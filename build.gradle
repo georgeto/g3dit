@@ -1,0 +1,123 @@
+plugins {
+  id 'com.github.ben-manes.versions' version '0.27.0' apply false
+}
+
+def eclipseFiles = "$rootDir/eclipse"
+def buildshipPrefFile = "org.eclipse.buildship.core.prefs"
+
+allprojects {
+	/*
+	 * Within 'subprojects {}', the Gradle 'plugins {}' block cannot be used yet, see 
+	 * https://docs.gradle.org/current/userguide/plugins.html#N12EB3
+	 */
+	 // TODO: Replace with 'plugins {}' block
+	apply plugin: 'eclipse'
+	apply plugin: 'java'
+	apply plugin: 'java-library'
+	
+	sourceCompatibility = 1.8
+	compileJava {
+		options.encoding = 'UTF-8'
+
+		options.compilerArgs << '-XDignore.symbol.file'
+		options.fork = true
+		options.forkOptions.executable = 'javac'
+	}
+
+	repositories {
+		mavenCentral()
+	}
+
+	tasks.eclipse.dependsOn(cleanEclipse)
+
+	cleanEclipse {
+		doLast {
+			for(File f : fileTree("$eclipseFiles"){include '*.prefs'}.getFiles()) {
+				delete "$projectDir/.settings/"+f.name
+			}
+		}
+	}
+
+	eclipse.classpath {
+		containers 'org.eclipse.buildship.core.gradleclasspathcontainer'
+		containers 'org.springsource.ide.eclipse.gradle.classpathcontainer'
+	}
+
+	eclipse.project {
+		natures 'org.eclipse.buildship.core.gradleprojectnature'
+		buildCommand 'org.eclipse.buildship.core.gradleprojectbuilder'
+
+		natures 'org.springsource.ide.eclipse.gradle.core.nature'
+	}
+	
+	eclipseJdt {
+		doLast {
+			// install Buildship preference files
+			project.copy {
+				from(eclipseFiles) {
+					include buildshipPrefFile
+				}
+				into '.settings'
+				
+				expand(projectPath: "\\:$project.name")
+				filteringCharset = 'UTF-8'
+			}
+		}
+	}
+}
+
+subprojects {
+ 	apply plugin: 'com.github.ben-manes.versions'
+ 	
+	repositories {
+		mavenCentral()
+
+		flatDir {
+			dirs '../G3Utils/libs'
+		}
+		
+		flatDir {
+			dirs '../LrentNode/libs'
+		}
+	}
+	
+	def cpAttributesNode = new NodeBuilder().attributes {
+		attribute(name:'FROM_GRADLE_MODEL', value:true)
+	}
+	
+	eclipse.classpath {
+		file {
+			whenMerged { classpath ->
+				classpath.entries.each { entry ->
+					if(entry.kind == 'con' && entry.path.startsWith('org.eclipse.jdt.launching.JRE_CONTAINER'))
+						entry.path = 'org.eclipse.jdt.launching.JRE_CONTAINER'
+				}
+			}
+			withXml { xml ->
+				xml.asNode().value().stream().filter { entry -> 
+					entry.attribute('kind') == 'src'
+				}.forEach { entry ->
+					entry.append(cpAttributesNode)
+				}
+			}
+		}
+	}
+
+	eclipse.project {
+		natures 'org.eclipse.jdt.core.javanature'
+		buildCommand 'org.eclipse.jdt.core.javabuilder'
+	}
+
+	eclipseJdt {
+		doLast {			
+			// install Eclipse preference files
+			project.copy {
+				from(eclipseFiles) {
+					include '*.prefs'
+					exclude buildshipPrefFile
+				}
+				into '.settings'
+			}
+		}
+	}
+}

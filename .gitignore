@@ -1,0 +1,13 @@
+# Eclipse
+bin/
+.settings/
+.classpath
+.project
+
+# IntelliJ IDEA
+.idea/
+
+# Gradle
+build/
+.gradle/
+gradle.properties

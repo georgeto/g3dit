@@ -1,0 +1,4425 @@
+[ {
+  "mesh" : "G3_Object_Grave_Stone_03.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 0.0,
+    "y" : -1.1920929E-7,
+    "z" : 0.0
+  } ],
+  "circleRadius" : [ 99.00009 ]
+}, {
+  "mesh" : "G3_Object_Varant_Amphore_03.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 0.0,
+    "y" : 0.0,
+    "z" : 0.0
+  } ],
+  "circleRadius" : [ 25.665096 ]
+}, {
+  "mesh" : "G3_Objects_FireAltar_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 0.0,
+    "y" : 0.0,
+    "z" : 0.0
+  } ],
+  "circleRadius" : [ 56.00026 ]
+}, {
+  "mesh" : "G3_Object_Varant_Basket_02.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 0.0,
+    "y" : 0.0,
+    "z" : 0.0
+  } ],
+  "circleRadius" : [ 29.989498 ]
+}, {
+  "mesh" : "G3_Object_Barrel_Snow_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 0.0,
+    "y" : 0.0,
+    "z" : 0.0
+  } ],
+  "circleRadius" : [ 86.000145 ]
+}, {
+  "mesh" : "G3_Object_Fence_End_03.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 77.052734,
+    "y" : 4.8826635E-4,
+    "z" : -1.8309937
+  }, {
+    "x" : -80.81885,
+    "y" : -0.0073242337,
+    "z" : -1.4249878
+  } ],
+  "circleRadius" : [ 59.840805, 61.840637 ]
+}, {
+  "mesh" : "G3_Tree_M_Gimlet_01.spt",
+  "circleOffsets" : [ {
+    "x" : 14.492569,
+    "y" : 132.05818,
+    "z" : 30.43309
+  }, {
+    "x" : -3.20813,
+    "y" : 44.641144,
+    "z" : -6.1035156E-5
+  } ],
+  "circleRadius" : [ 80.00008, 101.00021 ]
+}, {
+  "mesh" : "G3_Object_Fence_End_Snow_04.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 84.77344,
+    "y" : -0.010131836,
+    "z" : -5.6447754
+  }, {
+    "x" : -71.74609,
+    "y" : 0.009399414,
+    "z" : -8.591797
+  } ],
+  "circleRadius" : [ 63.160213, 63.160213 ]
+}, {
+  "mesh" : "G3_Myrtana_Ruins_Stone_Rubble_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 0.0,
+    "y" : -1.0430813E-6,
+    "z" : 163.4491
+  }, {
+    "x" : 0.0,
+    "y" : -4.7683716E-7,
+    "z" : -163.45569
+  } ],
+  "circleRadius" : [ 162.54909, 184.5488 ]
+}, {
+  "mesh" : "G3_Object_Cupboard_Top_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 90.367676,
+    "y" : -0.002257675,
+    "z" : -4.4748535
+  }, {
+    "x" : -70.61035,
+    "y" : 0.0028692484,
+    "z" : -3.2026367
+  } ],
+  "circleRadius" : [ 114.00002, 113.99994 ]
+}, {
+  "mesh" : "G3_Object_Stone_Snow_02.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 52.487915,
+    "y" : 0.0,
+    "z" : -13.095703
+  }, {
+    "x" : -77.40759,
+    "y" : 0.0,
+    "z" : -13.095947
+  } ],
+  "circleRadius" : [ 131.37323, 125.37326 ]
+}, {
+  "mesh" : "G3_Object_Barrelgroup_02.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 137.71997,
+    "y" : 0.017822236,
+    "z" : -5.242676
+  }, {
+    "x" : -140.17163,
+    "y" : -0.017700225,
+    "z" : -2.421875
+  } ],
+  "circleRadius" : [ 119.3695, 112.00008 ]
+}, {
+  "mesh" : "G3_Object_Varant_Dish_02.xcmsh",
+  "circleOffsets" : [ {
+    "x" : -0.0029296875,
+    "y" : 0.0,
+    "z" : 0.005126953
+  } ],
+  "circleRadius" : [ 68.40034 ]
+}, {
+  "mesh" : "G3_Object_Interact_Alchemy_Table_01.xlmsh",
+  "circleOffsets" : [ {
+    "x" : 73.12109,
+    "y" : 0.009277344,
+    "z" : -0.6296387
+  }, {
+    "x" : -49.71826,
+    "y" : -0.0064086914,
+    "z" : 0.37475586
+  } ],
+  "circleRadius" : [ 112.54803, 110.54802 ]
+}, {
+  "mesh" : "G3_Object_Sackgroup_Snow_02.xcmsh",
+  "circleOffsets" : [ {
+    "x" : -5.9604645E-8,
+    "y" : 0.0,
+    "z" : 22.146318
+  } ],
+  "circleRadius" : [ 97.00017 ]
+}, {
+  "mesh" : "G3_GrindStone_Body_GrindStone.FXA",
+  "circleOffsets" : [ {
+    "x" : 9.693359,
+    "y" : 3.3569336E-4,
+    "z" : 33.67578
+  }, {
+    "x" : -0.87841797,
+    "y" : 0.0016479492,
+    "z" : -59.315918
+  } ],
+  "circleRadius" : [ 89.23619, 89.23618 ]
+}, {
+  "mesh" : "G3_Object_Varant_Amphore_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : -0.6513672,
+    "y" : 2.8312206E-7,
+    "z" : 0.28515625
+  } ],
+  "circleRadius" : [ 54.52704 ]
+}, {
+  "mesh" : "G3_Object_Fence_End_06.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 75.76465,
+    "y" : -0.009246826,
+    "z" : -1.6557617
+  }, {
+    "x" : -70.92871,
+    "y" : 0.008483887,
+    "z" : 7.7770996
+  } ],
+  "circleRadius" : [ 63.338715, 67.338715 ]
+}, {
+  "mesh" : "G3_Object_Stonepillar_02.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 0.17803955,
+    "y" : 0.0,
+    "z" : -0.54467773
+  } ],
+  "circleRadius" : [ 160.45726 ]
+}, {
+  "mesh" : "G3_Tree_S_CrabApple_01.spt",
+  "circleOffsets" : [ {
+    "x" : -17.866724,
+    "y" : 261.56824,
+    "z" : 0.0058596665
+  }, {
+    "x" : -0.6498637,
+    "y" : 49.133114,
+    "z" : 0.012694991
+  } ],
+  "circleRadius" : [ 71.000145, 62.000286 ]
+}, {
+  "mesh" : "G3_Object_Crategroup_03.xcmsh",
+  "circleOffsets" : [ {
+    "x" : -0.8312471,
+    "y" : 0.0,
+    "z" : 67.592606
+  }, {
+    "x" : -8.236245,
+    "y" : 0.0,
+    "z" : -76.135925
+  } ],
+  "circleRadius" : [ 74.401535, 71.99993 ]
+}, {
+  "mesh" : "G3_Object_Fence_Start_02.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 67.40869,
+    "y" : 0.0,
+    "z" : -1.9938965
+  }, {
+    "x" : -75.60205,
+    "y" : 0.0,
+    "z" : -1.9951172
+  } ],
+  "circleRadius" : [ 63.70118, 67.701195 ]
+}, {
+  "mesh" : "G3_Object_Shelf_Weapons_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 79.15259,
+    "y" : 0.010131836,
+    "z" : 2.3574219
+  }, {
+    "x" : -82.98804,
+    "y" : -0.010620117,
+    "z" : 1.8950195
+  } ],
+  "circleRadius" : [ 74.99998, 73.99995 ]
+}, {
+  "mesh" : "G3_Object_Varant_Excavation_Caldroun_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 0.0,
+    "y" : 0.0,
+    "z" : -0.013671875
+  } ],
+  "circleRadius" : [ 41.999866 ]
+}, {
+  "mesh" : "G3_Object_Bucket_w_Logs_03.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 3.2507324,
+    "y" : 0.00265491,
+    "z" : 6.8569336
+  } ],
+  "circleRadius" : [ 68.67655 ]
+}, {
+  "mesh" : "G3_Object_Strawbale_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 44.04541,
+    "y" : -8.940697E-8,
+    "z" : -2.5219727
+  }, {
+    "x" : -52.832726,
+    "y" : -7.4505806E-8,
+    "z" : 2.2520337
+  } ],
+  "circleRadius" : [ 108.69709, 106.6971 ]
+}, {
+  "mesh" : "G3_Object_Interact_Campfire_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : -4.9262695,
+    "y" : 1.8310547E-4,
+    "z" : 3.907959
+  } ],
+  "circleRadius" : [ 153.12611 ]
+}, {
+  "mesh" : "G3_Object_Chickenbox_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : -8.34465E-7,
+    "y" : 0.0,
+    "z" : -2.0291448
+  } ],
+  "circleRadius" : [ 113.53191 ]
+}, {
+  "mesh" : "G3_Object_Fireplace_03.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 105.487,
+    "y" : 0.0,
+    "z" : -90.83203
+  }, {
+    "x" : -109.41098,
+    "y" : 0.0,
+    "z" : -91.30204
+  } ],
+  "circleRadius" : [ 126.99988, 126.99988 ]
+}, {
+  "mesh" : "G3_Object_Sign_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : -2.9973023,
+    "y" : 47.39048,
+    "z" : 1.6276134
+  }, {
+    "x" : -0.93029785,
+    "y" : 244.36089,
+    "z" : 1.7469516
+  } ],
+  "circleRadius" : [ 30.332924, 26.999954 ]
+}, {
+  "mesh" : "G3_Object_Shelf_06.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 52.054985,
+    "y" : 0.004760742,
+    "z" : -11.128939
+  }, {
+    "x" : -70.172195,
+    "y" : -0.007446289,
+    "z" : -8.15797
+  } ],
+  "circleRadius" : [ 67.999954, 67.99994 ]
+}, {
+  "mesh" : "G3_Object_Varant_Cupboard_Small_02.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 151.86572,
+    "y" : -1.1920929E-7,
+    "z" : -52.183838
+  }, {
+    "x" : -29.08496,
+    "y" : -1.1920929E-7,
+    "z" : -52.186035
+  } ],
+  "circleRadius" : [ 89.99614, 89.99614 ]
+}, {
+  "mesh" : "G3_Object_Fireplace_Blacksmith_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : -3.0468493,
+    "y" : 2.3841858E-7,
+    "z" : 6.6157165
+  } ],
+  "circleRadius" : [ 212.85674 ]
+}, {
+  "mesh" : "G3_Object_Sack_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 0.0048828125,
+    "y" : 2.2351742E-7,
+    "z" : 0.29345703
+  } ],
+  "circleRadius" : [ 63.87627 ]
+}, {
+  "mesh" : "G3_Object_Varant_Pot_Gold_04.xcmsh",
+  "circleOffsets" : [ {
+    "x" : -1.2207031E-4,
+    "y" : 0.0,
+    "z" : 0.0
+  } ],
+  "circleRadius" : [ 41.00065 ]
+}, {
+  "mesh" : "G3_Object_Stone_03.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 21.604267,
+    "y" : 0.0,
+    "z" : -2.7107322
+  }, {
+    "x" : -99.58594,
+    "y" : 0.0,
+    "z" : 0.7392578
+  } ],
+  "circleRadius" : [ 168.28769, 154.28781 ]
+}, {
+  "mesh" : "G3_Tree_L_PagodaTree_01.spt",
+  "circleOffsets" : [ {
+    "x" : -11.993652,
+    "y" : 30.62646,
+    "z" : -4.334839
+  }, {
+    "x" : 20.75415,
+    "y" : 575.00867,
+    "z" : -24.875732
+  } ],
+  "circleRadius" : [ 337.99963, 239.9996 ]
+}, {
+  "mesh" : "G3_Tree_L_LongleafPine_04_winter.spt",
+  "circleOffsets" : [ {
+    "x" : -0.6702881,
+    "y" : -1.335144E-5,
+    "z" : -2.566162
+  }, {
+    "x" : -70.49699,
+    "y" : 454.03726,
+    "z" : 13.074972
+  } ],
+  "circleRadius" : [ 82.999664, 60.999844 ]
+}, {
+  "mesh" : "G3_Object_Logs_Snow_03.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 94.32373,
+    "y" : 8.940697E-8,
+    "z" : 0.0
+  }, {
+    "x" : -70.6875,
+    "y" : 6.121397E-5,
+    "z" : 6.080655
+  } ],
+  "circleRadius" : [ 93.07203, 99.072044 ]
+}, {
+  "mesh" : "G3_Object_Winesqueezer_01.xlmsh",
+  "circleOffsets" : [ {
+    "x" : 125.213135,
+    "y" : 0.01574707,
+    "z" : 5.4492188
+  }, {
+    "x" : -120.34912,
+    "y" : -0.015258789,
+    "z" : 2.777832
+  } ],
+  "circleRadius" : [ 143.99997, 139.99995 ]
+}, {
+  "mesh" : "G3_Object_Barrel_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 0.0,
+    "y" : 0.0,
+    "z" : 0.0
+  } ],
+  "circleRadius" : [ 86.000145 ]
+}, {
+  "mesh" : "G3_Tree_M_CoconutPalm_02.spt",
+  "circleOffsets" : [ {
+    "x" : 20.714722,
+    "y" : 340.16882,
+    "z" : -13.930405
+  }, {
+    "x" : -3.2080078,
+    "y" : 44.64132,
+    "z" : -0.0019683838
+  } ],
+  "circleRadius" : [ 82.00023, 114.00033 ]
+}, {
+  "mesh" : "G3_Object_Counter_02.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 141.67838,
+    "y" : 0.0,
+    "z" : 0.0
+  }, {
+    "x" : -165.30664,
+    "y" : 0.0,
+    "z" : 0.0
+  } ],
+  "circleRadius" : [ 100.99994, 100.99994 ]
+}, {
+  "mesh" : "G3_Object_Well_02.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 0.0,
+    "y" : 0.0,
+    "z" : 0.0
+  } ],
+  "circleRadius" : [ 199.40147 ]
+}, {
+  "mesh" : "G3_Object_Basket_02.xcmsh",
+  "circleOffsets" : [ {
+    "x" : -4.8828125E-4,
+    "y" : 0.0,
+    "z" : 0.09741211
+  } ],
+  "circleRadius" : [ 63.607727 ]
+}, {
+  "mesh" : "G3_Object_Strawbale_03.xcmsh",
+  "circleOffsets" : [ {
+    "x" : -1.0458984,
+    "y" : 0.0,
+    "z" : -0.45996094
+  } ],
+  "circleRadius" : [ 113.2316 ]
+}, {
+  "mesh" : "G3_Object_Varant_Excavation_Group_02.xcmsh",
+  "circleOffsets" : [ {
+    "x" : -3.7624335,
+    "y" : -3.2122455,
+    "z" : -10.968472
+  } ],
+  "circleRadius" : [ 122.002106 ]
+}, {
+  "mesh" : "G3_Object_Varant_Teatable_Small_Single_02.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 0.0,
+    "y" : -2.1606684E-7,
+    "z" : 0.0
+  } ],
+  "circleRadius" : [ 53.711246 ]
+}, {
+  "mesh" : "G3_Object_Varant_Shelf_02.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 1.4901161E-7,
+    "y" : 0.0,
+    "z" : 59.07902
+  }, {
+    "x" : -2.104789E-7,
+    "y" : 0.0,
+    "z" : -44.55989
+  } ],
+  "circleRadius" : [ 79.253784, 79.253784 ]
+}, {
+  "mesh" : "G3_Object_Logs_Snow_02.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 65.63501,
+    "y" : -6.1035156E-5,
+    "z" : -7.78125
+  }, {
+    "x" : -70.35986,
+    "y" : -6.1035156E-5,
+    "z" : -2.6396484
+  } ],
+  "circleRadius" : [ 109.07205, 109.07205 ]
+}, {
+  "mesh" : "G3_Object_Plow_01.xlmsh",
+  "circleOffsets" : [ {
+    "x" : 0.0,
+    "y" : 0.0,
+    "z" : 112.49841
+  }, {
+    "x" : 0.0,
+    "y" : 0.0,
+    "z" : -111.203
+  } ],
+  "circleRadius" : [ 117.30161, 135.30157 ]
+}, {
+  "mesh" : "G3_Object_Barrel_04.xcmsh",
+  "circleOffsets" : [ {
+    "x" : -0.0029296875,
+    "y" : -4.4703484E-8,
+    "z" : 0.0
+  } ],
+  "circleRadius" : [ 94.999985 ]
+}, {
+  "mesh" : "G3_Object_Varant_Vegetation_BigBush_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 0.0,
+    "y" : 0.0,
+    "z" : 0.0
+  } ],
+  "circleRadius" : [ 122.99994 ]
+}, {
+  "mesh" : "G3_Tree_M_CurlyPalm_01.spt",
+  "circleOffsets" : [ {
+    "x" : 9.917358,
+    "y" : 340.16882,
+    "z" : -5.4003754
+  }, {
+    "x" : -3.208191,
+    "y" : 44.64121,
+    "z" : -1.9836426E-4
+  } ],
+  "circleRadius" : [ 75.00007, 90.00026 ]
+}, {
+  "mesh" : "G3_Object_Fence_End_Snow_02.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 69.49219,
+    "y" : -0.008300781,
+    "z" : -1.3310547
+  }, {
+    "x" : -75.4082,
+    "y" : 0.0041503906,
+    "z" : -2.0776367
+  } ],
+  "circleRadius" : [ 57.701176, 57.701176 ]
+}, {
+  "mesh" : "G3_Object_Varant_Statue_Mage_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 0.0,
+    "y" : 0.0,
+    "z" : 0.0
+  } ],
+  "circleRadius" : [ 102.999954 ]
+}, {
+  "mesh" : "G3_Tree_M_CrepeMyrtle_01.spt",
+  "circleOffsets" : [ {
+    "x" : -1.1953125,
+    "y" : 40.765614,
+    "z" : 0.0
+  }, {
+    "x" : -0.063964844,
+    "y" : 399.8039,
+    "z" : 0.0
+  } ],
+  "circleRadius" : [ 96.0002, 112.00013 ]
+}, {
+  "mesh" : "G3_Object_Branch_03.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 86.02173,
+    "y" : 2.2053719E-6,
+    "z" : 200.69531
+  }, {
+    "x" : 20.3187,
+    "y" : 1.013279E-6,
+    "z" : 52.625877
+  } ],
+  "circleRadius" : [ 77.72383, 60.723907 ]
+}, {
+  "mesh" : "G3_Object_Sackgroup_Snow_03.xcmsh",
+  "circleOffsets" : [ {
+    "x" : -6.1035156E-4,
+    "y" : -4.0233135E-7,
+    "z" : -0.013183594
+  } ],
+  "circleRadius" : [ 131.00038 ]
+}, {
+  "mesh" : "G3_Object_Barrelgroup_05.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 59.239532,
+    "y" : 0.0062256157,
+    "z" : -3.3686523
+  }, {
+    "x" : -73.91989,
+    "y" : -0.0070800483,
+    "z" : -6.107422
+  } ],
+  "circleRadius" : [ 115.99972, 109.99971 ]
+}, {
+  "mesh" : "G3_Object_Varant_Gargoyle_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 0.0,
+    "y" : 0.0,
+    "z" : 0.0
+  }, {
+    "x" : -2.9936523,
+    "y" : 0.0,
+    "z" : 201.59973
+  } ],
+  "circleRadius" : [ 147.99995, 80.99995 ]
+}, {
+  "mesh" : "G3_Object_SnowCover_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 400.0,
+    "y" : 0.0,
+    "z" : 0.0
+  }, {
+    "x" : -400.0,
+    "y" : 0.0,
+    "z" : 0.0
+  } ],
+  "circleRadius" : [ 200.0, 200.0 ]
+}, {
+  "mesh" : "G3_Object_Varant_Shelf_Amph_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 91.614784,
+    "y" : 0.0,
+    "z" : -14.863892
+  }, {
+    "x" : -86.95412,
+    "y" : 0.0,
+    "z" : -14.863892
+  } ],
+  "circleRadius" : [ 78.99199, 78.99193 ]
+}, {
+  "mesh" : "G3_Object_Bookshelf_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 97.489746,
+    "y" : 7.4505806E-8,
+    "z" : 0.0012207031
+  }, {
+    "x" : -98.586426,
+    "y" : 1.4901161E-7,
+    "z" : 0.0
+  } ],
+  "circleRadius" : [ 94.176346, 86.17636 ]
+}, {
+  "mesh" : "G3_Object_Varant_Vegetation_Aloe_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 0.0,
+    "y" : 0.0,
+    "z" : 0.0
+  } ],
+  "circleRadius" : [ 129.99994 ]
+}, {
+  "mesh" : "G3_Object_Table_02.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 2.6374512,
+    "y" : 0.002319336,
+    "z" : -66.62451
+  }, {
+    "x" : 5.583252,
+    "y" : -0.0010986328,
+    "z" : 62.28418
+  } ],
+  "circleRadius" : [ 133.99998, 133.99998 ]
+}, {
+  "mesh" : "G3_Tree_L_LongleafPine_03_winter.spt",
+  "circleOffsets" : [ {
+    "x" : -0.6702881,
+    "y" : -1.335144E-5,
+    "z" : -2.566162
+  }, {
+    "x" : -6.862671,
+    "y" : 571.5942,
+    "z" : 3.5511475
+  } ],
+  "circleRadius" : [ 82.999664, 60.999844 ]
+}, {
+  "mesh" : "G3_Object_Fence_End_Snow_05.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 78.38672,
+    "y" : 0.0057373047,
+    "z" : -8.481689
+  }, {
+    "x" : -68.19141,
+    "y" : -0.005493164,
+    "z" : 1.109375
+  } ],
+  "circleRadius" : [ 61.661373, 57.661366 ]
+}, {
+  "mesh" : "G3_Tree_L_DouglasFir_02_winter.spt",
+  "circleOffsets" : [ {
+    "x" : 6.398926,
+    "y" : 0.0,
+    "z" : -0.0040893555
+  }, {
+    "x" : -6.4300537,
+    "y" : 663.46796,
+    "z" : -0.0034179688
+  } ],
+  "circleRadius" : [ 71.99993, 76.99993 ]
+}, {
+  "mesh" : "G3_Object_Varant_Gewuerz_Sack_05.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 5.59375,
+    "y" : -0.02734375,
+    "z" : -3.7890625
+  } ],
+  "circleRadius" : [ 103.72517 ]
+}, {
+  "mesh" : "G3_Object_Branch_04.xcmsh",
+  "circleOffsets" : [ {
+    "x" : -83.28125,
+    "y" : 103.616325,
+    "z" : 365.271
+  }, {
+    "x" : -7.988726,
+    "y" : 15.092021,
+    "z" : 33.912514
+  } ],
+  "circleRadius" : [ 76.56714, 74.56714 ]
+}, {
+  "mesh" : "G3_Object_Wood_Plankgroup_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : -0.86065674,
+    "y" : -196.12021,
+    "z" : 6.1035156E-5
+  } ],
+  "circleRadius" : [ 41.25737 ]
+}, {
+  "mesh" : "G3_Object_Stonepillar_Snow_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 6.1035156E-5,
+    "y" : 0.0,
+    "z" : -1.2207031E-4
+  } ],
+  "circleRadius" : [ 165.87958 ]
+}, {
+  "mesh" : "G3_Object_Interact_Bookstand_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 0.64086914,
+    "y" : -6.1035156E-5,
+    "z" : 1.7382812
+  } ],
+  "circleRadius" : [ 137.33057 ]
+}, {
+  "mesh" : "G3_Object_Barrel_02.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 0.0,
+    "y" : -5.364418E-7,
+    "z" : 0.0
+  } ],
+  "circleRadius" : [ 90.00014 ]
+}, {
+  "mesh" : "G3_Object_Barrelgroup_06.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 11.221321,
+    "y" : 0.0062257275,
+    "z" : 7.239107
+  }, {
+    "x" : -104.14209,
+    "y" : -0.0070799366,
+    "z" : -75.94214
+  } ],
+  "circleRadius" : [ 157.99995, 84.99968 ]
+}, {
+  "mesh" : "G3_Object_Varant_Statue_Assasin_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 0.0,
+    "y" : 0.0,
+    "z" : 0.0
+  } ],
+  "circleRadius" : [ 100.99994 ]
+}, {
+  "mesh" : "G3_Varant_City_Well_03.xlmsh",
+  "circleOffsets" : [ {
+    "x" : -2.2700195,
+    "y" : 0.0,
+    "z" : -11.419922
+  } ],
+  "circleRadius" : [ 198.65457 ]
+}, {
+  "mesh" : "G3_Object_Fieldgrave_01.xlmsh",
+  "circleOffsets" : [ {
+    "x" : 5.243164,
+    "y" : 0.0,
+    "z" : 81.90137
+  }, {
+    "x" : -9.765625E-4,
+    "y" : 0.0,
+    "z" : -92.98633
+  } ],
+  "circleRadius" : [ 70.84075, 70.84076 ]
+}, {
+  "mesh" : "G3_Object_Wood_Plankgroup_04.xcmsh",
+  "circleOffsets" : [ {
+    "x" : -3.3276825,
+    "y" : -191.11731,
+    "z" : 0.93152046
+  } ],
+  "circleRadius" : [ 59.929016 ]
+}, {
+  "mesh" : "G3_Object_Shelf_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 49.728516,
+    "y" : 0.0064697266,
+    "z" : -9.536621
+  }, {
+    "x" : -50.213135,
+    "y" : -0.005859375,
+    "z" : -15.403809
+  } ],
+  "circleRadius" : [ 71.99995, 71.99995 ]
+}, {
+  "mesh" : "G3_Object_Interact_Bench_04.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 105.778564,
+    "y" : 0.01361084,
+    "z" : -4.5703125
+  }, {
+    "x" : -90.434814,
+    "y" : -0.011291504,
+    "z" : -6.9609375
+  } ],
+  "circleRadius" : [ 76.032135, 74.03215 ]
+}, {
+  "mesh" : "G3_Object_Interact_Stoneplate_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 0.0,
+    "y" : 0.0,
+    "z" : 0.0
+  } ],
+  "circleRadius" : [ 115.99993 ]
+}, {
+  "mesh" : "G3_Object_Shelf_02.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 53.89966,
+    "y" : 0.0073242188,
+    "z" : -18.09375
+  }, {
+    "x" : -42.066406,
+    "y" : -0.0048828125,
+    "z" : -15.561035
+  } ],
+  "circleRadius" : [ 67.99995, 67.99994 ]
+}, {
+  "mesh" : "G3_Object_Varant_Merchant_Group_02.xcmsh",
+  "circleOffsets" : [ {
+    "x" : -1.5341797,
+    "y" : 0.0,
+    "z" : 62.616577
+  }, {
+    "x" : -6.4433594,
+    "y" : 0.07180023,
+    "z" : -33.806274
+  } ],
+  "circleRadius" : [ 82.756325, 82.756325 ]
+}, {
+  "mesh" : "G3_Object_Stonepillar_Snow_02.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 0.17803955,
+    "y" : 0.0,
+    "z" : -0.54467773
+  } ],
+  "circleRadius" : [ 160.45726 ]
+}, {
+  "mesh" : "G3_Object_Logs_03.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 94.32373,
+    "y" : 8.940697E-8,
+    "z" : 0.0
+  }, {
+    "x" : -70.6875,
+    "y" : 6.121397E-5,
+    "z" : 6.080655
+  } ],
+  "circleRadius" : [ 93.07203, 99.072044 ]
+}, {
+  "mesh" : "G3_Object_Barrelgroup_03.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 170.22974,
+    "y" : -0.021972656,
+    "z" : 2.7236328
+  }, {
+    "x" : -172.47021,
+    "y" : 0.021728516,
+    "z" : 6.5878906
+  } ],
+  "circleRadius" : [ 113.99988, 121.99991 ]
+}, {
+  "mesh" : "G3_Object_Barrow_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : -0.8757324,
+    "y" : 7.9345703E-4,
+    "z" : 39.090332
+  }, {
+    "x" : -0.7993164,
+    "y" : -0.0010375977,
+    "z" : -63.96631
+  } ],
+  "circleRadius" : [ 84.00028, 83.04178 ]
+}, {
+  "mesh" : "G3_Chest_Body_ChestPod_02.FXA",
+  "circleOffsets" : [ {
+    "x" : -1.926184,
+    "y" : -5.187988E-4,
+    "z" : 2.8337288
+  } ],
+  "circleRadius" : [ 78.828804 ]
+}, {
+  "mesh" : "G3_Object_Varant_Excavation_Caldroun_02.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 0.0,
+    "y" : 0.0,
+    "z" : 0.0
+  } ],
+  "circleRadius" : [ 43.000023 ]
+}, {
+  "mesh" : "G3_Object_Cupboard_Wardrobe_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 117.37842,
+    "y" : -0.0044555664,
+    "z" : 4.2302246
+  }, {
+    "x" : -117.85449,
+    "y" : 0.0036010742,
+    "z" : 0.73583984
+  } ],
+  "circleRadius" : [ 141.99992, 141.99991 ]
+}, {
+  "mesh" : "G3_Object_Statue_Innos_Broken_01.xlmsh",
+  "circleOffsets" : [ {
+    "x" : 0.4013672,
+    "y" : 0.0,
+    "z" : -0.48498535
+  } ],
+  "circleRadius" : [ 197.64246 ]
+}, {
+  "mesh" : "G3_Tree_L_DouglasFir_02.spt",
+  "circleOffsets" : [ {
+    "x" : -12.582031,
+    "y" : 57.16563,
+    "z" : 1.2207031E-4
+  }, {
+    "x" : -5.051758,
+    "y" : 515.92175,
+    "z" : 1.2207031E-4
+  } ],
+  "circleRadius" : [ 100.0003, 96.00036 ]
+}, {
+  "mesh" : "G3_Object_Bucket_w_Logs_02.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 0.0,
+    "y" : 5.066395E-7,
+    "z" : -1.489624
+  } ],
+  "circleRadius" : [ 59.32261 ]
+}, {
+  "mesh" : "G3_Object_Cupboard_Wardrobe_Old_02.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 134.95581,
+    "y" : 0.01751709,
+    "z" : -10.398926
+  }, {
+    "x" : -139.71582,
+    "y" : -0.01739502,
+    "z" : -9.401367
+  } ],
+  "circleRadius" : [ 135.99995, 135.9999 ]
+}, {
+  "mesh" : "G3_Tree_L_HoneyLocust_01.spt",
+  "circleOffsets" : [ {
+    "x" : -4.4230957,
+    "y" : 51.299,
+    "z" : -5.833008
+  }, {
+    "x" : -26.066391,
+    "y" : 527.8272,
+    "z" : -25.697142
+  } ],
+  "circleRadius" : [ 165.00023, 129.99995 ]
+}, {
+  "mesh" : "G3_Object_Varant_Sacro_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : -2.2954102,
+    "y" : 0.0,
+    "z" : -97.13046
+  }, {
+    "x" : -3.0888672,
+    "y" : 0.0,
+    "z" : 90.66879
+  } ],
+  "circleRadius" : [ 108.99989, 108.99989 ]
+}, {
+  "mesh" : "G3_Object_Fireplace_Large_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 147.52222,
+    "y" : 0.0,
+    "z" : -137.00734
+  }, {
+    "x" : -124.4432,
+    "y" : 0.0,
+    "z" : -133.67879
+  } ],
+  "circleRadius" : [ 250.99982, 250.99982 ]
+}, {
+  "mesh" : "G3_Object_Varant_Excavation_Pot_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 0.0,
+    "y" : 0.0,
+    "z" : 0.0
+  } ],
+  "circleRadius" : [ 42.999393 ]
+}, {
+  "mesh" : "G3_Object_Varant_Dish_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : -4.8828125E-4,
+    "y" : -6.854534E-7,
+    "z" : 0.0014648438
+  } ],
+  "circleRadius" : [ 52.55743 ]
+}, {
+  "mesh" : "G3_Object_Barrelgroup_04.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 14.73468,
+    "y" : 0.0062256157,
+    "z" : 22.471191
+  } ],
+  "circleRadius" : [ 146.00005 ]
+}, {
+  "mesh" : "G3_Object_FabricRolls_Stack_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 4.07959,
+    "y" : 6.556511E-7,
+    "z" : -0.1550293
+  } ],
+  "circleRadius" : [ 147.98277 ]
+}, {
+  "mesh" : "G3_Object_Grave_Cross_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 0.001953125,
+    "y" : 3.0517578E-5,
+    "z" : 0.74316406
+  } ],
+  "circleRadius" : [ 62.38204 ]
+}, {
+  "mesh" : "G3_Object_Stone_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : -8.211426,
+    "y" : -1.3113022E-6,
+    "z" : -19.890625
+  } ],
+  "circleRadius" : [ 123.90144 ]
+}, {
+  "mesh" : "G3_Object_Grave_Stone_02.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 4.8828125E-4,
+    "y" : 0.0,
+    "z" : 4.8828125E-4
+  } ],
+  "circleRadius" : [ 95.00006 ]
+}, {
+  "mesh" : "G3_Object_Sign_02.xcmsh",
+  "circleOffsets" : [ {
+    "x" : -2.9973145,
+    "y" : 47.39048,
+    "z" : 1.6276169
+  }, {
+    "x" : -0.93029785,
+    "y" : 227.66396,
+    "z" : 1.7469482
+  } ],
+  "circleRadius" : [ 41.332924, 37.999954 ]
+}, {
+  "mesh" : "G3_Object_Varant_Parawan_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 102.66269,
+    "y" : -1.1920929E-7,
+    "z" : 4.61936E-7
+  }, {
+    "x" : -102.969406,
+    "y" : -1.3411045E-7,
+    "z" : 2.3841858E-7
+  } ],
+  "circleRadius" : [ 76.26435, 78.26438 ]
+}, {
+  "mesh" : "G3_Object_Varant_Teatable_Big_Single_02.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 0.0,
+    "y" : 0.0,
+    "z" : 0.0
+  } ],
+  "circleRadius" : [ 152.55658 ]
+}, {
+  "mesh" : "G3_Object_Grave_Stone_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : -0.0014648438,
+    "y" : -1.0430813E-7,
+    "z" : 4.8828125E-4
+  } ],
+  "circleRadius" : [ 87.99996 ]
+}, {
+  "mesh" : "G3_Tree_S_CarolinaBuckthorn_04.spt",
+  "circleOffsets" : [ {
+    "x" : -5.5913086,
+    "y" : 46.47842,
+    "z" : -0.0073242188
+  }, {
+    "x" : -8.583496,
+    "y" : 247.46155,
+    "z" : 0.0021972656
+  } ],
+  "circleRadius" : [ 61.00032, 87.00023 ]
+}, {
+  "mesh" : "G3_Object_Table_03.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 6.7036133,
+    "y" : 0.0031738281,
+    "z" : -70.90234
+  }, {
+    "x" : 1.8059082,
+    "y" : -0.0018310547,
+    "z" : 79.01953
+  } ],
+  "circleRadius" : [ 123.99994, 125.999985 ]
+}, {
+  "mesh" : "G3_Object_Lumberjack_Stump_03.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 0.0,
+    "y" : -1.6391277E-7,
+    "z" : 0.0
+  } ],
+  "circleRadius" : [ 59.970455 ]
+}, {
+  "mesh" : "G3_Tree_M_PagodaTree_01.spt",
+  "circleOffsets" : [ {
+    "x" : -1.1953125,
+    "y" : 40.765614,
+    "z" : 0.0
+  }, {
+    "x" : -0.063964844,
+    "y" : 399.8039,
+    "z" : 0.0
+  } ],
+  "circleRadius" : [ 96.0002, 112.00013 ]
+}, {
+  "mesh" : "G3_Object_Interact_Campfire_03.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 0.0,
+    "y" : 0.0,
+    "z" : 0.0
+  } ],
+  "circleRadius" : [ 170.0 ]
+}, {
+  "mesh" : "G3_Objects_Varant_Stone_Small_02.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 0.0,
+    "y" : 0.0,
+    "z" : 0.0
+  } ],
+  "circleRadius" : [ 200.0 ]
+}, {
+  "mesh" : "G3_Object_Logs_02.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 65.63501,
+    "y" : -6.1035156E-5,
+    "z" : -7.78125
+  }, {
+    "x" : -70.35986,
+    "y" : -6.1035156E-5,
+    "z" : -2.6396484
+  } ],
+  "circleRadius" : [ 109.07205, 109.07205 ]
+}, {
+  "mesh" : "G3_Tree_L_DouglasFir_04_winter.spt",
+  "circleOffsets" : [ {
+    "x" : 6.4161377,
+    "y" : 0.0,
+    "z" : -0.0040893555
+  }, {
+    "x" : -6.4207764,
+    "y" : 1048.4847,
+    "z" : -0.0034179688
+  } ],
+  "circleRadius" : [ 184.99986, 158.99988 ]
+}, {
+  "mesh" : "G3_Object_Wood_Wall_Snow_02.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 45.506836,
+    "y" : 0.0,
+    "z" : -0.29003048
+  }, {
+    "x" : -62.18457,
+    "y" : 6.136298E-5,
+    "z" : 12.199823
+  } ],
+  "circleRadius" : [ 61.470905, 62.50339 ]
+}, {
+  "mesh" : "G3_Objects_Varant_Stone_Small_03.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 0.0,
+    "y" : 0.0,
+    "z" : 0.0
+  } ],
+  "circleRadius" : [ 200.0 ]
+}, {
+  "mesh" : "G3_Object_Sackgroup_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : -41.553402,
+    "y" : -2.9802322E-8,
+    "z" : 4.8168945
+  }, {
+    "x" : 64.12121,
+    "y" : 0.0,
+    "z" : 0.0
+  } ],
+  "circleRadius" : [ 94.00017, 98.80526 ]
+}, {
+  "mesh" : "G3_Speedtree_Broadleaf_05_Var_01.spt",
+  "circleOffsets" : [ {
+    "x" : -12.344727,
+    "y" : 46.91749,
+    "z" : 0.0146484375
+  }, {
+    "x" : 12.0234375,
+    "y" : 559.2496,
+    "z" : 0.0087890625
+  } ],
+  "circleRadius" : [ 129.99992, 109.99993 ]
+}, {
+  "mesh" : "G3_Object_Stonepillar_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 6.1035156E-5,
+    "y" : 0.0,
+    "z" : -1.2207031E-4
+  } ],
+  "circleRadius" : [ 165.87958 ]
+}, {
+  "mesh" : "G3_Object_Plant_RottenTree_01.xlmsh",
+  "circleOffsets" : [ {
+    "x" : 62.55957,
+    "y" : 0.0,
+    "z" : 345.69354
+  }, {
+    "x" : 62.558594,
+    "y" : 106.84742,
+    "z" : -406.26514
+  } ],
+  "circleRadius" : [ 159.37811, 106.3781 ]
+}, {
+  "mesh" : "G3_Object_Interact_Alchemy_Table_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 400.0,
+    "y" : 0.0,
+    "z" : 0.0
+  }, {
+    "x" : -400.0,
+    "y" : 0.0,
+    "z" : 0.0
+  } ],
+  "circleRadius" : [ 200.0, 200.0 ]
+}, {
+  "mesh" : "G3_Chest_Body_ChestPod_01.FXA",
+  "circleOffsets" : [ {
+    "x" : -1.00536,
+    "y" : -5.187988E-4,
+    "z" : 1.9465439
+  } ],
+  "circleRadius" : [ 82.828804 ]
+}, {
+  "mesh" : "G3_Object_Stone_04.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 1.0297852,
+    "y" : -7.4505806E-7,
+    "z" : 4.3085938
+  } ],
+  "circleRadius" : [ 454.30905 ]
+}, {
+  "mesh" : "G3_Barbecue_Body_Barbecue.FXA",
+  "circleOffsets" : [ {
+    "x" : 11.769775,
+    "y" : -0.0021972656,
+    "z" : 131.72021
+  }, {
+    "x" : -2.5114746,
+    "y" : 0.0038146973,
+    "z" : -143.53857
+  } ],
+  "circleRadius" : [ 80.22589, 68.22588 ]
+}, {
+  "mesh" : "G3_Object_Grave_Cross_02.xcmsh",
+  "circleOffsets" : [ {
+    "x" : -4.6064453,
+    "y" : 1.6391277E-7,
+    "z" : -3.2939453
+  } ],
+  "circleRadius" : [ 87.62897 ]
+}, {
+  "mesh" : "G3_Object_Waggon_02.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 0.0,
+    "y" : -8.940697E-8,
+    "z" : 98.41052
+  }, {
+    "x" : 0.0048828125,
+    "y" : -1.3411045E-7,
+    "z" : -128.67615
+  } ],
+  "circleRadius" : [ 116.391075, 122.39116 ]
+}, {
+  "mesh" : "G3_Object_Interact_Bench_03.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 105.778564,
+    "y" : 0.01361084,
+    "z" : -4.5703125
+  }, {
+    "x" : -90.434814,
+    "y" : -0.011291504,
+    "z" : -6.9609375
+  } ],
+  "circleRadius" : [ 76.032135, 74.03215 ]
+}, {
+  "mesh" : "G3_Object_Wood_Plankgroup_02.xcmsh",
+  "circleOffsets" : [ {
+    "x" : -2.7010088,
+    "y" : -191.36783,
+    "z" : -1.4000149
+  } ],
+  "circleRadius" : [ 39.92897 ]
+}, {
+  "mesh" : "G3_Object_Crategroup_04.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 0.025878906,
+    "y" : 0.0,
+    "z" : -0.0010986328
+  } ],
+  "circleRadius" : [ 108.4024 ]
+}, {
+  "mesh" : "G3_Object_Interact_Stool_05.xcmsh",
+  "circleOffsets" : [ {
+    "x" : -0.58154297,
+    "y" : 0.0,
+    "z" : -4.3515625
+  } ],
+  "circleRadius" : [ 51.842564 ]
+}, {
+  "mesh" : "G3_Object_Varant_Palisade_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 0.18823242,
+    "y" : 0.0,
+    "z" : 0.0
+  }, {
+    "x" : -0.35658395,
+    "y" : 239.2849,
+    "z" : 0.36884975
+  } ],
+  "circleRadius" : [ 41.999557, 41.999557 ]
+}, {
+  "mesh" : "G3_Object_Pillory_01.xlmsh",
+  "circleOffsets" : [ {
+    "x" : 0.0,
+    "y" : 0.0,
+    "z" : 0.0
+  } ],
+  "circleRadius" : [ 184.82205 ]
+}, {
+  "mesh" : "G3_Object_Varant_Pot_Gold_03.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 0.0,
+    "y" : 0.0,
+    "z" : 0.0
+  } ],
+  "circleRadius" : [ 43.000633 ]
+}, {
+  "mesh" : "G3_Object_Torch_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 0.0,
+    "y" : 0.0,
+    "z" : 0.61376953
+  } ],
+  "circleRadius" : [ 71.55806 ]
+}, {
+  "mesh" : "G3_Tree_M_DouglasFir_02.spt",
+  "circleOffsets" : [ {
+    "x" : 5.3835144,
+    "y" : 258.18155,
+    "z" : 1.8428881
+  }, {
+    "x" : -4.7986813,
+    "y" : 13.917465,
+    "z" : 0.45380685
+  } ],
+  "circleRadius" : [ 80.0, 80.0 ]
+}, {
+  "mesh" : "G3_Object_Varant_Excavation_Amphore_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 0.0,
+    "y" : 0.0,
+    "z" : 0.0
+  } ],
+  "circleRadius" : [ 56.00026 ]
+}, {
+  "mesh" : "G3_Object_Wood_Palette_w_Logs_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 0.0,
+    "y" : 0.0,
+    "z" : 0.0
+  } ],
+  "circleRadius" : [ 83.84383 ]
+}, {
+  "mesh" : "G3_Object_Barrelgroup_Snow_05.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 59.239532,
+    "y" : 0.0062256157,
+    "z" : -3.3686523
+  }, {
+    "x" : -73.91989,
+    "y" : -0.0070800483,
+    "z" : -6.107422
+  } ],
+  "circleRadius" : [ 115.99972, 109.99971 ]
+}, {
+  "mesh" : "G3_Object_Varant_Cereals_Sack_02.xcmsh",
+  "circleOffsets" : [ {
+    "x" : -1.2172852,
+    "y" : 0.0,
+    "z" : 0.076416016
+  } ],
+  "circleRadius" : [ 72.39258 ]
+}, {
+  "mesh" : "G3_Tree_M_DatePalm_02.spt",
+  "circleOffsets" : [ {
+    "x" : -2.9109497,
+    "y" : 340.16882,
+    "z" : -5.162903
+  }, {
+    "x" : -3.20813,
+    "y" : 44.641144,
+    "z" : -6.1035156E-5
+  } ],
+  "circleRadius" : [ 59.000027, 74.0001 ]
+}, {
+  "mesh" : "G3_Tree_L_LongleafPine_04.spt",
+  "circleOffsets" : [ {
+    "x" : -11.783203,
+    "y" : 548.2026,
+    "z" : -20.00877
+  }, {
+    "x" : 1.9960938,
+    "y" : 60.086357,
+    "z" : 9.573975
+  } ],
+  "circleRadius" : [ 94.00012, 112.00009 ]
+}, {
+  "mesh" : "G3_Object_Cauldron_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 0.10253906,
+    "y" : 0.0,
+    "z" : 0.3284912
+  } ],
+  "circleRadius" : [ 55.764725 ]
+}, {
+  "mesh" : "G3_Object_Crate_03.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 0.0,
+    "y" : 0.0,
+    "z" : 0.0
+  } ],
+  "circleRadius" : [ 96.258514 ]
+}, {
+  "mesh" : "G3_Object_Dunghill_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : -14.024711,
+    "y" : 6.1035156E-5,
+    "z" : -2.8955078
+  } ],
+  "circleRadius" : [ 342.83865 ]
+}, {
+  "mesh" : "G3_Object_Wood_Plankgroup_03.xcmsh",
+  "circleOffsets" : [ {
+    "x" : -2.926178,
+    "y" : -191.24791,
+    "z" : 2.2410889
+  } ],
+  "circleRadius" : [ 40.257385 ]
+}, {
+  "mesh" : "G3_Tree_S_GSApple_01.spt",
+  "circleOffsets" : [ {
+    "x" : -5.2233887,
+    "y" : 79.6146,
+    "z" : 0.0
+  }, {
+    "x" : 10.197266,
+    "y" : 323.07748,
+    "z" : 0.0
+  } ],
+  "circleRadius" : [ 79.00074, 107.99989 ]
+}, {
+  "mesh" : "G3_Object_Crystal_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 6.6640625,
+    "y" : 0.0,
+    "z" : 1.6333008
+  } ],
+  "circleRadius" : [ 68.46094 ]
+}, {
+  "mesh" : "G3_Object_Varant_Firebasin_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 0.0,
+    "y" : 0.0,
+    "z" : 0.0
+  } ],
+  "circleRadius" : [ 106.67135 ]
+}, {
+  "mesh" : "G3_Object_Stone_05.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 1.0488281,
+    "y" : -3.33786E-6,
+    "z" : 60.782227
+  } ],
+  "circleRadius" : [ 318.3084 ]
+}, {
+  "mesh" : "G3_Tree_M_CoconutPalm_03.spt",
+  "circleOffsets" : [ {
+    "x" : 67.89192,
+    "y" : 340.16882,
+    "z" : -26.826778
+  }, {
+    "x" : -3.2082062,
+    "y" : 44.64121,
+    "z" : -1.8310547E-4
+  } ],
+  "circleRadius" : [ 67.00007, 85.00023 ]
+}, {
+  "mesh" : "G3_Tree_M_Tamarind_04.spt",
+  "circleOffsets" : [ {
+    "x" : 20.559692,
+    "y" : 284.79974,
+    "z" : 13.673462
+  }, {
+    "x" : -7.756592,
+    "y" : 44.641296,
+    "z" : -6.1348877
+  } ],
+  "circleRadius" : [ 187.0001, 154.00015 ]
+}, {
+  "mesh" : "G3_Objects_Varant_Stone_Big_03.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 38.674072,
+    "y" : 0.0,
+    "z" : -477.05615
+  }, {
+    "x" : 28.899902,
+    "y" : 0.0,
+    "z" : 310.36316
+  } ],
+  "circleRadius" : [ 379.99942, 552.9996 ]
+}, {
+  "mesh" : "G3_Object_TreeStump_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : -29.168945,
+    "y" : 49.697014,
+    "z" : 0.41418457
+  } ],
+  "circleRadius" : [ 148.01723 ]
+}, {
+  "mesh" : "G3_Object_Boards_Snow_02.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 203.58667,
+    "y" : 0.0034179688,
+    "z" : -1.8237305
+  }, {
+    "x" : -254.8457,
+    "y" : -0.002319336,
+    "z" : -13.527832
+  } ],
+  "circleRadius" : [ 151.00005, 148.00002 ]
+}, {
+  "mesh" : "G3_Tree_L_PinOak_01.spt",
+  "circleOffsets" : [ {
+    "x" : -17.644032,
+    "y" : 373.74304,
+    "z" : -8.010541
+  }, {
+    "x" : 6.3430505,
+    "y" : 45.601852,
+    "z" : -12.393809
+  } ],
+  "circleRadius" : [ 200.0, 200.0 ]
+}, {
+  "mesh" : "G3_Tree_M_CurlyPalm_02.spt",
+  "circleOffsets" : [ {
+    "x" : 32.95316,
+    "y" : 340.16882,
+    "z" : -0.93094385
+  }, {
+    "x" : -3.208191,
+    "y" : 44.64121,
+    "z" : -1.9836426E-4
+  } ],
+  "circleRadius" : [ 75.00007, 90.00026 ]
+}, {
+  "mesh" : "G3_Tree_M_PawPaw_03.spt",
+  "circleOffsets" : [ {
+    "x" : -8.838257,
+    "y" : 42.414562,
+    "z" : 2.0785522
+  }, {
+    "x" : -6.063904,
+    "y" : 304.27512,
+    "z" : -0.53237915
+  } ],
+  "circleRadius" : [ 115.00049, 77.9996 ]
+}, {
+  "mesh" : "G3_Object_Shelf_07.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 54.10327,
+    "y" : 0.0068359375,
+    "z" : 2.959961
+  }, {
+    "x" : -53.81372,
+    "y" : -0.006958008,
+    "z" : 5.347168
+  } ],
+  "circleRadius" : [ 71.99988, 71.99995 ]
+}, {
+  "mesh" : "G3_Object_Crategroup_02.xcmsh",
+  "circleOffsets" : [ {
+    "x" : -0.041992188,
+    "y" : 1.1920929E-7,
+    "z" : -19.449219
+  } ],
+  "circleRadius" : [ 257.08997 ]
+}, {
+  "mesh" : "G3_Object_Varant_PathFlag_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : -135.31325,
+    "y" : 0.0,
+    "z" : -15.859811
+  } ],
+  "circleRadius" : [ 330.99982 ]
+}, {
+  "mesh" : "G3_Object_Interact_Cauldron_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 0.016113281,
+    "y" : 2.4414062E-4,
+    "z" : 11.881836
+  } ],
+  "circleRadius" : [ 146.87231 ]
+}, {
+  "mesh" : "G3_Tree_L_LongleafPine_01_winter.spt",
+  "circleOffsets" : [ {
+    "x" : -0.6702881,
+    "y" : -1.335144E-5,
+    "z" : -2.566162
+  }, {
+    "x" : 7.211914,
+    "y" : 768.4639,
+    "z" : -44.377075
+  } ],
+  "circleRadius" : [ 138.99971, 83.99985 ]
+}, {
+  "mesh" : "G3_Object_Fence_Start_03.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 82.70117,
+    "y" : -1.7881393E-7,
+    "z" : -5.1137695
+  }, {
+    "x" : -74.06006,
+    "y" : -1.7881393E-7,
+    "z" : -5.1132812
+  } ],
+  "circleRadius" : [ 85.840614, 85.84063 ]
+}, {
+  "mesh" : "G3_Object_Varant_Teatable_Big_Single_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 66.29736,
+    "y" : 0.0,
+    "z" : 0.0
+  }, {
+    "x" : -66.29736,
+    "y" : 0.0,
+    "z" : 0.0029296875
+  } ],
+  "circleRadius" : [ 122.164116, 121.16407 ]
+}, {
+  "mesh" : "G3_Chest_Body_Chest.FXA",
+  "circleOffsets" : [ {
+    "x" : 0.09059858,
+    "y" : -5.187988E-4,
+    "z" : -0.04808235
+  } ],
+  "circleRadius" : [ 74.15045 ]
+}, {
+  "mesh" : "G3_Object_Interact_Innos_Statue_01.xlmsh",
+  "circleOffsets" : [ {
+    "x" : -0.095947266,
+    "y" : 1.8310547E-4,
+    "z" : -0.09472656
+  } ],
+  "circleRadius" : [ 206.10397 ]
+}, {
+  "mesh" : "G3_Object_Dunghill_02.xcmsh",
+  "circleOffsets" : [ {
+    "x" : -15.525391,
+    "y" : 0.0,
+    "z" : 15.172852
+  } ],
+  "circleRadius" : [ 242.61595 ]
+}, {
+  "mesh" : "G3_Object_Varant_Cupboard_Big_02.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 1.4494629,
+    "y" : -3.7252903E-8,
+    "z" : -58.14624
+  } ],
+  "circleRadius" : [ 116.64677 ]
+}, {
+  "mesh" : "G3_Object_Cauldron_04.xcmsh",
+  "circleOffsets" : [ {
+    "x" : -0.5083008,
+    "y" : -1.2516975E-6,
+    "z" : 0.44335938
+  } ],
+  "circleRadius" : [ 59.95433 ]
+}, {
+  "mesh" : "G3_Object_Myrtana_Coffin_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 400.0,
+    "y" : 0.0,
+    "z" : 0.0
+  }, {
+    "x" : -400.0,
+    "y" : 0.0,
+    "z" : 0.0
+  } ],
+  "circleRadius" : [ 200.0, 200.0 ]
+}, {
+  "mesh" : "G3_Tree_M_AmurCork_02.spt",
+  "circleOffsets" : [ {
+    "x" : -16.224165,
+    "y" : 521.7084,
+    "z" : -76.05349
+  }, {
+    "x" : -3.2080078,
+    "y" : 44.640778,
+    "z" : -0.001953125
+  } ],
+  "circleRadius" : [ 94.00003, 114.00003 ]
+}, {
+  "mesh" : "G3_Chest_Body_Chest_03.FXA",
+  "circleOffsets" : [ {
+    "x" : -4.83667,
+    "y" : -5.187988E-4,
+    "z" : -2.7856445
+  } ],
+  "circleRadius" : [ 104.82882 ]
+}, {
+  "mesh" : "G3_OrcBoulder_Body_OrcBoulder.FXA",
+  "circleOffsets" : [ {
+    "x" : -0.8121041,
+    "y" : -24.030752,
+    "z" : -68.98583
+  } ],
+  "circleRadius" : [ 102.88474 ]
+}, {
+  "mesh" : "G3_Object_Crate_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 0.061035156,
+    "y" : 8.195639E-8,
+    "z" : 1.0952759
+  } ],
+  "circleRadius" : [ 107.19949 ]
+}, {
+  "mesh" : "G3_Tree_S_CarolinaBuckthorn_01.spt",
+  "circleOffsets" : [ {
+    "x" : -1.4532471,
+    "y" : 50.93877,
+    "z" : -0.84976196
+  }, {
+    "x" : 1.1846528,
+    "y" : 178.97987,
+    "z" : -1.101786
+  } ],
+  "circleRadius" : [ 47.176033, 40.999683 ]
+}, {
+  "mesh" : "G3_Object_Varant_Dishes_Group_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 3.1018066,
+    "y" : -37.368473,
+    "z" : 3.6351318
+  } ],
+  "circleRadius" : [ 174.99973 ]
+}, {
+  "mesh" : "G3_Object_Wood_Wall_Snow_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 56.499023,
+    "y" : -1.4901161E-7,
+    "z" : -0.76953125
+  }, {
+    "x" : -50.854504,
+    "y" : -1.1920929E-7,
+    "z" : -16.518238
+  } ],
+  "circleRadius" : [ 84.89131, 78.8913 ]
+}, {
+  "mesh" : "G3_Object_Fireplace_02.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 120.1203,
+    "y" : 0.0,
+    "z" : -83.12915
+  }, {
+    "x" : -105.6593,
+    "y" : 0.0,
+    "z" : -82.02347
+  } ],
+  "circleRadius" : [ 149.99997, 148.99995 ]
+}, {
+  "mesh" : "G3_Object_Fence_End_05.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 78.38672,
+    "y" : 0.0057373047,
+    "z" : -8.481689
+  }, {
+    "x" : -68.19141,
+    "y" : -0.005493164,
+    "z" : 1.109375
+  } ],
+  "circleRadius" : [ 61.661373, 57.661366 ]
+}, {
+  "mesh" : "G3_Object_Varant_Stonplate_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 22.508408,
+    "y" : -1.0430813E-7,
+    "z" : 0.002439797
+  }, {
+    "x" : -17.670898,
+    "y" : -0.0045778006,
+    "z" : -0.77783203
+  } ],
+  "circleRadius" : [ 40.10319, 38.103207 ]
+}, {
+  "mesh" : "G3_Object_Varant_Parawan_05.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 92.69092,
+    "y" : -0.0112915635,
+    "z" : 3.8405762
+  }, {
+    "x" : 4.1601562,
+    "y" : 7.9339E-4,
+    "z" : 4.6992188
+  } ],
+  "circleRadius" : [ 40.542763, 42.82666 ]
+}, {
+  "mesh" : "G3_Object_Sign_03.xcmsh",
+  "circleOffsets" : [ {
+    "x" : -2.9973145,
+    "y" : 47.39048,
+    "z" : 1.6276169
+  }, {
+    "x" : -0.93029785,
+    "y" : 244.36089,
+    "z" : 1.7469482
+  } ],
+  "circleRadius" : [ 44.332924, 40.999943 ]
+}, {
+  "mesh" : "G3_Object_Interact_Throne_Orc_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : -0.8925781,
+    "y" : 0.0,
+    "z" : 8.643555
+  } ],
+  "circleRadius" : [ 153.39832 ]
+}, {
+  "mesh" : "G3_Tree_M_Tamarind_02.spt",
+  "circleOffsets" : [ {
+    "x" : 78.50369,
+    "y" : 284.79974,
+    "z" : 35.986633
+  }, {
+    "x" : -3.208496,
+    "y" : 44.641144,
+    "z" : 0.0
+  } ],
+  "circleRadius" : [ 138.99992, 168.99991 ]
+}, {
+  "mesh" : "G3_Object_Counter_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 175.18654,
+    "y" : 0.0,
+    "z" : 0.0
+  }, {
+    "x" : -169.23819,
+    "y" : 0.0,
+    "z" : 0.0
+  } ],
+  "circleRadius" : [ 83.99994, 83.99994 ]
+}, {
+  "mesh" : "G3_Tree_XXL_RedGum_01.spt",
+  "circleOffsets" : [ {
+    "x" : -0.3251332,
+    "y" : 57.99567,
+    "z" : 5.260426
+  }, {
+    "x" : -5.8007812,
+    "y" : 800.013,
+    "z" : 0.0
+  } ],
+  "circleRadius" : [ 200.0, 146.00024 ]
+}, {
+  "mesh" : "G3_Object_Sackgroup_02.xcmsh",
+  "circleOffsets" : [ {
+    "x" : -5.9604645E-8,
+    "y" : 0.0,
+    "z" : 22.146318
+  } ],
+  "circleRadius" : [ 97.00017 ]
+}, {
+  "mesh" : "G3_Object_Varant_Stonplate_02.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 29.493164,
+    "y" : 0.0,
+    "z" : -7.7819824E-4
+  }, {
+    "x" : -17.804688,
+    "y" : 0.0,
+    "z" : -13.153732
+  } ],
+  "circleRadius" : [ 61.124187, 61.124195 ]
+}, {
+  "mesh" : "G3_Object_Interact_Stool_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : -0.58154297,
+    "y" : 0.0,
+    "z" : -4.3515625
+  } ],
+  "circleRadius" : [ 51.842564 ]
+}, {
+  "mesh" : "G3_Object_Frame_Skin_02.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 73.47054,
+    "y" : 0.0,
+    "z" : -0.0029292107
+  }, {
+    "x" : -95.50098,
+    "y" : 0.0,
+    "z" : -9.765625E-4
+  } ],
+  "circleRadius" : [ 60.300133, 62.300117 ]
+}, {
+  "mesh" : "G3_Object_Varant_Cupboard_Big_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 150.97559,
+    "y" : 0.0,
+    "z" : -58.146484
+  }, {
+    "x" : -146.16992,
+    "y" : 0.0,
+    "z" : -58.146484
+  } ],
+  "circleRadius" : [ 108.36801, 110.368 ]
+}, {
+  "mesh" : "G3_Object_Ruin_Pillar_02.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 0.0,
+    "y" : 0.0,
+    "z" : 0.0
+  } ],
+  "circleRadius" : [ 102.89846 ]
+}, {
+  "mesh" : "G3_Object_Varant_Excavation_Platter_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 0.0,
+    "y" : 0.0,
+    "z" : 0.0
+  } ],
+  "circleRadius" : [ 53.0001 ]
+}, {
+  "mesh" : "G3_Objects_Varant_Stone_Big_02.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 504.133,
+    "y" : 0.0,
+    "z" : 26.743887
+  }, {
+    "x" : -336.57764,
+    "y" : 0.0,
+    "z" : 63.206146
+  } ],
+  "circleRadius" : [ 270.99988, 402.99844 ]
+}, {
+  "mesh" : "G3_Object_Varant_Merchant_Group_03.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 7.509142,
+    "y" : 8.544773E-4,
+    "z" : 21.853048
+  } ],
+  "circleRadius" : [ 140.98453 ]
+}, {
+  "mesh" : "G3_Object_Bucket_02.xcmsh",
+  "circleOffsets" : [ {
+    "x" : -5.585205,
+    "y" : 0.0,
+    "z" : -1.9038086
+  } ],
+  "circleRadius" : [ 59.63125 ]
+}, {
+  "mesh" : "G3_Object_Waggon_01.xlmsh",
+  "circleOffsets" : [ {
+    "x" : 8.621253E-4,
+    "y" : -1.2665987E-7,
+    "z" : 108.60227
+  }, {
+    "x" : 0.0048828125,
+    "y" : -3.2782555E-7,
+    "z" : -348.27625
+  } ],
+  "circleRadius" : [ 205.80153, 186.8016 ]
+}, {
+  "mesh" : "G3_Object_Shelf_Weapons_02.xlmsh",
+  "circleOffsets" : [ {
+    "x" : 95.71997,
+    "y" : 0.01184082,
+    "z" : 1.9204102
+  }, {
+    "x" : -95.407715,
+    "y" : -0.012084961,
+    "z" : -1.9140625
+  } ],
+  "circleRadius" : [ 93.99994, 89.99995 ]
+}, {
+  "mesh" : "G3_Object_Stonepillar_Snow_03.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 2.4414062E-4,
+    "y" : 0.0,
+    "z" : 0.0
+  } ],
+  "circleRadius" : [ 165.05655 ]
+}, {
+  "mesh" : "G3_Object_Plant_RottenTree_02.xlmsh",
+  "circleOffsets" : [ {
+    "x" : 30.49414,
+    "y" : 136.63911,
+    "z" : 560.251
+  }, {
+    "x" : -53.944336,
+    "y" : -9.983778E-7,
+    "z" : -724.2881
+  } ],
+  "circleRadius" : [ 208.58548, 166.58527 ]
+}, {
+  "mesh" : "G3_Tree_M_PagodaTree_02.spt",
+  "circleOffsets" : [ {
+    "x" : -1.1953125,
+    "y" : 40.765614,
+    "z" : 0.0
+  }, {
+    "x" : -0.063964844,
+    "y" : 399.8039,
+    "z" : 0.0
+  } ],
+  "circleRadius" : [ 96.0002, 112.00013 ]
+}, {
+  "mesh" : "G3_Object_Varant_Palisade_03.xcmsh",
+  "circleOffsets" : [ {
+    "x" : -1.1079102,
+    "y" : 0.0,
+    "z" : 0.0
+  }, {
+    "x" : -0.7619004,
+    "y" : 284.3926,
+    "z" : -2.741348E-6
+  } ],
+  "circleRadius" : [ 50.000114, 50.000114 ]
+}, {
+  "mesh" : "G3_Object_Fence_End_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 76.3125,
+    "y" : 0.0017089844,
+    "z" : -0.9067383
+  }, {
+    "x" : -77.61719,
+    "y" : -0.0073242188,
+    "z" : 0.9226074
+  } ],
+  "circleRadius" : [ 56.22509, 57.62643 ]
+}, {
+  "mesh" : "G3_Tree_L_FraserFir_01_winter.spt",
+  "circleOffsets" : [ {
+    "x" : 6.4161377,
+    "y" : 4.4822693E-5,
+    "z" : -0.006958008
+  }, {
+    "x" : -6.4207764,
+    "y" : 1048.4847,
+    "z" : 5.1494427
+  } ],
+  "circleRadius" : [ 204.9998, 117.99987 ]
+}, {
+  "mesh" : "G3_Object_Rockpile_02.xcmsh",
+  "circleOffsets" : [ {
+    "x" : -0.4609375,
+    "y" : -4.917383E-7,
+    "z" : -0.23144531
+  } ],
+  "circleRadius" : [ 221.29245 ]
+}, {
+  "mesh" : "G3_Object_Boards_04.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 211.37231,
+    "y" : 0.018066406,
+    "z" : -3.4404297
+  }, {
+    "x" : -208.69263,
+    "y" : -0.016967773,
+    "z" : -4.557129
+  } ],
+  "circleRadius" : [ 151.06784, 151.06784 ]
+}, {
+  "mesh" : "G3_Object_Interact_Campfire_02.xcmsh",
+  "circleOffsets" : [ {
+    "x" : -9.765625E-4,
+    "y" : 0.0,
+    "z" : 108.0249
+  }, {
+    "x" : 0.0,
+    "y" : 0.0,
+    "z" : -108.02222
+  } ],
+  "circleRadius" : [ 121.31108, 117.31111 ]
+}, {
+  "mesh" : "G3_Tree_M_PawPaw_04.spt",
+  "circleOffsets" : [ {
+    "x" : -8.838257,
+    "y" : 42.414562,
+    "z" : 2.0785522
+  }, {
+    "x" : -6.063904,
+    "y" : 304.27512,
+    "z" : -0.53237915
+  } ],
+  "circleRadius" : [ 115.00049, 77.9996 ]
+}, {
+  "mesh" : "G3_Tree_L_ItalianCypress_01_winter.spt",
+  "circleOffsets" : [ {
+    "x" : 6.41626,
+    "y" : -4.7683716E-6,
+    "z" : -0.011291504
+  }, {
+    "x" : -0.87109375,
+    "y" : 666.3565,
+    "z" : -2.4596558
+  } ],
+  "circleRadius" : [ 157.99974, 95.99985 ]
+}, {
+  "mesh" : "G3_Tree_L_ItalianCypress_02.spt",
+  "circleOffsets" : [ {
+    "x" : -17.367188,
+    "y" : 508.35944,
+    "z" : 0.0016174316
+  }, {
+    "x" : -9.058594,
+    "y" : 70.27507,
+    "z" : 0.0015563965
+  } ],
+  "circleRadius" : [ 95.99977, 107.9998 ]
+}, {
+  "mesh" : "G3_Object_Grave_Cross_03.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 2.9838867,
+    "y" : -1.2208521E-4,
+    "z" : 1.8994141
+  } ],
+  "circleRadius" : [ -62.531734 ]
+}, {
+  "mesh" : "G3_Object_Interact_Stoneplate_02.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 0.0,
+    "y" : 0.0,
+    "z" : 0.0
+  } ],
+  "circleRadius" : [ 200.0 ]
+}, {
+  "mesh" : "G3_Object_Table_04.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 14.955078,
+    "y" : 0.0040283203,
+    "z" : -75.31201
+  }, {
+    "x" : 18.570557,
+    "y" : 1.2207031E-4,
+    "z" : 82.895996
+  } ],
+  "circleRadius" : [ 117.99998, 115.999985 ]
+}, {
+  "mesh" : "G3_Object_Sign_04.xcmsh",
+  "circleOffsets" : [ {
+    "x" : -2.9973145,
+    "y" : 47.39048,
+    "z" : 1.6276093
+  }, {
+    "x" : -0.93029785,
+    "y" : 244.36089,
+    "z" : 1.7469482
+  } ],
+  "circleRadius" : [ 41.332924, 37.999954 ]
+}, {
+  "mesh" : "G3_Object_Interact_Anvil_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 9.0078125,
+    "y" : 0.0,
+    "z" : -7.0561523
+  } ],
+  "circleRadius" : [ 111.98646 ]
+}, {
+  "mesh" : "G3_Object_Varant_Shelf_04.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 0.0017089844,
+    "y" : -1.8626451E-8,
+    "z" : 68.315186
+  }, {
+    "x" : 4.8828125E-4,
+    "y" : -2.6077032E-8,
+    "z" : -62.446045
+  } ],
+  "circleRadius" : [ 49.253796, 51.253807 ]
+}, {
+  "mesh" : "G3_Tree_M_GhostGum_01.spt",
+  "circleOffsets" : [ {
+    "x" : -39.288147,
+    "y" : 340.16882,
+    "z" : 14.47847
+  }, {
+    "x" : -3.20813,
+    "y" : 44.641144,
+    "z" : -6.1035156E-5
+  } ],
+  "circleRadius" : [ 68.00008, 101.00021 ]
+}, {
+  "mesh" : "G3_Object_Crane_01.xlmsh",
+  "circleOffsets" : [ {
+    "x" : 0.0,
+    "y" : 0.0,
+    "z" : 0.0
+  } ],
+  "circleRadius" : [ 134.99985 ]
+}, {
+  "mesh" : "G3_Object_TreeStump_Snow_02.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 18.958984,
+    "y" : 33.07556,
+    "z" : 7.776245
+  } ],
+  "circleRadius" : [ 119.72584 ]
+}, {
+  "mesh" : "G3_Object_Varant_Merchant_Group_Gold_06.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 0.0,
+    "y" : 0.0,
+    "z" : 0.0
+  } ],
+  "circleRadius" : [ 151.0004 ]
+}, {
+  "mesh" : "G3_Tree_M_Tamarind_01.spt",
+  "circleOffsets" : [ {
+    "x" : -17.12692,
+    "y" : 284.79974,
+    "z" : 18.814974
+  }, {
+    "x" : -3.208496,
+    "y" : 44.641144,
+    "z" : 0.0
+  } ],
+  "circleRadius" : [ 99.000015, 130.00008 ]
+}, {
+  "mesh" : "G3_Varant_City_Well_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : -0.06689453,
+    "y" : 0.0,
+    "z" : 0.10644531
+  } ],
+  "circleRadius" : [ 145.54826 ]
+}, {
+  "mesh" : "G3_Object_Shelf_Weapons_03.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 95.71997,
+    "y" : 0.01184082,
+    "z" : 1.9204102
+  }, {
+    "x" : -95.407715,
+    "y" : -0.012084961,
+    "z" : -1.9140625
+  } ],
+  "circleRadius" : [ 93.99994, 89.99995 ]
+}, {
+  "mesh" : "G3_Object_Stonepile_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : -0.34765625,
+    "y" : -1.0430813E-7,
+    "z" : -0.52490234
+  } ],
+  "circleRadius" : [ 113.23836 ]
+}, {
+  "mesh" : "G3_Object_Table_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : -1.4250488,
+    "y" : 0.0017089844,
+    "z" : -62.36621
+  }, {
+    "x" : 1.1401367,
+    "y" : -0.0012207031,
+    "z" : 49.89258
+  } ],
+  "circleRadius" : [ 119.99998, 117.99994 ]
+}, {
+  "mesh" : "G3_Object_OldTree_Short_02.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 0.0,
+    "y" : 0.0,
+    "z" : 0.0
+  } ],
+  "circleRadius" : [ 107.8643 ]
+}, {
+  "mesh" : "G3_Object_Cupboard_Cabinet_Old_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 0.0,
+    "y" : 0.0,
+    "z" : 0.0
+  } ],
+  "circleRadius" : [ 166.00002 ]
+}, {
+  "mesh" : "G3_Objects_Innos_MonestaryPillar_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 0.0,
+    "y" : 0.0,
+    "z" : 0.0
+  } ],
+  "circleRadius" : [ 100.89847 ]
+}, {
+  "mesh" : "G3_Object_Varant_Shelf_03.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 9.536743E-7,
+    "y" : 0.0,
+    "z" : 68.141624
+  }, {
+    "x" : -1.5910709,
+    "y" : 0.0,
+    "z" : -58.131397
+  } ],
+  "circleRadius" : [ 49.253716, 47.253723 ]
+}, {
+  "mesh" : "G3_Object_Varant_Cupboard_Small_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 152.13428,
+    "y" : 0.0,
+    "z" : -51.990967
+  }, {
+    "x" : -9.477295,
+    "y" : 0.0,
+    "z" : -51.990967
+  } ],
+  "circleRadius" : [ 91.72526, 93.72528 ]
+}, {
+  "mesh" : "G3_Tree_M_CoconutPalm_01.spt",
+  "circleOffsets" : [ {
+    "x" : 35.767036,
+    "y" : 340.16882,
+    "z" : -7.632966
+  }, {
+    "x" : -3.2080097,
+    "y" : 44.64145,
+    "z" : -0.001953125
+  } ],
+  "circleRadius" : [ 59.000286, 81.000404 ]
+}, {
+  "mesh" : "G3_Object_Varant_Merchant_Group_05.xcmsh",
+  "circleOffsets" : [ {
+    "x" : -3.6687012,
+    "y" : 5.2154064E-7,
+    "z" : -2.4501953
+  } ],
+  "circleRadius" : [ 117.40799 ]
+}, {
+  "mesh" : "G3_Object_Fence_Start_05.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 66.124985,
+    "y" : 0.78719306,
+    "z" : -2.546875
+  }, {
+    "x" : -72.14422,
+    "y" : 0.0,
+    "z" : -2.5463867
+  } ],
+  "circleRadius" : [ 51.537445, 57.66139 ]
+}, {
+  "mesh" : "G3_Tree_L_PawPaw_02.spt",
+  "circleOffsets" : [ {
+    "x" : -3.4326172,
+    "y" : 45.509502,
+    "z" : -0.9707031
+  }, {
+    "x" : 11.355469,
+    "y" : 524.9718,
+    "z" : 8.809326
+  } ],
+  "circleRadius" : [ 241.00076, 202.00055 ]
+}, {
+  "mesh" : "G3_Object_Boards_02.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 203.58667,
+    "y" : 0.0034179688,
+    "z" : -1.8237305
+  }, {
+    "x" : -254.8457,
+    "y" : -0.002319336,
+    "z" : -13.527832
+  } ],
+  "circleRadius" : [ 151.00005, 148.00002 ]
+}, {
+  "mesh" : "G3_Tree_XXL_CaliforniaBuckeye_01.spt",
+  "circleOffsets" : [ {
+    "x" : 28.647217,
+    "y" : 110.44621,
+    "z" : 35.443604
+  }, {
+    "x" : -10.733124,
+    "y" : 805.338,
+    "z" : 9.685755E-6
+  } ],
+  "circleRadius" : [ 485.00278, 200.0 ]
+}, {
+  "mesh" : "G3_Tree_L_FraserFir_02_winter.spt",
+  "circleOffsets" : [ {
+    "x" : 6.41626,
+    "y" : -4.7683716E-6,
+    "z" : -0.010131836
+  }, {
+    "x" : -0.87109375,
+    "y" : 666.3565,
+    "z" : -2.4596558
+  } ],
+  "circleRadius" : [ 138.99974, 95.99985 ]
+}, {
+  "mesh" : "G3_Object_Varant_Clothesline_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 272.60498,
+    "y" : 0.0,
+    "z" : 25.522827
+  }, {
+    "x" : -291.4756,
+    "y" : 0.0,
+    "z" : 1.2207031E-4
+  } ],
+  "circleRadius" : [ 65.11411, 61.11412 ]
+}, {
+  "mesh" : "G3_Tree_L_LongleafPine_03.spt",
+  "circleOffsets" : [ {
+    "x" : -0.1651001,
+    "y" : 42.691948,
+    "z" : 0.0
+  }, {
+    "x" : 128.93272,
+    "y" : 564.8673,
+    "z" : -16.39795
+  } ],
+  "circleRadius" : [ 141.99994, 138.99995 ]
+}, {
+  "mesh" : "G3_Tree_L_Misc_01_winter.spt",
+  "circleOffsets" : [ {
+    "x" : -0.6702881,
+    "y" : -1.8298626E-5,
+    "z" : -2.566162
+  }, {
+    "x" : 13.613183,
+    "y" : 576.25726,
+    "z" : -12.671815
+  } ],
+  "circleRadius" : [ 282.99933, 153.99979 ]
+}, {
+  "mesh" : "G3_Object_Fence_End_Snow_03.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 77.052734,
+    "y" : 4.8826635E-4,
+    "z" : -1.8309937
+  }, {
+    "x" : -80.81885,
+    "y" : -0.0073242337,
+    "z" : -1.4249878
+  } ],
+  "circleRadius" : [ 59.840805, 61.840637 ]
+}, {
+  "mesh" : "G3_Object_Varant_Shelf_Cereals_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 100.052246,
+    "y" : 0.0037231445,
+    "z" : -20.024414
+  }, {
+    "x" : -102.4707,
+    "y" : 0.0,
+    "z" : -20.677246
+  } ],
+  "circleRadius" : [ 70.10887, 72.108864 ]
+}, {
+  "mesh" : "G3_Varant_City_Well_02.xlmsh",
+  "circleOffsets" : [ {
+    "x" : 11.581055,
+    "y" : 0.0,
+    "z" : -21.98655
+  } ],
+  "circleRadius" : [ 218.40692 ]
+}, {
+  "mesh" : "G3_Tree_L_DouglasFir_01.spt",
+  "circleOffsets" : [ {
+    "x" : -4.25,
+    "y" : 521.7084,
+    "z" : -9.765625E-4
+  }, {
+    "x" : -3.2080078,
+    "y" : 44.640778,
+    "z" : -0.001953125
+  } ],
+  "circleRadius" : [ 94.00003, 114.00003 ]
+}, {
+  "mesh" : "G3_Object_Varant_Palisade_02.xcmsh",
+  "circleOffsets" : [ {
+    "x" : -0.19576192,
+    "y" : 256.46323,
+    "z" : -5.9843063E-5
+  }, {
+    "x" : 1.8540039,
+    "y" : -1.927,
+    "z" : 0.0
+  } ],
+  "circleRadius" : [ 40.000187, 51.00015 ]
+}, {
+  "mesh" : "G3_Object_Varant_Sitpillow_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 0.0,
+    "y" : 5.811453E-7,
+    "z" : 0.0
+  } ],
+  "circleRadius" : [ 61.218105 ]
+}, {
+  "mesh" : "G3_Object_Frame_Skin_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 106.73291,
+    "y" : 1.937151E-7,
+    "z" : 0.0
+  }, {
+    "x" : -106.73193,
+    "y" : 1.7881393E-7,
+    "z" : -0.0029296875
+  } ],
+  "circleRadius" : [ 81.7295, 77.72948 ]
+}, {
+  "mesh" : "G3_Object_Crategroup_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : -96.37842,
+    "y" : 1.1026859E-6,
+    "z" : 26.088013
+  }, {
+    "x" : 76.68266,
+    "y" : 0.0,
+    "z" : -13.922528
+  } ],
+  "circleRadius" : [ 118.86114, 158.99947 ]
+}, {
+  "mesh" : "G3_Speedtree_Broadleaf_05_Var_02.spt",
+  "circleOffsets" : [ {
+    "x" : -12.344727,
+    "y" : 46.91749,
+    "z" : 0.0146484375
+  }, {
+    "x" : 12.0234375,
+    "y" : 559.2496,
+    "z" : 0.0087890625
+  } ],
+  "circleRadius" : [ 129.99992, 109.99993 ]
+}, {
+  "mesh" : "G3_Tree_XXL_UmbrellaThorn_01.spt",
+  "circleOffsets" : [ {
+    "x" : 62.560505,
+    "y" : 314.96243,
+    "z" : 1.3023615E-5
+  }, {
+    "x" : 0.8171387,
+    "y" : 53.924683,
+    "z" : 0.0
+  } ],
+  "circleRadius" : [ 200.0, 257.00095 ]
+}, {
+  "mesh" : "G3_Object_Varant_Excavation_Group_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : -4.907756,
+    "y" : 1.8774389,
+    "z" : -9.199814
+  } ],
+  "circleRadius" : [ 178.99997 ]
+}, {
+  "mesh" : "G3_Object_Interact_Bed_05.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 57.64331,
+    "y" : 0.0,
+    "z" : 2.0581055
+  }, {
+    "x" : -50.053955,
+    "y" : 1.2210757E-4,
+    "z" : 5.6242676
+  } ],
+  "circleRadius" : [ 127.999954, 129.99991 ]
+}, {
+  "mesh" : "G3_Object_BrokenBranch_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : -136.03613,
+    "y" : 0.040527344,
+    "z" : -5.033203
+  }, {
+    "x" : -691.36035,
+    "y" : -105.99658,
+    "z" : -5.0373535
+  } ],
+  "circleRadius" : [ 177.70886, 131.89543 ]
+}, {
+  "mesh" : "G3_Tree_M_AmurCork_01.spt",
+  "circleOffsets" : [ {
+    "x" : -5.250737,
+    "y" : 340.16882,
+    "z" : 33.995815
+  }, {
+    "x" : -3.2080078,
+    "y" : 44.640778,
+    "z" : -0.001953125
+  } ],
+  "circleRadius" : [ 94.00003, 114.00003 ]
+}, {
+  "mesh" : "G3_Object_Interact_Throne_Human_01.xlmsh",
+  "circleOffsets" : [ {
+    "x" : -3.0517578E-5,
+    "y" : 0.0,
+    "z" : 24.13388
+  } ],
+  "circleRadius" : [ 145.80945 ]
+}, {
+  "mesh" : "G3_Object_Interact_Bench_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 105.778564,
+    "y" : 0.01361084,
+    "z" : -4.5703125
+  }, {
+    "x" : -90.434814,
+    "y" : -0.011291504,
+    "z" : -6.9609375
+  } ],
+  "circleRadius" : [ 76.032135, 74.03215 ]
+}, {
+  "mesh" : "G3_Object_Shelf_04.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 62.476074,
+    "y" : 0.008056641,
+    "z" : -1.4174805
+  }, {
+    "x" : -62.343018,
+    "y" : -0.0078125,
+    "z" : 1.4145508
+  } ],
+  "circleRadius" : [ 69.99996, 67.99995 ]
+}, {
+  "mesh" : "G3_Object_Varant_Teatable_Small_Gold_04.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 0.0,
+    "y" : 0.0,
+    "z" : 0.0
+  } ],
+  "circleRadius" : [ 99.99994 ]
+}, {
+  "mesh" : "G3_Object_Varant_Shelf_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 8.940697E-8,
+    "y" : 0.0,
+    "z" : 59.80344
+  }, {
+    "x" : -3.2782555E-7,
+    "y" : 0.0,
+    "z" : -49.66294
+  } ],
+  "circleRadius" : [ 79.253784, 79.253784 ]
+}, {
+  "mesh" : "G3_Tree_M_JoshuaTree_02.spt",
+  "circleOffsets" : [ {
+    "x" : -5.0253906,
+    "y" : 229.86777,
+    "z" : -0.44958496
+  }, {
+    "x" : -3.2086182,
+    "y" : 44.641144,
+    "z" : 0.0
+  } ],
+  "circleRadius" : [ 71.00007, 77.000175 ]
+}, {
+  "mesh" : "G3_Tree_M_PinOak_01.spt",
+  "circleOffsets" : [ {
+    "x" : -8.838257,
+    "y" : 42.414562,
+    "z" : 2.0785522
+  }, {
+    "x" : -6.063904,
+    "y" : 304.27512,
+    "z" : -0.53237915
+  } ],
+  "circleRadius" : [ 115.00049, 77.9996 ]
+}, {
+  "mesh" : "G3_Object_Statue_King_01.xlmsh",
+  "circleOffsets" : [ {
+    "x" : 24.614502,
+    "y" : 0.0,
+    "z" : 0.0
+  } ],
+  "circleRadius" : [ 193.21788 ]
+}, {
+  "mesh" : "G3_Tree_L_PagodaTree_02.spt",
+  "circleOffsets" : [ {
+    "x" : -27.96708,
+    "y" : 530.0652,
+    "z" : 8.940697E-7
+  }, {
+    "x" : 7.705597,
+    "y" : 45.583668,
+    "z" : 0.005554199
+  } ],
+  "circleRadius" : [ 200.0, 254.99988 ]
+}, {
+  "mesh" : "G3_Tree_XXL_MontereyCypress_01.spt",
+  "circleOffsets" : [ {
+    "x" : -0.80859375,
+    "y" : 37.90954,
+    "z" : -9.765625E-4
+  }, {
+    "x" : -100.23447,
+    "y" : 784.3016,
+    "z" : -49.160736
+  } ],
+  "circleRadius" : [ 396.99985, 253.99991 ]
+}, {
+  "mesh" : "G3_Object_Barrelgroup_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 59.239532,
+    "y" : 0.0062256157,
+    "z" : -3.3686523
+  }, {
+    "x" : -73.91989,
+    "y" : -0.0070800483,
+    "z" : -6.107422
+  } ],
+  "circleRadius" : [ 115.99972, 109.99971 ]
+}, {
+  "mesh" : "G3_Object_Cupboard_Commode_Old_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 137.7544,
+    "y" : -0.004272461,
+    "z" : -0.10571289
+  }, {
+    "x" : -154.36182,
+    "y" : 0.004333496,
+    "z" : 4.290283
+  } ],
+  "circleRadius" : [ 115.99991, 113.99987 ]
+}, {
+  "mesh" : "G3_Object_Rockpile_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : -10.6171875,
+    "y" : -2.4423003E-4,
+    "z" : 2.182129
+  } ],
+  "circleRadius" : [ 308.31555 ]
+}, {
+  "mesh" : "G3_Object_Fence_End_04.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 84.77344,
+    "y" : -0.010131836,
+    "z" : -5.6447754
+  }, {
+    "x" : -71.74609,
+    "y" : 0.009399414,
+    "z" : -8.591797
+  } ],
+  "circleRadius" : [ 63.160213, 63.160213 ]
+}, {
+  "mesh" : "G3_Object_Bucket_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 0.0,
+    "y" : 0.0,
+    "z" : 0.0
+  } ],
+  "circleRadius" : [ 55.51753 ]
+}, {
+  "mesh" : "G3_Objects_Varant_Stone_Small_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 0.0,
+    "y" : 0.0,
+    "z" : 0.0
+  } ],
+  "circleRadius" : [ 200.0 ]
+}, {
+  "mesh" : "G3_Tree_S_DouglasFir_02.spt",
+  "circleOffsets" : [ {
+    "x" : -17.644043,
+    "y" : 373.74304,
+    "z" : -8.010498
+  }, {
+    "x" : 6.3432617,
+    "y" : 45.601852,
+    "z" : -12.393799
+  } ],
+  "circleRadius" : [ 66.999825, 55.999798 ]
+}, {
+  "mesh" : "G3_Object_Interact_Bed_04.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 57.64331,
+    "y" : 0.0,
+    "z" : 2.0581055
+  }, {
+    "x" : -50.054565,
+    "y" : 1.2207031E-4,
+    "z" : 5.623535
+  } ],
+  "circleRadius" : [ 127.999954, 129.99991 ]
+}, {
+  "mesh" : "G3_Object_Plant_RottenTree_Snow_02.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 47.93466,
+    "y" : 136.63911,
+    "z" : 673.9126
+  }, {
+    "x" : 7.5771284,
+    "y" : -9.983778E-7,
+    "z" : -851.7411
+  } ],
+  "circleRadius" : [ 293.5854, 220.58525 ]
+}, {
+  "mesh" : "G3_Object_Sign_Board_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 60.943497,
+    "y" : -53.11055,
+    "z" : -1.4744568
+  }, {
+    "x" : -53.83718,
+    "y" : -51.832787,
+    "z" : -1.9679108
+  } ],
+  "circleRadius" : [ 23.999954, 23.999954 ]
+}, {
+  "mesh" : "G3_Tree_M_Gimlet_04.spt",
+  "circleOffsets" : [ {
+    "x" : 2.2859192,
+    "y" : 151.86438,
+    "z" : -2.1374102
+  }, {
+    "x" : -3.20813,
+    "y" : 44.641144,
+    "z" : -6.1035156E-5
+  } ],
+  "circleRadius" : [ 87.00013, 101.00021 ]
+}, {
+  "mesh" : "G3_Tree_M_PawPaw_05.spt",
+  "circleOffsets" : [ {
+    "x" : -8.838257,
+    "y" : 42.414562,
+    "z" : 2.0785522
+  }, {
+    "x" : -6.063904,
+    "y" : 304.27512,
+    "z" : -0.53237915
+  } ],
+  "circleRadius" : [ 115.00049, 77.9996 ]
+}, {
+  "mesh" : "G3_Object_TreeStump_Snow_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 0.0,
+    "y" : 0.0,
+    "z" : 0.0
+  } ],
+  "circleRadius" : [ 107.8643 ]
+}, {
+  "mesh" : "G3_Tree_S_EuropeanAspen_01.spt",
+  "circleOffsets" : [ {
+    "x" : 2.9873037,
+    "y" : 289.21222,
+    "z" : 3.4039693
+  }, {
+    "x" : -0.4951172,
+    "y" : 66.286224,
+    "z" : -8.292328
+  } ],
+  "circleRadius" : [ 62.000095, 44.000126 ]
+}, {
+  "mesh" : "G3_Object_Varant_Teatable_Small_Single_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 0.0,
+    "y" : -1.937151E-7,
+    "z" : 0.0
+  } ],
+  "circleRadius" : [ 66.729004 ]
+}, {
+  "mesh" : "G3_Object_Fence_Start_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 74.990234,
+    "y" : 0.0,
+    "z" : -2.289917
+  }, {
+    "x" : -75.634766,
+    "y" : 0.0,
+    "z" : -2.2894287
+  } ],
+  "circleRadius" : [ 69.626396, 71.6264 ]
+}, {
+  "mesh" : "G3_Object_Cupboard_Down_Old_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 80.447266,
+    "y" : -0.002319336,
+    "z" : -3.9863281
+  }, {
+    "x" : -87.6499,
+    "y" : 0.0034179688,
+    "z" : -5.738037
+  } ],
+  "circleRadius" : [ 133.99986, 134.0 ]
+}, {
+  "mesh" : "G3_Tree_M_UmbrellaThorn_03.spt",
+  "circleOffsets" : [ {
+    "x" : 53.559853,
+    "y" : 284.79974,
+    "z" : 102.989815
+  }, {
+    "x" : -7.756592,
+    "y" : 44.641296,
+    "z" : -6.1348877
+  } ],
+  "circleRadius" : [ 167.00092, 154.00015 ]
+}, {
+  "mesh" : "G3_Object_Interact_Bed_03.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 57.64331,
+    "y" : 0.0,
+    "z" : 2.0581055
+  }, {
+    "x" : -50.05542,
+    "y" : 1.2207031E-4,
+    "z" : 5.6242676
+  } ],
+  "circleRadius" : [ 127.999954, 129.99991 ]
+}, {
+  "mesh" : "G3_Object_Cupboard_Wardrobe_Old_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 134.95581,
+    "y" : 0.01751709,
+    "z" : -10.398926
+  }, {
+    "x" : -139.71582,
+    "y" : -0.01739502,
+    "z" : -9.401367
+  } ],
+  "circleRadius" : [ 135.99995, 135.9999 ]
+}, {
+  "mesh" : "G3_Tree_M_LongleafPine_03.spt",
+  "circleOffsets" : [ {
+    "x" : 45.024414,
+    "y" : 566.40326,
+    "z" : 0.0
+  }, {
+    "x" : 4.20459,
+    "y" : 37.80926,
+    "z" : 0.0
+  } ],
+  "circleRadius" : [ 86.000145, 97.00017 ]
+}, {
+  "mesh" : "G3_Object_Varant_Sitpillow_02.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 0.25146484,
+    "y" : 0.0,
+    "z" : -0.42504883
+  } ],
+  "circleRadius" : [ 67.01602 ]
+}, {
+  "mesh" : "G3_Object_Table_05.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 6.698242,
+    "y" : 0.0028076172,
+    "z" : -70.87598
+  }, {
+    "x" : 5.676758,
+    "y" : -0.0014648438,
+    "z" : 66.4292
+  } ],
+  "circleRadius" : [ 145.99998, 145.99998 ]
+}, {
+  "mesh" : "G3_Object_Boards_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 222.09521,
+    "y" : -0.028197944,
+    "z" : 4.0822754
+  }, {
+    "x" : -212.96729,
+    "y" : 0.026977882,
+    "z" : 7.312744
+  } ],
+  "circleRadius" : [ 139.99983, 143.87778 ]
+}, {
+  "mesh" : "G3_Tree_L_Sycamore_01.spt",
+  "circleOffsets" : [ {
+    "x" : -2.273346,
+    "y" : 43.94887,
+    "z" : -13.387882
+  }, {
+    "x" : -0.5166383,
+    "y" : 676.914,
+    "z" : 0.0
+  } ],
+  "circleRadius" : [ 242.99947, 200.0 ]
+}, {
+  "mesh" : "G3_Object_Shelf_03.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 54.20337,
+    "y" : 0.006713867,
+    "z" : 2.965332
+  }, {
+    "x" : -62.213623,
+    "y" : -0.008178711,
+    "z" : 5.5322266
+  } ],
+  "circleRadius" : [ 77.99995, 75.99994 ]
+}, {
+  "mesh" : "G3_Object_Varant_Excavation_Pot_02.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 0.0,
+    "y" : 0.0,
+    "z" : 0.0
+  } ],
+  "circleRadius" : [ 55.000248 ]
+}, {
+  "mesh" : "G3_Object_Stone_Snow_03.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 21.604267,
+    "y" : 0.0,
+    "z" : -2.7107322
+  }, {
+    "x" : -99.58594,
+    "y" : 0.0,
+    "z" : 0.7392578
+  } ],
+  "circleRadius" : [ 168.28769, 154.28781 ]
+}, {
+  "mesh" : "G3_Object_Interact_Campfire_01.xlmsh",
+  "circleOffsets" : [ {
+    "x" : -4.9262695,
+    "y" : 1.8310547E-4,
+    "z" : 3.907959
+  } ],
+  "circleRadius" : [ 153.12611 ]
+}, {
+  "mesh" : "G3_Object_Interact_Stool_03.xcmsh",
+  "circleOffsets" : [ {
+    "x" : -0.58154297,
+    "y" : 0.0,
+    "z" : -4.3515625
+  } ],
+  "circleRadius" : [ 51.842564 ]
+}, {
+  "mesh" : "G3_Tree_M_GhostGum_02.spt",
+  "circleOffsets" : [ {
+    "x" : -5.6443706,
+    "y" : 209.05762,
+    "z" : 8.244037
+  }, {
+    "x" : -3.20813,
+    "y" : 44.641144,
+    "z" : -6.1035156E-5
+  } ],
+  "circleRadius" : [ 68.00008, 101.00021 ]
+}, {
+  "mesh" : "G3_Object_Fireplace_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : -7.701416,
+    "y" : 0.0,
+    "z" : 0.0
+  } ],
+  "circleRadius" : [ 170.85703 ]
+}, {
+  "mesh" : "G3_Object_Sack_02.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 0.0,
+    "y" : -1.3411045E-7,
+    "z" : 0.0
+  } ],
+  "circleRadius" : [ 68.1106 ]
+}, {
+  "mesh" : "G3_Object_Varant_Shelf_Fruits_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 53.34668,
+    "y" : -1.1920929E-7,
+    "z" : -20.651123
+  }, {
+    "x" : -67.64844,
+    "y" : -1.1920929E-7,
+    "z" : -20.651123
+  } ],
+  "circleRadius" : [ 96.14626, 96.14623 ]
+}, {
+  "mesh" : "G3_Object_Varant_Amphore_Gold_05.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 0.0,
+    "y" : 0.0,
+    "z" : 0.0
+  } ],
+  "circleRadius" : [ 61.00033 ]
+}, {
+  "mesh" : "G3_Object_Plow_02.xlmsh",
+  "circleOffsets" : [ {
+    "x" : -2.1489258,
+    "y" : 0.0,
+    "z" : 181.71826
+  }, {
+    "x" : -2.1450205,
+    "y" : 0.0,
+    "z" : -128.99469
+  } ],
+  "circleRadius" : [ 113.90047, 127.900475 ]
+}, {
+  "mesh" : "G3_Object_Strawbalegroup_03_03.xcmsh",
+  "circleOffsets" : [ {
+    "x" : -199.7522,
+    "y" : -8.940697E-8,
+    "z" : -0.45117188
+  }, {
+    "x" : 186.8335,
+    "y" : -1.6391277E-7,
+    "z" : -9.41748
+  } ],
+  "circleRadius" : [ 181.23148, 180.00002 ]
+}, {
+  "mesh" : "G3_Tree_M_RedOak_01.spt",
+  "circleOffsets" : [ {
+    "x" : -8.838257,
+    "y" : 42.414562,
+    "z" : 2.0785522
+  }, {
+    "x" : -6.063904,
+    "y" : 304.27512,
+    "z" : -0.53237915
+  } ],
+  "circleRadius" : [ 115.00049, 77.9996 ]
+}, {
+  "mesh" : "G3_Object_Varant_Excavation_Platter_02.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 0.0,
+    "y" : 0.0,
+    "z" : 0.0
+  } ],
+  "circleRadius" : [ 54.000126 ]
+}, {
+  "mesh" : "G3_Object_Boards_03.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 220.70654,
+    "y" : -0.0069578364,
+    "z" : -8.050659
+  }, {
+    "x" : -200.50342,
+    "y" : 0.007568598,
+    "z" : -5.2246094
+  } ],
+  "circleRadius" : [ 144.39253, 144.00003 ]
+}, {
+  "mesh" : "G3_Object_Wood_Plankgroup_05.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 118.460236,
+    "y" : 0.0,
+    "z" : 0.0
+  }, {
+    "x" : -109.41215,
+    "y" : 0.0,
+    "z" : 0.0
+  } ],
+  "circleRadius" : [ 59.929016, 59.929016 ]
+}, {
+  "mesh" : "G3_Object_Interact_Treasure_Spot_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 0.016113281,
+    "y" : 2.4414062E-4,
+    "z" : 11.881836
+  } ],
+  "circleRadius" : [ 146.87231 ]
+}, {
+  "mesh" : "G3_Objects_Innos_HolyFire_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 0.0,
+    "y" : 0.0,
+    "z" : 0.0
+  } ],
+  "circleRadius" : [ 56.00026 ]
+}, {
+  "mesh" : "G3_Object_Varant_Merchant_Group_Gold_07.xcmsh",
+  "circleOffsets" : [ {
+    "x" : -11.753547,
+    "y" : -3.353127,
+    "z" : 17.552456
+  } ],
+  "circleRadius" : [ 131.00009 ]
+}, {
+  "mesh" : "G3_Object_Cupboard_Cabinet_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 0.0,
+    "y" : 0.0,
+    "z" : 0.0
+  } ],
+  "circleRadius" : [ 158.00003 ]
+}, {
+  "mesh" : "G3_Object_Plant_RottenTree_Snow_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 62.55957,
+    "y" : 0.0,
+    "z" : 345.6936
+  }, {
+    "x" : 97.47412,
+    "y" : 106.84742,
+    "z" : -478.17993
+  } ],
+  "circleRadius" : [ 221.37804, 146.37807 ]
+}, {
+  "mesh" : "G3_Object_Varant_Cupboard_Small_03.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 137.21997,
+    "y" : 0.0055542514,
+    "z" : -55.794678
+  }, {
+    "x" : -116.69043,
+    "y" : 0.003723234,
+    "z" : -53.263916
+  } ],
+  "circleRadius" : [ 92.052055, 98.05203 ]
+}, {
+  "mesh" : "G3_Object_FabricRolls_Table_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 58.87329,
+    "y" : 0.0,
+    "z" : -0.15527344
+  }, {
+    "x" : -66.22046,
+    "y" : 0.0,
+    "z" : -0.15625
+  } ],
+  "circleRadius" : [ 139.67926, 146.67921 ]
+}, {
+  "mesh" : "G3_Object_Interact_Barrel_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : -3.713623,
+    "y" : -4.8828125E-4,
+    "z" : -4.9716797
+  } ],
+  "circleRadius" : [ 95.14613 ]
+}, {
+  "mesh" : "G3_Object_Logs_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 75.868416,
+    "y" : 0.0,
+    "z" : -4.908203
+  }, {
+    "x" : -91.16069,
+    "y" : 0.0,
+    "z" : -3.8027344
+  } ],
+  "circleRadius" : [ 108.66781, 108.66781 ]
+}, {
+  "mesh" : "G3_Object_Logs_04.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 141.51056,
+    "y" : 0.0,
+    "z" : -6.591797
+  }, {
+    "x" : -173.6061,
+    "y" : 0.0,
+    "z" : -9.508663
+  } ],
+  "circleRadius" : [ 144.74178, 154.74176 ]
+}, {
+  "mesh" : "G3_Object_Interact_Bed_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 57.64331,
+    "y" : 0.0,
+    "z" : 2.0581055
+  }, {
+    "x" : -62.312534,
+    "y" : 1.2207031E-4,
+    "z" : -1.9713973
+  } ],
+  "circleRadius" : [ 127.999954, 121.9999 ]
+}, {
+  "mesh" : "G3_Object_Lumberjack_Stump_02.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 0.0,
+    "y" : 0.0,
+    "z" : 0.0
+  } ],
+  "circleRadius" : [ 61.65995 ]
+}, {
+  "mesh" : "G3_Tree_M_UmbrellaThorn_02.spt",
+  "circleOffsets" : [ {
+    "x" : -14.26147,
+    "y" : 284.79974,
+    "z" : -93.5346
+  }, {
+    "x" : -7.756592,
+    "y" : 44.641296,
+    "z" : -6.1348877
+  } ],
+  "circleRadius" : [ 121.00092, 154.00015 ]
+}, {
+  "mesh" : "G3_Tree_L_DouglasFir_03_winter.spt",
+  "circleOffsets" : [ {
+    "x" : 6.4161377,
+    "y" : 0.0,
+    "z" : -0.0040893555
+  }, {
+    "x" : -6.4207764,
+    "y" : 1048.4847,
+    "z" : -0.0034179688
+  } ],
+  "circleRadius" : [ 184.99986, 158.99988 ]
+}, {
+  "mesh" : "G3_Object_Varant_Dish_Gold_04.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 0.0,
+    "y" : 0.0,
+    "z" : 0.0
+  } ],
+  "circleRadius" : [ 57.999863 ]
+}, {
+  "mesh" : "G3_Object_Varant_Amphore_Gold_04.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 0.0,
+    "y" : 0.0,
+    "z" : 0.0
+  } ],
+  "circleRadius" : [ 51.000244 ]
+}, {
+  "mesh" : "G3_Object_Counter_Side_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : -8.239189,
+    "y" : 0.0,
+    "z" : 55.770443
+  }, {
+    "x" : -6.2726545,
+    "y" : 0.0,
+    "z" : -53.521698
+  } ],
+  "circleRadius" : [ 93.99994, 93.99994 ]
+}, {
+  "mesh" : "G3_Object_Woodfeeder_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 116.623535,
+    "y" : 0.0,
+    "z" : 0.42919922
+  }, {
+    "x" : -116.62109,
+    "y" : 0.0,
+    "z" : 0.4243164
+  } ],
+  "circleRadius" : [ 125.95126, 123.95125 ]
+}, {
+  "mesh" : "G3_Tree_L_Misc_02_winter.spt",
+  "circleOffsets" : [ {
+    "x" : -0.6702881,
+    "y" : -1.8298626E-5,
+    "z" : -2.566162
+  }, {
+    "x" : 13.613183,
+    "y" : 576.25726,
+    "z" : -12.671815
+  } ],
+  "circleRadius" : [ 282.99933, 153.99979 ]
+}, {
+  "mesh" : "G3_Object_Strawbalegroup_01_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : -78.36148,
+    "y" : -0.0025634468,
+    "z" : 34.053833
+  }, {
+    "x" : 49.100586,
+    "y" : -0.0038448274,
+    "z" : 27.406006
+  } ],
+  "circleRadius" : [ 191.23158, 187.99994 ]
+}, {
+  "mesh" : "G3_Object_Fence_End_Snow_06.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 75.76465,
+    "y" : -0.009246826,
+    "z" : -1.6557617
+  }, {
+    "x" : -70.92871,
+    "y" : 0.008483887,
+    "z" : 7.7770996
+  } ],
+  "circleRadius" : [ 63.338715, 67.338715 ]
+}, {
+  "mesh" : "G3_Object_Varant_Vegetation_Bushes_04.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 0.0,
+    "y" : 0.0,
+    "z" : 0.0
+  } ],
+  "circleRadius" : [ 98.99995 ]
+}, {
+  "mesh" : "G3_Object_Wood_Wall_02.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 45.506836,
+    "y" : 0.0,
+    "z" : -0.29003048
+  }, {
+    "x" : -62.18457,
+    "y" : 6.136298E-5,
+    "z" : 12.199823
+  } ],
+  "circleRadius" : [ 61.470905, 62.50339 ]
+}, {
+  "mesh" : "G3_Object_Table_Large_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 6.314636,
+    "y" : 0.010131836,
+    "z" : -182.94397
+  }, {
+    "x" : 0.14868164,
+    "y" : -0.009521484,
+    "z" : 166.55832
+  } ],
+  "circleRadius" : [ 194.99997, 196.99995 ]
+}, {
+  "mesh" : "G3_Tree_L_RedOak_01.spt",
+  "circleOffsets" : [ {
+    "x" : 1.890625,
+    "y" : 45.377083,
+    "z" : -6.11084
+  }, {
+    "x" : 31.29071,
+    "y" : 584.71606,
+    "z" : -11.379211
+  } ],
+  "circleRadius" : [ 273.99963, 189.00002 ]
+}, {
+  "mesh" : "G3_Object_Sackgroup_Snow_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : -41.553402,
+    "y" : -2.9802322E-8,
+    "z" : 4.8168945
+  }, {
+    "x" : 64.12121,
+    "y" : 0.0,
+    "z" : 0.0
+  } ],
+  "circleRadius" : [ 94.00017, 98.80526 ]
+}, {
+  "mesh" : "G3_Object_Interact_Logstand_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 96.54541,
+    "y" : 0.012451172,
+    "z" : -7.1674805
+  }, {
+    "x" : -201.29555,
+    "y" : -0.022460938,
+    "z" : -12.51367
+  } ],
+  "circleRadius" : [ 110.00393, 96.003975 ]
+}, {
+  "mesh" : "G3_Object_Statue_Innos_01.xlmsh",
+  "circleOffsets" : [ {
+    "x" : -2.4453125,
+    "y" : 0.0,
+    "z" : -2.1793213
+  } ],
+  "circleRadius" : [ 199.96268 ]
+}, {
+  "mesh" : "G3_Object_Fireplace_04.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 147.52222,
+    "y" : 0.0,
+    "z" : -62.262268
+  }, {
+    "x" : -105.305756,
+    "y" : 0.0,
+    "z" : -64.45691
+  } ],
+  "circleRadius" : [ 110.999916, 110.999916 ]
+}, {
+  "mesh" : "G3_Object_Barrel_03.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 0.0,
+    "y" : 0.0,
+    "z" : 0.0
+  } ],
+  "circleRadius" : [ 91.99991 ]
+}, {
+  "mesh" : "G3_Object_Cauldron_03.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 0.47998047,
+    "y" : -5.364418E-7,
+    "z" : 0.12805176
+  } ],
+  "circleRadius" : [ 48.694767 ]
+}, {
+  "mesh" : "G3_Object_Varant_Gewuerz_Sack_04.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 53.13379,
+    "y" : -2.0861626E-7,
+    "z" : 3.9631348
+  }, {
+    "x" : -48.026367,
+    "y" : -1.5646219E-6,
+    "z" : 9.208252
+  } ],
+  "circleRadius" : [ 104.83836, 101.83938 ]
+}, {
+  "mesh" : "G3_Object_Varant_Teatable_Small_Gold_03.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 0.0,
+    "y" : 0.0,
+    "z" : 0.0
+  } ],
+  "circleRadius" : [ 76.999886 ]
+}, {
+  "mesh" : "G3_Tree_M_UmbrellaThorn_04.spt",
+  "circleOffsets" : [ {
+    "x" : 53.559853,
+    "y" : 284.79974,
+    "z" : 102.989815
+  }, {
+    "x" : -7.756592,
+    "y" : 44.641296,
+    "z" : -6.1348877
+  } ],
+  "circleRadius" : [ 167.00092, 154.00015 ]
+}, {
+  "mesh" : "G3_Object_Bucket_w_Logs_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : -1.159668,
+    "y" : 0.0,
+    "z" : 0.0029296875
+  } ],
+  "circleRadius" : [ 59.129074 ]
+}, {
+  "mesh" : "G3_Object_Varant_Merchant_Group_04.xcmsh",
+  "circleOffsets" : [ {
+    "x" : -8.419434,
+    "y" : -1.1622906E-6,
+    "z" : -6.281616
+  } ],
+  "circleRadius" : [ 120.81867 ]
+}, {
+  "mesh" : "G3_Object_Fence_End_02.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 69.49219,
+    "y" : -0.008300781,
+    "z" : -1.3310547
+  }, {
+    "x" : -75.4082,
+    "y" : 0.0041503906,
+    "z" : -2.0776367
+  } ],
+  "circleRadius" : [ 57.701176, 57.701176 ]
+}, {
+  "mesh" : "G3_Object_Lumberjack_Stump_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 0.0,
+    "y" : 0.0,
+    "z" : 0.0
+  } ],
+  "circleRadius" : [ 63.337223 ]
+}, {
+  "mesh" : "G3_Tree_M_FanPalm_01.spt",
+  "circleOffsets" : [ {
+    "x" : -2.9109497,
+    "y" : 340.16882,
+    "z" : -5.162903
+  }, {
+    "x" : -3.20813,
+    "y" : 44.641144,
+    "z" : -6.1035156E-5
+  } ],
+  "circleRadius" : [ 59.000027, 74.0001 ]
+}, {
+  "mesh" : "G3_Object_Lumberjack_Stump_04.xcmsh",
+  "circleOffsets" : [ {
+    "x" : -4.8828125E-4,
+    "y" : 0.0,
+    "z" : 0.0
+  } ],
+  "circleRadius" : [ 54.12401 ]
+}, {
+  "mesh" : "G3_Object_Branch_02.xcmsh",
+  "circleOffsets" : [ {
+    "x" : -10.88559,
+    "y" : -6.3968782,
+    "z" : 15.628338
+  }, {
+    "x" : -261.563,
+    "y" : 136.50212,
+    "z" : -56.66992
+  } ],
+  "circleRadius" : [ 64.3899, 50.38985 ]
+}, {
+  "mesh" : "G3_Object_Fence_End_Snow_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 76.3125,
+    "y" : 0.0017089844,
+    "z" : -0.9067383
+  }, {
+    "x" : -77.61719,
+    "y" : -0.0073242188,
+    "z" : 0.9226074
+  } ],
+  "circleRadius" : [ 56.22509, 57.62643 ]
+}, {
+  "mesh" : "G3_Object_TreeStump_02.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 18.958984,
+    "y" : 33.07556,
+    "z" : 7.776245
+  } ],
+  "circleRadius" : [ 119.72584 ]
+}, {
+  "mesh" : "G3_Object_Tub_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 0.0026855469,
+    "y" : 1.0281801E-6,
+    "z" : 9.765625E-4
+  } ],
+  "circleRadius" : [ 85.234856 ]
+}, {
+  "mesh" : "G3_Object_Interact_Stool_04.xcmsh",
+  "circleOffsets" : [ {
+    "x" : -0.58154297,
+    "y" : 0.0,
+    "z" : -4.3515625
+  } ],
+  "circleRadius" : [ 51.842564 ]
+}, {
+  "mesh" : "G3_Object_Well_03.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 0.0,
+    "y" : 2.0861626E-7,
+    "z" : 0.0
+  } ],
+  "circleRadius" : [ 200.4012 ]
+}, {
+  "mesh" : "G3_Tree_M_PawPaw_02.spt",
+  "circleOffsets" : [ {
+    "x" : -8.838257,
+    "y" : 42.414562,
+    "z" : 2.0785522
+  }, {
+    "x" : -6.063904,
+    "y" : 304.27512,
+    "z" : -0.53237915
+  } ],
+  "circleRadius" : [ 115.00049, 77.9996 ]
+}, {
+  "mesh" : "G3_Tree_M_DouglasFir_01.spt",
+  "circleOffsets" : [ {
+    "x" : -8.838257,
+    "y" : 42.414562,
+    "z" : 2.0785522
+  }, {
+    "x" : -6.063904,
+    "y" : 304.27512,
+    "z" : -0.53237915
+  } ],
+  "circleRadius" : [ 115.00049, 77.9996 ]
+}, {
+  "mesh" : "G3_Object_Fire_Cage_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 4.8828125E-4,
+    "y" : 2.8312206E-7,
+    "z" : -9.765625E-4
+  } ],
+  "circleRadius" : [ 82.47566 ]
+}, {
+  "mesh" : "G3_Object_Basket_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 0.0,
+    "y" : 0.0,
+    "z" : 0.0
+  } ],
+  "circleRadius" : [ 93.999954 ]
+}, {
+  "mesh" : "G3_Tree_L_DouglasFir_01_winter.spt",
+  "circleOffsets" : [ {
+    "x" : 6.398926,
+    "y" : 0.0,
+    "z" : -0.0040893555
+  }, {
+    "x" : -6.4300537,
+    "y" : 663.46796,
+    "z" : -0.0034179688
+  } ],
+  "circleRadius" : [ 107.99994, 98.99993 ]
+}, {
+  "mesh" : "G3_Object_Varant_Shelf_Amph_02.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 75.66542,
+    "y" : -1.1920929E-7,
+    "z" : -14.864014
+  }, {
+    "x" : -94.07245,
+    "y" : -1.0430813E-7,
+    "z" : -14.86377
+  } ],
+  "circleRadius" : [ 68.99209, 68.992035 ]
+}, {
+  "mesh" : "G3_Object_Interact_Ork_Drum_01.xlmsh",
+  "circleOffsets" : [ {
+    "x" : 100.40015,
+    "y" : 0.016113281,
+    "z" : -115.5083
+  }, {
+    "x" : -127.37964,
+    "y" : -0.012634277,
+    "z" : -124.407715
+  } ],
+  "circleRadius" : [ 161.99998, 161.99998 ]
+}, {
+  "mesh" : "G3_Chest_Body_Chest_02.FXA",
+  "circleOffsets" : [ {
+    "x" : -4.83667,
+    "y" : -5.187988E-4,
+    "z" : -2.7856445
+  } ],
+  "circleRadius" : [ 104.82882 ]
+}, {
+  "mesh" : "G3_Object_Wood_Wall_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 56.499023,
+    "y" : -1.4901161E-7,
+    "z" : -0.76953125
+  }, {
+    "x" : -50.854504,
+    "y" : -1.1920929E-7,
+    "z" : -16.518238
+  } ],
+  "circleRadius" : [ 84.89131, 78.8913 ]
+}, {
+  "mesh" : "G3_Object_Cupboard_Top_Old_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 100.555664,
+    "y" : -0.003112793,
+    "z" : -1.6328125
+  }, {
+    "x" : -97.657715,
+    "y" : 0.0036621094,
+    "z" : -5.211426
+  } ],
+  "circleRadius" : [ 113.99986, 115.99986 ]
+}, {
+  "mesh" : "G3_Object_Strawbalegroup_01_02.xcmsh",
+  "circleOffsets" : [ {
+    "x" : -199.98291,
+    "y" : -0.026916757,
+    "z" : 7.9561768
+  }, {
+    "x" : 189.96729,
+    "y" : -1.0430813E-7,
+    "z" : 4.9381104
+  } ],
+  "circleRadius" : [ 169.00406, 163.9999 ]
+}, {
+  "mesh" : "G3_Tree_M_JoshuaTree_01.spt",
+  "circleOffsets" : [ {
+    "x" : 21.96389,
+    "y" : 186.50745,
+    "z" : 34.04441
+  }, {
+    "x" : -3.2086182,
+    "y" : 44.641144,
+    "z" : 0.0
+  } ],
+  "circleRadius" : [ 86.000084, 77.000175 ]
+}, {
+  "mesh" : "G3_Object_Varant_Pot_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 0.0,
+    "y" : 0.0,
+    "z" : 0.0
+  } ],
+  "circleRadius" : [ 32.52693 ]
+}, {
+  "mesh" : "G3_Tree_M_Tamarind_03.spt",
+  "circleOffsets" : [ {
+    "x" : -61.26915,
+    "y" : 284.79974,
+    "z" : -60.535034
+  }, {
+    "x" : -7.7587357,
+    "y" : 44.641144,
+    "z" : -6.135803
+  } ],
+  "circleRadius" : [ 124.99991, 123.99991 ]
+}, {
+  "mesh" : "G3_Object_Fence_Start_06.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 71.310776,
+    "y" : -2.3841858E-7,
+    "z" : -6.4838867
+  }, {
+    "x" : -63.55078,
+    "y" : -0.35919952,
+    "z" : -6.236328
+  } ],
+  "circleRadius" : [ 59.338795, 63.338745 ]
+}, {
+  "mesh" : "G3_Object_Varant_Excavation_Group_03.xcmsh",
+  "circleOffsets" : [ {
+    "x" : -8.667236,
+    "y" : -1.8352537,
+    "z" : -3.7548828
+  } ],
+  "circleRadius" : [ 119.00069 ]
+}, {
+  "mesh" : "G3_Tree_M_PinOak_02.spt",
+  "circleOffsets" : [ {
+    "x" : -8.838257,
+    "y" : 42.414562,
+    "z" : 2.0785522
+  }, {
+    "x" : -6.063904,
+    "y" : 304.27512,
+    "z" : -0.53237915
+  } ],
+  "circleRadius" : [ 115.00049, 77.9996 ]
+}, {
+  "mesh" : "G3_Object_Stone_Snow_04.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 1.0297852,
+    "y" : -7.4505806E-7,
+    "z" : 4.3085938
+  } ],
+  "circleRadius" : [ 454.30905 ]
+}, {
+  "mesh" : "G3_Object_Sackgroup_03.xcmsh",
+  "circleOffsets" : [ {
+    "x" : -6.1035156E-4,
+    "y" : -4.0233135E-7,
+    "z" : -0.013183594
+  } ],
+  "circleRadius" : [ 131.00038 ]
+}, {
+  "mesh" : "G3_Object_Cauldron_02.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 0.10205078,
+    "y" : 0.0,
+    "z" : 0.09008789
+  } ],
+  "circleRadius" : [ 59.27433 ]
+}, {
+  "mesh" : "G3_Object_Stonepillar_03.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 2.4414062E-4,
+    "y" : 0.0,
+    "z" : 0.0
+  } ],
+  "circleRadius" : [ 165.05655 ]
+}, {
+  "mesh" : "G3_Object_Strawbalegroup_03_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 1.876782,
+    "y" : 0.0,
+    "z" : -21.390991
+  } ],
+  "circleRadius" : [ 164.2314 ]
+}, {
+  "mesh" : "G3_Tree_M_Gimlet_03.spt",
+  "circleOffsets" : [ {
+    "x" : 18.323792,
+    "y" : 151.86438,
+    "z" : 18.497803
+  }, {
+    "x" : -3.20813,
+    "y" : 44.641144,
+    "z" : -6.1035156E-5
+  } ],
+  "circleRadius" : [ 87.00013, 101.00021 ]
+}, {
+  "mesh" : "G3_Object_Crate_02.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 0.20605469,
+    "y" : 0.0,
+    "z" : 1.951294
+  } ],
+  "circleRadius" : [ 109.199524 ]
+}, {
+  "mesh" : "G3_Object_Shelf_05.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 49.91992,
+    "y" : 0.006591797,
+    "z" : -1.1577148
+  }, {
+    "x" : -62.375244,
+    "y" : -0.0078125,
+    "z" : -2.7089844
+  } ],
+  "circleRadius" : [ 77.99998, 73.99995 ]
+}, {
+  "mesh" : "G3_Object_Bucket_03.xcmsh",
+  "circleOffsets" : [ {
+    "x" : -0.0024414062,
+    "y" : -4.917383E-7,
+    "z" : 0.0012207031
+  } ],
+  "circleRadius" : [ 53.814606 ]
+}, {
+  "mesh" : "G3_Tree_M_Gimlet_02.spt",
+  "circleOffsets" : [ {
+    "x" : 1.6770902,
+    "y" : 151.86438,
+    "z" : -9.689989
+  }, {
+    "x" : -3.20813,
+    "y" : 44.641144,
+    "z" : -6.1035156E-5
+  } ],
+  "circleRadius" : [ 80.00008, 101.00021 ]
+}, {
+  "mesh" : "G3_Object_Varant_Merchant_Group_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : -3.6811523,
+    "y" : -1.1473894E-6,
+    "z" : 4.8828125E-4
+  } ],
+  "circleRadius" : [ 97.60977 ]
+}, {
+  "mesh" : "G3_Tree_M_DatePalm_01.spt",
+  "circleOffsets" : [ {
+    "x" : 0.970047,
+    "y" : 340.16882,
+    "z" : 14.896301
+  }, {
+    "x" : -3.208191,
+    "y" : 44.641045,
+    "z" : -1.8310547E-4
+  } ],
+  "circleRadius" : [ 71.00006, 93.00012 ]
+}, {
+  "mesh" : "G3_Tree_L_ItalianCypress_02_winter.spt",
+  "circleOffsets" : [ {
+    "x" : 6.41626,
+    "y" : -1.335144E-5,
+    "z" : -0.009094238
+  }, {
+    "x" : -8.791801,
+    "y" : 666.3565,
+    "z" : 1.9202956
+  } ],
+  "circleRadius" : [ 128.99973, 68.99985 ]
+}, {
+  "mesh" : "G3_Object_Stonefeeder_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 134.61621,
+    "y" : 0.0,
+    "z" : -4.8828125E-4
+  }, {
+    "x" : -134.61621,
+    "y" : 0.0,
+    "z" : -0.0026855469
+  } ],
+  "circleRadius" : [ 79.52902, 83.52896 ]
+}, {
+  "mesh" : "G3_Object_Strawbale_02.xcmsh",
+  "circleOffsets" : [ {
+    "x" : -0.95410156,
+    "y" : 50.000004,
+    "z" : 0.54504395
+  } ],
+  "circleRadius" : [ 89.23871 ]
+}, {
+  "mesh" : "G3_Object_Crate_04.xcmsh",
+  "circleOffsets" : [ {
+    "x" : -0.0048828125,
+    "y" : -7.4505806E-8,
+    "z" : 6.1035156E-4
+  } ],
+  "circleRadius" : [ 92.25854 ]
+}, {
+  "mesh" : "G3_Object_Cupboard_Down_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 43.564453,
+    "y" : -0.0010986328,
+    "z" : -2.1584473
+  }, {
+    "x" : -67.37012,
+    "y" : 0.0026245117,
+    "z" : -3.3823242
+  } ],
+  "circleRadius" : [ 139.99994, 137.99995 ]
+}, {
+  "mesh" : "G3_Object_Interact_Campfire_04.xcmsh",
+  "circleOffsets" : [ {
+    "x" : -7.465332,
+    "y" : 2.4414062E-4,
+    "z" : 4.3774414
+  } ],
+  "circleRadius" : [ 178.6511 ]
+}, {
+  "mesh" : "G3_Object_Varant_Excavation_Dish_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 0.0,
+    "y" : 0.0,
+    "z" : 0.0
+  } ],
+  "circleRadius" : [ 67.99989 ]
+}, {
+  "mesh" : "G3_Object_Varant_Amphore_02.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 0.0,
+    "y" : 2.3841858E-7,
+    "z" : 0.0
+  } ],
+  "circleRadius" : [ 45.253723 ]
+}, {
+  "mesh" : "G3_Tree_S_Linden_01.spt",
+  "circleOffsets" : [ {
+    "x" : -5.3808336,
+    "y" : 244.94826,
+    "z" : -0.0035399918
+  }, {
+    "x" : 1.0917969,
+    "y" : 37.705273,
+    "z" : -14.701782
+  } ],
+  "circleRadius" : [ 64.000305, 52.000404 ]
+}, {
+  "mesh" : "G3_Object_Stonepile_Snow_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : -0.34765625,
+    "y" : -1.0430813E-7,
+    "z" : -0.52490234
+  } ],
+  "circleRadius" : [ 113.23836 ]
+}, {
+  "mesh" : "G3_Object_Table_Heavy_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 79.23779,
+    "y" : 0.010131836,
+    "z" : 2.3833008
+  }, {
+    "x" : -74.875,
+    "y" : -0.009521484,
+    "z" : -2.4702148
+  } ],
+  "circleRadius" : [ 173.99998, 175.99998 ]
+}, {
+  "mesh" : "G3_Object_Varant_Cerealsfloor_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 0.078125,
+    "y" : -0.0146484375,
+    "z" : -0.1875
+  } ],
+  "circleRadius" : [ 139.29823 ]
+}, {
+  "mesh" : "G3_Object_Bench_Broken_02.xcmsh",
+  "circleOffsets" : [ {
+    "x" : -1.1855469,
+    "y" : -3.0517578E-5,
+    "z" : 79.68893
+  }, {
+    "x" : -3.3017578,
+    "y" : 0.0,
+    "z" : -76.456436
+  } ],
+  "circleRadius" : [ 58.457264, 59.999897 ]
+}, {
+  "mesh" : "G3_Object_Crategroup_Snow_04.xcmsh",
+  "circleOffsets" : [ {
+    "x" : -17.795174,
+    "y" : 0.0,
+    "z" : 10.41204
+  }, {
+    "x" : -12.671486,
+    "y" : 0.0,
+    "z" : -160.13364
+  } ],
+  "circleRadius" : [ 111.401505, 92.99987 ]
+}, {
+  "mesh" : "G3_Object_Varant_Cereals_Sack_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : -0.24902344,
+    "y" : -6.854534E-7,
+    "z" : -2.2591553
+  } ],
+  "circleRadius" : [ 89.9475 ]
+}, {
+  "mesh" : "G3_Object_Clothesline_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 330.61804,
+    "y" : 0.025390618,
+    "z" : 22.41748
+  }, {
+    "x" : -247.46216,
+    "y" : -0.019897468,
+    "z" : -7.748047
+  } ],
+  "circleRadius" : [ 87.114136, 87.114136 ]
+}, {
+  "mesh" : "G3_Object_Table_06.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 10.831787,
+    "y" : 0.0030517578,
+    "z" : -66.79541
+  }, {
+    "x" : 9.922119,
+    "y" : -0.0010986328,
+    "z" : 70.4707
+  } ],
+  "circleRadius" : [ 119.999954, 119.99997 ]
+}, {
+  "mesh" : "G3_Object_Strawbalegroup_03_02.xcmsh",
+  "circleOffsets" : [ {
+    "x" : -127.842285,
+    "y" : -0.012024194,
+    "z" : 9.744629
+  }, {
+    "x" : 74.22949,
+    "y" : 0.004882559,
+    "z" : 1.5908203
+  } ],
+  "circleRadius" : [ 143.08344, 142.00047 ]
+}, {
+  "mesh" : "G3_Tree_M_LongleafPine_02.spt",
+  "circleOffsets" : [ {
+    "x" : 63.783203,
+    "y" : 614.11816,
+    "z" : 53.726074
+  }, {
+    "x" : -11.113281,
+    "y" : 39.6178,
+    "z" : 10.30957
+  } ],
+  "circleRadius" : [ 93.0, 109.00001 ]
+}, {
+  "mesh" : "G3_Object_Varant_Gargoyle_02.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 0.0,
+    "y" : 0.0,
+    "z" : 0.0
+  }, {
+    "x" : -0.9077488,
+    "y" : 0.0,
+    "z" : 201.4935
+  } ],
+  "circleRadius" : [ 143.99995, 81.99987 ]
+}, {
+  "mesh" : "G3_Object_Stone_Snow_05.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 1.0488281,
+    "y" : -3.33786E-6,
+    "z" : 60.782227
+  } ],
+  "circleRadius" : [ 318.3084 ]
+}, {
+  "mesh" : "G3_Object_Varant_Stonepod_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 0.0,
+    "y" : 0.0,
+    "z" : 0.0
+  } ],
+  "circleRadius" : [ 48.712257 ]
+}, {
+  "mesh" : "G3_Object_Varant_Shelf_Amph_03.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 106.2312,
+    "y" : 0.0,
+    "z" : -14.863525
+  }, {
+    "x" : -105.29541,
+    "y" : 0.0,
+    "z" : -14.864014
+  } ],
+  "circleRadius" : [ 70.99188, 68.991905 ]
+}, {
+  "mesh" : "G3_Object_Crystal_02.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 6.663086,
+    "y" : -10.252552,
+    "z" : 1.6376953
+  } ],
+  "circleRadius" : [ 68.46094 ]
+}, {
+  "mesh" : "G3_Object_Varant_Dish_Gold_03.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 0.0,
+    "y" : 0.0,
+    "z" : 0.0
+  } ],
+  "circleRadius" : [ 56.99994 ]
+}, {
+  "mesh" : "G3_Object_Fence_Start_04.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 62.983887,
+    "y" : 8.940697E-8,
+    "z" : -5.873535
+  }, {
+    "x" : -72.822266,
+    "y" : 5.9604645E-8,
+    "z" : -5.8737793
+  } ],
+  "circleRadius" : [ 77.16022, 73.16023 ]
+}, {
+  "mesh" : "G3_Tree_M_UmbrellaThorn_01.spt",
+  "circleOffsets" : [ {
+    "x" : 74.28822,
+    "y" : 284.79974,
+    "z" : -59.076214
+  }, {
+    "x" : -7.756592,
+    "y" : 44.641296,
+    "z" : -6.1348877
+  } ],
+  "circleRadius" : [ 121.00092, 154.00015 ]
+}, {
+  "mesh" : "G3_Object_Interact_Fountain_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 32.210804,
+    "y" : 0.0,
+    "z" : 35.091957
+  }, {
+    "x" : -39.01821,
+    "y" : 0.0,
+    "z" : 33.449707
+  } ],
+  "circleRadius" : [ 200.0, 200.0 ]
+}, {
+  "mesh" : "G3_Waterpipe_Body_Waterpipe.FXA",
+  "circleOffsets" : [ {
+    "x" : 16.08252,
+    "y" : 0.0,
+    "z" : 10.003418
+  }, {
+    "x" : 11.155864,
+    "y" : 0.0,
+    "z" : -13.999943
+  } ],
+  "circleRadius" : [ 86.00006, 86.00006 ]
+}, {
+  "mesh" : "G3_Object_Varant_Shelf_NoCereals_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 87.31543,
+    "y" : 0.0,
+    "z" : -26.262451
+  }, {
+    "x" : -80.288574,
+    "y" : 0.0,
+    "z" : -26.262451
+  } ],
+  "circleRadius" : [ 74.21041, 76.21043 ]
+}, {
+  "mesh" : "G3_Object_Ruin_Pillar_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 0.0,
+    "y" : 0.0,
+    "z" : 0.0
+  } ],
+  "circleRadius" : [ 100.89847 ]
+}, {
+  "mesh" : "G3_Object_Loom_01.xlmsh",
+  "circleOffsets" : [ {
+    "x" : 62.35742,
+    "y" : 0.008300781,
+    "z" : -14.033203
+  }, {
+    "x" : -92.01489,
+    "y" : -0.011230469,
+    "z" : -14.405762
+  } ],
+  "circleRadius" : [ 199.99995, 193.99997 ]
+}, {
+  "mesh" : "G3_Tree_L_LongleafPine_02_winter.spt",
+  "circleOffsets" : [ {
+    "x" : -0.6702881,
+    "y" : -1.335144E-5,
+    "z" : -2.566162
+  }, {
+    "x" : -8.046517,
+    "y" : 768.4639,
+    "z" : 64.27576
+  } ],
+  "circleRadius" : [ 116.99969, 83.99985 ]
+}, {
+  "mesh" : "G3_Object_Stone_Snow_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : -8.211426,
+    "y" : -1.3113022E-6,
+    "z" : -19.890625
+  } ],
+  "circleRadius" : [ 123.90144 ]
+}, {
+  "mesh" : "G3_Object_Stone_02.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 52.487915,
+    "y" : 0.0,
+    "z" : -13.095703
+  }, {
+    "x" : -77.40759,
+    "y" : 0.0,
+    "z" : -13.095947
+  } ],
+  "circleRadius" : [ 131.37323, 125.37326 ]
+}, {
+  "mesh" : "G3_Object_Crate_Snow_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 0.061035156,
+    "y" : 8.195639E-8,
+    "z" : 1.0952759
+  } ],
+  "circleRadius" : [ 107.19949 ]
+}, {
+  "mesh" : "G3_Object_Bench_Broken_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : -1.1855469,
+    "y" : -3.0517578E-5,
+    "z" : 79.68893
+  }, {
+    "x" : -3.3017578,
+    "y" : 0.0,
+    "z" : -76.456436
+  } ],
+  "circleRadius" : [ 58.457264, 59.999897 ]
+}, {
+  "mesh" : "G3_Object_Cupboard_Commode_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 147.47998,
+    "y" : -0.0037841797,
+    "z" : -7.307617
+  }, {
+    "x" : -151.16406,
+    "y" : 0.004699707,
+    "z" : 0.77490234
+  } ],
+  "circleRadius" : [ 108.999794, 113.99989 ]
+}, {
+  "mesh" : "G3_Object_Lumberjack_Stump_Snow_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 0.0,
+    "y" : 0.0,
+    "z" : 0.0
+  } ],
+  "circleRadius" : [ 63.337223 ]
+}, {
+  "mesh" : "G3_Object_Varant_Parawan_02.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 119.1875,
+    "y" : 4.4703484E-8,
+    "z" : -0.0024414062
+  }, {
+    "x" : -110.87793,
+    "y" : 6.7055225E-8,
+    "z" : 0.6623535
+  } ],
+  "circleRadius" : [ 57.37088, 58.370872 ]
+}, {
+  "mesh" : "G3_Object_Logs_Snow_04.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 141.51056,
+    "y" : 0.0,
+    "z" : -6.591797
+  }, {
+    "x" : -173.6061,
+    "y" : 0.0,
+    "z" : -9.508663
+  } ],
+  "circleRadius" : [ 144.74178, 154.74176 ]
+}, {
+  "mesh" : "G3_Object_Well_01.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 0.0,
+    "y" : 0.0,
+    "z" : 0.0
+  } ],
+  "circleRadius" : [ 194.40144 ]
+}, {
+  "mesh" : "G3_Myrtana_Castle_Wall_Entrance_01_ClosedPortcullis.xcmsh",
+  "circleOffsets" : [ {
+    "x" : 200.0,
+    "y" : 0.0,
+    "z" : 0.0
+  }, {
+    "x" : -20.0,
+    "y" : 0.0,
+    "z" : 0.0
+  } ],
+  "circleRadius" : [ 100.0, 100.0 ]
+}, {
+  "mesh" : "G3_Object_Stone_04_Backrest",
+  "circleOffsets" : [ {
+    "x" : -208.0,
+    "y" : 0.0,
+    "z" : 0.0
+  }, {
+    "x" : 208.0,
+    "y" : 0.0,
+    "z" : 0.0
+  } ],
+  "circleRadius" : [ 140.0, 140.0 ]
+} ]

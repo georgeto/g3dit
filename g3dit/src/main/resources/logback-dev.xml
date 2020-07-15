@@ -1,0 +1,30 @@
+<configuration debug="true">
+	
+	<timestamp key="byDay" datePattern="yyyy-MM-dd_hh-mm-ss"/>
+	
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level (%file:%line\) - %message%n
+			</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="FILE" class="ch.qos.logback.core.FileAppender">
+		<file>logs/g3dit-${byDay}.log</file>
+
+		<encoder>
+			<pattern>%date [%thread] %-5level (%file:%line\) %msg%n
+			</pattern>
+		</encoder>
+	</appender>
+
+	<contextListener class="ch.qos.logback.classic.jul.LevelChangePropagator">
+        <!-- reset all previous level configurations of all j.u.l. loggers -->
+        <resetJUL>true</resetJUL>
+    </contextListener>
+	
+	<root level="debug">
+		<appender-ref ref="FILE" />
+		<appender-ref ref="STDOUT" />
+	</root>
+</configuration>

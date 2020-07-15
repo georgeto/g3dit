@@ -1,0 +1,130 @@
+plugins {
+  id 'com.github.johnrengelman.shadow' version '5.2.0'
+  id 'com.google.protobuf' version '0.8.11'
+}
+
+repositories {
+	maven {
+		url 'https://dl.bintray.com/jmonkeyengine/org.jmonkeyengine/'
+	}
+	
+	maven {
+		url 'https://oss.sonatype.org/content/repositories/snapshots/'
+	}
+	
+	flatDir { dirs 'libs' }
+}
+
+project.version = '1.9.11'
+
+dependencies {
+	implementation project(':G3Utils'), project(':LrentNode'), project(':NavMap')
+	implementation group: 'com.jidesoft', name: 'jide-oss', version: '3.6.18'
+	implementation group: 'org.swinglabs.swingx', name: 'swingx-all', version: '1.6.5-1'
+	implementation group: 'com.jgoodies', name: 'jgoodies-looks', version: '2.7.0'
+	implementation group: 'com.glazedlists', name: 'glazedlists' , version: '1.11.0'
+	implementation group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.3'
+	implementation group: 'org.slf4j', name: 'jul-to-slf4j', version: '1.7.30'
+	implementation group: 'org.jmonkeyengine', name: 'jme3-core', version: '3.2.4-stable'
+	implementation group: 'org.jmonkeyengine', name: 'jme3-desktop', version: '3.2.4-stable'
+	implementation group: 'org.jmonkeyengine', name: 'jme3-lwjgl3', version: '3.2.4-stable'
+	implementation group: 'io.github.classgraph', name: 'classgraph', version: '4.8.61'
+	implementation group: 'org.zeromq', name: 'jeromq', version: '0.3.6-SNAPSHOT'
+	implementation group: 'com.google.protobuf', name: 'protobuf-java', version: '2.6.1'
+	implementation group: 'net.jodah', name: 'expiringmap', version: '0.5.9'
+	implementation group: 'com.github.tulskiy', name: 'jkeymaster', version: '1.3-CUSTOM'
+	// Transitive dependencies of jkeymaster
+	implementation group: 'net.java.dev.jna', name: 'jna', version: '5.4.0'
+	implementation group: 'net.java.dev.jna', name: 'jna-platform', version: '5.4.0'
+	implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.10.2'
+	implementation group: 'com.j2html', name: 'j2html', version: '1.4.0'
+	implementation group: 'hu.kazocsaba', name: 'image-viewer', version: '1.2.5-g3dit'
+	implementation group: 'org.apache.commons', name: 'commons-csv', version: '1.7'
+	implementation group: 'net.sf.cssbox', name: 'cssbox', version: '4.17'
+	implementation group: 'net.sf.cssbox', name: 'swingbox', version: '1.2-SNAPSHOT'
+	implementation group: 'commons-io', name: 'commons-io', version: '2.6' // Used by net.sf.cssbox.swingbox
+	implementation group: 'ca.phon.ui', name: 'jbreadcrumb', version: '4'
+	implementation group: 'net.sourceforge.argparse4j', name: 'argparse4j', version: '0.8.1'
+	implementation files('libs/l2fprod-common-shared-10.0.jar', 'libs/l2fprod-common-sheet-10.0.jar')
+	testImplementation group: 'junit', name: 'junit', version: '4.13'
+}
+
+sourceSets {
+    main {
+        java {
+            // include self written and generated code
+            srcDirs "$buildDir/generated/source/proto/main/java"
+        }
+    }
+}
+
+protobuf {	
+	// Configure the protoc executable
+	protoc {
+		// Download from repositories
+		artifact = 'com.google.protobuf:protoc:2.6.1'
+	}
+	
+	 generatedFilesBaseDir = "$buildDir/generated/source/proto"
+}
+
+jar {
+	manifest {
+		attributes(
+			'Class-Path': 'config/',
+			'Main-Class': 'de.george.g3dit.Editor',
+			'g3dit-Version': project.version
+		)
+	}
+}
+
+task copyBinlib(type: Copy) {
+	dependsOn 'shadowJar'
+	from("$projectDir/libs") {
+		include "xfiledialog*.dll"
+	}
+	into "$projectDir/out/libs"
+}
+
+task copyJar(type: Copy) {
+	dependsOn 'copyBinlib'
+	from file("$buildDir/libs/${project.name}-${project.version}-all.jar")
+	into "$projectDir/out/"
+	rename {"${project.name}.jar"}
+}
+
+task dist(type: Zip){
+	dependsOn 'copyJar'
+	from 'out/' + project.name + '.exe'
+	from 'out/' + project.name + 'c.exe'
+	from 'out/' + project.name + '.jar'
+	into('libs') {
+		from 'out/libs'
+	}
+	into('config') {
+		from 'out/config'
+		exclude 'g3dit.options'
+	}
+	destinationDirectory = file('dist')
+	archiveFileName = project.name + '_' + project.version.replace(' ', '_') + ".zip"
+}
+
+task prefixNewMigrations {	
+	fileTree(dir: 'src/main', includes: ['java/de/george/g3dit/settings/migrations/*.java']).exclude({ isFilePrefixed(it.file) }).each { file ->
+		doLast {
+			def timestamp = new Date().format('yyyyMMddHHmmssSSS', TimeZone.getTimeZone('CET'))
+
+			println "Renaming $file.name to ${timestamp}__$file.name"
+
+			file.renameTo("${file.parentFile.absolutePath}${file.separator}V${timestamp}__${file.name}")
+
+			// Sleep for a moment to avoid prefix conflicts when renaming multiple files
+			sleep(1*1000)
+		}
+	}
+}
+
+def isFilePrefixed(file) {
+	return (file.name ==~ '^V\\d+__.*\\.java\$')
+}
+

@@ -1,0 +1,22 @@
+<configuration>
+	
+	<timestamp key="byDay" datePattern="yyyy-MM-dd"/>
+
+	<appender name="FILE" class="ch.qos.logback.core.FileAppender">
+		<file>logs/g3dit-${byDay}.log</file>
+
+		<encoder>
+			<pattern>%date [%thread] %-5level (%file:%line\) %msg%n
+			</pattern>
+		</encoder>
+	</appender>
+	
+	<contextListener class="ch.qos.logback.classic.jul.LevelChangePropagator">
+        <!-- reset all previous level configurations of all j.u.l. loggers -->
+        <resetJUL>true</resetJUL>
+    </contextListener>
+	
+	<root level="info">
+		<appender-ref ref="FILE" />
+	</root>
+</configuration>

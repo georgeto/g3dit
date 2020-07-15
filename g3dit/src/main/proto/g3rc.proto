@@ -1,0 +1,137 @@
+syntax = "proto2";
+
+package g3rc;
+
+option java_package = "de.george.g3dit.rpc.proto";
+option java_outer_classname = "G3RemoteControlProtos";
+
+// Uncomment before compiling for Script_RemoteControl
+// option optimize_for = LITE_RUNTIME;
+
+message RequestContainer {
+	required uint32 request_number = 1;
+	oneof request {
+		HearbeatRequest heartbeat_request = 2;
+		EntityRequest entity_request = 3;
+		GotoRequest goto_request = 4;
+		SpawnRequest spawn_request = 5;
+		PropertyRequest property_request = 6;
+	}
+}
+
+message ResponseContainer {
+	required uint32 request_number = 1;
+	enum Status {
+		FAILED = 0;
+		SUCCESSFUL = 1;
+	}
+	required Status status = 2;
+	optional string message = 3;
+	oneof response {
+		HearbeatResponse heartbeat_response = 4;
+		EntityResponse entity_response = 5;
+		VoidResponse void_response = 6;
+		PropertyResponse property_response = 7;
+	}
+}
+
+// -> HearbeatResponse
+message HearbeatRequest {
+
+}
+
+// -> EntityResponse
+message EntityRequest {
+	oneof identifier {
+		string name = 1;
+		string guid = 2;
+		bool focus = 3;
+	}
+	optional Position moveto = 4;
+	optional bool put_to_ground = 5;
+}
+
+// -> VoidResponse
+message GotoRequest {
+	oneof identifier {
+		string name = 1;
+		string guid = 2;
+		Vector position = 3;
+	}
+	optional bool put_to_ground = 4;
+}
+
+// -> EntityResponse
+message SpawnRequest {
+	oneof identifier {
+		string template_name = 1;
+		string template_guid = 2;
+	}
+
+	oneof location {
+		string entity_name = 3;
+		string entity_guid = 4;
+		Vector position = 5;
+	}
+}
+
+// -> PropertyResponse
+message PropertyRequest {
+	oneof identifier {
+		string entity_name = 1;
+		string entity_guid = 2;
+	}
+	repeated PropertyIdentifier properties_get = 3;
+	repeated PropertySerialized properties_set = 4;
+}
+
+message HearbeatResponse {
+	enum Status {
+		MENU = 0;
+		LOADING = 1;
+		INGAME = 2;
+	}
+	required Status status = 1;
+}
+
+message VoidResponse {
+}
+
+message EntityResponse {
+	required Position position = 1;
+	required string name = 2;
+	required string guid = 3;
+}
+
+message PropertyResponse {
+	repeated PropertySerialized properties_get = 1;
+	repeated PropertySerialized properties_set = 2;
+}
+
+message Position {
+	required Vector translation = 1;
+	required Vector scale = 2;
+	required EulerAngles rotation = 3;
+}
+
+message Vector {
+	required float x = 1;
+	required float y = 2;
+	required float z = 3;
+}
+
+message EulerAngles {
+	required float yaw = 1;
+	required float pitch = 2;
+	required float roll = 3;
+}
+
+message PropertyIdentifier {
+	optional string property_set = 1;
+	optional string property = 2;
+}
+
+message PropertySerialized {
+	required PropertyIdentifier identifier = 1;
+	optional bytes data = 2;
+}

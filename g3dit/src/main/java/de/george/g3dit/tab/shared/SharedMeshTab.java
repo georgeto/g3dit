@@ -1,0 +1,77 @@
+package de.george.g3dit.tab.shared;
+
+import java.awt.Container;
+
+import javax.swing.JLabel;
+
+import org.netbeans.validation.api.builtin.stringvalidation.StringValidators;
+import org.netbeans.validation.api.ui.ValidationGroup;
+import org.netbeans.validation.api.ui.swing.ValidationPanel;
+
+import de.george.g3dit.EditorContext;
+import de.george.g3dit.util.PropertySync;
+import de.george.g3utils.gui.SwingUtils;
+import de.george.g3utils.gui.UndoableTextField;
+import de.george.g3utils.validation.EmtpyWarnValidator;
+import de.george.lrentnode.archive.G3ClassContainer;
+import de.george.lrentnode.classes.desc.CD;
+import de.george.lrentnode.util.EntityUtil;
+import net.miginfocom.swing.MigLayout;
+
+public class SharedMeshTab extends AbstractSharedTab {
+	private UndoableTextField tfFileName, tfFilePath, tfMaterialSwitch;
+
+	public SharedMeshTab(EditorContext ctx, Container container) {
+		super(ctx, container);
+		container.setLayout(new MigLayout("fillx", "[]20px[]20px[]push[]"));
+
+		container.add(new JLabel("ResourceFileName"), "wrap");
+		tfFileName = SwingUtils.createUndoTF();
+		container.add(tfFileName, "width 100:300:300, wrap");
+
+		container.add(new JLabel("ResourceFilePath"), "wrap");
+		tfFilePath = SwingUtils.createUndoTF();
+		container.add(tfFilePath, "width 100:300:300, wrap");
+
+		container.add(new JLabel("MaterialSwitch"), "wrap");
+		tfMaterialSwitch = SwingUtils.createUndoTF();
+		container.add(tfMaterialSwitch, "width 100:300:300, wrap");
+	}
+
+	@Override
+	public String getTabTitle() {
+		return "Mesh";
+	}
+
+	@Override
+	public boolean isActive(G3ClassContainer entity) {
+		return entity.hasClass(CD.eCVisualMeshStatic_PS.class) || entity.hasClass(CD.eCVisualMeshDynamic_PS.class);
+	}
+
+	@Override
+	@SuppressWarnings("unchecked")
+	public void initValidation(ValidationPanel validationPanel) {
+		ValidationGroup validationGroup = validationPanel.getValidationGroup();
+		tfFileName.setName("ResourceFileName");
+		validationGroup.add(tfFileName, EmtpyWarnValidator.INSTANCE);
+
+		tfMaterialSwitch.setName("MaterialSwitch");
+		validationGroup.add(tfMaterialSwitch, StringValidators.REQUIRE_VALID_INTEGER, StringValidators.REQUIRE_NON_NEGATIVE_NUMBER);
+	}
+
+	@Override
+	public void loadValues(G3ClassContainer container) {
+		PropertySync meshSync = PropertySync.wrap(EntityUtil.getStaticMeshClass(container));
+		meshSync.readString(tfFileName, CD.eCVisualMeshBase_PS.ResourceFileName);
+		meshSync.readString(tfFilePath, CD.eCVisualMeshStatic_PS.ResourceFilePath);
+		meshSync.readInt(tfMaterialSwitch, CD.eCVisualMeshBase_PS.MaterialSwitch);
+	}
+
+	@Override
+	public void saveValues(G3ClassContainer container) {
+		PropertySync meshSync = PropertySync.wrap(EntityUtil.getStaticMeshClass(container));
+		meshSync.writeString(tfFileName, CD.eCVisualMeshBase_PS.ResourceFileName);
+		meshSync.writeString(tfFilePath, CD.eCVisualMeshStatic_PS.ResourceFilePath);
+		meshSync.writeInt(tfMaterialSwitch, CD.eCVisualMeshBase_PS.MaterialSwitch);
+	}
+}

@@ -1,0 +1,13 @@
+{
+	"Weaponry" : ["Weaponry_NPC", "Weaponry_Monster", "Weaponry_Story"],
+	"Plunder" : ["Plunder_NPC", "Plunder_Monster", "Plunder_Chest"],
+	"Unique" : ["Unique_Chest"],
+	"Trophy" : ["Trophies_Monster"],
+	"Trade_Generate" : ["Trade_Generate"],
+	"Trade_Refresh" : ["Trade_Refresh"],
+	"Mining" : ["Mining_Mobsis"],
+	"Pickpocket" : ["Pickpocket_NPC"],
+	"NotRandom" : ["Trade_NotRandom"],
+	"Guard" : ["Guard_NPC"],
+	"Ammunition" : ["Ammunition_NPC"]
+}
