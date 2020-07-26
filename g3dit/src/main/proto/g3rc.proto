@@ -46,6 +46,7 @@ message EntityRequest {
 		string name = 1;
 		string guid = 2;
 		bool focus = 3;
+		bool editor = 6;
 	}
 	optional Position moveto = 4;
 	optional bool put_to_ground = 5;

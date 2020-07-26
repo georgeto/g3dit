@@ -1,21 +1,20 @@
 package de.george.g3dit.gui.components;
 
 import java.awt.Component;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedHashSet;
 
 import javax.swing.Action;
 
 public class EnableGroup {
-	private List<Component> elements = new ArrayList<>();
-	private List<Action> actions = new ArrayList<>();
+	private LinkedHashSet<Component> elements = new LinkedHashSet<>();
+	private LinkedHashSet<Action> actions = new LinkedHashSet<>();
 
 	public static EnableGroup create(Component... comps) {
-		EnableGroup group = new EnableGroup();
-		for (Component comp : comps) {
-			group.add(comp);
-		}
-		return group;
+		return new EnableGroup().add(comps);
+	}
+
+	public static EnableGroup create(EnableGroup group) {
+		return new EnableGroup().add(group);
 	}
 
 	public EnableGroup add(Component... comps) {
@@ -51,6 +50,18 @@ public class EnableGroup {
 				this.actions.remove(action);
 			}
 		}
+		return this;
+	}
+
+	public EnableGroup add(EnableGroup group) {
+		group.elements.forEach(this::add);
+		group.actions.forEach(this::add);
+		return this;
+	}
+
+	public EnableGroup remove(EnableGroup group) {
+		group.elements.forEach(this::remove);
+		group.actions.forEach(this::remove);
 		return this;
 	}
 

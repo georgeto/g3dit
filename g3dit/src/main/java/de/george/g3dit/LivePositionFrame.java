@@ -163,7 +163,7 @@ public class LivePositionFrame extends JFrame {
 		btnErase.setToolTipText("Suche leeren");
 		btnErase.addActionListener(e -> tfSearchField.setText(null));
 
-		Action searchAction = SwingUtils.createAction("Suchen", Icons.getImageIcon(Icons.Action.FIND), () -> searchEntity(false));
+		Action searchAction = SwingUtils.createAction("Suchen", Icons.getImageIcon(Icons.Action.FIND), () -> searchEntity(null));
 		setDefaultAction(searchAction);
 		JButton btnSearch = new JButton(searchAction);
 		btnSearch.setFocusable(false);
@@ -184,27 +184,37 @@ public class LivePositionFrame extends JFrame {
 		btnSearchCamera.addActionListener(e -> searchForName(PC_CAMERA));
 
 		JCheckBox cbFocus = new JCheckBox("Fokussierte Entity");
+		JCheckBox cbEditor = new JCheckBox("Editor-Entity");
+		cbEditor.setToolTipText(SwingUtils.getMultilineText("Zeigt im Ingame-Editor ausgewählte Entity an.",
+				"Besonders nützlich, wenn man ingame den 'Pick Mode' zur Entity-Auswahl verwendet."));
 
-		EnableGroup group = EnableGroup.create(tfSearchField, btnSearch, btnErase, rbName, rbGuid).add(searchAction);
-		cbFocus.addActionListener(e -> {
-			if (cbFocus.isSelected()) {
-				searchEntity(true);
-			} else if (ifValidSearchResult.isEnabled()) {
-				synchronized (searchLock) {
-					searchString = GuidUtil.parseGuid(guid);
-					searchMode = IdentifierCase.GUID;
-				}
-			} else {
-				isValidSearchActive = false;
-			}
-			group.setEnabled(!cbFocus.isSelected());
-		});
+		EnableGroup groupFocus = EnableGroup.create(tfSearchField, btnSearch, btnErase, rbName, rbGuid).add(searchAction);
+		EnableGroup groupEditor = EnableGroup.create(groupFocus);
+		groupFocus.add(cbEditor);
+		groupEditor.add(cbFocus);
+		cbFocus.addActionListener(e -> triggerSearchModeCheckbox(cbFocus, groupFocus, IdentifierCase.FOCUS));
+		cbEditor.addActionListener(e -> triggerSearchModeCheckbox(cbEditor, groupEditor, IdentifierCase.EDITOR));
 
-		mainPanel.add(rbName, "split 5, spanx 4");
+		mainPanel.add(rbName, "split 6, spanx 4");
 		mainPanel.add(rbGuid, "gapleft 7");
 		mainPanel.add(btnSearchHero, "gapleft push");
 		mainPanel.add(btnSearchCamera, "gapleft 7");
-		mainPanel.add(cbFocus, "gapleft 15, wrap");
+		mainPanel.add(cbFocus, "id cbFocus, gapleft 15, wrap");
+		mainPanel.add(cbEditor, "pos cbFocus.x cbFocus.y2");
+	}
+
+	private void triggerSearchModeCheckbox(JCheckBox cb, EnableGroup group, IdentifierCase searchModeNoParam) {
+		if (cb.isSelected()) {
+			searchEntity(searchModeNoParam);
+		} else if (ifValidSearchResult.isEnabled()) {
+			synchronized (searchLock) {
+				searchString = GuidUtil.parseGuid(guid);
+				searchMode = IdentifierCase.GUID;
+			}
+		} else {
+			isValidSearchActive = false;
+		}
+		group.setEnabled(!cb.isSelected());
 	}
 
 	private void createCurrentPositionSection(Container mainPanel) {
@@ -427,10 +437,10 @@ public class LivePositionFrame extends JFrame {
 		logDialog.append(String.format(message + "\n", args));
 	}
 
-	private void searchEntity(boolean focus) {
+	private void searchEntity(IdentifierCase searchModeNoParam) {
 		synchronized (searchLock) {
-			if (focus) {
-				searchMode = IdentifierCase.FOCUS;
+			if (searchModeNoParam != null) {
+				searchMode = searchModeNoParam;
 			} else if (rbName.isSelected()) {
 				searchString = Optional.of(tfSearchField.getText()).filter(e -> !e.isEmpty()).orElse(null);
 				searchMode = IdentifierCase.NAME;
@@ -442,7 +452,7 @@ public class LivePositionFrame extends JFrame {
 			updateSpinners = true;
 		}
 
-		if (searchString == null && searchMode != IdentifierCase.FOCUS) {
+		if (searchString == null && searchMode != IdentifierCase.FOCUS && searchMode != IdentifierCase.EDITOR) {
 			if (searchMode == IdentifierCase.GUID) {
 				lblPosition.setText("Guid ist ungültig");
 			} else if (searchMode == IdentifierCase.NAME) {
@@ -502,6 +512,9 @@ public class LivePositionFrame extends JFrame {
 					break;
 				case FOCUS:
 					request = EntityRequest.newBuilder().setFocus(true).build();
+					break;
+				case EDITOR:
+					request = EntityRequest.newBuilder().setEditor(true).build();
 					break;
 				default:
 					throw new IllegalStateException();
