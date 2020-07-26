@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.awt.event.KeyEvent;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
@@ -13,13 +14,14 @@ import java.util.Locale;
 import javax.swing.AbstractButton;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
+import javax.swing.KeyStroke;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
 
 import de.george.g3utils.util.Misc;
 
 public class FloatSpinner extends JSpinner {
-
+	private boolean processingKeyBinding = false;
 	private float lastValue = 0;
 
 	private List<ActionListener> listeners = new ArrayList<>();
@@ -48,14 +50,23 @@ public class FloatSpinner extends JSpinner {
 
 		addChangeListener(e -> {
 			float value = getVal();
+			// Up or down button pressed, or up or down arrow key pressed
 			if (Misc.compareFloat(Math.abs(value - lastValue), getStepSize(), 0.00001f)
-					&& (btn1.getModel().isArmed() || btn2.getModel().isArmed())) {
+					&& (btn1.getModel().isArmed() || btn2.getModel().isArmed() || processingKeyBinding)) {
 				for (ActionListener listener : listeners) {
 					listener.actionPerformed(new ActionEvent(e.getSource(), ActionEvent.ACTION_PERFORMED, null));
 				}
 			}
 			lastValue = value;
 		});
+	}
+
+	@Override
+	protected boolean processKeyBinding(KeyStroke ks, KeyEvent e, int condition, boolean pressed) {
+		processingKeyBinding = true;
+		boolean result = super.processKeyBinding(ks, e, condition, pressed);
+		processingKeyBinding = false;
+		return result;
 	}
 
 	public float getVal() {
