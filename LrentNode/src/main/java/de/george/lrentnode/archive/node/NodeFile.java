@@ -36,12 +36,12 @@ public class NodeFile extends ArchiveFile {
 	@Override
 	protected ArchiveEntity readEntity(G3FileReaderEx reader) throws IOException {
 		boolean hasCreator = reader.readBool();
-		reader.readBool(); // DisablePatchWithTemplate, always false
-		if (hasCreator) {
-			reader.readGUID(); // bCPropertyID
-		}
+		boolean disablePatchWithTemplate = reader.readBool();
 		NodeEntity entity = new NodeEntity(false);
 		entity.read(reader, skipPropertySets);
+		if (hasCreator && !disablePatchWithTemplate) {
+			reader.readGUID(); // bCPropertyID
+		}
 		return entity;
 	}
 
@@ -55,9 +55,9 @@ public class NodeFile extends ArchiveFile {
 	protected void writeEntity(G3FileWriterEx writer, eCEntity entity) {
 		writer.writeBool(entity.hasCreator());
 		writer.writeBool(false); // DisablePatchWithTemplate, always false
+		entity.write(writer);
 		if (entity.hasCreator()) {
 			writer.write(entity.getCreator()); // bCPropertyID
 		}
-		entity.write(writer);
 	}
 }
