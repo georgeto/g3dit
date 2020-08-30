@@ -236,6 +236,9 @@ public class PropertySearchFilterBuilder<T extends G3ClassContainer> implements 
 	@Override
 	public SearchFilter<T> buildFilter() {
 		TableUtil.stopEditing(field.getTable());
+		if (propertyDesc == null) {
+			return new PropertySetSearchFilter<>(cbPropertySet.getSelectedItem());
+		}
 		return new PropertySearchFilter<>(getSubClassDesc(), getLeafPropertyDesc(), property, comparator, operation);
 	}
 
