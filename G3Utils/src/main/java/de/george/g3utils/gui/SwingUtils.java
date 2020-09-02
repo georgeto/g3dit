@@ -12,7 +12,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -46,6 +45,7 @@ import org.slf4j.LoggerFactory;
 import com.google.common.base.Strings;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
+import com.teamunify.i18n.I;
 
 import de.george.g3utils.util.WordWrapUtils;
 import one.util.streamex.StreamEx;
@@ -173,8 +173,8 @@ public class SwingUtils {
 		Color severity = errors.isEmpty() ? new Color(255, 100, 0) : Color.RED;
 		comp.setForeground(severity);
 
-		ArrayList<String> entries = Lists.newArrayList(
-				Iterables.concat(StreamEx.of(errors).map(e -> "[Fehler] " + e), StreamEx.of(warnings).map(e -> "[Warnung] " + e)));
+		ArrayList<String> entries = Lists.newArrayList(Iterables.concat(StreamEx.of(errors).map(e -> "[" + I.tr("Fehler") + "] " + e),
+				StreamEx.of(warnings).map(e -> "[" + I.tr("Warnung") + "] " + e)));
 		if (totalCount == 1) {
 			comp.setToolTipText(entries.get(0));
 		} else {
@@ -207,7 +207,7 @@ public class SwingUtils {
 	}
 
 	public static String getMultilineText(String... lines) {
-		return Arrays.stream(lines).collect(Collectors.joining("<br>", "<html>", "</html>"));
+		return StreamEx.of(lines).flatArray(l -> l.split("\n")).collect(Collectors.joining("<br>", "<html>", "</html>"));
 	}
 
 	public static String wrapTooltipText(String tooltipText, int wrapLength) {

@@ -1,5 +1,7 @@
 package de.george.g3dit.scripts;
 
+import com.teamunify.i18n.I;
+
 import de.george.lrentnode.classes.eCCollisionShape.BoxShape;
 import de.george.lrentnode.classes.eCCollisionShape.CapsuleShape;
 import de.george.lrentnode.classes.eCCollisionShape.Shape;
@@ -15,12 +17,12 @@ public class ScriptRepairCollisionShapes implements IScript {
 
 	@Override
 	public String getTitle() {
-		return "CollisionShapes überprüfen";
+		return I.tr("CollisionShapes überprüfen");
 	}
 
 	@Override
 	public String getDescription() {
-		return "Überprüft die CollisionShapes von Waffen";
+		return I.tr("Überprüft die CollisionShapes von Waffen");
 	}
 
 	@Override
@@ -37,18 +39,18 @@ public class ScriptRepairCollisionShapes implements IScript {
 				case gEUseType.gEUseType_1H, gEUseType.gEUseType_2H, gEUseType.gEUseType_Axe, gEUseType.gEUseType_Staff, gEUseType.gEUseType_Halberd -> {
 					eCCollisionShape_PS colShapePS = tple.getClass(CD.eCCollisionShape_PS.class);
 					if (colShapePS == null || colShapePS.getShapes().size() == 0) {
-						env.log(tpleFilesIterator.nextFile().getAbsolutePath() + " hat kein CollisionShape.");
+						env.log(I.trf("{0} hat kein CollisionShape.", tpleFilesIterator.nextFile().getAbsolutePath()));
 						continue;
 					}
 					if (colShapePS.getShapes().size() != 1) {
-						env.log(tpleFilesIterator.nextFile().getAbsolutePath() + " hat mehr als ein CollisionShape.");
+						env.log(I.trf("{0} hat mehr als ein CollisionShape.", tpleFilesIterator.nextFile().getAbsolutePath()));
 						continue;
 					}
 					Shape shape = colShapePS.getShapes().get(0).getShape();
 					if (shape instanceof BoxShape || shape instanceof CapsuleShape) {
 						// Nothing
 					} else {
-						env.log(tpleFilesIterator.nextFile().getAbsolutePath() + " hat kein Box/Capsule Shape.");
+						env.log(I.trf("{0} hat kein Box/Capsule Shape.", tpleFilesIterator.nextFile().getAbsolutePath()));
 					}
 				}
 				default -> {

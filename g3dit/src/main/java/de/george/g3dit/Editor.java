@@ -38,6 +38,8 @@ import com.google.common.util.concurrent.MoreExecutors;
 import com.jgoodies.looks.Options;
 import com.jidesoft.plaf.LookAndFeelFactory;
 import com.jme3.system.JmeSystem;
+import com.teamunify.i18n.I;
+import com.teamunify.i18n.settings.LanguageSetting;
 import com.tulskiy.keymaster.common.Provider;
 
 import de.ailis.oneinstance.OneInstance;
@@ -134,14 +136,20 @@ public class Editor implements EditorContext {
 	}
 
 	public Editor(final String[] args) {
+		LanguageSetting.translationPackage = "de.george.g3dit.translation";
+		I.setLanguage("en");
+
 		registerOneInstanceListener(args);
 
 		try {
 			init(args);
 		} catch (Exception e) {
-			logger.error("Unerwarteter Fehler bei der Programmausführung.", e);
-			logger.error("Beende g3dit.");
+			logger.error("Unexpected error during program execution.", e);
+			logger.error("Quitting g3dit.");
 			System.exit(EditorCli.EXIT_CODE_ERROR);
+			logger.error("Unexpected error during program execution.", e);
+			logger.error("Quitting g3dit.");
+			System.exit(1);
 		}
 	}
 
@@ -221,7 +229,7 @@ public class Editor implements EditorContext {
 		if (!diff.hasChanges()) {
 			String binaryCompare = getOptionStore().get(EditorOptions.Path.BINARY_COMPARE);
 			if (binaryCompare.isEmpty()) {
-				TaskDialogs.error(frame, "", "Kein Vergleichsprogramm für Binärdateien konfiguriert.");
+				TaskDialogs.error(frame, "", I.tr("Kein Vergleichsprogramm für Binärdateien konfiguriert."));
 				return;
 			}
 
@@ -232,7 +240,7 @@ public class Editor implements EditorContext {
 		diff.visit(mapPrintingVisitor);
 		SwingUtilities.invokeLater(() -> {
 			DisplayTextDialog dialog = new DisplayTextDialog(
-					String.format("Dateivergleich - [%s - %s]", new File(base).getName(), new File(mine).getName()),
+					I.trf("Dateivergleich - [{0} - {1}]", new File(base).getName(), new File(mine).getName()),
 					mapPrintingVisitor.getMessagesAsString(), frame, false);
 			// dialog.setLocationRelativeTo(editor.getOwner());
 			dialog.setVisible(true);
@@ -242,7 +250,7 @@ public class Editor implements EditorContext {
 	private void diffNavigationMap(String base, String mine) throws IOException {
 		String textCompare = getOptionStore().get(EditorOptions.Path.TEXT_COMPARE);
 		if (textCompare.isEmpty()) {
-			TaskDialogs.error(frame, "", "Kein Vergleichsprogramm für Textdateien konfiguriert.");
+			TaskDialogs.error(frame, "", I.tr("Kein Vergleichsprogramm für Textdateien konfiguriert."));
 			return;
 		}
 
@@ -268,12 +276,13 @@ public class Editor implements EditorContext {
 			String baseExt = Files.getFileExtension(base).toLowerCase();
 			String mineExt = Files.getFileExtension(mine).toLowerCase();
 			if (!baseExt.equals(mineExt)) {
-				TaskDialogs.error(frame, "", "Zu vergleichende Dateien haben unterschiedliche Dateiendungen.");
+				TaskDialogs.error(frame, "", I.tr("Zu vergleichende Dateien haben unterschiedliche Dateiendungen."));
 				return;
 			}
 
 			if (FileUtils.contentEquals(baseFile, mineFile)) {
-				TaskDialogs.inform(frame, "", "Zu vergleichende Dateien sind identisch.");
+				TaskDialogs.inform(frame, "", I.tr("Zu vergleichende Dateien sind identisch."));
+				return;
 			}
 
 			eCEntity baseRoot;
@@ -290,16 +299,14 @@ public class Editor implements EditorContext {
 					diffEntity(base, mine, baseRoot, mineRoot);
 				}
 				case "xnav" -> diffNavigationMap(base, mine);
-				default -> {
-					logger.error("Zu diffende Dateien haben nicht unterstützte Dateiendung '{}'.", baseExt);
-					return;
-				}
+				default -> TaskDialogs.error(frame, "", I.trf("Zu diffende Dateien haben nicht unterstützte Dateiendung '{0}'.", baseExt));
+
 			}
 		} catch (IOException e) {
-			logger.error("Fehler beim Öffnen der zu vergleichenden Dateien.", e);
+			logger.error("Error while opening the files to be compared.", e);
 			TaskDialogs.showException(e);
 		} catch (Exception e) {
-			logger.error("Fehler beim Diffen.", e);
+			logger.error("Error during file comparison.", e);
 			TaskDialogs.showException(e);
 		}
 	}
@@ -421,7 +428,7 @@ public class Editor implements EditorContext {
 				}
 
 				if (navMapManager.isNavMapChanged()) {
-					switch (Dialogs.askSaveChanges(frame, "Änderungen an NavMap vor dem Beenden speichern?")) {
+					switch (Dialogs.askSaveChanges(frame, I.tr("Änderungen an NavMap vor dem Beenden speichern?"))) {
 						case Yes:
 							navMapManager.saveMap();
 						case No:

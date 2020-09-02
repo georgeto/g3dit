@@ -6,6 +6,7 @@ import java.util.TreeMap;
 
 import com.google.common.collect.Multiset;
 import com.google.common.collect.TreeMultiset;
+import com.teamunify.i18n.I;
 
 import de.george.lrentnode.archive.ArchiveFile;
 import de.george.lrentnode.archive.eCEntity;
@@ -18,12 +19,12 @@ public class ScriptListVegMeshWindStrength implements IScript {
 
 	@Override
 	public String getTitle() {
-		return "WindStrength von Vegetations-Meshes auflisten";
+		return I.tr("WindStrength von Vegetations-Meshes auflisten");
 	}
 
 	@Override
 	public String getDescription() {
-		return "Erstellt einer Liste aller aller vorkommender Vegetations-Meshes, deren WindStrength variiert.";
+		return I.tr("Erstellt einer Liste aller aller vorkommender Vegetations-Meshes, deren WindStrength variiert.");
 	}
 
 	@Override

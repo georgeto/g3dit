@@ -6,6 +6,8 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.teamunify.i18n.I;
+
 import de.george.g3dit.util.FileDialogWrapper;
 import de.george.g3utils.util.IOUtils;
 import de.george.lrentnode.archive.ArchiveFile;
@@ -20,17 +22,17 @@ public class ScriptListVoices implements IScript {
 
 	@Override
 	public String getTitle() {
-		return "NPC-Stimmen auflisten";
+		return I.tr("NPC-Stimmen auflisten");
 	}
 
 	@Override
 	public String getDescription() {
-		return "Erstellt eine Liste, die zu jedem NPC dessen Stimme enthält.";
+		return I.tr("Erstellt eine Liste, die zu jedem NPC dessen Stimme enthält.");
 	}
 
 	@Override
 	public boolean execute(IScriptEnvironment env) {
-		File saveFile = FileDialogWrapper.saveFile("NPC-Stimmen Auflistung speichern unter...", env.getParentWindow(),
+		File saveFile = FileDialogWrapper.saveFile(I.tr("NPC-Stimmen Auflistung speichern unter..."), env.getParentWindow(),
 				FileDialogWrapper.CSV_FILTER);
 		if (saveFile == null) {
 			return false;
@@ -67,7 +69,7 @@ public class ScriptListVoices implements IScript {
 		try {
 			IOUtils.writeTextFile(output, saveFile, StandardCharsets.UTF_8);
 		} catch (IOException e) {
-			env.log("Datei konnte nicht gespeichert werden:" + e.getMessage());
+			env.log(I.trf("Datei konnte nicht gespeichert werden: {0}", e.getMessage()));
 			return false;
 		}
 		return true;

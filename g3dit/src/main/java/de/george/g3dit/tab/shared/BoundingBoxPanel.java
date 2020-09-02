@@ -13,6 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import com.ezware.dialog.task.TaskDialogs;
+import com.teamunify.i18n.I;
 
 import de.george.g3dit.gui.dialogs.TemplateNameSearchDialog;
 import de.george.g3dit.gui.theme.LayoutUtils;
@@ -55,22 +56,22 @@ public class BoundingBoxPanel extends JPanel {
 		add(lblMax, "");
 
 		JButton btnEditBoundingBox = new JButton(Icons.getImageIcon(Icons.Action.EDIT));
-		btnEditBoundingBox.setToolTipText("BoundingBox ändern");
+		btnEditBoundingBox.setToolTipText(I.tr("BoundingBox ändern"));
 		add(btnEditBoundingBox, LayoutUtils.sqrBtn());
 		btnEditBoundingBox.addActionListener(e -> handleChangeBoundingBox());
 
 		JButton btnCopyBoundingBox = new JButton(Icons.getImageIcon(Icons.Action.COPY));
-		btnCopyBoundingBox.setToolTipText("BoundingBox in Zwischenablage kopieren");
+		btnCopyBoundingBox.setToolTipText(I.tr("BoundingBox in Zwischenablage kopieren"));
 		add(btnCopyBoundingBox, LayoutUtils.sqrBtn("wrap"));
 		btnCopyBoundingBox.addActionListener(e -> handleCopyBoundingBox());
 
 		JButton btnLoadBoundingBoxTple = new JButton(Icons.getImageIcon(Icons.IO.UPLOAD));
-		btnLoadBoundingBoxTple.setToolTipText("BoundingBox aus Template laden");
+		btnLoadBoundingBoxTple.setToolTipText(I.tr("BoundingBox aus Template laden"));
 		add(btnLoadBoundingBoxTple, LayoutUtils.sqrBtn());
 		btnLoadBoundingBoxTple.addActionListener(e -> handleLoadBoundingBoxTple());
 
 		JButton btnLoadBoundingBoxMesh = new JButton(Icons.getImageIcon(Icons.IO.IMPORT));
-		btnLoadBoundingBoxMesh.setToolTipText("BoundingBox aus Mesh laden");
+		btnLoadBoundingBoxMesh.setToolTipText(I.tr("BoundingBox aus Mesh laden"));
 		add(btnLoadBoundingBoxMesh, LayoutUtils.sqrBtn());
 		btnLoadBoundingBoxMesh.addActionListener(e -> handleLoadBoundingBoxMesh());
 	}
@@ -78,8 +79,8 @@ public class BoundingBoxPanel extends JPanel {
 	public void setBoundingBox(bCBox boundingBox) {
 		this.boundingBox = boundingBox.clone();
 
-		lblMin.setText("Min: " + this.boundingBox.getMin());
-		lblMax.setText("Max: " + this.boundingBox.getMax());
+		lblMin.setText(I.trf("Min: {0}", this.boundingBox.getMin()));
+		lblMax.setText(I.trf("Max: {0}", this.boundingBox.getMax()));
 	}
 
 	private void handleCopyBoundingBox() {
@@ -97,13 +98,13 @@ public class BoundingBoxPanel extends JPanel {
 	private void handleLoadBoundingBoxMesh() {
 		String meshName = meshNameSupplier.get();
 		if (meshName == null || !meshName.endsWith("xcmsh")) {
-			TaskDialogs.error(ctx.getParentWindow(), "", "Entity hat kein statisches Mesh.");
+			TaskDialogs.error(ctx.getParentWindow(), "", I.tr("Entity hat kein statisches Mesh."));
 			return;
 		}
 
 		Optional<File> meshFile = ctx.getFileManager().searchFile(FileManager.RP_COMPILED_MESH, meshName);
 		if (!meshFile.isPresent()) {
-			TaskDialogs.error(ctx.getParentWindow(), "", "Mesh konnte nicht gefunden werden: " + meshName);
+			TaskDialogs.error(ctx.getParentWindow(), "", I.tr("Mesh konnte nicht gefunden werden") + ": " + meshName);
 			return;
 		}
 

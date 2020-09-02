@@ -13,6 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.KeyStroke;
 
 import com.ezware.dialog.task.TaskDialogs;
+import com.teamunify.i18n.I;
 
 import de.danielbechler.diff.node.DiffNode;
 import de.danielbechler.diff.node.ToMapPrintingVisitor;
@@ -76,79 +77,79 @@ public class AllgemeinTab extends AbstractEntityTab {
 	public void initComponents() {
 		setLayout(new MigLayout("fillx", "[][][]push[grow]"));
 
-		JLabel lblName = new JLabel("Name");
+		JLabel lblName = new JLabel(I.tr("Name"));
 		add(lblName, "wrap");
 
 		tfName = new JFocusNameField(ctx);
-		tfName.initValidation(validation(), "Name", EmtpyWarnValidator.INSTANCE);
+		tfName.initValidation(validation(), I.tr("Name"), EmtpyWarnValidator.INSTANCE);
 		add(tfName, "width 100:300:300, wrap");
 
-		JLabel lblGuid = new JLabel("Guid");
+		JLabel lblGuid = new JLabel(I.tr("Guid"));
 		add(lblGuid, "wrap");
 
 		tfGuid = new JEntityGuidField(ctx);
 		tfGuid.setFieldLayout(Layout.VerticalNoName);
-		tfGuid.initValidation(validation(), "Guid", GuidValidator.INSTANCE);
+		tfGuid.initValidation(validation(), I.tr("Guid"), GuidValidator.INSTANCE);
 		add(tfGuid, "width 100:300:300");
 
-		tfGuid.addMenuItem("Alle Nutzer dieses Freepoints auflisten", Icons.getImageIcon(Icons.Misc.GLOBE),
+		tfGuid.addMenuItem(I.tr("Alle Nutzer dieses Freepoints auflisten"), Icons.getImageIcon(Icons.Misc.GLOBE),
 				(ctx, g) -> EntitySearchDialog.openEntitySearchGuid(ctx, MatchMode.Routine, g), (ctx, g) -> interact);
 
-		tfGuid.addMenuItem("Alle PartyMember dieses NPCs auflisten", Icons.getImageIcon(Icons.Misc.GLOBE),
+		tfGuid.addMenuItem(I.tr("Alle PartyMember dieses NPCs auflisten"), Icons.getImageIcon(Icons.Misc.GLOBE),
 				(ctx, g) -> EntitySearchDialog.openEntitySearchGuid(ctx, MatchMode.PartyLeader, g), (ctx, g) -> npc && party);
 
-		tfGuid.addMenuItem("Alle InteractionPoints dieses Anchors auflisten", Icons.getImageIcon(Icons.Misc.GLOBE),
+		tfGuid.addMenuItem(I.tr("Alle InteractionPoints dieses Anchors auflisten"), Icons.getImageIcon(Icons.Misc.GLOBE),
 				(ctx, g) -> EntitySearchDialog.openEntitySearchGuid(ctx, MatchMode.AnchorPoint, g), (ctx, g) -> anchor);
 
-		tfGuid.addMenuItem("Alle Mitglieder dieser Enclave auflisten", Icons.getImageIcon(Icons.Misc.GLOBE),
+		tfGuid.addMenuItem(I.tr("Alle Mitglieder dieser Enclave auflisten"), Icons.getImageIcon(Icons.Misc.GLOBE),
 				(ctx, g) -> EntitySearchDialog.openEntitySearchGuid(ctx, MatchMode.Enclave, g), (ctx, g) -> enclave);
 
 		JButton btnRandomGuid = new JButton(Icons.getImageIcon(Icons.Data.COUNTER));
-		btnRandomGuid.setToolTipText("Zufällige Guid generieren");
+		btnRandomGuid.setToolTipText(I.tr("Zufällige Guid generieren"));
 		btnRandomGuid.addActionListener(a -> tfGuid.setText(GuidUtil.randomGUID(), true));
 		add(btnRandomGuid, LayoutUtils.sqrBtn("spanx 3, split 3"));
 
 		JButton btnCopyGuid = new JButton(Icons.getImageIcon(Icons.Action.COPY));
-		btnCopyGuid.setToolTipText("Guid in Zwischenablage kopieren");
+		btnCopyGuid.setToolTipText(I.tr("Guid in Zwischenablage kopieren"));
 		btnCopyGuid.addActionListener(a -> IOUtils.copyToClipboard(tfGuid.getText()));
 		add(btnCopyGuid, LayoutUtils.sqrBtn("wrap"));
 
-		plWorldPosition = new PositionPanel("World-Position", ctx.getParentWindow(), this::changeWorldPosition,
+		plWorldPosition = new PositionPanel(I.tr("World-Position"), ctx.getParentWindow(), this::changeWorldPosition,
 				this::changeWorldPositionKeepChilds);
 		add(plWorldPosition, "width 100:300:400, spanx 4, grow, wrap");
 
-		plLocalPosition = new PositionPanel("Local-Position", ctx.getParentWindow(), this::changeLocalPosition);
+		plLocalPosition = new PositionPanel(I.tr("Local-Position"), ctx.getParentWindow(), this::changeLocalPosition);
 		add(plLocalPosition, "width 100:300:400, spanx 4, grow, wrap");
 
-		plLocalNodeBoundary = new BoundingBoxPanel("BoundingBox", ctx, this::changeLocalNodeBoundary, () -> {
+		plLocalNodeBoundary = new BoundingBoxPanel(I.tr("BoundingBox"), ctx, this::changeLocalNodeBoundary, () -> {
 			ctx.saveView(); // Mesh wurde eventuell im Mesh Tab bearbeitet
 			return EntityUtil.getMesh(ctx.getCurrentEntity()).orElse(null);
 		}, () -> tfName.getText());
 		add(plLocalNodeBoundary, "width 100:300:400, spanx 4, grow, wrap");
 
-		lblRefGuid = new JLabel("Reference Guid");
+		lblRefGuid = new JLabel(I.tr("Reference Guid"));
 		add(lblRefGuid, "wrap");
 
 		tfRefGuid = new JTemplateGuidField(ctx);
-		tfRefGuid.initValidation(validation(), "Reference Guid", GuidValidator.INSTANCE_ALLOW_EMPTY,
+		tfRefGuid.initValidation(validation(), I.tr("Reference Guid"), GuidValidator.INSTANCE_ALLOW_EMPTY,
 				new TemplateExistenceValidator(validation(), ctx));
 		add(tfRefGuid, "width 100:300:300");
 
 		btnLoadFromTemplate = new JButton(Icons.getImageIcon(Icons.IO.UPLOAD));
-		btnLoadFromTemplate.setToolTipText("Reference Guid und ChangeTime aus Template laden");
+		btnLoadFromTemplate.setToolTipText(I.tr("Reference Guid und ChangeTime aus Template laden"));
 		add(btnLoadFromTemplate, LayoutUtils.sqrBtn());
 		btnLoadFromTemplate.addActionListener(e -> handleLoadFromTemplate());
 
 		btnDiffTemplate = new JButton(Icons.getImageIcon(Icons.Action.DIFF));
-		btnDiffTemplate.setToolTipText("Mit Template vergleichen");
+		btnDiffTemplate.setToolTipText(I.tr("Mit Template vergleichen"));
 		add(btnDiffTemplate, LayoutUtils.sqrBtn("wrap"));
 		btnDiffTemplate.addActionListener(e -> handleDiffTemplate());
 
-		lblChangeTime = new JLabel("ChangeTime");
+		lblChangeTime = new JLabel(I.tr("ChangeTime"));
 		add(lblChangeTime, "wrap");
 
 		tfChangeTime = SwingUtils.createUndoTF();
-		tfChangeTime.setName("ChangeTime");
+		tfChangeTime.setName(I.tr("ChangeTime"));
 		addValidators(tfChangeTime, IsALongValidator.INSTANCE, new ChangeTimeValidator(validation(), ctx, tfRefGuid));
 		add(tfChangeTime, "width 50:100:100, wrap");
 
@@ -158,7 +159,7 @@ public class AllgemeinTab extends AbstractEntityTab {
 
 	@Override
 	public String getTabTitle() {
-		return "Allgemein";
+		return I.tr("Allgemein");
 	}
 
 	@Override
@@ -273,8 +274,8 @@ public class AllgemeinTab extends AbstractEntityTab {
 				DiffNode diff = new EntityDiffer(true).diff(ctx.getCurrentEntity(), tple.getReferenceHeader());
 				ToMapPrintingVisitor mapPrintingVisitor = new ToMapPrintingVisitor(ctx.getCurrentEntity(), tple.getReferenceHeader());
 				diff.visit(mapPrintingVisitor);
-				DisplayTextDialog dialog = new DisplayTextDialog("Vergleich: Template - Entity", mapPrintingVisitor.getMessagesAsString(),
-						ctx.getParentWindow(), false);
+				DisplayTextDialog dialog = new DisplayTextDialog(I.tr("Vergleich: Template - Entity"),
+						mapPrintingVisitor.getMessagesAsString(), ctx.getParentWindow(), false);
 				dialog.setVisible(true);
 			} catch (IOException e) {
 				TaskDialogs.showException(e);

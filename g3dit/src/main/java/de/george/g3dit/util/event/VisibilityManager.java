@@ -43,7 +43,7 @@ public class VisibilityManager implements WindowStateListener {
 				if (activeFrame != null) {
 					activeFrame.setState(Frame.ICONIFIED);
 				} else {
-					logger.warn("Konnte g3dit nicht in den Vordergrund bringen, da kein letztes aktives Fenster gefunden werden konnte.");
+					logger.warn("Unable to bring g3dit to the foreground, because no previously active window could be found.");
 				}
 
 			} else {
@@ -58,7 +58,7 @@ public class VisibilityManager implements WindowStateListener {
 					activeWindow.requestFocus();
 					activeWindow.repaint();
 				} else {
-					logger.warn("Konnte g3dit nicht in den Hinterund bringen, da kein letztes aktives Fenster gefunden werden konnte.");
+					logger.warn("Unable to bring g3dit to the background, because no previously active window could be found.");
 				}
 			}
 		});

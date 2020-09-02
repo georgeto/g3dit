@@ -53,8 +53,8 @@ public abstract class ArchiveFile extends AbstractEntityFile<eCEntity> {
 		while ((parentIndex = reader.readInt()) != -1) {
 			int childIndex = reader.readInt();
 			if (childIndex < 0 || childIndex >= entities.size()) {
-				throw new IOException(reader.getFileName() + ": SubEntityDefinition enthält ungültigen Entity-Index " + childIndex
-						+ " an Adresse " + (reader.getPos() - 4) + ".");
+				throw new IOException(reader.getFileName() + ": SubEntityDefinition contains invalid entity index " + childIndex
+						+ " at address " + (reader.getPos() - 4) + ".");
 			}
 			// Attach entity
 			entities.get(parentIndex).attachChild(entities.get(childIndex));

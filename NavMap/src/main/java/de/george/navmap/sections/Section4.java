@@ -7,6 +7,8 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.teamunify.i18n.I;
+
 import de.george.g3utils.io.G3FileReader;
 import de.george.g3utils.io.G3FileWriter;
 import de.george.g3utils.io.G3Serializable;
@@ -118,7 +120,7 @@ public class Section4 implements G3Serializable {
 		int indexB = pair.el1();
 
 		if (addWaypoint() != indexA || addWaypoint() != indexB) {
-			throw new IllegalArgumentException("Sektion 4 hat nicht nicht dieselbe Anzahl an Einträgen wie Sektion 3h!", null);
+			throw new IllegalArgumentException(I.tr("Sektion4 hat nicht nicht dieselbe Anzahl an Einträgen wie Sektion3h!"));
 		}
 
 		processIntersection(navPath, navPath.zoneAGuid, indexA, indexB, navMap);
@@ -196,7 +198,7 @@ public class Section4 implements G3Serializable {
 
 			Waypoint destInter = getWaypoint(con.index);
 			if (!destInter.removeConnection(index)) {
-				logger.warn("Verbindung von {} zu {} konnte nicht gelöscht werden.", con.index, index);
+				logger.warn("Connection from {} to {} could not be deleted.", con.index, index);
 			}
 		}
 
@@ -230,8 +232,9 @@ public class Section4 implements G3Serializable {
 		public void addConnection(WaypointConnection connection) {
 			if (connection.backRoad) {
 				if (cons.size() > 0 && cons.get(0).backRoad) {
-					throw new IllegalArgumentException("Einfügen von Partnerverbindung zu " + connection.index
-							+ " fehlgeschlagen: Es besteht bereits eine Partnerverbindung zu Intersection " + cons.get(0).index);
+					throw new IllegalArgumentException(I.trf(
+							"Einfügen von Partnerverbindung zu {0, number} fehlgeschlagen: Es besteht bereits eine Partnerverbindung zu Intersection {1, number}",
+							connection.index, cons.get(0).index));
 				}
 				cons.add(0, connection);
 			} else {
@@ -243,8 +246,9 @@ public class Section4 implements G3Serializable {
 					}
 
 					if (con.index == connection.index) {
-						throw new IllegalArgumentException("Einfügen von Verbindung zu " + con.index
-								+ " fehlgeschlagen: Es besteht bereits eine Verbindung zu Intersection " + con.index);
+						throw new IllegalArgumentException(I.trf(
+								"Einfügen von Verbindung zu {0, number} fehlgeschlagen: Es besteht bereits eine Verbindung zu Intersection {1, number}",
+								connection.index, con.index));
 					}
 
 					if (con.index > connection.index) {

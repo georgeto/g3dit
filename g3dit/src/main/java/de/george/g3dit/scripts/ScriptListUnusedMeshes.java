@@ -9,6 +9,7 @@ import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 import com.google.common.collect.Sets;
+import com.teamunify.i18n.I;
 
 import de.george.lrentnode.archive.ArchiveFile;
 import de.george.lrentnode.archive.G3ClassContainer;
@@ -26,12 +27,12 @@ public class ScriptListUnusedMeshes implements IScript {
 
 	@Override
 	public String getTitle() {
-		return "Nicht verwendete Meshes auflisten";
+		return I.tr("Nicht verwendete Meshes auflisten");
 	}
 
 	@Override
 	public String getDescription() {
-		return "Erstellt eine Liste aller nicht verwendeten Meshes.";
+		return I.tr("Erstellt eine Liste aller nicht verwendeten Meshes.");
 	}
 
 	@Override
@@ -87,7 +88,7 @@ public class ScriptListUnusedMeshes implements IScript {
 			containerConsumer.accept(aFile.getReferenceHeader());
 		}
 
-		env.log("----------\nÜbersicht\n----------");
+		env.log("----------\n" + I.tr("Übersicht") + "\n----------");
 
 		String path = null;
 		for (File e : Sets.newTreeSet(meshes.values())) {
@@ -102,7 +103,7 @@ public class ScriptListUnusedMeshes implements IScript {
 			env.log("\t" + e.getName());
 		}
 
-		env.log("\n\n----------\nListe\n----------");
+		env.log("\n\n----------\n" + I.tr("Liste") + "\n----------");
 		Sets.newTreeSet(meshes.values()).forEach(e -> env.log(e.getAbsolutePath()));
 
 		return true;

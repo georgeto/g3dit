@@ -15,6 +15,7 @@ import java.util.stream.Stream;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
+import com.teamunify.i18n.I;
 
 import de.george.g3dit.EditorContext;
 import de.george.g3dit.config.ConfigFiles;
@@ -130,7 +131,7 @@ public class LowPolyGenerator {
 		Optional<eCVegetation_Mesh> mesh = lowPolyMcpVeg.getMeshClasses().stream().filter(m -> m.getName().equals(treeMesh.get()))
 				.findFirst();
 		if (!mesh.isPresent()) {
-			log("Speedtree mesh %s of entity %s is not available in LowPoly_MCP! Skipping.", treeMesh.get(), entity.getGuid());
+			log(I.trf("Speedtree mesh {0} of entity {1} is not available in LowPoly_MCP! Skipping.", treeMesh.get(), entity.getGuid()));
 			return false;
 		}
 
@@ -147,7 +148,7 @@ public class LowPolyGenerator {
 
 	private void createLowpolyNode(String nodeName, List<eCEntity> entities, List<String> contributingSectors, boolean globalNode) {
 		log("");
-		log("Create low poly node %s with %d entities.", nodeName, entities.size());
+		log(I.trf("Create low poly node {0} with {1} entities.", nodeName, entities.size()));
 		contributingSectors.forEach(f -> log("  - %s", f));
 
 		File sectorDir = new File(ctx.getFileManager().getPrimaryPath(FileManager.RP_PROJECTS_COMPILED), "World\\_Level\\" + nodeName);
@@ -177,7 +178,7 @@ public class LowPolyGenerator {
 				FileUtil.createLrgeo(lowpolyNodeFile);
 			}
 		} catch (IOException e) {
-			log("Failed to create low poly sector %s: %s", nodeName, e.getMessage());
+			log(I.trf("Failed to create low poly sector {0}: {1}", nodeName, e.getMessage()));
 			return;
 		}
 	}
@@ -191,7 +192,7 @@ public class LowPolyGenerator {
 					.collect(ImmutableMap.toImmutableMap(s -> s.getSector().toLowerCase(), LowPolySector::getLowpolyNode));
 
 			lowpolyBlacklist = ConfigFiles.objectsWithoutLowPoly(ctx).getGuids();
-			log("%d blacklisted objects.", lowpolyBlacklist.size());
+			log(I.trf("{0} blacklisted objects.", lowpolyBlacklist.size()));
 
 			// Search all available low poly meshes
 			lowpolyMeshes = ctx.getFileManager()
@@ -202,11 +203,11 @@ public class LowPolyGenerator {
 							return new LowpolyMesh(lowpoly.getName(), lowpolyMesh.getBoundingBox());
 						} catch (IOException e) {
 							log("");
-							log("Failed to open low poly mesh %s.", lowpoly.getName());
+							log(I.trf("Failed to open low poly mesh {0}.", lowpoly.getName()));
 							return null;
 						}
 					}).filter(Objects::nonNull).collect(ImmutableMap.toImmutableMap(m -> m.name.toLowerCase(), Function.identity()));
-			log("Found %d low poly meshes.", lowpolyMeshes.size());
+			log(I.trf("Found {0, number} low poly meshes.", lowpolyMeshes.size()));
 
 			// Search all non low poly lrendat and node files
 			worldFiles = ctx.getFileManager().listWorldFiles().stream().filter(f -> !isLowPolyFile(f))
@@ -253,7 +254,7 @@ public class LowPolyGenerator {
 					File worldFile = worldFiles.get(worldFileName.toLowerCase());
 					if (worldFile == null) {
 						log("");
-						log("File %s referenced by sector %s does not exist.", worldFileName, secdatFile.getName());
+						log(I.trf("File {0} referenced by sector {1} does not exist.", worldFileName, secdatFile.getName()));
 						continue;
 					}
 
@@ -265,7 +266,7 @@ public class LowPolyGenerator {
 						checkEntitiesForSpeedTree(archiveFile.getEntities().stream(), lowPolyMcpVeg);
 					} catch (Exception e) {
 						log("");
-						log("Failed to open archive %s: %s", worldFile.getName(), e.getMessage());
+						log(I.trf("Failed to open archive {0}: {1}", worldFile.getName(), e.getMessage()));
 					}
 				}
 
@@ -289,14 +290,14 @@ public class LowPolyGenerator {
 				}
 			} catch (IOException e) {
 				log("");
-				log("Failed to open/save secdat %s.", secdatFile.getName());
+				log(I.trf("Failed to open/save secdat {0}.", secdatFile.getName()));
 			}
 		}
 
 		createLowpolyNode("G3_World_Lowpoly_01_Levelmesh_01", globalLowPolyNodeEntities, globalLowPolyNodeSectors, true);
 
 		log("");
-		log("Create speedtree low poly lrentdat with %d speedtrees.", lowPolyMcpVeg.getGrid().getEntryCount());
+		log(I.trf("Create speedtree low poly lrentdat with {0, number} speedtrees.", lowPolyMcpVeg.getGrid().getEntryCount()));
 		// Save speedtree low poly lrentdat
 		lowPolyMcpVeg.getGrid().updateBounds();
 		lowPolyMcp.updateLocalNodeBoundary(lowPolyMcpVeg.getBounds());
@@ -314,7 +315,7 @@ public class LowPolyGenerator {
 		LowPolyGenerator lowPolyGenerator = new LowPolyGenerator(ctx);
 		boolean success = lowPolyGenerator.process();
 		lowPolyGenerator.log("");
-		lowPolyGenerator.log("LowPoly generation %s!", success ? "SUCCESSFUL" : "FAILED");
+		lowPolyGenerator.log(success ? I.tr("LowPoly generation SUCCESSFUL!") : I.tr("LowPoly generation FAILED!"));
 		return lowPolyGenerator.log;
 	}
 }

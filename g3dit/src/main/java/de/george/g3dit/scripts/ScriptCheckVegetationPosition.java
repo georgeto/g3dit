@@ -3,6 +3,8 @@ package de.george.g3dit.scripts;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.teamunify.i18n.I;
+
 import de.george.lrentnode.archive.ArchiveFile;
 import de.george.lrentnode.archive.eCEntity;
 import de.george.lrentnode.classes.eCVegetation_PS;
@@ -16,12 +18,12 @@ public class ScriptCheckVegetationPosition implements IScript {
 
 	@Override
 	public String getTitle() {
-		return "Prüfe Position von Vegetations-Objekten";
+		return I.tr("Prüfe Position von Vegetations-Objekten");
 	}
 
 	@Override
 	public String getDescription() {
-		return "Prüft, ob alle Vegetations-Objekte, in der für ihren Bereich zuständigen VegetationRoot, positioniert sind.";
+		return I.tr("Prüft, ob alle Vegetations-Objekte, in der für ihren Bereich zuständigen VegetationRoot, positioniert sind.");
 	}
 
 	@Override

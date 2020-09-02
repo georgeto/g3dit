@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 
 import com.ezware.dialog.task.TaskDialogs;
 import com.google.common.base.Joiner;
+import com.teamunify.i18n.I;
 
 import de.george.g3utils.structure.Stringtable;
 import de.george.lrentnode.archive.G3ClassContainer;
@@ -27,8 +28,8 @@ public class StringtableHelper {
 
 		if (!unknownClasses.isEmpty()) {
 			if (displayWarning) {
-				boolean isConfirmed = TaskDialogs.isConfirmed(parent,
-						"Datei enthält unbekannte Klassen, durch das Aufräumen der Stringtable\nkönnten Stringtableeinträge gelöscht werden,\ndie noch von diesen Klassen verwendet werden.\nStringtable trotzdem aufräumen?",
+				boolean isConfirmed = TaskDialogs.isConfirmed(parent, I.tr(
+						"Datei enthält unbekannte Klassen, durch das Aufräumen der Stringtable\nkönnten Stringtableeinträge gelöscht werden,\ndie noch von diesen Klassen verwendet werden.\nStringtable trotzdem aufräumen?"),
 						Joiner.on("\n").join(unknownClasses));
 				if (isConfirmed) {
 					stringtable.clear();

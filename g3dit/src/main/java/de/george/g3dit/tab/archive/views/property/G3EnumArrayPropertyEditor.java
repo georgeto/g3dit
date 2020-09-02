@@ -17,6 +17,7 @@ import javax.swing.SwingUtilities;
 
 import com.jidesoft.dialog.ButtonPanel;
 import com.l2fprod.common.beans.editor.AbstractPropertyEditor;
+import com.teamunify.i18n.I;
 
 import de.george.g3dit.gui.components.JEnumComboBox;
 import de.george.g3dit.gui.dialogs.ExtStandardDialog;
@@ -62,7 +63,7 @@ public class G3EnumArrayPropertyEditor extends AbstractPropertyEditor {
 		private EnumsPanel enumsPanel;
 
 		public PopupDialog() {
-			super((Frame) null, "Wert bearbeiten", true);
+			super((Frame) null, I.tr("Wert bearbeiten"), true);
 			setType(Type.UTILITY);
 			setResizable(true);
 			setSize(400, 475);
@@ -84,12 +85,12 @@ public class G3EnumArrayPropertyEditor extends AbstractPropertyEditor {
 		public ButtonPanel createButtonPanel() {
 			ButtonPanel buttonPanel = newButtonPanel();
 
-			Action saveAction = SwingUtils.createAction("Ok", () -> {
+			Action saveAction = SwingUtils.createAction(I.tr("Ok"), () -> {
 				G3EnumArrayPropertyEditor.this.firePropertyChange(oldValue, getWrapper());
 				affirm();
 			});
 
-			Action cancelAction = SwingUtils.createAction("Abbrechen", () -> {
+			Action cancelAction = SwingUtils.createAction(I.tr("Abbrechen"), () -> {
 				// Hacky workaround to cancel cell editing
 				Object al = editorComponent.getInputMap(JComponent.WHEN_FOCUSED).get(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0));
 				if (al instanceof ActionListener) {
@@ -119,7 +120,7 @@ public class G3EnumArrayPropertyEditor extends AbstractPropertyEditor {
 		private Class<? extends G3Enum> enumType;
 
 		public EnumsPanel(JScrollPane navScroll) {
-			super("Value", navScroll, true);
+			super(I.tr("Value"), navScroll, true);
 		}
 
 		@Override
@@ -162,7 +163,7 @@ public class G3EnumArrayPropertyEditor extends AbstractPropertyEditor {
 		private JEnumComboBox<?> cbValue;
 
 		public EnumPanel(int enumValue, Class<? extends G3Enum> enumType, EnumsPanel callback) {
-			super("Value", callback);
+			super(I.tr("Value"), callback);
 			setLayout(new MigLayout("fillx", "[grow]10px[]push[]"));
 
 			// add(new JLabel("Typ"), "cell 0 1");
@@ -181,7 +182,7 @@ public class G3EnumArrayPropertyEditor extends AbstractPropertyEditor {
 
 		@Override
 		protected String getBorderTitle() {
-			return position + ". Value";
+			return I.trf("{0, number}. Value", position);
 		}
 	}
 }

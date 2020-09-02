@@ -9,6 +9,7 @@ import javax.swing.JLabel;
 import javax.swing.JRadioButton;
 import javax.swing.border.EtchedBorder;
 
+import com.teamunify.i18n.I;
 import de.george.g3dit.gui.components.JTextAreaExt;
 import de.george.g3dit.gui.components.TextLineNumber;
 import de.george.g3dit.gui.validation.PointDistanceValidator;
@@ -30,8 +31,8 @@ public abstract class AbstractNavTab extends AbstractEntityTab {
 	}
 
 	protected void setupComponents(String strManualCoord) {
-		rbRelative = new JRadioButton("Relative Koordinaten", true);
-		rbAbsolut = new JRadioButton("Absolute Koordinaten");
+		rbRelative = new JRadioButton(I.tr("Relative Koordinaten"), true);
+		rbAbsolut = new JRadioButton(I.tr("Absolute Koordinaten"));
 		SwingUtils.createButtonGroup(rbRelative, rbAbsolut);
 
 		taSticks = new JTextAreaExt(true);
@@ -44,7 +45,7 @@ public abstract class AbstractNavTab extends AbstractEntityTab {
 		cbManualCoords = new JCheckBox(strManualCoord, false);
 		cbManualCoords.setEnabled(false);
 
-		JLabel lblStickList = new JLabel("Sticks (x-Pos/y-Pos/z-Pos//)");
+		JLabel lblStickList = new JLabel(I.tr("Sticks (x-Pos/y-Pos/z-Pos//)"));
 		add(lblStickList, "gaptop 7, wrap");
 
 		add(rbRelative, "");

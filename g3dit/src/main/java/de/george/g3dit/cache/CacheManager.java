@@ -46,7 +46,7 @@ public class CacheManager {
 			}
 			ctx.runGC();
 		} catch (Exception e) {
-			logger.warn("Erstellen von " + tClass.getSimpleName() + " ist fehlgeschlagen.", e);
+			logger.warn("Failed to create cache {}.", tClass.getSimpleName(), e);
 		}
 	}
 
@@ -57,7 +57,7 @@ public class CacheManager {
 					cache.save(new File(cache.getSavePath()));
 				}
 			} catch (IOException e) {
-				logger.warn("Speichern von " + cache.getClass().getSimpleName() + " ist fehlgeschlagen.", e);
+				logger.warn("Failed to save cache {}.", cache.getClass().getSimpleName(), e);
 			}
 		}
 	}

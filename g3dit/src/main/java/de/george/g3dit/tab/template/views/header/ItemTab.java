@@ -8,6 +8,8 @@ import javax.swing.JTextField;
 
 import org.netbeans.validation.api.builtin.stringvalidation.StringValidators;
 
+import com.teamunify.i18n.I;
+
 import de.george.g3dit.gui.components.HidingGroup;
 import de.george.g3dit.gui.components.JEnumComboBox;
 import de.george.g3dit.gui.components.JTemplateGuidField;
@@ -57,7 +59,7 @@ public class ItemTab extends AbstractTemplateTab {
 	public void initComponents() {
 		setLayout(new MigLayout("hidemode 3", "[]20[]20[]20[]"));
 
-		add(SwingUtils.createBoldLabel("Eigenschaften"), "spanx, wrap");
+		add(SwingUtils.createBoldLabel(I.tr("Eigenschaften")), "spanx, wrap");
 		add(new JLabel("GoldValue"), "gapleft 7, spanx 2");
 		add(new JLabel("Category"), "spanx 2, wrap");
 		tfGoldValue = SwingUtils.createUndoTF();

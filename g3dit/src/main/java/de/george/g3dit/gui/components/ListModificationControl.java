@@ -11,6 +11,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import com.google.common.collect.ImmutableList;
+import com.teamunify.i18n.I;
 
 import ca.odell.glazedlists.EventList;
 import de.george.g3dit.util.FileChangeMonitor;
@@ -32,7 +33,7 @@ public class ListModificationControl<T> extends JPanel {
 			Predicate<T> onDelete, Predicate<List<T>> onMultiDelete) {
 		setLayout(new MigLayout("fillx, insets 0", "[grow][][grow]"));
 
-		JButton btnAdd = new JButton("Hinzufügen", Icons.getImageIcon(Icons.Action.ADD));
+		JButton btnAdd = new JButton(I.tr("Hinzufügen"), Icons.getImageIcon(Icons.Action.ADD));
 		btnAdd.addActionListener(a -> {
 			Optional<T> entry = onAdd.get();
 			if (entry.isPresent()) {
@@ -50,7 +51,7 @@ public class ListModificationControl<T> extends JPanel {
 		add(lblCount, "width 30!");
 		source.addListEventListener(e -> lblCount.setText(Integer.toString(list.getModel().getSize())));
 
-		JButton btnRemove = new JButton("Löschen", Icons.getImageIcon(Icons.Action.DELETE));
+		JButton btnRemove = new JButton(I.tr("Löschen"), Icons.getImageIcon(Icons.Action.DELETE));
 		add(btnRemove, "sg tmcbtn, growx");
 		btnRemove.addActionListener(a -> {
 			int[] selected = list.getSelectedIndices();

@@ -11,6 +11,7 @@ import javax.swing.JComponent;
 import javax.swing.JPanel;
 
 import com.google.common.base.Joiner;
+import com.teamunify.i18n.I;
 
 import de.george.g3dit.EditorContext;
 import de.george.g3dit.EntityMap;
@@ -55,52 +56,52 @@ public class NavPathStage extends NavCalcStage {
 	private final void compareNavPath(NavPath changed, NavPath base, Consumer<String> report,
 			Optional<Pair<bCVector, bCVector>> baseIntersections) {
 		if (!Objects.equals(changed.zoneAGuid, base.zoneAGuid)) {
-			report.accept(String.format("ZoneA %s instead of %s.", changed.zoneAGuid, base.zoneAGuid));
+			report.accept(I.trf("ZoneA {0} instead of {1}.", changed.zoneAGuid, base.zoneAGuid));
 		}
 
 		if (!Objects.equals(changed.zoneBGuid, base.zoneBGuid)) {
-			report.accept(String.format("ZoneB %s instead of %s.", changed.zoneBGuid, base.zoneBGuid));
+			report.accept(I.trf("ZoneB {0} instead of {1}.", changed.zoneBGuid, base.zoneBGuid));
 		}
 
 		if (changed.zoneAGuid != null) {
 			if (!changed.zoneAIntersection.zoneIntersectionCenter.simliar(base.zoneAIntersection.zoneIntersectionCenter, 0.002f)) {
-				report.accept("ZoneAIntersectionCenter: " + changed.zoneAIntersection.zoneIntersectionCenter + " instead of "
-						+ base.zoneAIntersection.zoneIntersectionCenter);
+				report.accept(I.trf("ZoneAIntersectionCenter: {0} instead of {1}", changed.zoneAIntersection.zoneIntersectionCenter,
+						base.zoneAIntersection.zoneIntersectionCenter));
 			} else if (baseIntersections.isPresent()) {
 				bCVector zoneAIntersection = baseIntersections.get().el0().getTransformed(changed.getInvertedWorldMatrix());
 				if (!changed.zoneAIntersection.zoneIntersectionCenter.simliar(zoneAIntersection, 0.1f)) {
-					report.accept("ZoneAIntersectionCenter: " + changed.zoneAIntersection.zoneIntersectionCenter + " instead of "
-							+ zoneAIntersection);
+					report.accept(I.trf("ZoneAIntersectionCenter: {0} instead of {1}", changed.zoneAIntersection.zoneIntersectionCenter,
+							zoneAIntersection));
 				}
 			}
 			if (!changed.zoneAIntersection.zoneIntersectionMargin1.simliar(base.zoneAIntersection.zoneIntersectionMargin1, 0.002f)) {
-				report.accept("ZoneAIntersectionMargin1: " + changed.zoneAIntersection.zoneIntersectionMargin1 + " instead of "
-						+ base.zoneAIntersection.zoneIntersectionMargin1);
+				report.accept(I.trf("ZoneAIntersectionMargin1: {0} instead of {1}", changed.zoneAIntersection.zoneIntersectionMargin1,
+						base.zoneAIntersection.zoneIntersectionMargin1));
 			}
 			if (!changed.zoneAIntersection.zoneIntersectionMargin2.simliar(base.zoneAIntersection.zoneIntersectionMargin2, 0.002f)) {
-				report.accept("ZoneAIntersectionMargin2: " + changed.zoneAIntersection.zoneIntersectionMargin2 + " instead of "
-						+ base.zoneAIntersection.zoneIntersectionMargin2);
+				report.accept(I.trf("ZoneAIntersectionMargin2: {0} instead of {1}", changed.zoneAIntersection.zoneIntersectionMargin2,
+						base.zoneAIntersection.zoneIntersectionMargin2));
 			}
 		}
 
 		if (changed.zoneBGuid != null) {
 			if (!changed.zoneBIntersection.zoneIntersectionCenter.simliar(base.zoneBIntersection.zoneIntersectionCenter, 0.002f)) {
-				report.accept("ZoneBIntersectionCenter: " + changed.zoneBIntersection.zoneIntersectionCenter + " instead of "
-						+ base.zoneBIntersection.zoneIntersectionCenter);
+				report.accept(I.trf("ZoneBIntersectionCenter: {0} instead of {1}", changed.zoneBIntersection.zoneIntersectionCenter,
+						base.zoneBIntersection.zoneIntersectionCenter));
 			} else if (baseIntersections.isPresent()) {
 				bCVector zoneBIntersection = baseIntersections.get().el1().getTransformed(changed.getInvertedWorldMatrix());
 				if (!changed.zoneBIntersection.zoneIntersectionCenter.simliar(zoneBIntersection, 0.1f)) {
-					report.accept("ZoneBIntersectionCenter: " + changed.zoneBIntersection.zoneIntersectionCenter + " instead of "
-							+ zoneBIntersection);
+					report.accept(I.trf("ZoneBIntersectionCenter: {0} instead of {1}", changed.zoneBIntersection.zoneIntersectionCenter,
+							zoneBIntersection));
 				}
 			}
 			if (!changed.zoneBIntersection.zoneIntersectionMargin1.simliar(base.zoneBIntersection.zoneIntersectionMargin1, 0.002f)) {
-				report.accept("ZoneBIntersectionMargin1: " + changed.zoneBIntersection.zoneIntersectionMargin1 + " instead of "
-						+ base.zoneBIntersection.zoneIntersectionMargin1);
+				report.accept(I.trf("ZoneBIntersectionMargin1: {0} instead of {1}", changed.zoneBIntersection.zoneIntersectionMargin1,
+						base.zoneBIntersection.zoneIntersectionMargin1));
 			}
 			if (!changed.zoneBIntersection.zoneIntersectionMargin2.simliar(base.zoneBIntersection.zoneIntersectionMargin2, 0.002f)) {
-				report.accept("ZoneBIntersectionMargin2: " + changed.zoneBIntersection.zoneIntersectionMargin2 + " instead of "
-						+ base.zoneBIntersection.zoneIntersectionMargin2);
+				report.accept(I.trf("ZoneBIntersectionMargin2: {0} instead of {1}", changed.zoneBIntersection.zoneIntersectionMargin2,
+						base.zoneBIntersection.zoneIntersectionMargin2));
 			}
 		}
 	}
@@ -178,13 +179,13 @@ public class NavPathStage extends NavCalcStage {
 
 	private static String getInvalidNavPathMessage(NavPath navPath) {
 		if (navPath.getPoints().size() < 2) {
-			return String.format("Invalid NavPath with only %d points.", navPath.getPoints().size());
+			return I.trf("Invalid NavPath with only {0, number} points.", navPath.getPoints().size());
 		}
 
-		String nullZones = Joiner.on(" and ").skipNulls().join(navPath.zoneAGuid == null ? "ZoneA" : null,
+		String nullZones = Joiner.on(I.tr(" and ")).skipNulls().join(navPath.zoneAGuid == null ? "ZoneA" : null,
 				navPath.zoneBGuid == null ? "ZoneB" : null);
 		if (!nullZones.isEmpty()) {
-			return String.format("Unable to detect %s.", nullZones);
+			return I.trf("Unable to detect {0}.", nullZones);
 		} else {
 			throw new IllegalArgumentException();
 		}
@@ -233,7 +234,7 @@ public class NavPathStage extends NavCalcStage {
 
 	private class NotInNavmap extends BaseNavPathChange {
 		public NotInNavmap(NavPath navPath) {
-			super(navPath, Severity.Error, "Not in NavMap.", formatNavPathZones(navPath));
+			super(navPath, Severity.Error, I.tr("Not in NavMap."), formatNavPathZones(navPath));
 		}
 
 		@Override
@@ -245,7 +246,7 @@ public class NavPathStage extends NavCalcStage {
 
 	private class OnlyInNavmap extends BaseNavPathChange {
 		public OnlyInNavmap(NavPath navPath) {
-			super(navPath, Severity.Warn, "Only in NavMap.", formatNavPathZones(navPath));
+			super(navPath, Severity.Warn, I.tr("Only in NavMap."), formatNavPathZones(navPath));
 		}
 
 		@Override
@@ -257,7 +258,7 @@ public class NavPathStage extends NavCalcStage {
 
 	private class ZoneIntersectionChanged extends BaseNavPathChange {
 		public ZoneIntersectionChanged(NavPath navPath, String details) {
-			super(navPath, Severity.Error, "Intersections with NavZone have changed.",
+			super(navPath, Severity.Error, I.tr("Intersections with NavZone have changed."),
 					HtmlCreator.renderList(details, "", formatNavPathZones(navPath)));
 		}
 
@@ -270,7 +271,7 @@ public class NavPathStage extends NavCalcStage {
 
 	private class ZoneIntersectionStale extends BaseNavPathChange {
 		public ZoneIntersectionStale(NavPath navPath, String details) {
-			super(navPath, Severity.Info, "Intersections stored in the NavPath are stale.",
+			super(navPath, Severity.Info, I.tr("Intersections stored in the NavPath are stale."),
 					HtmlCreator.renderList(details, "", formatNavPathZones(navPath)));
 		}
 

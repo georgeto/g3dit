@@ -10,6 +10,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import com.jidesoft.dialog.ButtonPanel;
+import com.teamunify.i18n.I;
 
 import de.george.g3dit.gui.dialogs.ExtStandardDialog;
 import de.george.g3utils.gui.SwingUtils;
@@ -24,7 +25,7 @@ public class BoundingBoxDialog extends ExtStandardDialog {
 	private bCBox box;
 
 	public BoundingBoxDialog(Window owner, bCBox box) {
-		super(owner, "BoundingBox ändern", true);
+		super(owner, I.tr("BoundingBox ändern"), true);
 		this.box = box.clone();
 
 		setType(Type.UTILITY);
@@ -36,9 +37,9 @@ public class BoundingBoxDialog extends ExtStandardDialog {
 	public JComponent createContentPanel() {
 		JPanel mainPanel = new JPanel(new MigLayout("fill", "[sg, fill, grow]10[sg, fill, grow]10[sg, fill, grow]", "[]1[]8[]1[]"));
 
-		mainPanel.add(new JLabel("min-x"));
-		mainPanel.add(new JLabel("min-y"));
-		mainPanel.add(new JLabel("min-z"), "wrap");
+		mainPanel.add(new JLabel(I.tr("min-x")));
+		mainPanel.add(new JLabel(I.tr("min-y")));
+		mainPanel.add(new JLabel(I.tr("min-z")), "wrap");
 
 		tfMinX = SwingUtils.createUndoTF();
 		mainPanel.add(tfMinX);
@@ -47,9 +48,9 @@ public class BoundingBoxDialog extends ExtStandardDialog {
 		tfMinZ = SwingUtils.createUndoTF();
 		mainPanel.add(tfMinZ, "wrap");
 
-		mainPanel.add(new JLabel("max-x"));
-		mainPanel.add(new JLabel("max-y"));
-		mainPanel.add(new JLabel("max-z"), "wrap");
+		mainPanel.add(new JLabel(I.tr("max-x")));
+		mainPanel.add(new JLabel(I.tr("max-y")));
+		mainPanel.add(new JLabel(I.tr("max-z")), "wrap");
 
 		tfMaxX = SwingUtils.createUndoTF();
 		mainPanel.add(tfMaxX);
@@ -68,7 +69,7 @@ public class BoundingBoxDialog extends ExtStandardDialog {
 		buttonPanel.setAlignment(SwingConstants.CENTER);
 		buttonPanel.setMinButtonWidth(80);
 
-		Action saveAction = SwingUtils.createAction("Speichern", () -> {
+		Action saveAction = SwingUtils.createAction(I.tr("Speichern"), () -> {
 			try {
 				box.setMin(new bCVector(Float.parseFloat(tfMinX.getText()), Float.parseFloat(tfMinY.getText()),
 						Float.parseFloat(tfMinZ.getText())));

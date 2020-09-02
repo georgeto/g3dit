@@ -6,6 +6,8 @@ import java.util.Set;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
+import com.teamunify.i18n.I;
+
 import de.george.lrentnode.archive.ArchiveFile;
 import de.george.lrentnode.archive.eCEntity;
 
@@ -115,12 +117,12 @@ public class NameEntityFilter extends AbstractEntityFilter {
 
 	public static String getToolTipText() {
 		// @foff
-		return    "<html>"
+		return I.tr("<html>"
 				+ "Dem Suchbegriff kann einer der folgenden Präfixe vorangestellt werden."
 				+ "<ul>"
 				+ "<li><b>Kein Präfix</b>: Name enthält Suchbegriff</li>"
 				+ "<li><b>#f#</b>: Fokusname enthält Suchbegriff</li>"
-				+ "</ul></html>";
+				+ "</ul></html>");
 		// @fon
 	}
 }

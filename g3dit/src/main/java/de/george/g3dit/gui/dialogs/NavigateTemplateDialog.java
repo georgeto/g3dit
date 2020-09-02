@@ -16,6 +16,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import com.jidesoft.dialog.ButtonPanel;
+import com.teamunify.i18n.I;
 
 import ca.odell.glazedlists.BasicEventList;
 import ca.odell.glazedlists.FilterList;
@@ -41,7 +42,7 @@ public class NavigateTemplateDialog extends ExtStandardDialog {
 	}
 
 	public NavigateTemplateDialog(Window owner, EditorContext ctx, Predicate<TemplateCacheEntry> filter) {
-		super(owner, "Template öffnen", true);
+		super(owner, I.tr("Template öffnen"), true);
 		setSize(600, 400);
 
 		tfSearch = SwingUtils.createUndoTF();
@@ -79,7 +80,7 @@ public class NavigateTemplateDialog extends ExtStandardDialog {
 	@Override
 	public JComponent createContentPanel() {
 		JPanel panel = new JPanel(new MigLayout("insets 10, fill", "[fill]", "[][]10[fill, grow]"));
-		panel.add(new JLabel("Template-Name/Guid eingeben"), "wrap");
+		panel.add(new JLabel(I.tr("Template-Name/Guid eingeben")), "wrap");
 		panel.add(tfSearch, "wrap");
 		panel.add(new JScrollPane(list));
 
@@ -90,7 +91,7 @@ public class NavigateTemplateDialog extends ExtStandardDialog {
 	public ButtonPanel createButtonPanel() {
 		ButtonPanel buttonPanel = newButtonPanel();
 
-		Action okAction = SwingUtils.createAction("Öffnen", () -> {
+		Action okAction = SwingUtils.createAction(I.tr("Öffnen"), () -> {
 			if (!list.getSelectedValuesList().isEmpty()) {
 				setDialogResult(RESULT_AFFIRMED);
 			}
@@ -123,17 +124,17 @@ public class NavigateTemplateDialog extends ExtStandardDialog {
 			TemplateCacheEntry entry = (TemplateCacheEntry) value;
 			if (entry.isHelperParent()) {
 				setIcon(Icons.getImageIcon(Icons.Document.LETTER_I));
-				setToolTipText(SwingUtils.getMultilineText("Helfer-Template-Entity dessen Guid in .lrtpldatasc eingetragen wird.",
-						"Wird im Template-Allgemein-Tab und im Tiny Hexer auch als Item-Guid bezeichnet."));
+				setToolTipText(SwingUtils.getMultilineText(I.tr("Helfer-Template-Entity dessen Guid in .lrtpldatasc eingetragen wird."),
+						I.tr("Wird im Template-Allgemein-Tab und im Tiny Hexer auch als Item-Guid bezeichnet.")));
 			} else if (entry.getRefTemplate() != null) {
 				setIcon(Icons.getImageIcon(Icons.Document.LETTER_R));
-				setToolTipText(SwingUtils.getMultilineText("Template-Entity verweist auf andere Template-Entity.",
-						"Wird hauptsächlich in ObjectGroups verwendet."));
+				setToolTipText(SwingUtils.getMultilineText(I.tr("Template-Entity verweist auf andere Template-Entity."),
+						I.tr("Wird hauptsächlich in ObjectGroups verwendet.")));
 			} else {
 				setIcon(Icons.getImageIcon(Icons.Document.LETTER_T));
-				setToolTipText(
-						SwingUtils.getMultilineText("Template-Entity mit PropertySets, die als Vorlage für Weltdaten-Entities dient.",
-								"Wird im Template-Allgemein-Tab und im Tiny Hexer auch als Reference-Guid bezeichnet."));
+				setToolTipText(SwingUtils.getMultilineText(
+						I.tr("Template-Entity mit PropertySets, die als Vorlage für Weltdaten-Entities dient."),
+						I.tr("Wird im Template-Allgemein-Tab und im Tiny Hexer auch als Reference-Guid bezeichnet.")));
 			}
 
 			return this;

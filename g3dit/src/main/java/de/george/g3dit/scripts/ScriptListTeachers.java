@@ -11,6 +11,8 @@ import java.util.Optional;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
+import com.teamunify.i18n.I;
+
 import de.george.g3dit.cache.Caches;
 import de.george.g3dit.cache.TemplateCache;
 import de.george.g3dit.cache.TemplateCache.TemplateCacheEntry;
@@ -31,17 +33,17 @@ public class ScriptListTeachers implements IScript {
 
 	@Override
 	public String getTitle() {
-		return "Lehrer auflisten";
+		return I.tr("Lehrer auflisten");
 	}
 
 	@Override
 	public String getDescription() {
-		return "Erstellt eine Liste aller Lehrer mit den Perks und Attributen die sie lehren.";
+		return I.tr("Erstellt eine Liste aller Lehrer mit den Perks und Attributen die sie lehren.");
 	}
 
 	@Override
 	public boolean execute(IScriptEnvironment env) {
-		File saveFile = FileDialogWrapper.saveFile("Lehrer Auflistung speichern unter...", env.getParentWindow());
+		File saveFile = FileDialogWrapper.saveFile(I.tr("Lehrer-Auflistung speichern unter..."), env.getParentWindow());
 		if (saveFile == null) {
 			return false;
 		}
@@ -90,12 +92,12 @@ public class ScriptListTeachers implements IScript {
 
 			output.add(entry.getKey());
 			if (attributes.size() > 0) {
-				output.add("\tAttribute:");
+				output.add("\t" + I.tr("Attribute") + ":");
 				attributes.forEach(attr -> output.add("\t\t" + attr));
 			}
 
 			if (skills.size() > 0) {
-				output.add("\tSkills:");
+				output.add("\t" + I.tr("Skills") + ":");
 				skills.forEach(skill -> output.add("\t\t" + skill));
 			}
 
@@ -105,7 +107,7 @@ public class ScriptListTeachers implements IScript {
 		try {
 			IOUtils.writeTextFile(output, saveFile, StandardCharsets.UTF_8);
 		} catch (IOException e) {
-			env.log("Datei konnte nicht gespeichert werden:" + e.getMessage());
+			env.log(I.trf("Datei konnte nicht gespeichert werden: {0}", e.getMessage()));
 			return false;
 		}
 		return true;

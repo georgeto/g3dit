@@ -7,6 +7,8 @@ import java.util.function.Consumer;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 
+import com.teamunify.i18n.I;
+
 import de.george.g3dit.EditorContext;
 import de.george.g3dit.EntityMap;
 import de.george.g3dit.cache.NavCache;
@@ -101,7 +103,8 @@ public class PrefPathStage extends NavCalcStage {
 
 	private class InvalidPrefPath extends BasePrefPathChange {
 		public InvalidPrefPath(PrefPath prefPath) {
-			super(prefPath, Severity.Info, String.format("Invalid PrefPath with only %d points.", prefPath.getPoints().size()), null);
+			super(prefPath, Severity.Info, String.format(I.tr("Invalid PrefPath with only %d points."), prefPath.getPoints().size()),
+					null);
 		}
 
 		@Override
@@ -114,9 +117,9 @@ public class PrefPathStage extends NavCalcStage {
 		private String zoneGuid;
 
 		public ChangedNavZone(PrefPath prefPath, String detecedZoneGuid) {
-			super(prefPath, Severity.Warn, "Detected different containing NavZone.",
-					String.format("Detected %s instead of %s.", detecedZoneGuid == null ? "no NavZone" : detecedZoneGuid,
-							prefPath.getZoneGuid() == null ? "no NavZone" : prefPath.getZoneGuid()));
+			super(prefPath, Severity.Warn, I.tr("Detected different containing NavZone."),
+					I.trf("Detected {0} instead of {1}.", detecedZoneGuid == null ? I.tr("no NavZone") : detecedZoneGuid,
+							prefPath.getZoneGuid() == null ? I.tr("no NavZone") : prefPath.getZoneGuid()));
 			zoneGuid = detecedZoneGuid;
 		}
 
@@ -132,7 +135,7 @@ public class PrefPathStage extends NavCalcStage {
 
 	private class NoNavZone extends BasePrefPathChange {
 		public NoNavZone(PrefPath prefPath) {
-			super(prefPath, Severity.Warn, "Detected no containing NavZone.", null);
+			super(prefPath, Severity.Warn, I.tr("Detected no containing NavZone."), null);
 		}
 
 		@Override
@@ -143,7 +146,7 @@ public class PrefPathStage extends NavCalcStage {
 
 	private class SpansTwoZones extends BasePrefPathChange {
 		public SpansTwoZones(PrefPath prefPath) {
-			super(prefPath, Severity.Warn, "Spans more than one NavZone.", null);
+			super(prefPath, Severity.Warn, I.tr("Spans more than one NavZone."), null);
 		}
 
 		@Override

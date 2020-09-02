@@ -9,6 +9,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.SwingUtilities;
 
+import com.teamunify.i18n.I;
+
 public class JTextAreaExt extends JTextArea {
 
 	private boolean clearable;
@@ -35,25 +37,25 @@ public class JTextAreaExt extends JTextArea {
 					JPopupMenu menu = new JPopupMenu();
 
 					// Kopieren
-					JMenuItem miCopy = new JMenuItem("Kopieren");
+					JMenuItem miCopy = new JMenuItem(I.tr("Kopieren"));
 					menu.add(miCopy);
 					miCopy.addActionListener(e1 -> copy());
 
 					if (isEditable()) {
 						// Ausschneiden
-						JMenuItem miCut = new JMenuItem("Ausschneiden");
+						JMenuItem miCut = new JMenuItem(I.tr("Ausschneiden"));
 						menu.add(miCut);
 						miCut.addActionListener(e1 -> cut());
 
 						// Einfügen
-						JMenuItem miPaste = new JMenuItem("Einfügen");
+						JMenuItem miPaste = new JMenuItem(I.tr("Einfügen"));
 						menu.add(miPaste);
 						miPaste.addActionListener(e1 -> paste());
 					}
 
 					if (clearable) {
 						// Leeren
-						JMenuItem miClear = new JMenuItem("Inhalt löschen");
+						JMenuItem miClear = new JMenuItem(I.tr("Inhalt löschen"));
 						menu.add(miClear);
 						miClear.addActionListener(e1 -> setText(null));
 					}

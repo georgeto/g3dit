@@ -89,23 +89,23 @@ public class eCResourceAnimationActor_PS extends GenomeFile {
 		@Override
 		public void read(G3FileReader reader) {
 			if (reader.readInt() != 0x616E6567) {
-				throw new IllegalArgumentException("Ungültiger eCWrapper_emfx2Actor.");
+				throw new IllegalArgumentException("Invalid eCWrapper_emfx2Actor.");
 			}
 
 			int version = reader.readUnsignedShort();
 			if (version != 4) {
-				throw new IllegalArgumentException("Version != 4 wird nicht unterstützt.");
+				throw new IllegalArgumentException("Version != 4 is not supported.");
 			}
 
 			int offsetEnd = reader.readInt() + reader.getPos();
 			if (!reader.readString(4).equals("FXA ")) {
-				throw new IllegalArgumentException("Ungültiger eCWrapper_emfx2Actor.");
+				throw new IllegalArgumentException("Invalid eCWrapper_emfx2Actor.");
 			}
 			highVersion = reader.readUnsignedByte();
 			lowVersion = reader.readUnsignedByte();
 
 			if (highVersion != 1 || lowVersion != 1) {
-				throw new IllegalArgumentException("Ungültiger eCWrapper_emfx2Actor.");
+				throw new IllegalArgumentException("Invalid eCWrapper_emfx2Actor.");
 			}
 
 			chunks = Chunks.readChunks(reader, offsetEnd);
@@ -154,7 +154,7 @@ public class eCResourceAnimationActor_PS extends GenomeFile {
 	protected void readInternal(G3FileReaderEx reader) throws IOException {
 		int version = reader.readUnsignedShort();
 		if (version != 54) {
-			throw new IllegalArgumentException("Version != 54 wird nicht unterstützt.");
+			throw new IllegalArgumentException("Version != 54 is not supported.");
 		}
 
 		resourceSize = reader.readUnsignedInt();

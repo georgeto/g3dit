@@ -12,6 +12,9 @@ import org.jdesktop.swingx.JXTable;
 import org.jdesktop.swingx.table.ColumnFactory;
 import org.jdesktop.swingx.table.TableColumnExt;
 
+import com.google.common.collect.ImmutableBiMap;
+import com.teamunify.i18n.I;
+
 import de.george.g3dit.cache.Caches;
 import de.george.g3dit.cache.TemplateCache.TemplateCacheEntry;
 import de.george.g3dit.gui.components.TableModificationControl;
@@ -65,8 +68,11 @@ public class ItemPanel extends JPanel {
 	}
 
 	private class ItemTableModel extends ListTableModel<InventoryStack> {
+		private static final ImmutableBiMap<String, String> COLUMN_MAPPING = ImmutableBiMap.of("Reference ID", I.tr("Reference ID"),
+				"Name", I.tr("Name"), "Amount", I.tr("Amount"), "Quality", I.tr("Quality"));
+
 		public ItemTableModel() {
-			super("Reference ID", "Name", "Amount", "Quality");
+			super(COLUMN_MAPPING.values().toArray(new String[0]));
 		}
 
 		@Override
@@ -156,7 +162,7 @@ public class ItemPanel extends JPanel {
 		@Override
 		public void configureColumnWidths(JXTable table, TableColumnExt columnExt) {
 			columnExt.setEditable(true);
-			switch (columnExt.getTitle()) {
+			switch (ItemTableModel.COLUMN_MAPPING.inverse().get(columnExt.getTitle())) {
 				case "Reference ID" -> columnExt.setPreferredWidth(250);
 				case "Name" -> {
 					columnExt.setPreferredWidth(150);

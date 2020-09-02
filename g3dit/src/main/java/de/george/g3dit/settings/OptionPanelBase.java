@@ -12,6 +12,7 @@ import javax.swing.JPanel;
 
 import com.google.common.base.Joiner;
 import com.google.common.base.Strings;
+import com.teamunify.i18n.I;
 
 import de.george.g3dit.gui.dialogs.CheckBoxListSelectDialog;
 import de.george.g3dit.gui.renderer.BeanListCellRenderer;
@@ -44,7 +45,7 @@ public class OptionPanelBase<T extends OptionPanelBase<T>> {
 		content = new JPanel(new MigLayout(layoutConstraints, colConstraints, rowConstraints));
 
 		btnReset = new JButton(Icons.getImageIcon(Icons.Document.TEMPLATE));
-		btnReset.setToolTipText("Einstellungen zurücksetzen");
+		btnReset.setToolTipText(I.tr("Einstellungen zurücksetzen"));
 		btnReset.setFocusable(false);
 		btnReset.addActionListener(a -> resetToDefaults());
 	}
@@ -121,8 +122,8 @@ public class OptionPanelBase<T extends OptionPanelBase<T>> {
 
 	@SuppressWarnings("unchecked")
 	public void resetToDefaults() {
-		CheckBoxListSelectDialog<Option> dialog = new CheckBoxListSelectDialog<>(parent, "Einstellungen zurücksetzen", handlers.values(),
-				new BeanListCellRenderer("displayName"));
+		CheckBoxListSelectDialog<Option> dialog = new CheckBoxListSelectDialog<>(parent, I.tr("Einstellungen zurücksetzen"),
+				handlers.values(), new BeanListCellRenderer("displayName"));
 		if (dialog.openAndWasSuccessful()) {
 			List<Option> entries = dialog.getSelectedEntries();
 			handlers.entrySet().stream().filter(k -> entries.contains(k.getValue()))

@@ -1,5 +1,7 @@
 package de.george.g3dit.entitytree.filter;
 
+import com.teamunify.i18n.I;
+
 import de.george.g3utils.structure.bCVector;
 import de.george.lrentnode.archive.eCEntity;
 
@@ -66,13 +68,13 @@ public class PositionEntityFilter extends AbstractEntityFilter {
 
 	public static String getToolTipText() {
 		// @foff
-		return    "<html>"
+		return I.tr("<html>"
 				+ "Koordinaten in der Form x/y/z//<br>"
 				+ "Der Position kann einer der folgenden Präfixe vorangestellt werden."
 				+ "<ul>"
 				+ "<li><b>Kein Präfix</b>: Distanz</li>"
 				+ "<li><b>#l#</b>: Distanz unter Vernachlässigung der Y-Komponente</li>"
-				+ "</ul></html>";
+				+ "</ul></html>");
 		// @fon
 	}
 }

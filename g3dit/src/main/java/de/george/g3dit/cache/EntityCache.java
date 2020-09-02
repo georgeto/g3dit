@@ -20,6 +20,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.ezware.dialog.task.TaskDialogs;
+import com.teamunify.i18n.I;
 
 import de.george.g3dit.EditorContext;
 import de.george.g3dit.check.FileDescriptor;
@@ -110,7 +111,7 @@ public class EntityCache extends AbstractCache<EntityCache> {
 					entries = (Map<String, EntityCacheEntry>) data[1];
 					uniqueNames = extractUniqueNames(entries);
 				} catch (Exception e) {
-					logger.info("Ladefehler: {}", e.getMessage());
+					logger.info("Failed to load EntityCache: {}", e.getMessage());
 				} finally {
 					notifyCacheUpdated();
 				}
@@ -176,9 +177,9 @@ public class EntityCache extends AbstractCache<EntityCache> {
 
 		public CreateEntityCacheWorker(ConcurrentMap<String, EntityCacheEntry> openEntries, Callable<List<File>> fileProvider,
 				List<File> openFiles) {
-			super(fileProvider, openFiles, "Erstelle EntityCache", ctx.getParentWindow());
+			super(fileProvider, openFiles, I.tr("Erstelle EntityCache"), ctx.getParentWindow());
 			workerEntries = openEntries;
-			statusFormat = "%d Entities gefunden";
+			statusFormat = I.tr("{0, number} Entities gefunden");
 		}
 
 		@Override

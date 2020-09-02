@@ -9,6 +9,8 @@ import java.util.function.Supplier;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.teamunify.i18n.I;
+
 import de.george.g3dit.EditorContext;
 import de.george.g3dit.check.EntityDescriptor;
 import de.george.g3dit.check.FileDescriptor;
@@ -33,8 +35,8 @@ public class CheckLightmaps extends AbstractEntityCheck {
 	private Set<String> primaryGuids = new HashSet<>();
 
 	public CheckLightmaps(EditorContext ctx) {
-		super("Ungültige Lightmaps ermitteln", "Ermittelt Lightmaps deren Guid nicht existiert oder bei denen der Meshname nicht passt.",
-				0, 1);
+		super(I.tr("Ungültige Lightmaps ermitteln"),
+				I.tr("Ermittelt Lightmaps deren Guid nicht existiert oder bei denen der Meshname nicht passt."), 0, 1);
 		this.ctx = ctx;
 	}
 
@@ -74,20 +76,20 @@ public class CheckLightmaps extends AbstractEntityCheck {
 				}
 
 				reportLightmapError(problemConsumer, lightmap, Severity.Fatal,
-						"Mesh der Lightmap weicht vom Mesh der zugehörigen Entity ab.",
-						String.format("Lightmap: %s\n Entity: %s", mesh, cleanEntityMesh));
+						I.tr("Mesh der Lightmap weicht vom Mesh der zugehörigen Entity ab."),
+						I.trf("Lightmap: {0}\nEntity: {1}", mesh, cleanEntityMesh));
 			} else {
 				// Only report for lightmaps in primary data folder
 				if (primary) {
-					reportLightmapError(problemConsumer, lightmap, Severity.Warning, "Es existiert keine Entity mit Guid der Lightmap.",
-							String.format("Guid: %s", guid));
+					reportLightmapError(problemConsumer, lightmap, Severity.Warning,
+							I.tr("Es existiert keine Entity mit Guid der Lightmap."), I.trf("Guid: {0}", guid));
 				}
 			}
 		} else {
 			// Only report for lightmaps in primary data folder
 			if (primary) {
 				reportLightmapError(problemConsumer, lightmap, Severity.Warning,
-						"Name der Lightmap entspricht nicht dem Lightmap-Namensschema.", null);
+						I.tr("Name der Lightmap entspricht nicht dem Lightmap-Namensschema."), null);
 			}
 		}
 	}

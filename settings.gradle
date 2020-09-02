@@ -1,1 +1,8 @@
+pluginManagement {
+	repositories {
+		gradlePluginPortal()
+		maven { url "$rootDir/plugins" }
+	}
+}
+
 include ":G3Utils", ":LrentNode", ":NavMap", ":g3dit"

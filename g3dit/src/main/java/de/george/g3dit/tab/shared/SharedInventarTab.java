@@ -11,6 +11,8 @@ import javax.swing.JTextField;
 import org.netbeans.validation.api.builtin.stringvalidation.StringValidators;
 import org.netbeans.validation.api.ui.ValidationGroup;
 
+import com.teamunify.i18n.I;
+
 import de.george.g3dit.EditorContext;
 import de.george.g3dit.cache.Caches;
 import de.george.g3dit.cache.TemplateCache;
@@ -47,7 +49,7 @@ public class SharedInventarTab extends AbstractPropertySharedTab {
 
 	@Override
 	protected void initPropertyPanel(PropertyPanel propertyPanel, ValidationGroup validation, JScrollPane scrollPane) {
-		propertyPanel.addHeadline("TreasureSets");
+		propertyPanel.addHeadline(I.tr("TreasureSets"));
 		TemplateCache tpleCache = Caches.template(ctx);
 		for (int i = 1; i <= 5; i++) {
 			propertyPanel.add(PropertyUtil.GetTreasureSetProperty(i))
@@ -56,7 +58,7 @@ public class SharedInventarTab extends AbstractPropertySharedTab {
 					.fullWidth().done();
 		}
 
-		propertyPanel.addHeadline("InventoryStacks");
+		propertyPanel.addHeadline(I.tr("InventoryStacks"));
 		stacksPanel = new InventarStacksPanel(scrollPane);
 		stacksPanel.initValidation(validation);
 		propertyPanel.add(new LambdaPropertyHandler(stacksPanel, stacksPanel::loadValues, stacksPanel::saveValues)).grow()
@@ -68,7 +70,7 @@ public class SharedInventarTab extends AbstractPropertySharedTab {
 
 	@Override
 	public String getTabTitle() {
-		return "Inventar";
+		return I.tr("Inventar");
 	}
 
 	@Override
@@ -78,7 +80,7 @@ public class SharedInventarTab extends AbstractPropertySharedTab {
 
 	class InventarStacksPanel extends AbstractElementsPanel<G3ClassContainer> {
 		public InventarStacksPanel(JScrollPane navScroll) {
-			super("Stack", navScroll, true);
+			super(I.tr("Stack"), navScroll, true);
 
 			setLayout(new MigLayout("fillx, insets 0 5 0 0", "[]"));
 		}
@@ -137,21 +139,21 @@ public class SharedInventarTab extends AbstractPropertySharedTab {
 		private QualityPanel qualityPanel;
 
 		public InventarStackPanel(int inAmount, int inStackType, String inGuid, int inQuality) {
-			super("Stack", stacksPanel);
+			super(I.tr("Stack"), stacksPanel);
 			setLayout(new MigLayout("", "[]10px[]push[]"));
 
-			add(new JLabel("Anzahl"), "cell 0 0");
+			add(new JLabel(I.tr("Anzahl")), "cell 0 0");
 
 			tfAmount = SwingUtils.createUndoTF(String.valueOf(inAmount));
 			add(tfAmount, "cell 1 0, width 50:100:100");
 
-			add(new JLabel("Typ"), "cell 0 1");
+			add(new JLabel(I.tr("Typ")), "cell 0 1");
 
 			cbStackType = new JEnumComboBox<>(gEStackType.class);
 			cbStackType.setSelectedValue(inStackType);
 			add(cbStackType, "cell 1 1, width 50:100:100");
 
-			add(new JLabel("Template"), "cell 0 2");
+			add(new JLabel(I.tr("Template")), "cell 0 2");
 
 			tfTemplate = new JTemplateGuidField(ctx);
 			add(tfTemplate, "cell 1 2, width 100:300:300");
@@ -159,7 +161,7 @@ public class SharedInventarTab extends AbstractPropertySharedTab {
 				TemplateCache tpleCache = Caches.template(ctx);
 				if (tpleCache.isValid()) {
 					title = tpleCache.getEntryByGuid(newGuid).map(TemplateCache.TemplateCacheEntry::getName)
-							.orElse("<keine Template gefunden>");
+							.orElse(I.tr("<keine Template gefunden>"));
 					updateBorderTitle();
 				}
 			});
@@ -169,12 +171,12 @@ public class SharedInventarTab extends AbstractPropertySharedTab {
 			add(operationPanel, "cell 2 0, spanx 2, spany 3");
 
 			btnTple = new JButton(Icons.getImageIcon(Icons.Action.BOOK));
-			btnTple.setToolTipText("Template laden");
+			btnTple.setToolTipText(I.tr("Template laden"));
 
 			operationPanel.add(btnTple, LayoutUtils.sqrBtn("cell 1 1"));
 			btnTple.addActionListener(e -> new TemplateNameSearchDialog(InventarStackPanel.this, ctx).open());
 
-			add(new JLabel("Quality"), "cell 0 3");
+			add(new JLabel(I.tr("Quality")), "cell 0 3");
 			qualityPanel = new QualityPanel();
 			qualityPanel.setQuality(inQuality);
 			add(qualityPanel, "cell 1 3, spanx 3");
@@ -183,9 +185,9 @@ public class SharedInventarTab extends AbstractPropertySharedTab {
 		@Override
 		@SuppressWarnings("unchecked")
 		public void initValidation(ValidationGroup group) {
-			tfAmount.setName("Anzahl");
+			tfAmount.setName(I.tr("Anzahl"));
 			group.add(tfAmount, StringValidators.REQUIRE_VALID_INTEGER, StringValidators.REQUIRE_NON_NEGATIVE_NUMBER);
-			tfTemplate.initValidation(group, "Template Guid", GuidValidator.INSTANCE, new TemplateExistenceValidator(group, ctx));
+			tfTemplate.initValidation(group, I.tr("Template Guid"), GuidValidator.INSTANCE, new TemplateExistenceValidator(group, ctx));
 		}
 
 		@Override

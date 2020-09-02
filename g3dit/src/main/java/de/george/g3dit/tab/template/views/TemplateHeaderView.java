@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 
 import com.ezware.dialog.task.TaskDialogs;
 import com.google.common.eventbus.Subscribe;
+import com.teamunify.i18n.I;
 
 import de.george.g3dit.gui.components.tab.JSplittedTypedTabbedPane;
 import de.george.g3dit.gui.components.tab.TabSelectedEvent;
@@ -107,8 +108,9 @@ public class TemplateHeaderView implements TemplateView {
 					tab.saveValues(tple);
 				}
 			} catch (Exception e) {
-				TaskDialogs.error(ctx.getParentWindow(), "Fehler beim Speichern des Tabs " + tab.getTabTitle(), e.getMessage());
-				logger.warn("Fehler beim Speichern des Tabs {}: ", tab.getTabTitle(), e);
+				TaskDialogs.error(ctx.getParentWindow(), I.trf("Fehler beim Speichern des Tabs '{0}'.", tab.getTabTitle()),
+						e.getMessage());
+				logger.warn("Error while saving the tab '{}'.", tab.getTabTitle(), e);
 			}
 		}
 	}

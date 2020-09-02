@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.teamunify.i18n.I;
 
 import de.george.g3dit.settings.BooleanOptionHandler;
 import de.george.g3dit.settings.LambdaOption;
@@ -31,17 +32,17 @@ public class ScriptDumpSvmAdmin implements IScript {
 
 	@Override
 	public String getTitle() {
-		return "SVMAdmin.dat exportieren";
+		return I.tr("SVMAdmin.dat exportieren");
 	}
 
 	@Override
 	public String getDescription() {
-		return "Wandelt die SVMAdmin.dat in eine Textdatei um.";
+		return I.tr("Wandelt die SVMAdmin.dat in eine Textdatei um.");
 	}
 
 	@Override
 	public boolean execute(IScriptEnvironment env) {
-		File loadFile = FileDialogWrapper.openFile("SVMAdmin.dat öffnen...", env.getParentWindow());
+		File loadFile = FileDialogWrapper.openFile(I.tr("SVMAdmin.dat öffnen..."), env.getParentWindow());
 		if (loadFile == null) {
 			return false;
 		}
@@ -49,11 +50,11 @@ public class ScriptDumpSvmAdmin implements IScript {
 		File saveFile;
 		boolean asJson = env.getOption(AS_JSON).booleanValue();
 		if (!asJson) {
-			saveFile = FileDialogWrapper.saveFile("SVMAdmin.dat in Textform speichern", IOUtils.changeExtension(loadFile.getName(), "txt"),
-					env.getParentWindow(), FileDialogWrapper.TXT_FILTER);
+			saveFile = FileDialogWrapper.saveFile(I.tr("SVMAdmin.dat in Textform speichern"),
+					IOUtils.changeExtension(loadFile.getName(), "txt"), env.getParentWindow(), FileDialogWrapper.TXT_FILTER);
 		} else {
-			saveFile = FileDialogWrapper.saveFile("SVMAdmin.dat als Json speichern", IOUtils.changeExtension(loadFile.getName(), "json"),
-					env.getParentWindow(), FileDialogWrapper.JSON_FILTER);
+			saveFile = FileDialogWrapper.saveFile(I.tr("SVMAdmin.dat als Json speichern"),
+					IOUtils.changeExtension(loadFile.getName(), "json"), env.getParentWindow(), FileDialogWrapper.JSON_FILTER);
 		}
 
 		if (saveFile == null) {
@@ -80,8 +81,8 @@ public class ScriptDumpSvmAdmin implements IScript {
 						.writeValue(saveFile, manager);
 			}
 		} catch (IOException e) {
-			logger.warn("Fehler beim Export.", e);
-			env.log("Fehler beim Export:" + e.getMessage());
+			logger.warn("Error during export.", e);
+			env.log(I.trf("Fehler beim Export: {0}", e.getMessage()));
 
 		}
 

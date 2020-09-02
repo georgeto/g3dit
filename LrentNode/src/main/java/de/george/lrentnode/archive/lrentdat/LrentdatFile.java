@@ -33,11 +33,11 @@ public class LrentdatFile extends ArchiveFile {
 	@Override
 	protected void readInternal(G3FileReaderEx reader) throws IOException {
 		if (!reader.read(8).equals("47454E4F4D45444C")) {
-			throw new IOException("'" + reader.getFileName() + "' ist keine gültige .lrentdat Datei.");
+			throw new IOException("'" + reader.getFileName() + "' is not a valid .lrentdat file.");
 		}
 
 		if (reader.readShort() != 83) {
-			reader.warn(logger, "Lrentdat unbekannte Version.");
+			reader.warn(logger, "Unsupported Lrentdat version.");
 		}
 
 		context = (eCEntityDynamicContext) ClassUtil.readSubClass(reader);

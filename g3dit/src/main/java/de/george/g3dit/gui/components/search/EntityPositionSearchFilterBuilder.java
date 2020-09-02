@@ -7,6 +7,8 @@ import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import com.teamunify.i18n.I;
+
 import de.george.g3dit.entitytree.filter.PositionEntityFilter;
 import de.george.g3dit.gui.components.FloatSpinner;
 import de.george.g3utils.gui.SwingUtils;
@@ -26,7 +28,7 @@ public class EntityPositionSearchFilterBuilder implements SearchFilterBuilder<eC
 		tfFilter = SwingUtils.createUndoTF();
 		fsDistance = new FloatSpinner(100.0f);
 		fsDistance.setVal(100.0f);
-		cbIgnoreY = new JCheckBox("Ignore Y", false);
+		cbIgnoreY = new JCheckBox(I.tr("Ignore Y"), false);
 
 		comp = new JPanel(new MigLayout("ins 0"));
 		comp.add(tfFilter, "width 100:300:400");

@@ -7,6 +7,7 @@ import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
 import com.jidesoft.dialog.BannerPanel;
+import com.teamunify.i18n.I;
 
 import de.george.g3dit.Editor;
 import de.george.g3dit.gui.components.JLinkLabel;
@@ -15,7 +16,7 @@ import net.miginfocom.swing.MigLayout;
 
 public class AboutDialog extends ExtStandardDialog {
 	public AboutDialog(Window owner) {
-		super(owner, "Über g3dit", true);
+		super(owner, I.tr("Über g3dit"), true);
 		setType(Type.UTILITY);
 		setResizable(false);
 		setSize(500, 450);
@@ -38,7 +39,7 @@ public class AboutDialog extends ExtStandardDialog {
 		mainPanel.add(libPanel, "width 50%, growy");
 		mainPanel.add(iconPanel, "width 50%, growy, wrap");
 
-		libPanel.add(SwingUtils.createBoldLabel("Bibliotheken"), "wrap");
+		libPanel.add(SwingUtils.createBoldLabel(I.tr("Bibliotheken")), "wrap");
 		libPanel.add(new JLinkLabel("MigLayout", "http://www.miglayout.com/"), "gapleft 7, wrap");
 		libPanel.add(new JLinkLabel("Simple Validation 1.5", "https://kenai.com/projects/simplevalidation"), "gapleft 7, wrap");
 		libPanel.add(new JLinkLabel("XFileDialog", "http://code.google.com/p/xfiledialog/"), "gapleft 7, wrap");
@@ -52,7 +53,7 @@ public class AboutDialog extends ExtStandardDialog {
 		libPanel.add(new JLinkLabel("JBreadcrumb", "https://github.com/ghedlund/jbreadcrumb"), "gapleft 7, wrap");
 		libPanel.add(new JLinkLabel("FlatLaf", "https://github.com/JFormDesigner/FlatLaf"), "gapleft 7, wrap");
 
-		iconPanel.add(SwingUtils.createBoldLabel("Icons"), "wrap");
+		iconPanel.add(SwingUtils.createBoldLabel(I.tr("Icons")), "wrap");
 		iconPanel.add(new JLinkLabel("Fugue Icons", "http://p.yusukekamiyamane.com"), "gapleft 7, wrap");
 		iconPanel.add(new JLinkLabel("Crystal Clear", "http://everaldo.com"), "gapleft 7, wrap");
 		iconPanel.add(new JLinkLabel("Silk Icons", "http://www.famfamfam.com/lab/icons/silk/"), "gapleft 7, wrap");

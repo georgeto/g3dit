@@ -10,6 +10,7 @@ import com.google.common.collect.FluentIterable;
 import com.google.common.collect.ImmutableList;
 import com.l2fprod.common.propertysheet.AbstractProperty;
 import com.l2fprod.common.propertysheet.Property;
+import com.teamunify.i18n.I;
 
 import de.george.g3utils.io.G3Serializable;
 import de.george.lrentnode.classes.desc.PropertyDescriptor;
@@ -126,8 +127,8 @@ public class G3Property extends AbstractProperty {
 				}
 			}
 		} catch (Exception e) {
-			logger.warn("Fehler beim Anzeigen des Wertes der Property '{}'.", getName(), e);
-			TaskDialogs.error(null, "Fehler beim Anzeigen", "Fehler beim Anzeigen des Wertes der Property '" + getName() + "'.");
+			logger.warn("Failed to display the value of the property '{}'.", getName(), e);
+			TaskDialogs.error(null, I.tr("Fehler beim Anzeigen"), I.trf("Fehler beim Anzeigen des Wertes der Property '{0}'.", getName()));
 			throw new RuntimeException(e);
 		}
 
@@ -165,9 +166,9 @@ public class G3Property extends AbstractProperty {
 
 			classProperty.setValue((G3Serializable) value);
 		} catch (Exception e) {
-			logger.warn("Fehler beim Parsen des eingegebenen Wertes '{}' für Property '{}'.", value, getName(), e);
+			logger.warn("Failed to parse the entered value '{}' for the property '{}'.", value, getName(), e);
 			TaskDialogs.error(null, "Fehler beim Parsen",
-					"Fehler beim Parsen des eingegebenen Wertes '" + value + "' für Property '" + getName() + "'.");
+					I.trf("Fehler beim Parsen des eingegebenen Wertes '{0}' für Property '{1}'.", value, getName()));
 		} finally {
 			// Call afterwards, as it triggers the PropertySheetPanelListeners
 			super.setValue(value);

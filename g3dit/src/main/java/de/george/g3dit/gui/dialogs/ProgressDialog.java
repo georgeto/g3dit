@@ -10,6 +10,8 @@ import javax.swing.JLabel;
 import javax.swing.JProgressBar;
 import javax.swing.WindowConstants;
 
+import com.teamunify.i18n.I;
+
 import de.george.g3dit.util.Icons;
 
 public class ProgressDialog extends JDialog {
@@ -38,7 +40,7 @@ public class ProgressDialog extends JDialog {
 		lblStatus.setBounds(10, 11, 274, 14);
 		getContentPane().add(lblStatus);
 
-		JButton btnCancel = new JButton("Abbrechen", Icons.getImageIcon(Icons.Action.DELETE));
+		JButton btnCancel = new JButton(I.tr("Abbrechen"), Icons.getImageIcon(Icons.Action.DELETE));
 		btnCancel.setBounds(94, 58, 105, 23);
 		btnCancel.setEnabled(cancelable);
 		btnCancel.setFocusable(false);

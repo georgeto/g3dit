@@ -36,7 +36,7 @@ public abstract class eCShaderBase extends eCShaderEllementBase {
 	@Override
 	protected void readPostClassVersion(G3FileReader reader) {
 		if (reader.readShort() != 1) {
-			reader.warn(logger, "eCShaderBase unbekannte Version.");
+			reader.warn(logger, "Unsupported eCShaderBase version.");
 		}
 
 		super.readPostClassVersion(reader);

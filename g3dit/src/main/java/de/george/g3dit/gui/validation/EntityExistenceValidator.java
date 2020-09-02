@@ -5,6 +5,8 @@ import org.netbeans.validation.api.Problems;
 import org.netbeans.validation.api.Severity;
 import org.netbeans.validation.api.ui.ValidationGroup;
 
+import com.teamunify.i18n.I;
+
 import de.george.g3dit.EditorContext;
 import de.george.g3dit.cache.Caches;
 import de.george.g3dit.cache.EntityCache;
@@ -24,7 +26,7 @@ public class EntityExistenceValidator extends AbstractValidator<String> {
 
 		EntityCache cache = Caches.entity(ctx);
 		if (cache.isValid() && GuidUtil.isValid(model) && !cache.isExisting(GuidUtil.parseGuid(model))) {
-			problems.append(compName + " enthält eine Guid zu der keine Entity existiert.", Severity.WARNING);
+			problems.append(I.trf("{0} enthält eine Guid zu der keine Entity existiert.", compName), Severity.WARNING);
 		}
 	}
 

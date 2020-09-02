@@ -2,6 +2,8 @@ package de.george.g3dit.tab.archive.views.property;
 
 import java.util.Objects;
 
+import com.teamunify.i18n.I;
+
 import de.george.lrentnode.enums.G3Enums;
 import de.george.lrentnode.enums.G3Enums.G3Enum;
 
@@ -27,7 +29,7 @@ public class G3EnumWrapper {
 		String asString = G3Enums.asString(getEnumClass(), getEnumValue(), false);
 
 		if (asString == null) {
-			return "Unbekannt: " + getEnumValue();
+			return I.trcf("Unknown enum value", "Unbekannt: {0}", getEnumValue());
 		}
 
 		return asString;

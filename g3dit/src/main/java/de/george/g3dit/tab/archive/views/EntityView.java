@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 
 import com.ezware.dialog.task.TaskDialogs;
 import com.google.common.eventbus.Subscribe;
+import com.teamunify.i18n.I;
 
 import de.george.g3dit.entitytree.filter.ITreeExtension;
 import de.george.g3dit.gui.components.tab.JSplittedTypedTabbedPane;
@@ -106,8 +107,9 @@ public class EntityView extends SingleEntityArchiveView {
 					tab.saveValues(entity);
 				}
 			} catch (Exception e) {
-				TaskDialogs.error(ctx.getParentWindow(), "Fehler beim Speichern des Tabs " + tab.getTabTitle(), e.getMessage());
-				logger.warn("Fehler beim Speichern des Tabs {}: ", tab.getTabTitle(), e);
+				TaskDialogs.error(ctx.getParentWindow(), I.trf("Fehler beim Speichern des Tabs '{0}'.", tab.getTabTitle()),
+						e.getMessage());
+				logger.warn("Error while saving the Tab {}.", tab.getTabTitle(), e);
 			}
 		}
 	}

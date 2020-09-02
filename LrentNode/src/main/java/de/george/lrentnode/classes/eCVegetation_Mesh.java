@@ -7,6 +7,8 @@ import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.teamunify.i18n.I;
+
 import de.george.g3utils.io.G3FileReader;
 import de.george.g3utils.io.G3FileWriter;
 import de.george.g3utils.io.G3Serializable;
@@ -65,7 +67,7 @@ public class eCVegetation_Mesh extends G3Class {
 	public String getName() {
 		if (name == null) {
 			Optional<bCString> meshFilePath = propertyNoThrow(CD.eCVegetation_Mesh.MeshFilePath);
-			name = meshFilePath.map(m -> m.getString().replaceAll(".*\\\\", "").replace(".xcmsh", "")).orElse("<Fehler beim Auslesen>");
+			name = meshFilePath.map(m -> m.getString().replaceAll(".*\\\\", "").replace(".xcmsh", "")).orElse(I.tr("<no name>"));
 		}
 		return name;
 	}

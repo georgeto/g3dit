@@ -10,6 +10,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import com.ezware.dialog.task.TaskDialogs;
+import com.teamunify.i18n.I;
 
 import de.george.g3dit.gui.theme.LayoutUtils;
 import de.george.g3dit.tab.archive.views.entity.dialogs.PositionDialog;
@@ -57,29 +58,29 @@ public class PositionPanel extends JPanel {
 		add(lblScaling, "");
 
 		JButton btnCopyPosition = new JButton(Icons.getImageIcon(Icons.Misc.COOKIE));
-		btnCopyPosition.setToolTipText("Position in Zwischenablage kopieren");
+		btnCopyPosition.setToolTipText(I.tr("Position in Zwischenablage kopieren"));
 		add(btnCopyPosition, LayoutUtils.sqrBtn() + (changePositionConsumerKeepChilds != null ? ", skip" : ""));
 		btnCopyPosition.addActionListener(e -> handleCopyPosition());
 
 		JButton btnCopyMarvinPosition = new JButton(Icons.getImageIcon(Icons.Misc.COOKIE_BITE));
-		btnCopyMarvinPosition.setToolTipText("Position in Zwischenablage kopieren (gerundet für Konsole)");
+		btnCopyMarvinPosition.setToolTipText(I.tr("Position in Zwischenablage kopieren (gerundet für Konsole)"));
 		add(btnCopyMarvinPosition, LayoutUtils.sqrBtn("wrap"));
 		btnCopyMarvinPosition.addActionListener(e -> handleCopyMarvinPosition());
 
 		if (changePositionConsumerKeepChilds != null) {
 			JButton btnEditPositionKeepChilds = new JButton(Icons.getImageIcon(Icons.Action.LAYER_EDIT));
-			btnEditPositionKeepChilds.setToolTipText("Position ändern, aber World-Position der Child-Entities beibehalten");
+			btnEditPositionKeepChilds.setToolTipText(I.tr("Position ändern, aber World-Position der Child-Entities beibehalten"));
 			add(btnEditPositionKeepChilds, LayoutUtils.sqrBtn());
 			btnEditPositionKeepChilds.addActionListener(e -> handleChangePosition(true));
 		}
 
 		JButton btnEditPosition = new JButton(Icons.getImageIcon(Icons.Action.EDIT));
-		btnEditPosition.setToolTipText("Position ändern");
+		btnEditPosition.setToolTipText(I.tr("Position ändern"));
 		add(btnEditPosition, LayoutUtils.sqrBtn());
 		btnEditPosition.addActionListener(e -> handleChangePosition(false));
 
 		JButton btnPastePosition = new JButton(Icons.getImageIcon(Icons.IO.IMPORT));
-		btnPastePosition.setToolTipText("Position aus Zwischenablage verwenden");
+		btnPastePosition.setToolTipText(I.tr("Position aus Zwischenablage verwenden"));
 		add(btnPastePosition, LayoutUtils.sqrBtn());
 		btnPastePosition.addActionListener(e -> handlePastePosition());
 	}
@@ -105,7 +106,7 @@ public class PositionPanel extends JPanel {
 
 	private void handleChangePosition(boolean keepChildPosition) {
 		PositionDialog dialog = new PositionDialog(dialogOwner,
-				title + " ändern" + (keepChildPosition ? " (Child Position unverändert)" : ""), positionMatrix);
+				keepChildPosition ? I.trf("{0} ändern (Child Position unverändert)", title) : I.trf("{0} ändern", title), positionMatrix);
 
 		if (dialog.openAndWasSuccessful(this)) {
 			if (!keepChildPosition) {
@@ -136,7 +137,7 @@ public class PositionPanel extends JPanel {
 
 			changePositionConsumer.accept(worldMatrix);
 		} else {
-			TaskDialogs.inform(dialogOwner, "Zwischenablage enthält keine Positionsdaten", null);
+			TaskDialogs.inform(dialogOwner, I.tr("Zwischenablage enthält keine Positionsdaten"), null);
 		}
 	}
 }

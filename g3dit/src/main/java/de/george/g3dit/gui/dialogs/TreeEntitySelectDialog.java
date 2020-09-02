@@ -7,6 +7,7 @@ import javax.swing.JComponent;
 import javax.swing.tree.TreeSelectionModel;
 
 import com.jidesoft.dialog.ButtonPanel;
+import com.teamunify.i18n.I;
 
 import de.george.g3dit.EditorContext;
 import de.george.g3dit.entitytree.EntityTree;
@@ -47,7 +48,7 @@ public class TreeEntitySelectDialog extends AbstractSelectDialog<eCEntity> {
 	public ButtonPanel createButtonPanel() {
 		ButtonPanel buttonPanel = newButtonPanel();
 
-		Action okAction = SwingUtils.createAction("OK", () -> {
+		Action okAction = SwingUtils.createAction(I.tr("Ok"), () -> {
 			if (!entityTree.getSelectedEntities().isEmpty()) {
 				setDialogResult(RESULT_AFFIRMED);
 			}

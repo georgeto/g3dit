@@ -56,7 +56,7 @@ public class FileUtil {
 	public static ArchiveFile openArchive(G3FileReaderEx reader, boolean verifyEntityGraph, boolean skipPropertySets) throws IOException {
 		reader.seek(0);
 		if (!GenomeFile.isGenomeFile(reader) || reader.getSize() < 100) {
-			throw new IOException("'" + reader.getFileName() + "' ist keine gültige .lrentdat/.node Datei.");
+			throw new IOException("'" + reader.getFileName() + "' is not a valid .lrentdat/.node file.");
 		}
 
 		return reader.readSilent(14, 8).equals("47454E4F4D45444C") ? new LrentdatFile(reader, verifyEntityGraph, skipPropertySets)
@@ -121,7 +121,7 @@ public class FileUtil {
 		try {
 			file = openArchive(reader, false);
 		} catch (Exception e) {
-			logger.error("Fehler beim Erstellen der Archivedatei", e);
+			logger.error("Error while creating archive file.", e);
 			return null;
 		}
 		file.getGraph().setGuid(GuidUtil.randomGUID());
@@ -139,7 +139,7 @@ public class FileUtil {
 					}
 				}
 			} catch (Exception e) {
-				logger.info("Fehler beim Öffnen der Template {}", file.getAbsolutePath(), e);
+				logger.info("Error while opening template {}.", file.getAbsolutePath(), e);
 			}
 		}
 		return null;

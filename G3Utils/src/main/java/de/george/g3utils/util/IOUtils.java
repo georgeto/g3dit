@@ -165,7 +165,7 @@ public class IOUtils {
 			try {
 				return c.call().stream();
 			} catch (Exception e) {
-				logger.warn("Fehler beim Auflisten von Dateien.", e);
+				logger.warn("Error while listing files.", e);
 				return Stream.empty();
 			}
 		}).collect(Collectors.toList());
@@ -308,11 +308,11 @@ public class IOUtils {
 						return (String) manifest.getMainAttributes().get(attributeName);
 					}
 				} catch (Exception e) {
-					logger.warn("{}", e);
+					logger.warn("Failed to get manifest attribute.", e);
 				}
 			}
 		} catch (IOException e) {
-			logger.warn("{}", e);
+			logger.warn("Failed to enumerate manifest resources.", e);
 		}
 		return null;
 	}

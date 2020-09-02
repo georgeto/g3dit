@@ -22,7 +22,7 @@ public class BeanPropertyValueConverter<T extends G3Serializable, V> extends Abs
 			if (method != null) {
 				return (V) method.invoke(source);
 			} else {
-				throw new RuntimeException("Der angegebene AccessorName existiert nicht.");
+				throw new RuntimeException(String.format("Could not find a read method for the accessor name '%s'.", accessorName));
 			}
 		} catch (Exception e) {
 			throw new RuntimeException(e);
@@ -37,7 +37,7 @@ public class BeanPropertyValueConverter<T extends G3Serializable, V> extends Abs
 				method.invoke(old, value);
 				return old;
 			} else {
-				throw new RuntimeException("Der angegebene AccessorName existiert nicht.");
+				throw new RuntimeException(String.format("Could not find a write method for the accessor name '%s'.", accessorName));
 			}
 		} catch (Exception e) {
 			throw new RuntimeException(e);

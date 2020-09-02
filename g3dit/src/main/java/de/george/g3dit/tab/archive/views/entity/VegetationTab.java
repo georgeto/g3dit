@@ -25,7 +25,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.ezware.dialog.task.TaskDialogs;
+import com.google.common.collect.ImmutableBiMap;
 import com.l2fprod.common.swing.renderer.ColorCellRenderer;
+import com.teamunify.i18n.I;
 
 import de.george.g3dit.gui.table.TableUtil;
 import de.george.g3dit.gui.theme.LayoutUtils;
@@ -82,17 +84,17 @@ public class VegetationTab extends AbstractEntityTab {
 		tfPosY = SwingUtils.createUndoTF();
 		tfPosZ = SwingUtils.createUndoTF();
 		tfRadius = SwingUtils.createUndoTF();
-		cbInvert = new JCheckBox("Invertieren");
-		cbInvert.setToolTipText("Einträge außerhalb statt innerhalb des angegebenen Radius anzeigen.");
+		cbInvert = new JCheckBox(I.tr("Invertieren"));
+		cbInvert.setToolTipText(I.tr("Einträge außerhalb statt innerhalb des angegebenen Radius anzeigen."));
 
 		JButton btnPastePosition = new JButton(Icons.getImageIcon(Icons.IO.IMPORT));
-		btnPastePosition.setToolTipText("Position aus Zwischenablage verwenden");
+		btnPastePosition.setToolTipText(I.tr("Position aus Zwischenablage verwenden"));
 		btnPastePosition.addActionListener(e -> handlePastePosition());
 
-		filterPanel.add(new JLabel("X"));
-		filterPanel.add(new JLabel("Y"));
-		filterPanel.add(new JLabel("Z"), "");
-		filterPanel.add(new JLabel("Radius"), "wrap");
+		filterPanel.add(new JLabel(I.trc("coordinate", "X")));
+		filterPanel.add(new JLabel(I.trc("coordinate", "Y")));
+		filterPanel.add(new JLabel(I.trc("coordinate", "Z")), "");
+		filterPanel.add(new JLabel(I.tr("Radius")), "wrap");
 		filterPanel.add(tfPosX, "width 50:100:150");
 		filterPanel.add(tfPosY, "width 50:100:150");
 		filterPanel.add(tfPosZ, "width 50:100:150");
@@ -134,44 +136,44 @@ public class VegetationTab extends AbstractEntityTab {
 			ctx.fileChanged();
 		});
 
-		JButton btnCreate = new JButton("Neues Objekt einfügen", Icons.getImageIcon(Icons.Action.ADD));
+		JButton btnCreate = new JButton(I.tr("Neues Objekt einfügen"), Icons.getImageIcon(Icons.Action.ADD));
 		btnCreate.setMnemonic(KeyEvent.VK_E);
 		add(btnCreate, "split 4, gaptop 5");
 		btnCreate.addActionListener((e) -> insertPlant(false));
 
-		JButton btnCreateFromClipboard = new JButton("Neues Objekt aus Zwischenablage", Icons.getImageIcon(Icons.IO.IMPORT));
+		JButton btnCreateFromClipboard = new JButton(I.tr("Neues Objekt aus Zwischenablage"), Icons.getImageIcon(Icons.IO.IMPORT));
 		btnCreateFromClipboard.setMnemonic(KeyEvent.VK_C);
 		add(btnCreateFromClipboard, "");
 		btnCreateFromClipboard.addActionListener((e) -> insertPlant(true));
 
-		JButton btnEdit = new JButton("Objekt bearbeiten", Icons.getImageIcon(Icons.Action.EDIT));
+		JButton btnEdit = new JButton(I.tr("Objekt bearbeiten"), Icons.getImageIcon(Icons.Action.EDIT));
 		btnEdit.setMnemonic(KeyEvent.VK_A);
 		TableUtil.enableOnEqual(table, btnEdit, 1);
 		add(btnEdit, "");
 		btnEdit.addActionListener((e) -> editSelectedPlant());
 
-		JButton btnDelete = new JButton("Ausgewählte löschen", Icons.getImageIcon(Icons.Action.DELETE));
+		JButton btnDelete = new JButton(I.tr("Ausgewählte löschen"), Icons.getImageIcon(Icons.Action.DELETE));
 		btnDelete.setMnemonic(KeyEvent.VK_S);
 		TableUtil.enableOnGreaterEqual(table, btnDelete, 1);
 		add(btnDelete, "wrap");
 		btnDelete.addActionListener((e) -> removeSelectedPlants());
 
-		JButton btnApplyColor = new JButton("Einfärben", Icons.getImageIcon(Icons.Color.ARROW));
+		JButton btnApplyColor = new JButton(I.tr("Einfärben"), Icons.getImageIcon(Icons.Color.ARROW));
 		add(btnApplyColor, "gaptop 10, split 3, sgy color");
 		TableUtil.enableOnGreaterEqual(table, btnApplyColor, 1);
 		btnApplyColor.addActionListener(e -> applyColor());
 
 		ccbDefaultColor = new ColorChooserButton(Color.WHITE, ctx.getParentWindow(), false);
 		add(ccbDefaultColor, "gaptop 10, width 40!, sgy color");
-		ccbDefaultColor.setToolTipText("Standardfarbe");
+		ccbDefaultColor.setToolTipText(I.tr("Standardfarbe"));
 
-		JButton btnSetDefaultColor = new JButton("Standardfarbe aus Markierung", Icons.getImageIcon(Icons.Color.PENCIL));
+		JButton btnSetDefaultColor = new JButton(I.tr("Standardfarbe aus Markierung"), Icons.getImageIcon(Icons.Color.PENCIL));
 		add(btnSetDefaultColor, "gaptop 10, sgy color, wrap");
 		TableUtil.enableOnEqual(table, btnSetDefaultColor, 1);
 		btnSetDefaultColor.addActionListener(e -> setDefaultColor());
 
-		JButton btnGotoPlant = new JButton("Goto", Icons.getImageIcon(Icons.Misc.GEOLOCATION));
-		btnGotoPlant.setToolTipText("Teleportiert den Spieler zum Objekt.");
+		JButton btnGotoPlant = new JButton(I.tr("Goto"), Icons.getImageIcon(Icons.Misc.GEOLOCATION));
+		btnGotoPlant.setToolTipText(I.tr("Teleportiert den Spieler zum Objekt."));
 		btnGotoPlant.setMnemonic(KeyEvent.VK_G);
 		add(btnGotoPlant, "gaptop 10, wrap");
 		btnGotoPlant.addActionListener(e -> gotoPlant());
@@ -179,13 +181,13 @@ public class VegetationTab extends AbstractEntityTab {
 		ctx.getIpcMonitor().addListener(this,
 				ipcMonitor -> btnGotoPlant.setEnabled(ipcMonitor.isAvailable() && table.getSelectedRowCount() >= 1), true, false, true);
 
-		JButton btnEditMeshes = new JButton("Meshes betrachten", Icons.getImageIcon(Icons.Action.BOOK));
+		JButton btnEditMeshes = new JButton(I.tr("Meshes betrachten"), Icons.getImageIcon(Icons.Action.BOOK));
 		add(btnEditMeshes, "gaptop 20, split 2");
 		btnEditMeshes.addActionListener((e) -> editMeshes());
 
-		JButton btnUpdateBounds = new JButton("BoundaryBox neu berechnen", Icons.getImageIcon(Icons.Arrow.CIRCLE_DOUBLE));
-		btnUpdateBounds.setToolTipText(
-				"<html>Wird im Normalfall nicht benötigt, da die BoundingBox bei Änderungen automatisch neu berechnet wird.<br>Kann verwendet werden, um eine Datei zu reparieren, die manuell oder mit einer Version von g3dit,<br>bearbeitet wurde, die die Neuberechnung der BoundingBox noch nicht unterstüzte (alles vor 1.5a).</html>");
+		JButton btnUpdateBounds = new JButton(I.tr("BoundaryBox neu berechnen"), Icons.getImageIcon(Icons.Arrow.CIRCLE_DOUBLE));
+		btnUpdateBounds.setToolTipText(I.tr(
+				"<html>Wird im Normalfall nicht benötigt, da die BoundingBox bei Änderungen automatisch neu berechnet wird.<br>Kann verwendet werden, um eine Datei zu reparieren, die manuell oder mit einer Version von g3dit,<br>bearbeitet wurde, die die Neuberechnung der BoundingBox noch nicht unterstüzte (alles vor 1.5a).</html>"));
 		add(btnUpdateBounds, "gaptop 10");
 		btnUpdateBounds.addActionListener((e) -> updateBounds());
 	}
@@ -201,19 +203,18 @@ public class VegetationTab extends AbstractEntityTab {
 	}
 
 	private void insertPlant(boolean fromClipboard) {
-		CreatePlantDialog dialog = new CreatePlantDialog(ctx.getParentWindow(), "Neues Objekt einfügen", vegetationPS, lastSelectedMeshID,
-				fromClipboard ? IOUtils.getClipboardContent() : null, ccbDefaultColor.getSelectedColor());
+		CreatePlantDialog dialog = new CreatePlantDialog(ctx.getParentWindow(), I.tr("Neues Objekt einfügen"), vegetationPS,
+				lastSelectedMeshID, fromClipboard ? IOUtils.getClipboardContent() : null, ccbDefaultColor.getSelectedColor());
 
 		if (dialog.openAndWasSuccessful()) {
 			lastSelectedMeshID = dialog.getLastSelectedMeshID();
 
 			PlantRegionEntry createdEntry = dialog.getCreatedEntry();
 			if (!isInsideStaticNode(createdEntry.position)) {
-				boolean result = TaskDialogs.isConfirmed(ctx.getParentWindow(), "Soll das neue Objekt gespeichert werden?",
-						"Die Position (" + createdEntry.position.toString() + "), des neuen Objektes '"
-								+ vegetationPS.getMeshClass(createdEntry.meshID).getName() + "',"
-								+ "\nliegt außerhalb des Zuständigkeitsbereiches dieser Datei."
-								+ "\nDas Objekt sollte stattdessen in die für den Bereich zuständige Datei eingefügt werden.");
+				boolean result = TaskDialogs.isConfirmed(ctx.getParentWindow(), I.tr("Soll das neue Objekt gespeichert werden?"),
+						I.trf("Die Position ({0}), des neuen Objektes '{1}',\nliegt außerhalb des Zuständigkeitsbereiches dieser Datei."
+								+ "\nDas Objekt sollte stattdessen in die für den Bereich zuständige Datei eingefügt werden.",
+								createdEntry.position.toString(), vegetationPS.getMeshClass(createdEntry.meshID).getName()));
 
 				// Änderungen verwerfen
 				if (!result) {
@@ -237,19 +238,18 @@ public class VegetationTab extends AbstractEntityTab {
 				Misc.formatFloat(entry.roll), Misc.formatFloat(entry.scaleWidth), Misc.formatFloat(entry.scaleHeight),
 				Misc.colorToHexStringRGB(new Color(entry.colorARGB)));
 
-		CreatePlantDialog dialog = new CreatePlantDialog(ctx.getParentWindow(), "Objekt bearbeiten", vegetationPS, lastSelectedMeshID,
-				encodedPlant, ccbDefaultColor.getSelectedColor());
+		CreatePlantDialog dialog = new CreatePlantDialog(ctx.getParentWindow(), I.tr("Objekt bearbeiten"), vegetationPS,
+				lastSelectedMeshID, encodedPlant, ccbDefaultColor.getSelectedColor());
 
 		if (dialog.openAndWasSuccessful()) {
 			lastSelectedMeshID = dialog.getLastSelectedMeshID();
 
 			PlantRegionEntry createdEntry = dialog.getCreatedEntry();
 			if (!isInsideStaticNode(createdEntry.position)) {
-				boolean result = TaskDialogs.isConfirmed(ctx.getParentWindow(), "Soll die neue Position gespeichert werden?",
-						"Die neue Position (" + entry.position.toString() + "), des Objektes '"
-								+ vegetationPS.getMeshClass(entry.meshID).getName() + "',"
-								+ "\nliegt außerhalb des Zuständigkeitsbereiches dieser Datei."
-								+ "\nDas Objekt sollte stattdessen in die für den Bereich zuständige Datei verschoben werden.");
+				boolean result = TaskDialogs.isConfirmed(ctx.getParentWindow(), I.tr("Soll die neue Position gespeichert werden?"),
+						I.trf("Die neue Position ({0}), des Objektes '{1}',\nliegt außerhalb des Zuständigkeitsbereiches dieser Datei."
+								+ "\nDas Objekt sollte stattdessen in die für den Bereich zuständige Datei verschoben werden.",
+								entry.position.toString(), vegetationPS.getMeshClass(entry.meshID).getName()));
 
 				// Änderungen verwerfen
 				if (!result) {
@@ -274,7 +274,7 @@ public class VegetationTab extends AbstractEntityTab {
 			tfPosY.setText(Misc.formatFloat(position.getY()));
 			tfPosZ.setText(Misc.formatFloat(position.getZ()));
 		} else {
-			TaskDialogs.inform(ctx.getParentWindow(), "Zwischenablage enthält keine Positionsdaten", null);
+			TaskDialogs.inform(ctx.getParentWindow(), I.tr("Zwischenablage enthält keine Positionsdaten"), null);
 		}
 	}
 
@@ -376,11 +376,16 @@ public class VegetationTab extends AbstractEntityTab {
 		}
 	}
 
+	private static final ImmutableBiMap<String, String> PLANT_COLUMN_MAPPING = ImmutableBiMap.of("Position X", I.tr("Position X"),
+			"Position Y", I.tr("Position Y"), "Position Z", I.tr("Position Z"), "Pitch", I.tr("Pitch"), "Yaw", I.tr("Yaw"), "Roll",
+			I.tr("Roll"), "Scale Height", I.tr("Scale Height"), "Scale Width", I.tr("Scale Width"), "Type", I.tr("Type"), "Color",
+			I.tr("Color"));
+
 	public class PlantTableModel extends ListTableModel<PlantTableEntry> {
 		private PlantTableListener listener;
 
 		public PlantTableModel() {
-			super("Position X", "Position Y", "Position Z", "Pitch", "Yaw", "Roll", "Scale Height", "Scale Width", "Typ", "Color");
+			super(PLANT_COLUMN_MAPPING.values().toArray(new String[0]));
 		}
 
 		@Override
@@ -471,11 +476,11 @@ public class VegetationTab extends AbstractEntityTab {
 			if (changed != 0) {
 				if (changed == 1) {
 					if (!isInsideStaticNode(position)) {
-						boolean result = TaskDialogs.isConfirmed(ctx.getParentWindow(), "Soll die neue Position gespeichert werden?",
-								"Die neue Position (" + position + "), des Objektes '"
-										+ vegetationPS.getMeshClass(tableEntry.meshID).getName() + "',"
+						boolean result = TaskDialogs.isConfirmed(ctx.getParentWindow(), I.tr("Soll die neue Position gespeichert werden?"),
+								I.trf("Die neue Position ({0}), des Objektes '{1}',"
 										+ "\nliegt außerhalb des Zuständigkeitsbereiches dieser Datei."
-										+ "\nDas Objekt sollte stattdessen in die für den Bereich zuständige Datei verschoben werden.");
+										+ "\nDas Objekt sollte stattdessen in die für den Bereich zuständige Datei verschoben werden.",
+										position, vegetationPS.getMeshClass(tableEntry.meshID).getName()));
 
 						// Änderungen verwerfen
 						if (!result) {
@@ -520,14 +525,11 @@ public class VegetationTab extends AbstractEntityTab {
 
 		@Override
 		public void configureColumnWidths(JXTable table, TableColumnExt columnExt) {
-			// super("Position X", "Position Y", "Position Z", "Pitch", "Yaw", "Roll", "Scale
-			// Height", "Scale
-			// Width", "Typ");
-			switch (columnExt.getTitle()) {
+			switch (PLANT_COLUMN_MAPPING.inverse().get(columnExt.getTitle())) {
 				case "Position X", "Position Y", "Position Z" -> columnExt.setPreferredWidth(85);
 				case "Pitch", "Yaw", "Roll" -> columnExt.setPreferredWidth(60);
 				case "Scale Height", "Scale Width" -> columnExt.setPreferredWidth(60);
-				case "Typ" -> columnExt.setPreferredWidth(200);
+				case "Type" -> columnExt.setPreferredWidth(200);
 				case "Color" -> columnExt.setPreferredWidth(40);
 			}
 		}

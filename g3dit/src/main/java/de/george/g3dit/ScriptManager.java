@@ -23,6 +23,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.jidesoft.swing.MultilineLabel;
+import com.teamunify.i18n.I;
 
 import ca.odell.glazedlists.GlazedLists;
 import ca.odell.glazedlists.SortedList;
@@ -130,7 +131,7 @@ public class ScriptManager implements IScriptEnvironment {
 		private OptionPanel optionPanel;
 
 		public ScriptDialog() {
-			super(ctx.getParentWindow(), "Scripts ausführen", true);
+			super(ctx.getParentWindow(), I.tr("Scripts ausführen"), true);
 			setSize(1000, 700);
 			addWindowListener(new WindowAdapter() {
 				@Override
@@ -171,7 +172,7 @@ public class ScriptManager implements IScriptEnvironment {
 
 			area.setText(null);
 			IScript selectedValue = scriptList.getSelectedValue();
-			log("'" + selectedValue.getTitle() + "' wird ausgeführt.");
+			log(I.trf("'{0}' wird ausgeführt.", selectedValue.getTitle()));
 			boolean result;
 			try {
 				result = selectedValue.execute(ScriptManager.this);
@@ -180,7 +181,7 @@ public class ScriptManager implements IScriptEnvironment {
 				log("Exception: %s", e.getMessage());
 				logger.warn("Error while executing script '{}'.", selectedValue.getTitle(), e);
 			}
-			log("Ausführung " + (result ? "erfolgreich." : "fehlgeschlagen."));
+			log(result ? I.tr("Ausführung erfolgreich.") : I.tr("Ausführung fehlgeschlagen."));
 			ctx.runGC();
 		}
 
@@ -196,7 +197,7 @@ public class ScriptManager implements IScriptEnvironment {
 			mainPanel.add(new JScrollPane(scriptList), "spany 2, cell 0 0");
 
 			lblDescription = new MultilineLabel("");
-			btnExecute = new JButton("Script ausführen");
+			btnExecute = new JButton(I.tr("Script ausführen"));
 			btnExecute.addActionListener(a -> executeScript());
 			ListUtil.enableOnEqual(scriptList, btnExecute, 1);
 

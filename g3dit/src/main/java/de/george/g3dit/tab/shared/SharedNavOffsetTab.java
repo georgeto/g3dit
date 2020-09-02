@@ -9,6 +9,8 @@ import javax.swing.JScrollPane;
 
 import org.netbeans.validation.api.ui.ValidationGroup;
 
+import com.teamunify.i18n.I;
+
 import de.george.g3dit.EditorContext;
 import de.george.g3dit.gui.components.JEnumComboBox;
 import de.george.g3dit.gui.edit.PropertyPanel;
@@ -42,10 +44,10 @@ public class SharedNavOffsetTab extends AbstractPropertySharedTab {
 
 		// @foff
 		propertyPanel
-			.addHeadline("Eigenschaften")
+			.addHeadline(I.tr("Eigenschaften"))
 			.add(CD.gCNavOffset_PS.OffsetCircle)
-				.tooltip(SwingUtils.getMultilineText("Animation kann auf einem Kreis um dieses Objekt ausgeführt werden.",
-						 "Der Radius des Kreises wird durch den ersten NavOffset definiert."))
+				.tooltip(SwingUtils.getMultilineText(I.tr("Animation kann auf einem Kreis um dieses Objekt ausgeführt werden."),
+						 I.tr("Der Radius des Kreises wird durch den ersten NavOffset definiert.")))
 			.addHeadline("NavOffsets")
 			.add(new LambdaPropertyHandler(navOffsetsPanel, navOffsetsPanel::loadValues, navOffsetsPanel::saveValues))
 				.grow().constraints("width 100:300:450, wrap")
@@ -92,7 +94,7 @@ public class SharedNavOffsetTab extends AbstractPropertySharedTab {
 			List<gInt> directions = entity.getProperty(CD.gCNavOffset_PS.AniDirection).getEntries();
 
 			if (poses.size() != directions.size()) {
-				throw new IllegalArgumentException("gCNavOffset_PS hat unterschiedlich viele OffsetPoses und AniDirections.");
+				throw new IllegalArgumentException(I.tr("gCNavOffset_PS hat unterschiedlich viele OffsetPoses und AniDirections."));
 			}
 
 			for (NavOffset offset : StreamEx.zip(poses, directions, (p, d) -> new NavOffset(p, d.getInt()))) {

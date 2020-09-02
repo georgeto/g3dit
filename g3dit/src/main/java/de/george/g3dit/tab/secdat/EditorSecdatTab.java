@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.ezware.dialog.task.TaskDialogs;
+import com.teamunify.i18n.I;
 
 import de.george.g3dit.EditorContext;
 import de.george.g3dit.tab.EditorAbstractFileTab;
@@ -131,13 +132,13 @@ public class EditorSecdatTab extends EditorAbstractFileTab {
 		File dataFile = getDataFile().get();
 		File sector = new File(IOUtils.changeExtension(dataFile.getAbsolutePath(), "sec"));
 		if (!sector.exists() && !ctx.getFileManager().moveFromPrimaryToSecondary(sector).filter(File::exists).isPresent()) {
-			boolean result = TaskDialogs.ask(ctx.getParentWindow(), ".sec erstellen",
-					"Für '" + dataFile.getName() + "' konnte keine zugehörige .sec gefunden werden.\nSoll eine .sec erstellt werden?");
+			boolean result = TaskDialogs.ask(ctx.getParentWindow(), I.tr(".sec erstellen"),
+					I.trf("Für '{0}' konnte keine zugehörige .sec gefunden werden.\nSoll eine .sec erstellt werden?", dataFile.getName()));
 			if (result) {
 				try {
 					FileUtil.createSec(sector);
 				} catch (IOException e) {
-					logger.warn("Fehler beim Erstellen des Sektors für {}: ", dataFile.getName(), e);
+					logger.warn("Error while creating sector for {}.", dataFile.getName(), e);
 				}
 			}
 		}

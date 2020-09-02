@@ -111,7 +111,7 @@ public class eCVegetation_PS extends G3Class {
 
 	public void removeMeshClass(eCVegetation_Mesh mesh) {
 		if (getMeshUseCount(mesh.getMeshID()) != 0) {
-			throw new IllegalStateException("Mesh wird von Vegetationsobjekten benutzt, entfernen nicht möglich!");
+			throw new IllegalStateException("Mesh is used by vegetation object, removal is not possible!");
 		}
 
 		meshClasses.remove(mesh.getMeshID().getIndex());
@@ -198,7 +198,7 @@ public class eCVegetation_PS extends G3Class {
 
 		public bCPoint indexToLocalGridPosition(int index, bCRect grid) {
 			if (index >= grid.getWidth() * grid.getHeight()) {
-				throw new IllegalArgumentException("Index " + index + " befindet sich außerhalb des Grids " + grid);
+				throw new IllegalArgumentException("Index " + index + " lies outside of the grid " + grid);
 			}
 
 			return new bCPoint(index % grid.getWidth(), index / grid.getWidth());
@@ -206,7 +206,7 @@ public class eCVegetation_PS extends G3Class {
 
 		public int localGridPositionToIndex(bCPoint position, bCRect grid) {
 			if (!grid.contains(position.clone().translate(grid.getTopLeft()))) {
-				throw new IllegalArgumentException("Position " + position + " befindet sich außerhalb des Grids " + grid);
+				throw new IllegalArgumentException("Position " + position + " lies outside of the grid " + grid);
 			}
 
 			return position.getY() * grid.getWidth() + position.getX();
@@ -232,7 +232,7 @@ public class eCVegetation_PS extends G3Class {
 			// GridDimension ist ungültig -> Grid enthält keine Nodes
 			if (!gridDimension.isValid()) {
 				if (!gridNodes.isEmpty()) {
-					throw new IllegalStateException("Grid mit ungültigen Dimensionen enthält Nodes.");
+					throw new IllegalStateException("Grid with invalid dimensions contains nodes.");
 				}
 
 				gridDimension = gridExtension;
@@ -241,7 +241,7 @@ public class eCVegetation_PS extends G3Class {
 
 			if (expand) {
 				gridExtension.merge(gridDimension);
-				logger.info("Grid expandiert von {} auf {}.", gridDimension, gridExtension);
+				logger.info("Grid expanded from {} to {}.", gridDimension, gridExtension);
 			}
 
 			// VirtualIndex der Nodes an neues Grid anpassen
@@ -272,7 +272,7 @@ public class eCVegetation_PS extends G3Class {
 			// GridDimension ist ungültig -> Grid enthält keine Nodes
 			if (!gridDimension.isValid()) {
 				if (!gridNodes.isEmpty()) {
-					throw new IllegalStateException("Grid mit ungültigen Dimensionen enthält Nodes.");
+					throw new IllegalStateException("Grid with invalid dimensions contains nodes.");
 				}
 				return;
 			}
@@ -288,7 +288,7 @@ public class eCVegetation_PS extends G3Class {
 			compactDimension.setBottomRight(compactDimension.getBottomRight().translate(new bCPoint(1, 1)));
 
 			if (compactDimension.isValid() && !compactDimension.equal(gridDimension)) {
-				logger.info("Grid verkleinert von {} auf {}.", gridDimension, compactDimension);
+				logger.info("Grid shrinked from {} to {}.", gridDimension, compactDimension);
 				resizeGrid(compactDimension, false);
 			}
 
@@ -297,7 +297,7 @@ public class eCVegetation_PS extends G3Class {
 		@Override
 		public void read(G3FileReader reader) {
 			if (reader.readShort() != 2) {
-				reader.warn(logger, "eCVegetation_Grid hat unbekannte Version.");
+				reader.warn(logger, "Unsupported eCVegetation_Grid version.");
 			}
 
 			nodeDimension = reader.readFloat();
@@ -366,7 +366,7 @@ public class eCVegetation_PS extends G3Class {
 		public void read(G3FileReader reader) {
 			index = reader.readInt();
 			if (reader.readShort() != 1) {
-				reader.warn(logger, "eCVegetation_GridNode hat unbekannte Version.");
+				reader.warn(logger, "Unsupported eCVegetation_GridNode version.");
 			}
 			bounds = reader.readBox();
 			entries = reader.readList(PlantRegionEntry.class);

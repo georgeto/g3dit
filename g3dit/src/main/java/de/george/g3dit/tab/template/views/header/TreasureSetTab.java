@@ -25,6 +25,7 @@ import org.netbeans.validation.api.builtin.stringvalidation.StringValidators;
 import com.ezware.dialog.task.TaskDialogs;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 import com.google.common.collect.ImmutableMap;
+import com.teamunify.i18n.I;
 
 import de.george.g3dit.EditorContext;
 import de.george.g3dit.cache.Caches;
@@ -68,13 +69,13 @@ public class TreasureSetTab extends AbstractTemplateTab {
 	public void initComponents() {
 		setLayout(new MigLayout("", "[]20[]20[]"));
 
-		add(SwingUtils.createBoldLabel("Eigenschaften"), "spanx, wrap");
+		add(SwingUtils.createBoldLabel(I.tr("Eigenschaften")), "spanx, wrap");
 		add(new JLabel("Name"), "gapleft 7, gaptop 5, wrap");
 		tfName = SwingUtils.createUndoTF();
 		add(tfName, "gapleft 7, spanx 2, growx, width 175:225:250");
 
-		JButton btnSaveName = new JButton("Übernehmen", Icons.getImageIcon(Icons.IO.SAVE));
-		btnSaveName.setToolTipText("Template Name setzt sich zusammen aus: <Category>_TS_<TreasureDistribution>_<Name>");
+		JButton btnSaveName = new JButton(I.tr("Übernehmen"), Icons.getImageIcon(Icons.IO.SAVE));
+		btnSaveName.setToolTipText(I.tr("Template Name setzt sich zusammen aus: <Category>_TS_<TreasureDistribution>_<Name>"));
 		btnSaveName.addActionListener(new ActionSaveName());
 		add(btnSaveName, "wrap");
 
@@ -100,8 +101,8 @@ public class TreasureSetTab extends AbstractTemplateTab {
 		addValidators(tfMaxTStacks, StringValidators.REQUIRE_NON_NEGATIVE_NUMBER, StringValidators.REQUIRE_VALID_INTEGER);
 		add(tfMaxTStacks, "growx");
 
-		JButton btnCopyToClipboard = new JButton("Zwischenablage", Icons.getImageIcon(Icons.Action.COPY));
-		btnCopyToClipboard.setToolTipText("Zusammenfassung des TreasureSets in Zwischenablage kopieren");
+		JButton btnCopyToClipboard = new JButton(I.tr("Zwischenablage"), Icons.getImageIcon(Icons.Action.COPY));
+		btnCopyToClipboard.setToolTipText(I.tr("Zusammenfassung des TreasureSets in Zwischenablage kopieren"));
 		btnCopyToClipboard.addActionListener(a -> copyToClipboard());
 		add(btnCopyToClipboard, "wrap");
 
@@ -171,7 +172,7 @@ public class TreasureSetTab extends AbstractTemplateTab {
 			String guid = GuidUtil.parseGuid(item.getRefId());
 			itemPos++;
 			if (guid == null) {
-				TaskDialogs.error(ctx.getParentWindow(), "", "Die Guid von Item #" + itemPos + " ist ungültig.");
+				TaskDialogs.error(ctx.getParentWindow(), "", I.trf("Die Guid von Item #{0, number} ist ungültig.", itemPos));
 				return;
 			}
 		}

@@ -223,7 +223,7 @@ public abstract class AbstractTextComponentMatcherEditor<E> extends AbstractMatc
 
 		@Override
 		public void propertyChange(PropertyChangeEvent evt) {
-			if ("document" == evt.getPropertyName()) {
+			if ("document".equals(evt.getPropertyName())) {
 				// stop listening to the old Document
 				deregisterListeners(live);
 

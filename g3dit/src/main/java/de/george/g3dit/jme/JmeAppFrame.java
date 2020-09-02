@@ -40,6 +40,7 @@ import javax.swing.WindowConstants;
 import com.jme3.app.LostFocusBehavior;
 import com.jme3.system.AppSettings;
 import com.jme3.system.awt.PaintMode;
+import com.teamunify.i18n.I;
 
 import de.george.g3utils.gui.SwingUtils;
 
@@ -110,7 +111,7 @@ public class JmeAppFrame<T extends EditorAwareApplication> {
 	}
 
 	public void createFrame() {
-		frame = new JFrame("3D-Ansicht");
+		frame = new JFrame(I.tr("3D-Ansicht"));
 		frame.setIconImage(SwingUtils.getG3Icon());
 		frame.setSize(width, height);
 		frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);

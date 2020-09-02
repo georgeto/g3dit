@@ -561,7 +561,7 @@ public abstract class Chunks {
 				return UnknownChunk.class;
 		}
 
-		throw new IllegalArgumentException("ChunkID " + chunkID + " mit Version " + version + " wird nicht unterstützt.");
+		throw new IllegalArgumentException("ChunkID " + chunkID + " with version " + version + " is not supported.");
 	}
 
 	public static List<Chunk> readChunks(G3FileReader reader, int offsetEnd) {

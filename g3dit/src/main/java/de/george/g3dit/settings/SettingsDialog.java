@@ -11,6 +11,7 @@ import javax.swing.JScrollPane;
 import javax.swing.WindowConstants;
 
 import com.jidesoft.dialog.ButtonPanel;
+import com.teamunify.i18n.I;
 
 import de.george.g3dit.gui.components.tab.ITypedTab;
 import de.george.g3dit.gui.components.tab.JTypedTabbedPane;
@@ -25,7 +26,7 @@ public class SettingsDialog extends ExtStandardDialog {
 	private Runnable settingsUpdatedCallback;
 
 	public SettingsDialog(Window owner, OptionStore optionStore, Runnable settingsUpdatedCallback) {
-		super(owner, "Einstellungen");
+		super(owner, I.tr("Einstellungen"));
 		this.optionStore = optionStore;
 		this.settingsUpdatedCallback = settingsUpdatedCallback;
 
@@ -44,51 +45,51 @@ public class SettingsDialog extends ExtStandardDialog {
 		mainPanel.add(tbTabs.getComponent(), "push, grow");
 
 		//@foff
-		tbTabs.addTab(new OptionsTab("Pfade")
-				.addHeadline("Gothic 3 Daten")
+		tbTabs.addTab(new OptionsTab(I.tr("Pfade"))
+				.addHeadline(I.tr("Gothic 3 Daten"))
 				.addOption(EditorOptions.Path.PRIMARY_DATA_FOLDER)
 				.addOption(EditorOptions.Path.SECONDARY_DATA_FOLDER)
 				.addOption(EditorOptions.Path.HIDE_PROJECTS_COMPILED)
-				.addHeadline("Externe Programme")
+				.addHeadline(I.tr("Externe Programme"))
 				.addOption(EditorOptions.Path.FILE_MANAGER)
 				.addOption(EditorOptions.Path.TINY_HEXER)
 				.addOption(EditorOptions.Path.TINY_HEXER_SCRIPT)
 				.addOption(EditorOptions.Path.TEXT_COMPARE)
 				.addOption(EditorOptions.Path.BINARY_COMPARE));
 
-		tbTabs.addTab(new OptionsTab("Sprache")
-				.addHeadline("Sprache")
+		tbTabs.addTab(new OptionsTab(I.tr("Sprache"))
+				.addHeadline(I.tr("Sprache"))
 				.addOption(EditorOptions.Language.STRINGTABLE_LANGUAGE));
 
-		tbTabs.addTab(new OptionsTab("Diverses")
-				.addHeadline("Speichern")
+		tbTabs.addTab(new OptionsTab(I.tr("Diverses"))
+				.addHeadline(I.tr("Speichern"))
 				.addOption(EditorOptions.Misc.MAKE_BACKUP)
 				.addOption(EditorOptions.Misc.CLEAN_STRINGTABLE)
-				.addHeadline("Sonstiges")
+				.addHeadline(I.tr("Sonstiges"))
 				.addOption(EditorOptions.Misc.IMPROVE_CHANGE_DETECTION)
 				.addOption(EditorOptions.Misc.OPTIMIZE_MEMORY_USAGE)
 				.addOption(EditorOptions.Misc.NAVPATH_DEBUG));
 
-		tbTabs.addTab(new OptionsTab("3D-Ansicht")
-				.addHeadline("Farbe und Beleuchtung")
+		tbTabs.addTab(new OptionsTab(I.tr("3D-Ansicht"))
+				.addHeadline(I.tr("Farbe und Beleuchtung"))
 				.addOption(EditorOptions.D3View.BACKGROUND_COLOR, "sgx color, height 40!")
 				.addOptionHorizontalStart(EditorOptions.D3View.AMBIENT_LIGHT_INTENSITY, "sgx color", 2)
 				.addOptionHorizontal(EditorOptions.D3View.DIRECTIONAL_LIGHT_INTENSITY, "sgx color")
 				.addOptionHorizontalStart(EditorOptions.D3View.DIRECTIONAL_LIGHT_AZIMUTH, "sgx color", 2)
 				.addOptionHorizontal(EditorOptions.D3View.DIRECTIONAL_LIGHT_INCLINATION, "sgx color")
-				.addHeadline("Kamera")
+				.addHeadline(I.tr("Kamera"))
 				.addOptionHorizontalStart(EditorOptions.D3View.HORIZONTAL_ROTATION, "sgx color", 2)
 				.addOptionHorizontal(EditorOptions.D3View.VERTICAL_ROTATION, "sgx color")
 				.addOption(EditorOptions.D3View.DISTANCE, "sgx color")
-				.addHeadline("Screenshots")
+				.addHeadline(I.tr("Screenshots"))
 				.addOption(EditorOptions.D3View.SCREENSHOT_FOLDER));
 
-		tbTabs.addTab(new OptionsTab("Theme")
-				.addHeadline("Themes")
+		tbTabs.addTab(new OptionsTab(I.tr("Theme"))
+				.addHeadline(I.tr("Themes"))
 				.addOption(EditorOptions.TheVoid.THEME, "push, grow"));
 
-		tbTabs.addTab(new OptionsTab("Dateiendungen", "fill")
-				.addHeadline("Mit g3dit verknüpfte Dateiendungen")
+		tbTabs.addTab(new OptionsTab(I.tr("Dateiendungen"), "fill")
+				.addHeadline(I.tr("Mit g3dit verknüpfte Dateiendungen"))
 				.addOption(EditorOptions.TheVoid.FILE_EXTENSIONS, "push, grow"));
 
 		tbTabs.getTabs().forEach(t -> t.load(optionStore));
@@ -101,21 +102,21 @@ public class SettingsDialog extends ExtStandardDialog {
 	public ButtonPanel createButtonPanel() {
 		ButtonPanel buttonPanel = newButtonPanel();
 
-		Action okAction = SwingUtils.createAction("OK", () -> {
+		Action okAction = SwingUtils.createAction(I.tr("Ok"), () -> {
 			tbTabs.getTabs().forEach(t -> t.save(optionStore));
 
 			affirm();
 			settingsUpdatedCallback.run();
 		});
 
-		Action applyAction = SwingUtils.createAction("Übernehmen", () -> {
+		Action applyAction = SwingUtils.createAction(I.tr("Übernehmen"), () -> {
 			tbTabs.getTabs().forEach(t -> t.save(optionStore));
 
 			setDialogResult(RESULT_AFFIRMED);
 			settingsUpdatedCallback.run();
 		});
 
-		Action cancelAction = SwingUtils.createAction("Abbrechen", () -> {
+		Action cancelAction = SwingUtils.createAction(I.tr("Abbrechen"), () -> {
 			tbTabs.getTabs().forEach(t -> t.cancel(optionStore));
 			cancel();
 		});

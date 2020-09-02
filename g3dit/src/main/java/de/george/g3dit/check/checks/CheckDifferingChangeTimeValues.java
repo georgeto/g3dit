@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Supplier;
 
+import com.teamunify.i18n.I;
+
 import de.george.g3dit.check.EntityDescriptor;
 import de.george.g3dit.check.FileDescriptor;
 import de.george.g3dit.check.FileDescriptor.FileType;
@@ -20,8 +22,8 @@ public class CheckDifferingChangeTimeValues extends AbstractEntityCheck {
 	private Map<String, FileDescriptor> descriptors = new HashMap<>();
 
 	public CheckDifferingChangeTimeValues() {
-		super("Abweichend ChangeTime-Werte ermitteln",
-				"Überprüft für alle Entities ob ihr ChangeTime-Wert von dem ihrer Template abweicht.", 1, 1);
+		super(I.tr("Abweichend ChangeTime-Werte ermitteln"),
+				I.tr("Überprüft für alle Entities ob ihr ChangeTime-Wert von dem ihrer Template abweicht."), 1, 1);
 	}
 
 	@Override
@@ -34,7 +36,8 @@ public class CheckDifferingChangeTimeValues extends AbstractEntityCheck {
 			if (entityChangeTime != creatorChangeTime) {
 				String creatorLink = HtmlCreator.renderLink("Template", UriUtil.encodeFile(descriptors.get(entity.getCreator())));
 				problemConsumer.fatal(
-						String.format("ChangeTime-Wert %s als in Template", entityChangeTime < creatorChangeTime ? "kleiner" : "größer"),
+						entityChangeTime < creatorChangeTime ? I.tr("ChangeTime-Wert kleiner als in Template")
+								: I.tr("ChangeTime-Wert größer als in Template"),
 						String.format("%d (Entity) != %d (%s)", entityChangeTime, creatorChangeTime, creatorLink));
 			}
 		}

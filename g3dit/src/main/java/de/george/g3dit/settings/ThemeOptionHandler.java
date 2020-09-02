@@ -5,6 +5,8 @@ import java.awt.Window;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import com.teamunify.i18n.I;
+
 import de.george.g3dit.gui.theme.ThemeInfo;
 import de.george.g3dit.gui.theme.ThemeManager;
 import de.george.g3dit.gui.theme.ThemeSettingsPanel;
@@ -22,7 +24,8 @@ public class ThemeOptionHandler extends AbstractOptionHandler<ThemeInfo> {
 
 		themeSettingsPanel = new ThemeSettingsPanel();
 		content.add(themeSettingsPanel, "width 300!, grow, push, wrap");
-		content.add(new JLabel("After changing the theme it may be necessary to restart g3dit."), "pushy, alignx right, aligny bottom");
+		content.add(new JLabel(I.tr("After changing the theme it may be necessary to restart g3dit.")),
+				"pushy, alignx right, aligny bottom");
 		return content;
 	}
 

@@ -49,9 +49,11 @@ import org.jdesktop.swingx.table.TableColumnExt;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.common.collect.ImmutableBiMap;
 import com.google.common.collect.Lists;
 import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.ListenableFuture;
+import com.teamunify.i18n.I;
 
 import ca.odell.glazedlists.BasicEventList;
 import ca.odell.glazedlists.EventList;
@@ -129,7 +131,7 @@ public class CheckManager {
 						}
 					}
 				} catch (InstantiationException | IllegalAccessException e) {
-					logger.warn("Unable to instantiate '{}': {})", check.getSimpleName(), e);
+					logger.warn("Unable to instantiate '{}'.", check.getSimpleName(), e);
 				}
 			}
 			return checks;
@@ -201,7 +203,7 @@ public class CheckManager {
 		private JTypedTabbedPane<ProblemTableTab> tabbedPane;
 
 		public CheckDialog() {
-			super(ctx.getParentWindow(), "Checks ausführen");
+			super(ctx.getParentWindow(), I.tr("Checks ausführen"));
 			setSize(1000, 700);
 
 			addWindowListener(new WindowAdapter() {
@@ -215,7 +217,7 @@ public class CheckManager {
 		}
 
 		private void toggleChecks() {
-			CheckBoxListSelectDialog<Check> dialog = new CheckBoxListSelectDialog<>(this, "Checks auswählen", checks,
+			CheckBoxListSelectDialog<Check> dialog = new CheckBoxListSelectDialog<>(this, I.tr("Checks auswählen"), checks,
 					new BeanListCellRenderer("Title", "Description", 80));
 			dialog.setSelectedEntries(enabledChecks);
 			if (dialog.openAndWasSuccessful()) {
@@ -241,7 +243,7 @@ public class CheckManager {
 			int passes = Math.max(archivePasses, templatePasses);
 
 			executeChecksFuture = ConcurrencyUtil.executeAndInvokeLater(() -> {
-				updateProgressBar(String.format("Ermittele zu überprüfende Dateien..."));
+				updateProgressBar(String.format(I.tr("Ermittele zu überprüfende Dateien...")));
 
 				List<File> worldFiles = archivePasses != 0 ? ctx.getFileManager().listWorldFiles() : null;
 				List<File> templateFiles = templatePasses != 0 ? ctx.getFileManager().listTemplateFiles() : null;
@@ -249,7 +251,7 @@ public class CheckManager {
 				for (int pass = 0; pass < passes; pass++) {
 					if (pass < templatePasses) {
 						// log("Template-Pass " + pass + "...");
-						updateProgressBar(String.format("Template-Pass %d/%d", pass + 1, templatePasses));
+						updateProgressBar(I.trf("Template-Pass {0, number}/{1, number}", pass + 1, templatePasses));
 						TemplateFileIterator iter = new TemplateFileIterator(templateFiles);
 						while (iter.hasNext()) {
 							// Check execution got cancelled
@@ -276,7 +278,7 @@ public class CheckManager {
 
 					if (pass < archivePasses) {
 						// log("Archive-Pass " + pass + "...");
-						updateProgressBar(String.format("Archive-Pass %d/%d", pass + 1, archivePasses));
+						updateProgressBar(I.trf("Archive-Pass {0, number}/{1, number}", pass + 1, archivePasses));
 						ArchiveFileIterator iter = new ArchiveFileIterator(worldFiles);
 						while (iter.hasNext()) {
 							// Check execution got cancelled
@@ -302,7 +304,7 @@ public class CheckManager {
 					}
 				}
 
-				updateProgressBar(String.format("Sammle Probleme..."));
+				updateProgressBar(I.tr("Sammle Probleme..."));
 				for (Check check : enabledChecks) {
 					if (Thread.interrupted()) {
 						return;
@@ -326,7 +328,7 @@ public class CheckManager {
 
 				private void onCompletion() {
 					progressBar.setIndeterminate(false);
-					progressBar.setString("Ausführung abgeschlossen");
+					progressBar.setString(I.tr("Ausführung abgeschlossen"));
 					egCheck.setEnabled(true);
 					ctx.runGC();
 					executeChecksFuture = null;
@@ -346,12 +348,12 @@ public class CheckManager {
 			progressBar = SwingUtils.createProgressBar();
 			mainPanel.add(progressBar, "grow");
 
-			btnToggleChecks = new JButton("Checks auswählen");
+			btnToggleChecks = new JButton(I.tr("Checks auswählen"));
 			btnToggleChecks.addActionListener(a -> toggleChecks());
 			egCheck.add(btnToggleChecks);
 			mainPanel.add(btnToggleChecks, "alignx right");
 
-			btnExecute = new JButton("Checks ausführen");
+			btnExecute = new JButton(I.tr("Checks ausführen"));
 			btnExecute.addActionListener(a -> executeChecks());
 			egCheck.add(btnExecute);
 			mainPanel.add(btnExecute, "alignx right, wrap");
@@ -607,11 +609,14 @@ public class CheckManager {
 		}
 	}
 
+	private static final ImmutableBiMap<String, String> COLUMN_MAPPING = ImmutableBiMap.of("Name", I.tr("Name"), "Guid", I.tr("Guid"),
+			"Index", I.tr("Index"), "Path", I.tr("Pfad"));
+
 	private abstract static class ProblemTableFormat implements TableFormat<Problem> {
 		@Override
 		public String getColumnName(int column) {
 			return switch (column) {
-				case 0 -> "Name";
+				case 0 -> COLUMN_MAPPING.get("Name");
 				default -> throw new IllegalArgumentException();
 			};
 		}
@@ -664,9 +669,9 @@ public class CheckManager {
 		public String getColumnName(int column) {
 			return switch (column) {
 				case 0 -> super.getColumnName(column);
-				case 1 -> "Guid";
-				case 2 -> "Index";
-				case 3 -> "Pfad";
+				case 1 -> COLUMN_MAPPING.get("Guid");
+				case 2 -> COLUMN_MAPPING.get("Index");
+				case 3 -> COLUMN_MAPPING.get("Path");
 				default -> throw new IllegalArgumentException();
 			};
 		}
@@ -705,7 +710,7 @@ public class CheckManager {
 
 		@Override
 		public void configureColumnWidths(JXTable table, TableColumnExt columnExt) {
-			switch (columnExt.getTitle()) {
+			switch (COLUMN_MAPPING.inverse().get(columnExt.getTitle())) {
 				case "Name" -> {
 					columnExt.setPreferredWidth(500);
 					columnExt.setMaxWidth(1000);
@@ -720,7 +725,7 @@ public class CheckManager {
 					columnExt.setPreferredWidth(45);
 					columnExt.setMaxWidth(45);
 				}
-				case "Pfad" -> {
+				case "Path" -> {
 					columnExt.setPreferredWidth(75);
 					columnExt.setMaxWidth(1000);
 				}
@@ -749,7 +754,7 @@ public class CheckManager {
 		public String getColumnName(int column) {
 			return switch (column) {
 				case 0 -> super.getColumnName(column);
-				case 1 -> "Pfad";
+				case 1 -> COLUMN_MAPPING.get("Path");
 				default -> throw new IllegalArgumentException();
 			};
 		}
@@ -767,13 +772,13 @@ public class CheckManager {
 	private static class TemplateProblemTableColumnFactory extends ColumnFactory {
 		@Override
 		public void configureColumnWidths(JXTable table, TableColumnExt columnExt) {
-			switch (columnExt.getTitle()) {
+			switch (COLUMN_MAPPING.inverse().get(columnExt.getTitle())) {
 				case "Name" -> {
 					columnExt.setPreferredWidth(500);
 					columnExt.setMaxWidth(1000);
 					columnExt.setHideable(false);
 				}
-				case "Pfad" -> {
+				case "Path" -> {
 					columnExt.setPreferredWidth(75);
 					columnExt.setMaxWidth(1000);
 				}

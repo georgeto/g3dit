@@ -12,6 +12,7 @@ import javax.swing.JTextField;
 import javax.swing.border.EtchedBorder;
 
 import com.ezware.dialog.task.TaskDialogs;
+import com.teamunify.i18n.I;
 
 import ca.odell.glazedlists.EventList;
 import ca.odell.glazedlists.GlazedLists;
@@ -48,7 +49,7 @@ public class PrefPathContentPane extends NavMapObjectContentPane {
 		return ListManageAndEdit.create(pathEventList, this::addPrefPath, editingPanel).onSelect(editingPanel::loadPrefPath)
 				.onDelete(this::deletePrefPath)
 				.cellRenderer(new FunctionalListCellRenderer<String>(
-						g -> navMap.getPrefPath(g).map(p -> p.getRadiusOffset().toString()).orElse("<No longer in NavMap>")))
+						g -> navMap.getPrefPath(g).map(p -> p.getRadiusOffset().toString()).orElse(I.tr("<No longer in NavMap>"))))
 				.searchTooltip(getSearchTooltip()).matcherEditor(tfFilter -> new NavMapObjectMatcherEditor(tfFilter,
 						negZone -> navMap.getPrefPath(negZone).map(PrefPath::getRadiusOffset)))
 				.build();
@@ -124,7 +125,7 @@ public class PrefPathContentPane extends NavMapObjectContentPane {
 			this.add(taSticks.getScrollPane(), "spanx 3, width 100:500:500, pushy, grow");
 			this.add(taRadius.getScrollPane(), "width 100:125:150, pushy, grow, wrap");
 
-			JButton btnCalc = new JButton("Errechne PrefPath aus Sticks");
+			JButton btnCalc = new JButton(I.tr("Errechne PrefPath aus Sticks"));
 			this.add(btnCalc, "split 2, spanx 3");
 			btnCalc.addActionListener(l -> handlePrefPath());
 
@@ -150,7 +151,8 @@ public class PrefPathContentPane extends NavMapObjectContentPane {
 			try {
 				sticks = Misc.parseVectorList(taSticks.getText());
 			} catch (IllegalArgumentException e) {
-				TaskDialogs.inform(ctx.getParentWindow(), "", "Mindestens für einen Stick wurden fehlerhafte Koordinaten eingegeben.");
+				TaskDialogs.inform(ctx.getParentWindow(), "",
+						I.tr("Mindestens für einen Stick wurden fehlerhafte Koordinaten eingegeben."));
 				return;
 			}
 
@@ -158,12 +160,13 @@ public class PrefPathContentPane extends NavMapObjectContentPane {
 			try {
 				pointRadius = Misc.parseFloatList(taRadius.getText());
 			} catch (IllegalArgumentException e) {
-				TaskDialogs.inform(ctx.getParentWindow(), "", "Mindestens für einen Stick wurden fehlerhafte Koordinaten eingegeben.");
+				TaskDialogs.inform(ctx.getParentWindow(), "",
+						I.tr("Mindestens für einen Stick wurden fehlerhafte Koordinaten eingegeben."));
 				return;
 			}
 
 			if (sticks.size() != pointRadius.size()) {
-				TaskDialogs.inform(ctx.getParentWindow(), "", "Anzahl von Sticks und PointRadius unterscheidet sich.");
+				TaskDialogs.inform(ctx.getParentWindow(), "", I.tr("Anzahl von Sticks und Radien unterscheidet sich."));
 				return;
 			}
 
@@ -185,8 +188,8 @@ public class PrefPathContentPane extends NavMapObjectContentPane {
 			boolean endInZone = !detecedZoneEnd.equals(NavMap.INVALID_ZONE_ID);
 
 			if (startInZone && endInZone && !detecedZoneStart.equals(detecedZoneEnd)) {
-				TaskDialogs.error(ctx.getParentWindow(), "Spans two NavZones",
-						"The PrefPath spans two or more zones,\nbut a PrefPath can only be assigned to one zone.\nPlease consider to change the PrefPath.");
+				TaskDialogs.error(ctx.getParentWindow(), I.tr("Spans two NavZones"), I.tr(
+						"The PrefPath spans two or more zones,\nbut a PrefPath can only be assigned to one zone.\nPlease consider to change the PrefPath."));
 				return detecedZoneStart;
 			} else {
 				return startInZone ? detecedZoneStart : detecedZoneEnd;

@@ -10,6 +10,7 @@ import javax.swing.JTextField;
 import org.netbeans.validation.api.builtin.stringvalidation.StringValidators;
 
 import com.ezware.dialog.task.TaskDialogs;
+import com.teamunify.i18n.I;
 
 import de.george.g3dit.cache.Caches;
 import de.george.g3dit.tab.archive.EditorArchiveTab;
@@ -37,29 +38,29 @@ public class NavZoneTab extends AbstractNavTab {
 	public void initComponents() {
 		setLayout(new MigLayout("fill", "[][]push"));
 
-		JLabel lblRadius = new JLabel("Radius");
+		JLabel lblRadius = new JLabel(I.tr("Radius"));
 		tfRadius = SwingUtils.createUndoTF();
 		tfRadius.setEditable(false);
 		tfRadius.setName("Radius");
 		addValidators(tfRadius, StringValidators.REQUIRE_VALID_NUMBER);
 
-		JLabel lblRadiusOffset = new JLabel("RadiusOffset (x/y/z//)");
+		JLabel lblRadiusOffset = new JLabel(I.tr("RadiusOffset (x/y/z//)"));
 		tfRadiusOffset = SwingUtils.createUndoTF();
 		tfRadiusOffset.setEditable(false);
 
 		cbZoneIsCCW = new JCheckBox();
-		cbZoneIsCCW.setToolTipText("Sticks sind entgegen dem Uhrzeigersinn ausgerichtet. (wird automatisch berechnet)");
+		cbZoneIsCCW.setToolTipText(I.tr("Sticks sind entgegen dem Uhrzeigersinn ausgerichtet. (wird automatisch berechnet)"));
 
 		add(lblRadius, "");
 		add(lblRadiusOffset, "wrap");
 		add(tfRadius, "width 50:100:100");
 		add(tfRadiusOffset, "width 200:250:300, wrap");
-		add(new JLabel("ZoneIsCCW"), "wrap");
+		add(new JLabel(I.tr("ZoneIsCCW")), "wrap");
 		add(cbZoneIsCCW, "wrap");
 
-		setupComponents("NavZone-Koordinaten beibehalten");
+		setupComponents(I.tr("NavZone-Koordinaten beibehalten"));
 
-		JButton btnCalc = new JButton("Errechne NavZone aus Sticks");
+		JButton btnCalc = new JButton(I.tr("Errechne NavZone aus Sticks"));
 		add(btnCalc, "split 2, spanx 4");
 		btnCalc.addActionListener(l -> handleCalcZone());
 
@@ -97,11 +98,11 @@ public class NavZoneTab extends AbstractNavTab {
 		try {
 			sticks = Misc.parseVectorList(taSticks.getText());
 		} catch (IllegalArgumentException e) {
-			TaskDialogs.inform(ctx.getParentWindow(), "", "Mindestens für einen Stick wurden fehlerhafte Koordinaten eingegeben.");
+			TaskDialogs.inform(ctx.getParentWindow(), "", I.tr("Mindestens für einen Stick wurden fehlerhafte Koordinaten eingegeben."));
 			return;
 		}
 		if (sticks.size() < 3) {
-			TaskDialogs.inform(ctx.getParentWindow(), "", "Eine NavZone muss aus mindestens 3 Sticks bestehen.");
+			TaskDialogs.inform(ctx.getParentWindow(), "", I.tr("Eine NavZone muss aus mindestens 3 Sticks bestehen."));
 			return;
 		}
 

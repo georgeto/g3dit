@@ -21,6 +21,7 @@ import org.netbeans.validation.api.ui.swing.SwingValidationGroup;
 
 import com.google.common.eventbus.Subscribe;
 import com.jidesoft.dialog.ButtonPanel;
+import com.teamunify.i18n.I;
 
 import ca.odell.glazedlists.BasicEventList;
 import ca.odell.glazedlists.EventList;
@@ -55,9 +56,9 @@ public class FileSearchDialog extends AbstractTableProgressDialog {
 	private EventList<Result> results;
 	private SortableEventTable<Result> table;
 
-	private static final TableColumnDef COLUMN_NAME = TableColumnDef.withName("Name").size(400).b();
+	private static final TableColumnDef COLUMN_NAME = TableColumnDef.withName("Name").displayName(I.tr("Name")).size(400).b();
 
-	private final TableColumnDef COLUMN_PATH = TableColumnDef.withName("Path").size(600)
+	private final TableColumnDef COLUMN_PATH = TableColumnDef.withName("Path").displayName(I.tr("Path")).size(600)
 			.cellRenderer(new FileTableCellRenderer(() -> ctx.getOptionStore())).b();
 
 	public FileSearchDialog(EditorContext ctx, String title) {
@@ -67,20 +68,20 @@ public class FileSearchDialog extends AbstractTableProgressDialog {
 
 	@Override
 	public JComponent createContentPanel() {
-		btnSearch = registerAction("Suchen", Icons.getImageIcon(Icons.Action.FIND), this::doWork, true);
+		btnSearch = registerAction(I.tr("Suchen"), Icons.getImageIcon(Icons.Action.FIND), this::doWork, true);
 
 		JPanel mainPanel = new JPanel(new MigLayout("fill", "[][][]"));
 
 		tfSearchField = SwingUtils.createUndoTF();
-		tfSearchField.setName("Filter");
+		tfSearchField.setName(I.tr("Filter"));
 
 		JButton btnErase = new JButton(Icons.getImageIcon(Icons.Action.ERASE));
 		btnErase.setFocusable(false);
-		btnErase.setToolTipText("Suche leeren");
+		btnErase.setToolTipText(I.tr("Suche leeren"));
 		btnErase.addActionListener(e -> tfSearchField.setText(null));
 
 		mainPanel.add(tfSearchField, "split 4, width 100%, spanx 4");
-		cbRegex = new JCheckBox("Regex", false);
+		cbRegex = new JCheckBox(I.tr("Regex"), false);
 		mainPanel.add(cbRegex);
 
 		SwingValidationGroup group = SwingValidationGroup.create();
@@ -94,7 +95,7 @@ public class FileSearchDialog extends AbstractTableProgressDialog {
 				try {
 					Pattern.compile(model);
 				} catch (Exception e) {
-					problems.append(compName + " enthält ungültigen regulären Ausdruck.");
+					problems.append(I.trf("{0} enthält ungültigen regulären Ausdruck.", compName));
 				}
 			}
 		});
@@ -103,15 +104,15 @@ public class FileSearchDialog extends AbstractTableProgressDialog {
 		mainPanel.add(btnSearch, "height 23!");
 		mainPanel.add(btnErase, "width 23!, height 23!, wrap");
 
-		cbLrentdat = new JCheckBox("Lrentdat", Icons.getDisabledImageIcon(Icons.Document.LETTER_L), true);
+		cbLrentdat = new JCheckBox(I.tr("Lrentdat"), Icons.getDisabledImageIcon(Icons.Document.LETTER_L), true);
 		cbLrentdat.setSelectedIcon(Icons.getImageIcon(Icons.Document.LETTER_L));
-		cbNode = new JCheckBox("Node", Icons.getDisabledImageIcon(Icons.Document.LETTER_N), true);
+		cbNode = new JCheckBox(I.tr("Node"), Icons.getDisabledImageIcon(Icons.Document.LETTER_N), true);
 		cbNode.setSelectedIcon(Icons.getImageIcon(Icons.Document.LETTER_N));
-		cbTple = new JCheckBox("Template", Icons.getDisabledImageIcon(Icons.Document.LETTER_T), true);
+		cbTple = new JCheckBox(I.tr("Template"), Icons.getDisabledImageIcon(Icons.Document.LETTER_T), true);
 		cbTple.setSelectedIcon(Icons.getImageIcon(Icons.Document.LETTER_T));
-		cbMesh = new JCheckBox("Mesh", Icons.getDisabledImageIcon(Icons.Document.LETTER_M), false);
+		cbMesh = new JCheckBox(I.tr("Mesh"), Icons.getDisabledImageIcon(Icons.Document.LETTER_M), false);
 		cbMesh.setSelectedIcon(Icons.getImageIcon(Icons.Document.LETTER_M));
-		btnImport = new JButton("Entities aus ausgewählter Datei importieren", Icons.getImageIcon(Icons.IO.IMPORT));
+		btnImport = new JButton(I.tr("Entities aus ausgewählter Datei importieren"), Icons.getImageIcon(Icons.IO.IMPORT));
 		btnImport.setEnabled(false);
 		mainPanel.add(cbLrentdat, "split 5, spanx 4");
 		mainPanel.add(cbNode, "gapleft 7");
@@ -166,7 +167,7 @@ public class FileSearchDialog extends AbstractTableProgressDialog {
 		Predicate<File> filter;
 		String text = tfSearchField.getText();
 		if (text.isEmpty() || !cbLrentdat.isSelected() && !cbNode.isSelected() && !cbTple.isSelected() && !cbMesh.isSelected()) {
-			progressBar.setString("Ungültige Filtereinstellungen");
+			progressBar.setString(I.tr("Ungültige Filtereinstellungen"));
 			return;
 		}
 
@@ -178,7 +179,7 @@ public class FileSearchDialog extends AbstractTableProgressDialog {
 				Pattern pattern = Pattern.compile(text);
 				filter = f -> pattern.matcher(ctx.getFileManager().getRelativePath(f).orElseGet(f::getName)).find();
 			} catch (PatternSyntaxException e) {
-				progressBar.setString("Ungültiger Regulärer Ausdruck");
+				progressBar.setString(I.tr("Ungültiger Regulärer Ausdruck"));
 				return;
 			}
 		}
@@ -211,7 +212,8 @@ public class FileSearchDialog extends AbstractTableProgressDialog {
 		private Predicate<File> filter;
 
 		protected SearchFileWorker(Callable<List<File>> fileProvider, Predicate<File> filter) {
-			super(fileProvider, "Erstelle Liste aller Dateien...", "%d/%d Dateien betrachtet", "Suche abgeschlossen");
+			super(fileProvider, I.tr("Erstelle Liste aller Dateien..."), I.tr("{0, number}/{1, number} Dateien betrachtet"),
+					I.tr("Suche abgeschlossen"));
 			this.filter = filter;
 			setProgressBar(progressBar);
 			doneMessageSupplier = this::getDoneMessage;
@@ -248,7 +250,7 @@ public class FileSearchDialog extends AbstractTableProgressDialog {
 		}
 
 		private String getDoneMessage() {
-			return String.format("Suche abgeschlossen (%d Dateien gefunden)", results.size());
+			return I.trf("Suche abgeschlossen ({0, number} Dateien gefunden)", results.size());
 		}
 	}
 

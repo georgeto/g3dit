@@ -6,6 +6,8 @@ import org.netbeans.validation.api.AbstractValidator;
 import org.netbeans.validation.api.Problems;
 import org.netbeans.validation.api.Severity;
 
+import com.teamunify.i18n.I;
+
 import de.george.g3utils.structure.bCVector;
 import de.george.g3utils.util.Misc;
 
@@ -24,13 +26,12 @@ public class PointDistanceValidator extends AbstractValidator<String> {
 
 			for (int s = points.size() - 1, e = 0; e < points.size(); s = e++) {
 				if (points.get(s).getInvTranslated(points.get(e)).getSquareMagnitude() < 3 * 3) {
-					problems.append(
-							String.format(compName + " enthält zwei sehr nah beieinander liegende Sticks: %d und %d", s + 1, e + 1),
-							Severity.WARNING);
+					problems.append(I.trf("{0} enthält zwei sehr nah beieinander liegende Sticks: {1, number} und {2, number}", compName,
+							s + 1, e + 1), Severity.WARNING);
 				}
 			}
 		} catch (IllegalArgumentException e) {
-			problems.append(compName + " enthält fehlerhafte Koordinaten.", Severity.FATAL);
+			problems.append(I.trf("{0} enthält fehlerhafte Koordinaten.", compName), Severity.FATAL);
 		}
 	}
 

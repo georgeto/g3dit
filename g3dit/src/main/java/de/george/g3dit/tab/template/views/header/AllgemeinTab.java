@@ -10,6 +10,8 @@ import javax.swing.JLabel;
 import javax.swing.KeyStroke;
 import javax.swing.event.DocumentListener;
 
+import com.teamunify.i18n.I;
+
 import de.george.g3dit.entitytree.filter.GuidEntityFilter.MatchMode;
 import de.george.g3dit.gui.components.JFocusNameField;
 import de.george.g3dit.gui.components.JSearchGuidField;
@@ -55,62 +57,62 @@ public class AllgemeinTab extends AbstractTemplateTab {
 
 		DocumentListener documentListener = SwingUtils.createDocumentListener(this::handleUpdateDataFile);
 
-		add(new JLabel("Name"), "wrap");
+		add(new JLabel(I.tr("Name")), "wrap");
 		tfName = new JFocusNameField(ctx);
-		tfName.initValidation(validation(), "Name", EmtpyWarnValidator.INSTANCE);
+		tfName.initValidation(validation(), I.tr("Name"), EmtpyWarnValidator.INSTANCE);
 		tfName.getDocument().addDocumentListener(documentListener);
 		add(tfName, "width 100:300:300, wrap");
 
-		add(new JLabel("Datei Prefix"), "wrap");
+		add(new JLabel(I.tr("Datei Prefix")), "wrap");
 		tfFilePrefix = SwingUtils.createUndoTF();
 		tfFilePrefix.getDocument().addDocumentListener(documentListener);
 		add(tfFilePrefix, "width 100:300:300, wrap");
 
-		add(new JLabel("Item Guid"), "wrap");
+		add(new JLabel(I.tr("Item Guid")), "wrap");
 		tfItemGuid = new JGuidField();
-		tfItemGuid.initValidation(validation(), "Item Guid", GuidValidator.INSTANCE);
+		tfItemGuid.initValidation(validation(), I.tr("Item Guid"), GuidValidator.INSTANCE);
 		add(tfItemGuid, "width 100:300:300");
 		JButton btnRandomItemGuid = new JButton(Icons.getImageIcon(Icons.Data.COUNTER));
-		btnRandomItemGuid.setToolTipText("Zufällige Guid generieren");
+		btnRandomItemGuid.setToolTipText(I.tr("Zufällige Guid generieren"));
 		btnRandomItemGuid.addActionListener(a -> tfItemGuid.setText(GuidUtil.randomGUID(), true));
 		add(btnRandomItemGuid, LayoutUtils.sqrBtn());
 
 		JButton btnCopyEntry = new JButton(Icons.getImageIcon(Icons.Action.COPY));
-		btnCopyEntry.setToolTipText(".lrtpldatasc Eintrag in Zwischenablage kopieren");
+		btnCopyEntry.setToolTipText(I.tr(".lrtpldatasc Eintrag in Zwischenablage kopieren"));
 		btnCopyEntry.addActionListener(a -> IOUtils.copyToClipboard(
 				GuidUtil.hexToLrtpldatasc(tfItemGuid.getText()) + "=" + tfFilePrefix.getText() + "_" + tfName.getText() + ".tple"));
 		add(btnCopyEntry, LayoutUtils.sqrBtn("wrap"));
 
-		add(new JLabel("Reference Guid"), "wrap");
+		add(new JLabel(I.tr("Reference Guid")), "wrap");
 		tfRefGuid = new JSearchGuidField(ctx);
-		tfRefGuid.initValidation(validation(), "Reference Guid", GuidValidator.INSTANCE);
+		tfRefGuid.initValidation(validation(), I.tr("Reference Guid"), GuidValidator.INSTANCE);
 		add(tfRefGuid, "width 100:300:300");
 
-		tfRefGuid.addMenuItem("Alle Referenzen in Entities auf diese Template auflisten", Icons.getImageIcon(Icons.Misc.GLOBE),
+		tfRefGuid.addMenuItem(I.tr("Alle Referenzen in Entities auf diese Template auflisten"), Icons.getImageIcon(Icons.Misc.GLOBE),
 				(ctx, g) -> EntitySearchDialog.openEntitySearchGuid(ctx, MatchMode.Template, g));
-		tfRefGuid.addMenuItem("Alle Referenzen in Templates auf diese Template auflisten", Icons.getImageIcon(Icons.Misc.GLOBE),
+		tfRefGuid.addMenuItem(I.tr("Alle Referenzen in Templates auf diese Template auflisten"), Icons.getImageIcon(Icons.Misc.GLOBE),
 				(ctx, g) -> TemplateSearchDialog.openTemplateSearchGuid(ctx, MatchMode.Template, g));
 
 		JButton btnRandomRefGuid = new JButton(Icons.getImageIcon(Icons.Data.COUNTER));
-		btnRandomRefGuid.setToolTipText("Zufällige Guid generieren");
+		btnRandomRefGuid.setToolTipText(I.tr("Zufällige Guid generieren"));
 		btnRandomRefGuid.addActionListener(a -> tfRefGuid.setText(GuidUtil.randomGUID(), true));
 		add(btnRandomRefGuid, LayoutUtils.sqrBtn());
 
 		JButton btnCopyGuid = new JButton(Icons.getImageIcon(Icons.Action.COPY));
-		btnCopyGuid.setToolTipText("Guid in Zwischenablage kopieren");
+		btnCopyGuid.setToolTipText(I.tr("Guid in Zwischenablage kopieren"));
 		btnCopyGuid.addActionListener(a -> IOUtils.copyToClipboard(tfRefGuid.getText()));
 		add(btnCopyGuid, LayoutUtils.sqrBtn("wrap"));
 
-		add(new JLabel("ChangeTime"), "wrap");
+		add(new JLabel(I.tr("ChangeTime")), "wrap");
 		tfChangeTime = SwingUtils.createUndoTF();
-		tfChangeTime.setName("ChangeTime");
+		tfChangeTime.setName(I.tr("ChangeTime"));
 		addValidators(tfChangeTime, IsALongValidator.INSTANCE);
 		add(tfChangeTime, "width 50:100:100, wrap");
 
-		plWorldPosition = new PositionPanel("Position", ctx.getParentWindow(), this::changeWorldPosition);
+		plWorldPosition = new PositionPanel(I.tr("Position"), ctx.getParentWindow(), this::changeWorldPosition);
 		add(plWorldPosition, "width 100:300:400, spanx 3, grow, wrap");
 
-		plLocalNodeBoundary = new BoundingBoxPanel("BoundingBox", ctx, this::changeLocalNodeBoundary, () -> {
+		plLocalNodeBoundary = new BoundingBoxPanel(I.tr("BoundingBox"), ctx, this::changeLocalNodeBoundary, () -> {
 			ctx.saveView(); // Mesh wurde eventuell im Mesh Tab bearbeitet
 			return EntityUtil.getMesh(ctx.getCurrentTemplate().getReferenceHeader()).orElse(null);
 		}, () -> tfName.getText());
@@ -119,7 +121,7 @@ public class AllgemeinTab extends AbstractTemplateTab {
 
 	@Override
 	public String getTabTitle() {
-		return "Allgemein";
+		return I.tr("Allgemein");
 	}
 
 	@Override

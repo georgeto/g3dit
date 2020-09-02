@@ -4,6 +4,8 @@ import java.awt.Component;
 
 import javax.swing.Icon;
 
+import com.teamunify.i18n.I;
+
 import de.george.g3dit.EditorContext;
 import de.george.g3dit.tab.EditorTab;
 
@@ -13,7 +15,7 @@ public class EditorNavMapObjectTab extends EditorTab {
 
 	public EditorNavMapObjectTab(EditorContext ctx, EditorTabType tabType, NavMapObjectContentPane content) {
 		super(ctx, tabType);
-		title = String.format("NavMap -> %ss", tabType.name());
+		title = I.trf("NavMap -> {0}s", tabType.name());
 		this.content = content;
 		content.initGui();
 	}

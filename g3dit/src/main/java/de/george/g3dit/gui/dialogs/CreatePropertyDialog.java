@@ -10,6 +10,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import com.jidesoft.dialog.ButtonPanel;
+import com.teamunify.i18n.I;
 
 import de.george.g3utils.gui.SwingUtils;
 import de.george.lrentnode.classes.desc.CD;
@@ -24,7 +25,7 @@ public class CreatePropertyDialog extends ExtStandardDialog {
 	private JComboBox<String> cbType;
 
 	public CreatePropertyDialog(Window owner, String propertySetName) {
-		super(owner, "Property erstellen für " + propertySetName, true);
+		super(owner, I.trf("Property erstellen für {0}", propertySetName), true);
 		propertySet = CD.getClassDescriptor(propertySetName).get();
 		setSize(500, 170);
 
@@ -41,10 +42,10 @@ public class CreatePropertyDialog extends ExtStandardDialog {
 	public JComponent createContentPanel() {
 		JPanel panel = new JPanel(new MigLayout("insets 10, fillx", "[fill, grow]"));
 
-		panel.add(new JLabel("Name"), "wrap");
+		panel.add(new JLabel(I.tr("Name")), "wrap");
 		panel.add(cbName, "wrap");
 
-		panel.add(new JLabel("Type"), "wrap");
+		panel.add(new JLabel(I.tr("Type")), "wrap");
 		panel.add(cbType, "");
 
 		return panel;
@@ -54,7 +55,7 @@ public class CreatePropertyDialog extends ExtStandardDialog {
 	public ButtonPanel createButtonPanel() {
 		ButtonPanel buttonPanel = newButtonPanel();
 
-		Action okAction = SwingUtils.createAction("OK", () -> {
+		Action okAction = SwingUtils.createAction(I.tr("Ok"), () -> {
 			if (isValidSelection()) {
 				setDialogResult(RESULT_AFFIRMED);
 			}

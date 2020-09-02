@@ -3,6 +3,7 @@ package de.george.g3dit.entitytree.filter;
 import java.util.function.BiConsumer;
 
 import com.google.common.collect.ImmutableList;
+import com.teamunify.i18n.I;
 
 import de.george.g3utils.structure.GuidUtil;
 import de.george.g3utils.util.Holder;
@@ -179,7 +180,7 @@ public class GuidEntityFilter extends AbstractEntityFilter {
 
 	public static String getToolTipText() {
 		// @foff
-		return    "<html>"
+		return I.tr("<html>"
 				+ "Es kann sowohl nach vollständigen als auch unvollständigen Guids gesucht werden.<br>"
 				+ "Der Guid kann einer der folgenden Präfixe vorangestellt werden."
 				+ "<ul>"
@@ -191,7 +192,7 @@ public class GuidEntityFilter extends AbstractEntityFilter {
 				+ "<li><b>#p#</b>: PartyMember des PartyLeaders</li>"
 				+ "<li><b>#g#</b>: Entities die in irgendeiner ihrer Eigenschaften auf diese Entity verweisen</li>"
 				+ "<li><b>#t#</b>: Entities die in irgendeiner ihrer Eigenschaften auf dieses Template verweisen</li>"
-				+ "</ul></html>";
+				+ "</ul></html>");
 		// @fon
 	}
 }

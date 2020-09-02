@@ -16,6 +16,7 @@ import javax.swing.JTextField;
 import javax.swing.border.EtchedBorder;
 
 import com.ezware.dialog.task.TaskDialogs;
+import com.teamunify.i18n.I;
 
 import de.george.g3dit.cache.Caches;
 import de.george.g3dit.cache.NavCache;
@@ -60,29 +61,29 @@ public class NavPathTab extends AbstractNavTab {
 	public void initComponents() {
 		setLayout(new MigLayout("fillx", "[][][][]push"));
 
-		add(new JLabel("UnlimitedHeight"), "wrap");
+		add(new JLabel(I.tr("UnlimitedHeight")), "wrap");
 		cbUnlimitedHeight = new JCheckBox();
-		cbUnlimitedHeight.setToolTipText("NavPath kann von großen NPCs, wie etwa Trollen und Wyvern, verwendet werden.");
+		cbUnlimitedHeight.setToolTipText(I.tr("NavPath kann von großen NPCs, wie etwa Trollen und Wyvern, verwendet werden."));
 		add(cbUnlimitedHeight, "wrap");
 
 		// TODO: Warnung anzeigen, wenn NavPath nicht in NavZone liegt.
 
-		JLabel lblZoneA = new JLabel("ZoneA Guid");
+		JLabel lblZoneA = new JLabel(I.tr("ZoneA Guid"));
 		tfZoneA = new JEntityGuidField(ctx);
 		tfZoneA.setEditable(false);
 		tfZoneA.initValidation(validation(), "ZoneA", GuidValidator.INSTANCE_ALLOW_EMPTY, new EntityExistenceValidator(validation(), ctx));
 		add(lblZoneA, "wrap");
 		add(tfZoneA, "width 100:300:300, spanx 3, wrap");
 
-		JLabel lblZoneB = new JLabel("ZoneB Guid");
+		JLabel lblZoneB = new JLabel(I.tr("ZoneB Guid"));
 		tfZoneB = new JEntityGuidField(ctx);
 		tfZoneB.setEditable(false);
 		tfZoneB.initValidation(validation(), "ZoneB", GuidValidator.INSTANCE_ALLOW_EMPTY, new EntityExistenceValidator(validation(), ctx));
 		add(lblZoneB, "wrap");
 		add(tfZoneB, "width 100:300:300, spanx 3, wrap");
 
-		add(new JLabel("ZoneAIntersectionCenter"), "gaptop 5");
-		add(new JLabel("ZoneBIntersectionCenter"), "gaptop 5, wrap");
+		add(new JLabel(I.tr("ZoneAIntersectionCenter")), "gaptop 5");
+		add(new JLabel(I.tr("ZoneBIntersectionCenter")), "gaptop 5, wrap");
 		tfAISC = SwingUtils.createUndoTF();
 		tfBISC = SwingUtils.createUndoTF();
 		tfAISC.setEditable(false);
@@ -90,8 +91,8 @@ public class NavPathTab extends AbstractNavTab {
 		add(tfAISC, "width 150:210:250");
 		add(tfBISC, "width 150:210:250, wrap");
 
-		add(new JLabel("ZoneAIntersectionMargin1"), "");
-		add(new JLabel("ZoneBIntersectionMargin1"), "wrap");
+		add(new JLabel(I.tr("ZoneAIntersectionMargin1")), "");
+		add(new JLabel(I.tr("ZoneBIntersectionMargin1")), "wrap");
 		tfAISM1 = SwingUtils.createUndoTF();
 		tfBISM1 = SwingUtils.createUndoTF();
 		tfAISM1.setEditable(false);
@@ -99,8 +100,8 @@ public class NavPathTab extends AbstractNavTab {
 		add(tfAISM1, "width 150:210:250");
 		add(tfBISM1, "width 150:210:250, wrap");
 
-		add(new JLabel("ZoneAIntersectionMargin2"), "");
-		add(new JLabel("ZoneBIntersectionMargin2"), "wrap");
+		add(new JLabel(I.tr("ZoneAIntersectionMargin2")), "");
+		add(new JLabel(I.tr("ZoneBIntersectionMargin2")), "wrap");
 		tfAISM2 = SwingUtils.createUndoTF();
 		tfBISM2 = SwingUtils.createUndoTF();
 		tfAISM2.setEditable(false);
@@ -108,23 +109,23 @@ public class NavPathTab extends AbstractNavTab {
 		add(tfAISM2, "width 150:210:250");
 		add(tfBISM2, "width 150:210:250, wrap");
 
-		setupComponents("NavPath-Koordinaten beibehalten");
+		setupComponents(I.tr("NavPath-Koordinaten beibehalten"));
 
 		taRadius = new JTextAreaExt(true);
 		taRadius.getScrollPane().setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
 		TextLineNumber tln = new TextLineNumber(taRadius);
 		taRadius.getScrollPane().setRowHeaderView(tln);
 
-		add(new JLabel("Radius"), "cell 2 12");
+		add(new JLabel(I.tr("Radius")), "cell 2 12");
 
 		add(taRadius.getScrollPane(), "cell 2 14, push, grow, width 50:120:150, wrap");
 
-		JButton btnCalc = new JButton("Errechne NavPath");
+		JButton btnCalc = new JButton(I.tr("Errechne NavPath"));
 		add(btnCalc, "split 2, spanx 2");
 		btnCalc.addActionListener(a -> processNavPath());
 		add(cbManualCoords, "gapleft 15");
 
-		btnResizePopup = new JButton("Resize NavPath");
+		btnResizePopup = new JButton(I.tr("Resize NavPath"));
 		add(btnResizePopup, "wrap");
 		JNavPathResizePopup resizePopup = new JNavPathResizePopup(ctx.getParentWindow(), () -> {
 			// Update NavCache
@@ -136,7 +137,7 @@ public class NavPathTab extends AbstractNavTab {
 		});
 		btnResizePopup.addActionListener(a -> resizePopup.showForEntity(ctx.getCurrentEntity(), btnResizePopup));
 
-		JButton btnLoadFromNavMap = new JButton("Intersections aus NavMap laden");
+		JButton btnLoadFromNavMap = new JButton(I.tr("Intersections aus NavMap laden"));
 		add(btnLoadFromNavMap, "spanx 3");
 		btnLoadFromNavMap.addActionListener(a -> loadFromNavMap());
 	}
@@ -221,20 +222,20 @@ public class NavPathTab extends AbstractNavTab {
 			points = Misc.parseVectorList(taSticks.getText());
 			radius = Misc.parseFloatList(taRadius.getText());
 		} catch (NumberFormatException e1) {
-			TaskDialogs.inform(ctx.getParentWindow(), "", "Die Radius-Daten sind fehlerhaft.");
+			TaskDialogs.inform(ctx.getParentWindow(), "", I.tr("Die Radius-Daten sind fehlerhaft."));
 			return null;
 		} catch (IllegalArgumentException e1) {
-			TaskDialogs.inform(ctx.getParentWindow(), "", "Die Stick-Daten sind fehlerhaft.");
+			TaskDialogs.inform(ctx.getParentWindow(), "", I.tr("Die Stick-Daten sind fehlerhaft."));
 			return null;
 		}
 
 		if (points.size() != radius.size()) {
-			TaskDialogs.inform(ctx.getParentWindow(), "", "Die Anzahl der Sticks und Radien stimmt nicht überein.");
+			TaskDialogs.inform(ctx.getParentWindow(), "", I.tr("Die Anzahl der Sticks und Radien stimmt nicht überein."));
 			return null;
 		}
 
 		if (points.size() < 2) {
-			TaskDialogs.inform(ctx.getParentWindow(), "", "Ein NavPath muss aus mindestens 2 Sticks bestehen.");
+			TaskDialogs.inform(ctx.getParentWindow(), "", I.tr("Ein NavPath muss aus mindestens 2 Sticks bestehen."));
 			return null;
 		}
 
@@ -287,7 +288,7 @@ public class NavPathTab extends AbstractNavTab {
 		eCEntity entity = ctx.getCurrentEntity();
 
 		if (!navMap.hasNavPath(entity.getGuid())) {
-			TaskDialogs.inform(ctx.getParentWindow(), "", "NavPath ist nicht in der NavMap.");
+			TaskDialogs.inform(ctx.getParentWindow(), "", I.tr("NavPath ist nicht in der NavMap."));
 			return;
 		}
 
@@ -308,7 +309,7 @@ public class NavPathTab extends AbstractNavTab {
 			ctx.fileChanged();
 			ctx.refreshView();
 		} else {
-			TaskDialogs.inform(ctx.getParentWindow(), "", "Eintrag in der NavMap ist fehlerhaft.");
+			TaskDialogs.inform(ctx.getParentWindow(), "", I.tr("Eintrag in der NavMap ist fehlerhaft."));
 		}
 	}
 
@@ -333,18 +334,18 @@ public class NavPathTab extends AbstractNavTab {
 			cbLockWidthLeft = new JCheckBox("", true);
 			cbLockWidthRight = new JCheckBox("", true);
 
-			JButton btnResize = new JButton("Resize");
+			JButton btnResize = new JButton(I.tr("Resize"));
 			btnResize.setFocusable(false);
 
 			setLayout(new MigLayout("fillx, ins 0"));
 			add(spWidthLeftA, "width 100!");
 			add(spLengthA, "width 100!");
 			add(spWidthRightA, "width 100!, wrap");
-			add(SwingUtils.monospaceFont(new JLabel("Locked |")), "alignx left, sgy lock, split 2");
+			add(SwingUtils.monospaceFont(new JLabel(I.tr("Locked") + " |")), "alignx left, sgy lock, split 2");
 			add(cbLockWidthLeft, "sgy lock");
 			add(btnResize, "alignx center");
 			add(cbLockWidthRight, "alignx right, sgy lock, split 2");
-			add(SwingUtils.monospaceFont(new JLabel("| Locked")), "sgy lock, wrap");
+			add(SwingUtils.monospaceFont(new JLabel("| " + I.tr("Locked"))), "sgy lock, wrap");
 			add(spWidthLeftB, "width 100!");
 			add(spLengthB, "width 100!");
 			add(spWidthRightB, "width 100!");
@@ -412,7 +413,7 @@ public class NavPathTab extends AbstractNavTab {
 				spWidthLeftB.commitEdit();
 				spWidthRightB.commitEdit();
 			} catch (ParseException e) {
-				TaskDialogs.inform(parent, "", "Ungültige Eingabe: " + e.getMessage());
+				TaskDialogs.inform(parent, "", I.trf("Ungültige Eingabe: {0}", e.getMessage()));
 			}
 
 			List<bCVector> points = navPath.property(CD.gCNavPath_PS.Point).getEntries(bCVector::clone);

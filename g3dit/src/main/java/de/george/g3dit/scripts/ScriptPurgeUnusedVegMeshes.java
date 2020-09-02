@@ -3,6 +3,8 @@ package de.george.g3dit.scripts;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.teamunify.i18n.I;
+
 import de.george.lrentnode.archive.eCEntity;
 import de.george.lrentnode.classes.eCVegetation_Mesh;
 import de.george.lrentnode.classes.eCVegetation_PS;
@@ -11,12 +13,12 @@ import de.george.lrentnode.classes.desc.CD;
 public class ScriptPurgeUnusedVegMeshes implements IScript {
 	@Override
 	public String getTitle() {
-		return "Nicht verwendete Vegetationsmeshes löschen";
+		return I.tr("Nicht verwendete Vegetationsmeshes löschen");
 	}
 
 	@Override
 	public String getDescription() {
-		return "Löscht alle nicht verwendeten Vegetationsmeshes aus den Weltdaten.";
+		return I.tr("Löscht alle nicht verwendeten Vegetationsmeshes aus den Weltdaten.");
 	}
 
 	@Override
@@ -31,12 +33,13 @@ public class ScriptPurgeUnusedVegMeshes implements IScript {
 					unusedMeshes.forEach(veg::removeMeshClass);
 
 					if (!unusedMeshes.isEmpty()) {
-						env.log("Entferne " + unusedMeshes.size() + " unbenutzte Meshes in " + file.getName() + "#" + entity.getGuid());
+						env.log(I.trf("Entferne {0, number} unbenutzte Meshes in {1}#{2}", unusedMeshes.size(), file.getName(),
+								entity.getGuid()));
 						removed += unusedMeshes.size();
 					}
 				}
 			}
 			return removed;
-		}, "Es wurden insgesamt %d unbenutzte Meshes entfernt.");
+		}, I.tr("Es wurden insgesamt {0, number} unbenutzte Meshes entfernt."));
 	}
 }

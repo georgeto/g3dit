@@ -16,6 +16,7 @@ import javax.swing.SwingUtilities;
 
 import com.jidesoft.dialog.ButtonPanel;
 import com.l2fprod.common.beans.editor.AbstractPropertyEditor;
+import com.teamunify.i18n.I;
 
 import de.george.g3dit.gui.dialogs.ExtStandardDialog;
 import de.george.g3dit.tab.archive.views.property.JsonPropertyValueConverter.JsonStringWrapper;
@@ -64,7 +65,7 @@ public class JsonStringPropertyEditor extends AbstractPropertyEditor {
 		private JTextArea textArea;
 
 		public PopupDialog() {
-			super((Frame) null, "Wert bearbeiten", true);
+			super((Frame) null, I.tr("Wert bearbeiten"), true);
 			setType(Type.UTILITY);
 			setResizable(true);
 			setSize(400, 475);
@@ -86,7 +87,7 @@ public class JsonStringPropertyEditor extends AbstractPropertyEditor {
 		public ButtonPanel createButtonPanel() {
 			ButtonPanel buttonPanel = newButtonPanel();
 
-			Action saveAction = SwingUtils.createAction("Ok", () -> {
+			Action saveAction = SwingUtils.createAction(I.tr("Ok"), () -> {
 				String oldValue = editorComponent.getText();
 				currentText = textArea.getText();
 				editorComponent.setText(currentText);
@@ -94,7 +95,7 @@ public class JsonStringPropertyEditor extends AbstractPropertyEditor {
 				affirm();
 			});
 
-			Action cancelAction = SwingUtils.createAction("Abbrechen", () -> {
+			Action cancelAction = SwingUtils.createAction(I.tr("Abbrechen"), () -> {
 				// Hacky workaround to cancel cell editing
 				Object al = editorComponent.getInputMap(JComponent.WHEN_FOCUSED).get(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0));
 				if (al instanceof ActionListener) {

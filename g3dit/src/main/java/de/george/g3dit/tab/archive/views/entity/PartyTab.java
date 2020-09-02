@@ -1,5 +1,7 @@
 package de.george.g3dit.tab.archive.views.entity;
 
+import com.teamunify.i18n.I;
+
 import de.george.g3dit.entitytree.filter.GuidEntityFilter.MatchMode;
 import de.george.g3dit.gui.components.JSearchNamedGuidField;
 import de.george.g3dit.gui.dialogs.EntitySearchDialog;
@@ -24,7 +26,7 @@ public class PartyTab extends AbstractPropertyEntityTab {
 		propertyPanel
 			.add(CD.gCParty_PS.PartyLeaderEntity)
 				.name("PartyLeader")
-				.<JSearchNamedGuidField>customize(tfPartyLeader -> tfPartyLeader.addMenuItem("Alle PartyMember des PartyLeaders auflisten", Icons.getImageIcon(Icons.Misc.GLOBE),
+				.<JSearchNamedGuidField>customize(tfPartyLeader -> tfPartyLeader.addMenuItem(I.tr("Alle PartyMember des PartyLeaders auflisten"), Icons.getImageIcon(Icons.Misc.GLOBE),
 					(c, text) -> EntitySearchDialog.openEntitySearchGuid(c, MatchMode.PartyLeader, text)))
 			.add(CD.gCParty_PS.PartyMemberType)
 			.add(CD.gCParty_PS.class, gCParty_PS::getMembers, gCParty_PS::setMembers, bTObjArray_eCEntityProxy::new, bTObjArray_eCEntityProxy.class, "bTObjArray<class eCEntityProxy>")

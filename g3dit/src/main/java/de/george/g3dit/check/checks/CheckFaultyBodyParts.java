@@ -14,6 +14,7 @@ import java.util.Optional;
 import java.util.function.Supplier;
 
 import com.google.common.base.Strings;
+import com.teamunify.i18n.I;
 
 import de.george.g3dit.check.EntityDescriptor;
 import de.george.g3dit.check.FileDescriptor;
@@ -40,8 +41,8 @@ import de.george.lrentnode.util.NPCUtil;
 
 public class CheckFaultyBodyParts extends AbstractEntityCheck {
 	public CheckFaultyBodyParts() {
-		super("Fehlerhafte Körperteile ermitteln",
-				"Überprüft für alle Körperteile, ob diese Inkonsistenzen mit ihrer Template oder ihrem NPC aufweisen.", 1, 1);
+		super(I.tr("Fehlerhafte Körperteile ermitteln"),
+				I.tr("Überprüft für alle Körperteile, ob diese Inkonsistenzen mit ihrer Template oder ihrem NPC aufweisen."), 1, 1);
 	}
 
 	private Map<String, File> tpleGuidMap;
@@ -76,22 +77,22 @@ public class CheckFaultyBodyParts extends AbstractEntityCheck {
 							".fxa");
 					if (!Objects.equals(filePath, visEntity.fxaSlot.fxaFile)) {
 						problemConsumer.fatal(
-								"ResourceFilePath weicht von Anhang 1 ab: '" + filePath + "' vs. '" + visEntity.fxaSlot.fxaFile + "'");
+								I.trf("ResourceFilePath weicht von Anhang 1 ab: '{0}' vs. '{1}'", filePath, visEntity.fxaSlot.fxaFile));
 					}
 
 					if (!Objects.equals(materialSwitch, visEntity.fxaSlot.fxaSwitch)) {
-						problemConsumer
-								.fatal("MaterialSwitch weicht von Anhang 1 ab: " + materialSwitch + " vs. " + visEntity.fxaSlot.fxaSwitch);
+						problemConsumer.fatal(
+								I.trf("MaterialSwitch weicht von Anhang 1 ab: {0} vs. {1}", materialSwitch, visEntity.fxaSlot.fxaSwitch));
 					}
 
 					if (!Objects.equals(animFilePath, Strings.nullToEmpty(visEntity.fxaSlot.fxaFile2))) {
-						problemConsumer.fatal("FacialAnimFilePath weicht von Anhang 2 ab: '" + filePath + "' vs. '"
-								+ Strings.nullToEmpty(visEntity.fxaSlot.fxaFile2) + "'");
+						problemConsumer.fatal(I.trf("FacialAnimFilePath weicht von Anhang 2 ab: '{0}' vs. '{1}'", filePath,
+								Strings.nullToEmpty(visEntity.fxaSlot.fxaFile2)));
 					}
 
 					if (!Objects.isNull(visEntity.fxaSlot.fxaFile2) && !Objects.equals(materialSwitch, visEntity.fxaSlot.fxaSwitch2)) {
-						problemConsumer.fatal(
-								"MaterialSwitch weicht von Anhang 2 ab: " + materialSwitch + " vs. " + visEntity.fxaSlot.fxaSwitch2);
+						problemConsumer.fatal(I.trf("MaterialSwitch weicht von Anhang 2 ab: {0, number} vs. {1, number}", materialSwitch,
+								visEntity.fxaSlot.fxaSwitch2));
 					}
 				}
 
@@ -103,7 +104,7 @@ public class CheckFaultyBodyParts extends AbstractEntityCheck {
 						if (owner.isPresent()) {
 							if (owner.get() != entity.getParent()) {
 								problemConsumer.fatal(
-										String.format("Körperteil ist kein Child seines Owners '%s' (%s), sondern ein Child von '%s' (%s)",
+										I.trf("Körperteil ist kein Child seines Owners '{0}' ({1}), sondern ein Child von '{2}' ({3})",
 												owner.get().getName(), owner.get().getGuid(), entity.getParent().getName(),
 												entity.getParent().getGuid()));
 							} else {
@@ -111,7 +112,7 @@ public class CheckFaultyBodyParts extends AbstractEntityCheck {
 										.length();
 								if (distanceToOwner > 1000.0f) {
 									problemConsumer.warning(
-											String.format("Körperteil ist zu weit (%d) von NPC entfernt.", (int) distanceToOwner));
+											I.trf("Körperteil ist zu weit ({0, number}) von NPC entfernt.", (int) distanceToOwner));
 								}
 
 								gCInventory_PS inv = owner.get().getClass(CD.gCInventory_PS.class);
@@ -120,7 +121,8 @@ public class CheckFaultyBodyParts extends AbstractEntityCheck {
 									String slotItem = invSlot.property(CD.gCInventorySlot.Item).getGuid();
 									if (!entity.getGuid().equals(slotItem)) {
 										problemConsumer.fatal(
-												"Körperteil Slot des zugehörigen NPCs referenziert nicht auf das Körperteil: " + slotItem);
+												I.trf("Körperteil Slot des zugehörigen NPCs referenziert nicht auf das Körperteil: {0}",
+														slotItem));
 									}
 
 									eCVisualAnimation_PS visNPC = owner.get().getClass(CD.eCVisualAnimation_PS.class);
@@ -129,10 +131,10 @@ public class CheckFaultyBodyParts extends AbstractEntityCheck {
 										java.util.Optional<MaterialSwitchSlot> slotNPC = visNPC.bodyParts.stream()
 												.filter(p -> p.name.equals(slotName)).findFirst();
 										if (!slotNPC.isPresent()) {
-											problemConsumer.fatal("Zugehörige NPC enthält keinen passenden MaterialSwitchSlot.");
+											problemConsumer.fatal(I.tr("Zugehörige NPC enthält keinen passenden MaterialSwitchSlot."));
 										} else {
 											problemConsumer.postIfDetailsNotEmpy(Severity.Fatal,
-													"MaterialSwitchSlot des zugehörigen NPCs fehlerhaft.",
+													I.tr("MaterialSwitchSlot des zugehörigen NPCs fehlerhaft."),
 													compareMaterialSwitchSlot(visEntity.fxaSlot, slotNPC.get(), "(Item vs. NPC)"));
 										}
 									}
@@ -141,11 +143,11 @@ public class CheckFaultyBodyParts extends AbstractEntityCheck {
 										java.util.Optional<ExtraSlot> extraSlotNPC = visNPC.attachments.stream()
 												.filter(p -> p.name.equals(slotName)).findFirst();
 										if (!extraSlotNPC.isPresent()) {
-											problemConsumer.fatal("Zugehörige NPC enthält keinen passenden ExtraSlot.");
+											problemConsumer.fatal(I.tr("Zugehörige NPC enthält keinen passenden ExtraSlot."));
 										} else if (!entity.getGuid().equals(extraSlotNPC.get().guid)) {
-											problemConsumer
-													.fatal("ExtraSlot Guid des zugehörigen NPCs referenziert nicht auf das Körperteil: "
-															+ extraSlotNPC.get().guid);
+											problemConsumer.fatal(
+													I.trf("ExtraSlot Guid des zugehörigen NPCs referenziert nicht auf das Körperteil: {0}",
+															extraSlotNPC.get().guid));
 										}
 									}
 
@@ -154,33 +156,33 @@ public class CheckFaultyBodyParts extends AbstractEntityCheck {
 										try {
 											TemplateEntity tple = FileUtil.openTemplate(tpleFile).getReferenceHeader();
 											problemConsumer.postIfDetailsNotEmpy(Severity.Fatal,
-													join(text("Weicht von Template ab: "),
+													join(text(I.tr("Weicht von Template ab: ")),
 															a(tple.getName()).withHref(
 																	UriUtil.encodeFile(new FileDescriptor(tpleFile, FileType.Template))))
 																			.render(),
 													compareItemToTemplate(entity, visEntity, tple));
 										} catch (Exception e) {
-											problemConsumer.fatal("Fehler beim Öffnen von Template.");
+											problemConsumer.fatal(I.tr("Fehler beim Öffnen von Template."));
 
 										}
 									} else {
-										problemConsumer
-												.fatal("Körperteil referenziert andere Template als Head Slot des zugehörigen NPCs: "
-														+ creator + " vs. " + slotTple);
+										problemConsumer.fatal(I.trf(
+												"Körperteil referenziert andere Template als entsprechender Slot des zugehörigen NPCs: {0} vs. {1}",
+												creator, slotTple));
 									}
 								} else {
-									problemConsumer.fatal("Owner hat keinen " + G3Enums.asString(gESlot.class, slot) + " Slot.");
+									problemConsumer.fatal(I.trf("Owner hat keinen {0} Slot.", G3Enums.asString(gESlot.class, slot)));
 								}
 							}
 						} else if (NPCUtil.isNPC(entity.getParent())) {
-							problemConsumer.fatal(
-									"Hat einen ungültigen Owner eingetragen: " + inter.property(CD.gCInteraction_PS.Owner).getGuid());
+							problemConsumer.fatal(I.trf("Hat einen ungültigen Owner eingetragen: {0}",
+									inter.property(CD.gCInteraction_PS.Owner).getGuid()));
 						}
 					} else {
-						problemConsumer.fatal("Hat eine nicht existente Reference Guid eingetragen: " + creator);
+						problemConsumer.fatal(I.trf("Hat eine nicht existente Reference Guid eingetragen: {0}", creator));
 					}
 				} else {
-					problemConsumer.fatal("Hat keine Reference Guid eingetragen.");
+					problemConsumer.fatal(I.tr("Hat keine Reference Guid eingetragen."));
 				}
 			}
 		}

@@ -34,7 +34,7 @@ public class OptionStoreMigrator {
 			String migrationFullName = migration.getSimpleName();
 			Matcher matcher = MIGRATION_PATTERN.matcher(migrationFullName);
 			if (!matcher.matches()) {
-				throw new IllegalStateException("Migration mit ungültigem Namen: " + migrationFullName);
+				throw new IllegalStateException("Migration name is invalid: " + migrationFullName);
 			}
 
 			Long migrationVersion = Long.valueOf(matcher.group("version"));
@@ -45,14 +45,14 @@ public class OptionStoreMigrator {
 		try {
 			for (Map.Entry<Long, Class<? extends OptionStoreMigration>> migration : migrations.entrySet()) {
 				if (!appliedMigrations.contains(migration.getKey())) {
-					logger.info("Wende Migration '{}' an.", migration.getValue().getSimpleName());
+					logger.info("Applying migration '{}'.", migration.getValue().getSimpleName());
 					migration.getValue().newInstance().migrate(optionStore);
 					appliedMigrations.add(migration.getKey());
 				}
 			}
 		} catch (Exception e) {
-			logger.error("Fehler beim Anwenden der OptionStore-Migrations.", e);
-			throw new IllegalStateException("Fehler beim Anwenden der OptionStore-Migrations.", e);
+			logger.error("Failed to apply OptionStore migrations.", e);
+			throw new IllegalStateException("Failed to apply OptionStore migrations.", e);
 		}
 		optionStore.put(APPLIED_MIGRATIONS, appliedMigrations);
 	}

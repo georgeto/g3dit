@@ -3,10 +3,10 @@ package de.george.g3dit.cache;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.function.Consumer;
+
+import com.teamunify.i18n.I;
 
 import de.george.g3dit.util.event.HolderEventList;
 import de.george.g3utils.util.IOUtils;
@@ -53,7 +53,7 @@ public abstract class AbstractCache<T extends AbstractCache<T>> implements Seria
 			creationTimestamp = (long) data[0];
 			return data;
 		} else {
-			throw new IOException("Cache-Datei ist ungülitg! Bitte den Cache neu erstellen.");
+			throw new IOException(I.tr("Cache-Datei ist ungülitg! Bitte den Cache neu erstellen."));
 		}
 	}
 
@@ -75,9 +75,7 @@ public abstract class AbstractCache<T extends AbstractCache<T>> implements Seria
 	}
 
 	public String printCreationTimestamp() {
-		Calendar mydate = Calendar.getInstance();
-		mydate.setTimeInMillis(getCreationTimestamp());
-		return new SimpleDateFormat("dd.MM.yyyy HH:mm").format(new Date(getCreationTimestamp()));
+		return I.dateToString(new Date(getCreationTimestamp()));
 	}
 
 	public String getSavePath() {

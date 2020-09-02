@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.ezware.dialog.task.TaskDialogs;
+import com.teamunify.i18n.I;
 
 import de.george.g3dit.EditorContext;
 import de.george.g3dit.cache.Caches;
@@ -48,8 +49,8 @@ public class NavMapManager extends EventBusProvider {
 			navMap = null;
 			eventBus().post(new NavMapLoadedEvent(false));
 			if (displayErrorDialog) {
-				TaskDialogs.error(ctx.getParentWindow(), "NavMap konnte nicht gefunden werden",
-						"Die NavMap (NavigationMap.xnav) konnte nicht gefunden werden.\nBitte überprüfen sie, ob die Data-Verzeichnisse korrekt konfiguriert sind.");
+				TaskDialogs.error(ctx.getParentWindow(), I.tr("NavMap konnte nicht gefunden werden"), I.tr(
+						"Die NavMap (NavigationMap.xnav) konnte nicht gefunden werden.\nBitte überprüfen sie, ob die Data-Verzeichnisse korrekt konfiguriert sind."));
 			}
 			return false;
 		}
@@ -58,10 +59,10 @@ public class NavMapManager extends EventBusProvider {
 		} catch (Exception e) {
 			navMap = null;
 			eventBus().post(new NavMapLoadedEvent(false));
-			logger.warn("Beim Laden der NavMap ist ein Fehler aufgetreten.", e);
+			logger.warn("Error while loading NavMap.", e);
 			if (displayErrorDialog) {
-				TaskDialogs.error(ctx.getParentWindow(), "Fehler beim Laden der NavMap",
-						"Beim Laden der NavMap ist ein Fehler aufgetreten:\n" + e.getMessage());
+				TaskDialogs.error(ctx.getParentWindow(), I.tr("Fehler beim Laden der NavMap"),
+						I.tr("Beim Laden der NavMap ist ein Fehler aufgetreten:") + "\n" + e.getMessage());
 			}
 			return false;
 		}
@@ -87,15 +88,15 @@ public class NavMapManager extends EventBusProvider {
 			navMapFile = file;
 			navMap.save(file);
 		} catch (IOException e) {
-			TaskDialogs.error(ctx.getParentWindow(), "Speichern fehlgeschlagen",
-					"NavMap konnte nicht gespeichert werden: " + e.getMessage());
+			TaskDialogs.error(ctx.getParentWindow(), I.tr("Speichern fehlgeschlagen"),
+					I.trf("NavMap konnte nicht gespeichert werden: {0}", e.getMessage()));
 			return false;
 		}
 		return true;
 	}
 
 	public boolean saveNavMapAs() {
-		File navMapSave = FileDialogWrapper.saveFile("NavMap speichern unter", "NavigationMap.xnav", ctx.getParentWindow(),
+		File navMapSave = FileDialogWrapper.saveFile(I.tr("NavMap speichern unter"), "NavigationMap.xnav", ctx.getParentWindow(),
 				FileDialogWrapper.XNAV_FILTER);
 		if (navMapSave != null) {
 			if (!this.saveMap(navMapSave)) {

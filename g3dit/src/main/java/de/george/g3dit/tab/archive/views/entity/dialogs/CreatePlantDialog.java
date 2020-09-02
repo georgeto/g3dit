@@ -19,6 +19,7 @@ import javax.swing.JTextField;
 import javax.swing.border.EtchedBorder;
 
 import com.jidesoft.dialog.ButtonPanel;
+import com.teamunify.i18n.I;
 
 import ca.odell.glazedlists.GlazedLists;
 import ca.odell.glazedlists.SortedList;
@@ -76,9 +77,9 @@ public class CreatePlantDialog extends ExtStandardDialog {
 		JPanel mainPanel = new JPanel(new MigLayout("fill", "[][][]"));
 		add(mainPanel, BorderLayout.CENTER);
 
-		mainPanel.add(new JLabel("X"));
-		mainPanel.add(new JLabel("Y"));
-		mainPanel.add(new JLabel("Z"), "wrap");
+		mainPanel.add(new JLabel(I.trc("coordinate", "X")));
+		mainPanel.add(new JLabel(I.trc("coordinate", "Y")));
+		mainPanel.add(new JLabel(I.trc("coordinate", "Z")), "wrap");
 
 		tfX = SwingUtils.createUndoTF();
 		mainPanel.add(tfX, "width 100:150:200");
@@ -89,9 +90,9 @@ public class CreatePlantDialog extends ExtStandardDialog {
 		tfZ = SwingUtils.createUndoTF();
 		mainPanel.add(tfZ, "width 100:150:200, wrap");
 
-		mainPanel.add(new JLabel("Pitch"));
-		mainPanel.add(new JLabel("Yaw"));
-		mainPanel.add(new JLabel("Roll"), "wrap");
+		mainPanel.add(new JLabel(I.tr("Pitch")));
+		mainPanel.add(new JLabel(I.tr("Yaw")));
+		mainPanel.add(new JLabel(I.tr("Roll")), "wrap");
 
 		tfPitch = SwingUtils.createUndoTF();
 		mainPanel.add(tfPitch, "width 100:150:200");
@@ -102,9 +103,9 @@ public class CreatePlantDialog extends ExtStandardDialog {
 		tfRoll = SwingUtils.createUndoTF();
 		mainPanel.add(tfRoll, "width 100:150:200, wrap");
 
-		mainPanel.add(new JLabel("Scale Width"));
-		mainPanel.add(new JLabel("Scale Height"));
-		mainPanel.add(new JLabel("Color"), "wrap");
+		mainPanel.add(new JLabel(I.tr("Scale Width")));
+		mainPanel.add(new JLabel(I.tr("Scale Height")));
+		mainPanel.add(new JLabel(I.tr("Color")), "wrap");
 
 		tfScaleWidth = SwingUtils.createUndoTF();
 		mainPanel.add(tfScaleWidth, "width 100:150:200");
@@ -115,7 +116,7 @@ public class CreatePlantDialog extends ExtStandardDialog {
 		ccbColor = new ColorChooserButton(getOwner(), false);
 		mainPanel.add(ccbColor, "height " + tfScaleHeight.getPreferredSize().height + "! ,width 100:150:200, wrap");
 
-		mainPanel.add(new JLabel("Mesh"), "wrap");
+		mainPanel.add(new JLabel(I.tr("Mesh")), "wrap");
 		cbMesh = new JComboBox<>();
 		mainPanel.add(cbMesh, "spanx 3, width 200:300:400, wrap");
 
@@ -182,7 +183,7 @@ public class CreatePlantDialog extends ExtStandardDialog {
 	public ButtonPanel createButtonPanel() {
 		ButtonPanel buttonPanel = newButtonPanel();
 
-		Action okAction = SwingUtils.createAction("OK", () -> {
+		Action okAction = SwingUtils.createAction(I.tr("Ok"), () -> {
 			try {
 				bCVector pos = new bCVector(Float.parseFloat(tfX.getText()), Float.parseFloat(tfY.getText()),
 						Float.parseFloat(tfZ.getText()));

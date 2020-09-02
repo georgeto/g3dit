@@ -27,7 +27,7 @@ public class gCItem_PS extends G3Class {
 	@Override
 	protected void readPostClassVersion(G3FileReader reader) {
 		if (!reader.read(24).equals(ITEM_STATS)) {
-			reader.warn(logger, "(1) gCItem_PS unerwartete Dateistruktur.");
+			reader.warn(logger, "(1) gCItem_PS unexpected file structure.");
 		}
 		slot = reader.readInt();
 		visible = reader.readUnsignedByte();

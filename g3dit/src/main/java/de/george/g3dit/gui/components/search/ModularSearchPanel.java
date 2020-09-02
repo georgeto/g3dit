@@ -18,6 +18,7 @@ import javax.swing.JPopupMenu;
 import javax.swing.JToggleButton;
 
 import com.google.common.base.Strings;
+import com.teamunify.i18n.I;
 
 import de.george.g3dit.EditorContext;
 import de.george.g3dit.gui.components.JDynamicMenuItem;
@@ -249,20 +250,21 @@ public class ModularSearchPanel<T> implements SearchFilterBuilder<T> {
 		private List<SearchBuilderContainer> filterBuilders;
 
 		public SearchCombinatorContainer() {
-			addMenuItem("Append filter", Icons.Node.INSERT_CHILD, () -> appendSearchBuilder(this, new SearchFilterContainer()));
-			addMenuItem("Prepend combinator", Icons.Node.INSERT, () -> prependSearchCombinator(this));
-			addMenuItem("Append combinator", Icons.Node.INSERT_CHILD, () -> appendSearchBuilder(this, new SearchCombinatorContainer()));
-			addMenuItem("Clone combinator", Icons.Node.INSERT_NEXT, ensureHasParent(() -> {
+			addMenuItem(I.tr("Append filter"), Icons.Node.INSERT_CHILD, () -> appendSearchBuilder(this, new SearchFilterContainer()));
+			addMenuItem(I.tr("Prepend combinator"), Icons.Node.INSERT, () -> prependSearchCombinator(this));
+			addMenuItem(I.tr("Append combinator"), Icons.Node.INSERT_CHILD,
+					() -> appendSearchBuilder(this, new SearchCombinatorContainer()));
+			addMenuItem(I.tr("Clone combinator"), Icons.Node.INSERT_NEXT, ensureHasParent(() -> {
 				SearchCombinatorContainer newCombinatorContainer = new SearchCombinatorContainer();
 				newCombinatorContainer.loadFilter(buildFilter());
 				appendSearchBuilder(parent, newCombinatorContainer, InsertLocation.RelativeAfter, this);
 			}));
-			addMenuItem("Delete", Icons.Action.DELETE, () -> deleteSearchBuilder(this), () -> parent != null);
-			addMenuItem("Dissolve", Icons.Misc.CHAIN_MINUS, () -> dissolveSearchCombinator(this),
+			addMenuItem(I.tr("Delete"), Icons.Action.DELETE, () -> deleteSearchBuilder(this), () -> parent != null);
+			addMenuItem(I.tr("Dissolve"), Icons.Misc.CHAIN_MINUS, () -> dissolveSearchCombinator(this),
 					() -> parent != null || filterBuilders.size() == 1);
 
 			tbNegate = new JToggleButton("!", false);
-			tbNegate.setToolTipText("Negate");
+			tbNegate.setToolTipText(I.tr("Negate"));
 			tbNegate.setFocusable(false);
 			cbOperator = new JComboBoxExt<>(BooleanOperator.And, BooleanOperator.Or);
 
@@ -348,17 +350,17 @@ public class ModularSearchPanel<T> implements SearchFilterBuilder<T> {
 		private SearchFilterBuilder<T> filter;
 
 		public SearchFilterContainer() {
-			addMenuItem("Add filter before", Icons.Node.INSERT_PREVIOUS,
+			addMenuItem(I.tr("Add filter before"), Icons.Node.INSERT_PREVIOUS,
 					ensureHasParent(() -> appendSearchBuilder(parent, new SearchFilterContainer(), InsertLocation.RelativeBefore, this)));
-			addMenuItem("Add filter after", Icons.Node.INSERT_NEXT,
+			addMenuItem(I.tr("Add filter after"), Icons.Node.INSERT_NEXT,
 					ensureHasParent(() -> appendSearchBuilder(parent, new SearchFilterContainer(), InsertLocation.RelativeAfter, this)));
-			addMenuItem("Clone filter", Icons.Node.INSERT_NEXT, ensureHasParent(() -> {
+			addMenuItem(I.tr("Clone filter"), Icons.Node.INSERT_NEXT, ensureHasParent(() -> {
 				SearchFilterContainer newFilterContainer = new SearchFilterContainer();
 				newFilterContainer.loadFilter(buildFilter());
 				appendSearchBuilder(parent, newFilterContainer, InsertLocation.RelativeAfter, this);
 			}));
-			addMenuItem("Prepend combinator", Icons.Node.INSERT, () -> prependSearchCombinator(this));
-			addMenuItem("Delete", Icons.Action.DELETE, () -> deleteSearchBuilder(this), () -> parent != null);
+			addMenuItem(I.tr("Prepend combinator"), Icons.Node.INSERT, () -> prependSearchCombinator(this));
+			addMenuItem(I.tr("Delete"), Icons.Action.DELETE, () -> deleteSearchBuilder(this), () -> parent != null);
 
 			cbFilter = new JComboBoxExt<>(filterBuilders, Class.class);
 			cbFilter.setRenderer(new FunctionalListCellRenderer<Class<SearchFilterBuilder<T>>>(SearchFilterBuilder::getTitle));

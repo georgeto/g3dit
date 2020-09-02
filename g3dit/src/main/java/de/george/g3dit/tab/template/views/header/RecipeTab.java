@@ -10,6 +10,7 @@ import javax.swing.JTextField;
 import org.netbeans.validation.api.builtin.stringvalidation.StringValidators;
 
 import com.google.common.collect.ImmutableList;
+import com.teamunify.i18n.I;
 
 import de.george.g3dit.gui.components.JEnumComboBox;
 import de.george.g3dit.gui.components.JTemplateGuidField;
@@ -55,12 +56,12 @@ public class RecipeTab extends AbstractTemplateTab {
 	public void initComponents() {
 		setLayout(new MigLayout("", "[]20[]20[]20[]"));
 
-		add(SwingUtils.createBoldLabel("Kategorie"), "spanx, wrap");
+		add(SwingUtils.createBoldLabel(I.tr("Kategorie")), "spanx, wrap");
 		add(new JLabel("Craft"), "gapleft 7, spanx, wrap");
 		cbCraft = new JEnumComboBox<>(gESkillCategory.class);
 		add(cbCraft, "gapleft 7, width 125:150:175, spanx, wrap");
 
-		add(SwingUtils.createBoldLabel("Zutaten"), "gaptop 10, spanx, wrap");
+		add(SwingUtils.createBoldLabel(I.tr("Zutaten")), "gaptop 10, spanx, wrap");
 		add(new JLabel("Item"), "gapleft 7, spanx 2");
 		add(new JLabel("Amount"), "wrap");
 
@@ -78,7 +79,7 @@ public class RecipeTab extends AbstractTemplateTab {
 			add(tfTemp, "width 50:75:100, wrap");
 		}
 
-		add(SwingUtils.createBoldLabel("Resultat"), "gaptop 10, spanx, wrap");
+		add(SwingUtils.createBoldLabel(I.tr("Resultat")), "gaptop 10, spanx, wrap");
 		add(new JLabel("Item"), "gapleft 7, spanx 2");
 		add(new JLabel("Amount"), "wrap");
 		gfResultItem = new JTemplateGuidField(ctx);
@@ -91,7 +92,7 @@ public class RecipeTab extends AbstractTemplateTab {
 		pnResultQuality = new QualityPanel(CD.gCRecipe_PS.ResultQuality);
 		add(pnResultQuality, "gapleft 7, width 100:370:370, spanx, wrap");
 
-		add(SwingUtils.createBoldLabel("Voraussetzungen"), "gaptop 10, spanx, wrap");
+		add(SwingUtils.createBoldLabel(I.tr("Voraussetzungen")), "gaptop 10, spanx, wrap");
 		add(new JLabel("Skill"), "gapleft 7, spanx, wrap");
 		gfReqSkill = new JTemplateGuidField(ctx);
 		gfReqSkill.initValidation(validation(), "Skill", GuidValidator.INSTANCE_ALLOW_EMPTY,

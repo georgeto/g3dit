@@ -5,6 +5,8 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import com.teamunify.i18n.I;
+
 import de.george.lrentnode.enums.G3Enums;
 import de.george.lrentnode.enums.G3Enums.G3Enum;
 
@@ -27,8 +29,10 @@ public class G3EnumArrayWrapper {
 
 	@Override
 	public String toString() {
-		return enumValues.stream().map(enumValue -> Optional.ofNullable(G3Enums.asString(getEnumClass(), enumValue, false))
-				.orElseGet(() -> "Unbekannt: " + enumValue)).collect(Collectors.joining(", ", "[", "]"));
+		return enumValues.stream()
+				.map(enumValue -> Optional.ofNullable(G3Enums.asString(getEnumClass(), enumValue, false))
+						.orElseGet(() -> I.trcf("Unknown enum value", "Unbekannt: {0}", enumValue)))
+				.collect(Collectors.joining(", ", "[", "]"));
 	}
 
 	@Override

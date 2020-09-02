@@ -17,6 +17,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.ezware.dialog.task.TaskDialogs;
+import com.teamunify.i18n.I;
 
 import de.george.g3dit.EditorContext;
 import de.george.g3dit.tab.EditorTab.EditorTabType;
@@ -158,8 +159,8 @@ public class NavCache extends AbstractCache<NavCache> {
 
 	private class CreateNavCacheWorker extends AbstractDialogFileWorker<Pair<Map<String, NavZone>, Map<String, NavPath>>> {
 		public CreateNavCacheWorker(Callable<List<File>> fileProvider, List<File> openFiles) {
-			super(fileProvider, openFiles, "Erstelle NavCache", ctx.getParentWindow());
-			statusFormat = "%d NavZones und NavPaths gefunden";
+			super(fileProvider, openFiles, I.tr("Erstelle NavCache"), ctx.getParentWindow());
+			statusFormat = I.tr("{0, number} NavZones und NavPaths gefunden");
 		}
 
 		@Override

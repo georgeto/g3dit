@@ -1,6 +1,13 @@
 plugins {
 	id 'com.github.ben-manes.versions' version '0.27.0' apply false
+	id 'com.github.vlsi.gettext' version '1.76-CUSTOM'
 }
+
+import com.github.vlsi.gradle.gettext.GettextTask
+import com.github.vlsi.gradle.gettext.MsgAttribTask
+import com.github.vlsi.gradle.gettext.MsgFmtTask
+import com.github.vlsi.gradle.gettext.MsgMergeTask
+
 
 def eclipseFiles = "$rootDir/eclipse"
 def buildshipPrefFile = "org.eclipse.buildship.core.prefs"
@@ -123,6 +130,47 @@ subprojects {
 					exclude buildshipPrefFile
 				}
 				into '.settings'
+			}
+		}
+	}
+}
+
+task updatePot(type: GettextTask) {
+	// TODO: The paths generated in the .pot file are \ for windows, and / for linux...
+	sourceFiles.from(project("G3Utils").sourceSets.main.allJava, project("LrentNode").sourceSets.main.allJava,
+			project("NavMap").sourceSets.main.allJava, project("g3dit").sourceSets.main.allJava)
+	keywords = ["", "trc:1c,2", "trcw:1c,2", "trcf:1c,2", "trcfw:1c,2", "tr", "trj", "trfj", "trw", "trf", "trfw"]
+	nowrap = true
+}
+
+task removeObsoleteTranslations(type: MsgAttribTask) {
+	args = ["--no-obsolete", "--no-wrap"]
+	poFiles.from(files(project("g3dit").sourceSets.main.allSource).filter { it.path.endsWith(".po") })
+}
+
+task addNewMessagesToPo(type: MsgMergeTask) {
+	poFiles.from(removeObsoleteTranslations)
+	potFile = updatePot.outputPot
+	args = ["--previous", "--no-wrap"]
+}
+
+task generateJavaResources(type: MsgFmtTask) {
+	poFiles.from(addNewMessagesToPo)
+	targetBundle.set("de.george.g3dit.translation.messages")
+}
+
+task generateGettextSources() {
+	group = LifecycleBasePlugin.BUILD_GROUP
+	description = "Updates .po, .pot, and .java files in src/main/java/de/george/g3dit/translation"
+	dependsOn(addNewMessagesToPo)
+	dependsOn(generateJavaResources)
+	doLast {
+		copy {
+			into("g3dit/src/main/java")
+			from(generateJavaResources)
+			into("de/george/g3dit/translation") {
+				from(updatePot)
+				from(addNewMessagesToPo)
 			}
 		}
 	}

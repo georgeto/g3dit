@@ -20,7 +20,7 @@ public final class eCResourceMeshComplex_PS extends eCResourceBase_PS {
 		super.readPostClassVersion(reader);
 
 		if (classVersion < 0x22) {
-			throw new UnsupportedOperationException("eCResourceMeshComplex_PS::Read(): Altes Format wird nicht unterstützt.");
+			throw new UnsupportedOperationException("eCResourceMeshComplex_PS::Read(): Old format is not supported.");
 		}
 
 		resourcePriority = reader.readFloat();

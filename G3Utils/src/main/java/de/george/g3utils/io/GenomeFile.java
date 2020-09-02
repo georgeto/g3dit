@@ -78,7 +78,7 @@ public abstract class GenomeFile implements Saveable {
 
 	protected static void raiseNotGenomeFile(G3FileReaderEx reader) throws IOException {
 		if (!isGenomeFile(reader)) {
-			throw new IOException("'" + reader.getFileName() + "' ist keine gültige Genome-Datei.");
+			throw new IOException("'" + reader.getFileName() + "' is not a valid Genome file.");
 		}
 		reader.skip(8);
 	}

@@ -105,7 +105,7 @@ public class ClassUtil {
 		reader.skip(SUB_CLASS_IDENTIFIER.length); // subClassIdentifier - always constant
 		String className = reader.readEntry();
 		if (!className.equals(preType)) {
-			logger.warn("Erster und zweiter Name von Template Klasse stimmen nicht überein: {} - {}", preType, className);
+			logger.warn("First and second name of the template class do not match: {} - {}", preType, className);
 		}
 		// Header
 		reader.skip(TYPE_TO_VERSION_FILLER.length);

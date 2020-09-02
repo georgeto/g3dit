@@ -12,6 +12,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EtchedBorder;
 
 import com.jidesoft.dialog.ButtonPanel;
+import com.teamunify.i18n.I;
 
 import de.george.g3dit.gui.dialogs.ExtStandardDialog;
 import de.george.g3utils.gui.SwingUtils;
@@ -42,9 +43,9 @@ public class PositionDialog extends ExtStandardDialog {
 		JPanel mainPanel = new JPanel(
 				new MigLayout("fill", "[sg, fill, grow]10[sg, fill, grow]10[sg, fill, grow]", "[]1[]8[]1[]8[]1[]8[fill, grow]"));
 
-		mainPanel.add(new JLabel("x-pos"));
-		mainPanel.add(new JLabel("y-pos"));
-		mainPanel.add(new JLabel("z-pos"), "wrap");
+		mainPanel.add(new JLabel(I.tr("x-pos")));
+		mainPanel.add(new JLabel(I.tr("y-pos")));
+		mainPanel.add(new JLabel(I.tr("z-pos")), "wrap");
 
 		tfX = SwingUtils.createUndoTF();
 		mainPanel.add(tfX, "");
@@ -53,9 +54,9 @@ public class PositionDialog extends ExtStandardDialog {
 		tfZ = SwingUtils.createUndoTF();
 		mainPanel.add(tfZ, "wrap");
 
-		mainPanel.add(new JLabel("pitch"));
-		mainPanel.add(new JLabel("yaw"));
-		mainPanel.add(new JLabel("roll"), "wrap");
+		mainPanel.add(new JLabel(I.tr("pitch")));
+		mainPanel.add(new JLabel(I.tr("yaw")));
+		mainPanel.add(new JLabel(I.tr("roll")), "wrap");
 
 		tfPitch = SwingUtils.createUndoTF();
 		mainPanel.add(tfPitch, "");
@@ -64,9 +65,9 @@ public class PositionDialog extends ExtStandardDialog {
 		tfRoll = SwingUtils.createUndoTF();
 		mainPanel.add(tfRoll, "wrap");
 
-		mainPanel.add(new JLabel("x-scale"));
-		mainPanel.add(new JLabel("y-scale"));
-		mainPanel.add(new JLabel("z-scale"), "wrap");
+		mainPanel.add(new JLabel(I.tr("x-scale")));
+		mainPanel.add(new JLabel(I.tr("y-scale")));
+		mainPanel.add(new JLabel(I.tr("z-scale")), "wrap");
 
 		tfScaleX = SwingUtils.createUndoTF();
 		mainPanel.add(tfScaleX, "");
@@ -91,7 +92,7 @@ public class PositionDialog extends ExtStandardDialog {
 		buttonPanel.setAlignment(SwingConstants.CENTER);
 		buttonPanel.setMinButtonWidth(80);
 
-		Action saveAction = SwingUtils.createAction("Speichern", () -> {
+		Action saveAction = SwingUtils.createAction(I.tr("Speichern"), () -> {
 			try {
 				positionMatrix.setToIdentity();
 				positionMatrix.modifyRotation(bCEulerAngles.fromDegree(Float.parseFloat(tfYaw.getText()),

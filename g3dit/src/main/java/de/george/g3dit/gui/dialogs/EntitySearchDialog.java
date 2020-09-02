@@ -22,6 +22,7 @@ import org.slf4j.LoggerFactory;
 import com.ezware.dialog.task.TaskDialogs;
 import com.google.common.collect.ImmutableList;
 import com.google.common.eventbus.Subscribe;
+import com.teamunify.i18n.I;
 
 import ca.odell.glazedlists.BasicEventList;
 import ca.odell.glazedlists.EventList;
@@ -78,7 +79,7 @@ public class EntitySearchDialog extends AbstractTableProgressDialog {
 	private SortableEventTable<Result> table;
 
 	public static final EntitySearchDialog openEntitySearch(EditorContext ctx) {
-		EntitySearchDialog searchDialog = new EntitySearchDialog(ctx, "Entity-Suche");
+		EntitySearchDialog searchDialog = new EntitySearchDialog(ctx, I.tr("Entity-Suche"));
 		searchDialog.open();
 		return searchDialog;
 	}
@@ -109,14 +110,14 @@ public class EntitySearchDialog extends AbstractTableProgressDialog {
 		setSize(1000, 700);
 	}
 
-	private static final TableColumnDef COLUMN_POSITION = TableColumnDef.withName("Position").maxSize(60)
+	private static final TableColumnDef COLUMN_POSITION = TableColumnDef.withName("Position").displayName(I.tr("Position")).maxSize(60)
 			.comparator(Comparator.naturalOrder()).b();
 
-	private static final TableColumnDef COLUMN_NAME = TableColumnDef.withName("Name").size(300).b();
+	private static final TableColumnDef COLUMN_NAME = TableColumnDef.withName("Name").displayName(I.tr("Name")).size(300).b();
 
-	private static final TableColumnDef COLUMN_GUID = TableColumnDef.withName("Guid").size(300).b();
+	private static final TableColumnDef COLUMN_GUID = TableColumnDef.withName("Guid").displayName(I.tr("Guid")).size(300).b();
 
-	private static final TableColumnDef COLUMN_PATH = TableColumnDef.withName("Path").size(350).b();
+	private static final TableColumnDef COLUMN_PATH = TableColumnDef.withName("Path").displayName(I.tr("Path")).size(350).b();
 
 	@Override
 	public void open() {
@@ -130,21 +131,21 @@ public class EntitySearchDialog extends AbstractTableProgressDialog {
 
 		searchPanel = new ModularSearchPanel(ctx, EntityNameSearchFilterBuilder.class, EntityGuidSearchFilterBuilder.class,
 				EntityPositionSearchFilterBuilder.class, PropertySearchFilterBuilder.class, ByteSearchFilterBuilder.class);
-		btnSearch = registerAction("Suchen", Icons.getImageIcon(Icons.Action.FIND), this::doWork, true);
+		btnSearch = registerAction(I.tr("Suchen"), Icons.getImageIcon(Icons.Action.FIND), this::doWork, true);
 		JButton btnErase = new JButton(Icons.getImageIcon(Icons.Action.ERASE));
 		btnErase.setFocusable(false);
-		btnErase.setToolTipText("Suche leeren");
+		btnErase.setToolTipText(I.tr("Suche leeren"));
 		btnErase.addActionListener(e -> searchPanel.reset(false));
 
 		mainPanel.add(searchPanel.getComponent(), "split 3, width 100%, spanx");
 		mainPanel.add(btnSearch);
 		mainPanel.add(btnErase, "wrap");
 
-		cbPositionFromClipboard = new JCheckBox("Position aus Zwischenablage");
-		cbRandomGuids = new JCheckBox("Zufällige Guid");
-		btnImport = new JButton("Entity importieren", Icons.getImageIcon(Icons.IO.IMPORT));
+		cbPositionFromClipboard = new JCheckBox(I.tr("Position aus Zwischenablage"));
+		cbRandomGuids = new JCheckBox(I.tr("Zufällige Guid"));
+		btnImport = new JButton(I.tr("Entity importieren"), Icons.getImageIcon(Icons.IO.IMPORT));
 		btnImport.setEnabled(false);
-		btnShowOnMap = new JButton("Karte", Icons.getImageIcon(Icons.Misc.MAP));
+		btnShowOnMap = new JButton(I.tr("Karte"), Icons.getImageIcon(Icons.Misc.MAP));
 		btnShowOnMap.setEnabled(false);
 
 		mainPanel.add(cbPositionFromClipboard, "gapx push");
@@ -170,8 +171,8 @@ public class EntitySearchDialog extends AbstractTableProgressDialog {
 				Optional<bCMatrix> matrix = Misc.stringToMatrix(IOUtils.getClipboardContent());
 				if (matrix.isPresent()) {
 					entity.setToWorldMatrix(matrix.get());
-				} else if (!TaskDialogs.ask(ctx.getParentWindow(), "Zwischenablage enthält keine Positionsdaten",
-						"Soll der Import, unter Verwendung der originalen Position, trotzdem fortgesetzt werden?")) {
+				} else if (!TaskDialogs.ask(ctx.getParentWindow(), I.tr("Zwischenablage enthält keine Positionsdaten"),
+						I.tr("Soll der Import, unter Verwendung der originalen Position, trotzdem fortgesetzt werden?"))) {
 					return;
 				}
 			}
@@ -199,7 +200,7 @@ public class EntitySearchDialog extends AbstractTableProgressDialog {
 	public void doWork() {
 		SearchFilter<eCEntity> filter = searchPanel.buildFilter();
 		if (!filter.isValid() || worker != null) {
-			progressBar.setString("Ungültige Filtereinstellungen");
+			progressBar.setString(I.tr("Ungültige Filtereinstellungen"));
 			return;
 		}
 
@@ -283,7 +284,8 @@ public class EntitySearchDialog extends AbstractTableProgressDialog {
 		private SearchFilter<eCEntity> filter;
 
 		protected SearchEntityWorker(Callable<List<File>> fileProvider, List<File> openFiles, SearchFilter<eCEntity> filter) {
-			super(fileProvider, openFiles, "Ermittele zu durchsuchende Dateien...", "%d/%d Dateien durchsucht", "Suche abgeschlossen");
+			super(fileProvider, openFiles, I.tr("Ermittele zu durchsuchende Dateien..."),
+					I.tr("{0, number}/{1, number} Dateien durchsucht"), I.tr("Suche abgeschlossen"));
 			this.filter = filter;
 			setProgressBar(progressBar);
 			doneMessageSupplier = this::getDoneMessage;
@@ -331,7 +333,7 @@ public class EntitySearchDialog extends AbstractTableProgressDialog {
 		}
 
 		private String getDoneMessage() {
-			return String.format("Suche abgeschlossen (%d Entities gefunden)", results.size());
+			return I.trf("Suche abgeschlossen ({0, number} Entities gefunden)", results.size());
 		}
 	}
 
@@ -403,7 +405,7 @@ public class EntitySearchDialog extends AbstractTableProgressDialog {
 			try {
 				return (ArchiveEntity) FileUtil.openArchive(getFile(), false).getEntityByGuid(getGuid()).orElse(null);
 			} catch (Exception e) {
-				logger.warn("Fehler beim Öffnen von Datei: ", e);
+				logger.warn("Error while opening the file containing the entity.", e);
 				TaskDialogs.showException(e);
 				return null;
 			}
@@ -428,16 +430,16 @@ public class EntitySearchDialog extends AbstractTableProgressDialog {
 			if (archiveTab != null) {
 				return archiveTab.getTitle();
 			}
-			return "<Inzwischen geschlossen>";
+			return I.tr("<Inzwischen geschlossen>");
 		}
 
 		@Override
 		public String getPath() {
 			EditorArchiveTab archiveTab = weakTab.get();
 			if (archiveTab != null) {
-				return "Geladen: " + archiveTab.getTitle();
+				return I.trf("Geladen: {0}", archiveTab.getTitle());
 			}
-			return "<Inzwischen geschlossen>";
+			return I.tr("<Inzwischen geschlossen>");
 		}
 
 		@Override

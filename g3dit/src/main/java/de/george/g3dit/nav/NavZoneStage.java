@@ -6,6 +6,8 @@ import java.util.function.Consumer;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 
+import com.teamunify.i18n.I;
+
 import de.george.g3dit.EditorContext;
 import de.george.g3dit.EntityMap;
 import de.george.g3dit.cache.Caches;
@@ -88,7 +90,7 @@ public class NavZoneStage extends NavCalcStage {
 
 	private class NotInNavmap extends BaseNavZoneChange {
 		public NotInNavmap(NavZone navZone) {
-			super(navZone, Severity.Error, "Not in NavMap.", null);
+			super(navZone, Severity.Error, I.tr("Not in NavMap."), null);
 		}
 
 		@Override
@@ -99,7 +101,7 @@ public class NavZoneStage extends NavCalcStage {
 	}
 
 	private String getNavZoneConnectionDetails(String navZone) {
-		return HtmlCreator.renderList("Related nav objects", "  NavPaths: " + navMap.getNavPathsForZone(navZone).count(),
+		return HtmlCreator.renderList(I.tr("Related nav objects"), "  NavPaths: " + navMap.getNavPathsForZone(navZone).count(),
 				"  NegZones: " + navMap.getNegZonesForZone(navZone).count(),
 				"  NegCircles: " + navMap.getNegCirclesForZone(navZone).count(),
 				"  PrefPaths: " + navMap.getPrefPathsForZone(navZone).count());
@@ -107,7 +109,7 @@ public class NavZoneStage extends NavCalcStage {
 
 	private class OnlyInNavmap extends BaseNamedChange {
 		public OnlyInNavmap(String navZone) {
-			super(navZone, Severity.Warn, "Only in NavMap.", getNavZoneConnectionDetails(navZone));
+			super(navZone, Severity.Warn, I.tr("Only in NavMap."), getNavZoneConnectionDetails(navZone));
 		}
 
 		@Override
@@ -124,7 +126,7 @@ public class NavZoneStage extends NavCalcStage {
 
 	private class BoundaryChanged extends BaseNavZoneChange {
 		public BoundaryChanged(NavZone navZone) {
-			super(navZone, Severity.Error, "Shape or position has changed.", getNavZoneConnectionDetails(navZone.getGuid()));
+			super(navZone, Severity.Error, I.tr("Shape or position has changed."), getNavZoneConnectionDetails(navZone.getGuid()));
 		}
 
 		@Override

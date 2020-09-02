@@ -3,6 +3,8 @@ package de.george.g3dit.check.checks;
 import java.io.File;
 import java.util.function.Supplier;
 
+import com.teamunify.i18n.I;
+
 import de.george.g3dit.check.EntityDescriptor;
 import de.george.g3utils.structure.bCBox;
 import de.george.g3utils.structure.bCVector;
@@ -15,7 +17,7 @@ public class CheckOutsideStaticNode extends AbstractEntityCheck {
 	private bCBox staticNodeBoundary;
 
 	public CheckOutsideStaticNode() {
-		super("Entity außerhalb Zuständigkeitsbereich von statischer .node", "", 0, 1);
+		super(I.tr("Entity außerhalb Zuständigkeitsbereich von statischer .node"), "", 0, 1);
 	}
 
 	@Override
@@ -37,7 +39,7 @@ public class CheckOutsideStaticNode extends AbstractEntityCheck {
 			Supplier<EntityDescriptor> descriptor, StringProblemConsumer problemConsumer) {
 		if (entity.getWorldNodeBoundary().isValid() && !entity.hasClass(CD.eCVegetation_PS.class)
 				&& !entity.getName().contains("_Landscape_") && !entity.getWorldNodeBoundary().intersects(staticNodeBoundary)) {
-			problemConsumer.fatal("Befindet sich außerhalb des Zuständigkeitsbereich seiner statischen .node");
+			problemConsumer.fatal(I.tr("Befindet sich außerhalb des Zuständigkeitsbereich seiner statischen .node"));
 		}
 
 		return EntityPassStatus.Next;

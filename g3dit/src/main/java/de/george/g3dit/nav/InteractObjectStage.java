@@ -11,6 +11,8 @@ import java.util.function.Supplier;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 
+import com.teamunify.i18n.I;
+
 import de.george.g3dit.EditorContext;
 import de.george.g3dit.EntityMap;
 import de.george.g3dit.cache.NavCache;
@@ -81,9 +83,9 @@ public class InteractObjectStage extends NavCalcStage {
 							// (Bug in Gothic 3 code?)
 							String insideNegDetails = null;
 							if (!navCalc.testPointAgainstNegCircles(area.areaId, entity.getWorldPosition())) {
-								insideNegDetails = "InteractObject is inside of NegCircle.";
+								insideNegDetails = I.tr("InteractObject is inside of NegCircle.");
 							} else if (!navCalc.testPointAgainstNegZones(area.areaId, entity.getWorldPosition())) {
-								insideNegDetails = "InteractObject is inside of NegZone.";
+								insideNegDetails = I.tr("InteractObject is inside of NegZone.");
 							}
 
 							if (insideNegDetails != null) {
@@ -124,9 +126,9 @@ public class InteractObjectStage extends NavCalcStage {
 		// if (area == null || !NavMap.OUT_OF_NAV_AREA_ID.equals(area.areaId)) {
 		// return "no NavArea";
 		if (area == null) {
-			return "no NavArea (null)";
+			return I.tr("no NavArea (null)");
 		} else if (NavMap.OUT_OF_NAV_AREA_ID.equals(area.areaId)) {
-			return "no NavArea (out of)";
+			return I.tr("no NavArea (out of)");
 		} else {
 			return String.format("%s %s", area.isNavPath ? "NavPath" : "NavZone", area.areaId);
 		}
@@ -182,7 +184,7 @@ public class InteractObjectStage extends NavCalcStage {
 		private NavArea area;
 
 		public NotInNavmap(EntityDescriptor entity, bCVector position, NavArea area) {
-			super(entity, position, Severity.Error, "Not in NavMap.", String.format("Registered to %s.", getRegisteredToArea(area)));
+			super(entity, position, Severity.Error, I.tr("Not in NavMap."), I.trf("Registered to {0}.", getRegisteredToArea(area)));
 			this.area = area;
 		}
 
@@ -195,8 +197,8 @@ public class InteractObjectStage extends NavCalcStage {
 
 	private class OnlyInNavmap extends BaseInteractObjectChange {
 		public OnlyInNavmap(String guid, Optional<NavArea> area) {
-			super(guid, Severity.Warn, "Only in NavMap, no corresponding entity found!",
-					String.format("Registered to %s.", getRegisteredToArea(area.orElse(null))));
+			super(guid, Severity.Warn, I.tr("Only in NavMap, no corresponding entity found!"),
+					I.trf("Registered to {0}.", getRegisteredToArea(area.orElse(null))));
 		}
 
 		@Override
@@ -215,8 +217,8 @@ public class InteractObjectStage extends NavCalcStage {
 		private NavArea area;
 
 		public AreaChanged(EntityDescriptor entity, bCVector position, NavArea area, NavArea navMapArea) {
-			super(entity, position, Severity.Error, "Registered NavArea has changed.",
-					String.format("Registered to %s instead of %s.", getRegisteredToArea(area), getRegisteredToArea(navMapArea)));
+			super(entity, position, Severity.Error, I.tr("Registered NavArea has changed."),
+					I.trf("Registered to {0} instead of {1}.", getRegisteredToArea(area), getRegisteredToArea(navMapArea)));
 			this.area = area;
 		}
 
@@ -231,7 +233,7 @@ public class InteractObjectStage extends NavCalcStage {
 
 	private class CriticalInteractObject extends BaseExtInteractObjectChange {
 		public CriticalInteractObject(EntityDescriptor entity, bCVector position, String details) {
-			super(entity, position, Severity.Info, "Critical InteractObject.", details);
+			super(entity, position, Severity.Info, I.tr("Critical InteractObject."), details);
 		}
 
 		@Override

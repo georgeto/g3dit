@@ -19,6 +19,7 @@ import org.slf4j.LoggerFactory;
 import com.ezware.dialog.task.TaskDialogs;
 import com.google.common.collect.FluentIterable;
 import com.google.common.eventbus.Subscribe;
+import com.teamunify.i18n.I;
 
 import de.george.g3dit.EditorContext;
 import de.george.g3dit.StatusBar;
@@ -70,22 +71,22 @@ public class EditorArchiveTab extends EditorAbstractFileTab {
 		statusBarExtension = new JPanel(new MigLayout("ins 0"));
 		statusBarExtension.setOpaque(false);
 		JToggleButton btnEntity = new JToggleButton("E", true);
-		btnEntity.setToolTipText("Entity bearbeiten");
+		btnEntity.setToolTipText(I.tr("Entity bearbeiten"));
 		btnEntity.setMargin(new Insets(0, 0, 0, 0));
 		btnEntity.addActionListener(l -> contentPane.showView(ArchiveViewType.ENTITY));
 		btnEntity.setMnemonic(KeyEvent.VK_1);
 		JToggleButton btnPropertySheet = new JToggleButton("P", false);
-		btnPropertySheet.setToolTipText("Property");
+		btnPropertySheet.setToolTipText(I.tr("Property"));
 		btnPropertySheet.setMargin(new Insets(0, 0, 0, 0));
 		btnPropertySheet.addActionListener(l -> contentPane.showView(ArchiveViewType.PROPERTY));
 		btnPropertySheet.setMnemonic(KeyEvent.VK_2);
 		JToggleButton btnIllumination = new JToggleButton("B", false);
-		btnIllumination.setToolTipText("Beleuchtung berechnen");
+		btnIllumination.setToolTipText(I.tr("Beleuchtung berechnen"));
 		btnIllumination.setMargin(new Insets(0, 0, 0, 0));
 		btnIllumination.addActionListener(l -> contentPane.showView(ArchiveViewType.ILLUMINATION));
 		btnIllumination.setMnemonic(KeyEvent.VK_3);
 		JToggleButton btnNegCircle = new JToggleButton("N", false);
-		btnNegCircle.setToolTipText("NegCircle");
+		btnNegCircle.setToolTipText(I.tr("NegCircle"));
 		btnNegCircle.setMargin(new Insets(0, 0, 0, 0));
 		btnNegCircle.addActionListener(l -> contentPane.showView(ArchiveViewType.NEGCIRCLE));
 		btnNegCircle.setMnemonic(KeyEvent.VK_4);
@@ -276,7 +277,7 @@ public class EditorArchiveTab extends EditorAbstractFileTab {
 		StatusBar statusBar = getStatusBar();
 		ArchiveFile archiveFile = getCurrentFile();
 		if (archiveFile != null) {
-			statusBar.setFileStatus("Anzahl der Entities: " + archiveFile.getEntityCount());
+			statusBar.setFileStatus(I.trf("Anzahl der Entities: {0, number}", archiveFile.getEntityCount()));
 			if (statusBarExtension == null) {
 				initStatusBarExtension();
 			}
@@ -324,13 +325,15 @@ public class EditorArchiveTab extends EditorAbstractFileTab {
 			File dynamicLayer = new File(IOUtils.changeExtension(dataFile.getAbsolutePath(), "lrent"));
 			if (!dynamicLayer.exists()
 					&& !ctx.getFileManager().moveFromPrimaryToSecondary(dynamicLayer).filter(File::exists).isPresent()) {
-				boolean result = TaskDialogs.ask(ctx.getParentWindow(), ".lrent erstellen", "Für '" + dataFile.getName()
-						+ "' konnte keine zugehörige .lrent gefunden werden.\nSoll eine .lrent erstellt werden?");
+				boolean result = TaskDialogs.ask(ctx.getParentWindow(), I.tr(".lrent erstellen"),
+						I.trf("Für '{0}' konnte keine zugehörige .lrent gefunden werden.\nSoll eine .lrent erstellt werden?",
+								dataFile.getName()));
 				if (result) {
 					try {
 						FileUtil.createLrent(dynamicLayer);
 					} catch (IOException e) {
-						logger.warn("Fehler beim Erstellen des DynamicLayers für {}: ", dataFile.getName(), e);
+						TaskDialogs.error(ctx.getParentWindow(),
+								I.trf("Fehler beim Erstellen des DynamicLayers für {0}.", dataFile.getName()), e.getMessage());
 					}
 				}
 			}
@@ -342,14 +345,16 @@ public class EditorArchiveTab extends EditorAbstractFileTab {
 			if (!geometryLayer.exists() && !ctx.getFileManager().moveFromPrimaryToSecondary(geometryLayer).filter(File::exists).isPresent()
 					|| !geometryLayerDat.exists()
 							&& !ctx.getFileManager().moveFromPrimaryToSecondary(geometryLayerDat).filter(File::exists).isPresent()) {
-				boolean result = TaskDialogs.ask(ctx.getParentWindow(), ".lrgeo/.lrgeodat erstellen", "Für '" + dataFile.getName()
-						+ "' konnte keine zugehörige .lrgeo/.lrgeodat gefunden werden.\nSoll eine .lrgeo/.lrgeodat erstellt werden?");
+				boolean result = TaskDialogs.ask(ctx.getParentWindow(), I.tr(".lrgeo/.lrgeodat erstellen"), I.trf(
+						"Für '{0}' konnte keine zugehörige .lrgeo/.lrgeodat gefunden werden.\nSoll eine .lrgeo/.lrgeodat erstellt werden?",
+						dataFile.getName()));
 				if (result) {
 					try {
 						FileUtil.createLrgeo(geometryLayer);
 						FileUtil.createLrgeodat(geometryLayerDat, newContextBox);
 					} catch (IOException e) {
-						logger.warn("Fehler beim Erstellen des GeometryLayers für {}: ", dataFile.getName(), e);
+						TaskDialogs.error(ctx.getParentWindow(),
+								I.trf("Fehler beim Erstellen des GeometryLayers für {0}.", dataFile.getName()), e.getMessage());
 					}
 				}
 			} else {
@@ -372,7 +377,7 @@ public class EditorArchiveTab extends EditorAbstractFileTab {
 						FileUtil.saveLrgeodat(lrgeodat, geometryLayerDat);
 					}
 				} catch (IOException e) {
-					logger.warn("Fehler beim Aktualisieren des eCGeometrySpatialContexts für {}: ", dataFile.getName(), e);
+					logger.warn("Error while updating the eCGeometrySpatialContexts of {}: ", dataFile.getName(), e);
 				}
 			}
 		}
@@ -385,7 +390,7 @@ public class EditorArchiveTab extends EditorAbstractFileTab {
 		private boolean fileLoaded = false;
 
 		public OpenFileWorker(File file) {
-			progDlg = new ProgressDialog(ctx.getParentWindow(), "Lade Datei...", file.getName(), false);
+			progDlg = new ProgressDialog(ctx.getParentWindow(), I.tr("Lade Datei..."), file.getName(), false);
 			progDlg.setLocationRelativeTo(ctx.getParentWindow());
 			progDlg.getProgressBar().setIndeterminate(true);
 			this.file = file;
@@ -419,8 +424,8 @@ public class EditorArchiveTab extends EditorAbstractFileTab {
 				progDlg.dispose();
 			} catch (Exception ex) {
 				progDlg.dispose();
-				logger.warn("Fehler beim Öffnen der Datei: ", ex.getCause());
-				TaskDialogs.showException(ex);
+				logger.warn("Failed to load the file {}.", file.getName(), ex);
+				TaskDialogs.error(ctx.getParentWindow(), I.tr("Fehler beim Öffnen der Datei."), ex.getMessage());
 			}
 		}
 	}

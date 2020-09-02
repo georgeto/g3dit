@@ -27,6 +27,7 @@ import com.l2fprod.common.propertysheet.Property;
 import com.l2fprod.common.propertysheet.PropertySheetPanel;
 import com.l2fprod.common.propertysheet.PropertySheetTableModel.Item;
 import com.l2fprod.common.swing.LookAndFeelTweaks;
+import com.teamunify.i18n.I;
 
 import de.george.g3dit.EditorContext;
 import de.george.g3dit.gui.dialogs.CreatePropertyDialog;
@@ -79,13 +80,13 @@ public class SharedPropertyView extends JPanel {
 		classList.addListSelectionListener(e -> classSelectionChanged());
 
 		JButton btnGetRemotePropertySet = new JButton(Icons.getImageIcon(Icons.Data.TABLE_IMPORT));
-		btnGetRemotePropertySet.setToolTipText("Remote PropertySet lesen");
+		btnGetRemotePropertySet.setToolTipText(I.tr("Remote PropertySet lesen"));
 		add(btnGetRemotePropertySet, "split 2");
 		btnGetRemotePropertySet.addActionListener(e -> getRemotePropertySet());
 		enableOnSelectedPropertySetAndIpcAvailable(btnGetRemotePropertySet);
 
 		JButton btnSetRemotePropertySet = new JButton(Icons.getImageIcon(Icons.Data.TABLE_EXPORT));
-		btnSetRemotePropertySet.setToolTipText("Remote PropertySet schreiben");
+		btnSetRemotePropertySet.setToolTipText(I.tr("Remote PropertySet schreiben"));
 		add(btnSetRemotePropertySet);
 		btnSetRemotePropertySet.addActionListener(e -> setRemotePropertySet());
 		enableOnSelectedPropertySetAndIpcAvailable(btnSetRemotePropertySet);
@@ -93,24 +94,24 @@ public class SharedPropertyView extends JPanel {
 		this.add(sheet, "grow, spany, wrap");
 
 		JButton btnGetRemoteProperty = new JButton(Icons.getImageIcon(Icons.Data.CARD_IMPORT));
-		btnGetRemoteProperty.setToolTipText("Remote Property lesen");
+		btnGetRemoteProperty.setToolTipText(I.tr("Remote Property lesen"));
 		add(btnGetRemoteProperty, "split 4");
 		btnGetRemoteProperty.addActionListener(e -> getRemoteProperty());
 		enableOnSelectedPropertyAndIpcAvailable(btnGetRemoteProperty);
 
 		JButton btnSetRemoteProperty = new JButton(Icons.getImageIcon(Icons.Data.CARD_EXPORT));
-		btnSetRemoteProperty.setToolTipText("Remote Property schreiben");
+		btnSetRemoteProperty.setToolTipText(I.tr("Remote Property schreiben"));
 		add(btnSetRemoteProperty);
 		btnSetRemoteProperty.addActionListener(e -> setRemoteProperty());
 		enableOnSelectedPropertyAndIpcAvailable(btnSetRemoteProperty);
 
 		JButton btnAddProperty = new JButton(Icons.getImageIcon(Icons.Data.CARD_PLUS));
-		btnAddProperty.setToolTipText("Property hinzufügen");
+		btnAddProperty.setToolTipText(I.tr("Property hinzufügen"));
 		add(btnAddProperty);
 		btnAddProperty.addActionListener(e -> addProperty());
 
 		JButton btnRemProperty = new JButton(Icons.getImageIcon(Icons.Data.CARD_MINUS));
-		btnRemProperty.setToolTipText("Property entfernen");
+		btnRemProperty.setToolTipText(I.tr("Property entfernen"));
 		add(btnRemProperty, "wrap");
 		btnRemProperty.addActionListener(e -> removeProperty());
 		enableOnSelectedProperty(btnRemProperty);
@@ -247,10 +248,12 @@ public class SharedPropertyView extends JPanel {
 					selectedClass.addProperty(property);
 					classSelectionChanged();
 				} else {
-					TaskDialogs.error(dialog, "", "Es konnte keine Instanz des Typs '" + dialog.getPropertyType() + "' erstellt werden.");
+					TaskDialogs.error(dialog, "",
+							I.trf("Es konnte keine Instanz des Typs '{0}' erstellt werden.", dialog.getPropertyType()));
 				}
 			} else {
-				TaskDialogs.error(dialog, "", "PropertySet hat bereits eine Property mit dem Namen '" + dialog.getPropertyName() + "'.");
+				TaskDialogs.error(dialog, "",
+						I.trf("PropertySet hat bereits eine Property mit dem Namen '{0}'.", dialog.getPropertyName()));
 			}
 		}
 	}

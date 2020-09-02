@@ -13,6 +13,7 @@ import com.google.common.collect.ImmutableMap;
 import com.jidesoft.swing.AutoCompletion;
 import com.l2fprod.common.propertysheet.Property;
 import com.l2fprod.common.propertysheet.PropertySheetPanel;
+import com.teamunify.i18n.I;
 
 import ca.odell.glazedlists.BasicEventList;
 import ca.odell.glazedlists.EventList;
@@ -50,12 +51,15 @@ public class PropertySearchFilterBuilder<T extends G3ClassContainer> implements 
 	private static final ImmutableMap<CompareOperation, String> RENDER_COMPARE_OPERATION = ImmutableMap.<CompareOperation, String>builder()
 			.put(CompareOperation.Equals, "==").put(CompareOperation.NotEquals, "!=").put(CompareOperation.GreaterThanEquals, ">=")
 			.put(CompareOperation.LessThanEquals, "<=").put(CompareOperation.Greater, ">").put(CompareOperation.Less, "<")
-			.put(CompareOperation.EqualsIgnoreCase, "== (case insensitive)")
-			.put(CompareOperation.NotEqualsIgnoreCase, "!= (case insensitive)").put(CompareOperation.Contains, "Contains")
-			.put(CompareOperation.ContainsIgnoreCase, "Contains (case insensitive)").put(CompareOperation.StartsWith, "Starts With")
-			.put(CompareOperation.StartsWithIgnoreCase, "Starts With (case insensitive)").put(CompareOperation.EndsWith, "Ends With")
-			.put(CompareOperation.EndsWithIgnoreCase, "Ends With (case insensitive)").put(CompareOperation.Regex, "Regex")
-			.put(CompareOperation.RegexIgnoreCase, "Regex (case insensitive)").put(CompareOperation.ContainsElement, "Contains").build();
+			.put(CompareOperation.EqualsIgnoreCase, I.tr("== (case insensitive)"))
+			.put(CompareOperation.NotEqualsIgnoreCase, I.tr("!= (case insensitive)")).put(CompareOperation.Contains, I.tr("Contains"))
+			.put(CompareOperation.ContainsIgnoreCase, I.tr("Contains (case insensitive)"))
+			.put(CompareOperation.StartsWith, I.tr("Starts With"))
+			.put(CompareOperation.StartsWithIgnoreCase, I.tr("Starts With (case insensitive)"))
+			.put(CompareOperation.EndsWith, I.tr("Ends With"))
+			.put(CompareOperation.EndsWithIgnoreCase, I.tr("Ends With (case insensitive)")).put(CompareOperation.Regex, I.tr("Regex"))
+			.put(CompareOperation.RegexIgnoreCase, I.tr("Regex (case insensitive)"))
+			.put(CompareOperation.ContainsElement, I.tr("Contains")).build();
 
 	private JComponent comp;
 
@@ -190,7 +194,7 @@ public class PropertySearchFilterBuilder<T extends G3ClassContainer> implements 
 			} else {
 				resetPropertyInstance.run();
 				TaskDialogs.error(null, "",
-						"Es konnte keine Instanz des Typs '" + leafPropertyDesc.getDataTypeName() + "' erstellt werden.");
+						I.trf("Es konnte keine Instanz des Typs '{0}' erstellt werden.", leafPropertyDesc.getDataTypeName()));
 			}
 		});
 

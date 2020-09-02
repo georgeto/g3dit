@@ -43,19 +43,19 @@ public class eCResourceAnimationMotion_PS extends GenomeFile {
 		public void read(G3FileReader reader) {
 			int offsetEnd = reader.readInt() + reader.getPos();
 			if (!reader.readString(4).equals("LMA ")) {
-				throw new IllegalArgumentException("Ungültiger eCWrapper_emfx2Motion.");
+				throw new IllegalArgumentException("Invalid eCWrapper_emfx2Motion.");
 			}
 
 			highVersion = reader.readUnsignedByte();
 			lowVersion = reader.readUnsignedByte();
 
 			if (highVersion != 1 || lowVersion != 1) {
-				throw new IllegalArgumentException("Ungültiger eCWrapper_emfx2Motion.");
+				throw new IllegalArgumentException("Invalid eCWrapper_emfx2Motion.");
 			}
 
 			// is this an actor? (if false, it's a motion)
 			if (reader.readBool()) {
-				throw new IllegalArgumentException("Ungültiger eCWrapper_emfx2Motion.");
+				throw new IllegalArgumentException("Invalid eCWrapper_emfx2Motion.");
 			}
 
 			chunks = Chunks.readChunks(reader, offsetEnd);

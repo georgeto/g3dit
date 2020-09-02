@@ -9,6 +9,7 @@ import javax.swing.JScrollPane;
 import com.ezware.dialog.task.TaskDialogs;
 import com.google.common.collect.ImmutableSet;
 import com.jidesoft.dialog.ButtonPanel;
+import com.teamunify.i18n.I;
 
 import ca.odell.glazedlists.EventList;
 import ca.odell.glazedlists.GlazedLists;
@@ -30,7 +31,7 @@ public class EditGuidWithCommentConfigDialog extends ExtStandardDialog {
 		super(parent, title, false);
 		// Acquire config edit lock
 		if (!config.acquireEditLock()) {
-			TaskDialogs.error(parent, title, "Already opened for editing.");
+			TaskDialogs.error(parent, title, I.tr("Already opened for editing."));
 			cancel();
 		} else {
 			this.config = config;
@@ -39,10 +40,10 @@ public class EditGuidWithCommentConfigDialog extends ExtStandardDialog {
 		}
 	}
 
-	private static final TableColumnDef COLUMN_GUID = TableColumnDef.withName("Guid").editable(false).sizeExample(GuidUtil.randomGUID())
-			.b();
+	private static final TableColumnDef COLUMN_GUID = TableColumnDef.withName("Guid").displayName(I.tr("Guid")).editable(false)
+			.sizeExample(GuidUtil.randomGUID()).b();
 
-	private static final TableColumnDef COLUMN_COMMENT = TableColumnDef.withName("Comment")
+	private static final TableColumnDef COLUMN_COMMENT = TableColumnDef.withName("Comment").displayName(I.tr("Comment"))
 			.sizeExample("[BASE] Closest entity: G3_Desert_Objects_House_Ruins_B_04_LOWPOLY.xcmsh (460)").editable(true).b();
 
 	@Override
@@ -57,7 +58,7 @@ public class EditGuidWithCommentConfigDialog extends ExtStandardDialog {
 		panel.add(new JScrollPane(sortableTable.table), "width 100%, growy, push, wrap");
 
 		panel.add(new TableModificationControl<>(null, sortableTable.table, sortableTable.sortedSource, () -> {
-			EnterGuidDialog dialog = new EnterGuidDialog(getOwner(), "Enter Guid", "Ok", "");
+			EnterGuidDialog dialog = new EnterGuidDialog(getOwner(), I.tr("Enter Guid"), I.tr("Ok"), "");
 			if (dialog.openAndWasSuccessful()) {
 				GuidWithComment newEntry = new GuidWithComment(GuidUtil.parseGuid(dialog.getEnteredGuid()), "");
 				int index = entries.indexOf(newEntry);
@@ -79,8 +80,8 @@ public class EditGuidWithCommentConfigDialog extends ExtStandardDialog {
 	public ButtonPanel createButtonPanel() {
 		ButtonPanel buttonPanel = newButtonPanel();
 
-		addButton(buttonPanel, SwingUtils.createAction("Save", this::save), ButtonPanel.AFFIRMATIVE_BUTTON);
-		addButton(buttonPanel, SwingUtils.createAction("Cancel", this::cancel), ButtonPanel.CANCEL_BUTTON);
+		addButton(buttonPanel, SwingUtils.createAction(I.tr("Save"), this::save), ButtonPanel.AFFIRMATIVE_BUTTON);
+		addButton(buttonPanel, SwingUtils.createAction(I.tr("Cancel"), this::cancel), ButtonPanel.CANCEL_BUTTON);
 
 		return buttonPanel;
 	}

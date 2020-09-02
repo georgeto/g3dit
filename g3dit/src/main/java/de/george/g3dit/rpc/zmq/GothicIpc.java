@@ -51,7 +51,7 @@ public class GothicIpc {
 
 	public void start() {
 		if (executor != null && !executor.isTerminated()) {
-			throw new IllegalStateException("Es läuft bereits ein Ipc Worker Thread.");
+			throw new IllegalStateException("There is already a Ipc worker thread running.");
 		}
 
 		pendingRequests.clear();
@@ -85,7 +85,7 @@ public class GothicIpc {
 			}
 		}
 
-		throw new IllegalArgumentException("'" + request.getDescriptorForType().getFullName() + "' ist kein gültiger Request.");
+		throw new IllegalArgumentException("'" + request.getDescriptorForType().getFullName() + "' is not a valid request.");
 	}
 
 	private final class Worker implements Runnable {
@@ -120,7 +120,7 @@ public class GothicIpc {
 						if (request != null) {
 							notifyCallback(request, Status.Successful, response);
 						} else {
-							logger.debug("Unerwartete Nachricht empfangen mit RequestNumber: " + response.getRequestNumber());
+							logger.debug("Received unexpected message with request number: {}", response.getRequestNumber());
 						}
 					}
 

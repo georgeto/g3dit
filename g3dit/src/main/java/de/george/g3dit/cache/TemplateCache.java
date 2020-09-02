@@ -17,6 +17,7 @@ import org.slf4j.LoggerFactory;
 
 import com.ezware.dialog.task.TaskDialogs;
 import com.google.common.collect.ImmutableSet;
+import com.teamunify.i18n.I;
 
 import de.george.g3dit.EditorContext;
 import de.george.g3dit.util.AbstractDialogFileWorker;
@@ -107,7 +108,7 @@ public class TemplateCache extends AbstractCache<TemplateCache> {
 					Object[] data = loadIntern(get());
 					templates = (List<TemplateCacheEntry>) data[1];
 				} catch (Exception e) {
-					logger.info("TemplateCache Ladefehler: {}", e.getMessage());
+					logger.info("Failed to load TemplateCache: {}", e.getMessage());
 				} finally {
 					notifyCacheUpdated();
 				}
@@ -123,8 +124,8 @@ public class TemplateCache extends AbstractCache<TemplateCache> {
 
 	private class CreateTemplateCacheWorker extends AbstractDialogFileWorker<List<TemplateCacheEntry>> {
 		public CreateTemplateCacheWorker(Callable<List<File>> fileProvider) {
-			super(fileProvider, null, "Erstelle TemplateCache", ctx.getParentWindow());
-			statusFormat = "%d Templates gefunden";
+			super(fileProvider, null, I.tr("Erstelle TemplateCache"), ctx.getParentWindow());
+			statusFormat = I.tr("{0, number} Templates gefunden");
 		}
 
 		@Override

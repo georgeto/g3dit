@@ -4,6 +4,8 @@ import static j2html.TagCreator.dd;
 import static j2html.TagCreator.dl;
 import static j2html.TagCreator.dt;
 
+import com.teamunify.i18n.I;
+
 import de.george.g3dit.EditorContext;
 import de.george.g3dit.check.EntityDescriptor;
 
@@ -37,7 +39,7 @@ public class EntityHelper implements Problem {
 
 	@Override
 	public String getDetails() {
-		return dl(dt("Name"), dd(descriptor.getDisplayName()), dt("Guid"), dd(descriptor.getGuid()), dt("Index"),
+		return dl(dt(I.tr("Name")), dd(descriptor.getDisplayName()), dt(I.tr("Guid")), dd(descriptor.getGuid()), dt(I.tr("Index")),
 				dd(String.valueOf(descriptor.getIndex()))).render();
 	}
 

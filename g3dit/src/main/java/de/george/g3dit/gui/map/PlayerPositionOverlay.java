@@ -55,7 +55,7 @@ public class PlayerPositionOverlay<T extends MapItem> extends Overlay {
 				}
 				lastActive = active;
 			} catch (Exception e) {
-				logger.warn("Fehler in updatePosition().", e);
+				logger.warn("Error occured in updatePosition().", e);
 			}
 		}, 0, 1000, TimeUnit.MILLISECONDS);
 	}

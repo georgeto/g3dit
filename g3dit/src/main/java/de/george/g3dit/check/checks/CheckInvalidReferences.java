@@ -6,6 +6,8 @@ import java.util.Set;
 import java.util.function.BiConsumer;
 import java.util.function.Supplier;
 
+import com.teamunify.i18n.I;
+
 import de.george.g3dit.check.EntityDescriptor;
 import de.george.g3dit.check.FileDescriptor;
 import de.george.g3dit.check.FileDescriptor.FileType;
@@ -23,7 +25,7 @@ public class CheckInvalidReferences extends AbstractEntityCheck {
 	private Set<String> refGuids = new HashSet<>();
 
 	public CheckInvalidReferences() {
-		super("Ungültige Referenzen ermitteln", "Überprüft alle Templates auf ungültige Guids.", 2, 1);
+		super(I.tr("Ungültige Referenzen ermitteln"), I.tr("Überprüft alle Templates auf ungültige Guids."), 2, 1);
 	}
 
 	@Override
@@ -31,7 +33,7 @@ public class CheckInvalidReferences extends AbstractEntityCheck {
 			Supplier<EntityDescriptor> descriptor, StringProblemConsumer problemConsumer) {
 
 		if (entity.getCreator() != null && !refGuids.contains(entity.getCreator())) {
-			problemConsumer.fatal("Reference Guid existiert nicht", entity.getCreator());
+			problemConsumer.fatal(I.tr("Reference Guid existiert nicht"), entity.getCreator());
 		}
 
 		PropertyUtil.visitTemplateReferences(entity,
@@ -56,9 +58,9 @@ public class CheckInvalidReferences extends AbstractEntityCheck {
 	private boolean processTemplateProperty(eCEntityProxy value, ClassProperty<?> property, G3Class propertySet,
 			BiConsumer<String, String> problemConsumer) {
 		if (value.getGuid() != null && !refGuids.contains(value.getGuid())) {
-			String message = String.format("Property %s.%s enthält nicht existente Guid", propertySet.getClassName(), property.getName());
-			String details = String.format("Property %s.%s enthält nicht existente Guid\n%s", propertySet.getClassName(),
-					property.getName(), value.getGuid());
+			String message = I.trf("Property {0}.{1} enthält nicht existente Guid", propertySet.getClassName(), property.getName());
+			String details = I.trf("Property {0}.{1} enthält nicht existente Guid\n{2}", propertySet.getClassName(), property.getName(),
+					value.getGuid());
 			problemConsumer.accept(message, details);
 		}
 		return true;

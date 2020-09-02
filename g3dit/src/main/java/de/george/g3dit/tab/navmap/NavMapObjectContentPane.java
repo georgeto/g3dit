@@ -13,6 +13,7 @@ import javax.swing.JToolBar;
 import javax.swing.text.JTextComponent;
 
 import com.google.common.eventbus.Subscribe;
+import com.teamunify.i18n.I;
 
 import de.george.g3dit.EditorContext;
 import de.george.g3dit.gui.components.AbstractTextComponentMatcherEditor;
@@ -71,13 +72,13 @@ public abstract class NavMapObjectContentPane extends ValidationPanelContainer<N
 
 		JToolBar toolBar = ToolbarUtil.createTopToolbar();
 
-		JButton btnGoto = SwingUtils.keyStrokeButton("Goto", "Teleportiert den Spieler zu dem ausgewählten Objekt.",
+		JButton btnGoto = SwingUtils.keyStrokeButton(I.tr("Goto"), I.tr("Teleportiert den Spieler zu dem ausgewählten Objekt."),
 				Icons.getImageIcon(Icons.Misc.GEOLOCATION), KeyEvent.VK_G, InputEvent.CTRL_DOWN_MASK,
 				() -> edit.getSelectedValues().stream().findFirst().ifPresent(this::onGoto));
 		toolBar.add(btnGoto);
 		ctx.getIpcMonitor().addListener(this, ipcMonitor -> btnGoto.setEnabled(ipcMonitor.isAvailable()), true, false, true);
 
-		JButton btnShowOnMap = SwingUtils.keyStrokeButton("Karte", "Zeigt ausgewählte Objekte auf Karte an.",
+		JButton btnShowOnMap = SwingUtils.keyStrokeButton(I.tr("Karte"), I.tr("Zeigt ausgewählte Objekte auf Karte an."),
 				Icons.getImageIcon(Icons.Misc.MAP), KeyEvent.VK_M, InputEvent.CTRL_DOWN_MASK, () -> onShowOnMap(edit.getSelectedValues()));
 		toolBar.add(btnShowOnMap);
 
@@ -98,7 +99,7 @@ public abstract class NavMapObjectContentPane extends ValidationPanelContainer<N
 	protected abstract ListManageAndEdit<String> createContent();
 
 	protected String getSearchTooltip() {
-		return SwingUtils.getMultilineText("Guid ODER Position und Radius im Format x/y/z// r");
+		return SwingUtils.getMultilineText(I.tr("Guid ODER Position und Radius im Format x/y/z// r"));
 	}
 
 	protected static class NavMapObjectMatcherEditor extends AbstractTextComponentMatcherEditor<String> {

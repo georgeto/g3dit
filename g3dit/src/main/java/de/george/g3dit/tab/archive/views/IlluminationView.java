@@ -18,6 +18,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.ezware.dialog.task.TaskDialogs;
+import com.teamunify.i18n.I;
 
 import de.george.g3dit.cache.Caches;
 import de.george.g3dit.cache.LightCache;
@@ -53,15 +54,14 @@ public class IlluminationView extends JPanel implements ArchiveView {
 
 		LightCache lightCache = Caches.light(ctx);
 		lightCache.load();
-		if (lightCache.isValid()) {
-			logger.info("Fehler beim Laden des Light-Caches.");
+		if (!lightCache.isValid()) {
+			logger.warn("Failed to load the light cache.");
 		}
-
 		lightCache.addUpdateListener(this, this::updateLightCacheStatus);
 
 		setLayout(new MigLayout("fill", "[]30[][grow]push[]", "[][][][]10[grow]"));
 
-		JLabel lblLightCache = SwingUtils.createBoldLabel("Light-Cache");
+		JLabel lblLightCache = SwingUtils.createBoldLabel(I.tr("Light-Cache"));
 		add(lblLightCache, "cell 0 0");
 
 		lblStatusCache = new JLabel();
@@ -70,27 +70,27 @@ public class IlluminationView extends JPanel implements ArchiveView {
 		lblLightCount = new JLabel();
 		add(lblLightCount, "cell 0 2, gapleft 7");
 
-		final JButton btnCreateCache = new JButton("Cache erstellen");
+		final JButton btnCreateCache = new JButton(I.tr("Cache erstellen"));
 		add(btnCreateCache, "cell 0 3, gapleft 7");
 
-		JLabel lblEntityIllum = SwingUtils.createBoldLabel("Entities beleuchten");
+		JLabel lblEntityIllum = SwingUtils.createBoldLabel(I.tr("Entities beleuchten"));
 		add(lblEntityIllum, "cell 1 0");
 
 		lblEntitiesSel = new JLabel();
 		this.add(lblEntitiesSel, "cell 1 1, gapleft 7");
 
-		btnShowLighting = new JButton("Aktuelle Beleuchtung");
+		btnShowLighting = new JButton(I.tr("Aktuelle Beleuchtung"));
 		btnShowLighting.setEnabled(false);
 		this.add(btnShowLighting, "cell 1 2, gapleft 7, height 18:18:18");
 
-		btnDoLighting = new JButton("Beleuchten");
+		btnDoLighting = new JButton(I.tr("Beleuchten"));
 		btnDoLighting.setEnabled(false);
 		this.add(btnDoLighting, "cell 1 3, gapleft 7");
 
-		cbPrintResult = new JCheckBox("Ergebnisse(+)", true);
+		cbPrintResult = new JCheckBox(I.tr("Ergebnisse(+)"), true);
 		this.add(cbPrintResult, "cell 4 3, split 2");
 
-		cbPrintError = new JCheckBox("Fehler(-)", true);
+		cbPrintError = new JCheckBox(I.tr("Fehler(-)"), true);
 		this.add(cbPrintError, "cell 4 3");
 
 		taLog = new JTextAreaExt(true);
@@ -124,11 +124,11 @@ public class IlluminationView extends JPanel implements ArchiveView {
 
 	private void updateLightCacheStatus(LightCache lightCache) {
 		if (lightCache.isValid()) {
-			lblStatusCache.setText("Status: Vorhanden (" + lightCache.printCreationTimestamp() + ")");
-			lblLightCount.setText("Lichtquellen: " + lightCache.getEntries().size());
+			lblStatusCache.setText(I.trf("Status: Vorhanden ({0, number})", lightCache.printCreationTimestamp()));
+			lblLightCount.setText(I.trf("Lichtquellen: {0, number}", lightCache.getEntries().size()));
 		} else {
-			lblStatusCache.setText("Status: Existiert nicht!");
-			lblLightCount.setText("Lichtquellen: -");
+			lblStatusCache.setText(I.tr("Status: Existiert nicht!"));
+			lblLightCount.setText(I.tr("Lichtquellen: -"));
 		}
 
 	}
@@ -147,7 +147,7 @@ public class IlluminationView extends JPanel implements ArchiveView {
 		EntityTree entityTree = ctx.getEntityTree();
 		btnDoLighting.setEnabled(entityTree.getSelectedEntityCount() > 0);
 		btnShowLighting.setEnabled(entityTree.getSelectedEntityCount() > 0);
-		lblEntitiesSel.setText("Ausgewählt: " + entityTree.getSelectedEntityCount());
+		lblEntitiesSel.setText(I.trf("Ausgewählt: {0, number}", entityTree.getSelectedEntityCount()));
 	}
 
 	@Override
@@ -178,7 +178,7 @@ public class IlluminationView extends JPanel implements ArchiveView {
 		taLog.setText(null);
 		for (eCEntity entity : ctx.getEntityTree().getSelectedEntities()) {
 			if (!entity.hasClass(CD.eCIlluminated_PS.class)) {
-				logError(entity.getName() + "(" + entity.getGuid() + ") ist nicht beleuchtet, keine eCIlluminated_PS Klasse.");
+				logError(I.trf("{0} ({1}) ist nicht beleuchtet, kein eCIlluminated_PS PropertySet.", entity.getName(), entity.getGuid()));
 				continue;
 			}
 
@@ -188,21 +188,21 @@ public class IlluminationView extends JPanel implements ArchiveView {
 			StaticLightedResult result = LightCalc.isStaticLighted(entity);
 
 			if (result == StaticLightedResult.MeshNotStatic) {
-				logError(entity.getName() + "(" + entity.getGuid() + ") ist nicht beleuchtet, kein statisches Mesh.");
+				logError(I.trf("{0} ({1}) ist nicht beleuchtet, kein statisches Mesh.", entity.getName(), entity.getGuid()));
 				return;
 			}
 
 			if (result == StaticLightedResult.WrongLightingType) {
-				logResult(entity.getName() + "(" + entity.getGuid() + ") ist mit einer Lightmap beleuchtet.");
+				logResult(I.trf("{0} ({1}) ist mit einer Lightmap beleuchtet.", entity.getName(), entity.getGuid()));
 				return;
 			}
 
 			if (result == StaticLightedResult.Valid) {
 				if (illuminated.lights.getLights().size() > 0) {
-					logResult(entity.getName() + "(" + entity.getGuid() + ") ist mit " + illuminated.lights.getLights().size()
-							+ " Lichtquellen beleuchtet.");
+					logResult(I.trf("{0} ({1}) ist mit {3, number} Lichtquellen beleuchtet.", entity.getName(), entity.getGuid(),
+							illuminated.lights.getLights().size()));
 				} else {
-					logResult(entity.getName() + "(" + entity.getGuid() + ") ist mit keiner Lichtquelle beleuchtet.");
+					logResult(I.trf("{0} ({1}) ist mit keiner Lichtquelle beleuchtet.", entity.getName(), entity.getGuid()));
 				}
 			}
 		}
@@ -211,8 +211,8 @@ public class IlluminationView extends JPanel implements ArchiveView {
 	private void handleDoLighting() {
 		LightCache lightCache = Caches.light(ctx);
 		if (!lightCache.isValid()) {
-			TaskDialogs.inform(ctx.getParentWindow(), "Light-Cache existiert nicht",
-					"Bevor Entities beleuchtet werden können, muss der Light-Cache erstellt werden.");
+			TaskDialogs.inform(ctx.getParentWindow(), I.tr("Light-Cache existiert nicht"),
+					I.tr("Bevor Entities beleuchtet werden können, muss der Light-Cache erstellt werden."));
 			return;
 		}
 		taLog.setText(null);
@@ -220,21 +220,23 @@ public class IlluminationView extends JPanel implements ArchiveView {
 			int result = LightCalc.calcLighting(entity, lightCache);
 			switch (result) {
 				case -3:
-					logError(entity.getName() + "(" + entity.getGuid()
-							+ ") wurde nicht beleuchtet, StaticLightingType ungleich eEStaticLightingType_Instance.");
+					logError(I.trf("{0} ({1}) wurde nicht beleuchtet, StaticLightingType ungleich eEStaticLightingType_Instance.",
+							entity.getName(), entity.getGuid()));
 					break;
 				case -2:
-					logError(entity.getName() + "(" + entity.getGuid() + ") wurde nicht beleuchtet, keine statisches Mesh.");
+					logError(I.trf("{0} ({1}) wurde nicht beleuchtet, keine statisches Mesh.", entity.getName(), entity.getGuid()));
 					break;
 				case -1:
-					logError(entity.getName() + "(" + entity.getGuid() + ") wurde nicht beleuchtet, keine eCIlluminated_PS Klasse.");
+					logError(
+							I.trf("{0} ({1}) wurde nicht beleuchtet, keine eCIlluminated_PS Klasse.", entity.getName(), entity.getGuid()));
 					break;
 				case 0:
-					logError(entity.getName() + "(" + entity.getGuid() + ") hatte keine Lichtquelle in der Nähe.");
+					logError(I.trf("{0} ({1}) hatte keine Lichtquelle in der Nähe.", entity.getName(), entity.getGuid()));
 					break;
 				default:
 					if (result > 0) {
-						logResult(entity.getName() + "(" + entity.getGuid() + ") wurde mit " + result + " Lichtquellen beleuchtet.");
+						logResult(I.trf("{0} ({1}) wurde mit {3, number} Lichtquellen beleuchtet.", entity.getName(), entity.getGuid(),
+								result));
 					}
 					break;
 			}
@@ -247,7 +249,7 @@ public class IlluminationView extends JPanel implements ArchiveView {
 
 		@Override
 		public void guiInit(JPanel extensionPanel, ActionListener extActionListener) {
-			cbOnlyIlluminatable = new JCheckBox("Nur beleuchtbare Entities");
+			cbOnlyIlluminatable = new JCheckBox(I.tr("Nur beleuchtbare Entities"));
 			cbOnlyIlluminatable.addActionListener(extActionListener);
 			extensionPanel.add(cbOnlyIlluminatable);
 		}

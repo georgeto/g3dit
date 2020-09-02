@@ -3,6 +3,8 @@ package de.george.g3dit.scripts;
 import java.io.File;
 import java.io.FileInputStream;
 
+import com.teamunify.i18n.I;
+
 import de.george.lrentnode.classes.eCResourceShaderMaterial_PS;
 import de.george.lrentnode.classes.eCShaderBase;
 import de.george.lrentnode.classes.desc.CD;
@@ -14,12 +16,12 @@ public class ScriptListMaterialProperties implements IScript {
 
 	@Override
 	public String getTitle() {
-		return "Material Eigenschaften auflisten";
+		return I.tr("Material Eigenschaften auflisten");
 	}
 
 	@Override
 	public String getDescription() {
-		return "Material Eigenschaften auflisten";
+		return I.tr("Material Eigenschaften auflisten");
 	}
 
 	@Override

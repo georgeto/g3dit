@@ -8,6 +8,8 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import com.teamunify.i18n.I;
+
 import de.george.g3dit.util.FileDialogWrapper;
 import de.george.g3utils.gui.SwingUtils;
 import net.miginfocom.swing.MigLayout;
@@ -54,7 +56,7 @@ public class FilePathOptionHandler extends TitledOptionHandler<String> {
 			tfPath.setToolTipText(tooltip);
 		}
 
-		JButton btnPath = new JButton("...");
+		JButton btnPath = new JButton(I.tr("..."));
 		btnPath.addActionListener(e -> {
 			File file = FileDialogWrapper.openFile(openFileDialogTitle, getParent(), filter);
 			if (file != null) {

@@ -5,6 +5,8 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import com.teamunify.i18n.I;
+
 import de.george.g3utils.io.G3FileReader;
 import de.george.g3utils.io.G3FileWriter;
 import de.george.g3utils.io.G3Serializable;
@@ -56,7 +58,8 @@ public class Section3a implements G3Serializable {
 
 	public int addNegCircle(NegCircle negCircle) {
 		if (guidMapping.containsKey(negCircle.circleGuid)) {
-			throw new IllegalArgumentException("Section3a enthält bereits einen NegCircle mit der Guid '" + negCircle.circleGuid + "'.");
+			throw new IllegalArgumentException(
+					I.trf("Section3a enthält bereits einen NegCircle mit der Guid '{0}'.", negCircle.circleGuid));
 		}
 		negCircles.add(negCircle);
 		guidMapping.put(negCircle.circleGuid, negCircle);
@@ -77,7 +80,7 @@ public class Section3a implements G3Serializable {
 
 	public int updateNegCircle(NegCircle negCircle) {
 		if (!guidMapping.containsKey(negCircle.circleGuid)) {
-			throw new IllegalArgumentException("Section3a enthält keinen NegCircle mit der Guid '" + negCircle.circleGuid + "'.");
+			throw new IllegalArgumentException(I.trf("Section3a enthält keinen NegCircle mit der Guid '{0}'.", negCircle.circleGuid));
 		}
 
 		int circleIndex = getNegCircleIndex(negCircle.circleGuid);

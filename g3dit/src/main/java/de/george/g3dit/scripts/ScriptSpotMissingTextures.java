@@ -3,6 +3,8 @@ package de.george.g3dit.scripts;
 import java.io.File;
 import java.io.FileInputStream;
 
+import com.teamunify.i18n.I;
+
 import de.george.g3dit.util.AssetResolver;
 import de.george.g3dit.util.AssetResolver.MaterialAsset;
 import de.george.g3dit.util.AssetResolver.TextureAsset;
@@ -13,12 +15,12 @@ public class ScriptSpotMissingTextures implements IScript {
 
 	@Override
 	public String getTitle() {
-		return "Fehlende Texturen ermitteln";
+		return I.tr("Fehlende Texturen ermitteln");
 	}
 
 	@Override
 	public String getDescription() {
-		return "Wenn eine im Material eingetragene Basistextur nicht existiert, wird diese als fehlend klassifiziert.";
+		return I.tr("Wenn eine im Material eingetragene Basistextur nicht existiert, wird diese als fehlend klassifiziert.");
 	}
 
 	@Override
@@ -34,8 +36,8 @@ public class ScriptSpotMissingTextures implements IScript {
 					env.log(parsedMaterial.print() + "\n\n");
 				}
 			} catch (Exception e) {
-				env.log("Material: " + file.getName());
-				env.log("Exception beim Parsen des Materials: " + e.getMessage() + "\n\n");
+				env.log(I.tr("Material") + ": " + file.getName());
+				env.log(I.tr("Exception beim Parsen des Materials") + ": " + e.getMessage() + "\n\n");
 			}
 		}
 

@@ -15,6 +15,7 @@ import javax.swing.border.EtchedBorder;
 
 import com.jidesoft.dialog.ButtonPanel;
 import com.jidesoft.swing.CheckBoxList;
+import com.teamunify.i18n.I;
 
 import ca.odell.glazedlists.GlazedLists;
 import ca.odell.glazedlists.swing.GlazedListsSwing;
@@ -56,7 +57,7 @@ public class CheckBoxListSelectDialog<T> extends AbstractSelectDialog<T> {
 	public ButtonPanel createButtonPanel() {
 		ButtonPanel buttonPanel = newButtonPanel();
 
-		Action okAction = SwingUtils.createAction("OK", () -> {
+		Action okAction = SwingUtils.createAction(I.tr("Ok"), () -> {
 			if (!list.getCheckBoxListSelectionModel().isSelectionEmpty()) {
 				setDialogResult(RESULT_AFFIRMED);
 			}

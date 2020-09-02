@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import com.ezware.dialog.task.TaskDialogs;
 import com.l2fprod.common.beans.ExtendedPropertyDescriptor;
 import com.l2fprod.common.propertysheet.AbstractProperty;
+import com.teamunify.i18n.I;
 
 import de.george.g3utils.io.G3Serializable;
 
@@ -84,8 +85,8 @@ class PropertyDescriptorAdapter extends AbstractProperty {
 
 			setValue(value);
 		} catch (Exception e) {
-			logger.warn("Fehler beim Anzeigen des Wertes der Property '{}'.", getName(), e);
-			TaskDialogs.error(null, "Fehler beim Anzeigen", "Fehler beim Anzeigen des Wertes der Property '" + getName() + "'.");
+			logger.warn("Failed to display the value of the property '{}'.", getName(), e);
+			TaskDialogs.error(null, I.tr("Fehler beim Anzeigen"), I.trf("Fehler beim Anzeigen des Wertes der Property '{0}'.", getName()));
 			throw new RuntimeException(e);
 		}
 	}
@@ -104,9 +105,9 @@ class PropertyDescriptorAdapter extends AbstractProperty {
 			}
 			readFromObject(object);
 		} catch (Exception e) {
-			logger.warn("Fehler beim Parsen des eingegebenen Wertes '{}' für Property '{}'.", getValue(), getName(), e);
-			TaskDialogs.error(null, "Fehler beim Parsen",
-					"Fehler beim Parsen des eingegebenen Wertes '" + getValue() + "' für Property '" + getName() + "'.");
+			logger.warn("Failed to parse the entered value '{}' for the property '{}'.", getValue(), getName(), e);
+			TaskDialogs.error(null, I.tr("Fehler beim Parsen"),
+					I.trf("Fehler beim Parsen des eingegebenen Wertes '{0}' für Property '{1}'.", getValue(), getName()));
 		}
 	}
 

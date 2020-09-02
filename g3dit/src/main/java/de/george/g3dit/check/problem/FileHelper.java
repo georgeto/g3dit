@@ -6,6 +6,8 @@ import static j2html.TagCreator.dt;
 
 import java.util.function.Function;
 
+import com.teamunify.i18n.I;
+
 import de.george.g3dit.EditorContext;
 import de.george.g3dit.check.FileDescriptor;
 
@@ -39,7 +41,7 @@ public class FileHelper implements Problem {
 
 	@Override
 	public String getDetails() {
-		return dl(dt("Name"), dd(descriptor.getPath().getName()), dt("Path"), dd(pathResolver.apply(this))).render();
+		return dl(dt(I.tr("Name")), dd(descriptor.getPath().getName()), dt(I.tr("Path")), dd(pathResolver.apply(this))).render();
 	}
 
 	@Override

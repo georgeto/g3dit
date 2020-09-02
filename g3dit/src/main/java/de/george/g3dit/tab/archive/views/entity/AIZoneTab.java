@@ -33,5 +33,4 @@ public class AIZoneTab extends AbstractPropertyEntityTab {
 	public boolean isActive(eCEntity entity) {
 		return entity.hasClass(CD.gCAIZone_PS.class);
 	}
-
 }

@@ -171,7 +171,7 @@ public class PrefPath implements G3Serializable {
 					.union();
 		} catch (Exception e) {
 			invalidPolygon = true;
-			logger.warn("Für PrefPath {} - {} konnte kein Polygon erstellt werden.", virtualGuid, radiusOffset.toMarvinString());
+			logger.warn("Failed to create polygon for PrefPath {} - {}.", virtualGuid, radiusOffset.toMarvinString());
 			return null;
 		}
 	}

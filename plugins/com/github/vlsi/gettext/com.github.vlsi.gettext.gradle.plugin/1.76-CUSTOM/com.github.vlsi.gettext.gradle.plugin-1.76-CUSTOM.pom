@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.github.vlsi.gettext</groupId>
+  <artifactId>com.github.vlsi.gettext.gradle.plugin</artifactId>
+  <version>1.76-CUSTOM</version>
+  <packaging>pom</packaging>
+  <name>GNU gettext plugin for Gradle</name>
+  <description>Configures gettext processing for Gradle</description>
+  <url>https://github.com/vlsi/vlsi-release-plugins</url>
+  <inceptionYear>2019</inceptionYear>
+  <licenses>
+        
+    <license>
+            
+      <name>Apache-2.0</name>
+            
+      <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+          
+    </license>
+      
+  </licenses>
+  <developers>
+        
+    <developer>
+            
+      <id>vlsi</id>
+            
+      <name>Vladimir Sitnikov</name>
+            
+      <email>sitnikov.vladmir@gmail.com</email>
+          
+    </developer>
+      
+  </developers>
+  <scm>
+        
+    <connection>scm:git:https://github.com/vlsi/vlsi-release-plugins.git</connection>
+        
+    <developerConnection>scm:git:https://github.com/vlsi/vlsi-release-plugins.git</developerConnection>
+        
+    <url>https://github.com/vlsi/vlsi-release-plugins</url>
+      
+  </scm>
+  <issueManagement>
+        
+    <system>GitHub</system>
+        
+    <url>https://github.com/vlsi/vlsi-release-plugins/issues</url>
+      
+  </issueManagement>
+  <dependencies>
+    <dependency>
+      <groupId>com.github.vlsi.gradle</groupId>
+      <artifactId>gettext-plugin</artifactId>
+      <version>1.76-CUSTOM</version>
+    </dependency>
+  </dependencies>
+</project>

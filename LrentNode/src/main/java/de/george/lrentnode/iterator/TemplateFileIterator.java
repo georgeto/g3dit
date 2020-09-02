@@ -32,7 +32,7 @@ public class TemplateFileIterator implements Iterator<TemplateFile> {
 				try {
 					tple = FileUtil.openTemplate(file);
 				} catch (Exception e) {
-					logger.warn("Fehler beim Öffnen von Template({}): {}", file.getAbsolutePath(), e.getMessage());
+					logger.warn("Error while opening template({}): {}", file.getAbsolutePath(), e.getMessage());
 				}
 				if (tple != null) {
 					nextTple = tple;

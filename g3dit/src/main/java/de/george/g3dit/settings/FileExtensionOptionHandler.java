@@ -81,7 +81,7 @@ public class FileExtensionOptionHandler extends AbstractOptionHandler<Void> {
 				}
 				ext.setWasRegistered(checkedExts.contains(ext));
 			} catch (RegistryException e) {
-				logger.warn("Dateiendung konnte nicht registriert werden: ", e);
+				logger.warn("Unable to register file extension.", e);
 			}
 		}
 	}

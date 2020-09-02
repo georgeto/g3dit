@@ -4,6 +4,7 @@ import java.util.Objects;
 
 import com.ezware.dialog.task.TaskDialogs;
 import com.google.common.collect.Lists;
+import com.teamunify.i18n.I;
 
 import de.george.g3utils.structure.bCBox;
 import de.george.g3utils.structure.bCVector;
@@ -18,12 +19,13 @@ public class ScriptFindMisplacedEntities implements IScript {
 
 	@Override
 	public String getTitle() {
-		return "Falsch platzierte Entities ermitteln";
+		return I.tr("Falsch platzierte Entities ermitteln");
 	}
 
 	@Override
 	public String getDescription() {
-		return "Ermittelt Entities die innerhalb einer Schwellwertdistanz keine bzw. wenige Nachbarentities haben. In den meisten Fällen liegt dann eine fehlerhafte Positionierung der Entity vor.";
+		return I.tr(
+				"Ermittelt Entities die innerhalb einer Schwellwertdistanz keine bzw. wenige Nachbarentities haben. In den meisten Fällen liegt dann eine fehlerhafte Positionierung der Entity vor.");
 	}
 
 	private static class EntityAABBTreePrimitive implements AABBTreePrimitive {
@@ -66,24 +68,24 @@ public class ScriptFindMisplacedEntities implements IScript {
 
 	@Override
 	public boolean execute(IScriptEnvironment env) {
-		Integer k = TaskDialogs.input(env.getParentWindow(), "Anzahl der betrachteten nächsten Nachbarn",
-				"Anzahl der Nachbarentities die innerhalb der Schwellwertdistanz liegen müssen.", 1);
+		Integer k = TaskDialogs.input(env.getParentWindow(), I.tr("Anzahl der betrachteten nächsten Nachbarn"),
+				I.tr("Anzahl der Nachbarentities die innerhalb der Schwellwertdistanz liegen müssen."), 1);
 		if (Objects.isNull(k)) {
 			return false;
 		}
 
-		Integer threshold = TaskDialogs.input(env.getParentWindow(), "Schwellwertdistanz",
-				"Alle Entities die innerhalb der Schwellwertdistanz keine bzw. nicht genug Nachbarn haben,\nwerden als 'falsch' platziert klassifiziert.",
+		Integer threshold = TaskDialogs.input(env.getParentWindow(), I.tr("Schwellwertdistanz"), I.tr(
+				"Alle Entities die innerhalb der Schwellwertdistanz keine bzw. nicht genug Nachbarn haben,\nwerden als 'falsch' platziert klassifiziert."),
 				2000);
 		if (Objects.isNull(threshold)) {
 			return false;
 		}
 
-		boolean solidOnly = TaskDialogs.ask(env.getParentWindow(), "Solide Entities",
-				"Sollen ausschließlich solide Entities, also solche die ein Mesh haben, betrachtet werden?");
+		boolean solidOnly = TaskDialogs.ask(env.getParentWindow(), I.tr("Solide Entities"),
+				I.tr("Sollen ausschließlich solide Entities, also solche die ein Mesh haben, betrachtet werden?"));
 
-		env.log("Anzahl der betrachteten nächsten Nachbarn: " + k);
-		env.log("Schwellwert: " + threshold);
+		env.log(I.trf("Anzahl der betrachteten nächsten Nachbarn: {0, number}", k));
+		env.log(I.trf("Schwellwert: {0, number}", threshold));
 
 		ArchiveFileIterator worldFilesIterator = env.getFileManager().worldFilesIterator();
 		AABBTree<EntityAABBTreePrimitive> aabbTree = new AABBTree<>();
@@ -101,13 +103,13 @@ public class ScriptFindMisplacedEntities implements IScript {
 		}
 
 		aabbTree.complete();
-		env.log(aabbTree.getPrimitives().size() + " Entities erfasst.");
+		env.log(I.trf("{0, number} Entities erfasst.", aabbTree.getPrimitives().size()));
 
 		for (EntityAABBTreePrimitive primitive : aabbTree.getPrimitives()) {
 			EntityAABBTreePrimitive neighbour = Lists.reverse(aabbTree.closestPrimitives(k + 1, primitive.getBounds())).get(0);
 			float distance = primitive.getBounds().distance(neighbour.getBounds());
 			if (distance > threshold) {
-				env.log(String.format("%s (%s) an Position %s alleine im Radius von %f.", primitive.getName(), primitive.getGuid(),
+				env.log(I.trf("{0} ({1}) an Position {2} alleine im Radius von {3, number}.", primitive.getName(), primitive.getGuid(),
 						primitive.getPosition().toMarvinString(), distance));
 			}
 		}

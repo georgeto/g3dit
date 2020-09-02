@@ -89,7 +89,7 @@ public class eCParticle_PS extends G3Class {
 			sounds = new eCParticleSoundArray();
 			classVersion = 2;
 		} else {
-			throw new UnsupportedOperationException("Version > 2 wird nicht unterstützt.");
+			throw new UnsupportedOperationException("Version > 2 is not supported.");
 		}
 	}
 

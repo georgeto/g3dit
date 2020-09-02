@@ -12,6 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.JToolBar;
 
 import com.ezware.dialog.task.TaskDialogs;
+import com.teamunify.i18n.I;
 
 import de.danielbechler.diff.node.DiffNode;
 import de.danielbechler.diff.node.ToMapPrintingVisitor;
@@ -65,14 +66,14 @@ public class TemplateContentPane extends JPanel {
 		toolBar = ToolbarUtil.createTopToolbar();
 
 		JButton btnAddClasses = new JButton(Icons.getImageIcon(Icons.Data.CLASS_PLUS));
-		btnAddClasses.setToolTipText("Klassen hinzufügen");
+		btnAddClasses.setToolTipText(I.tr("Klassen hinzufügen"));
 		toolBar.add(btnAddClasses);
 		btnAddClasses.addActionListener(e -> {
 			Optional<TemplateFile> selectedTple = ctx.getFileManager().selectAndOpenTemplate();
 			if (selectedTple.isPresent()) {
 				eCEntity classContainer = selectedTple.get().getReferenceHeader();
-				SelectClassDialog classSelect = new SelectClassDialog(ctx.getParentWindow(), "Klassen hinzufügen", "Hinzufügen",
-						classContainer);
+				SelectClassDialog classSelect = new SelectClassDialog(ctx.getParentWindow(), I.tr("Klassen hinzufügen"),
+						I.tr("Hinzufügen"), classContainer);
 				if (classSelect.openAndWasSuccessful()) {
 					TemplateFile tple = ctx.getCurrentTemplate();
 					for (G3Class clazz : classSelect.getResultClasses()) {
@@ -84,11 +85,11 @@ public class TemplateContentPane extends JPanel {
 		});
 
 		JButton btnRemClasses = new JButton(Icons.getImageIcon(Icons.Data.CLASS_MINUS));
-		btnRemClasses.setToolTipText("Klassen entfernen");
+		btnRemClasses.setToolTipText(I.tr("Klassen entfernen"));
 		toolBar.add(btnRemClasses);
 		btnRemClasses.addActionListener(e -> {
 			TemplateFile tple = ctx.getCurrentTemplate();
-			SelectClassDialog dialog = new SelectClassDialog(ctx.getParentWindow(), "Klassen entfernen", "Entfernen",
+			SelectClassDialog dialog = new SelectClassDialog(ctx.getParentWindow(), I.tr("Klassen entfernen"), I.tr("Entfernen"),
 					tple.getReferenceHeader());
 
 			if (dialog.openAndWasSuccessful()) {
@@ -99,39 +100,39 @@ public class TemplateContentPane extends JPanel {
 			}
 		});
 		toolBar.addSeparator();
-		JButton btn3dView = new JButton("3D-Ansicht", Icons.getImageIcon(Icons.Data.THREED));
+		JButton btn3dView = new JButton(I.tr("3D-Ansicht"), Icons.getImageIcon(Icons.Data.THREED));
 		btn3dView.setFocusable(false);
 		toolBar.add(btn3dView);
 		btn3dView.addActionListener(e -> EntityViewer.getInstance(ctx).showContainer(ctx.getCurrentTemplate().getReferenceHeader()));
-		JButton btnAssetInfo = new JButton("Asset-Info", Icons.getImageIcon(Icons.Data.INFORMATION));
-		btnAssetInfo.setToolTipText("Ermittelt die von der Template verwendeten Assets und kopiert sie in die Zwischenablage.");
+		JButton btnAssetInfo = new JButton(I.tr("Asset-Info"), Icons.getImageIcon(Icons.Data.INFORMATION));
+		btnAssetInfo.setToolTipText(I.tr("Ermittelt die von der Template verwendeten Assets und kopiert sie in die Zwischenablage."));
 		btnAssetInfo.setFocusable(false);
 		toolBar.add(btnAssetInfo);
 		btnAssetInfo.addActionListener(e -> {
 			eCEntity template = ctx.getCurrentTemplate().getReferenceHeader();
 			AssetResolver resolver = AssetResolver.with(ctx).build();
-			new DisplayTextDialog("Asset-Info", resolver.resolveContainer(template).print(), ctx.getParentWindow(), false).open();
+			new DisplayTextDialog(I.tr("Asset-Info"), resolver.resolveContainer(template).print(), ctx.getParentWindow(), false).open();
 		});
 		toolBar.addSeparator();
 
-		JButton btnProcessTemplateContext = new JButton("TemplateContext prüfen", Icons.getImageIcon(Icons.Select.TICK));
-		btnProcessTemplateContext
-				.setToolTipText("Überprüft ob die Template in einem TemplateContext eingetragen ist und bietet Korrekturmaßnahmen an.");
+		JButton btnProcessTemplateContext = new JButton(I.tr("TemplateContext prüfen"), Icons.getImageIcon(Icons.Select.TICK));
+		btnProcessTemplateContext.setToolTipText(
+				I.tr("Überprüft ob die Template in einem TemplateContext eingetragen ist und bietet Korrekturmaßnahmen an."));
 		btnProcessTemplateContext.setFocusable(false);
 		toolBar.add(btnProcessTemplateContext);
 		btnProcessTemplateContext.addActionListener(a -> ctx.checkTemplateContext());
 
 		toolBar.addSeparator();
-		JButton btnDiff = new JButton("Mit Originaldaten vergleichen", Icons.getImageIcon(Icons.Action.DIFF));
-		btnDiff.setToolTipText("Vergleicht Template mit Version aus den Originaldaten.");
+		JButton btnDiff = new JButton(I.tr("Mit Originaldaten vergleichen"), Icons.getImageIcon(Icons.Action.DIFF));
+		btnDiff.setToolTipText(I.tr("Vergleicht Template mit Version aus den Originaldaten."));
 		btnDiff.setFocusable(false);
 		toolBar.add(btnDiff);
 		btnDiff.addActionListener(a -> {
 			try {
 				Optional<File> originalFile = ctx.getFileManager().moveFromPrimaryToSecondary(ctx.getDataFile().get());
 				if (!originalFile.isPresent() || !originalFile.get().isFile()) {
-					TaskDialogs.error(ctx.getParentWindow(), "",
-							"Es gibt keine Version des Templates in den Originaldaten bzw. das Template befindet sich selbst in den Originaldaten.");
+					TaskDialogs.error(ctx.getParentWindow(), "", I.tr(
+							"Es gibt keine Version des Templates in den Originaldaten bzw. das Template befindet sich selbst in den Originaldaten."));
 					return;
 				}
 
@@ -139,7 +140,7 @@ public class TemplateContentPane extends JPanel {
 				DiffNode diff = new EntityDiffer(true).diff(ctx.getCurrentTemplate().getGraph(), tple.getGraph());
 				ToMapPrintingVisitor mapPrintingVisitor = new ToMapPrintingVisitor(ctx.getCurrentTemplate().getGraph(), tple.getGraph());
 				diff.visit(mapPrintingVisitor);
-				DisplayTextDialog dialog = new DisplayTextDialog("Vergleich: Template - Original-Template",
+				DisplayTextDialog dialog = new DisplayTextDialog(I.tr("Vergleich: Template - Original-Template"),
 						mapPrintingVisitor.getMessagesAsString(), ctx.getParentWindow(), true);
 				dialog.setVisible(true);
 			} catch (IOException e) {

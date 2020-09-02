@@ -19,6 +19,8 @@ import javax.swing.WindowConstants;
 
 import org.jdesktop.swingx.JXTable;
 
+import com.teamunify.i18n.I;
+
 import de.george.g3dit.EditorContext;
 import de.george.g3dit.gui.table.TableUtil;
 import de.george.g3dit.util.AbstractFileWorker;
@@ -66,7 +68,7 @@ public abstract class AbstractTableProgressDialog extends ExtStandardDialog {
 			}
 		});
 
-		Action cancelAction = SwingUtils.createAction("Abbrechen", Icons.getImageIcon(Icons.Select.CANCEL), () -> {
+		Action cancelAction = SwingUtils.createAction(I.tr("Abbrechen"), Icons.getImageIcon(Icons.Select.CANCEL), () -> {
 			if (worker != null) {
 				worker.cancel(true);
 			}

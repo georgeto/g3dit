@@ -55,7 +55,7 @@ public class JsonFileOptionStore extends AbstractConcurrentOptionStore {
 				}
 			} catch (IOException | ClassCastException e) {
 				// Nichts, vielleicht existiert noch keine Config datei
-				logger.warn("Fehler beim Laden der Konfigurationsdatei.", e);
+				logger.warn("Error while loading configuration file.", e);
 			}
 	}
 
@@ -83,7 +83,7 @@ public class JsonFileOptionStore extends AbstractConcurrentOptionStore {
 				Files.write(file.toPath(), buffer.toByteArray());
 				return true;
 			} catch (IOException e) {
-				logger.info("Fehler beim Speichern der Konfigurationsdatei.", e);
+				logger.warn("Error while saving configuration file.", e);
 				return false;
 			}
 		}

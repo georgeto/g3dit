@@ -7,6 +7,8 @@ import java.util.function.Consumer;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 
+import com.teamunify.i18n.I;
+
 import de.george.g3dit.EditorContext;
 import de.george.g3dit.EntityMap;
 import de.george.g3dit.cache.NavCache;
@@ -102,7 +104,7 @@ public class NegZoneStage extends NavCalcStage {
 
 	private class InvalidNegZone extends BaseNegZoneChange {
 		public InvalidNegZone(NegZone negZone) {
-			super(negZone, Severity.Info, String.format("Invalid NegZone with only %d sticks.", negZone.getPointCount()), null);
+			super(negZone, Severity.Info, I.trf("Invalid NegZone with only {0, number} sticks.", negZone.getPointCount()), null);
 		}
 
 		@Override
@@ -115,9 +117,9 @@ public class NegZoneStage extends NavCalcStage {
 		private String zoneGuid;
 
 		public ChangedNavZone(NegZone negZone, String detecedZoneGuid) {
-			super(negZone, Severity.Error, "Detected different containing NavZone.",
-					String.format("Detected %s instead of %s.", detecedZoneGuid == null ? "no NavZone" : detecedZoneGuid,
-							negZone.getZoneGuid() == null ? "no NavZone" : negZone.getZoneGuid()));
+			super(negZone, Severity.Error, I.tr("Detected different containing NavZone."),
+					I.trf("Detected {0} instead of {1}.", detecedZoneGuid == null ? I.tr("no NavZone") : detecedZoneGuid,
+							negZone.getZoneGuid() == null ? I.tr("no NavZone") : negZone.getZoneGuid()));
 			zoneGuid = detecedZoneGuid;
 		}
 
@@ -133,7 +135,7 @@ public class NegZoneStage extends NavCalcStage {
 
 	private class NoNavZone extends BaseNegZoneChange {
 		public NoNavZone(NegZone negZone) {
-			super(negZone, Severity.Warn, "Detected no containing NavZone.", null);
+			super(negZone, Severity.Warn, I.tr("Detected no containing NavZone."), null);
 		}
 
 		@Override
@@ -144,7 +146,7 @@ public class NegZoneStage extends NavCalcStage {
 
 	private class UniRefNegZone extends BaseNegZoneChange {
 		public UniRefNegZone(NegZone negZone, String navZone) {
-			super(negZone, Severity.Error, String.format("NavZone %s referred by NegZone, does not refer to NegZone.", navZone), null);
+			super(negZone, Severity.Error, I.trf("NavZone {0} referred by NegZone, does not refer to NegZone.", navZone), null);
 		}
 
 		@Override
@@ -155,8 +157,8 @@ public class NegZoneStage extends NavCalcStage {
 
 	private class UniRefNavZone extends BaseNegZoneChange {
 		public UniRefNavZone(String refNavZone, NegZone negZone, String realNavZone) {
-			super(negZone, Severity.Error,
-					String.format("NegZone referred by NavZone %s, refers to other NavZone %s.", refNavZone, realNavZone), null);
+			super(negZone, Severity.Error, I.trf("NegZone referred by NavZone {0}, refers to other NavZone {1}.", refNavZone, realNavZone),
+					null);
 		}
 
 		@Override

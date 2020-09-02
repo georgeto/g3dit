@@ -5,6 +5,8 @@ import java.util.List;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 
+import com.teamunify.i18n.I;
+
 import de.george.g3dit.util.Icons;
 import de.george.lrentnode.archive.ArchiveFile;
 import de.george.lrentnode.archive.eCEntity;
@@ -36,11 +38,13 @@ public class TreePopupExtension implements ITreePopupExtension {
 			}
 
 			if (show) {
-				String moveTitle = "'" + markedEntities.get(0) + "' zu SubEntity";
-				if (markedEntities.size() > 1) {
-					moveTitle = markedEntities.size() + " Entities zu SubEntites";
+				String moveTitle;
+				if (markedEntities.size() == 1) {
+					moveTitle = I.trf("'{0}' zu SubEntity von '{1}' machen", markedEntities.get(0), clickedEntity);
+				} else {
+					moveTitle = I.trf("{0, number} Entities zu SubEntites von '{1}' machen", markedEntities.size(), clickedEntity);
 				}
-				JMenuItem miMove = new JMenuItem(moveTitle + " von '" + clickedEntity + "' machen", Icons.getImageIcon(Icons.Arrow.CURVE));
+				JMenuItem miMove = new JMenuItem(moveTitle, Icons.getImageIcon(Icons.Arrow.CURVE));
 				miMove.addActionListener(e -> {
 					for (eCEntity markedEntity : markedEntities) {
 						// TODO: Optional wählbar ob moveWorld oder moveLocal?!
@@ -53,7 +57,7 @@ public class TreePopupExtension implements ITreePopupExtension {
 		}
 
 		// Entity klonen
-		JMenuItem miClone = new JMenuItem("'" + clickedEntity + "' klonen", Icons.getImageIcon(Icons.Action.CLONE));
+		JMenuItem miClone = new JMenuItem(I.trf("'{0}' klonen", clickedEntity), Icons.getImageIcon(Icons.Action.CLONE));
 		miClone.addActionListener(e -> {
 			if (NPCUtil.isNPC(clickedEntity)) {
 				eCEntity cloneNPC = NPCUtil.cloneNPC(clickedEntity);
@@ -67,7 +71,7 @@ public class TreePopupExtension implements ITreePopupExtension {
 		menu.add(miClone);
 
 		if (!NPCUtil.isNPC(clickedEntity) && !clickedEntity.getChilds().isEmpty()) {
-			JMenuItem miCloneChilds = new JMenuItem("'" + clickedEntity + "' und Child-Entities klonen",
+			JMenuItem miCloneChilds = new JMenuItem(I.trf("'{0}' und Child-Entities klonen", clickedEntity),
 					Icons.getImageIcon(Icons.Action.CLONE));
 			miCloneChilds.addActionListener(e -> {
 				EntityUtil.cloneEntityRecursive(clickedEntity).moveToWorldNode(archiveFile.getGraph());
@@ -89,9 +93,9 @@ public class TreePopupExtension implements ITreePopupExtension {
 		}
 
 		if (show) {
-			String markTitle = "'" + clickedEntity + "' markieren";
+			String markTitle = I.trf("'{0}' markieren", clickedEntity);
 			if (elCount > 1) {
-				markTitle = elCount + " Entities markieren";
+				markTitle = I.trf("{0, number} Entities markieren", elCount);
 			}
 			JMenuItem miMark = new JMenuItem(markTitle, Icons.getImageIcon(Icons.Select.SELECT));
 			miMark.addActionListener(e -> tree.setMarkedEntities(selEntities));
@@ -100,9 +104,9 @@ public class TreePopupExtension implements ITreePopupExtension {
 
 		// Entity löschen
 		if (elCount > 1 || clickedEntity != archiveFile.getGraph()) {
-			String title = "'" + clickedEntity + "' löschen";
+			String title = I.trf("'{0}' löschen", clickedEntity);
 			if (elCount > 1) {
-				title = elCount + " Entities löschen";
+				title = I.trf("{0, number} Entities löschen", elCount);
 			}
 			JMenuItem miDelete = new JMenuItem(title, Icons.getImageIcon(Icons.Action.DELETE));
 			miDelete.addActionListener(e -> {

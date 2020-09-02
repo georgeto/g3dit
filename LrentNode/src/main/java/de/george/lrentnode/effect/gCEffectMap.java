@@ -17,7 +17,7 @@ public class gCEffectMap extends GenomeFile {
 	@Override
 	protected void readInternal(G3FileReaderEx reader) throws IOException {
 		if (reader.readUnsignedShort() != 2) {
-			throw new IOException("Version der EffectMap wird nicht unterstützt.");
+			throw new IOException("Unsupported EffectMap version.");
 		}
 		effects = reader.readList(gCEffectCommandSequence.class);
 	}

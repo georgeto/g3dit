@@ -22,6 +22,7 @@ import com.ezware.dialog.task.CommandLink;
 import com.ezware.dialog.task.TaskDialogs;
 import com.google.common.base.Joiner;
 import com.google.common.collect.ImmutableList;
+import com.teamunify.i18n.I;
 
 import de.george.g3dit.Editor;
 import de.george.g3dit.EditorContext;
@@ -217,7 +218,7 @@ public class FileManager {
 					locator.addLocator(new RecursiveFileLocator(rootPath, refreshOnCacheMiss));
 				}
 			} catch (IOException e) {
-				logger.warn("Fehler beim setzen des RootPaths.", e);
+				logger.warn("Error while setting the root path.", e);
 			}
 		}
 
@@ -264,19 +265,20 @@ public class FileManager {
 		if (isInSecondaryDataFolder(file)) {
 			int result;
 			if (moveFromSecondaryToPrimary(file).map(File::exists).orElse(false)) {
-				result = TaskDialogs.choice(ctx.getParentWindow(), "Soll die Datei wirklich gespeichert werden?",
-						"'" + file.getName() + "' befindet sich im sekundären Data-Verzeichnis.\n"
+				result = TaskDialogs.choice(ctx.getParentWindow(), I.tr("Soll die Datei wirklich gespeichert werden?"),
+						I.trf("'{0}' befindet sich im sekundären Data-Verzeichnis.\n"
 								+ "Normalerweise sollten an Dateien in diesem Verzeichnis keine Änderungen vorgenommen werden.\n\n"
 								+ "Im primären Data-Verzeichnis existiert unter dem gleichen relativen Pfad bereits eine Datei.\n\n"
-								+ "Soll sie trotzdem gespeichert werden?",
-						1, new CommandLink("Ja", ""), new CommandLink("Nein", ""));
+								+ "Soll sie trotzdem gespeichert werden?", file.getName()),
+						1, new CommandLink(I.tr("Ja"), ""), new CommandLink(I.tr("Nein"), ""));
 			} else {
-				result = TaskDialogs.choice(ctx.getParentWindow(), "Soll die Datei wirklich gespeichert werden?",
-						"'" + file.getName() + "' befindet sich im sekundären Data-Verzeichnis.\n"
+				result = TaskDialogs.choice(ctx.getParentWindow(), I.tr("Soll die Datei wirklich gespeichert werden?"),
+						I.trf("'{0}' befindet sich im sekundären Data-Verzeichnis.\n"
 								+ "Normalerweise sollten an Dateien in diesem Verzeichnis keine Änderungen vorgenommen werden.\n\n"
-								+ "Soll sie trotzdem gespeichert werden?",
-						1, new CommandLink("Ja", ""), new CommandLink("Nein", ""), new CommandLink("Primäres Data-Verzeichnis",
-								"Unter gleichem relativen Pfad im primären Data-Verzeichnis abspeichern."));
+								+ "Soll sie trotzdem gespeichert werden?", file.getName()),
+						1, new CommandLink(I.tr("Ja"), ""), new CommandLink(I.tr("Nein"), ""),
+						new CommandLink(I.tr("Primäres Data-Verzeichnis"),
+								I.tr("Unter gleichem relativen Pfad im primären Data-Verzeichnis abspeichern.")));
 			}
 
 			return switch (result) {
@@ -301,7 +303,7 @@ public class FileManager {
 			}
 			return true;
 		} catch (Exception e) {
-			logger.warn("Dateimanager konnte nicht geöffnet werden: ", e);
+			logger.warn("Failed to open file manager.", e);
 			return false;
 		}
 	}

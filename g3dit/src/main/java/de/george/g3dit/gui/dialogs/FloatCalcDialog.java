@@ -7,6 +7,8 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 
+import com.teamunify.i18n.I;
+
 import de.george.g3utils.gui.SwingUtils;
 import de.george.g3utils.util.Converter;
 import de.george.g3utils.util.Misc;
@@ -21,12 +23,12 @@ public class FloatCalcDialog extends JDialog {
 		super(owner);
 		setType(Type.UTILITY);
 		setResizable(false);
-		setTitle("Float <-> Hex");
+		setTitle(I.tr("Float <-> Hex"));
 		setSize(230, 130);
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		getContentPane().setLayout(null);
 
-		JLabel lblNewLabel = new JLabel("Float");
+		JLabel lblNewLabel = new JLabel(I.tr("Float"));
 		lblNewLabel.setBounds(10, 11, 46, 14);
 		getContentPane().add(lblNewLabel);
 
@@ -40,7 +42,7 @@ public class FloatCalcDialog extends JDialog {
 		lblNewLabel_1.setBounds(102, 29, 14, 14);
 		getContentPane().add(lblNewLabel_1);
 
-		JLabel lblNewLabel_2 = new JLabel("Hex");
+		JLabel lblNewLabel_2 = new JLabel(I.tr("Hex"));
 		lblNewLabel_2.setBounds(120, 11, 46, 14);
 		getContentPane().add(lblNewLabel_2);
 
@@ -56,7 +58,7 @@ public class FloatCalcDialog extends JDialog {
 		getContentPane().add(tfHexIn);
 		tfHexIn.getDocument().addDocumentListener(SwingUtils.createDocumentListener(this::hexToFloat));
 
-		JLabel lblFloat = new JLabel("Float");
+		JLabel lblFloat = new JLabel(I.tr("Float"));
 		lblFloat.setBounds(120, 57, 46, 14);
 		getContentPane().add(lblFloat);
 
@@ -70,7 +72,7 @@ public class FloatCalcDialog extends JDialog {
 		tfFloatOut.setBounds(120, 72, 86, 20);
 		getContentPane().add(tfFloatOut);
 
-		JLabel lblHex = new JLabel("Hex");
+		JLabel lblHex = new JLabel(I.tr("Hex"));
 		lblHex.setBounds(10, 57, 46, 14);
 		getContentPane().add(lblHex);
 	}

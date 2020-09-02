@@ -30,7 +30,7 @@ public final class XimgLoader implements AssetLoader {
 			@SuppressWarnings("resource")
 			G3FileReader reader = new G3FileReaderVirtual(is);
 			if (reader.getSize() < 87 || !reader.read(8).equalsIgnoreCase("47454E4F4D464C45")) {
-				throw new IOException("Keine ximg Datei");
+				throw new IOException("Not a ximg file!");
 			}
 
 			reader.skip(2);
@@ -92,7 +92,7 @@ public final class XimgLoader implements AssetLoader {
 				format = Format.DXT5;
 				imageStart = imageEnd - width * height;
 			} else {
-				throw new IOException("Unbekannte Kompression");
+				throw new IOException("Unsupported compression: " + typeString);
 			}
 
 			reader.seek(imageStart);

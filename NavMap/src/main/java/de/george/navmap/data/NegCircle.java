@@ -5,6 +5,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.vividsolutions.jts.algorithm.ConvexHull;
@@ -27,6 +30,8 @@ import de.george.lrentnode.enums.G3Enums.gENavObstacleType;
 import de.george.navmap.util.GeoUtil;
 
 public class NegCircle implements G3Serializable {
+	private static final Logger logger = LoggerFactory.getLogger(NegCircle.class);
+
 	public List<bCVector> circleOffsets;
 	public List<Float> circleRadius;
 	public List<String> zoneGuids; // Enthält auch NavPaths...
@@ -108,7 +113,7 @@ public class NegCircle implements G3Serializable {
 			Coordinate[] schnitt2 = circle2.intersection(inter2).getCoordinates();
 
 			if (schnitt1.length != 2 || schnitt2.length != 2) {
-				System.out.println("Fehlerhafter NegCircle: " + circleGuid);
+				logger.warn("Malformed NegCircle: {}", circleGuid);
 				return null;
 			}
 

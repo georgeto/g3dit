@@ -14,6 +14,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 import javax.swing.KeyStroke;
 
+import com.teamunify.i18n.I;
 import org.jdesktop.swingx.JXTable;
 import org.jdesktop.swingx.table.ColumnFactory;
 
@@ -120,7 +121,7 @@ public class MapAndTableComponent<T extends MapItem> {
 					}
 				});
 
-		cbOnlySelected = new JCheckBox("Nur auf Karte Ausgewählte anzeigen");
+		cbOnlySelected = new JCheckBox(I.tr("Nur auf Karte Ausgewählte anzeigen"));
 		onlySelectedMatcher.init();
 	}
 

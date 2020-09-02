@@ -16,6 +16,8 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.tree.TreeSelectionModel;
 
+import com.teamunify.i18n.I;
+
 import de.george.g3dit.config.ConfigFiles;
 import de.george.g3dit.config.NegCirclePrototypeConfigFile;
 import de.george.g3dit.entitytree.EntityTree;
@@ -57,28 +59,28 @@ public class NegCircleView extends JPanel implements ArchiveView {
 
 		setLayout(new MigLayout("fill", "[]30[][grow]push[]", "[][][][]10[grow]"));
 
-		JLabel lblModify = SwingUtils.createBoldLabel("Erstellen & Entfernen");
+		JLabel lblModify = SwingUtils.createBoldLabel(I.tr("Erstellen & Entfernen"));
 		add(lblModify, "cell 0 0");
 
 		lblEntitiesSel = new JLabel();
 		this.add(lblEntitiesSel, "cell 0 1, gapleft 7");
 
-		btnCreateCircles = new JButton("NegCircles erstellen");
+		btnCreateCircles = new JButton(I.tr("NegCircles erstellen"));
 		btnCreateCircles.setEnabled(false);
 		this.add(btnCreateCircles, "cell 0 2, gapleft 7");
 
-		btnRemoveCircles = new JButton("NegCircles entfernen");
+		btnRemoveCircles = new JButton(I.tr("NegCircles entfernen"));
 		btnRemoveCircles.setEnabled(false);
 		this.add(btnRemoveCircles, "cell 0 3, gapleft 7");
 
-		JButton btnRemoveCirclesManual = new JButton("Manuell entfernen (Guids angeben)");
+		JButton btnRemoveCirclesManual = new JButton(I.tr("Manuell entfernen (Guids angeben)"));
 		btnRemoveCirclesManual.setEnabled(true);
 		this.add(btnRemoveCirclesManual, "cell 1 3, gapleft 7");
 
-		cbPrintPosition = new JCheckBox("Position", true);
+		cbPrintPosition = new JCheckBox(I.tr("Position"), true);
 		this.add(cbPrintPosition, "cell 4 3, split 2");
 
-		cbPrintGuid = new JCheckBox("Guid", false);
+		cbPrintGuid = new JCheckBox(I.tr("Guid"), false);
 		this.add(cbPrintGuid, "cell 4 3");
 
 		taLog = new JTextAreaExt(true);
@@ -125,7 +127,7 @@ public class NegCircleView extends JPanel implements ArchiveView {
 		EntityTree entityTree = ctx.getEntityTree();
 		btnRemoveCircles.setEnabled(entityTree.getSelectedEntityCount() > 0);
 		btnCreateCircles.setEnabled(entityTree.getSelectedEntityCount() > 0);
-		lblEntitiesSel.setText("Ausgewählt: " + entityTree.getSelectedEntityCount());
+		lblEntitiesSel.setText(I.trf("Ausgewählt: {0}", entityTree.getSelectedEntityCount()));
 	}
 
 	@Override
@@ -153,19 +155,19 @@ public class NegCircleView extends JPanel implements ArchiveView {
 
 		NavCalc navCalc = ctx.getNavMapManager().getNavCalc(false);
 		if (navCalc == null) {
-			log("NavCalc konnte nicht erstellt werden.");
+			log(I.tr("NavCalc konnte nicht erstellt werden."));
 			return;
 		}
 
 		for (eCEntity entity : ctx.getEntityTree().getSelectedEntities()) {
 			logEntity(entity);
 			if (navMap.hasNegCircle(entity.getGuid())) {
-				log("NegCircle Eintrag existiert bereits.\n");
+				log(I.tr("NegCircle Eintrag existiert bereits.") + "\n");
 				continue;
 			}
 
 			if (!calc.hasNegCirclePrototype(entity)) {
-				log("Keinen NegCircle-Prototypen für diese Entity gefunden.\n");
+				log(I.tr("Keinen NegCircle-Prototypen für diese Entity gefunden.") + "\n");
 				continue;
 			}
 
@@ -173,7 +175,7 @@ public class NegCircleView extends JPanel implements ArchiveView {
 			try {
 				navMap.addNegCircle(circle);
 			} catch (Exception e) {
-				log("Kritischer Fehler! Speichern der NavMap NICHT empfohlen: " + e.getMessage() + "\n");
+				log(I.trf("Kritischer Fehler! Speichern der NavMap NICHT empfohlen: {0}", e.getMessage()) + "\n");
 				continue;
 			}
 
@@ -182,7 +184,7 @@ public class NegCircleView extends JPanel implements ArchiveView {
 			}
 
 			if (circle.zoneGuids.size() == 0) {
-				log("Erstellt ohne NavZone!");
+				log(I.tr("Erstellt ohne NavZone!"));
 			}
 
 			log("");
@@ -204,17 +206,17 @@ public class NegCircleView extends JPanel implements ArchiveView {
 
 	private void removeNegCircle(NavMap navMap, String guid) {
 		if (!navMap.hasNegCircle(guid)) {
-			log("Es existiert kein NegCircle Eintrag.\n");
+			log(I.tr("Es existiert kein NegCircle Eintrag.") + "\n");
 			return;
 		}
 
 		try {
 			navMap.removeNegCircle(guid);
 		} catch (IllegalStateException e) {
-			log("Kritischer Fehler! Speichern der NavMap NICHT empfohlen: " + e.getMessage() + "\n");
+			log(I.trf("Kritischer Fehler! Speichern der NavMap NICHT empfohlen: {0}", e.getMessage()) + "\n");
 			return;
 		}
-		log("Entfernt!\n");
+		log(I.tr("Entfernt!") + "\n");
 	}
 
 	private void handleRemoveCirclesManual() {
@@ -228,7 +230,7 @@ public class NegCircleView extends JPanel implements ArchiveView {
 		JScrollPane scrollPane = new JScrollPane(textArea);
 		scrollPane.setPreferredSize(new Dimension(500, 500));
 
-		int result = JOptionPane.showConfirmDialog(null, scrollPane, "Guid's der NegCircles eingeben", JOptionPane.OK_CANCEL_OPTION,
+		int result = JOptionPane.showConfirmDialog(null, scrollPane, I.tr("Guids der NegCircles eingeben"), JOptionPane.OK_CANCEL_OPTION,
 				JOptionPane.PLAIN_MESSAGE);
 		if (result == JOptionPane.OK_OPTION) {
 			String[] lines = textArea.getText().split("\n");
@@ -245,7 +247,7 @@ public class NegCircleView extends JPanel implements ArchiveView {
 	private NavMap getNavMap() {
 		NavMap navMap = ctx.getNavMapManager().getNavMap(false);
 		if (navMap == null) {
-			log("NavMap konnte nicht geladen werden.");
+			log(I.tr("NavMap konnte nicht geladen werden."));
 			return null;
 		}
 		return navMap;
@@ -257,15 +259,15 @@ public class NegCircleView extends JPanel implements ArchiveView {
 
 		@Override
 		public void guiInit(JPanel extensionPanel, ActionListener extActionListener) {
-			cbHasPrototpye = new JCheckBox("Prototyp vorhanden");
+			cbHasPrototpye = new JCheckBox(I.tr("Prototyp vorhanden"));
 			cbHasPrototpye.addActionListener(extActionListener);
 			extensionPanel.add(cbHasPrototpye);
 
-			cbNoNegCircrle = new JCheckBox("NegCircle fehlt");
+			cbNoNegCircrle = new JCheckBox(I.tr("NegCircle fehlt"));
 			cbNoNegCircrle.addActionListener(extActionListener);
 			extensionPanel.add(cbNoNegCircrle);
 
-			cbHasNegCircrle = new JCheckBox("NegCircle existiert");
+			cbHasNegCircrle = new JCheckBox(I.tr("NegCircle existiert"));
 			cbHasNegCircrle.addActionListener(extActionListener);
 			extensionPanel.add(cbHasNegCircrle);
 		}
@@ -276,7 +278,7 @@ public class NegCircleView extends JPanel implements ArchiveView {
 			if (cbNoNegCircrle.isSelected() || cbHasNegCircrle.isSelected()) {
 				NavMap navMap = ctx.getNavMapManager().getNavMap(false);
 				if (navMap == null) {
-					log("NavMap konnte nicht geladen werden.");
+					log(I.tr("NavMap konnte nicht geladen werden."));
 				}
 				if (cbNoNegCircrle.isSelected()) {
 					show = navMap != null && !navMap.hasNegCircle(entity.getGuid());

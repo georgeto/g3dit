@@ -10,6 +10,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import com.google.common.base.Predicates;
+import com.teamunify.i18n.I;
 
 import de.george.g3dit.util.FileManager;
 import de.george.g3utils.structure.bCVector;
@@ -30,12 +31,12 @@ public class ScriptListUnusedCollisionMesh implements IScript {
 
 	@Override
 	public String getTitle() {
-		return "Nicht verwendete oder fehlende CollisionMeshes auflisten";
+		return I.tr("Nicht verwendete oder fehlende CollisionMeshes auflisten");
 	}
 
 	@Override
 	public String getDescription() {
-		return "Erstellt eine Liste aller nicht verwendeten oder fehlende CollisionMeshes.";
+		return I.tr("Erstellt eine Liste aller nicht verwendeten oder fehlende CollisionMeshes.");
 	}
 
 	@Override
@@ -105,13 +106,13 @@ public class ScriptListUnusedCollisionMesh implements IScript {
 			containerConsumer.accept(aFile.getReferenceHeader());
 		}
 
-		env.log("=== Unused collision meshes ===");
+		env.log("=== " + I.tr("Unused collision meshes") + " ===");
 		StreamEx.of(unseenMeshes).map(meshes::get).map(File::getName).sorted().forEach(env::log);
 
-		env.log("\n\n=== Missing collision meshes ===");
+		env.log("\n\n=== " + I.tr("Missing collision meshes") + " ===");
 		missingMeshes.forEach(env::log);
 
-		env.log("\n\n=== Used collision meshes ===");
+		env.log("\n\n=== " + I.tr("Used collision meshes") + " ===");
 		StreamEx.ofValues(meshes, Predicates.not(unseenMeshes::contains)).map(File::getName).sorted().forEach(env::log);
 
 		return true;

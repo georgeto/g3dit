@@ -15,6 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.ezware.dialog.task.TaskDialogs;
+import com.teamunify.i18n.I;
 
 import de.george.g3dit.EditorContext;
 import de.george.g3dit.util.AbstractDialogFileWorker;
@@ -64,7 +65,7 @@ public class LightCache extends AbstractCache<LightCache> {
 					Object[] data = loadIntern(get());
 					lights = (Set<LightSource>) data[1];
 				} catch (Exception e) {
-					logger.info("LightCache Ladefehler: {}", e.getMessage());
+					logger.info("Failed to load LightCache: {}", e.getMessage());
 				} finally {
 					notifyCacheUpdated();
 				}
@@ -81,8 +82,8 @@ public class LightCache extends AbstractCache<LightCache> {
 	private class CreateLightCacheWorker extends AbstractDialogFileWorker<Set<LightSource>> {
 
 		public CreateLightCacheWorker(Callable<List<File>> fileProvider) {
-			super(fileProvider, null, "Erstelle LightCache", ctx.getParentWindow());
-			statusFormat = "%d Lichtquellen gefunden";
+			super(fileProvider, null, I.tr("Erstelle LightCache"), ctx.getParentWindow());
+			statusFormat = I.tr("{0, number} Lichtquellen gefunden");
 		}
 
 		@Override
@@ -116,7 +117,7 @@ public class LightCache extends AbstractCache<LightCache> {
 				publish(lightsMap.size());
 			}
 
-			statusFormat = lightsMap.size() + " Lichtquellen gefunden. Sammle weitere Daten...";
+			statusFormat = I.trf("{0, number} Lichtquellen gefunden. Sammle weitere Daten...", lightsMap.size());
 
 			// Load Intensities
 			filesDone.set(0);

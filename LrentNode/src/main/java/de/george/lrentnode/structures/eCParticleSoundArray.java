@@ -18,7 +18,7 @@ public class eCParticleSoundArray implements G3Serializable {
 			reader.warn(logger, "Detected unknown version. Expected: {}. Found: {}. Skipping content.", 1, version);
 			reader.skip(size);
 		} else if (size > 0) {
-			throw new UnsupportedOperationException("Nicht leeres eCParticleSoundArray wird nicht unterstützt.");
+			throw new UnsupportedOperationException("Non-empty eCParticleSoundArray is not supported.");
 		}
 	}
 

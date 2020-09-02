@@ -20,6 +20,7 @@ import javax.swing.border.EtchedBorder;
 
 import com.ezware.dialog.task.TaskDialogs;
 import com.jidesoft.dialog.ButtonPanel;
+import com.teamunify.i18n.I;
 
 import ca.odell.glazedlists.EventList;
 import ca.odell.glazedlists.GlazedLists;
@@ -55,7 +56,7 @@ public class EditVegetationMeshesDialog extends ExtStandardDialog {
 	private UndoableTextField tfWindStrength;
 
 	public EditVegetationMeshesDialog(Window owner, EditorAbstractFileTab ctx, eCVegetation_PS vegetationPS) {
-		super(owner, "Vegetation-Meshes bearbeiten", true);
+		super(owner, I.tr("Vegetation-Meshes bearbeiten"), true);
 		this.ctx = ctx;
 		setType(Type.UTILITY);
 		setSize(800, 500);
@@ -77,30 +78,30 @@ public class EditVegetationMeshesDialog extends ExtStandardDialog {
 		listMeshes.addListSelectionListener(e -> meshSelected());
 		mainPanel.add(new JScrollPane(listMeshes), "dock west, height 100%, width 250:300:350, grow");
 
-		mainPanel.add(new JLabel("MeshFilePath"), "spanx 4, wrap");
+		mainPanel.add(new JLabel(I.tr("MeshFilePath")), "spanx 4, wrap");
 		tfMeshFilePath = new JTextField();
 		tfMeshFilePath.setEditable(false);
 		mainPanel.add(tfMeshFilePath, "spanx 4, growx, wrap");
 
-		mainPanel.add(new JLabel("MeshID"), "wrap");
+		mainPanel.add(new JLabel(I.tr("MeshID")), "wrap");
 		tfMeshID = new JTextField();
 		tfMeshID.setEditable(false);
 		mainPanel.add(tfMeshID, "wrap");
 
-		mainPanel.add(new JLabel("DiffuseTexture"), "spanx 4, wrap");
+		mainPanel.add(new JLabel(I.tr("DiffuseTexture")), "spanx 4, wrap");
 		tfDiffuseTexture = new JTextField();
 		tfDiffuseTexture.setEditable(false);
 		mainPanel.add(tfDiffuseTexture, "spanx 4, growx, wrap");
 
-		mainPanel.add(new JLabel("Anzahl der Vorkommen"), "spanx 4, wrap");
+		mainPanel.add(new JLabel(I.tr("Anzahl der Vorkommen")), "spanx 4, wrap");
 		tfUseCount = new JTextField();
 		tfUseCount.setEditable(false);
 		mainPanel.add(tfUseCount, "wrap");
 
-		mainPanel.add(new JLabel("Vertices"));
-		mainPanel.add(new JLabel("Normals"));
-		mainPanel.add(new JLabel("UVs"));
-		mainPanel.add(new JLabel("Indices"), "wrap");
+		mainPanel.add(new JLabel(I.tr("Vertices")));
+		mainPanel.add(new JLabel(I.tr("Normals")));
+		mainPanel.add(new JLabel(I.tr("UVs")));
+		mainPanel.add(new JLabel(I.tr("Indices")), "wrap");
 		tfVertices = new JTextField();
 		tfVertices.setEditable(false);
 		tfNormals = new JTextField();
@@ -114,11 +115,11 @@ public class EditVegetationMeshesDialog extends ExtStandardDialog {
 		mainPanel.add(tfUVs, "sgx stats");
 		mainPanel.add(tfIndices, "sgx stats, wrap");
 
-		mainPanel.add(new JLabel("WindStrength"), "wrap");
+		mainPanel.add(new JLabel(I.tr("WindStrength")), "wrap");
 		tfWindStrength = SwingUtils.createUndoTF();
 		mainPanel.add(tfWindStrength, "");
 
-		Action saveAction = SwingUtils.createAction("Speichern", Icons.getImageIcon(Icons.IO.SAVE), () -> {
+		Action saveAction = SwingUtils.createAction(I.tr("Speichern"), Icons.getImageIcon(Icons.IO.SAVE), () -> {
 			PropertySync.wrap(listMeshes.getSelectedValue()).writeFloat(tfWindStrength, CD.eCVegetation_Mesh.WindStrength);
 			tfWindStrength.setText(Misc.formatFloat(listMeshes.getSelectedValue().property(CD.eCVegetation_Mesh.WindStrength).getFloat()),
 					true);
@@ -155,8 +156,8 @@ public class EditVegetationMeshesDialog extends ExtStandardDialog {
 		ButtonPanel buttonPanel = newButtonPanel();
 		buttonPanel.setAlignment(SwingConstants.LEFT);
 
-		Action importAction = SwingUtils.createAction("Meshes importieren", Icons.getImageIcon(Icons.IO.IMPORT), () -> {
-			File file = FileDialogWrapper.openFile("Meshes aus anderer VegetationRoot importieren", EditVegetationMeshesDialog.this,
+		Action importAction = SwingUtils.createAction(I.tr("Meshes importieren"), Icons.getImageIcon(Icons.IO.IMPORT), () -> {
+			File file = FileDialogWrapper.openFile(I.tr("Meshes aus anderer VegetationRoot importieren"), EditVegetationMeshesDialog.this,
 					FileDialogWrapper.ARCHIVE_FILTER);
 			if (file != null) {
 				try {
@@ -167,7 +168,7 @@ public class EditVegetationMeshesDialog extends ExtStandardDialog {
 						Collection<eCVegetation_Mesh> meshes = vegetationRoot.get().<eCVegetation_PS>getClass(CD.eCVegetation_PS.class)
 								.getMeshClasses();
 						ListSelectDialog<eCVegetation_Mesh> dialog = new ListSelectDialog<>(EditVegetationMeshesDialog.this,
-								"Meshes aus anderer VegetationRoot importieren", AbstractSelectDialog.SELECTION_MULTIPLE, meshes);
+								I.tr("Meshes aus anderer VegetationRoot importieren"), AbstractSelectDialog.SELECTION_MULTIPLE, meshes);
 
 						if (dialog.openAndWasSuccessful()) {
 							List<eCVegetation_Mesh> selectedMeshes = dialog.getSelectedEntries();
@@ -178,7 +179,8 @@ public class EditVegetationMeshesDialog extends ExtStandardDialog {
 							ctx.fileChanged();
 						}
 					} else {
-						TaskDialogs.inform(EditVegetationMeshesDialog.this, "", "'" + file.getName() + "' enthält keine VegetationRoot.");
+						TaskDialogs.inform(EditVegetationMeshesDialog.this, "",
+								I.trf("'{0}' enthält keine VegetationRoot.", file.getName()));
 					}
 				} catch (Exception ex) {
 					TaskDialogs.showException(ex);

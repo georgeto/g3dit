@@ -28,8 +28,8 @@ public class NavObject implements G3Serializable {
 			Integer curIndex = indexes.get(i);
 
 			if (index == curIndex) {
-				logger.warn("{} {}: Einfügen von Index {} fehlgeschlagen, da er bereits eingetragen ist.",
-						!isNavPath ? "NavZone" : "NavPath", guid, index);
+				logger.warn("{} {}: Insertion of index {} failed, since it is already registered.", !isNavPath ? "NavZone" : "NavPath",
+						guid, index);
 			}
 
 			if (curIndex > index) {
@@ -42,8 +42,7 @@ public class NavObject implements G3Serializable {
 
 	public void removeIndex(Integer index) {
 		if (!indexes.remove(index)) {
-			logger.warn("{} {}: Löschen von Index {} fehlgeschlagen, da er nicht eingetragen ist.", !isNavPath ? "NavZone" : "NavPath",
-					guid, index);
+			logger.warn("{} {}: Removal of index {} failed, since it is not registered.", !isNavPath ? "NavZone" : "NavPath", guid, index);
 		}
 	}
 

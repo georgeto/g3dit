@@ -7,6 +7,8 @@ import org.netbeans.validation.api.Problems;
 import org.netbeans.validation.api.Severity;
 import org.netbeans.validation.api.ui.ValidationGroup;
 
+import com.teamunify.i18n.I;
+
 import de.george.g3dit.EditorContext;
 import de.george.g3dit.cache.Caches;
 import de.george.g3dit.cache.TemplateCache;
@@ -37,8 +39,11 @@ public class ChangeTimeValidator extends AbstractValidator<String> {
 					long ourChangeTime = Long.parseLong(model);
 					long creatorChangeTime = entry.get().getChangeTime();
 					if (ourChangeTime != creatorChangeTime) {
-						problems.append(String.format("ChangeTime-Wert %s als in referenzierter Template (%d)",
-								ourChangeTime < creatorChangeTime ? "kleiner" : "größer", creatorChangeTime), Severity.WARNING);
+						problems.append(
+								ourChangeTime < creatorChangeTime
+										? I.trf("ChangeTime-Wert kleiner als in referenzierter Template ({0, number})", creatorChangeTime)
+										: I.trf("ChangeTime-Wert größer als in referenzierter Template ({0, number})", creatorChangeTime),
+								Severity.WARNING);
 					}
 				} catch (NumberFormatException e) {
 					// Ignore

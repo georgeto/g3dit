@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Set;
 
 import com.google.common.base.Joiner;
+import com.teamunify.i18n.I;
 
 import de.george.lrentnode.archive.ArchiveFile;
 import de.george.lrentnode.archive.eCEntity;
@@ -21,12 +22,12 @@ public class ScriptSpotNonExistentRoutineGuids implements IScript {
 
 	@Override
 	public String getTitle() {
-		return "Routinen mit nicht existenten Guids ermitteln";
+		return I.tr("Routinen mit nicht existenten Guids ermitteln");
 	}
 
 	@Override
 	public String getDescription() {
-		return "Überprüft die Routinen aller Entities auf nicht existenten Guids.";
+		return I.tr("Überprüft die Routinen aller Entities auf nicht existenten Guids.");
 	}
 
 	@Override
@@ -75,15 +76,16 @@ public class ScriptSpotNonExistentRoutineGuids implements IScript {
 			if (index != -1) {
 				if (!workingPoint.equals(workingPoints.get(index)) || !relaxingPoint.equals(relaxingPoints.get(index))
 						|| !sleepingPoint.equals(sleepingPoints.get(index))) {
-					messages.add("Guids der Startroutine '" + routineName + "' unterscheiden sich von denen des Routinelisteneintrages.");
-					routineNames.add(0, routineName + " (Startroutine)");
+					messages.add(
+							I.trf("Guids der Startroutine '{0}' unterscheiden sich von denen des Routinelisteneintrages.", routineName));
+					routineNames.add(0, I.trf("{0} (Startroutine)", routineName));
 					workingPoints.add(0, workingPoint);
 					relaxingPoints.add(0, relaxingPoint);
 					sleepingPoints.add(0, sleepingPoint);
 				}
 			} else {
-				messages.add("Startroutine '" + routineName + "' ist nicht in der Routinenliste enthalten.");
-				routineNames.add(0, routineName + " (Startroutine)");
+				messages.add(I.trf("Startroutine '{0}' ist nicht in der Routinenliste enthalten.", routineName));
+				routineNames.add(0, I.trf("{0} (Startroutine)", routineName));
 				workingPoints.add(0, workingPoint);
 				relaxingPoints.add(0, relaxingPoint);
 				sleepingPoints.add(0, sleepingPoint);

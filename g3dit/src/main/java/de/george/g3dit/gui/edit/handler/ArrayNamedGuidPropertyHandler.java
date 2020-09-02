@@ -5,6 +5,7 @@ import java.util.Arrays;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
+import com.teamunify.i18n.I;
 import org.netbeans.validation.api.AbstractValidator;
 import org.netbeans.validation.api.Problems;
 import org.netbeans.validation.api.Validator;
@@ -35,8 +36,8 @@ public class ArrayNamedGuidPropertyHandler extends TitledPropertyHandler<bTObjAr
 
 	@Override
 	protected void addValueComponent(JPanel content) {
-		TableColumnDef column = TableColumnDef.withName("Guid").size(700).editable(true).cellRenderer(buildTableReditor(false))
-				.cellEditor(buildTableReditor(true)).b();
+		TableColumnDef column = TableColumnDef.withName("Guid").displayName(I.tr("Guid")).size(700).editable(true)
+				.cellRenderer(buildTableReditor(false)).cellEditor(buildTableReditor(true)).b();
 
 		table = TableUtil.createTable(GlazedLists.eventList(null), eCEntityProxy.class, column);
 		table.table.setTableHeader(null);

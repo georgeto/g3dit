@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 
 import com.ezware.dialog.task.TaskDialogs;
 import com.jidesoft.dialog.ButtonPanel;
+import com.teamunify.i18n.I;
 
 import de.george.g3dit.gui.theme.LayoutUtils;
 import de.george.g3dit.util.Icons;
@@ -41,7 +42,7 @@ public class EnterGuidDialog extends ExtStandardDialog {
 		panel.add(gfGuid, "grow");
 
 		JButton btnRandomGuid = new JButton(Icons.getImageIcon(Icons.Data.COUNTER));
-		btnRandomGuid.setToolTipText("Zufällige Guid generieren");
+		btnRandomGuid.setToolTipText(I.tr("Zufällige Guid generieren"));
 		btnRandomGuid.addActionListener(a -> gfGuid.setText(GuidUtil.randomGUID(), true));
 		panel.add(btnRandomGuid, LayoutUtils.sqrBtn());
 
@@ -55,7 +56,7 @@ public class EnterGuidDialog extends ExtStandardDialog {
 		Action action = SwingUtils.createAction(actionTitle, () -> {
 			String guid = GuidUtil.parseGuid(gfGuid.getText());
 			if (guid == null) {
-				TaskDialogs.error(EnterGuidDialog.this, "", "Guid ist ungültig.");
+				TaskDialogs.error(EnterGuidDialog.this, "", I.tr("Guid ist ungültig."));
 				return;
 			}
 

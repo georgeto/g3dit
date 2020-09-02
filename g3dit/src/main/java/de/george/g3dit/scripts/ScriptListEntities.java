@@ -7,6 +7,7 @@ import com.fasterxml.jackson.core.JsonEncoding;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.google.common.base.Strings;
+import com.teamunify.i18n.I;
 
 import de.george.g3dit.settings.BooleanOptionHandler;
 import de.george.g3dit.settings.LambdaOption;
@@ -23,22 +24,23 @@ import de.george.lrentnode.util.EntityUtil;
 
 public class ScriptListEntities implements IScript {
 	private static final Option<Boolean> ONLY_NAMED = new LambdaOption<>(true,
-			(parent) -> new BooleanOptionHandler(parent, "Nur benannte Entities auflisten"), "ScriptListEntities.ONLY_NAMED",
-			"Nur benannte Entities exportieren");
+			(parent) -> new BooleanOptionHandler(parent, I.tr("Nur benannte Entities auflisten")), "ScriptListEntities.ONLY_NAMED",
+			I.tr("Nur benannte Entities exportieren"));
 
 	@Override
 	public String getTitle() {
-		return "Entities auflisten";
+		return I.tr("Entities auflisten");
 	}
 
 	@Override
 	public String getDescription() {
-		return "Erstellt eine Liste aller Entities.";
+		return I.tr("Erstellt eine Liste aller Entities.");
 	}
 
 	@Override
 	public boolean execute(IScriptEnvironment env) {
-		File saveFile = FileDialogWrapper.saveFile("Auflistung speichern unter...", env.getParentWindow(), FileDialogWrapper.JSON_FILTER);
+		File saveFile = FileDialogWrapper.saveFile(I.tr("Auflistung speichern unter..."), env.getParentWindow(),
+				FileDialogWrapper.JSON_FILTER);
 		if (saveFile == null) {
 			return false;
 		}
@@ -88,7 +90,7 @@ public class ScriptListEntities implements IScript {
 			generator.writeEndArray();
 			generator.close();
 		} catch (IOException e) {
-			env.log("Fehler beim Schreiben der Datei:" + e.getMessage());
+			env.log(I.trf("Fehler beim Schreiben der Datei: {0}", e.getMessage()));
 			return false;
 		}
 		return true;

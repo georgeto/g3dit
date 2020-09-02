@@ -8,6 +8,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import com.teamunify.i18n.I;
+
 import de.george.g3dit.util.FileDialogWrapper;
 import de.george.g3utils.gui.SwingUtils;
 import de.george.g3utils.util.IOUtils;
@@ -31,9 +33,8 @@ public class AliasFolderPathOptionHandler extends AbstractOptionHandler<String> 
 		JPanel content = super.initContent();
 
 		// Titel
-		content.add(new JLabel(title + " (Alias:"), "split 3");
+		content.add(new JLabel(title + " (" + I.tr("Alias") + ":"), "split 3");
 		tfPathAlias = SwingUtils.createNoBorderUndoTF();
-		tfPathAlias.setBorder(null);
 		content.add(tfPathAlias, "grow, width 50:50:150, height 15!");
 		content.add(new JLabel(")"), "wrap");
 
@@ -41,7 +42,7 @@ public class AliasFolderPathOptionHandler extends AbstractOptionHandler<String> 
 		tfPath = SwingUtils.createUndoTF();
 		content.add(tfPath, "grow");
 
-		JButton btnPath = new JButton("...");
+		JButton btnPath = new JButton(I.tr("..."));
 		btnPath.addActionListener(e -> {
 			File file = FileDialogWrapper.chooseDirectory(chooseFolderDialogTitle, getParent());
 			if (file != null) {

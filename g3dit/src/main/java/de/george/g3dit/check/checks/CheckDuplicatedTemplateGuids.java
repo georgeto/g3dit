@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 
 import com.google.common.collect.SortedSetMultimap;
 import com.google.common.collect.TreeMultimap;
+import com.teamunify.i18n.I;
 
 import de.george.g3dit.check.EntityDescriptor;
 import de.george.g3dit.check.FileDescriptor;
@@ -25,7 +26,7 @@ public class CheckDuplicatedTemplateGuids extends AbstractEntityCheck {
 	private SortedSetMultimap<String, FileDescriptor> refGuidMap = TreeMultimap.create();
 
 	public CheckDuplicatedTemplateGuids() {
-		super("Uneindeutige Template-Guids ermitteln", "Überprüft alle Templates nach mehrfach vorkommenden Guids.", 1, 0);
+		super(I.tr("Uneindeutige Template-Guids ermitteln"), I.tr("Überprüft alle Templates nach mehrfach vorkommenden Guids."), 1, 0);
 	}
 
 	@Override
@@ -45,14 +46,14 @@ public class CheckDuplicatedTemplateGuids extends AbstractEntityCheck {
 	@Override
 	public void reportProblems(ProblemConsumer problemConsumer) {
 		itemGuidMap.asMap().entrySet().stream().filter(e -> e.getValue().size() > 1)
-				.forEach(e -> reportDuplicatedGuid(problemConsumer, "Item", e.getKey(), e.getValue()));
+				.forEach(e -> reportDuplicatedGuid(problemConsumer, I.tr("Item"), e.getKey(), e.getValue()));
 
 		refGuidMap.asMap().entrySet().stream().filter(e -> e.getValue().size() > 1)
-				.forEach(e -> reportDuplicatedGuid(problemConsumer, "Reference", e.getKey(), e.getValue()));
+				.forEach(e -> reportDuplicatedGuid(problemConsumer, I.tr("Reference"), e.getKey(), e.getValue()));
 	}
 
 	protected void reportDuplicatedGuid(ProblemConsumer problemConsumer, String guidType, String guid, Collection<FileDescriptor> files) {
-		String message = "Mehrfach vorkommende " + guidType + "-Guid: " + guid;
+		String message = I.trf("Mehrfach vorkommende {0}-Guid: {1}", guidType, guid);
 		String details = files.stream().map(f -> a(f.getPath().getName()).withHref(UriUtil.encodeFile(f)).render())
 				.collect(Collectors.joining("<br>"));
 

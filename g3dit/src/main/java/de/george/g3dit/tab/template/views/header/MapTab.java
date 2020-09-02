@@ -4,6 +4,8 @@ import org.jdesktop.swingx.JXTable;
 import org.jdesktop.swingx.renderer.CheckBoxProvider;
 import org.jdesktop.swingx.renderer.DefaultTableRenderer;
 
+import com.teamunify.i18n.I;
+
 import de.george.g3dit.gui.edit.PropertyPanel;
 import de.george.g3dit.gui.editor.LambdaConvertEditor;
 import de.george.g3dit.gui.table.TableColumnDef;
@@ -17,11 +19,12 @@ import de.george.lrentnode.classes.desc.CD;
 import de.george.lrentnode.template.TemplateFile;
 
 public class MapTab extends AbstractPropertyTemplateTab {
-	private static final TableColumnDef MARKER_NAME = TableColumnDef.withName("Name").editable(true).size(250).b();
-	private static final TableColumnDef MARKER_POSITION = TableColumnDef.withName("Position").editable(true)
+	private static final TableColumnDef MARKER_NAME = TableColumnDef.withName("Name").displayName(I.tr("Name")).editable(true).size(250)
+			.b();
+	private static final TableColumnDef MARKER_POSITION = TableColumnDef.withName("Position").displayName(I.tr("Position")).editable(true)
 			.cellEditor(new LambdaConvertEditor<>(bCVector::toString, bCVector::fromString)).size(250).b();
-	private static final TableColumnDef MARKER_ACTIVE = TableColumnDef.withName("Active").editable(true).size(30)
-			.cellRenderer(new DefaultTableRenderer(new CheckBoxProvider())).cellEditor(new JXTable.BooleanEditor()).b();
+	private static final TableColumnDef MARKER_ACTIVE = TableColumnDef.withName("Active").displayName(I.tr("Active")).editable(true)
+			.size(30).cellRenderer(new DefaultTableRenderer(new CheckBoxProvider())).cellEditor(new JXTable.BooleanEditor()).b();
 
 	public MapTab(EditorTemplateTab ctx) {
 		super(ctx);
@@ -31,7 +34,7 @@ public class MapTab extends AbstractPropertyTemplateTab {
 	protected void initPropertyPanel(PropertyPanel propertyPanel) {
 		// @foff
 		propertyPanel
-			.addHeadline("Eigenschaften")
+			.addHeadline(I.tr("Eigenschaften"))
 			.add(CD.gCMap_PS.Header)
 				.constraints("width 175:225:250").growx()
 				.validate(validation(), EmtpyWarnValidator.INSTANCE)
@@ -44,7 +47,7 @@ public class MapTab extends AbstractPropertyTemplateTab {
 			.add(CD.gCMap_PS.WorldBottomRight)
 				.constraints("width 175:225:250").growx()
 				.validate(validation(), VectorValidator.INSTANCE)
-			.addHeadline("Markers")
+			.addHeadline(I.tr("Markers"))
 			.add(CD.gCMap_PS.class, gCMap_PS::getMarkers, gCMap_PS::setMarkers, MapMarker.class)
 				.tableColumns(MARKER_NAME, MARKER_POSITION, MARKER_ACTIVE)
 				.constraints("width 500:600:700")

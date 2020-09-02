@@ -5,6 +5,8 @@ import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import com.teamunify.i18n.I;
+
 import de.george.g3dit.EditorContext;
 import de.george.g3dit.cache.Caches;
 import de.george.g3dit.cache.StringtableCache;
@@ -27,7 +29,7 @@ public class NameSearchFilterBuilder implements SearchFilterBuilder<eCEntity> {
 		this.ctx = ctx;
 		cbMatchMode = new JComboBoxExt<>(MatchMode.Name, MatchMode.FocusName);
 		tfFilter = SwingUtils.createUndoTF();
-		cbRegex = new JCheckBox("Regex", false);
+		cbRegex = new JCheckBox(I.tr("Regex"), false);
 
 		comp = new JPanel(new MigLayout("ins 0, fillx"));
 		comp.add(cbMatchMode);

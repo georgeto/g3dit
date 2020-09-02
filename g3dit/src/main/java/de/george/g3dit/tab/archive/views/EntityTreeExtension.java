@@ -7,6 +7,8 @@ import java.util.Optional;
 
 import javax.swing.JPanel;
 
+import com.teamunify.i18n.I;
+
 import de.george.g3dit.EditorContext;
 import de.george.g3dit.cache.Caches;
 import de.george.g3dit.cache.TemplateCache;
@@ -48,7 +50,7 @@ public class EntityTreeExtension implements ITreeExtension {
 
 		// Überprüfen
 		if (EntityUtil.checkOwnerMapping(entity) == 1) {
-			warnings.add("Owner-Entity ungleich Parent-Entity");
+			warnings.add(I.tr("Owner-Entity ungleich Parent-Entity"));
 			// TODO: Add even more checks (CheckManager...)
 		}
 
@@ -59,8 +61,11 @@ public class EntityTreeExtension implements ITreeExtension {
 			if (entry.isPresent()) {
 				long creatorChangeTime = entry.get().getChangeTime();
 				if (entityChangeTime != creatorChangeTime) {
-					warnings.add(String.format("ChangeTime-Wert (%d) %s als in referenzierter Template (%d)", entityChangeTime,
-							entityChangeTime < creatorChangeTime ? "kleiner" : "größer", creatorChangeTime));
+					warnings.add(entityChangeTime < creatorChangeTime
+							? I.trf("ChangeTime-Wert ({0, number}) kleiner als in referenzierter Template ({1, number})", entityChangeTime,
+									creatorChangeTime)
+							: I.trf("ChangeTime-Wert ({0, number}) größer als in referenzierter Template ({1, number})", entityChangeTime,
+									creatorChangeTime));
 				}
 			}
 		}

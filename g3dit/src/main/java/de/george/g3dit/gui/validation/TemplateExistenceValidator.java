@@ -5,6 +5,8 @@ import org.netbeans.validation.api.Problems;
 import org.netbeans.validation.api.Severity;
 import org.netbeans.validation.api.ui.ValidationGroup;
 
+import com.teamunify.i18n.I;
+
 import de.george.g3dit.EditorContext;
 import de.george.g3dit.cache.Caches;
 import de.george.g3dit.cache.TemplateCache;
@@ -30,7 +32,7 @@ public class TemplateExistenceValidator extends AbstractValidator<String> {
 
 		TemplateCache cache = Caches.template(ctx);
 		if (cache.isValid() && GuidUtil.isValid(model) && !cache.getEntryByGuid(GuidUtil.parseGuid(model), all).isPresent()) {
-			problems.append(compName + " enthält eine Guid zu der keine Template existiert.", Severity.WARNING);
+			problems.append(I.trf("{0} enthält eine Guid zu der keine Template existiert.", compName), Severity.WARNING);
 		}
 	}
 

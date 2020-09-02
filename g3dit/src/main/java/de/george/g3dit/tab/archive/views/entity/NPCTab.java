@@ -6,6 +6,7 @@ import javax.swing.JTabbedPane;
 import org.netbeans.validation.api.builtin.stringvalidation.StringValidators;
 
 import com.google.common.collect.Iterables;
+import com.teamunify.i18n.I;
 
 import de.george.g3dit.config.StringListConfigFile;
 import de.george.g3dit.entitytree.filter.GuidEntityFilter.MatchMode;
@@ -36,44 +37,44 @@ public class NPCTab extends AbstractPropertyEntityTab {
 	@Override
 	public void initPropertyPanel(PropertyPanel propertyPanel) {
 		slotTabs = new JTabbedPane();
-		slotTabs.addTab("Kopf", new NPCSlotPanel(gESlot.gESlot_Head, ctx));
-		slotTabs.addTab("Körper", new NPCSlotPanel(gESlot.gESlot_Body, ctx));
-		slotTabs.addTab("Haare", new NPCSlotPanel(gESlot.gESlot_Hair, ctx));
-		slotTabs.addTab("Bart", new NPCSlotPanel(gESlot.gESlot_Beard, ctx));
-		slotTabs.addTab("Helm", new NPCSlotPanel(gESlot.gESlot_Helmet, ctx));
+		slotTabs.addTab(I.tr("Kopf"), new NPCSlotPanel(gESlot.gESlot_Head, ctx));
+		slotTabs.addTab(I.tr("Körper"), new NPCSlotPanel(gESlot.gESlot_Body, ctx));
+		slotTabs.addTab(I.tr("Haare"), new NPCSlotPanel(gESlot.gESlot_Hair, ctx));
+		slotTabs.addTab(I.tr("Bart"), new NPCSlotPanel(gESlot.gESlot_Beard, ctx));
+		slotTabs.addTab(I.tr("Helm"), new NPCSlotPanel(gESlot.gESlot_Helmet, ctx));
 		for (int i = 0; i < slotTabs.getTabCount(); i++) {
 			((NPCSlotPanel) slotTabs.getComponentAt(i)).initValidation(validation());
 		}
 
 		//@foff
 		propertyPanel
-			.addHeadline("Eigenschaften")
-			.add(CD.gCNPC_PS.Voice).name("Stimme").horizontalStart(2).constraints("x level.x, x2 levelMax.x2")
+			.addHeadline(I.tr("Eigenschaften"))
+			.add(CD.gCNPC_PS.Voice).horizontalStart(2).constraints("x level.x, x2 levelMax.x2")
 				.valueList(Iterables.toArray(voices.getContent(), String.class))
 				.<JComboBox<?>>customize(c -> c.setEditable(true))
 				.validate(validation(), EmtpyWarnValidator.INSTANCE)
-			.add(CD.gCNPC_PS.Level).name("Level").horizontalStart().sizegroup("level").constraints("id level")
+			.add(CD.gCNPC_PS.Level).horizontalStart().sizegroup("level").constraints("id level")
 				.validate(validation(), StringValidators.REQUIRE_NON_NEGATIVE_NUMBER, StringValidators.REQUIRE_VALID_INTEGER)
-			.add(CD.gCNPC_PS.LevelMax).name("Maximales Level").horizontal().sizegroup("level").constraints("id levelMax")
+			.add(CD.gCNPC_PS.LevelMax).horizontal().sizegroup("level").constraints("id levelMax")
 				.validate(validation(), StringValidators.REQUIRE_NON_NEGATIVE_NUMBER, StringValidators.REQUIRE_VALID_INTEGER)
-			.add(CD.gCNPC_PS.Gender).name("Geschlecht").horizontalStart().sizegroup("level")
-			.add(CD.gCNPC_PS.Species).name("Rasse").horizontal()
-			.add(CD.gCNPC_PS.PoliticalAlignment).name("Politische Ausrichtung").horizontal()
-			.add(CD.gCNPC_PS.Class).name("Klasse").horizontalStart()
-			.add(CD.gCNPC_PS.Type).name("Typ").horizontal()
-			.add(CD.gCDialog_PS.TradeEnabled).name("Händler").horizontal()
+			.add(CD.gCNPC_PS.Gender).horizontalStart().sizegroup("level")
+			.add(CD.gCNPC_PS.Species).horizontal()
+			.add(CD.gCNPC_PS.PoliticalAlignment).horizontal()
+			.add(CD.gCNPC_PS.Class).horizontalStart()
+			.add(CD.gCNPC_PS.Type).horizontal()
+			.add(CD.gCDialog_PS.TradeEnabled).horizontal()
 				.hideIf(entity -> !entity.hasClass(CD.gCDialog_PS.class))
-			.addHeadline("Wache")
+			.addHeadline(I.tr("Wache"))
 			.add(CD.gCNPC_PS.GuardPoint).horizontalStart(2)
 				.validate(validation(), GuidValidator.INSTANCE_ALLOW_EMPTY, new EntityExistenceValidator(validation(), ctx))
 			.add(CD.gCNPC_PS.GuardStatus).horizontal()
-			.addHeadline("Sonstiges")
+			.addHeadline(I.tr("Sonstiges"))
 			.add(CD.gCNPC_PS.Enclave)
 				.validate(validation(), GuidValidator.INSTANCE_ALLOW_EMPTY, new EntityExistenceValidator(validation(), ctx))
 				.<JEntityGuidField>customize(tfEnclave ->
-					tfEnclave.addMenuItem("Alle Mitglieder der Enclave auflisten", Icons.getImageIcon(Icons.Misc.GLOBE),
+					tfEnclave.addMenuItem(I.tr("Alle Mitglieder dieser Enclave auflisten"), Icons.getImageIcon(Icons.Misc.GLOBE),
 						(c, text) -> EntitySearchDialog.openEntitySearchGuid(c, MatchMode.Enclave, text)))
-			.addHeadline("Körperteile")
+			.addHeadline(I.tr("Körperteile"))
 			.add(new LambdaPropertyHandler(slotTabs, entity -> {
 				for (int i = 0; i < slotTabs.getTabCount(); i++) {
 					((NPCSlotPanel) slotTabs.getComponentAt(i)).loadSlot(entity);

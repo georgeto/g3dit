@@ -7,6 +7,8 @@ import javax.swing.JMenuBar;
 
 import org.jdesktop.swingx.JXColorSelectionButton;
 
+import com.teamunify.i18n.I;
+
 import de.george.g3dit.EditorContext;
 
 public class EntityViewerMainMenu extends JMenuBar {
@@ -21,7 +23,7 @@ public class EntityViewerMainMenu extends JMenuBar {
 	}
 
 	private void createMenuData() {
-		JMenu muColor = new JMenu("Farben");
+		JMenu muColor = new JMenu(I.tr("Farben"));
 		muColor.setMnemonic(KeyEvent.VK_D);
 		add(muColor);
 

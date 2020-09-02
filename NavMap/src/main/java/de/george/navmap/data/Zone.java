@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
+import com.teamunify.i18n.I;
 import com.vividsolutions.jts.geom.Geometry;
 
 import de.george.g3utils.structure.bCMatrix;
@@ -554,11 +555,11 @@ public abstract class Zone implements Comparable<Zone> {
 		List<String> errors = new LinkedList<>();
 
 		if (getPointCount() < 3) {
-			errors.add("Zone benötigt mindestens 3 Sticks, hat aber nur " + getPointCount() + ".");
+			errors.add(I.trf("Zone benötigt mindestens 3 Sticks, hat aber nur {0, number}.", getPointCount()));
 		} else if (!isLinearRingValid()) {
-			errors.add("Zone in 2D nicht gültig, aber möglicherweise in 3D.");
+			errors.add(I.tr("Zone in 2D nicht gültig, aber möglicherweise in 3D."));
 		} else if (isCcw() != arePointsCcw().get()) {
-			errors.add("Orientierung der Sticks entspricht nicht der CCW Eigenschaft");
+			errors.add(I.tr("Orientierung der Sticks entspricht nicht der CCW Eigenschaft"));
 		}
 
 		return errors;

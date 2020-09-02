@@ -6,6 +6,8 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.teamunify.i18n.I;
+
 import de.george.g3dit.util.FileDialogWrapper;
 import de.george.g3utils.util.IOUtils;
 import de.george.lrentnode.archive.ArchiveFile;
@@ -21,17 +23,18 @@ public class ScriptListPickPocketNPCs implements IScript {
 
 	@Override
 	public String getTitle() {
-		return "Beklaubare NPCs auflisten";
+		return I.tr("Beklaubare NPCs auflisten");
 	}
 
 	@Override
 	public String getDescription() {
-		return "Erstellt eine Liste aller beklaubaren NPCs (dazu zählen auch Truhen) und deren PickPocket TreasureSets.";
+		return I.tr("Erstellt eine Liste aller beklaubaren NPCs (dazu zählen auch Truhen) und deren PickPocket TreasureSets.");
 	}
 
 	@Override
 	public boolean execute(IScriptEnvironment env) {
-		File saveFile = FileDialogWrapper.saveFile("Auflistung speichern unter...", env.getParentWindow(), FileDialogWrapper.CSV_FILTER);
+		File saveFile = FileDialogWrapper.saveFile(I.tr("Auflistung speichern unter..."), env.getParentWindow(),
+				FileDialogWrapper.CSV_FILTER);
 		if (saveFile == null) {
 			return false;
 		}
@@ -71,7 +74,7 @@ public class ScriptListPickPocketNPCs implements IScript {
 		try {
 			IOUtils.writeTextFile(output, saveFile, StandardCharsets.UTF_8);
 		} catch (IOException e) {
-			env.log("Datei konnte nicht gespeichert werden:" + e.getMessage());
+			env.log(I.trf("Datei konnte nicht gespeichert werden: {0}", e.getMessage()));
 		}
 		return true;
 	}

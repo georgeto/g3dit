@@ -22,6 +22,8 @@ import org.objenesis.ObjenesisStd;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.teamunify.i18n.I;
+
 import de.george.g3utils.structure.bCBox;
 import de.george.g3utils.structure.bCVector;
 import de.george.g3utils.util.Converter;
@@ -32,7 +34,7 @@ public abstract class G3FileReader extends G3FileBase implements AutoCloseable {
 
 	private static Objenesis objenesis = new ObjenesisStd(true);
 
-	protected String fileName = "<Quelle ist keine Datei>";
+	protected String fileName = I.tr("<Quelle ist keine Datei>");
 
 	public G3FileReader(String hex) {
 		this(Misc.asByte(hex));
@@ -91,7 +93,7 @@ public abstract class G3FileReader extends G3FileBase implements AutoCloseable {
 			buffer.get(bytes);
 			return Misc.asHex(bytes);
 		} catch (Exception e) {
-			warn(logger, "Fehler bei read(): " + e.getMessage());
+			warn(logger, "Error during read(): " + e.getMessage());
 			throw e;
 		}
 	}
@@ -127,7 +129,7 @@ public abstract class G3FileReader extends G3FileBase implements AutoCloseable {
 			buffer.position(savePos);
 			return bytes;
 		} catch (Exception e) {
-			warn(logger, "Fehler bei readSilentByteArray(): " + e.getMessage());
+			warn(logger, "Error during readSilentByteArray(): " + e.getMessage());
 			throw e;
 		}
 	}

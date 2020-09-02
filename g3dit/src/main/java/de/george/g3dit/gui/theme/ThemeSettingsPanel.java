@@ -21,6 +21,7 @@ import com.formdev.flatlaf.FlatDarkLaf;
 import com.formdev.flatlaf.FlatIntelliJLaf;
 import com.formdev.flatlaf.FlatLightLaf;
 import com.formdev.flatlaf.intellijthemes.FlatAllIJThemes;
+import com.teamunify.i18n.I;
 
 import ca.odell.glazedlists.BasicEventList;
 import ca.odell.glazedlists.EventList;
@@ -87,17 +88,17 @@ public class ThemeSettingsPanel extends JPanel {
 
 		ThemeInfo nativeTheme = ThemeManager.getNativeTheme();
 		if (nativeTheme != null) {
-			categories.put(themes.size(), "Native");
+			categories.put(themes.size(), I.tr("Native"));
 			themes.add(nativeTheme);
 		}
 
-		categories.put(themes.size(), "Core Themes");
+		categories.put(themes.size(), I.tr("Core Themes"));
 		StreamEx.of(FlatDarkLaf.class, FlatLightLaf.class, FlatIntelliJLaf.class, FlatDarculaLaf.class)
 				.map(ReflectionUtils::getConstructor).map(ReflectionUtils::newInstance)
 				.map(l -> new ThemeInfo(l.getName(), l.getDescription(), null, l.isDark(), l.getClass().getName(), null)).filter(filter)
 				.forEach(themes::add);
 
-		categories.put(themes.size(), "IntelliJ Themes");
+		categories.put(themes.size(), I.tr("IntelliJ Themes"));
 		StreamEx.of(FlatAllIJThemes.INFOS).map(i -> new ThemeInfo(i.getName(), "", null, i.isDark(), i.getClassName(), null))
 				.filter(filter).forEach(themes::add);
 

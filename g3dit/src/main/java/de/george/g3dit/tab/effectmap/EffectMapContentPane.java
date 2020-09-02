@@ -16,8 +16,10 @@ import org.jdesktop.swingx.table.ColumnFactory;
 import org.jdesktop.swingx.table.TableColumnExt;
 
 import com.ezware.dialog.task.TaskDialogs;
+import com.google.common.collect.ImmutableBiMap;
 import com.l2fprod.common.propertysheet.Property;
 import com.l2fprod.common.propertysheet.PropertySheetPanel;
+import com.teamunify.i18n.I;
 
 import ca.odell.glazedlists.BasicEventList;
 import ca.odell.glazedlists.EventList;
@@ -59,7 +61,7 @@ public class EffectMapContentPane extends JPanel {
 		editingPanel = new EffectMapEditingPanel();
 
 		ListManageAndEdit<gCEffectCommandSequence> edit = ListManageAndEdit.create(effects, this::inputEffect, editingPanel)
-				.title("Effects").changeMonitor(ctx).onSelect(editingPanel::loadEffect)
+				.title(I.tr("Effects")).changeMonitor(ctx).onSelect(editingPanel::loadEffect)
 				.matcherEditor(tfFilter -> new TextComponentMatcherEditor<>(tfFilter, GlazedLists.textFilterator("Name")))
 				.cellRenderer(new FunctionalListCellRenderer<>(gCEffectCommandSequence::getName)).build();
 
@@ -81,14 +83,15 @@ public class EffectMapContentPane extends JPanel {
 		private void setupComponents() {
 			setLayout(new MigLayout("fill", "[fill, grow]", "[][]20px push[fill, grow]"));
 
-			add(new JLabel("Name"), "wrap");
+			add(new JLabel(I.tr("Name")), "wrap");
 
 			tfName = SwingUtils.createUndoTF();
 			add(tfName, "width 100:300:300, wrap");
 
 			commandEditingPanel = new EffectCommandEditingPanel();
 			ListManageAndEdit<gCEffectCommand> edit = ListManageAndEdit.create(commands, this::inputCommand, commandEditingPanel)
-					.title("Commands").orientation(JSplitPane.VERTICAL_SPLIT).changeMonitor(ctx).onSelect(commandEditingPanel::loadCommand)
+					.title(I.tr("Commands")).orientation(JSplitPane.VERTICAL_SPLIT).changeMonitor(ctx)
+					.onSelect(commandEditingPanel::loadCommand)
 					.cellRenderer(
 							new FunctionalListCellRenderer<gCEffectCommand>(e -> e.getClassName().replaceFirst("gCEffectCommand", "")))
 					.build();
@@ -117,7 +120,7 @@ public class EffectMapContentPane extends JPanel {
 		}
 
 		private Optional<gCEffectCommand> inputCommand() {
-			EnterEnumDialog dialog = new EnterEnumDialog(ctx.getParentWindow(), "Neues EffectCommand erstellen", "Erstellen",
+			EnterEnumDialog dialog = new EnterEnumDialog(ctx.getParentWindow(), I.tr("Neues EffectCommand erstellen"), I.tr("Erstellen"),
 					Arrays.stream(G3Enums.asArray(gEEffectCommand.class)).filter(c -> !c.equals("CreateDecal")).toArray(String[]::new),
 					G3Enums.asString(gEEffectCommand.class, gEEffectCommand.gEEffectCommand_PlaySound));
 
@@ -175,7 +178,7 @@ public class EffectMapContentPane extends JPanel {
 			sampleModel = new SampleTableModel();
 			sampleTable.setModel(sampleModel);
 
-			JLabel lblSamples = SwingUtils.createBoldLabel("Samples");
+			JLabel lblSamples = SwingUtils.createBoldLabel(I.tr("Samples"));
 			add(lblSamples, "gaptop u, hidemode 2, wrap");
 			JScrollPane scrollSampleTable = new JScrollPane(sampleTable);
 			add(scrollSampleTable, "hidemode 2, wrap");
@@ -214,9 +217,12 @@ public class EffectMapContentPane extends JPanel {
 			}
 		}
 
+		private static final ImmutableBiMap<String, String> SAMPLE_COLUMN_MAPPING = ImmutableBiMap.of("Sample", I.tr("Sample"),
+				"Probability", I.tr("Probability"));
+
 		private class SampleTableModel extends ListTableModel<Sample> {
 			public SampleTableModel() {
-				super("Sample", "Probability");
+				super(SAMPLE_COLUMN_MAPPING.values().toArray(new String[0]));
 			}
 
 			@Override
@@ -254,8 +260,8 @@ public class EffectMapContentPane extends JPanel {
 			@Override
 			public void configureColumnWidths(JXTable table, TableColumnExt columnExt) {
 				columnExt.setEditable(true);
-				switch (columnExt.getTitle()) {
-					case "Name" -> columnExt.setPreferredWidth(300);
+				switch (SAMPLE_COLUMN_MAPPING.inverse().get(columnExt.getTitle())) {
+					case "Sample" -> columnExt.setPreferredWidth(300);
 					case "Probability" -> columnExt.setPreferredWidth(100);
 					default -> super.configureColumnWidths(table, columnExt);
 				}
@@ -283,8 +289,8 @@ public class EffectMapContentPane extends JPanel {
 	}
 
 	private Optional<gCEffectCommandSequence> inputEffect() {
-		String input = TaskDialogs.input(ctx.getParentWindow(), "Neuen Effekt erstellen", "Bitte Namen des Effekts eingeben",
-				"Effekt einfügen");
+		String input = TaskDialogs.input(ctx.getParentWindow(), I.tr("Neuen Effekt erstellen"), I.tr("Bitte Namen des Effekts eingeben"),
+				I.tr("Effekt einfügen"));
 
 		return Optional.ofNullable(input).filter(i -> !i.isEmpty()).map(gCEffectCommandSequence::new);
 	}

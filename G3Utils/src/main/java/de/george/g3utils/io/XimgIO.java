@@ -14,12 +14,12 @@ public class XimgIO {
 	public static BufferedImage decompressXimg(File file, boolean ignoreTransparency) throws Exception {
 		byte[] ximgfile = Files.readAllBytes(file.toPath());
 		if (ximgfile.length < 87) {
-			throw new IOException("Keine ximg Datei");
+			throw new IOException("Not an ximg file.");
 		}
 		@SuppressWarnings("resource")
 		G3FileReader reader = new G3FileReaderVirtual(Misc.asHex(Arrays.copyOfRange(ximgfile, 0, 87)));
 		if (!reader.read(8).equalsIgnoreCase("47454E4F4D464C45")) {
-			throw new IOException("Keine ximg Datei");
+			throw new IOException("Not an ximg file.");
 		}
 		reader.skip(2);
 		int offset = reader.readInt();
@@ -42,7 +42,7 @@ public class XimgIO {
 			type = CompressionType.DXT5;
 			imageStart = offset - width * height;
 		} else {
-			throw new IOException("Unbekannte Kompression");
+			throw new IOException("Unknown compression type.");
 		}
 		byte[] bigMipMap = Arrays.copyOfRange(ximgfile, imageStart, offset);
 

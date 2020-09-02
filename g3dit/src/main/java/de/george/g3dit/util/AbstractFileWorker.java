@@ -14,6 +14,8 @@ import javax.swing.SwingWorker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.teamunify.i18n.I;
+
 public abstract class AbstractFileWorker<T, V> extends SwingWorker<T, V> {
 	private static final Logger logger = LoggerFactory.getLogger(AbstractFileWorker.class);
 
@@ -71,7 +73,7 @@ public abstract class AbstractFileWorker<T, V> extends SwingWorker<T, V> {
 			progressBarSwitched = true;
 		}
 		progressBar.setValue(filesDone.get());
-		progressBar.setString(String.format(progessMessage, filesDone.get(), fileCount));
+		progressBar.setString(I.format(progessMessage, filesDone.get(), fileCount));
 	}
 
 	@Override

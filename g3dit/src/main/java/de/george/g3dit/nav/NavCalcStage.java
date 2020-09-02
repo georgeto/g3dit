@@ -26,6 +26,7 @@ import javax.swing.JTable;
 import org.jdesktop.swingx.JXTable;
 
 import com.google.common.base.Predicates;
+import com.teamunify.i18n.I;
 
 import ca.odell.glazedlists.BasicEventList;
 import ca.odell.glazedlists.CompositeList;
@@ -154,7 +155,7 @@ public abstract class NavCalcStage {
 	protected abstract JComponent createComponent();
 
 	private void updateFilteredCount() {
-		laFilteredCount.setText(String.format("%d / %d issues displayed", changeTableModel.getRowCount(), getChangeCount()));
+		laFilteredCount.setText(I.trf("{0, number} / {1, number} issues displayed", changeTableModel.getRowCount(), getChangeCount()));
 	}
 
 	private void onExecute() {
@@ -167,14 +168,15 @@ public abstract class NavCalcStage {
 
 	protected abstract void doExecute();
 
-	protected static final TableColumnDef COLUMN_GUID = TableColumnDef.withName("Guid").sizeExample(GuidUtil.randomGUID()).b();
-	protected static final TableColumnDef COLUMN_MESSAGE = TableColumnDef.withName("Message").displayName("Beschreibung")
+	protected static final TableColumnDef COLUMN_GUID = TableColumnDef.withName("Guid").displayName(I.tr("Guid"))
+			.sizeExample(GuidUtil.randomGUID()).b();
+	protected static final TableColumnDef COLUMN_MESSAGE = TableColumnDef.withName("Message").displayName(I.tr("Beschreibung"))
 			.sizeExample("Something is wrong, please fix it before it grows.")
 			.<Change, String>cellValueTransformer((change, value) -> new SeverityImageIcon(change.getSeverity(), value))
 			.cellRenderer(new IconTableCellRenderer()).b();
 
-	protected final TableColumnDef COLUMN_FIXED = TableColumnDef.withName("Fixed").displayName("Behoben").sizeExample(false).editable(true)
-			.cellRenderer(new BooleanTableCellRenderer() {
+	protected final TableColumnDef COLUMN_FIXED = TableColumnDef.withName("Fixed").displayName(I.tr("Behoben")).sizeExample(false)
+			.editable(true).cellRenderer(new BooleanTableCellRenderer() {
 				@Override
 				public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row,
 						int column) {
@@ -197,15 +199,15 @@ public abstract class NavCalcStage {
 				}
 			}).b();
 
-	protected final TableColumnDef COLUMN_FILE = TableColumnDef.withName("File").displayName("Datei")
+	protected final TableColumnDef COLUMN_FILE = TableColumnDef.withName("File").displayName(I.tr("Datei"))
 			.cellRenderer(new FileTableCellRenderer(() -> getContext().getOptionStore()))
 			.sizeExample(new File("G3_Nordmar_01_Landscape_Dynamic_Objects_02_SHyb.node")).b();
 
-	protected static final TableColumnDef COLUMN_NAME = TableColumnDef.withName("Name").sizeExample("G3_Object_Interact_Animated_Chest_01")
-			.b();
+	protected static final TableColumnDef COLUMN_NAME = TableColumnDef.withName("Name").displayName(I.tr("Name"))
+			.sizeExample("G3_Object_Interact_Animated_Chest_01").b();
 
 	protected void addBackButton(JPanel mainPanel, NavCalcState state) {
-		JButton btnBack = new JButton(String.format("Back (%s) <-", state.name()));
+		JButton btnBack = new JButton(I.trf("Back ({0}) <-", state.name()));
 		btnBack.setFocusable(false);
 		btnBack.addActionListener(a -> gotoState(state));
 		SwingUtils.addWindowKeyStroke(btnBack, "Back", KeyEvent.VK_LEFT, InputEvent.ALT_DOWN_MASK, () -> gotoState(state));
@@ -213,7 +215,7 @@ public abstract class NavCalcStage {
 	}
 
 	protected void addNextButton(JPanel mainPanel, NavCalcState state) {
-		JButton btnNext = new JButton(String.format("-> Next (%s)", state.name()));
+		JButton btnNext = new JButton(I.trf("-> Next ({0})", state.name()));
 		btnNext.setFocusable(false);
 		btnNext.addActionListener(a -> gotoState(state));
 		SwingUtils.addWindowKeyStroke(btnNext, "Next", KeyEvent.VK_RIGHT, InputEvent.ALT_DOWN_MASK, () -> gotoState(state));
@@ -234,7 +236,7 @@ public abstract class NavCalcStage {
 		JProgressBar progressBar = SwingUtils.createProgressBar();
 		mainPanel.add(progressBar, "spanx 10, split 2, pushx, growx 100, id progressbar");
 
-		mainPanel.add(SwingUtils.keyStrokeButton("Execute Scan", Icons.getImageIcon(Icons.Action.DIFF), KeyEvent.VK_E,
+		mainPanel.add(SwingUtils.keyStrokeButton(I.tr("Execute Scan"), Icons.getImageIcon(Icons.Action.DIFF), KeyEvent.VK_E,
 				InputEvent.CTRL_DOWN_MASK, this::onExecute), "wrap");
 
 		changes = new BasicEventList<>();
@@ -273,23 +275,23 @@ public abstract class NavCalcStage {
 		repaintListeners = new ArrayList<>();
 		getExtraButtons(changeTable, mainPanel::add, repaintListeners::add);
 
-		JButton btnFix = SwingUtils.keyStrokeButton("Fix", "Fix the selected issue(s).", Icons.getImageIcon(Icons.Misc.WAND_MAGIC),
-				KeyEvent.VK_SPACE, 0, this::onFix);
+		JButton btnFix = SwingUtils.keyStrokeButton(I.tr("Fix"), I.tr("Fix the selected issue(s)."),
+				Icons.getImageIcon(Icons.Misc.WAND_MAGIC), KeyEvent.VK_SPACE, 0, this::onFix);
 		repaintListeners.add(TableUtil.enableOnGreaterEqual(changeTable, btnFix, 1,
 				() -> getSelectedChange().map(change -> change.canBeFixed() && !change.isFixed()).orElse(false)));
 		mainPanel.add(btnFix);
 
-		JButton btnShowInEditor = SwingUtils.keyStrokeButton("Open in editor", "Open the affected nav object in the editor.",
+		JButton btnShowInEditor = SwingUtils.keyStrokeButton(I.tr("Open in editor"), I.tr("Open the affected nav object in the editor."),
 				Icons.getImageIcon(Icons.Action.EDIT), KeyEvent.VK_O, InputEvent.CTRL_DOWN_MASK, this::onShowInEditor);
 		TableUtil.enableOnGreaterEqual(changeTable, btnShowInEditor, 1);
 		mainPanel.add(btnShowInEditor);
 
-		JButton btnTeleport = SwingUtils.keyStrokeButton("Goto", "Teleport player to the affected nav object.",
+		JButton btnTeleport = SwingUtils.keyStrokeButton(I.tr("Goto"), I.tr("Teleport player to the affected nav object."),
 				Icons.getImageIcon(Icons.Misc.GEOLOCATION), KeyEvent.VK_G, InputEvent.CTRL_DOWN_MASK, this::onTeleport);
 		TableUtil.enableOnGreaterEqual(changeTable, btnTeleport, 1);
 		mainPanel.add(btnTeleport);
 
-		JButton btnShowOnMap = SwingUtils.keyStrokeButton("Show on map", "Show the affected nav object on the entity map.",
+		JButton btnShowOnMap = SwingUtils.keyStrokeButton(I.tr("Show on map"), I.tr("Show the affected nav object on the entity map."),
 				Icons.getImageIcon(Icons.Misc.MAP), KeyEvent.VK_M, InputEvent.CTRL_DOWN_MASK, this::onShowOnMap);
 		TableUtil.enableOnGreaterEqual(changeTable, btnShowOnMap, 1);
 		mainPanel.add(btnShowOnMap, "wrap");

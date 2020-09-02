@@ -4,6 +4,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+import com.teamunify.i18n.I;
+
 import de.george.g3utils.io.G3FileReader;
 import de.george.g3utils.io.G3FileWriter;
 import de.george.g3utils.io.G3Serializable;
@@ -203,16 +205,16 @@ public class Section1 implements G3Serializable {
 
 	public void addNavZone(NavZone navZone) {
 		if (!isInGrid(navZone)) {
-			throw new IllegalArgumentException(
-					"NavZone befindet sich außerhalb des Navigation-Grids. Die Vergrößerung des Grids wird bisher nicht unterstützt.");
+			throw new IllegalArgumentException(I.tr(
+					"NavZone befindet sich außerhalb des Navigation-Grids. Die Vergrößerung des Grids wird bisher nicht unterstützt."));
 		}
 		applyNavZoneBoundary(navZone, calcNavZoneBoundary(navZone));
 	}
 
 	public void addNavPath(NavPath navPath) {
 		if (!isInGrid(navPath)) {
-			throw new IllegalArgumentException(
-					"NavPath befindet sich außerhalb des Navigation-Grids. Die Vergrößerung des Grids wird bisher nicht unterstützt.");
+			throw new IllegalArgumentException(I.tr(
+					"NavPath befindet sich außerhalb des Navigation-Grids. Die Vergrößerung des Grids wird bisher nicht unterstützt."));
 		}
 		applyNavPathBoundary(navPath, calcNavPathBoundary(navPath));
 	}

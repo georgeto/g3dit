@@ -10,6 +10,8 @@ import javax.swing.JTextField;
 
 import org.netbeans.validation.api.ui.ValidationGroup;
 
+import com.teamunify.i18n.I;
+
 import de.george.g3dit.entitytree.filter.GuidEntityFilter.MatchMode;
 import de.george.g3dit.gui.components.JEntityGuidField;
 import de.george.g3dit.gui.components.JSearchGuidField;
@@ -68,7 +70,7 @@ public class NavigationTab extends AbstractEntityTab {
 
 	private class NavigationRoutinesPanel extends AbstractElementsPanel<eCEntity> {
 		public NavigationRoutinesPanel(JScrollPane navScroll) {
-			super("Routine", navScroll, false);
+			super(I.tr("Routine"), navScroll, false);
 			// TODO Auto-generated constructor stub
 		}
 
@@ -111,7 +113,7 @@ public class NavigationTab extends AbstractEntityTab {
 					insertElementRelative(routinePanel, null, InsertPosition.After);
 				}
 			} else {
-				throw new IllegalArgumentException(entity.getName() + ": gCNavigation_PS ungültig.");
+				throw new IllegalArgumentException(entity.getName() + ": gCNavigation_PS is invalid.");
 			}
 		}
 
@@ -169,20 +171,20 @@ public class NavigationTab extends AbstractEntityTab {
 		private JSearchGuidField tfWorking, tfRelaxing, tfSleeping;
 
 		public NavigationRoutinePanel(String name, String working, String relaxing, String sleeping) {
-			super("Routine", routinesPanel);
+			super(I.tr("Routine"), routinesPanel);
 			setLayout(new MigLayout("", "[]10px[]push[]"));
 
-			JLabel lblName = new JLabel("Name");
+			JLabel lblName = new JLabel(I.tr("Name"));
 			add(lblName, "cell 0 0");
 
 			tfName = SwingUtils.createUndoTF(name);
 			add(tfName, "cell 1 0, width 100:300:300");
 
-			GuildFieldMenuItem miListAllEntities = new GuildFieldMenuItem("Alle Nutzer dieses Interaktionspunktes auflisten",
+			GuildFieldMenuItem miListAllEntities = new GuildFieldMenuItem(I.tr("Alle Nutzer dieses Interaktionspunktes auflisten"),
 					Icons.getImageIcon(Icons.Misc.GLOBE),
 					(ctx, text) -> EntitySearchDialog.openEntitySearchGuid(ctx, MatchMode.Routine, text));
 
-			JLabel lblWorking = new JLabel("Working");
+			JLabel lblWorking = new JLabel(I.tr("Working"));
 			add(lblWorking, "cell 0 1");
 
 			tfWorking = new JEntityGuidField(ctx);
@@ -190,7 +192,7 @@ public class NavigationTab extends AbstractEntityTab {
 			tfWorking.addMenuItem(miListAllEntities);
 			add(tfWorking, "cell 1 1, width 100:300:300");
 
-			JLabel lblRelaxing = new JLabel("Relaxing");
+			JLabel lblRelaxing = new JLabel(I.tr("Relaxing"));
 			add(lblRelaxing, "cell 0 2");
 
 			tfRelaxing = new JEntityGuidField(ctx);
@@ -198,7 +200,7 @@ public class NavigationTab extends AbstractEntityTab {
 			tfRelaxing.addMenuItem(miListAllEntities);
 			add(tfRelaxing, "cell 1 2, width 100:300:300");
 
-			JLabel lblSleeping = new JLabel("Sleeping");
+			JLabel lblSleeping = new JLabel(I.tr("Sleeping"));
 			add(lblSleeping, "cell 0 3");
 
 			tfSleeping = new JEntityGuidField(ctx);
@@ -214,9 +216,9 @@ public class NavigationTab extends AbstractEntityTab {
 
 		@Override
 		public void initValidation(ValidationGroup group) {
-			tfWorking.initValidation(group, "Working", GuidValidator.INSTANCE, new EntityExistenceValidator(group, ctx));
-			tfRelaxing.initValidation(group, "Relaxing", GuidValidator.INSTANCE, new EntityExistenceValidator(group, ctx));
-			tfSleeping.initValidation(group, "Sleeping", GuidValidator.INSTANCE, new EntityExistenceValidator(group, ctx));
+			tfWorking.initValidation(group, I.tr("Working"), GuidValidator.INSTANCE, new EntityExistenceValidator(group, ctx));
+			tfRelaxing.initValidation(group, I.tr("Relaxing"), GuidValidator.INSTANCE, new EntityExistenceValidator(group, ctx));
+			tfSleeping.initValidation(group, I.tr("Sleeping"), GuidValidator.INSTANCE, new EntityExistenceValidator(group, ctx));
 		}
 
 		@Override
@@ -228,7 +230,7 @@ public class NavigationTab extends AbstractEntityTab {
 
 		@Override
 		protected String getBorderTitle() {
-			return position + ". Routine: " + tfName.getText();
+			return I.trf("{0, number}. Routine: {1}", position, tfName.getText());
 		}
 
 		public String getRoutineName() {

@@ -6,6 +6,8 @@ import java.util.Objects;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.teamunify.i18n.I;
+
 import de.george.g3utils.io.G3FileReader;
 import de.george.g3utils.io.G3FileWriter;
 import de.george.g3utils.io.G3Serializable;
@@ -89,7 +91,7 @@ public class Section3h implements G3Serializable {
 		}
 
 		if (!noThrow && (link1 == null || link2 == null)) {
-			throw new IllegalArgumentException("Ungültiger NavPath Eintrag in Section3h: " + pathGuid);
+			throw new IllegalArgumentException(I.trf("Ungültiger NavPath Eintrag in Section3h: {0}", pathGuid));
 		}
 
 		return new Pair<>(link1, link2);
@@ -110,7 +112,7 @@ public class Section3h implements G3Serializable {
 		}
 
 		if (!noThrow && (link1 == -1 || link2 == -1)) {
-			throw new IllegalArgumentException("Ungültiger NavPath Eintrag in Section3h: " + pathGuid);
+			throw new IllegalArgumentException(I.trf("Ungültiger NavPath Eintrag in Section3h: {0}", pathGuid));
 		}
 
 		return new Pair<>(link1, link2);
@@ -188,11 +190,11 @@ public class Section3h implements G3Serializable {
 			if (zone != null) {
 				zone.addIndex(linkIndex);
 			} else {
-				logger.warn("NavPath {} hat Intersection ({}) mit Zone {} die nicht existiert.", link.pathGuid, link.intersection,
+				logger.warn("NavPath {} has intersection ({}) with zone {} that does not exist.", link.pathGuid, link.intersection,
 						link.zoneGuid);
 			}
 		} else {
-			logger.warn("NavPath {} hat für Intersection ({}) keine Zone eingetragen.", link.pathGuid, link.intersection);
+			logger.warn("NavPath {} has no zone registered for intersection ({}).", link.pathGuid, link.intersection);
 		}
 	}
 
@@ -202,11 +204,11 @@ public class Section3h implements G3Serializable {
 			if (oldZone != null) {
 				oldZone.removeIndex(linkIndex);
 			} else {
-				logger.warn("NavPath {} hatte Intersection ({}) mit Zone {} die nicht existiert.", link.pathGuid, link.intersection,
+				logger.warn("NavPath {} had intersection ({}) with zone {} that does not exist.", link.pathGuid, link.intersection,
 						link.zoneGuid);
 			}
 		} else {
-			logger.warn("NavPath {} hatte für Intersection ({}) keine Zone eingetragen.", link.pathGuid, link.intersection);
+			logger.warn("NavPath {} had no zone registered for intersection ({}).", link.pathGuid, link.intersection);
 		}
 	}
 

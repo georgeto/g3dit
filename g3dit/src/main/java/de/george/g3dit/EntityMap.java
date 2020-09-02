@@ -28,6 +28,7 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Iterables;
 import com.google.common.io.Resources;
+import com.teamunify.i18n.I;
 
 import ca.odell.glazedlists.GlazedLists;
 import ca.odell.glazedlists.TextFilterator;
@@ -79,7 +80,7 @@ public class EntityMap extends JFrame {
 
 	public EntityMap(EditorContext ctx) {
 		this.ctx = ctx;
-		setTitle("Entity-Map");
+		setTitle(I.tr("Entity-Map"));
 		setIconImage(SwingUtils.getG3Icon());
 		setSize(SwingUtils.getScreenWorkingWidth(), SwingUtils.getScreenWorkingHeight());
 		setResizable(true);
@@ -167,7 +168,7 @@ public class EntityMap extends JFrame {
 				new PlayerPositionOverlay<>(map.getMap().getModel(), () -> isShowing() && cbShowPlayerPosition.isSelected()), 1);
 
 		map.getMap().addOverlay(new NavObjectOverlay<>(map.getMap().getModel(), ctx), 1);
-		map.getMap().addMenuItem("Search for NavObject", point -> {
+		map.getMap().addMenuItem(I.tr("Search for NavObject"), point -> {
 			// TODO: Search in area?
 			NavCache navCache = Caches.nav(ctx);
 			for (NavZone navZone : navCache.getZones()) {
@@ -190,7 +191,7 @@ public class EntityMap extends JFrame {
 			}
 		});
 
-		map.getMap().addMenuItem("Search connected NavObjects", point -> {
+		map.getMap().addMenuItem(I.tr("Search connected NavObjects"), point -> {
 			EntityMapItem entity = map.getMap().getModel().getNearest(point, 20);
 			if (entity == null) {
 				return;
@@ -251,10 +252,10 @@ public class EntityMap extends JFrame {
 		SwingUtils.addKeyStroke(map.getTable(), JComponent.WHEN_IN_FOCUSED_WINDOW, "Remove Selected Entities",
 				KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0), () -> map.removeItems(map.getItemsSelectedInList()));
 
-		JButton btnHelp = new JButton("Hilfe");
+		JButton btnHelp = new JButton(I.tr("Hilfe"));
 		btnHelp.addActionListener(a -> {
 			try {
-				new DisplayHtmlDialog("Hilfe zu Entity-Map",
+				new DisplayHtmlDialog(I.tr("Hilfe zu Entity-Map"),
 						Resources.toString(Resources.getResource(EntityMap.class, "/res/ChestEditorHelp.html"), StandardCharsets.UTF_8),
 						EntityMap.this, 700, 700, false).setVisible(true);
 			} catch (IOException e) {
@@ -262,7 +263,7 @@ public class EntityMap extends JFrame {
 			}
 		});
 
-		cbShowPlayerPosition = new JCheckBox("Live-Position des Helden anzeigen", true);
+		cbShowPlayerPosition = new JCheckBox(I.tr("Live-Position des Helden anzeigen"), true);
 
 		JPanel tablePanel = new JPanel(new MigLayout("fill", "[][]", "[][grow][]"));
 		tablePanel.add(tfSearch, "grow, wrap");
@@ -301,14 +302,18 @@ public class EntityMap extends JFrame {
 		public void configureTableColumn(TableModel model, TableColumnExt columnExt) {
 			super.configureTableColumn(model, columnExt);
 
-			switch (columnExt.getTitle()) {
-				case "Name" -> columnExt.setPrototypeValue("G3_Object_Bookshelf_Scrolls_01");
+			int fieldIndex = EntityMapItem.FIELD_NAMES.indexOf(columnExt.getTitle());
+			if (fieldIndex != -1) {
+				switch (EntityMapItem.FIELDS.get(fieldIndex)) {
+					case "Title" -> columnExt.setPrototypeValue("G3_Object_Bookshelf_Scrolls_01");
+				}
 			}
 		}
 	}
 
 	public static class EntityMapItem implements MapItem, Comparable<EntityMapItem> {
-		public static final ImmutableMap<String, String> FIELD_MAPPING = ImmutableMap.of("Title", "Name", "File", "Datei", "Guid", "Guid");
+		public static final ImmutableMap<String, String> FIELD_MAPPING = ImmutableMap.of("Title", I.tr("Name"), "File", I.tr("Datei"),
+				"Guid", I.tr("Guid"));
 		public static final ImmutableList<String> FIELDS = FIELD_MAPPING.keySet().asList();
 		public static final ImmutableList<String> FIELD_NAMES = FIELD_MAPPING.values().asList();
 

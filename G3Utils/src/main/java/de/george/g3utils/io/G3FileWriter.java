@@ -353,7 +353,7 @@ public abstract class G3FileWriter extends G3FileBase {
 		buffer.rewind();
 		tmpBuffer.put(buffer);
 		buffer = tmpBuffer;
-		logger.debug("Vergrößere Buffer von {} Bytes auf {} Bytes.", oldCapacity, newCapacity);
+		logger.debug("Increasing buffer from {} bytes to {} bytes.", oldCapacity, newCapacity);
 	}
 
 	private static int hugeCapacity(int minCapacity) {

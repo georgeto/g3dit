@@ -36,10 +36,12 @@ public class LrentdatEntity extends ArchiveEntity {
 
 	@Override
 	public void read(G3FileReader reader, boolean skipPropertySets) {
-		// START OF ENTITY-DEFINITION
-		if (!reader.read(4).equals("40005300")) {
-			reader.warn(logger, "(1) LrentdatEntity unerwartete Dateistruktur.");
-		}
+		if (reader.readUnsignedShort() != 0x40)
+			reader.warn(logger, "Unsupported gCEntity version.");
+
+		if (reader.readUnsignedShort() != 0x53)
+			reader.warn(logger, "Unsupported eCDynamicEntity version.");
+
 		setCreator(reader.readBool() ? reader.readGUID() : null);
 
 		super.read(reader, skipPropertySets);
@@ -47,7 +49,7 @@ public class LrentdatEntity extends ArchiveEntity {
 
 	@Override
 	public void write(G3FileWriter writer) {
-		writer.write("40005300");
+		writer.writeUnsignedShort(0x40).writeUnsignedShort(0x53);
 		writer.writeBool(hasCreator());
 		if (hasCreator()) {
 			writer.write(getCreator());

@@ -18,6 +18,7 @@ import java.util.Set;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.collect.ImmutableList;
+import com.teamunify.i18n.I;
 
 import de.george.g3dit.EditorContext;
 import de.george.g3dit.jme.asset.IntermediateMesh;
@@ -95,7 +96,7 @@ public class AssetResolver {
 				return new MeshAsset(mesh, true, null);
 			}
 		}
-		return new MeshAsset("", false, "Container hat kein Mesh.");
+		return new MeshAsset("", false, I.tr("Container hat kein Mesh."));
 	}
 
 	public MeshAsset resolveMesh(String meshFile, int materialSwitch) {
@@ -116,9 +117,9 @@ public class AssetResolver {
 				throw new NoSuchElementException();
 			}
 		} catch (IOException | IllegalMeshException e) {
-			return new MeshAsset(meshFile, false, "Fehler beim Öffnen des Meshes: " + e.getMessage());
+			return new MeshAsset(meshFile, false, I.trf("Fehler beim Öffnen des Meshes: {0}", e.getMessage()));
 		} catch (NoSuchElementException e) {
-			return new MeshAsset(meshFile, false, "Kein Mesh mit diesem Namen gefunden.");
+			return new MeshAsset(meshFile, false, I.tr("Kein Mesh mit diesem Namen gefunden."));
 		}
 
 		MeshAsset asset = new MeshAsset(meshFile, true, null);
@@ -137,9 +138,9 @@ public class AssetResolver {
 			eCResourceShaderMaterial_PS material = FileUtil.openMaterial(materialLocator.locate(materialFile).get());
 			return parseMaterial(materialFile, material, materialSwitch);
 		} catch (IOException e) {
-			return new MaterialAsset(materialFile, materialSwitch, false, "Fehler beim Öffnen des Materials: " + e.getMessage());
+			return new MaterialAsset(materialFile, materialSwitch, false, I.trf("Fehler beim Öffnen des Materials: {0}", e.getMessage()));
 		} catch (NoSuchElementException e) {
-			return new MaterialAsset(materialFile, materialSwitch, false, "Kein Material mit diesem Namen gefunden.");
+			return new MaterialAsset(materialFile, materialSwitch, false, I.tr("Kein Material mit diesem Namen gefunden."));
 		}
 	}
 
@@ -226,7 +227,7 @@ public class AssetResolver {
 
 			if (textureCount == 0) {
 				return new TextureAsset(switched, textureName, switchRepeat, textureName, false,
-						"Keine Textur mit diesem Namen gefunden.");
+						I.tr("Keine Textur mit diesem Namen gefunden."));
 			}
 
 			int textureIndex = 0;
@@ -258,7 +259,8 @@ public class AssetResolver {
 		}
 
 		if (!textureLocator.locate(textureName).isPresent()) {
-			return new TextureAsset(switched, textureName, switchRepeat, textureName, false, "Keine Textur mit diesem Namen gefunden.");
+			return new TextureAsset(switched, textureName, switchRepeat, textureName, false,
+					I.tr("Keine Textur mit diesem Namen gefunden."));
 		}
 
 		return new TextureAsset(switched, textureName, switchRepeat, textureName, true, null);
@@ -331,7 +333,7 @@ public class AssetResolver {
 
 		@Override
 		public void print(IndentPrintWriter writer) {
-			writer.println("Mesh: " + getName());
+			writer.println(I.tr("Mesh") + ": " + getName());
 			writer.indent();
 			if (isFound()) {
 				materials.forEach(m -> {
@@ -370,9 +372,9 @@ public class AssetResolver {
 
 		@Override
 		public void print(IndentPrintWriter writer) {
-			writer.println("Material: " + getName());
+			writer.println(I.tr("Material") + ": " + getName());
 			writer.indent();
-			writer.println("MaterialSwitch: " + getMaterialSwitch());
+			writer.println(I.tr("MaterialSwitch") + ": " + getMaterialSwitch());
 			if (isFound()) {
 				textures.forEach(t -> {
 					writer.println();
@@ -442,12 +444,12 @@ public class AssetResolver {
 
 		@Override
 		public void print(IndentPrintWriter writer) {
-			writer.println("Textur: " + getName());
+			writer.println(I.tr("Textur") + ": " + getName());
 			writer.indent();
-			writer.println("Verwendung: " + getUseType());
+			writer.println(I.tr("Verwendung") + ": " + getUseType());
 			if (switched) {
-				writer.println("Basisname: " + getBaseName());
-				writer.println("SwitchRepeat: " + G3Enums.asString(eEColorSrcSwitchRepeat.class, switchRepeat));
+				writer.println(I.tr("Basisname") + ": " + getBaseName());
+				writer.println(I.tr("SwitchRepeat") + ": " + G3Enums.asString(eEColorSrcSwitchRepeat.class, switchRepeat));
 			}
 			if (!isFound()) {
 				writer.println("!!! " + getError() + " !!!");

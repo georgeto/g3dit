@@ -10,7 +10,7 @@ public class eCVisualMeshStatic_PS extends eCVisualMeshBase_PS {
 	@Override
 	protected void readPostClassVersion(G3FileReader reader) {
 		if (classVersion == 3 || classVersion == 4) {
-			throw new UnsupportedOperationException("Version 3 oder 4 werden nicht unterstützt.");
+			throw new UnsupportedOperationException("Version 3 or 4 are not supported.");
 		}
 		super.readPostClassVersion(reader);
 	}

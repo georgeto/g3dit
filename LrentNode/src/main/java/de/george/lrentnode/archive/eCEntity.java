@@ -7,6 +7,7 @@ import java.util.Optional;
 import java.util.function.Function;
 
 import com.google.common.collect.FluentIterable;
+import com.teamunify.i18n.I;
 
 import de.george.g3utils.io.G3FileReader;
 import de.george.g3utils.io.G3FileReaderEx;
@@ -743,7 +744,7 @@ public abstract class eCEntity extends G3ClassContainer {
 	protected void onPatchWithTemplate(TemplateEntity tple, boolean justCreated, boolean dontCallOnChildrenAvailable,
 			Function<String, TemplateEntity> tpleLookup) {
 		if (tple.isDeleted()) {
-			throw new IllegalStateException("Patching mit als gelöscht markierter Template nicht möglich.");
+			throw new IllegalStateException("Patching with template marked as deleted not possible.");
 		} else if (justCreated || getDataChangedTimeStamp() != tple.getDataChangedTimeStamp() || getDataChangedTimeStamp() == -1) {
 			tple.patchEntity(this, justCreated, dontCallOnChildrenAvailable, tpleLookup);
 		} else {
@@ -756,7 +757,7 @@ public abstract class eCEntity extends G3ClassContainer {
 		if (hasCreator()) {
 			creator = tpleLookup.apply(getCreator());
 			if (creator == null) {
-				throw new IllegalStateException("Creator-Template " + getCreator() + " konnte nicht geladen werden.");
+				throw new IllegalStateException("Creator template " + getCreator() + " could not be loaded.");
 			}
 		}
 
@@ -820,7 +821,7 @@ public abstract class eCEntity extends G3ClassContainer {
 			name = "<Vegetation Root>";
 		}
 		if (name == null) {
-			name = "<no name>";
+			name = I.tr("<no name>");
 		}
 		return name != null ? name : "";
 	}

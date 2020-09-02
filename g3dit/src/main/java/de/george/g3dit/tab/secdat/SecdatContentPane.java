@@ -6,6 +6,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import com.ezware.dialog.task.TaskDialogs;
+import com.teamunify.i18n.I;
 
 import ca.odell.glazedlists.BasicEventList;
 import ca.odell.glazedlists.EventList;
@@ -60,8 +61,8 @@ public class SecdatContentPane extends JPanel {
 	}
 
 	private Optional<String> inputEntry(String name) {
-		String input = TaskDialogs.input(ctx.getParentWindow(), "Neuen Eintrag erstellen", "Bitte Namen der " + name + " eingeben",
-				name + " einfügen");
+		String input = TaskDialogs.input(ctx.getParentWindow(), I.tr("Neuen Eintrag erstellen"),
+				I.trf("Bitte Namen der {0} eingeben", name), I.trf("{0} einfügen", name));
 
 		return Optional.ofNullable(input).filter(i -> !i.isEmpty());
 	}

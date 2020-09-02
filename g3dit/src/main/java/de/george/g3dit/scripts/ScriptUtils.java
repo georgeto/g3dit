@@ -8,6 +8,8 @@ import java.util.function.BiFunction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.teamunify.i18n.I;
+
 import de.george.g3dit.util.FileDialogWrapper;
 import de.george.g3dit.util.FileManager;
 import de.george.g3dit.util.StringtableHelper;
@@ -22,7 +24,7 @@ public class ScriptUtils {
 
 	public static final boolean processAndSaveWorldFiles(IScriptEnvironment env, BiFunction<ArchiveFile, File, Integer> processor,
 			String formatString) {
-		File saveDir = FileDialogWrapper.chooseDirectory("Speicherpfad auswählen", env.getParentWindow());
+		File saveDir = FileDialogWrapper.chooseDirectory(I.tr("Speicherpfad auswählen"), env.getParentWindow());
 		if (saveDir == null) {
 			return false;
 		}
@@ -44,8 +46,8 @@ public class ScriptUtils {
 				FileManager fileManager = env.getFileManager();
 				Optional<String> relativePath = fileManager.getRelativePath(file);
 				if (!relativePath.isPresent()) {
-					env.log("Relativer Pfad von " + file.getAbsolutePath()
-							+ " konnte nicht ermittelt werden, übernehmen der Änderungen nicht möglich.");
+					env.log(I.trf("Relativer Pfad von {0} konnte nicht ermittelt werden, übernehmen der Änderungen nicht möglich.",
+							file.getAbsolutePath()));
 					continue;
 				}
 				try {
@@ -53,12 +55,12 @@ public class ScriptUtils {
 					out.getParentFile().mkdirs();
 					archive.save(out);
 				} catch (IOException e) {
-					env.log("Speichern von " + file.getAbsolutePath() + " fehlgeschlagen: " + e.getMessage());
-					logger.warn("Speichern fehlgeschlagen", e);
+					env.log(I.trf("Speichern von {0} fehlgeschlagen: {1}", file.getAbsolutePath(), e.getMessage()));
+					logger.warn("Error while saving file {}.", file.getAbsolutePath(), e);
 				}
 			}
 		}
-		env.log(String.format(formatString, totalChanged));
+		env.log(I.format(formatString, totalChanged));
 		return true;
 	}
 

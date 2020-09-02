@@ -6,6 +6,8 @@ import javax.swing.JScrollPane;
 
 import org.netbeans.validation.api.ui.ValidationGroup;
 
+import com.teamunify.i18n.I;
+
 import de.george.g3dit.util.Icons;
 import de.george.g3utils.gui.SwingUtils;
 import de.george.g3utils.validation.ValidationGroupWrapper;
@@ -31,7 +33,7 @@ public abstract class AbstractElementsPanel<T> extends JPanel {
 
 		setLayout(new MigLayout("fillx, insets 0 5 0 0", "[]"));
 
-		addElementBtn = new JButton(elementName.concat(" hinzufügen"), Icons.getImageIcon(Icons.Action.ADD));
+		addElementBtn = new JButton(I.trf("{0} hinzufügen", elementName), Icons.getImageIcon(Icons.Action.ADD));
 		addElementBtn.addActionListener(e -> insertNewElement(null, InsertPosition.After));
 	}
 

@@ -2,6 +2,8 @@ package de.george.g3dit.scripts;
 
 import java.util.Optional;
 
+import com.teamunify.i18n.I;
+
 import de.george.g3dit.EntityMap;
 import de.george.g3dit.cache.Caches;
 import de.george.g3dit.cache.NavCache;
@@ -11,12 +13,12 @@ public class ScriptShowGuidsOnMap implements IScript {
 
 	@Override
 	public String getTitle() {
-		return "Objekte zu Guids auf Map anzeigen";
+		return I.tr("Objekte zu Guids auf Map anzeigen");
 	}
 
 	@Override
 	public String getDescription() {
-		return "Zeigt für Guids in der Zwischenablage die dazugehörigen Objekte (NavZone, NavPath, ...) auf der Karte an.";
+		return I.tr("Zeigt für Guids in der Zwischenablage die dazugehörigen Objekte (NavZone, NavPath, ...) auf der Karte an.");
 	}
 
 	@Override

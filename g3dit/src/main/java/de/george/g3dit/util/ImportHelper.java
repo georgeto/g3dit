@@ -15,6 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.ezware.dialog.task.TaskDialogs;
+import com.teamunify.i18n.I;
 
 import de.george.g3dit.EditorContext;
 import de.george.g3dit.gui.dialogs.AbstractSelectDialog;
@@ -37,7 +38,7 @@ public class ImportHelper {
 		try {
 			return importFromArchiveFile(FileUtil.openArchive(file, false), currentFile, ctx);
 		} catch (Exception e) {
-			logger.warn("Import fehlgeschalgen: ", e);
+			logger.warn("Import failed.", e);
 			TaskDialogs.showException(e);
 			return false;
 		}
@@ -50,21 +51,21 @@ public class ImportHelper {
 
 			if (currentFile.isLrentdat()) {
 				if (!aFile.isLrentdat()) {
-					message = "Entities aus einer *.node können nicht in eine *.lrentdat importiert werden.";
+					message = I.tr("Entities aus einer *.node können nicht in eine *.lrentdat importiert werden.");
 				}
 			} else if (aFile.isLrentdat()) {
-				message = "Entities aus einer *.lrentdat können nicht in eine *.node importiert werden.";
+				message = I.tr("Entities aus einer *.lrentdat können nicht in eine *.node importiert werden.");
 			}
 
 			if (message != null) {
-				convert = TaskDialogs.ask(ctx.getParentWindow(), "Inkompatible Dateitypen",
-						message + "\nSollen die Entities konvertiert werden?");
+				convert = TaskDialogs.ask(ctx.getParentWindow(), I.tr("Inkompatible Dateitypen"),
+						message + "\n" + I.tr("Sollen die Entities konvertiert werden?"));
 				if (!convert) {
 					return false;
 				}
 			}
 
-			ImportTreeEntitySelectDialog dialog = new ImportTreeEntitySelectDialog(ctx, "Entities importieren",
+			ImportTreeEntitySelectDialog dialog = new ImportTreeEntitySelectDialog(ctx, I.tr("Entities importieren"),
 					AbstractSelectDialog.SELECTION_MULTIPLE, aFile);
 			if (dialog.openAndWasSuccessful()) {
 				List<eCEntity> entities = dialog.getSelectedEntries();
@@ -132,7 +133,7 @@ public class ImportHelper {
 				return true;
 			}
 		} catch (Exception ex) {
-			logger.warn("Import fehlgeschalgen: ", ex);
+			logger.warn("Import failed.", ex);
 			TaskDialogs.showException(ex);
 
 		}
@@ -160,7 +161,7 @@ public class ImportHelper {
 			}
 			return true;
 		} catch (Exception ex) {
-			logger.warn("Import fehlgeschalgen: ", ex);
+			logger.warn("Import failed.", ex);
 			TaskDialogs.showException(ex);
 
 		}
@@ -178,10 +179,10 @@ public class ImportHelper {
 		public JComponent createContentPanel() {
 			JPanel contentPanel = new JPanel(new MigLayout("ins 0, fill", "[]", "[fill][]"));
 			contentPanel.add(super.createContentPanel(), "grow, wrap");
-			cbImportChilds = new JCheckBox("Childs-Entities importieren");
+			cbImportChilds = new JCheckBox(I.tr("Childs-Entities importieren"));
 			cbImportChilds.setSelected(true);
 			contentPanel.add(cbImportChilds, "gapleft 5, split 2");
-			cbRandomGuids = new JCheckBox("Zufällige Guids generieren");
+			cbRandomGuids = new JCheckBox(I.tr("Zufällige Guids generieren"));
 			cbRandomGuids.setSelected(true);
 			contentPanel.add(cbRandomGuids);
 			return contentPanel;

@@ -9,6 +9,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import com.google.common.eventbus.Subscribe;
+import com.teamunify.i18n.I;
 
 import ca.phon.ui.jbreadcrumb.Breadcrumb;
 import ca.phon.ui.jbreadcrumb.JBreadcrumb;
@@ -32,7 +33,7 @@ public class NavMapSync extends JFrame {
 
 	public NavMapSync(EditorContext ctx) {
 		this.ctx = ctx;
-		setTitle("NavMap synchronisieren");
+		setTitle(I.tr("NavMap synchronisieren"));
 		setIconImage(SwingUtils.getG3Icon());
 		setSize(SwingUtils.getScreenWorkingWidth(), SwingUtils.getScreenWorkingHeight());
 		setResizable(true);

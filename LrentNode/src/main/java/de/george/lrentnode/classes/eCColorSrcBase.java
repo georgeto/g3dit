@@ -16,7 +16,7 @@ public abstract class eCColorSrcBase extends eCShaderEllementBase {
 	@Override
 	protected void readPostClassVersion(G3FileReader reader) {
 		if (reader.readShort() != 1) {
-			reader.warn(logger, "eCColorSrcBase unbekannte Version");
+			reader.warn(logger, "Unsupported eCColorSrcBase version.");
 		}
 
 		super.readPostClassVersion(reader);

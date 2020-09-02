@@ -45,16 +45,15 @@ public class KryoFileOptionStore extends AbstractConcurrentOptionStore {
 								logger.warn("Encountered malformed option while loading the config file.", e);
 							}
 						} else {
-							logger.warn("Fehler beim Laden der Konfigurationsdatei.");
+							logger.warn("Failed to parse the config file {}.", file);
 							break;
 						}
 					}
 				}
 			} catch (IOException e) {
-				// Nichts, vielleicht existiert noch keine Config datei
-				logger.info("Fehler beim Öffnen der Konfigurationsdatei: {}", e.getMessage());
+				logger.warn("Failed to read the config file {}: {}", file, e.getMessage());
 			} catch (KryoException e) {
-				logger.warn("Fehler beim Laden der Konfigurationsdatei.", e);
+				logger.warn("Failed to parse the config file {}.", file, e);
 			}
 		}
 	}
@@ -76,7 +75,7 @@ public class KryoFileOptionStore extends AbstractConcurrentOptionStore {
 				}
 				return true;
 			} catch (IOException e) {
-				logger.info("Fehler beim Speichern der Konfigurationsdatei: {}", e.getMessage());
+				logger.warn("Failed to save the config file {}: {}", fileName, e.getMessage());
 				return false;
 			}
 		}

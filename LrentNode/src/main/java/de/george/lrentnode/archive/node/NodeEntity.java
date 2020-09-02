@@ -48,7 +48,7 @@ public class NodeEntity extends ArchiveEntity {
 	@Override
 	public void read(G3FileReader reader, boolean skipPropertySets) {
 		if (reader.readUnsignedShort() != 0x23) {
-			reader.warn(logger, "eCSpatialEntity unknown version.");
+			reader.warn(logger, "Unsupported eCSpatialEntity version.");
 		}
 
 		setCreator(reader.readBool() ? reader.readGUID() : null); // bCPropertyID

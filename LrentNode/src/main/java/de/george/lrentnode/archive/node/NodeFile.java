@@ -27,7 +27,7 @@ public class NodeFile extends ArchiveFile {
 	@Override
 	protected void readInternal(G3FileReaderEx reader) throws IOException {
 		if (reader.readShort() != 83) {
-			reader.warn(logger, "Node unbekannte Version.");
+			reader.warn(logger, "Unsupported Node version.");
 		}
 
 		super.readInternal(reader);

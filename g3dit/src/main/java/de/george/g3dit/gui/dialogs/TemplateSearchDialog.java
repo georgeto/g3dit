@@ -18,6 +18,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.common.eventbus.Subscribe;
+import com.teamunify.i18n.I;
 
 import ca.odell.glazedlists.BasicEventList;
 import ca.odell.glazedlists.EventList;
@@ -60,7 +61,7 @@ public class TemplateSearchDialog extends AbstractTableProgressDialog {
 	private SortableEventTable<Result> table;
 
 	public static final TemplateSearchDialog openTemplateSearch(EditorContext ctx) {
-		TemplateSearchDialog searchDialog = new TemplateSearchDialog(ctx, "Template-Suche");
+		TemplateSearchDialog searchDialog = new TemplateSearchDialog(ctx, I.tr("Template-Suche"));
 		searchDialog.open();
 		return searchDialog;
 	}
@@ -81,14 +82,14 @@ public class TemplateSearchDialog extends AbstractTableProgressDialog {
 		setSize(1000, 700);
 	}
 
-	private static final TableColumnDef COLUMN_POSITION = TableColumnDef.withName("Position").maxSize(60)
+	private static final TableColumnDef COLUMN_POSITION = TableColumnDef.withName("Position").displayName(I.tr("Position")).maxSize(60)
 			.comparator(Comparator.naturalOrder()).b();
 
-	private static final TableColumnDef COLUMN_NAME = TableColumnDef.withName("Name").size(300).b();
+	private static final TableColumnDef COLUMN_NAME = TableColumnDef.withName("Name").displayName(I.tr("Name")).size(300).b();
 
-	private static final TableColumnDef COLUMN_GUID = TableColumnDef.withName("Guid").size(300).b();
+	private static final TableColumnDef COLUMN_GUID = TableColumnDef.withName("Guid").displayName(I.tr("Guid")).size(300).b();
 
-	private static final TableColumnDef COLUMN_PATH = TableColumnDef.withName("Path").size(350).b();
+	private static final TableColumnDef COLUMN_PATH = TableColumnDef.withName("Path").displayName(I.tr("Path")).size(350).b();
 
 	@Override
 	public void open() {
@@ -102,10 +103,10 @@ public class TemplateSearchDialog extends AbstractTableProgressDialog {
 
 		searchPanel = new ModularSearchPanel(ctx, TemplateNameSearchFilterBuilder.class, EntityGuidSearchFilterBuilder.class,
 				EntityPositionSearchFilterBuilder.class, PropertySearchFilterBuilder.class, ByteSearchFilterBuilder.class);
-		btnSearch = registerAction("Suchen", Icons.getImageIcon(Icons.Action.FIND), this::doWork, true);
+		btnSearch = registerAction(I.tr("Suchen"), Icons.getImageIcon(Icons.Action.FIND), this::doWork, true);
 		JButton btnErase = new JButton(Icons.getImageIcon(Icons.Action.ERASE));
 		btnErase.setFocusable(false);
-		btnErase.setToolTipText("Suche leeren");
+		btnErase.setToolTipText(I.tr("Suche leeren"));
 		btnErase.addActionListener(e -> searchPanel.reset(false));
 
 		mainPanel.add(searchPanel.getComponent(), "split 3, width 100%, spanx");
@@ -134,7 +135,7 @@ public class TemplateSearchDialog extends AbstractTableProgressDialog {
 	public void doWork() {
 		SearchFilter<eCEntity> filter = searchPanel.buildFilter();
 		if (!filter.isValid() || worker != null) {
-			progressBar.setString("Ungültige Filtereinstellungen");
+			progressBar.setString(I.tr("Ungültige Filtereinstellungen"));
 			return;
 		}
 
@@ -209,7 +210,8 @@ public class TemplateSearchDialog extends AbstractTableProgressDialog {
 		private SearchFilter<eCEntity> filter;
 
 		protected SearchEntityWorker(Callable<List<File>> fileProvider, List<File> openFiles, SearchFilter<eCEntity> filter) {
-			super(fileProvider, openFiles, "Ermittele zu durchsuchende Dateien...", "%d/%d Dateien durchsucht", "Suche abgeschlossen");
+			super(fileProvider, openFiles, I.tr("Ermittele zu durchsuchende Dateien..."),
+					I.tr("{0, number}/{1, number} Dateien durchsucht"), I.tr("Suche abgeschlossen"));
 			this.filter = filter;
 			setProgressBar(progressBar);
 			doneMessageSupplier = this::getDoneMessage;
@@ -257,7 +259,7 @@ public class TemplateSearchDialog extends AbstractTableProgressDialog {
 		}
 
 		private String getDoneMessage() {
-			return String.format("Suche abgeschlossen (%d Templates gefunden)", results.size());
+			return I.trf("Suche abgeschlossen ({0, number} Templates gefunden)", results.size());
 		}
 	}
 
@@ -327,16 +329,16 @@ public class TemplateSearchDialog extends AbstractTableProgressDialog {
 			if (archiveTab != null) {
 				return archiveTab.getTitle();
 			}
-			return "<Inzwischen geschlossen>";
+			return I.tr("<Inzwischen geschlossen>");
 		}
 
 		@Override
 		public String getPath() {
 			EditorTemplateTab templateTab = weakTab.get();
 			if (templateTab != null) {
-				return "Geladen: " + templateTab.getTitle();
+				return I.trf("Geladen: {0}", templateTab.getTitle());
 			}
-			return "<Inzwischen geschlossen>";
+			return I.tr("<Inzwischen geschlossen>");
 		}
 
 		@Override

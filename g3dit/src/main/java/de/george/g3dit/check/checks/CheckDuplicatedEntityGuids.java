@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.ListMultimap;
+import com.teamunify.i18n.I;
 
 import de.george.g3dit.check.EntityDescriptor;
 import de.george.g3dit.check.problem.ProblemConsumer;
@@ -21,7 +22,7 @@ public class CheckDuplicatedEntityGuids extends AbstractEntityCheck {
 	private ListMultimap<String, EntityDescriptor> entityGuidMap = ArrayListMultimap.create(300000, 1);
 
 	public CheckDuplicatedEntityGuids() {
-		super("Uneindeutige Entity-Guids ermitteln", "Überprüft alle Entities nach mehrfach vorkommenden Guids.", 0, 1);
+		super(I.tr("Uneindeutige Entity-Guids ermitteln"), I.tr("Überprüft alle Entities nach mehrfach vorkommenden Guids."), 0, 1);
 	}
 
 	@Override
@@ -38,7 +39,7 @@ public class CheckDuplicatedEntityGuids extends AbstractEntityCheck {
 	}
 
 	protected void reportDuplicatedGuid(ProblemConsumer problemConsumer, String guid, Collection<EntityDescriptor> entities) {
-		String message = "Mehrfach vorkommende Entity-Guid: " + guid;
+		String message = I.trf("Mehrfach vorkommende Entity-Guid: {0}", guid);
 		String details = entities.stream().map(e -> {
 			String entityIdentifier = String.format("%s (%s #%d)", e.getDisplayName(), e.getFile().getPath().getName(), e.getIndex());
 			return a(entityIdentifier).withHref(UriUtil.encodeEntity(e)).render();

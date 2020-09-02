@@ -7,6 +7,8 @@ import java.util.concurrent.Callable;
 
 import javax.swing.JProgressBar;
 
+import com.teamunify.i18n.I;
+
 import de.george.g3dit.gui.dialogs.ProgressDialog;
 
 public abstract class AbstractDialogFileWorker<T> extends AbstractFileWorker<T, Integer> {
@@ -14,9 +16,9 @@ public abstract class AbstractDialogFileWorker<T> extends AbstractFileWorker<T, 
 	protected String statusFormat;
 
 	protected AbstractDialogFileWorker(Callable<List<File>> fileProvider, List<File> openFiles, String dialogTitle, Window parent) {
-		super(fileProvider, openFiles, "", "%d/%d Dateien verarbeitet", "Verarbeitung abgeschlossen");
+		super(fileProvider, openFiles, "", I.tr("{0, number}/{1, number} Dateien verarbeitet"), I.tr("Verarbeitung abgeschlossen"));
 
-		progDlg = new ProgressDialog(parent, dialogTitle, "Ermittele zu bearbeitende Dateien...", true);
+		progDlg = new ProgressDialog(parent, dialogTitle, I.tr("Ermittele zu bearbeitende Dateien..."), true);
 		progDlg.setLocationRelativeTo(parent);
 		progDlg.setCancelListener(() -> cancel(false));
 
@@ -33,7 +35,7 @@ public abstract class AbstractDialogFileWorker<T> extends AbstractFileWorker<T, 
 	@Override
 	protected void process(List<Integer> chunks) {
 		super.process(chunks);
-		progDlg.setStatusMessage(String.format(statusFormat, chunks.get(chunks.size() - 1)));
+		progDlg.setStatusMessage(I.format(statusFormat, chunks.get(chunks.size() - 1)));
 	}
 
 	public void executeAndShowDialog() {

@@ -40,6 +40,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.jidesoft.swing.JidePopupMenu;
+import com.teamunify.i18n.I;
 
 import de.george.g3dit.EditorContext;
 import de.george.g3dit.cache.Caches;
@@ -89,13 +90,13 @@ public class EntityTree extends JPanel {
 
 	private void guiLayout() {
 
-		rbName = new JRadioButton("Name", true);
+		rbName = new JRadioButton(I.tr("Name"), true);
 		rbName.setFocusable(false);
 		rbName.setToolTipText(NameEntityFilter.getToolTipText());
-		rbGuid = new JRadioButton("Guid");
+		rbGuid = new JRadioButton(I.tr("Guid"));
 		rbGuid.setFocusable(false);
 		rbGuid.setToolTipText(GuidEntityFilter.getToolTipText());
-		rbPosition = new JRadioButton("Position (");
+		rbPosition = new JRadioButton(I.tr("Position") + " (");
 		rbPosition.setToolTipText(PositionEntityFilter.getToolTipText());
 		rbPosition.setFocusable(false);
 		SwingUtils.createButtonGroup(rbName, rbGuid, rbPosition);
@@ -113,23 +114,23 @@ public class EntityTree extends JPanel {
 
 		JButton btnErase = new JButton(Icons.getImageIcon(Icons.Action.ERASE));
 		btnErase.setFocusable(false);
-		btnErase.setToolTipText("Suche leeren");
+		btnErase.setToolTipText(I.tr("Suche leeren"));
 		btnErase.addActionListener(e -> searchField.setText(null));
 
-		JidePopupMenu pmSettings = new JidePopupMenu("Einstellungen");
+		JidePopupMenu pmSettings = new JidePopupMenu(I.tr("Einstellungen"));
 
 		JButton btnSettings = new JButton(Icons.getImageIcon(Icons.Data.SETTINGS));
 		btnSettings.setFocusable(false);
 		btnSettings.addActionListener(l -> pmSettings.show(btnSettings, 15, 15));
 
-		final JCheckBoxMenuItem cbShowNumber = new JCheckBoxMenuItem("Entity Nummer anzeigen", Icons.getImageIcon(Icons.Data.NUMBER),
+		final JCheckBoxMenuItem cbShowNumber = new JCheckBoxMenuItem(I.tr("Entity Nummer anzeigen"), Icons.getImageIcon(Icons.Data.NUMBER),
 				false);
 		cbShowNumber.addActionListener(e -> {
 			renderer.showEntityNumbers(cbShowNumber.isSelected());
 			refreshTree(false, false);
 		});
 
-		cbKeepChilds = new JCheckBoxMenuItem("Subentities anzeigen ", Icons.getImageIcon(Icons.Data.SORT), false);
+		cbKeepChilds = new JCheckBoxMenuItem(I.tr("Subentities anzeigen"), Icons.getImageIcon(Icons.Data.SORT), false);
 		cbKeepChilds.addActionListener(e -> filterTree(false));
 
 		pmSettings.add(cbShowNumber);

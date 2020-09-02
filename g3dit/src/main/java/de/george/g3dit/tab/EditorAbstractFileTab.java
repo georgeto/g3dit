@@ -13,6 +13,7 @@ import java.util.zip.CRC32;
 import javax.swing.SwingWorker;
 
 import com.ezware.dialog.task.TaskDialogs;
+import com.teamunify.i18n.I;
 
 import de.george.g3dit.Editor;
 import de.george.g3dit.EditorContext;
@@ -43,7 +44,7 @@ public abstract class EditorAbstractFileTab extends EditorTab implements FileCha
 		if (getDataFile().isPresent()) {
 			return getDataFile().get().getName();
 		}
-		return "<Nicht gespeichert>";
+		return I.tr("<Nicht gespeichert>");
 	}
 
 	@Override
@@ -51,7 +52,7 @@ public abstract class EditorAbstractFileTab extends EditorTab implements FileCha
 		if (getDataFile().isPresent()) {
 			return (isFileChanged() ? "*" : "") + getDataFile().get().getName();
 		}
-		return "<Nicht gespeichert>";
+		return I.tr("<Nicht gespeichert>");
 	}
 
 	@Override
@@ -178,7 +179,7 @@ public abstract class EditorAbstractFileTab extends EditorTab implements FileCha
 			return true;
 
 		} else {
-			TaskDialogs.error(ctx.getParentWindow(), "Speichern fehlgeschlagen", "Momentan ist keine Datei geöffnet.");
+			TaskDialogs.error(ctx.getParentWindow(), I.tr("Speichern fehlgeschlagen"), I.tr("Momentan ist keine Datei geöffnet."));
 			return false;
 		}
 
@@ -207,7 +208,7 @@ public abstract class EditorAbstractFileTab extends EditorTab implements FileCha
 		}
 
 		String absolutePath = dataFile.map(File::getAbsolutePath).orElse(null);
-		File file = FileDialogWrapper.saveFile("Speichern unter", absolutePath, getDefaultFileExtension(), ctx.getParentWindow(),
+		File file = FileDialogWrapper.saveFile(I.tr("Speichern unter"), absolutePath, getDefaultFileExtension(), ctx.getParentWindow(),
 				getFileFilter());
 		if (file != null) {
 			if (!this.saveFile(Optional.ofNullable(file))) {
@@ -216,7 +217,7 @@ public abstract class EditorAbstractFileTab extends EditorTab implements FileCha
 			ctx.getEditor().getMainMenu().addRecentFile(file.getAbsolutePath());
 			return true;
 		} else {
-			TaskDialogs.inform(ctx.getParentWindow(), "Speichern fehlgeschlagen", "Es wurde kein Speicherort ausgewählt.");
+			TaskDialogs.inform(ctx.getParentWindow(), I.tr("Speichern fehlgeschlagen"), I.tr("Es wurde kein Speicherort ausgewählt."));
 			return false;
 		}
 	}
@@ -231,7 +232,7 @@ public abstract class EditorAbstractFileTab extends EditorTab implements FileCha
 		Optional<Boolean> checksum = validateChecksum();
 		boolean changed = checksum.isPresent() ? !checksum.get() : isFileChanged();
 		if (changed) {
-			switch (Dialogs.askSaveChanges(ctx.getParentWindow(), String.format(message, getTitle()))) {
+			switch (Dialogs.askSaveChanges(ctx.getParentWindow(), I.format(message, getTitle()))) {
 				case Yes:
 					showSaveFileAsDialog();
 					return true;
@@ -246,7 +247,7 @@ public abstract class EditorAbstractFileTab extends EditorTab implements FileCha
 
 	@Override
 	public boolean onClose(boolean appExit) {
-		String message = appExit ? "Änderungen an '%s' vor dem Beenden speichern?" : "Änderungen an '%s' Speichern?";
+		String message = appExit ? I.tr("Änderungen an '{0}' vor dem Beenden speichern?") : I.tr("Änderungen an '{0}' Speichern?");
 		return askSaveChanges(message);
 	}
 
@@ -272,7 +273,7 @@ public abstract class EditorAbstractFileTab extends EditorTab implements FileCha
 		private boolean makeBackup;
 
 		public SaveFileWorker(File file, Saveable fileToSave) {
-			progDlg = new ProgressDialog(ctx.getParentWindow(), "Speichere Datei...", file.getName(), false);
+			progDlg = new ProgressDialog(ctx.getParentWindow(), I.tr("Speichere Datei..."), file.getName(), false);
 			progDlg.setLocationRelativeTo(ctx.getParentWindow());
 			progDlg.getProgressBar().setIndeterminate(true);
 			this.file = file;

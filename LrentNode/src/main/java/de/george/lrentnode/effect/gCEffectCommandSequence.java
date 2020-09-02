@@ -25,7 +25,7 @@ public class gCEffectCommandSequence implements G3Serializable {
 	public void read(G3FileReader reader) {
 		name = reader.readEntry();
 		if (reader.readUnsignedShort() != 1) {
-			throw new IllegalStateException("Version der EffectCommandSequence wird nicht unterstützt.");
+			throw new IllegalStateException("Unsupported EffectCommandSequence version.");
 		}
 		commands = reader.readList(ClassUtil::readSubClass, gCEffectCommand.class);
 	}

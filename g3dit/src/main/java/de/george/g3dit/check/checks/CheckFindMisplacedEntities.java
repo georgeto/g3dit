@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.function.Supplier;
 
 import com.google.common.collect.Lists;
+import com.teamunify.i18n.I;
 
 import de.george.g3dit.check.EntityDescriptor;
 import de.george.g3dit.check.problem.ProblemConsumer;
@@ -24,8 +25,8 @@ public class CheckFindMisplacedEntities extends AbstractEntityCheck {
 	private boolean solidOnly;
 
 	public CheckFindMisplacedEntities() {
-		super("Falsch platzierte Entities ermitteln",
-				"Ermittelt Entities die innerhalb einer Schwellwertdistanz keine bzw. wenige Nachbarentities haben. In den meisten Fällen liegt dann eine fehlerhafte Positionierung der Entity vor.",
+		super(I.tr("Falsch platzierte Entities ermitteln"), I.tr(
+				"Ermittelt Entities die innerhalb einer Schwellwertdistanz keine bzw. wenige Nachbarentities haben. In den meisten Fällen liegt dann eine fehlerhafte Positionierung der Entity vor."),
 				0, 1);
 	}
 
@@ -109,7 +110,7 @@ public class CheckFindMisplacedEntities extends AbstractEntityCheck {
 			EntityAABBTreePrimitive neighbour = Lists.reverse(aabbTree.closestPrimitives(k + 1, primitive.getBounds())).get(0);
 			float distance = primitive.getBounds().distance(neighbour.getBounds());
 			if (distance > threshold) {
-				String message = String.format("An Position %s alleine im Radius von %f.", primitive.getPosition().toMarvinString(),
+				String message = I.trf("An Position {0} alleine im Radius von {1, number}.", primitive.getPosition().toMarvinString(),
 						distance);
 				postEntityProblem(problemConsumer, primitive.getDescriptor(), Severity.Info, message, null);
 			}

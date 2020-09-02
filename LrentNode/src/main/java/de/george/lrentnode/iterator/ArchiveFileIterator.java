@@ -39,7 +39,7 @@ public class ArchiveFileIterator implements Iterator<ArchiveFile> {
 				try {
 					aFile = FileUtil.openArchive(file, false, skipPropertySets);
 				} catch (Exception e) {
-					logger.warn("Fehler beim Öffnen von Archiv({}): {}", file.getAbsolutePath(), e.getMessage());
+					logger.warn("Error while opening archive({}): {}", file.getAbsolutePath(), e.getMessage());
 				}
 				if (aFile != null) {
 					nextFile = aFile;

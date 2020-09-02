@@ -7,6 +7,7 @@ import java.util.stream.IntStream;
 
 import com.ezware.dialog.task.TaskDialogs;
 import com.google.common.base.Strings;
+import com.teamunify.i18n.I;
 
 import de.george.g3utils.util.Pair;
 import de.george.lrentnode.iterator.TemplateFileIterator;
@@ -18,27 +19,27 @@ public class ScriptSearchTemplateForMesh implements IScript {
 
 	@Override
 	public String getTitle() {
-		return "Templates zu Mesh suchen";
+		return I.tr("Templates zu Mesh suchen");
 	}
 
 	@Override
 	public String getDescription() {
-		return "Ermittelt Templates die eine angegebene Mesh-MaterialSwitch Kombination(en) verwenden.";
+		return I.tr("Ermittelt Templates die eine angegebene Mesh-MaterialSwitch Kombination(en) verwenden.");
 	}
 
 	@Override
 	public boolean execute(IScriptEnvironment env) {
-		String meshRaw = TaskDialogs.input(env.getParentWindow(), "Mesh",
-				"Name des Meshes.\nEs kann auch nur ein Teil eines Meshnamens eingegeben werden.", "");
+		String meshRaw = TaskDialogs.input(env.getParentWindow(), I.tr("Mesh"),
+				I.tr("Name des Meshes.\nEs kann auch nur ein Teil eines Meshnamens eingegeben werden."), "");
 		if (Strings.isNullOrEmpty(meshRaw)) {
 			return false;
 		}
 
 		String mesh = EntityUtil.cleanAnimatedMeshName(meshRaw.toLowerCase());
 
-		String materialSwitchesRaw = TaskDialogs.input(env.getParentWindow(), "MaterialSwitches",
-				"Durch Leerzeichen separierte Liste von MaterialSwitches bzw. MaterialSwitch Bereichen (z.B. 4-12).\n"
-						+ "Bei leerer Eingabe werden alle MaterialSwitches akzeptiert.",
+		String materialSwitchesRaw = TaskDialogs.input(env.getParentWindow(), I.tr("MaterialSwitches"),
+				I.tr("Durch Leerzeichen separierte Liste von MaterialSwitches bzw. MaterialSwitch Bereichen (z.B. 4-12).\n"
+						+ "Bei leerer Eingabe werden alle MaterialSwitches akzeptiert."),
 				"");
 		if (Objects.isNull(materialSwitchesRaw)) {
 			return false;
@@ -63,8 +64,8 @@ public class ScriptSearchTemplateForMesh implements IScript {
 			}
 		}
 
-		env.log("Mesh: " + meshRaw);
-		env.log("MaterialSwitches: " + (materialSwitchesRaw.isEmpty() ? "Beliebig" : materialSwitchesRaw));
+		env.log(I.tr("Mesh") + ": " + meshRaw);
+		env.log(I.tr("MaterialSwitches") + ": " + (materialSwitchesRaw.isEmpty() ? I.tr("Beliebig") : materialSwitchesRaw));
 
 		TemplateFileIterator tpleFilesIterator = env.getFileManager().templateFilesIterator();
 		while (tpleFilesIterator.hasNext()) {

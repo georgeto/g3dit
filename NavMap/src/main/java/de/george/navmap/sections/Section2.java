@@ -5,6 +5,8 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import com.teamunify.i18n.I;
+
 import de.george.g3utils.io.G3FileReader;
 import de.george.g3utils.io.G3FileWriter;
 import de.george.g3utils.io.G3Serializable;
@@ -27,7 +29,7 @@ public class Section2 implements G3Serializable {
 
 	public int addNegZone(NegZone negZone) {
 		if (guidMapping.containsKey(negZone.getGuid())) {
-			throw new IllegalArgumentException("Section2 enthält bereits eine NegZone mit der Guid '" + negZone.getGuid() + "'.");
+			throw new IllegalArgumentException(I.trf("Section2 enthält bereits eine NegZone mit der Guid '{0}'.", negZone.getGuid()));
 		}
 		negZones.add(negZone);
 		guidMapping.put(negZone.getGuid(), negZone);
@@ -48,7 +50,7 @@ public class Section2 implements G3Serializable {
 
 	public void updateNegZone(int index, NegZone negZone) {
 		if (!negZone.getGuid().equals(getNegZone(index).getGuid())) {
-			throw new IllegalArgumentException("Guid der NegZone darf sich nicht ändern.");
+			throw new IllegalArgumentException(I.tr("Guid der NegZone darf sich nicht ändern."));
 		}
 		negZones.set(index, negZone);
 		guidMapping.put(negZone.getGuid(), negZone);

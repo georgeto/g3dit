@@ -116,7 +116,7 @@ public class bCVector implements G3Serializable, Serializable {
 		} catch (NumberFormatException e) {
 			// Nothing
 		}
-		throw new IllegalArgumentException("'" + string + "' ist kein gültiger bCVector.");
+		throw new IllegalArgumentException("'" + string + "' is not a valid bCVector.");
 	}
 
 	@Override

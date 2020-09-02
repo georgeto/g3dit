@@ -232,7 +232,7 @@ public class TemplateEntity extends eCEntity {
 	public void patchEntity(eCEntity entity, boolean justCreated, boolean dontCallOnChildrenAvailable,
 			Function<String, TemplateEntity> tpleLookup) {
 		if (!justCreated) {
-			throw new UnsupportedOperationException("Patching bestehender Entities wird noch nicht unterstützt");
+			throw new UnsupportedOperationException("Patching of existing entities is not yet supported.");
 		}
 
 		if (refTemplate == null) {
@@ -275,7 +275,7 @@ public class TemplateEntity extends eCEntity {
 		} else {
 			TemplateEntity refTpleEntity = tpleLookup.apply(refTemplate);
 			if (refTpleEntity == null) {
-				throw new IllegalStateException("RefTemplate " + refTemplate + " konnte nicht geladen werden.");
+				throw new IllegalStateException("RefTemplate " + refTemplate + " could not be loaded.");
 			}
 			refTpleEntity.patchEntity(entity, justCreated, false, tpleLookup);
 			entity.copyEntityPrivateData(this, justCreated);

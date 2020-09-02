@@ -8,6 +8,8 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import com.teamunify.i18n.I;
+
 import de.george.g3dit.util.FileDialogWrapper;
 import de.george.g3utils.gui.SwingUtils;
 import de.george.g3utils.util.IOUtils;
@@ -42,7 +44,7 @@ public class FolderPathOptionHandler extends TitledOptionHandler<String> {
 		tfPath = SwingUtils.createUndoTF();
 		content.add(tfPath, "grow");
 
-		JButton btnPath = new JButton("...");
+		JButton btnPath = new JButton(I.tr("..."));
 		btnPath.addActionListener(e -> {
 			File file = FileDialogWrapper.chooseDirectory(chooseFolderDialogTitle, getParent());
 			if (file != null) {

@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.google.common.io.Files;
+import com.teamunify.i18n.I;
 
 import de.george.g3dit.util.FileDialogWrapper;
 import de.george.lrentnode.archive.ArchiveFile;
@@ -20,18 +21,18 @@ public class ScriptDumpNavAreas implements IScript {
 
 	@Override
 	public String getTitle() {
-		return "NavZones und NavPaths exportieren";
+		return I.tr("NavZones und NavPaths exportieren");
 	}
 
 	@Override
 	public String getDescription() {
-		return "Exportiert NavZones und NavPaths in eine Textdatei.";
+		return I.tr("Exportiert NavZones und NavPaths in eine Textdatei.");
 	}
 
 	@Override
 	public boolean execute(IScriptEnvironment env) {
-		File saveFile = FileDialogWrapper.saveFile("NavZones und NavPaths in Textform speichern", "NavAreas.txt", env.getParentWindow(),
-				FileDialogWrapper.TXT_FILTER);
+		File saveFile = FileDialogWrapper.saveFile(I.tr("NavZones und NavPaths in Textform speichern"), "NavAreas.txt",
+				env.getParentWindow(), FileDialogWrapper.TXT_FILTER);
 		if (saveFile == null) {
 			return false;
 		}

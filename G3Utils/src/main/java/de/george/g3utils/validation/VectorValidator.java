@@ -3,6 +3,8 @@ package de.george.g3utils.validation;
 import org.netbeans.validation.api.AbstractValidator;
 import org.netbeans.validation.api.Problems;
 
+import com.teamunify.i18n.I;
+
 import de.george.g3utils.structure.bCVector;
 
 public class VectorValidator extends AbstractValidator<String> {
@@ -18,7 +20,7 @@ public class VectorValidator extends AbstractValidator<String> {
 		try {
 			bCVector.fromString(model);
 		} catch (IllegalArgumentException e) {
-			problems.append(compName + " enthält keinen gültige Vektor.");
+			problems.append(I.trf("{0} enthält keinen gültige Vektor.", compName));
 		}
 	}
 }

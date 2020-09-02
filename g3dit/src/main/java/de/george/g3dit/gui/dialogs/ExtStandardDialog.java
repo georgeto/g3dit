@@ -16,6 +16,7 @@ import javax.swing.JComponent;
 
 import com.jidesoft.dialog.ButtonPanel;
 import com.jidesoft.dialog.StandardDialog;
+import com.teamunify.i18n.I;
 
 import de.george.g3utils.gui.SwingUtils;
 
@@ -141,7 +142,7 @@ public abstract class ExtStandardDialog extends StandardDialog {
 	}
 
 	protected void addDefaultCancelButton(ButtonPanel buttonPanel) {
-		Action action = SwingUtils.createAction("Abbrechen", this::cancel);
+		Action action = SwingUtils.createAction(I.tr("Abbrechen"), this::cancel);
 		addButton(buttonPanel, action, ButtonPanel.CANCEL_BUTTON);
 	}
 

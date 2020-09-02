@@ -307,7 +307,7 @@ public abstract class G3Class {
 	}
 
 	private String getNoSuchPropertyErrorMessage(String name) {
-		return "Die Klasse '" + className + "' hat keine Property '" + name + "'.";
+		return "The class '" + className + "' has no property with name '" + name + "'.";
 	}
 
 	public void onChildrenAvailable(long oldChangeTime, long newChangeTime, TemplateEntity creator) {

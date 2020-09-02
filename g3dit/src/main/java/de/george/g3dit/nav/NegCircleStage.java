@@ -19,6 +19,7 @@ import org.jdesktop.swingx.JXTable;
 import com.ezware.dialog.task.TaskDialogs;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Iterables;
+import com.teamunify.i18n.I;
 
 import de.george.g3dit.EditorContext;
 import de.george.g3dit.EntityMap;
@@ -69,7 +70,7 @@ public class NegCircleStage extends NavCalcStage {
 
 	@Override
 	protected void getExtraButtons(JXTable changeTable, Consumer<JButton> add, Consumer<Runnable> repaintListener) {
-		JButton btnBlacklist = SwingUtils.keyStrokeButton("Blacklist", "Mark the selected issue(s) as having no NegCircle.",
+		JButton btnBlacklist = SwingUtils.keyStrokeButton(I.tr("Blacklist"), I.tr("Mark the selected issue(s) as having no NegCircle."),
 				Icons.getImageIcon(Icons.Select.CANCEL), KeyEvent.VK_B, InputEvent.CTRL_DOWN_MASK, this::onBlacklist);
 		repaintListener.accept(TableUtil.enableOnGreaterEqual(changeTable, btnBlacklist, 1,
 				() -> getSelectedChange().map(change -> change instanceof ObjectWithoutNegCircle && !change.isFixed()).orElse(false)));
@@ -95,7 +96,7 @@ public class NegCircleStage extends NavCalcStage {
 		if (!navPaths.isEmpty()) {
 			negCircle = negCircle.clone();
 			assignAreas(negCircle, assignedAreas);
-			addChange(new CriticalNegCircle(negCircle, HtmlCreator.renderList("Overlaps with NavPaths:", navPaths)));
+			addChange(new CriticalNegCircle(negCircle, HtmlCreator.renderList(I.tr("Overlaps with NavPaths:"), navPaths)));
 		}
 	}
 
@@ -118,7 +119,7 @@ public class NegCircleStage extends NavCalcStage {
 			blacklistedChanges.forEach(BaseChange::markFixed);
 			repaintChanges();
 		} else {
-			TaskDialogs.error(ctx.getParentWindow(), "Objects without NegCircle", "Already opened for editing.");
+			TaskDialogs.error(ctx.getParentWindow(), I.tr("Objects without NegCircle"), I.tr("Already opened for editing."));
 		}
 	}
 
@@ -159,7 +160,7 @@ public class NegCircleStage extends NavCalcStage {
 					List<String> details = new ArrayList<>(2);
 					if (ourNegCircle.circleOffsets.size() != negCircle.circleOffsets.size()) {
 						// Amount of NegCircle offsets has changed
-						details.add(String.format("NegCircle has %d offsets instead of %d.", ourNegCircle.circleOffsets.size(),
+						details.add(I.trf("NegCircle has {0, number} offsets instead of {1, number}.", ourNegCircle.circleOffsets.size(),
 								negCircle.circleOffsets.size()));
 					} else {
 						for (int i = 0; i < ourNegCircle.circleOffsets.size(); i++) {
@@ -167,7 +168,7 @@ public class NegCircleStage extends NavCalcStage {
 							bCVector ourOffset = ourNegCircle.circleOffsets.get(i);
 							bCVector offset = negCircle.circleOffsets.get(i);
 							if (!ourOffset.simliar(offset, 0.01f)) {
-								details.add(String.format("Offset %d differs: %s instead of %s (%s).", i, ourOffset, offset,
+								details.add(I.trf("Offset {0, number} differs: {1} instead of {2} ({3}).", i, ourOffset, offset,
 										offset.getTransformed(entity.getWorldMatrix().getInverted())));
 							}
 
@@ -175,7 +176,8 @@ public class NegCircleStage extends NavCalcStage {
 							float radius = negCircle.circleRadius.get(i);
 							if (!Misc.compareFloat(ourRadius, radius, 0.0001f)) {
 								// Neg Circle radius has changed.
-								details.add(String.format("Radius %d differs: %f instead of %f.", i, ourRadius, radius));
+								details.add(
+										I.trf("Radius {0, number} differs: {1, number} instead of {2, number}.", i, ourRadius, radius));
 							}
 						}
 					}
@@ -207,17 +209,16 @@ public class NegCircleStage extends NavCalcStage {
 			for (String navArea : negCircle.zoneGuids) {
 				if (assignedAreas.stream().noneMatch(area -> area.areaId.equals(navArea))) {
 					if (navMap.hasNavPath(navArea)) {
-						details.add(String.format("Not detected in NavPath %s.", navArea));
+						details.add(I.trf("Not detected in NavPath {0}.", navArea));
 					} else {
-						details.add(String.format("Not detected in NavZone %s.", navArea));
+						details.add(I.trf("Not detected in NavZone {0}.", navArea));
 					}
 				}
 			}
 
 			for (NavArea navArea : assignedAreas) {
 				if (!negCircle.zoneGuids.contains(navArea.areaId)) {
-					details.add(
-							String.format("Unexpectedly detected in %s %s.", navArea.isNavPath ? "NavPath" : "NavZone", navArea.areaId));
+					details.add(I.trf("Unexpectedly detected in {0} {1}.", navArea.isNavPath ? "NavPath" : "NavZone", navArea.areaId));
 				}
 			}
 
@@ -247,9 +248,9 @@ public class NegCircleStage extends NavCalcStage {
 				.map(guid -> String.format("  %s %s", navCache.getPath(guid).isPresent() ? "NavPath" : "NavZone", guid)));
 
 		if (details != null) {
-			return HtmlCreator.renderList(details, "", "Assigned NavAreas:", assignedNavAreas);
+			return HtmlCreator.renderList(details, "", I.tr("Assigned NavAreas:"), assignedNavAreas);
 		} else {
-			return HtmlCreator.renderList("Assigned NavAreas:", assignedNavAreas);
+			return HtmlCreator.renderList(I.tr("Assigned NavAreas:"), assignedNavAreas);
 		}
 	}
 
@@ -285,7 +286,7 @@ public class NegCircleStage extends NavCalcStage {
 
 	private class CriticalNegCircle extends BaseNegCircleChange {
 		public CriticalNegCircle(NegCircle negCircle, String details) {
-			super(negCircle, Severity.Info, "Critical NegCircle.", details);
+			super(negCircle, Severity.Info, I.tr("Critical NegCircle."), details);
 		}
 
 		@Override
@@ -296,7 +297,7 @@ public class NegCircleStage extends NavCalcStage {
 
 	private class ChangedNavAreas extends BaseNegCircleChange {
 		public ChangedNavAreas(NegCircle negCircle, String details) {
-			super(negCircle, Severity.Error, "Detected different containing NavAreas.", details);
+			super(negCircle, Severity.Error, I.tr("Detected different containing NavAreas."), details);
 		}
 
 		@Override
@@ -308,7 +309,7 @@ public class NegCircleStage extends NavCalcStage {
 
 	private class MovedOrModified extends BaseNegCircleChange {
 		public MovedOrModified(NegCircle negCircle, String details) {
-			super(negCircle, Severity.Error, "Entity was moved or modified.", details);
+			super(negCircle, Severity.Error, I.tr("Entity was moved or modified."), details);
 		}
 
 		@Override
@@ -320,7 +321,7 @@ public class NegCircleStage extends NavCalcStage {
 
 	private class ObjectWithoutNegCircle extends BaseNegCircleChange {
 		public ObjectWithoutNegCircle(NegCircle negCircle) {
-			super(negCircle, Severity.Warn, "Object without NegCircle.", null);
+			super(negCircle, Severity.Warn, I.tr("Object without NegCircle."), null);
 		}
 
 		@Override
@@ -337,7 +338,7 @@ public class NegCircleStage extends NavCalcStage {
 
 	private class NegCircleWithoutNegCirclePrototype extends BaseNegCircleChange {
 		public NegCircleWithoutNegCirclePrototype(NegCircle negCircle) {
-			super(negCircle, Severity.Info, "NegCircle for object without NegCirclePrototype.", null);
+			super(negCircle, Severity.Info, I.tr("NegCircle for object without NegCirclePrototype."), null);
 		}
 
 		@Override
@@ -348,7 +349,7 @@ public class NegCircleStage extends NavCalcStage {
 
 	private class NegCircleWithoutObject extends BaseNegCircleChange {
 		public NegCircleWithoutObject(NegCircle negCircle) {
-			super(negCircle, Severity.Warn, "NegCircle without object.", null);
+			super(negCircle, Severity.Warn, I.tr("NegCircle without object."), null);
 		}
 
 		@Override

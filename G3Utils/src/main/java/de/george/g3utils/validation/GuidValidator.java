@@ -3,6 +3,8 @@ package de.george.g3utils.validation;
 import org.netbeans.validation.api.AbstractValidator;
 import org.netbeans.validation.api.Problems;
 
+import com.teamunify.i18n.I;
+
 import de.george.g3utils.structure.GuidUtil;
 
 public class GuidValidator extends AbstractValidator<String> {
@@ -26,7 +28,7 @@ public class GuidValidator extends AbstractValidator<String> {
 			return;
 		}
 
-		problems.append(compName + " enthält keine gültige Guid.");
+		problems.append(I.trf("{0} enthält keine gültige Guid.", compName));
 	}
 
 }

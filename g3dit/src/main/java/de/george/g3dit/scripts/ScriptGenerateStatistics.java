@@ -3,6 +3,8 @@ package de.george.g3dit.scripts;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.teamunify.i18n.I;
+
 import de.george.g3dit.settings.EditorOptions;
 import de.george.g3dit.util.FileManager;
 import de.george.g3utils.util.IOUtils;
@@ -19,12 +21,12 @@ public class ScriptGenerateStatistics implements IScript {
 
 	@Override
 	public String getTitle() {
-		return "Änderungsstatistiken generieren";
+		return I.tr("Änderungsstatistiken generieren");
 	}
 
 	@Override
 	public String getDescription() {
-		return "Generiert Stastiken zu den vorgenommenen Veränderungen.";
+		return I.tr("Generiert Stastiken zu den vorgenommenen Veränderungen.");
 	}
 
 	@Override
@@ -92,16 +94,17 @@ public class ScriptGenerateStatistics implements IScript {
 			}
 		}
 
-		logDiff(env, "NPCs", originalNpcsCount, newNPCs.size(), originalNPCs.size());
-		logDiff(env, "Monster", originalMonstersCount, newMonsters.size(), originalMonsters.size());
-		logDiff(env, "Objekte", originalObjectsCount, newObjects.size(), originalObjects.size());
-		env.log("Vegetationsobjekte: %d (%+d)", vegetationObjectCount, vegetationObjectCount - originalVegetationObjectCount);
+		logDiff(env, I.tr("NPCs"), originalNpcsCount, newNPCs.size(), originalNPCs.size());
+		logDiff(env, I.tr("Monster"), originalMonstersCount, newMonsters.size(), originalMonsters.size());
+		logDiff(env, I.tr("Objekte"), originalObjectsCount, newObjects.size(), originalObjects.size());
+		env.log(I.tr("Vegetationsobjekte") + ": %d (%+d)", vegetationObjectCount, vegetationObjectCount - originalVegetationObjectCount);
 
 		return true;
 	}
 
 	private static void logDiff(IScriptEnvironment env, String name, int original, int created, int deleted) {
-		env.log("%s: %d (Gothic3) + %d (neu) - %d (entfernt) = %d", name, original, created, deleted, original + created - deleted);
+		env.log("%s: %d (Gothic3) + %d (%s) - %d (%s) = %d", name, original, created, I.tr("neu"), deleted, I.tr("entfernt"),
+				original + created - deleted);
 	}
 
 	private static boolean isIncluded(eCEntity entity) {

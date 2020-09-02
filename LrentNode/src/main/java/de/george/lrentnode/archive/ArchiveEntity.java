@@ -40,9 +40,9 @@ public abstract class ArchiveEntity extends eCEntity {
 
 	@Override
 	public void read(G3FileReader reader, boolean skipPropertySets) {
-		if (!reader.read(4).equals("53000100")) {
-			reader.warn(logger, "(1) ArchiveEntity unerwartete Dateistruktur.");
-		}
+		if (reader.readUnsignedShort() != 0x53)
+			reader.warn(logger, "Unsupported eCEntity version.");
+		reader.skip(2); // Skip 0x0001
 		setGuid(reader.readGUID());
 		enabled = reader.readBool();
 		renderingEnabled = reader.readBool();
@@ -87,7 +87,7 @@ public abstract class ArchiveEntity extends eCEntity {
 
 	@Override
 	public void write(G3FileWriter writer) {
-		writer.write("53000100");
+		writer.writeUnsignedShort(0x53).writeUnsignedShort(0x01);
 		writer.write(getGuid());
 		writer.writeBool(enabled);
 		writer.writeBool(renderingEnabled);

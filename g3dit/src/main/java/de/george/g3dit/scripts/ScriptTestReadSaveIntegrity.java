@@ -10,6 +10,8 @@ import java.util.Arrays;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.teamunify.i18n.I;
+
 import de.george.lrentnode.archive.ArchiveFile;
 import de.george.lrentnode.template.TemplateFile;
 import de.george.lrentnode.util.FileUtil;
@@ -19,12 +21,13 @@ public class ScriptTestReadSaveIntegrity implements IScript {
 
 	@Override
 	public String getTitle() {
-		return "Teste auf Veränderungen beim Laden und Speichern";
+		return I.tr("Teste auf Veränderungen beim Laden und Speichern");
 	}
 
 	@Override
 	public String getDescription() {
-		return "Überprüft welche Dateien sich ändern, wenn sie eigelesen und anschließend wieder gespeichert werden. Es werden keine Änderungen auf dem Datenträger vorgenommen, die Überprüfung geschieht im Arbeitsspeicher.";
+		return I.tr(
+				"Überprüft welche Dateien sich ändern, wenn sie eingelesen und anschließend wieder gespeichert werden. Es werden keine Änderungen auf dem Datenträger vorgenommen, die Überprüfung geschieht im Arbeitsspeicher.");
 	}
 
 	@Override
@@ -42,12 +45,12 @@ public class ScriptTestReadSaveIntegrity implements IScript {
 						env.log(file.getAbsolutePath());
 					}
 				} catch (IOException e) {
-					logger.warn("Fehler beim Vergleich", e);
-					env.log("Fehler beim Vergleich: " + e.getMessage());
+					logger.warn("Error while comparing archive file.", e);
+					env.log(I.trf("Fehler beim Vergleich: {0}", e.getMessage()));
 				}
 			} catch (IOException e) {
-				logger.warn("Fehler beim Laden", e);
-				env.log("Fehler beim Laden: " + e.getMessage());
+				logger.warn("Error while loading archive file.", e);
+				env.log(I.trf("Fehler beim Laden: {0}", e.getMessage()));
 			}
 			totalArchiveFiles++;
 		}
@@ -66,16 +69,16 @@ public class ScriptTestReadSaveIntegrity implements IScript {
 						env.log(file.getAbsolutePath());
 					}
 				} catch (IOException e) {
-					logger.warn("Fehler beim Vergleich", e);
-					env.log("Fehler beim Vergleich: " + e.getMessage());
+					logger.warn("Error while comparing template file.", e);
+					env.log(I.trf("Fehler beim Vergleich: {0}", e.getMessage()));
 				}
 			} catch (IOException e) {
-				logger.warn("Fehler beim Laden", e);
-				env.log("Fehler beim Laden: " + e.getMessage());
+				logger.warn("Error while loading template file.", e);
+				env.log(I.trf("Fehler beim Laden: {0}", e.getMessage()));
 			}
 			totalTemplateFiles++;
 		}
-		env.log(totalTemplateFiles + " .tple überprüft.");
+		env.log(I.trf("{0} .tple überprüft.", totalTemplateFiles));
 
 		return true;
 	}

@@ -13,6 +13,8 @@ import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 
+import com.teamunify.i18n.I;
+
 import de.george.g3dit.util.FileDialogWrapper;
 import de.george.g3dit.util.FileManager;
 import de.george.g3utils.structure.bCEulerAngles;
@@ -36,12 +38,12 @@ import de.george.lrentnode.util.FileUtil;
 public class ScriptReplaceCollisionShapes implements IScript {
 	@Override
 	public String getTitle() {
-		return "CollisionShapes ersetzen";
+		return I.tr("CollisionShapes ersetzen");
 	}
 
 	@Override
 	public String getDescription() {
-		return "Ersetzt CollisionShapes gemäß einer Liste von Ersetzungsregeln.";
+		return I.tr("Ersetzt CollisionShapes gemäß einer Liste von Ersetzungsregeln.");
 	}
 
 	private static class ReplaceRule {
@@ -95,7 +97,7 @@ public class ScriptReplaceCollisionShapes implements IScript {
 
 	@Override
 	public boolean execute(IScriptEnvironment env) {
-		File ruleFile = FileDialogWrapper.openFile("Ersetzungsregeln laden", env.getParentWindow(), FileDialogWrapper.CSV_FILTER);
+		File ruleFile = FileDialogWrapper.openFile(I.tr("Ersetzungsregeln laden"), env.getParentWindow(), FileDialogWrapper.CSV_FILTER);
 		if (ruleFile == null) {
 			return false;
 		}
@@ -148,6 +150,6 @@ public class ScriptReplaceCollisionShapes implements IScript {
 				}
 			}
 			return replaced;
-		}, "Es wurden insgesamt %d CollisionShapes ersetzt.");
+		}, I.tr("Es wurden insgesamt {0, number} CollisionShapes ersetzt."));
 	}
 }

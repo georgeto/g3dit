@@ -10,6 +10,7 @@ import javax.swing.JButton;
 import javax.swing.border.BevelBorder;
 
 import com.bric.swing.ColorPicker;
+import com.teamunify.i18n.I;
 
 public class ColorChooserButton extends JButton {
 
@@ -26,7 +27,7 @@ public class ColorChooserButton extends JButton {
 		setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
 		setSelectedColor(color);
 		addActionListener(arg0 -> {
-			Color newColor = ColorPicker.showDialog(owner, "Farbe auswählen", current, showAlpha);
+			Color newColor = ColorPicker.showDialog(owner, I.tr("Farbe auswählen"), current, showAlpha);
 			if (newColor != null) {
 				setSelectedColor(newColor);
 			}

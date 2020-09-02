@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Optional;
 
+import com.teamunify.i18n.I;
+
 import de.george.g3dit.util.FileManager;
 import de.george.g3utils.structure.bCBox;
 import de.george.g3utils.util.IOUtils;
@@ -18,12 +20,12 @@ public class ScriptUpdateContextBox implements IScript {
 
 	@Override
 	public String getTitle() {
-		return "Update ContextBox";
+		return I.tr("Update ContextBox");
 	}
 
 	@Override
 	public String getDescription() {
-		return "Update ContextBox of eCEntityDynamicContexts and eCGeometrySpatialContexts in primary data folder.";
+		return I.tr("Update ContextBox of eCEntityDynamicContexts and eCGeometrySpatialContexts in primary data folder.");
 	}
 
 	@Override

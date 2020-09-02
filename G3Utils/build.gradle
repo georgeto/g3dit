@@ -20,5 +20,8 @@ dependencies {
 	api group: 'org.objenesis', name: 'objenesis', version: '3.2'
 	api group: 'one.util', name: 'streamex', version: '0.8.0'
 	api group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: '2.13.0'
+	api group: 'com.teamunify', name: 'easy-i18n', version: '0.10.1-custom'
+	// Transitive dependencies of easy-i18n
+	api group: 'org.gnu.gettext', name: 'libintl', version: '0.18.3'
 	testImplementation group: 'junit', name: 'junit', version: '4.13.2'
 }

@@ -31,7 +31,7 @@ public class TemplateFile extends AbstractEntityFile<TemplateEntity> {
 
 	private void readInternalExt(G3FileReaderEx reader, boolean stringtableInPlace) throws IOException {
 		if (reader.getRemainingSize() < 8 || !reader.read(8).equals("47454E4F4D455450")) {
-			throw new IOException("'" + reader.getFileName() + "' ist keine gültige .tple Datei.");
+			throw new IOException("'" + reader.getFileName() + "' is not a valid .tple file.");
 		}
 
 		// Skip version
@@ -70,8 +70,8 @@ public class TemplateFile extends AbstractEntityFile<TemplateEntity> {
 		while ((parentIndex = reader.readInt()) != -1) {
 			int childIndex = reader.readInt();
 			if (childIndex < 0 || childIndex >= headers.size()) {
-				throw new IOException(reader.getFileName() + ": SubEntityDefinition enthält ungültigen Entity-Index " + childIndex
-						+ " an Adresse " + (reader.getPos() - 4) + ".");
+				throw new IOException(reader.getFileName() + ": SubEntityDefinition contains invalid entity index " + childIndex
+						+ " at address " + (reader.getPos() - 4) + ".");
 			}
 			// Attach entity
 			headers.get(parentIndex).attachChild(headers.get(childIndex));

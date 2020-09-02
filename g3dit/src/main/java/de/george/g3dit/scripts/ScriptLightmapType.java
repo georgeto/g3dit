@@ -6,6 +6,7 @@ import java.util.TreeSet;
 
 import com.google.common.collect.LinkedListMultimap;
 import com.google.common.collect.ListMultimap;
+import com.teamunify.i18n.I;
 
 import ca.odell.glazedlists.impl.sort.ComparableComparator;
 import de.george.g3utils.structure.bCVector;
@@ -23,12 +24,12 @@ public class ScriptLightmapType implements IScript {
 
 	@Override
 	public String getTitle() {
-		return "LightmapType auflisten";
+		return I.tr("LightmapType auflisten");
 	}
 
 	@Override
 	public String getDescription() {
-		return "Auflistung aller Entities die per Lightmap beleuchtet sind.";
+		return I.tr("Auflistung aller Entities die per Lightmap beleuchtet sind.");
 	}
 
 	@Override

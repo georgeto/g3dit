@@ -3,6 +3,8 @@ package de.george.g3dit.gui.components;
 import java.awt.event.KeyEvent;
 import java.util.Optional;
 
+import com.teamunify.i18n.I;
+
 import de.george.g3dit.EditorContext;
 import de.george.g3dit.cache.Caches;
 import de.george.g3dit.cache.EntityCache;
@@ -46,9 +48,9 @@ public class JEntityGuidField extends JSearchNamedGuidField {
 
 	@Override
 	protected void addDefaultMenuItem() {
-		addMenuItem("Entity zu dieser Guid öffnen [F3]", Icons.getImageIcon(Icons.Arrow.CURVE), this::openEntity);
-		addMenuItem("Nach Entity zu dieser Guid suchen [F4]", Icons.getImageIcon(Icons.Action.FIND), this::searchEntity);
-		addMenuItem("Zu Entity mit dieser Guid teleportieren", Icons.getImageIcon(Icons.Misc.GEOLOCATION),
+		addMenuItem(I.tr("Entity zu dieser Guid öffnen [F3]"), Icons.getImageIcon(Icons.Arrow.CURVE), this::openEntity);
+		addMenuItem(I.tr("Nach Entity zu dieser Guid suchen [F4]"), Icons.getImageIcon(Icons.Action.FIND), this::searchEntity);
+		addMenuItem(I.tr("Zu Entity mit dieser Guid teleportieren"), Icons.getImageIcon(Icons.Misc.GEOLOCATION),
 				(ctx, guid) -> IpcUtil.gotoGuid(guid), (ctx, guid) -> GuidUtil.isValid(guid) && ctx.getIpcMonitor().isAvailable());
 	}
 
