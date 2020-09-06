@@ -11,7 +11,6 @@ import org.netbeans.validation.api.builtin.stringvalidation.StringValidators;
 
 import com.google.common.collect.ImmutableList;
 
-import de.george.g3dit.cache.Caches;
 import de.george.g3dit.gui.components.JEnumComboBox;
 import de.george.g3dit.gui.components.JTemplateGuidField;
 import de.george.g3dit.gui.validation.TemplateExistenceValidator;
@@ -119,7 +118,7 @@ public class StatsTab extends AbstractTemplateTab {
 		for (int i = 1; i <= 2; i++) {
 			add(new JLabel(String.valueOf(i)), "gapleft 7");
 
-			JTemplateGuidField tfTemp = new JTemplateGuidField(Caches.template(ctx));
+			JTemplateGuidField tfTemp = new JTemplateGuidField(ctx);
 			tfSkill.add(tfTemp);
 			add(tfTemp, "gaptop 5, width 100:300:300, spanx, wrap");
 		}
@@ -128,7 +127,7 @@ public class StatsTab extends AbstractTemplateTab {
 		for (int i = 1; i <= 2; i++) {
 			add(new JLabel(String.valueOf(i)), "gapleft 7");
 
-			JTemplateGuidField tfTemp = new JTemplateGuidField(Caches.template(ctx));
+			JTemplateGuidField tfTemp = new JTemplateGuidField(ctx);
 			tfTemp.initValidation(validation(), "Guid", GuidValidator.INSTANCE_ALLOW_EMPTY,
 					new TemplateExistenceValidator(validation(), ctx));
 			tfSkill.add(tfTemp);

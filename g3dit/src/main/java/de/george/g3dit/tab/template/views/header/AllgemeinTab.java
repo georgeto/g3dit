@@ -80,7 +80,7 @@ public class AllgemeinTab extends AbstractTemplateTab {
 		add(btnCopyEntry, "width 27!, height 27!, wrap");
 
 		add(new JLabel("Reference Guid"), "wrap");
-		tfRefGuid = new JSearchGuidField(ctx, false);
+		tfRefGuid = new JSearchGuidField(ctx);
 		tfRefGuid.initValidation(validation(), "Reference Guid", GuidValidator.INSTANCE);
 		add(tfRefGuid, "width 100:300:300");
 

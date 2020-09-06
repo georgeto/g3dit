@@ -17,16 +17,12 @@ import net.miginfocom.swing.MigLayout;
 public class JGuidField extends JPanel {
 	private CopyOnWriteArrayList<Consumer<String>> listeners;
 
-	private UndoableTextField tfGuid;
+	protected UndoableTextField tfGuid;
 	protected JTextField tfGuidText;
 
 	private boolean editing = false;
 
 	public JGuidField() {
-		this(null);
-	}
-
-	public JGuidField(String text) {
 		listeners = new CopyOnWriteArrayList<>();
 		setLayout(new MigLayout("insets 0", "[]", "[]0[]"));
 
@@ -38,8 +34,6 @@ public class JGuidField extends JPanel {
 		tfGuidText = new JTextField();
 		add(tfGuidText, "width 100%, height 19:19:19");
 		tfGuidText.setEditable(false);
-
-		setText(text);
 	}
 
 	public void setText(String guid) {

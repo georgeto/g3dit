@@ -185,21 +185,24 @@ public class NavigationTab extends AbstractEntityTab {
 			JLabel lblWorking = new JLabel("Working");
 			add(lblWorking, "cell 0 1");
 
-			tfWorking = new JEntityGuidField(working, ctx);
+			tfWorking = new JEntityGuidField(ctx);
+			tfWorking.setText(working);
 			tfWorking.addMenuItem(miListAllEntities);
 			add(tfWorking, "cell 1 1, width 100:300:300");
 
 			JLabel lblRelaxing = new JLabel("Relaxing");
 			add(lblRelaxing, "cell 0 2");
 
-			tfRelaxing = new JEntityGuidField(relaxing, ctx);
+			tfRelaxing = new JEntityGuidField(ctx);
+			tfRelaxing.setText(relaxing);
 			tfRelaxing.addMenuItem(miListAllEntities);
 			add(tfRelaxing, "cell 1 2, width 100:300:300");
 
 			JLabel lblSleeping = new JLabel("Sleeping");
 			add(lblSleeping, "cell 0 3");
 
-			tfSleeping = new JEntityGuidField(sleeping, ctx);
+			tfSleeping = new JEntityGuidField(ctx);
+			tfSleeping.setText(sleeping);
 			tfSleeping.addMenuItem(miListAllEntities);
 			add(tfSleeping, "cell 1 3, width 100:300:300");
 

@@ -194,7 +194,7 @@ public class SharedInventarTab extends AbstractSharedTab {
 
 			add(new JLabel("Template"), "cell 0 2");
 
-			tfTemplate = new JTemplateGuidField(Caches.template(ctx));
+			tfTemplate = new JTemplateGuidField(ctx);
 			add(tfTemplate, "cell 1 2, width 100:300:300");
 			tfTemplate.addGuidFiedListener(newGuid -> {
 				TemplateCache tpleCache = Caches.template(ctx);

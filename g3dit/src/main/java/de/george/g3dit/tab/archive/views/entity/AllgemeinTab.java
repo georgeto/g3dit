@@ -17,11 +17,11 @@ import com.ezware.dialog.task.TaskDialogs;
 import de.danielbechler.diff.node.DiffNode;
 import de.danielbechler.diff.node.ToMapPrintingVisitor;
 import de.george.g3dit.cache.Caches;
-import de.george.g3dit.cache.TemplateCache;
 import de.george.g3dit.cache.TemplateCache.TemplateCacheEntry;
 import de.george.g3dit.entitytree.filter.GuidEntityFilter.MatchMode;
+import de.george.g3dit.gui.components.JEntityGuidField;
 import de.george.g3dit.gui.components.JFocusNameField;
-import de.george.g3dit.gui.components.JSearchGuidField;
+import de.george.g3dit.gui.components.JSearchNamedGuidField.Layout;
 import de.george.g3dit.gui.components.JTemplateGuidField;
 import de.george.g3dit.gui.dialogs.DisplayTextDialog;
 import de.george.g3dit.gui.dialogs.EntitySearchDialog;
@@ -55,7 +55,7 @@ public class AllgemeinTab extends AbstractEntityTab {
 	private JFocusNameField tfName;
 	private UndoableTextField tfChangeTime;
 
-	private JSearchGuidField tfGuid;
+	private JEntityGuidField tfGuid;
 	private JTemplateGuidField tfRefGuid;
 	private JLabel lblRefGuid, lblChangeTime;
 	private PositionPanel plWorldPosition;
@@ -85,7 +85,8 @@ public class AllgemeinTab extends AbstractEntityTab {
 		JLabel lblGuid = new JLabel("Guid");
 		add(lblGuid, "wrap");
 
-		tfGuid = new JSearchGuidField(ctx);
+		tfGuid = new JEntityGuidField(ctx);
+		tfGuid.setFieldLayout(Layout.VerticalNoName);
 		tfGuid.initValidation(validation(), "Guid", GuidValidator.INSTANCE);
 		add(tfGuid, "width 100:300:300");
 
@@ -128,8 +129,7 @@ public class AllgemeinTab extends AbstractEntityTab {
 		lblRefGuid = new JLabel("Reference Guid");
 		add(lblRefGuid, "wrap");
 
-		TemplateCache templateCache = Caches.template(ctx);
-		tfRefGuid = new JTemplateGuidField(templateCache);
+		tfRefGuid = new JTemplateGuidField(ctx);
 		tfRefGuid.initValidation(validation(), "Reference Guid", GuidValidator.INSTANCE_ALLOW_EMPTY,
 				new TemplateExistenceValidator(validation(), ctx));
 		add(tfRefGuid, "width 100:300:300");
@@ -153,7 +153,7 @@ public class AllgemeinTab extends AbstractEntityTab {
 		add(tfChangeTime, "width 50:100:100, wrap");
 
 		tfRefGuid.addGuidFiedListener(g -> evalDiffTemplate());
-		templateCache.addUpdateListener(this, c -> evalDiffTemplate());
+		Caches.template(ctx).addUpdateListener(this, c -> evalDiffTemplate());
 	}
 
 	@Override

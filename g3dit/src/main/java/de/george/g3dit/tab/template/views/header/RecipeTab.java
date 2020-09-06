@@ -11,7 +11,6 @@ import org.netbeans.validation.api.builtin.stringvalidation.StringValidators;
 
 import com.google.common.collect.ImmutableList;
 
-import de.george.g3dit.cache.Caches;
 import de.george.g3dit.gui.components.JEnumComboBox;
 import de.george.g3dit.gui.components.JTemplateGuidField;
 import de.george.g3dit.gui.validation.TemplateExistenceValidator;
@@ -66,7 +65,7 @@ public class RecipeTab extends AbstractTemplateTab {
 		add(new JLabel("Amount"), "wrap");
 
 		for (int i = 1; i <= 4; i++) {
-			JTemplateGuidField gfTemp = new JTemplateGuidField(Caches.template(ctx));
+			JTemplateGuidField gfTemp = new JTemplateGuidField(ctx);
 			gfTemp.initValidation(validation(), "Item", GuidValidator.INSTANCE_ALLOW_EMPTY,
 					new TemplateExistenceValidator(validation(), ctx));
 			gfIngridientItem.add(gfTemp);
@@ -82,7 +81,7 @@ public class RecipeTab extends AbstractTemplateTab {
 		add(SwingUtils.createBoldLabel("Resultat"), "gaptop 10, spanx, wrap");
 		add(new JLabel("Item"), "gapleft 7, spanx 2");
 		add(new JLabel("Amount"), "wrap");
-		gfResultItem = new JTemplateGuidField(Caches.template(ctx));
+		gfResultItem = new JTemplateGuidField(ctx);
 		gfResultItem.initValidation(validation(), "ResultItem", GuidValidator.INSTANCE, new TemplateExistenceValidator(validation(), ctx));
 		add(gfResultItem, "gapleft 7, gaptop 5, width 100:270:270, spanx 2");
 		tfResultAmount = SwingUtils.createUndoTF();
@@ -94,7 +93,7 @@ public class RecipeTab extends AbstractTemplateTab {
 
 		add(SwingUtils.createBoldLabel("Voraussetzungen"), "gaptop 10, spanx, wrap");
 		add(new JLabel("Skill"), "gapleft 7, spanx, wrap");
-		gfReqSkill = new JTemplateGuidField(Caches.template(ctx));
+		gfReqSkill = new JTemplateGuidField(ctx);
 		gfReqSkill.initValidation(validation(), "Skill", GuidValidator.INSTANCE_ALLOW_EMPTY,
 				new TemplateExistenceValidator(validation(), ctx));
 		add(gfReqSkill, "gapleft 7, width 100:300:300, spanx, wrap");

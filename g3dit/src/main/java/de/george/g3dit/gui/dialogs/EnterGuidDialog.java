@@ -35,7 +35,8 @@ public class EnterGuidDialog extends ExtStandardDialog {
 	public JComponent createContentPanel() {
 		JPanel panel = new JPanel(new MigLayout("insets 10, fill", "[grow]10 push[]"));
 
-		gfGuid = new JGuidField(defaultGuid);
+		gfGuid = new JGuidField();
+		gfGuid.setText(defaultGuid);
 		panel.add(gfGuid, "grow");
 
 		JButton btnRandomGuid = new JButton(Icons.getImageIcon(Icons.Data.COUNTER));

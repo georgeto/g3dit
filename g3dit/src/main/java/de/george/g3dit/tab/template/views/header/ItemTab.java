@@ -8,7 +8,6 @@ import javax.swing.JTextField;
 
 import org.netbeans.validation.api.builtin.stringvalidation.StringValidators;
 
-import de.george.g3dit.cache.Caches;
 import de.george.g3dit.gui.components.HidingGroup;
 import de.george.g3dit.gui.components.JEnumComboBox;
 import de.george.g3dit.gui.components.JTemplateGuidField;
@@ -102,19 +101,19 @@ public class ItemTab extends AbstractTemplateTab {
 		add(tfScriptUseFunc, "spanx 2, width 125:150:175, wrap");
 
 		add(new JLabel("ArmorSet"), "gapleft 7, spanx, wrap");
-		gfArmorSet = new JTemplateGuidField(Caches.template(ctx));
+		gfArmorSet = new JTemplateGuidField(ctx);
 		gfArmorSet.initValidation(validation(), "ArmorSet", GuidValidator.INSTANCE_ALLOW_EMPTY,
 				new TemplateExistenceValidator(validation(), ctx));
 		add(gfArmorSet, "gapleft 7, growx 100, spanx 4, wrap");
 
 		add(new JLabel("Spell"), "gapleft 7, spanx 2, wrap");
-		gfSpell = new JTemplateGuidField(Caches.template(ctx));
+		gfSpell = new JTemplateGuidField(ctx);
 		gfSpell.initValidation(validation(), "Spell", GuidValidator.INSTANCE_ALLOW_EMPTY,
 				new TemplateExistenceValidator(validation(), ctx));
 		add(gfSpell, "gapleft 7, growx 100, spanx 4, wrap");
 
 		add(new JLabel("Skill"), "gapleft 7, spanx 2, wrap");
-		gfSkill = new JTemplateGuidField(Caches.template(ctx));
+		gfSkill = new JTemplateGuidField(ctx);
 		gfSkill.initValidation(validation(), "Skill", GuidValidator.INSTANCE_ALLOW_EMPTY,
 				new TemplateExistenceValidator(validation(), ctx));
 		add(gfSkill, "gapleft 7, growx 100, spanx 4, wrap");
