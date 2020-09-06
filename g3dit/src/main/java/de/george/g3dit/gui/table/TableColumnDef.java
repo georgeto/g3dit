@@ -61,7 +61,7 @@ public class TableColumnDef {
 		return maxSize != -1;
 	}
 
-	public int getmaxSize() {
+	public int getMaxSize() {
 		return maxSize;
 	}
 

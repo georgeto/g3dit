@@ -212,7 +212,7 @@ public abstract class TableUtil {
 					columnExt.setPrototypeValue(columnDef.getPreferredSizeExample());
 				}
 				if (columnDef.hasMaxSize()) {
-					columnExt.setMaxWidth(columnDef.getmaxSize());
+					columnExt.setMaxWidth(columnDef.getMaxSize());
 				}
 			}
 
