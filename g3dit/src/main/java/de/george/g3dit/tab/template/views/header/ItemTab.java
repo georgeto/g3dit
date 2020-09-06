@@ -7,7 +7,6 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 import org.netbeans.validation.api.builtin.stringvalidation.StringValidators;
-import org.netbeans.validation.api.ui.ValidationGroup;
 
 import de.george.g3dit.cache.Caches;
 import de.george.g3dit.gui.components.HidingGroup;
@@ -53,19 +52,26 @@ public class ItemTab extends AbstractTemplateTab {
 
 	public ItemTab(EditorTemplateTab ctx) {
 		super(ctx);
+	}
 
+	@Override
+	public void initComponents() {
 		setLayout(new MigLayout("hidemode 3", "[]20[]20[]20[]"));
 
 		add(SwingUtils.createBoldLabel("Eigenschaften"), "spanx, wrap");
 		add(new JLabel("GoldValue"), "gapleft 7, spanx 2");
 		add(new JLabel("Category"), "spanx 2, wrap");
 		tfGoldValue = SwingUtils.createUndoTF();
+		tfGoldValue.setName("GoldValue");
+		addValidators(tfGoldValue, StringValidators.REQUIRE_NON_NEGATIVE_NUMBER, StringValidators.REQUIRE_VALID_INTEGER);
 		add(tfGoldValue, "gapleft 7, spanx 2, width 125:150:175");
 		cbCategory = new JEnumComboBox<>(gEItemCategory.class);
 		add(cbCategory, "width 125:150:175, spanx 2, wrap");
 
 		add(new JLabel("Icon"), "gapleft 7, spanx 2, wrap");
 		tfTexture = SwingUtils.createUndoTF();
+		tfTexture.setName("Icon");
+		addValidators(tfTexture, EmtpyWarnValidator.INSTANCE);
 		add(tfTexture, "gapleft 7, growx 100, spanx 4, wrap");
 
 		JLabel lblDamage = SwingUtils.createBoldLabel("Schaden");
@@ -77,6 +83,8 @@ public class ItemTab extends AbstractTemplateTab {
 		add(lblDamageAmount, "spanx 2, wrap");
 		add(cbDamageType, "gapleft 7, spanx 2, width 125:150:175");
 		tfDamageAmount = SwingUtils.createUndoTF();
+		tfDamageAmount.setName("DamageAmount");
+		addValidators(tfDamageAmount, StringValidators.REQUIRE_NON_NEGATIVE_NUMBER, StringValidators.REQUIRE_VALID_INTEGER);
 		add(tfDamageAmount, "spanx 2, width 125:150:175, wrap");
 		JLabel lblRange = new JLabel("Reichweite");
 		add(lblRange, "gapleft 7, spanx 2, wrap");
@@ -95,14 +103,20 @@ public class ItemTab extends AbstractTemplateTab {
 
 		add(new JLabel("ArmorSet"), "gapleft 7, spanx, wrap");
 		gfArmorSet = new JTemplateGuidField(Caches.template(ctx));
+		gfArmorSet.initValidation(validation(), "ArmorSet", GuidValidator.INSTANCE_ALLOW_EMPTY,
+				new TemplateExistenceValidator(validation(), ctx));
 		add(gfArmorSet, "gapleft 7, growx 100, spanx 4, wrap");
 
 		add(new JLabel("Spell"), "gapleft 7, spanx 2, wrap");
 		gfSpell = new JTemplateGuidField(Caches.template(ctx));
+		gfSpell.initValidation(validation(), "Spell", GuidValidator.INSTANCE_ALLOW_EMPTY,
+				new TemplateExistenceValidator(validation(), ctx));
 		add(gfSpell, "gapleft 7, growx 100, spanx 4, wrap");
 
 		add(new JLabel("Skill"), "gapleft 7, spanx 2, wrap");
 		gfSkill = new JTemplateGuidField(Caches.template(ctx));
+		gfSkill.initValidation(validation(), "Skill", GuidValidator.INSTANCE_ALLOW_EMPTY,
+				new TemplateExistenceValidator(validation(), ctx));
 		add(gfSkill, "gapleft 7, growx 100, spanx 4, wrap");
 
 		cbMissionItem = new JCheckBox("MissionItem");
@@ -148,22 +162,6 @@ public class ItemTab extends AbstractTemplateTab {
 	}
 
 	@Override
-	@SuppressWarnings("unchecked")
-	public void initValidation() {
-		ValidationGroup group = getValidationPanel().getValidationGroup();
-		tfGoldValue.setName("GoldValue");
-		group.add(tfGoldValue, StringValidators.REQUIRE_NON_NEGATIVE_NUMBER, StringValidators.REQUIRE_VALID_INTEGER);
-		tfDamageAmount.setName("DamageAmount");
-		group.add(tfDamageAmount, StringValidators.REQUIRE_NON_NEGATIVE_NUMBER, StringValidators.REQUIRE_VALID_INTEGER);
-		tfTexture.setName("Icon");
-		group.add(tfTexture, EmtpyWarnValidator.INSTANCE);
-		gfArmorSet.initValidation(group, "ArmorSet", GuidValidator.INSTANCE_ALLOW_EMPTY, new TemplateExistenceValidator(group, ctx));
-		gfSpell.initValidation(group, "Spell", GuidValidator.INSTANCE_ALLOW_EMPTY, new TemplateExistenceValidator(group, ctx));
-		gfSkill.initValidation(group, "Skill", GuidValidator.INSTANCE_ALLOW_EMPTY, new TemplateExistenceValidator(group, ctx));
-
-	}
-
-	@Override
 	public void loadValues(TemplateFile tple) {
 		TemplateEntity header = tple.getReferenceHeader();
 
@@ -197,9 +195,9 @@ public class ItemTab extends AbstractTemplateTab {
 			syncDamage.readEnum(cbDamageType, CD.gCDamage_PS.DamageType);
 			syncDamage.readLong(tfDamageAmount, CD.gCDamage_PS.DamageAmount);
 			tfRange.setText(ItemUtil.getWeaponRange(header).map(Object::toString).orElse("-"));
-			groupDamage.setVisible(true, getValidationPanel().getValidationGroup());
+			groupDamage.setVisible(true, validation());
 		} else {
-			groupDamage.setVisible(false, getValidationPanel().getValidationGroup());
+			groupDamage.setVisible(false, validation());
 		}
 
 	}

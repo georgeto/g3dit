@@ -11,8 +11,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EtchedBorder;
 
-import org.netbeans.validation.api.ui.ValidationGroup;
-
 import com.ezware.dialog.task.TaskDialogs;
 
 import ca.odell.glazedlists.EventList;
@@ -53,11 +51,6 @@ public class NegCircleContentPane extends NavMapObjectContentPane {
 				.matcherEditor(tfFilter -> new NavMapObjectMatcherEditor(tfFilter,
 						negZone -> navMap.getNegCircle(negZone).map(NegCircle::getCenter)))
 				.build();
-	}
-
-	@Override
-	public void initValidation() {
-		editingPanel.initValidation();
 	}
 
 	private Optional<String> addNegCircle() {
@@ -123,6 +116,8 @@ public class NegCircleContentPane extends NavMapObjectContentPane {
 			taOffsets = new JTextAreaExt(true);
 			taOffsets.getScrollPane().setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
 			taOffsets.getScrollPane().setRowHeaderView(new TextLineNumber(taOffsets));
+			taOffsets.setName("Offsets");
+			addValidators(taOffsets, new PointDistanceValidator());
 
 			taRadius = new JTextAreaExt(true);
 			taRadius.getScrollPane().setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
@@ -155,13 +150,6 @@ public class NegCircleContentPane extends NavMapObjectContentPane {
 			enableGroup = EnableGroup.create(gfCircleGuid, ecbObstacleType, taOffsets, taRadius, tfObjectY, taZonesGuids, btnCalc);
 
 			// TODO: Show/modify NegCircles without object...
-		}
-
-		public void initValidation() {
-			ValidationGroup group = getValidationPanel().getValidationGroup();
-
-			taOffsets.setName("Offsets");
-			group.add(taOffsets, new PointDistanceValidator());
 		}
 
 		public void loadNegCircle(String newNegCircleGuid) {

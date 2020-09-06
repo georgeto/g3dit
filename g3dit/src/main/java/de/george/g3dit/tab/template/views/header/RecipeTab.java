@@ -8,7 +8,6 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 import org.netbeans.validation.api.builtin.stringvalidation.StringValidators;
-import org.netbeans.validation.api.ui.ValidationGroup;
 
 import com.google.common.collect.ImmutableList;
 
@@ -51,7 +50,10 @@ public class RecipeTab extends AbstractTemplateTab {
 
 	public RecipeTab(EditorTemplateTab ctx) {
 		super(ctx);
+	}
 
+	@Override
+	public void initComponents() {
 		setLayout(new MigLayout("", "[]20[]20[]20[]"));
 
 		add(SwingUtils.createBoldLabel("Kategorie"), "spanx, wrap");
@@ -65,10 +67,14 @@ public class RecipeTab extends AbstractTemplateTab {
 
 		for (int i = 1; i <= 4; i++) {
 			JTemplateGuidField gfTemp = new JTemplateGuidField(Caches.template(ctx));
+			gfTemp.initValidation(validation(), "Item", GuidValidator.INSTANCE_ALLOW_EMPTY,
+					new TemplateExistenceValidator(validation(), ctx));
 			gfIngridientItem.add(gfTemp);
 			add(gfTemp, "gapleft 7, gaptop 5, width 100:270:270, spanx 2");
 
 			JTextField tfTemp = SwingUtils.createUndoTF();
+			tfTemp.setName("Amount");
+			addValidators(tfTemp, StringValidators.REQUIRE_VALID_INTEGER, StringValidators.REQUIRE_NON_NEGATIVE_NUMBER);
 			tfIngridientAmount.add(tfTemp);
 			add(tfTemp, "width 50:75:100, wrap");
 		}
@@ -77,8 +83,11 @@ public class RecipeTab extends AbstractTemplateTab {
 		add(new JLabel("Item"), "gapleft 7, spanx 2");
 		add(new JLabel("Amount"), "wrap");
 		gfResultItem = new JTemplateGuidField(Caches.template(ctx));
+		gfResultItem.initValidation(validation(), "ResultItem", GuidValidator.INSTANCE, new TemplateExistenceValidator(validation(), ctx));
 		add(gfResultItem, "gapleft 7, gaptop 5, width 100:270:270, spanx 2");
 		tfResultAmount = SwingUtils.createUndoTF();
+		tfResultAmount.setName("ResultAmount");
+		addValidators(tfResultAmount, StringValidators.REQUIRE_VALID_INTEGER, StringValidators.REQUIRE_NON_NEGATIVE_NUMBER);
 		add(tfResultAmount, "width 50:75:100, wrap");
 		pnResultQuality = new QualityPanel(CD.gCRecipe_PS.ResultQuality);
 		add(pnResultQuality, "gapleft 7, width 100:370:370, spanx, wrap");
@@ -86,6 +95,8 @@ public class RecipeTab extends AbstractTemplateTab {
 		add(SwingUtils.createBoldLabel("Voraussetzungen"), "gaptop 10, spanx, wrap");
 		add(new JLabel("Skill"), "gapleft 7, spanx, wrap");
 		gfReqSkill = new JTemplateGuidField(Caches.template(ctx));
+		gfReqSkill.initValidation(validation(), "Skill", GuidValidator.INSTANCE_ALLOW_EMPTY,
+				new TemplateExistenceValidator(validation(), ctx));
 		add(gfReqSkill, "gapleft 7, width 100:300:300, spanx, wrap");
 
 		add(new JLabel("Attribute Tag"), "gapleft 7");
@@ -93,6 +104,8 @@ public class RecipeTab extends AbstractTemplateTab {
 		cbReqAttribTag = new JComboBox<>(Misc.concat(new String[] {""}, ATTRIBUTES));
 		add(cbReqAttribTag, "gapleft 7, width 125:150:175");
 		tfReqAttribValue = SwingUtils.createUndoTF();
+		tfReqAttribValue.setName("Attribute Value");
+		addValidators(tfReqAttribValue, StringValidators.REQUIRE_VALID_INTEGER, StringValidators.REQUIRE_NON_NEGATIVE_NUMBER);
 		add(tfReqAttribValue, "growx, wrap");
 
 	}
@@ -105,24 +118,6 @@ public class RecipeTab extends AbstractTemplateTab {
 	@Override
 	public boolean isActive(TemplateFile tple) {
 		return tple.getReferenceHeader().hasClass(CD.gCRecipe_PS.class);
-	}
-
-	@Override
-	@SuppressWarnings("unchecked")
-	public void initValidation() {
-		ValidationGroup group = getValidationPanel().getValidationGroup();
-		tfIngridientAmount.forEach(t -> {
-			t.setName("Amount");
-			group.add(t, StringValidators.REQUIRE_VALID_INTEGER, StringValidators.REQUIRE_NON_NEGATIVE_NUMBER);
-		});
-		gfIngridientItem.forEach(
-				t -> t.initValidation(group, "Item", GuidValidator.INSTANCE_ALLOW_EMPTY, new TemplateExistenceValidator(group, ctx)));
-		gfResultItem.initValidation(group, "ResultItem", GuidValidator.INSTANCE, new TemplateExistenceValidator(group, ctx));
-		tfResultAmount.setName("ResultAmount");
-		group.add(tfResultAmount, StringValidators.REQUIRE_VALID_INTEGER, StringValidators.REQUIRE_NON_NEGATIVE_NUMBER);
-		gfReqSkill.initValidation(group, "Skill", GuidValidator.INSTANCE_ALLOW_EMPTY, new TemplateExistenceValidator(group, ctx));
-		tfReqAttribValue.setName("Attribute Value");
-		group.add(tfReqAttribValue, StringValidators.REQUIRE_VALID_INTEGER, StringValidators.REQUIRE_NON_NEGATIVE_NUMBER);
 	}
 
 	@Override

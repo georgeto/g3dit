@@ -66,8 +66,12 @@ public class VegetationTab extends AbstractEntityTab {
 
 	private ColorChooserButton ccbDefaultColor;
 
-	public VegetationTab(EditorArchiveTab inEditor) {
-		super(inEditor);
+	public VegetationTab(EditorArchiveTab ctx) {
+		super(ctx);
+	}
+
+	@Override
+	public void initComponents() {
 		setLayout(new MigLayout("fill", "", "[]push[grow]push[]"));
 
 		JPanel filterPanel = new JPanel(new MigLayout("gapx 10:20:30"));
@@ -343,9 +347,6 @@ public class VegetationTab extends AbstractEntityTab {
 			table.setRowFilter(null);
 		}
 	}
-
-	@Override
-	public void initValidation() {}
 
 	@Override
 	public void loadValues(eCEntity entity) {

@@ -12,8 +12,6 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.KeyStroke;
 
-import org.netbeans.validation.api.ui.ValidationGroup;
-
 import com.ezware.dialog.task.TaskDialogs;
 
 import de.danielbechler.diff.node.DiffNode;
@@ -69,20 +67,26 @@ public class AllgemeinTab extends AbstractEntityTab {
 
 	private boolean enclave, npc, anchor, interact, party;
 
-	public AllgemeinTab(EditorArchiveTab inEditor) {
-		super(inEditor);
-		setLayout(new MigLayout("fillx", "[][][]push[grow]"));// , "[][][][]0[]"));
+	public AllgemeinTab(EditorArchiveTab ctx) {
+		super(ctx);
+	}
+
+	@Override
+	public void initComponents() {
+		setLayout(new MigLayout("fillx", "[][][]push[grow]"));
 
 		JLabel lblName = new JLabel("Name");
 		add(lblName, "wrap");
 
 		tfName = new JFocusNameField(ctx);
+		tfName.initValidation(validation(), "Name", EmtpyWarnValidator.INSTANCE);
 		add(tfName, "width 100:300:300, wrap");
 
 		JLabel lblGuid = new JLabel("Guid");
 		add(lblGuid, "wrap");
 
-		tfGuid = new JSearchGuidField(inEditor);
+		tfGuid = new JSearchGuidField(ctx);
+		tfGuid.initValidation(validation(), "Guid", GuidValidator.INSTANCE);
 		add(tfGuid, "width 100:300:300");
 
 		tfGuid.addMenuItem("Alle Nutzer dieses Freepoints auflisten", Icons.getImageIcon(Icons.Misc.GLOBE),
@@ -126,6 +130,8 @@ public class AllgemeinTab extends AbstractEntityTab {
 
 		TemplateCache templateCache = Caches.template(ctx);
 		tfRefGuid = new JTemplateGuidField(templateCache);
+		tfRefGuid.initValidation(validation(), "Reference Guid", GuidValidator.INSTANCE_ALLOW_EMPTY,
+				new TemplateExistenceValidator(validation(), ctx));
 		add(tfRefGuid, "width 100:300:300");
 
 		btnLoadFromTemplate = new JButton(Icons.getImageIcon(Icons.IO.UPLOAD));
@@ -142,6 +148,8 @@ public class AllgemeinTab extends AbstractEntityTab {
 		add(lblChangeTime, "wrap");
 
 		tfChangeTime = SwingUtils.createUndoTF();
+		tfChangeTime.setName("ChangeTime");
+		addValidators(tfChangeTime, IsALongValidator.INSTANCE, new ChangeTimeValidator(validation(), ctx, tfRefGuid));
 		add(tfChangeTime, "width 50:100:100, wrap");
 
 		tfRefGuid.addGuidFiedListener(g -> evalDiffTemplate());
@@ -156,20 +164,6 @@ public class AllgemeinTab extends AbstractEntityTab {
 	@Override
 	public boolean isActive(eCEntity entity) {
 		return true;
-	}
-
-	/**
-	 * Einmalig nach erstellen des Panels aufrufen, um die Fehleranzeige zu initialisieren
-	 */
-	@Override
-	public void initValidation() {
-		ValidationGroup group = getValidationPanel().getValidationGroup();
-		tfName.initValidation(group, "Name", EmtpyWarnValidator.INSTANCE);
-		tfGuid.initValidation(group, "Guid", GuidValidator.INSTANCE);
-		tfRefGuid.initValidation(group, "Reference Guid", GuidValidator.INSTANCE_ALLOW_EMPTY, new TemplateExistenceValidator(group, ctx));
-		tfChangeTime.setName("ChangeTime");
-		group.add(tfChangeTime, IsALongValidator.INSTANCE);
-		group.add(tfChangeTime, new ChangeTimeValidator(group, ctx, tfRefGuid));
 	}
 
 	/**

@@ -12,7 +12,6 @@ import javax.swing.JTextField;
 
 import org.netbeans.validation.api.builtin.stringvalidation.StringValidators;
 import org.netbeans.validation.api.ui.ValidationGroup;
-import org.netbeans.validation.api.ui.swing.ValidationPanel;
 
 import de.george.g3dit.EditorContext;
 import de.george.g3dit.cache.Caches;
@@ -47,6 +46,10 @@ public class SharedInventarTab extends AbstractSharedTab {
 
 	public SharedInventarTab(EditorContext ctx, Container container) {
 		super(ctx, container);
+	}
+
+	@Override
+	public void initComponents(ValidationGroup validation, JScrollPane scrollPane) {
 		container.setLayout(new MigLayout("fillx", "[]20px[]20px[]push[]"));
 
 		JLabel lblTreasureSets = SwingUtils.createBoldLabel("TreasureSets");
@@ -61,14 +64,12 @@ public class SharedInventarTab extends AbstractSharedTab {
 		}
 
 		initAutoCompleters();
-	}
 
-	@Override
-	public void afterScrollPaneCreation(JScrollPane scrollPane) {
 		JLabel lblInventoryStacks = SwingUtils.createBoldLabel("InventoryStacks");
 		container.add(lblInventoryStacks, "gaptop 7, wrap");
 
 		stacksPanel = new InventarStacksPanel(scrollPane);
+		stacksPanel.initValidation(validation);
 		container.add(stacksPanel, "width 100:300:450, spanx 4, grow, wrap");
 	}
 
@@ -83,11 +84,6 @@ public class SharedInventarTab extends AbstractSharedTab {
 	@Override
 	public boolean isActive(G3ClassContainer entity) {
 		return entity.hasClass(CD.gCInventory_PS.class);
-	}
-
-	@Override
-	public void initValidation(ValidationPanel validationPanel) {
-		stacksPanel.initValidation(validationPanel);
 	}
 
 	@Override

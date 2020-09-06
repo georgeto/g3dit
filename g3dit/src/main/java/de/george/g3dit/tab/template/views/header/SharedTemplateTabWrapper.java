@@ -12,10 +12,10 @@ import de.george.lrentnode.template.TemplateFile;
 public class SharedTemplateTabWrapper extends AbstractTemplateTab {
 	private AbstractSharedTab sharedTab;
 
-	public SharedTemplateTabWrapper(Class<? extends AbstractSharedTab> sharedTab, EditorTemplateTab inEditor) {
-		super(inEditor);
+	public SharedTemplateTabWrapper(Class<? extends AbstractSharedTab> sharedTab, EditorTemplateTab ctx) {
+		super(ctx);
 		try {
-			this.sharedTab = sharedTab.getConstructor(EditorContext.class, Container.class).newInstance(inEditor, this);
+			this.sharedTab = sharedTab.getConstructor(EditorContext.class, Container.class).newInstance(ctx, this);
 		} catch (ReflectiveOperationException | SecurityException e) {
 			if (e.getSuppressed().length > 0) {
 				throw new RuntimeException(e.getSuppressed()[0]);
@@ -25,8 +25,8 @@ public class SharedTemplateTabWrapper extends AbstractTemplateTab {
 	}
 
 	@Override
-	protected void afterScrollPaneCreation() {
-		sharedTab.afterScrollPaneCreation(getScrollpane());
+	protected void initComponents() {
+		sharedTab.initComponents(validation(), getScrollpane());
 	}
 
 	@Override
@@ -37,11 +37,6 @@ public class SharedTemplateTabWrapper extends AbstractTemplateTab {
 	@Override
 	public String getTabTitle() {
 		return sharedTab.getTabTitle();
-	}
-
-	@Override
-	public void initValidation() {
-		sharedTab.initValidation(getValidationPanel());
 	}
 
 	@Override

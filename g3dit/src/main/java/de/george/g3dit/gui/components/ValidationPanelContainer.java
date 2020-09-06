@@ -5,6 +5,8 @@ import javax.swing.JPanel;
 import javax.swing.JRootPane;
 import javax.swing.JScrollPane;
 
+import org.netbeans.validation.api.Validator;
+import org.netbeans.validation.api.ui.ValidationGroup;
 import org.netbeans.validation.api.ui.swing.ValidationPanel;
 
 import de.george.g3utils.validation.LayeredValidationPanel;
@@ -12,11 +14,6 @@ import de.george.g3utils.validation.LayeredValidationPanel;
 public abstract class ValidationPanelContainer<T extends ValidationPanelContainer<T>> extends JPanel {
 	private JScrollPane scrollPane;
 	private LayeredValidationPanel validationPanel;
-
-	/**
-	 * Einmalig nach erstellen des Panels aufrufen, um die Fehleranzeige zu initialisieren
-	 */
-	public abstract void initValidation();
 
 	/**
 	 * ValidationPanel entählt den Tab
@@ -27,8 +24,7 @@ public abstract class ValidationPanelContainer<T extends ValidationPanelContaine
 	public T createValiditionPanel() {
 		validationPanel = new LayeredValidationPanel();
 		validationPanel.validationPanel().setInnerComponent(this);
-		this.afterScrollPaneCreation();
-		this.initValidation();
+		this.initComponents();
 		return (T) this;
 	}
 
@@ -44,15 +40,14 @@ public abstract class ValidationPanelContainer<T extends ValidationPanelContaine
 		scrollPane.setBorder(BorderFactory.createEmptyBorder());
 		scrollPane.setViewportView(this);
 		validationPanel.validationPanel().setInnerComponent(scrollPane);
-		this.afterScrollPaneCreation();
-		this.initValidation();
+		this.initComponents();
 		return (T) this;
 	}
 
 	/**
-	 * Wird aufgerufen, nachdem scrollPane instanziiert wurde
+	 * Wird aufgerufen nachdem ValidationPanel und eventuell ScrollPanel erstellten wurden.
 	 */
-	protected void afterScrollPaneCreation() {}
+	protected abstract void initComponents();
 
 	public ValidationPanel getValidationPanel() {
 		return validationPanel.validationPanel();
@@ -64,5 +59,14 @@ public abstract class ValidationPanelContainer<T extends ValidationPanelContaine
 
 	protected JScrollPane getScrollpane() {
 		return scrollPane;
+	}
+
+	protected final ValidationGroup validation() {
+		return getValidationPanel().getValidationGroup();
+	}
+
+	@SafeVarargs
+	protected final <ComponentType, ValueType> void addValidators(ComponentType comp, Validator<ValueType>... validators) {
+		validation().add(comp, validators);
 	}
 }

@@ -21,7 +21,6 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 import org.netbeans.validation.api.builtin.stringvalidation.StringValidators;
-import org.netbeans.validation.api.ui.ValidationGroup;
 
 import com.ezware.dialog.task.TaskDialogs;
 import com.fasterxml.jackson.databind.type.TypeFactory;
@@ -63,7 +62,10 @@ public class TreasureSetTab extends AbstractTemplateTab {
 	public TreasureSetTab(EditorTemplateTab ctx) {
 		super(ctx);
 		categories = ctx.getFileManager().getConfigFile("Categories.json", CategoriesConfigFile.class);
+	}
 
+	@Override
+	public void initComponents() {
 		setLayout(new MigLayout("", "[]20[]20[]"));
 
 		add(SwingUtils.createBoldLabel("Eigenschaften"), "spanx, wrap");
@@ -89,9 +91,13 @@ public class TreasureSetTab extends AbstractTemplateTab {
 		add(new JLabel("MaxTransferStacks"), "wrap");
 
 		tfMinTStacks = SwingUtils.createUndoTF();
+		tfMinTStacks.setName("MinTransferStacks");
+		addValidators(tfMinTStacks, StringValidators.REQUIRE_NON_NEGATIVE_NUMBER, StringValidators.REQUIRE_VALID_INTEGER);
 		add(tfMinTStacks, "gapleft 7, growx");
 
 		tfMaxTStacks = SwingUtils.createUndoTF();
+		tfMaxTStacks.setName("MaxTransferStacks");
+		addValidators(tfMaxTStacks, StringValidators.REQUIRE_NON_NEGATIVE_NUMBER, StringValidators.REQUIRE_VALID_INTEGER);
 		add(tfMaxTStacks, "growx");
 
 		JButton btnCopyToClipboard = new JButton("Zwischenablage", Icons.getImageIcon(Icons.Action.COPY));
@@ -115,17 +121,6 @@ public class TreasureSetTab extends AbstractTemplateTab {
 	public boolean isActive(TemplateFile tple) {
 		return tple.getReferenceHeader().hasClass(CD.gCInventory_PS.class)
 				&& tple.getReferenceHeader().hasClass(CD.gCTreasureSet_PS.class);
-	}
-
-	@Override
-	@SuppressWarnings("unchecked")
-	public void initValidation() {
-		ValidationGroup group = getValidationPanel().getValidationGroup();
-		tfMinTStacks.setName("MinTransferStacks");
-		group.add(tfMinTStacks, StringValidators.REQUIRE_NON_NEGATIVE_NUMBER, StringValidators.REQUIRE_VALID_INTEGER);
-		tfMaxTStacks.setName("MaxTransferStacks");
-		group.add(tfMaxTStacks, StringValidators.REQUIRE_NON_NEGATIVE_NUMBER, StringValidators.REQUIRE_VALID_INTEGER);
-
 	}
 
 	@Override

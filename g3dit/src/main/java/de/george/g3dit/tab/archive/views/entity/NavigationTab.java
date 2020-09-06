@@ -36,7 +36,6 @@ public class NavigationTab extends AbstractEntityTab {
 
 	public NavigationTab(EditorArchiveTab ctx) {
 		super(ctx);
-		setLayout(new MigLayout("fillx", "[]"));
 	}
 
 	@Override
@@ -50,14 +49,11 @@ public class NavigationTab extends AbstractEntityTab {
 	}
 
 	@Override
-	protected void afterScrollPaneCreation() {
+	protected void initComponents() {
+		setLayout(new MigLayout("fillx", "[]"));
 		routinesPanel = new NavigationRoutinesPanel(getScrollpane());
+		routinesPanel.initValidation(validation());
 		add(routinesPanel, "width 100:300:450, spanx 4, grow, wrap");
-	}
-
-	@Override
-	public void initValidation() {
-		routinesPanel.initValidation(getValidationPanel());
 	}
 
 	@Override

@@ -34,6 +34,10 @@ public class ItemScriptTab extends AbstractTemplateTab {
 
 	public ItemScriptTab(EditorTemplateTab ctx) {
 		super(ctx);
+	}
+
+	@Override
+	public void initComponents() {
 		setLayout(new MigLayout("fill, insets 0", "[]"));
 
 		scriptTable = new JXTable();
@@ -71,11 +75,6 @@ public class ItemScriptTab extends AbstractTemplateTab {
 	@Override
 	public boolean isActive(TemplateFile tple) {
 		return tple.getReferenceHeader().hasClass(CD.gCItem_PS.class);
-	}
-
-	@Override
-	public void initValidation() {
-
 	}
 
 	private class ScriptTableModel extends ListTableModel<ScriptLine> {

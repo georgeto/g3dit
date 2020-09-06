@@ -5,7 +5,7 @@ import java.awt.Container;
 import javax.swing.JComponent;
 import javax.swing.JScrollPane;
 
-import org.netbeans.validation.api.ui.swing.ValidationPanel;
+import org.netbeans.validation.api.ui.ValidationGroup;
 
 import de.george.g3dit.EditorContext;
 import de.george.g3dit.gui.components.Keystroker;
@@ -20,8 +20,6 @@ public abstract class AbstractSharedTab implements Keystroker {
 		this.container = container;
 	}
 
-	public void afterScrollPaneCreation(JScrollPane scrollPane) {}
-
 	/**
 	 * Wird aufgerufen, wenn die TabbedPane, die diesen Tab enthält, geschlossen wird. In dieser
 	 * Methode kann der Tab Resourcen freigeben.
@@ -30,9 +28,7 @@ public abstract class AbstractSharedTab implements Keystroker {
 
 	public abstract String getTabTitle();
 
-	public void initValidation(ValidationPanel validationPanel) {
-
-	}
+	public abstract void initComponents(ValidationGroup validation, JScrollPane scrollPane);
 
 	/**
 	 * Nach dem Umschalten auf einen anderen {@code G3ClassContainer} aufrufen, um deren Werte ins

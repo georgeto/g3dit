@@ -13,7 +13,6 @@ import org.jdesktop.swingx.renderer.CheckBoxProvider;
 import org.jdesktop.swingx.renderer.DefaultTableRenderer;
 import org.jdesktop.swingx.table.ColumnFactory;
 import org.jdesktop.swingx.table.TableColumnExt;
-import org.netbeans.validation.api.ui.ValidationGroup;
 
 import de.george.g3dit.gui.components.TableModificationControl;
 import de.george.g3dit.gui.table.TableUtil;
@@ -37,22 +36,33 @@ public class MapTab extends AbstractTemplateTab {
 	public MapTab(EditorTemplateTab ctx) {
 		super(ctx);
 		setLayout(new MigLayout("", "[]20[]20[]"));
+	}
 
+	@Override
+	public void initComponents() {
 		add(SwingUtils.createBoldLabel("Eigenschaften"), "spanx, wrap");
 		add(new JLabel("Header"), "gapleft 7, gaptop 5, wrap");
 		tfHeader = SwingUtils.createUndoTF();
+		tfHeader.setName("Header");
+		addValidators(tfHeader, EmtpyWarnValidator.INSTANCE);
 		add(tfHeader, "gapleft 7, spanx 2, growx, width 175:225:250, wrap");
 
 		add(new JLabel("Bitmap"), "gapleft 7, gaptop 5, wrap");
 		tfBitmap = SwingUtils.createUndoTF();
+		tfBitmap.setName("Bitmap");
+		addValidators(tfBitmap, EmtpyWarnValidator.INSTANCE);
 		add(tfBitmap, "gapleft 7, spanx 2, growx, width 175:225:250, wrap");
 
 		add(new JLabel("WorldTopLeft"), "gapleft 7, gaptop 5, wrap");
 		tfWorldTopLeft = SwingUtils.createUndoTF();
+		tfWorldTopLeft.setName("WorldTopLeft");
+		addValidators(tfWorldTopLeft, VectorValidator.INSTANCE);
 		add(tfWorldTopLeft, "gapleft 7, spanx 2, growx, width 175:225:250, wrap");
 
 		add(new JLabel("WorldBottomRight"), "gapleft 7, gaptop 5, wrap");
 		tfWorldBottomRight = SwingUtils.createUndoTF();
+		tfWorldBottomRight.setName("WorldBottomRight");
+		addValidators(tfWorldBottomRight, VectorValidator.INSTANCE);
 		add(tfWorldBottomRight, "gapleft 7, spanx 2, growx, width 175:225:250, wrap");
 
 		add(SwingUtils.createBoldLabel("Markers"), "gaptop 10, wrap");
@@ -68,19 +78,6 @@ public class MapTab extends AbstractTemplateTab {
 	@Override
 	public boolean isActive(TemplateFile tple) {
 		return tple.getReferenceHeader().hasClass(CD.gCMap_PS.class);
-	}
-
-	@Override
-	public void initValidation() {
-		ValidationGroup group = getValidationPanel().getValidationGroup();
-		tfHeader.setName("Header");
-		group.add(tfHeader, EmtpyWarnValidator.INSTANCE);
-		tfBitmap.setName("Bitmap");
-		group.add(tfBitmap, EmtpyWarnValidator.INSTANCE);
-		tfWorldTopLeft.setName("WorldTopLeft");
-		group.add(tfWorldTopLeft, VectorValidator.INSTANCE);
-		tfWorldBottomRight.setName("WorldBottomRight");
-		group.add(tfWorldBottomRight, VectorValidator.INSTANCE);
 	}
 
 	@Override

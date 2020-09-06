@@ -15,8 +15,6 @@ import javax.swing.JPopupMenu;
 import javax.swing.JTextField;
 import javax.swing.border.EtchedBorder;
 
-import org.netbeans.validation.api.ui.ValidationGroup;
-
 import com.ezware.dialog.task.TaskDialogs;
 
 import de.george.g3dit.cache.Caches;
@@ -56,7 +54,10 @@ public class NavPathTab extends AbstractNavTab {
 
 	public NavPathTab(EditorArchiveTab ctx) {
 		super(ctx);
+	}
 
+	@Override
+	public void initComponents() {
 		setLayout(new MigLayout("fillx", "[][][][]push"));
 
 		add(new JLabel("UnlimitedHeight"), "wrap");
@@ -69,12 +70,14 @@ public class NavPathTab extends AbstractNavTab {
 		JLabel lblZoneA = new JLabel("ZoneA Guid");
 		tfZoneA = new JEntityGuidField(ctx);
 		tfZoneA.setEditable(false);
+		tfZoneA.initValidation(validation(), "ZoneA", GuidValidator.INSTANCE_ALLOW_EMPTY, new EntityExistenceValidator(validation(), ctx));
 		add(lblZoneA, "wrap");
 		add(tfZoneA, "width 100:300:300, spanx 3, wrap");
 
 		JLabel lblZoneB = new JLabel("ZoneB Guid");
 		tfZoneB = new JEntityGuidField(ctx);
 		tfZoneB.setEditable(false);
+		tfZoneB.initValidation(validation(), "ZoneB", GuidValidator.INSTANCE_ALLOW_EMPTY, new EntityExistenceValidator(validation(), ctx));
 		add(lblZoneB, "wrap");
 		add(tfZoneB, "width 100:300:300, spanx 3, wrap");
 
@@ -236,18 +239,6 @@ public class NavPathTab extends AbstractNavTab {
 		}
 
 		return Pair.of(points, radius);
-	}
-
-	/**
-	 * Einmalig nach erstellen des Panels aufrufen, um die Fehleranzeige zu initialisieren
-	 */
-	@Override
-	public void initValidation() {
-		super.initValidation();
-		ValidationGroup group = getValidationPanel().getValidationGroup();
-
-		tfZoneA.initValidation(group, "ZoneA", GuidValidator.INSTANCE_ALLOW_EMPTY, new EntityExistenceValidator(group, ctx));
-		tfZoneB.initValidation(group, "ZoneB", GuidValidator.INSTANCE_ALLOW_EMPTY, new EntityExistenceValidator(group, ctx));
 	}
 
 	@Override

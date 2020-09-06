@@ -3,11 +3,11 @@ package de.george.g3dit.tab.shared;
 import java.awt.Container;
 
 import javax.swing.JLabel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
 import org.netbeans.validation.api.builtin.stringvalidation.StringValidators;
 import org.netbeans.validation.api.ui.ValidationGroup;
-import org.netbeans.validation.api.ui.swing.ValidationPanel;
 
 import de.george.g3dit.EditorContext;
 import de.george.g3dit.gui.components.JEnumComboBox;
@@ -26,6 +26,10 @@ public class SharedEnclaveTab extends AbstractSharedTab {
 
 	public SharedEnclaveTab(EditorContext ctx, Container container) {
 		super(ctx, container);
+	}
+
+	@Override
+	public void initComponents(ValidationGroup validation, JScrollPane scrollPane) {
 		container.setLayout(new MigLayout("fillx", "[]20px[]20px[]push"));
 
 		JLabel lblPoliticalAlignment = new JLabel("PoliticalAlignment");
@@ -36,6 +40,8 @@ public class SharedEnclaveTab extends AbstractSharedTab {
 
 		JLabel lblPlayerFame = new JLabel("PlayerFame");
 		tfPlayerFame = SwingUtils.createUndoTF();
+		tfPlayerFame.setName("PlayerFame");
+		validation.add(tfPlayerFame, StringValidators.REQUIRE_NON_NEGATIVE_NUMBER, StringValidators.REQUIRE_VALID_INTEGER);
 
 		container.add(lblPoliticalAlignment, "");
 		container.add(lblKnownPlayerCrime, "");
@@ -53,15 +59,6 @@ public class SharedEnclaveTab extends AbstractSharedTab {
 	@Override
 	public boolean isActive(G3ClassContainer entity) {
 		return entity.hasClass(CD.gCEnclave_PS.class);
-	}
-
-	@Override
-	@SuppressWarnings("unchecked")
-	public void initValidation(ValidationPanel validationPanel) {
-		ValidationGroup group = validationPanel.getValidationGroup();
-
-		tfPlayerFame.setName("PlayerFame");
-		group.add(tfPlayerFame, StringValidators.REQUIRE_NON_NEGATIVE_NUMBER, StringValidators.REQUIRE_VALID_INTEGER);
 	}
 
 	@Override

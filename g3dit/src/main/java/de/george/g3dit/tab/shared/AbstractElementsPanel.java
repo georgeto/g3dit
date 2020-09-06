@@ -4,7 +4,7 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-import org.netbeans.validation.api.ui.swing.ValidationPanel;
+import org.netbeans.validation.api.ui.ValidationGroup;
 
 import de.george.g3dit.util.Icons;
 import de.george.g3utils.gui.SwingUtils;
@@ -38,8 +38,8 @@ public abstract class AbstractElementsPanel<T> extends JPanel {
 	/**
 	 * Einmalig nach erstellen des Panels aufrufen, um die Fehleranzeige zu initialisieren
 	 */
-	public void initValidation(ValidationPanel panel) {
-		validationGroup = new ValidationGroupWrapper(panel.getValidationGroup());
+	public void initValidation(ValidationGroup validation) {
+		validationGroup = new ValidationGroupWrapper(validation);
 	}
 
 	public boolean isEmpty() {

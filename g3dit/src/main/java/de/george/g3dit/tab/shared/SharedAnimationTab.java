@@ -3,10 +3,10 @@ package de.george.g3dit.tab.shared;
 import java.awt.Container;
 
 import javax.swing.JLabel;
+import javax.swing.JScrollPane;
 
 import org.netbeans.validation.api.builtin.stringvalidation.StringValidators;
 import org.netbeans.validation.api.ui.ValidationGroup;
-import org.netbeans.validation.api.ui.swing.ValidationPanel;
 
 import de.george.g3dit.EditorContext;
 import de.george.g3utils.gui.SwingUtils;
@@ -23,10 +23,16 @@ public class SharedAnimationTab extends AbstractSharedTab {
 
 	public SharedAnimationTab(EditorContext ctx, Container container) {
 		super(ctx, container);
+	}
+
+	@Override
+	public void initComponents(ValidationGroup validation, JScrollPane scrollPane) {
 		container.setLayout(new MigLayout("fillx", "[]20px[]20px[]push[]"));
 
 		container.add(new JLabel("ResourceFilePath"), "wrap");
 		tfFilePath = SwingUtils.createUndoTF();
+		tfFilePath.setName("ResourceFilePath");
+		validation.add(tfFilePath, EmtpyWarnValidator.INSTANCE);
 		container.add(tfFilePath, "width 100:300:300, wrap");
 
 		container.add(new JLabel("FacialAnimFilePath"), "wrap");
@@ -35,6 +41,8 @@ public class SharedAnimationTab extends AbstractSharedTab {
 
 		container.add(new JLabel("MaterialSwitch"), "wrap");
 		tfMaterialSwitch = SwingUtils.createUndoTF();
+		tfMaterialSwitch.setName("MaterialSwitch");
+		validation.add(tfMaterialSwitch, StringValidators.REQUIRE_VALID_INTEGER, StringValidators.REQUIRE_NON_NEGATIVE_NUMBER);
 		container.add(tfMaterialSwitch, "width 100:300:300, wrap");
 	}
 
@@ -46,17 +54,6 @@ public class SharedAnimationTab extends AbstractSharedTab {
 	@Override
 	public boolean isActive(G3ClassContainer entity) {
 		return entity.hasClass(CD.eCVisualAnimation_PS.class);
-	}
-
-	@Override
-	@SuppressWarnings("unchecked")
-	public void initValidation(ValidationPanel validationPanel) {
-		ValidationGroup validationGroup = validationPanel.getValidationGroup();
-		tfFilePath.setName("ResourceFilePath");
-		validationGroup.add(tfFilePath, EmtpyWarnValidator.INSTANCE);
-
-		tfMaterialSwitch.setName("MaterialSwitch");
-		validationGroup.add(tfMaterialSwitch, StringValidators.REQUIRE_VALID_INTEGER, StringValidators.REQUIRE_NON_NEGATIVE_NUMBER);
 	}
 
 	@Override

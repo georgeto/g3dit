@@ -38,6 +38,10 @@ public class TeachTab extends AbstractEntityTab {
 
 	public TeachTab(EditorArchiveTab ctx) {
 		super(ctx);
+	}
+
+	@Override
+	public void initComponents() {
 		setLayout(new MigLayout("fill, insets 0", "[]", "[][][]"));
 
 		attributeTable = new JXTable();
@@ -100,11 +104,6 @@ public class TeachTab extends AbstractEntityTab {
 	@Override
 	public boolean isActive(eCEntity entity) {
 		return entity.hasClass(CD.gCNPC_PS.class);
-	}
-
-	@Override
-	public void initValidation() {
-
 	}
 
 	private class AttributeTableModel extends ListTableModel<String> {

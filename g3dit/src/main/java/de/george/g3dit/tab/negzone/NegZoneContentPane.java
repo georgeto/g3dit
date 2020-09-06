@@ -14,8 +14,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EtchedBorder;
 
-import org.netbeans.validation.api.ui.ValidationGroup;
-
 import com.ezware.dialog.task.TaskDialogs;
 
 import ca.odell.glazedlists.EventList;
@@ -69,11 +67,6 @@ public class NegZoneContentPane extends NavMapObjectContentPane {
 				}).searchTooltip(getSearchTooltip()).matcherEditor(tfFilter -> new NavMapObjectMatcherEditor(tfFilter,
 						negZone -> navMap.getNegZone(negZone).map(NegZone::getRadiusOffset)))
 				.build();
-	}
-
-	@Override
-	public void initValidation() {
-		editingPanel.initValidation();
 	}
 
 	private Optional<String> addNegZone() {
@@ -158,6 +151,8 @@ public class NegZoneContentPane extends NavMapObjectContentPane {
 			taSticks.getScrollPane().setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
 			TextLineNumber tln = new TextLineNumber(taSticks);
 			taSticks.getScrollPane().setRowHeaderView(tln);
+			taSticks.setName("Sticks");
+			addValidators(taSticks, new PointDistanceValidator());
 
 			JLabel lblStickList = new JLabel("Sticks (x-Pos/y-Pos/z-Pos//)");
 
@@ -169,13 +164,6 @@ public class NegZoneContentPane extends NavMapObjectContentPane {
 			btnCalc.addActionListener(l -> handleCalcNegZone());
 
 			enableGroup = EnableGroup.create(gfGuid, tfRadius, tfRadiusOffset, gfZoneGuid, cbZoneIsCCW, taSticks, btnCalc);
-		}
-
-		public void initValidation() {
-			ValidationGroup group = getValidationPanel().getValidationGroup();
-
-			taSticks.setName("Sticks");
-			group.add(taSticks, new PointDistanceValidator());
 		}
 
 		public void loadNegZone(String newNegZoneGuid) {

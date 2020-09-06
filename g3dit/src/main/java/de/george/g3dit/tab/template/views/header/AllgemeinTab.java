@@ -10,8 +10,6 @@ import javax.swing.JLabel;
 import javax.swing.KeyStroke;
 import javax.swing.event.DocumentListener;
 
-import org.netbeans.validation.api.ui.ValidationGroup;
-
 import de.george.g3dit.entitytree.filter.GuidEntityFilter.MatchMode;
 import de.george.g3dit.gui.components.JFocusNameField;
 import de.george.g3dit.gui.components.JSearchGuidField;
@@ -45,14 +43,19 @@ public class AllgemeinTab extends AbstractTemplateTab {
 	private PositionPanel plWorldPosition;
 	private BoundingBoxPanel plLocalNodeBoundary;
 
-	public AllgemeinTab(EditorTemplateTab inEditor) {
-		super(inEditor);
+	public AllgemeinTab(EditorTemplateTab ctx) {
+		super(ctx);
+	}
+
+	@Override
+	public void initComponents() {
 		setLayout(new MigLayout("", "[][]push[grow]"));
 
 		DocumentListener documentListener = SwingUtils.createDocumentListener(() -> handleUpdateDataFile());
 
 		add(new JLabel("Name"), "wrap");
 		tfName = new JFocusNameField(ctx);
+		tfName.initValidation(validation(), "Name", EmtpyWarnValidator.INSTANCE);
 		tfName.getDocument().addDocumentListener(documentListener);
 		add(tfName, "width 100:300:300, wrap");
 
@@ -63,6 +66,7 @@ public class AllgemeinTab extends AbstractTemplateTab {
 
 		add(new JLabel("Item Guid"), "wrap");
 		tfItemGuid = new JGuidField();
+		tfItemGuid.initValidation(validation(), "Item Guid", GuidValidator.INSTANCE);
 		add(tfItemGuid, "width 100:300:300");
 		JButton btnRandomItemGuid = new JButton(Icons.getImageIcon(Icons.Data.COUNTER));
 		btnRandomItemGuid.setToolTipText("Zufällige Guid generieren");
@@ -76,7 +80,8 @@ public class AllgemeinTab extends AbstractTemplateTab {
 		add(btnCopyEntry, "width 27!, height 27!, wrap");
 
 		add(new JLabel("Reference Guid"), "wrap");
-		tfRefGuid = new JSearchGuidField(inEditor, false);
+		tfRefGuid = new JSearchGuidField(ctx, false);
+		tfRefGuid.initValidation(validation(), "Reference Guid", GuidValidator.INSTANCE);
 		add(tfRefGuid, "width 100:300:300");
 
 		tfRefGuid.addMenuItem("Alle Referenzen auf diese Template auflisten", Icons.getImageIcon(Icons.Misc.GLOBE),
@@ -94,6 +99,8 @@ public class AllgemeinTab extends AbstractTemplateTab {
 
 		add(new JLabel("ChangeTime"), "wrap");
 		tfChangeTime = SwingUtils.createUndoTF();
+		tfChangeTime.setName("ChangeTime");
+		addValidators(tfChangeTime, IsALongValidator.INSTANCE);
 		add(tfChangeTime, "width 50:100:100, wrap");
 
 		plWorldPosition = new PositionPanel("Position", ctx.getParentWindow(), positionMatrix -> changeWorldPosition(positionMatrix));
@@ -114,16 +121,6 @@ public class AllgemeinTab extends AbstractTemplateTab {
 	@Override
 	public boolean isActive(TemplateFile entity) {
 		return true;
-	}
-
-	@Override
-	public void initValidation() {
-		ValidationGroup group = getValidationPanel().getValidationGroup();
-		tfName.initValidation(group, "Name", EmtpyWarnValidator.INSTANCE);
-		tfItemGuid.initValidation(group, "Item Guid", GuidValidator.INSTANCE);
-		tfRefGuid.initValidation(group, "Reference Guid", GuidValidator.INSTANCE);
-		tfChangeTime.setName("ChangeTime");
-		group.add(tfChangeTime, IsALongValidator.INSTANCE);
 	}
 
 	@Override

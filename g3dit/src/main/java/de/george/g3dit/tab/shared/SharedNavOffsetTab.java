@@ -9,7 +9,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import org.netbeans.validation.api.ui.ValidationGroup;
-import org.netbeans.validation.api.ui.swing.ValidationPanel;
 
 import de.george.g3dit.EditorContext;
 import de.george.g3dit.gui.components.JEnumComboBox;
@@ -39,7 +38,7 @@ public class SharedNavOffsetTab extends AbstractSharedTab {
 	}
 
 	@Override
-	public void afterScrollPaneCreation(JScrollPane scrollPane) {
+	public void initComponents(ValidationGroup validation, JScrollPane scrollPane) {
 		container.setLayout(new MigLayout("fillx"));
 
 		container.add(SwingUtils.createBoldLabel("Eigenschaften"), "gaptop 7, wrap");
@@ -52,6 +51,7 @@ public class SharedNavOffsetTab extends AbstractSharedTab {
 		container.add(SwingUtils.createBoldLabel("NavOffsets"), "gaptop 7, wrap");
 
 		navOffsetsPanel = new NavOffsetsPanel(scrollPane);
+		navOffsetsPanel.initValidation(validation);
 		container.add(navOffsetsPanel, "grow, wrap");
 	}
 
@@ -63,11 +63,6 @@ public class SharedNavOffsetTab extends AbstractSharedTab {
 	@Override
 	public boolean isActive(G3ClassContainer entity) {
 		return entity.hasClass(CD.gCNavOffset_PS.class);
-	}
-
-	@Override
-	public void initValidation(ValidationPanel validationPanel) {
-		navOffsetsPanel.initValidation(validationPanel);
 	}
 
 	@Override

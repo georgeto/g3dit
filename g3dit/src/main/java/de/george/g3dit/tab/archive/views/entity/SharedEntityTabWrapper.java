@@ -12,10 +12,10 @@ import de.george.lrentnode.archive.eCEntity;
 public class SharedEntityTabWrapper extends AbstractEntityTab {
 	private AbstractSharedTab sharedTab;
 
-	public SharedEntityTabWrapper(Class<? extends AbstractSharedTab> sharedTab, EditorArchiveTab inEditor) {
-		super(inEditor);
+	public SharedEntityTabWrapper(Class<? extends AbstractSharedTab> sharedTab, EditorArchiveTab ctx) {
+		super(ctx);
 		try {
-			this.sharedTab = sharedTab.getConstructor(EditorContext.class, Container.class).newInstance(inEditor, this);
+			this.sharedTab = sharedTab.getConstructor(EditorContext.class, Container.class).newInstance(ctx, this);
 		} catch (ReflectiveOperationException | SecurityException e) {
 			if (e.getSuppressed().length > 0) {
 				throw new RuntimeException(e.getSuppressed()[0]);
@@ -25,8 +25,8 @@ public class SharedEntityTabWrapper extends AbstractEntityTab {
 	}
 
 	@Override
-	protected void afterScrollPaneCreation() {
-		sharedTab.afterScrollPaneCreation(getScrollpane());
+	protected void initComponents() {
+		sharedTab.initComponents(validation(), getScrollpane());
 	}
 
 	@Override
@@ -37,11 +37,6 @@ public class SharedEntityTabWrapper extends AbstractEntityTab {
 	@Override
 	public String getTabTitle() {
 		return sharedTab.getTabTitle();
-	}
-
-	@Override
-	public void initValidation() {
-		sharedTab.initValidation(getValidationPanel());
 	}
 
 	@Override

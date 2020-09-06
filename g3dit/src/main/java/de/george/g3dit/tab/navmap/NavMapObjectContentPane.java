@@ -62,6 +62,11 @@ public abstract class NavMapObjectContentPane extends ValidationPanelContainer<N
 	}
 
 	public final void initGui() {
+		createValiditionPanel();
+	}
+
+	@Override
+	protected void initComponents() {
 		edit = createContent();
 
 		JToolBar toolBar = ToolbarUtil.createTopToolbar();
@@ -84,8 +89,6 @@ public abstract class NavMapObjectContentPane extends ValidationPanelContainer<N
 
 		setLayout(new BorderLayout());
 		add(edit.getContent(), BorderLayout.CENTER);
-
-		createValiditionPanel();
 	}
 
 	protected abstract void onGoto(String guid);

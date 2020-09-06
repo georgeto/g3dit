@@ -9,8 +9,6 @@ import javax.swing.JLabel;
 import javax.swing.JRadioButton;
 import javax.swing.border.EtchedBorder;
 
-import org.netbeans.validation.api.ui.ValidationGroup;
-
 import de.george.g3dit.gui.components.JTextAreaExt;
 import de.george.g3dit.gui.components.TextLineNumber;
 import de.george.g3dit.gui.validation.PointDistanceValidator;
@@ -40,6 +38,8 @@ public abstract class AbstractNavTab extends AbstractEntityTab {
 		taSticks.getScrollPane().setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
 		TextLineNumber tln = new TextLineNumber(taSticks);
 		taSticks.getScrollPane().setRowHeaderView(tln);
+		taSticks.setName("Sticks");
+		addValidators(taSticks, new PointDistanceValidator());
 
 		cbManualCoords = new JCheckBox(strManualCoord, false);
 		cbManualCoords.setEnabled(false);
@@ -67,13 +67,5 @@ public abstract class AbstractNavTab extends AbstractEntityTab {
 			stream = stream.map(p -> p.getTransformed(entity.getWorldMatrix()));
 		}
 		taSticks.setText(Misc.formatVectorList(stream));
-	}
-
-	@Override
-	public void initValidation() {
-		ValidationGroup group = getValidationPanel().getValidationGroup();
-
-		taSticks.setName("Sticks");
-		group.add(taSticks, new PointDistanceValidator());
 	}
 }

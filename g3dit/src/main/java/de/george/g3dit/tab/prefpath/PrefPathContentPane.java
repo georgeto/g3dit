@@ -11,8 +11,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EtchedBorder;
 
-import org.netbeans.validation.api.ui.ValidationGroup;
-
 import com.ezware.dialog.task.TaskDialogs;
 
 import ca.odell.glazedlists.EventList;
@@ -54,11 +52,6 @@ public class PrefPathContentPane extends NavMapObjectContentPane {
 				.searchTooltip(getSearchTooltip()).matcherEditor(tfFilter -> new NavMapObjectMatcherEditor(tfFilter,
 						negZone -> navMap.getPrefPath(negZone).map(PrefPath::getRadiusOffset)))
 				.build();
-	}
-
-	@Override
-	public void initValidation() {
-		editingPanel.initValidation();
 	}
 
 	private Optional<String> addPrefPath() {
@@ -119,6 +112,8 @@ public class PrefPathContentPane extends NavMapObjectContentPane {
 			taSticks = new JTextAreaExt(true);
 			taSticks.getScrollPane().setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
 			taSticks.getScrollPane().setRowHeaderView(new TextLineNumber(taSticks));
+			taSticks.setName("Sticks");
+			addValidators(taSticks, new PointDistanceValidator());
 
 			taRadius = new JTextAreaExt(true);
 			taRadius.getScrollPane().setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
@@ -134,13 +129,6 @@ public class PrefPathContentPane extends NavMapObjectContentPane {
 			btnCalc.addActionListener(l -> handlePrefPath());
 
 			enableGroup = EnableGroup.create(tfRadius, tfRadiusOffset, gfZoneGuid, taSticks, taRadius, btnCalc);
-		}
-
-		public void initValidation() {
-			ValidationGroup group = getValidationPanel().getValidationGroup();
-
-			taSticks.setName("Sticks");
-			group.add(taSticks, new PointDistanceValidator());
 		}
 
 		public void loadPrefPath(String newPrefPathGuid) {

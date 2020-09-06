@@ -8,7 +8,6 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 import org.netbeans.validation.api.builtin.stringvalidation.StringValidators;
-import org.netbeans.validation.api.ui.ValidationGroup;
 
 import com.google.common.collect.ImmutableList;
 
@@ -66,7 +65,10 @@ public class StatsTab extends AbstractTemplateTab {
 
 	public StatsTab(EditorTemplateTab ctx) {
 		super(ctx);
+	}
 
+	@Override
+	public void initComponents() {
 		setLayout(new MigLayout("", "[]20[]20[]20[]"));
 
 		add(SwingUtils.createBoldLabel("Required Attribute"), "spanx, wrap");
@@ -86,6 +88,8 @@ public class StatsTab extends AbstractTemplateTab {
 			add(cbOperation, "width 125:150:175");
 
 			JTextField tfTemp = SwingUtils.createUndoTF();
+			tfTemp.setName("Value");
+			addValidators(tfTemp, StringValidators.REQUIRE_VALID_INTEGER);
 			tfAmount.add(tfTemp);
 			add(tfTemp, "width 50:75:100, wrap");
 		}
@@ -125,6 +129,8 @@ public class StatsTab extends AbstractTemplateTab {
 			add(new JLabel(String.valueOf(i)), "gapleft 7");
 
 			JTemplateGuidField tfTemp = new JTemplateGuidField(Caches.template(ctx));
+			tfTemp.initValidation(validation(), "Guid", GuidValidator.INSTANCE_ALLOW_EMPTY,
+					new TemplateExistenceValidator(validation(), ctx));
 			tfSkill.add(tfTemp);
 			add(tfTemp, "gaptop 5, width 100:300:300, spanx, wrap");
 		}
@@ -138,17 +144,6 @@ public class StatsTab extends AbstractTemplateTab {
 	@Override
 	public boolean isActive(TemplateFile tple) {
 		return tple.getReferenceHeader().hasClass(CD.gCItem_PS.class);
-	}
-
-	@Override
-	public void initValidation() {
-		ValidationGroup group = getValidationPanel().getValidationGroup();
-		tfAmount.forEach(t -> {
-			t.setName("Value");
-			group.add(t, StringValidators.REQUIRE_VALID_INTEGER);
-		});
-		tfSkill.forEach(
-				t -> t.initValidation(group, "Guid", GuidValidator.INSTANCE_ALLOW_EMPTY, new TemplateExistenceValidator(group, ctx)));
 	}
 
 	@Override

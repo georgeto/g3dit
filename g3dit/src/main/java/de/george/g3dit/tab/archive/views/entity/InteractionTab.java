@@ -3,8 +3,6 @@ package de.george.g3dit.tab.archive.views.entity;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
-import org.netbeans.validation.api.ui.ValidationGroup;
-
 import de.george.g3dit.cache.Caches;
 import de.george.g3dit.gui.components.JEntityGuidField;
 import de.george.g3dit.gui.components.JEnumComboBox;
@@ -32,7 +30,10 @@ public class InteractionTab extends AbstractEntityTab {
 
 	public InteractionTab(EditorArchiveTab ctx) {
 		super(ctx);
+	}
 
+	@Override
+	public void initComponents() {
 		setLayout(new MigLayout("fillx", "[]20px[]20px[]push"));
 
 		JLabel lblFocusPriority = new JLabel("FocusPriority");
@@ -57,18 +58,23 @@ public class InteractionTab extends AbstractEntityTab {
 		add(lblAnchorPoint, "cell 0 2");
 
 		tfAnchorPoint = new JEntityGuidField(ctx);
+		tfAnchorPoint.initValidation(validation(), "AnchorPoint", GuidValidator.INSTANCE_ALLOW_EMPTY,
+				new EntityExistenceValidator(validation(), ctx));
 		add(tfAnchorPoint, "cell 0 3, width 100:300:300, spanx 3");
 
 		JLabel lblOwner = new JLabel("Owner");
 		add(lblOwner, "cell 0 4");
 
 		tfOwner = new JEntityGuidField(ctx);
+		tfOwner.initValidation(validation(), "Owner", GuidValidator.INSTANCE_ALLOW_EMPTY, new EntityExistenceValidator(validation(), ctx));
 		add(tfOwner, "cell 0 5, width 100:300:300, spanx 3");
 
 		JLabel lblSpell = new JLabel("Spell");
 		add(lblSpell, "cell 0 6");
 
 		tfSpell = new JTemplateGuidField(Caches.template(ctx));
+		tfSpell.initValidation(validation(), "Spell", GuidValidator.INSTANCE_ALLOW_EMPTY,
+				new TemplateExistenceValidator(validation(), ctx));
 		add(tfSpell, "cell 0 7, width 100:300:300, spanx 3");
 	}
 
@@ -80,15 +86,6 @@ public class InteractionTab extends AbstractEntityTab {
 	@Override
 	public boolean isActive(eCEntity entity) {
 		return entity.hasClass(CD.gCInteraction_PS.class);
-	}
-
-	@Override
-	public void initValidation() {
-		ValidationGroup group = getValidationPanel().getValidationGroup();
-
-		tfAnchorPoint.initValidation(group, "AnchorPoint", GuidValidator.INSTANCE_ALLOW_EMPTY, new EntityExistenceValidator(group, ctx));
-		tfOwner.initValidation(group, "Owner", GuidValidator.INSTANCE_ALLOW_EMPTY, new EntityExistenceValidator(group, ctx));
-		tfSpell.initValidation(group, "Spell", GuidValidator.INSTANCE_ALLOW_EMPTY, new TemplateExistenceValidator(group, ctx));
 	}
 
 	@Override

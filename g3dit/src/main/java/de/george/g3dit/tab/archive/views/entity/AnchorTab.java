@@ -27,7 +27,10 @@ public class AnchorTab extends AbstractEntityTab {
 
 	public AnchorTab(EditorArchiveTab ctx) {
 		super(ctx);
+	}
 
+	@Override
+	protected void initComponents() {
 		setLayout(new MigLayout("fillx", "[]"));
 
 		add(new JLabel("AnchorType"), "wrap");
@@ -55,9 +58,6 @@ public class AnchorTab extends AbstractEntityTab {
 	public boolean isActive(eCEntity entity) {
 		return entity.hasClass(CD.gCAnchor_PS.class);
 	}
-
-	@Override
-	public void initValidation() {}
 
 	@Override
 	public void loadValues(eCEntity entity) {

@@ -12,7 +12,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import org.netbeans.validation.api.ui.ValidationGroup;
-import org.netbeans.validation.api.ui.swing.ValidationPanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -60,7 +59,7 @@ public class SharedCollisionShapeTab extends AbstractSharedTab {
 	}
 
 	@Override
-	public void afterScrollPaneCreation(JScrollPane scrollPane) {
+	public void initComponents(ValidationGroup validation, JScrollPane scrollPane) {
 		container.setLayout(new MigLayout("fillx"));
 
 		JLabel lblInventoryStacks = SwingUtils.createBoldLabel("CollisionShapes");
@@ -71,6 +70,7 @@ public class SharedCollisionShapeTab extends AbstractSharedTab {
 		container.add(btnLoadFromXnvmsh, "gapleft 7, wrap");
 
 		stacksPanel = new CollisionShapesPanel(scrollPane);
+		stacksPanel.initValidation(validation);
 		container.add(stacksPanel, "grow, wrap");
 	}
 
@@ -82,11 +82,6 @@ public class SharedCollisionShapeTab extends AbstractSharedTab {
 	@Override
 	public boolean isActive(G3ClassContainer entity) {
 		return entity.hasClass(CD.eCCollisionShape_PS.class);
-	}
-
-	@Override
-	public void initValidation(ValidationPanel validationPanel) {
-		stacksPanel.initValidation(validationPanel);
 	}
 
 	@Override

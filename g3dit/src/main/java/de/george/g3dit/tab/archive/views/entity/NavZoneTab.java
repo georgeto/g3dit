@@ -8,7 +8,6 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 import org.netbeans.validation.api.builtin.stringvalidation.StringValidators;
-import org.netbeans.validation.api.ui.ValidationGroup;
 
 import com.ezware.dialog.task.TaskDialogs;
 
@@ -30,14 +29,19 @@ public class NavZoneTab extends AbstractNavTab {
 	private JTextField tfRadius, tfRadiusOffset;
 	private JCheckBox cbZoneIsCCW;
 
-	public NavZoneTab(EditorArchiveTab inEditor) {
-		super(inEditor);
+	public NavZoneTab(EditorArchiveTab ctx) {
+		super(ctx);
+	}
 
+	@Override
+	public void initComponents() {
 		setLayout(new MigLayout("fill", "[][]push"));
 
 		JLabel lblRadius = new JLabel("Radius");
 		tfRadius = SwingUtils.createUndoTF();
 		tfRadius.setEditable(false);
+		tfRadius.setName("Radius");
+		addValidators(tfRadius, StringValidators.REQUIRE_VALID_NUMBER);
 
 		JLabel lblRadiusOffset = new JLabel("RadiusOffset (x/y/z//)");
 		tfRadiusOffset = SwingUtils.createUndoTF();
@@ -70,15 +74,6 @@ public class NavZoneTab extends AbstractNavTab {
 	@Override
 	public boolean isActive(eCEntity entity) {
 		return entity.hasClass(CD.gCNavZone_PS.class);
-	}
-
-	@Override
-	public void initValidation() {
-		super.initValidation();
-		ValidationGroup group = getValidationPanel().getValidationGroup();
-
-		tfRadius.setName("Radius");
-		group.add(tfRadius, StringValidators.REQUIRE_VALID_NUMBER);
 	}
 
 	@Override

@@ -2,8 +2,6 @@ package de.george.g3dit.tab.archive.views.entity;
 
 import javax.swing.JLabel;
 
-import org.netbeans.validation.api.ui.ValidationGroup;
-
 import de.george.g3dit.gui.components.JEntityGuidField;
 import de.george.g3dit.gui.components.JEnumComboBox;
 import de.george.g3dit.gui.validation.EntityExistenceValidator;
@@ -25,7 +23,10 @@ public class AIZoneTab extends AbstractEntityTab {
 
 	public AIZoneTab(EditorArchiveTab ctx) {
 		super(ctx);
+	}
 
+	@Override
+	protected void initComponents() {
 		setLayout(new MigLayout("fillx", "[]20px[]20px[]push"));
 
 		JLabel lblFocusPriority = new JLabel("ZoneType");
@@ -44,6 +45,7 @@ public class AIZoneTab extends AbstractEntityTab {
 		add(lblOwner, "cell 0 2");
 
 		tfOwner = new JEntityGuidField(ctx);
+		tfOwner.initValidation(validation(), "Owner", GuidValidator.INSTANCE_ALLOW_EMPTY, new EntityExistenceValidator(validation(), ctx));
 		add(tfOwner, "cell 0 3, width 100:300:300, spanx 3");
 	}
 
@@ -55,16 +57,6 @@ public class AIZoneTab extends AbstractEntityTab {
 	@Override
 	public boolean isActive(eCEntity entity) {
 		return entity.hasClass(CD.gCAIZone_PS.class);
-	}
-
-	/**
-	 * Einmalig nach erstellen des Panels aufrufen, um die Fehleranzeige zu initialisieren
-	 */
-	@Override
-	public void initValidation() {
-		ValidationGroup group = getValidationPanel().getValidationGroup();
-
-		tfOwner.initValidation(group, "Owner", GuidValidator.INSTANCE_ALLOW_EMPTY, new EntityExistenceValidator(group, ctx));
 	}
 
 	/**

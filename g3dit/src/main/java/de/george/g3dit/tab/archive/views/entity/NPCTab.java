@@ -7,7 +7,6 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 
 import org.netbeans.validation.api.builtin.stringvalidation.StringValidators;
-import org.netbeans.validation.api.ui.ValidationGroup;
 
 import de.george.g3dit.config.StringListConfigFile;
 import de.george.g3dit.entitytree.filter.GuidEntityFilter.MatchMode;
@@ -56,7 +55,10 @@ public class NPCTab extends AbstractEntityTab {
 	public NPCTab(EditorArchiveTab ctx) {
 		super(ctx);
 		voices = ctx.getFileManager().getConfigFile("Voices.list", StringListConfigFile.class);
+	}
 
+	@Override
+	public void initComponents() {
 		setLayout(new MigLayout("fillx", "[]20px[]20px[]push"));
 
 		JLabel lblCommon = SwingUtils.createBoldLabel("Eigenschaften");
@@ -65,12 +67,18 @@ public class NPCTab extends AbstractEntityTab {
 		JLabel lblVoice = new JLabel("Stimme");
 		cbVoice = new JComboBox<>(voices.getContent().toArray(new String[0]));
 		cbVoice.setEditable(true);
+		cbVoice.setName("Stimme");
+		addValidators(cbVoice, EmtpyWarnValidator.INSTANCE);
 
 		JLabel lblLevel = new JLabel("Level");
 		tfLevel = SwingUtils.createUndoTF();
+		tfLevel.setName("Level");
+		addValidators(tfLevel, StringValidators.REQUIRE_NON_NEGATIVE_NUMBER, StringValidators.REQUIRE_VALID_INTEGER);
 
 		JLabel lblLevelMax = new JLabel("Maximales Level");
 		tfLevelMax = SwingUtils.createUndoTF();
+		tfLevelMax.setName("Maximales Level");
+		addValidators(tfLevelMax, StringValidators.REQUIRE_NON_NEGATIVE_NUMBER, StringValidators.REQUIRE_VALID_INTEGER);
 
 		add(lblVoice, "gapleft 7");
 		add(lblLevel, "");
@@ -114,6 +122,8 @@ public class NPCTab extends AbstractEntityTab {
 
 		JLabel lblGuardPoint = new JLabel("GuardPoint");
 		tfGuardPoint = new JEntityGuidField(ctx);
+		tfGuardPoint.initValidation(validation(), "GuardPoint", GuidValidator.INSTANCE_ALLOW_EMPTY,
+				new EntityExistenceValidator(validation(), ctx));
 
 		JLabel lblGuard = SwingUtils.createBoldLabel("Wache");
 		add(lblGuard, "gaptop 5, wrap");
@@ -130,6 +140,8 @@ public class NPCTab extends AbstractEntityTab {
 		add(lblEnclave, "gapleft 7, wrap");
 
 		tfEnclave = new JEntityGuidField(ctx);
+		tfEnclave.initValidation(validation(), "Enclave", GuidValidator.INSTANCE_ALLOW_EMPTY,
+				new EntityExistenceValidator(validation(), ctx));
 		add(tfEnclave, "width 100:300:300, spanx 3, gapleft 7, wrap");
 
 		tfEnclave.addMenuItem("Alle Mitglieder der Enclave auflisten", Icons.getImageIcon(Icons.Misc.GLOBE),
@@ -144,7 +156,9 @@ public class NPCTab extends AbstractEntityTab {
 		slotTabs.addTab("Haare", new NPCSlotPanel(gESlot.gESlot_Hair, ctx));
 		slotTabs.addTab("Bart", new NPCSlotPanel(gESlot.gESlot_Beard, ctx));
 		slotTabs.addTab("Helm", new NPCSlotPanel(gESlot.gESlot_Helmet, ctx));
-
+		for (int i = 0; i < slotTabs.getTabCount(); i++) {
+			((NPCSlotPanel) slotTabs.getComponentAt(i)).initValidation(validation());
+		}
 		add(slotTabs, "width 100:300:400, grow, spanx 3, gapleft 7, wrap");
 	}
 
@@ -156,23 +170,6 @@ public class NPCTab extends AbstractEntityTab {
 	@Override
 	public boolean isActive(eCEntity entity) {
 		return NPCUtil.isNPC(entity);
-	}
-
-	@Override
-	@SuppressWarnings("unchecked")
-	public void initValidation() {
-		ValidationGroup group = getValidationPanel().getValidationGroup();
-		cbVoice.setName("Stimme");
-		group.add(cbVoice, EmtpyWarnValidator.INSTANCE);
-		tfLevel.setName("Level");
-		group.add(tfLevel, StringValidators.REQUIRE_NON_NEGATIVE_NUMBER, StringValidators.REQUIRE_VALID_INTEGER);
-		tfLevelMax.setName("Maximales Level");
-		group.add(tfLevelMax, StringValidators.REQUIRE_NON_NEGATIVE_NUMBER, StringValidators.REQUIRE_VALID_INTEGER);
-		tfGuardPoint.initValidation(group, "GuardPoint", GuidValidator.INSTANCE_ALLOW_EMPTY, new EntityExistenceValidator(group, ctx));
-		tfEnclave.initValidation(group, "Enclave", GuidValidator.INSTANCE_ALLOW_EMPTY, new EntityExistenceValidator(group, ctx));
-		for (int i = 0; i < slotTabs.getTabCount(); i++) {
-			((NPCSlotPanel) slotTabs.getComponentAt(i)).initValidation(group);
-		}
 	}
 
 	@Override

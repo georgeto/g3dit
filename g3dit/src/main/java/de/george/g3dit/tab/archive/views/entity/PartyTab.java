@@ -32,7 +32,10 @@ public class PartyTab extends AbstractEntityTab {
 
 	public PartyTab(EditorArchiveTab ctx) {
 		super(ctx);
+	}
 
+	@Override
+	public void initComponents() {
 		setLayout(new MigLayout("fillx", "[]"));
 
 		add(new JLabel("PartyLeader"), "wrap");
@@ -68,9 +71,6 @@ public class PartyTab extends AbstractEntityTab {
 	public boolean isActive(eCEntity entity) {
 		return entity.hasClass(CD.gCParty_PS.class);
 	}
-
-	@Override
-	public void initValidation() {}
 
 	@Override
 	public void loadValues(eCEntity entity) {
