@@ -26,6 +26,7 @@ import de.george.g3dit.EditorContext;
 import de.george.g3dit.check.EntityDescriptor;
 import de.george.g3dit.check.FileDescriptor;
 import de.george.g3dit.check.FileDescriptor.FileType;
+import de.george.g3dit.entitytree.filter.GuidEntityFilter;
 import de.george.g3dit.gui.components.search.EntityGuidSearchFilterBuilder;
 import de.george.g3dit.gui.components.search.EntityPositionSearchFilterBuilder;
 import de.george.g3dit.gui.components.search.ModularSearchPanel;
@@ -52,14 +53,26 @@ public class TemplateSearchDialog extends AbstractTableProgressDialog {
 	private static final Logger logger = LoggerFactory.getLogger(TemplateSearchDialog.class);
 
 	private ModularSearchPanel<eCEntity> searchPanel;
+	private JButton btnSearch;
 
 	private EventList<Result> results;
 	private SortableEventTable<Result> table;
 
-	public static final TemplateSearchDialog openEntitySearch(EditorContext ctx) {
+	public static final TemplateSearchDialog openTemplateSearch(EditorContext ctx) {
 		TemplateSearchDialog searchDialog = new TemplateSearchDialog(ctx, "Template-Suche");
 		searchDialog.open();
 		return searchDialog;
+	}
+
+	public static final TemplateSearchDialog openTemplateSearch(EditorContext ctx, SearchFilter<eCEntity> filter) {
+		TemplateSearchDialog dialog = openTemplateSearch(ctx);
+		dialog.searchPanel.loadFilter(filter);
+		dialog.btnSearch.doClick(0);
+		return dialog;
+	}
+
+	public static final TemplateSearchDialog openTemplateSearchGuid(EditorContext ctx, GuidEntityFilter.MatchMode matchMode, String guid) {
+		return openTemplateSearch(ctx, new GuidEntityFilter(matchMode, guid));
 	}
 
 	private TemplateSearchDialog(EditorContext ctx, String title) {
@@ -88,7 +101,7 @@ public class TemplateSearchDialog extends AbstractTableProgressDialog {
 
 		searchPanel = new ModularSearchPanel(ctx, TemplateNameSearchFilterBuilder.class, EntityGuidSearchFilterBuilder.class,
 				EntityPositionSearchFilterBuilder.class, PropertySearchFilterBuilder.class);
-		JButton btnSearch = registerAction("Suchen", Icons.getImageIcon(Icons.Action.FIND), this::doWork, true);
+		btnSearch = registerAction("Suchen", Icons.getImageIcon(Icons.Action.FIND), this::doWork, true);
 		JButton btnErase = new JButton(Icons.getImageIcon(Icons.Action.ERASE));
 		btnErase.setFocusable(false);
 		btnErase.setToolTipText("Suche leeren");

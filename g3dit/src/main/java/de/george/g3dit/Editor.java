@@ -49,6 +49,7 @@ import de.george.g3dit.cache.LightCache;
 import de.george.g3dit.cache.NavCache;
 import de.george.g3dit.cache.StringtableCache;
 import de.george.g3dit.cache.TemplateCache;
+import de.george.g3dit.cache.TemplateCache.TemplateCacheEntry;
 import de.george.g3dit.check.EntityDescriptor;
 import de.george.g3dit.check.FileDescriptor;
 import de.george.g3dit.gui.components.tab.JSplittedTypedTabbedPane;
@@ -677,6 +678,15 @@ public class Editor extends JFrame implements EditorContext {
 	public boolean modifyEntity(EntityDescriptor entityDescriptor, boolean hidden) {
 		// Modify open file or search file
 		return false;
+	}
+
+	public boolean openTemplate(String guid) {
+		Optional<File> templateFile = Caches.template(this).getEntryByGuid(guid).map(TemplateCacheEntry::getFile);
+		if (templateFile.isPresent()) {
+			return openOrSelectFile(templateFile.get());
+		} else {
+			return false;
+		}
 	}
 
 	@Override

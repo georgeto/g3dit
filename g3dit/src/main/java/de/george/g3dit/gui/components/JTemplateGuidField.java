@@ -8,7 +8,10 @@ import de.george.g3dit.EditorContext;
 import de.george.g3dit.cache.Caches;
 import de.george.g3dit.cache.TemplateCache;
 import de.george.g3dit.cache.TemplateCache.TemplateCacheEntry;
+import de.george.g3dit.entitytree.filter.GuidEntityFilter;
 import de.george.g3dit.gui.dialogs.TemplateIntelliHints;
+import de.george.g3dit.gui.dialogs.TemplateSearchDialog;
+import de.george.g3dit.util.Icons;
 
 public class JTemplateGuidField extends JSearchNamedGuidField {
 	private boolean all;
@@ -52,4 +55,13 @@ public class JTemplateGuidField extends JSearchNamedGuidField {
 		}
 		return entities;
 	}
+
+	@Override
+	protected void addDefaultMenuItem() {
+		addMenuItem("Template zu dieser Guid öffnen", Icons.getImageIcon(Icons.Arrow.CURVE),
+				(ctx, text) -> ctx.getEditor().openTemplate(text));
+		addMenuItem("Nach Template zu dieser Guid suchen", Icons.getImageIcon(Icons.Action.FIND),
+				(ctx, text) -> TemplateSearchDialog.openTemplateSearchGuid(ctx, GuidEntityFilter.MatchMode.Guid, text));
+	}
+
 }
