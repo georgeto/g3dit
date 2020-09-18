@@ -1,5 +1,6 @@
 package de.george.g3dit.gui.components;
 
+import java.awt.event.KeyEvent;
 import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
@@ -12,6 +13,7 @@ import de.george.g3dit.entitytree.filter.GuidEntityFilter;
 import de.george.g3dit.gui.dialogs.TemplateIntelliHints;
 import de.george.g3dit.gui.dialogs.TemplateSearchDialog;
 import de.george.g3dit.util.Icons;
+import de.george.g3utils.gui.SwingUtils;
 
 public class JTemplateGuidField extends JSearchNamedGuidField {
 	private boolean all;
@@ -32,6 +34,9 @@ public class JTemplateGuidField extends JSearchNamedGuidField {
 		new TemplateIntelliHints(getOrCreateTextFieldName(), cache);
 		// Update name when cache changes
 		cache.addUpdateListener(this, c -> lookupName(getText()));
+
+		SwingUtils.addKeyStroke(this, "Open", KeyEvent.VK_F3, () -> openTemplate(ctx, getText()));
+		SwingUtils.addKeyStroke(this, "Search", KeyEvent.VK_F4, () -> searchTemplate(ctx, getText()));
 	}
 
 	@Override
@@ -58,10 +63,15 @@ public class JTemplateGuidField extends JSearchNamedGuidField {
 
 	@Override
 	protected void addDefaultMenuItem() {
-		addMenuItem("Template zu dieser Guid öffnen", Icons.getImageIcon(Icons.Arrow.CURVE),
-				(ctx, text) -> ctx.getEditor().openTemplate(text));
-		addMenuItem("Nach Template zu dieser Guid suchen", Icons.getImageIcon(Icons.Action.FIND),
-				(ctx, text) -> TemplateSearchDialog.openTemplateSearchGuid(ctx, GuidEntityFilter.MatchMode.Guid, text));
+		addMenuItem("Template zu dieser Guid öffnen", Icons.getImageIcon(Icons.Arrow.CURVE), this::openTemplate);
+		addMenuItem("Nach Template zu dieser Guid suchen", Icons.getImageIcon(Icons.Action.FIND), this::searchTemplate);
 	}
 
+	private boolean openTemplate(EditorContext ctx, String text) {
+		return ctx.getEditor().openTemplate(text);
+	}
+
+	private TemplateSearchDialog searchTemplate(EditorContext ctx, String text) {
+		return TemplateSearchDialog.openTemplateSearchGuid(ctx, GuidEntityFilter.MatchMode.Guid, text);
+	}
 }

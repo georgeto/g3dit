@@ -1,5 +1,6 @@
 package de.george.g3dit.gui.components;
 
+import java.awt.event.KeyEvent;
 import java.util.Optional;
 
 import de.george.g3dit.EditorContext;
@@ -10,6 +11,7 @@ import de.george.g3dit.gui.dialogs.EntityIntelliHints;
 import de.george.g3dit.gui.dialogs.EntitySearchDialog;
 import de.george.g3dit.rpc.IpcUtil;
 import de.george.g3dit.util.Icons;
+import de.george.g3utils.gui.SwingUtils;
 import de.george.g3utils.structure.GuidUtil;
 
 public class JEntityGuidField extends JSearchNamedGuidField {
@@ -23,6 +25,9 @@ public class JEntityGuidField extends JSearchNamedGuidField {
 		new EntityIntelliHints(getOrCreateTextFieldName(), cache);
 		// Update name when cache changes
 		cache.addUpdateListener(this, c -> lookupName(getText()));
+
+		SwingUtils.addKeyStroke(this, "Open", KeyEvent.VK_F3, () -> openEntity(ctx, getText()));
+		SwingUtils.addKeyStroke(this, "Search", KeyEvent.VK_F4, () -> searchEntity(ctx, getText()));
 	}
 
 	@Override
@@ -41,11 +46,18 @@ public class JEntityGuidField extends JSearchNamedGuidField {
 
 	@Override
 	protected void addDefaultMenuItem() {
-		addMenuItem("Entity zu dieser Guid öffnen", Icons.getImageIcon(Icons.Arrow.CURVE),
-				(ctx, text) -> ctx.getEditor().openEntity(text));
-		addMenuItem("Nach Entity zu dieser Guid suchen", Icons.getImageIcon(Icons.Action.FIND),
-				(ctx, text) -> EntitySearchDialog.openEntitySearchGuid(ctx, GuidEntityFilter.MatchMode.Guid, text));
+		addMenuItem("Entity zu dieser Guid öffnen", Icons.getImageIcon(Icons.Arrow.CURVE), this::openEntity);
+		addMenuItem("Nach Entity zu dieser Guid suchen", Icons.getImageIcon(Icons.Action.FIND), this::searchEntity);
 		addMenuItem("Zu Entity mit dieser Guid teleportieren", Icons.getImageIcon(Icons.Misc.GEOLOCATION),
 				(ctx, guid) -> IpcUtil.gotoGuid(guid), (ctx, guid) -> GuidUtil.isValid(guid) && ctx.getIpcMonitor().isAvailable());
 	}
+
+	private boolean openEntity(EditorContext ctx, String text) {
+		return ctx.getEditor().openEntity(text);
+	}
+
+	private EntitySearchDialog searchEntity(EditorContext ctx, String text) {
+		return EntitySearchDialog.openEntitySearchGuid(ctx, GuidEntityFilter.MatchMode.Guid, text);
+	}
+
 }
