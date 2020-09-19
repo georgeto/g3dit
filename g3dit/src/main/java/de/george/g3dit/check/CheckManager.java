@@ -334,6 +334,7 @@ public class CheckManager {
 
 				@Override
 				public void onFailure(Throwable t) {
+					logger.warn("Failure during check execution.", t);
 					onCompletion();
 				}
 
