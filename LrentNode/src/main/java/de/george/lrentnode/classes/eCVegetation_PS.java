@@ -342,6 +342,10 @@ public class eCVegetation_PS extends G3Class {
 			outerBounds = newBounds;
 			boundsNeedUpdate = false;
 		}
+
+		public int getEntryCount() {
+			return getGridNodes().stream().map(eCVegetation_GridNode::getEntryCount).reduce(0, Integer::sum);
+		}
 	}
 
 	public class eCVegetation_GridNode implements G3Serializable {

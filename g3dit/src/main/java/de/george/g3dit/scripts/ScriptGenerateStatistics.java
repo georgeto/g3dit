@@ -8,6 +8,7 @@ import de.george.g3dit.util.FileManager;
 import de.george.g3utils.util.IOUtils;
 import de.george.lrentnode.archive.ArchiveFile;
 import de.george.lrentnode.archive.eCEntity;
+import de.george.lrentnode.classes.eCVegetation_PS;
 import de.george.lrentnode.classes.desc.CD;
 import de.george.lrentnode.enums.G3Enums.gESpecies;
 import de.george.lrentnode.iterator.ArchiveFileIterator;
@@ -35,27 +36,22 @@ public class ScriptGenerateStatistics implements IScript {
 		Map<String, String> originalNPCs = new HashMap<>();
 		Map<String, String> originalMonsters = new HashMap<>();
 		Map<String, String> originalObjects = new HashMap<>();
+		int originalVegetationObjectCount = 0;
 
 		while (secWorldFilesIterator.hasNext()) {
 			ArchiveFile archiveFile = secWorldFilesIterator.next();
 
-			for (eCEntity entity : archiveFile.getEntities()) {
-				if (entity.getName().equalsIgnoreCase("Root") || entity.getName().equalsIgnoreCase("RootEntity")) {
-					continue;
-				}
-
-				if (entity.hasParent() && NPCUtil.isNPC(entity.getParent())) {
-					continue;
-				}
-
-				if (NPCUtil.isNPC(entity)) {
-					bTPropertyContainer<gESpecies> species = entity.getClass(CD.gCNPC_PS.class).property(CD.gCNPC_PS.Species);
-					if (species.getEnumValue() == gESpecies.gESpecies_Human || species.getEnumValue() == gESpecies.gESpecies_Orc) {
-						originalNPCs.put(entity.getGuid(), entity.toString());
-					} else {
-						originalMonsters.put(entity.getGuid(), entity.toString());
-					}
+			for (eCEntity entity : archiveFile.getEntities().filter(ScriptGenerateStatistics::isIncluded)) {
+				if (isNPC(entity)) {
+					originalNPCs.put(entity.getGuid(), entity.toString());
+				} else if (isMonster(entity)) {
+					originalMonsters.put(entity.getGuid(), entity.toString());
 				} else {
+					if (entity.hasClass(CD.eCVegetation_PS.class)) {
+						eCVegetation_PS vegetation = entity.getClass(CD.eCVegetation_PS.class);
+						originalVegetationObjectCount += vegetation.getGrid().getEntryCount();
+					}
+
 					originalObjects.put(entity.getGuid(), entity.toString());
 				}
 			}
@@ -64,31 +60,30 @@ public class ScriptGenerateStatistics implements IScript {
 		Map<String, String> newNPCs = new HashMap<>();
 		Map<String, String> newMonsters = new HashMap<>();
 		Map<String, String> newObjects = new HashMap<>();
+		int vegetationObjectCount = 0;
 
 		ArchiveFileIterator worldFilesIterator = env.getFileManager().worldFilesIterator();
 		while (worldFilesIterator.hasNext()) {
 			ArchiveFile archiveFile = worldFilesIterator.next();
 
-			for (eCEntity entity : archiveFile.getEntities()) {
-				if (entity.getName().equalsIgnoreCase("Root") || entity.getName().equalsIgnoreCase("RootEntity")) {
-					continue;
-				}
-
-				if (entity.hasParent() && NPCUtil.isNPC(entity.getParent())) {
-					continue;
-				}
-
-				if (NPCUtil.isNPC(entity)) {
-					bTPropertyContainer<gESpecies> species = entity.getClass(CD.gCNPC_PS.class).property(CD.gCNPC_PS.Species);
-					if (species.getEnumValue() == gESpecies.gESpecies_Human || species.getEnumValue() == gESpecies.gESpecies_Orc) {
-						if (originalNPCs.remove(entity.getGuid()) == null) {
-							newNPCs.put(entity.getGuid(), entity.toString());
-						}
-					} else if (originalMonsters.remove(entity.getGuid()) == null) {
+			for (eCEntity entity : archiveFile.getEntities().filter(ScriptGenerateStatistics::isIncluded)) {
+				if (isNPC(entity)) {
+					if (originalNPCs.remove(entity.getGuid()) == null) {
+						newNPCs.put(entity.getGuid(), entity.toString());
+					}
+				} else if (isMonster(entity)) {
+					if (originalMonsters.remove(entity.getGuid()) == null) {
 						newMonsters.put(entity.getGuid(), entity.toString());
 					}
-				} else if (originalObjects.remove(entity.getGuid()) == null) {
-					newObjects.put(entity.getGuid(), entity.toString());
+				} else {
+					if (entity.hasClass(CD.eCVegetation_PS.class)) {
+						eCVegetation_PS vegetation = entity.getClass(CD.eCVegetation_PS.class);
+						vegetationObjectCount += vegetation.getGrid().getEntryCount();
+					}
+
+					if (originalObjects.remove(entity.getGuid()) == null) {
+						newObjects.put(entity.getGuid(), entity.toString());
+					}
 				}
 			}
 		}
@@ -99,7 +94,31 @@ public class ScriptGenerateStatistics implements IScript {
 		env.log(newNPCs.size() + " NPCs erstellt.");
 		env.log(newMonsters.size() + " Monster erstellt.");
 		env.log(newObjects.size() + " Objekte erstellt.");
+		env.log("%d (%+d) Vegetationsobjekte", vegetationObjectCount, vegetationObjectCount - originalVegetationObjectCount);
 
 		return true;
+	}
+
+	private static boolean isIncluded(eCEntity entity) {
+		if (entity.getName().equalsIgnoreCase("Root") || entity.getName().equalsIgnoreCase("RootEntity")) {
+			return false;
+		}
+		if (entity.hasParent() && NPCUtil.isNPC(entity.getParent())) {
+			return false;
+		}
+		return true;
+	}
+
+	private static boolean isMonster(eCEntity entity) {
+		return NPCUtil.isNPC(entity);
+	}
+
+	private static boolean isNPC(eCEntity entity) {
+		if (!NPCUtil.isNPC(entity)) {
+			return false;
+		}
+
+		bTPropertyContainer<gESpecies> species = entity.getClass(CD.gCNPC_PS.class).property(CD.gCNPC_PS.Species);
+		return species.getEnumValue() == gESpecies.gESpecies_Human || species.getEnumValue() == gESpecies.gESpecies_Orc;
 	}
 }

@@ -33,7 +33,6 @@ import de.george.lrentnode.classes.eCResourceMeshComplex_PS;
 import de.george.lrentnode.classes.eCVegetation_Mesh;
 import de.george.lrentnode.classes.eCVegetation_PS;
 import de.george.lrentnode.classes.eCVegetation_PS.PlantRegionEntry;
-import de.george.lrentnode.classes.eCVegetation_PS.eCVegetation_GridNode;
 import de.george.lrentnode.classes.desc.CD;
 import de.george.lrentnode.util.EntityUtil;
 import de.george.lrentnode.util.FileUtil;
@@ -297,8 +296,7 @@ public class LowPolyGenerator {
 		createLowpolyNode("G3_World_Lowpoly_01_Levelmesh_01", globalLowPolyNodeEntities, globalLowPolyNodeSectors, true);
 
 		log("");
-		log("Create speedtree low poly lrentdat with %d speedtrees.",
-				lowPolyMcpVeg.getGrid().getGridNodes().stream().map(eCVegetation_GridNode::getEntryCount).reduce(0, Integer::sum));
+		log("Create speedtree low poly lrentdat with %d speedtrees.", lowPolyMcpVeg.getGrid().getEntryCount());
 		// Save speedtree low poly lrentdat
 		lowPolyMcpVeg.getGrid().updateBounds();
 		lowPolyMcp.updateLocalNodeBoundary(lowPolyMcpVeg.getBounds());
