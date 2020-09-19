@@ -1591,6 +1591,7 @@ public interface CD {
 		public static final PropertyDescriptor<bTPropertyContainer<gEUseType>> UseType = new PropertyDescriptor<>("UseType", bTPropertyContainer.class, "bTPropertyContainer<enum gEUseType>", "Interact", gCInteraction_PS.class);
 		public static final PropertyDescriptor<gBool> UsedByPlayer = new PropertyDescriptor<>("UsedByPlayer", gBool.class, "bool", "Intern", gCInteraction_PS.class);
 		public static final PropertyDescriptor<eCEntityProxy> User = new PropertyDescriptor<>("User", eCEntityProxy.class, "eCEntityProxy", "Intern", gCInteraction_PS.class);
+		public static final PropertyDescriptor<gBool> RoutineExclusive = new PropertyDescriptor<>("RoutineExclusive", gBool.class, "bool", "Intern", gCInteraction_PS.class, new gBool(false));
 	}
 
 	public static interface gCInventorySlot extends ClassDescriptor {
