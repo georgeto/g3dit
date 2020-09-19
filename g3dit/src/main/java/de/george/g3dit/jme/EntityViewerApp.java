@@ -21,6 +21,8 @@ public class EntityViewerApp extends EditorAwareApplication implements ActionLis
 	private float defaultRelativeDistance = 4.0f;
 	private float defaultAbsoluteDistance = Float.NaN;
 
+	private boolean invertRotation = false;
+
 	public EntityViewerApp(AssetManager assetManager) {
 		super(assetManager);
 	}
@@ -40,8 +42,9 @@ public class EntityViewerApp extends EditorAwareApplication implements ActionLis
 		getCamera().setFrustumFar(111111f);
 
 		// Disable fly cam
-		getFlyByCamera().setDragToRotate(true);
-		getFlyByCamera().setEnabled(false);
+		flyCam.setDragToRotate(true);
+		flyCam.setMoveSpeed(400.0f);
+		flyCam.setEnabled(false);
 
 		// Init pivot cam
 		pivotCam = new ChaseCamera(cam, inputManager);
@@ -53,22 +56,59 @@ public class EntityViewerApp extends EditorAwareApplication implements ActionLis
 	}
 
 	private void initKeys() {
-		inputManager.addMapping("Reset Camera", new KeyTrigger(KeyInput.KEY_D));
-		inputManager.addListener(this, "Reset Camera");
+		inputManager.addMapping("Reset Camera", new KeyTrigger(KeyInput.KEY_R));
+		inputManager.addMapping("Toggle Camera", new KeyTrigger(KeyInput.KEY_C));
+		inputManager.addMapping("Rotate X", new KeyTrigger(KeyInput.KEY_F));
+		inputManager.addMapping("Rotate Y", new KeyTrigger(KeyInput.KEY_G));
+		inputManager.addMapping("Rotate Z", new KeyTrigger(KeyInput.KEY_H));
+		inputManager.addMapping("Reset Rotation", new KeyTrigger(KeyInput.KEY_J));
+		inputManager.addMapping("Invert Rotation", new KeyTrigger(KeyInput.KEY_LSHIFT));
+		inputManager.addListener(this, "Reset Camera", "Toggle Camera", "Rotate X", "Rotate Y", "Rotate Z", "Reset Rotation",
+				"Invert Rotation");
 	}
 
 	@Override
 	public void onAction(String name, boolean isPressed, float tpf) {
+		if (name.equals("Invert Rotation")) {
+			invertRotation = isPressed;
+			return;
+		} else if (isPressed) {
+			return;
+		}
+
 		switch (name) {
 			case "Reset Camera":
-				if (!isPressed) {
-					pivotCam.setDefaultHorizontalRotation(defaultHorizontalRotation);
-					pivotCam.setDefaultVerticalRotation(defaultVerticalRotation);
-					pivotCam.setDefaultDistance(pivotCam.getMaxDistance() / 80.0f * defaultRelativeDistance);
-				}
+				pivotCam.setDefaultHorizontalRotation(defaultHorizontalRotation);
+				pivotCam.setDefaultVerticalRotation(defaultVerticalRotation);
+				pivotCam.setDefaultDistance(pivotCam.getMaxDistance() / RELATIVE_MAX_DISTANCE * defaultRelativeDistance);
+				break;
 
+			case "Toggle Camera":
+				boolean flyCamEnabled = flyCam.isEnabled();
+				flyCam.setEnabled(!flyCamEnabled);
+				pivotCam.setEnabled(flyCamEnabled);
+				break;
+
+			case "Rotate X":
+				entitiesNode.rotate(getRotationStep(), 0, 0);
+				break;
+
+			case "Rotate Y":
+				entitiesNode.rotate(0, getRotationStep(), 0);
+				break;
+
+			case "Rotate Z":
+				entitiesNode.rotate(0, 0, getRotationStep());
+				break;
+
+			case "Reset Rotation":
+				setObjectRotation(0, 0, 0);
 				break;
 		}
+	}
+
+	private float getRotationStep() {
+		return (invertRotation ? -1 : 1) * 10.0f * FastMath.DEG_TO_RAD;
 	}
 
 	public void clearEntities() {
@@ -121,5 +161,13 @@ public class EntityViewerApp extends EditorAwareApplication implements ActionLis
 
 	public void setVerticalRotationDeg(float rotation) {
 		setVerticalRotation(rotation * FastMath.DEG_TO_RAD);
+	}
+
+	public void setObjectRotation(float x, float y, float z) {
+		entitiesNode.setLocalRotation(new Quaternion().fromAngles(x, y, z));
+	}
+
+	public void setObjectRotationDeg(float x, float y, float z) {
+		setObjectRotation(x * FastMath.DEG_TO_RAD, y * FastMath.DEG_TO_RAD, z * FastMath.DEG_TO_RAD);
 	}
 }

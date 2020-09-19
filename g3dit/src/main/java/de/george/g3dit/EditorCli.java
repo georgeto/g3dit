@@ -78,12 +78,15 @@ public class EditorCli {
 		renderParser.addArgument("-o", "--out").required(true);
 		renderParser.addArgument("-w", "--width").type(int.class).setDefault(1920);
 		renderParser.addArgument("-H", "--height").type(int.class).setDefault(1080);
-		renderParser.addArgument("-rh", "--rot-horiz").type(float.class);
-		renderParser.addArgument("-rv", "--rot-vert").type(float.class);
+		renderParser.addArgument("-rh", "--rot-horiz").type(float.class).help("horizontal rotation of the camera");
+		renderParser.addArgument("-rv", "--rot-vert").type(float.class).help("vertical rotation of the camera");
 		MutuallyExclusiveGroup renderDistanceGroup = renderParser.addMutuallyExclusiveGroup("distance");
 		renderDistanceGroup.addArgument("-d", "--distance").type(float.class).help("distance of the camera from the object");
 		renderDistanceGroup.addArgument("-dr", "--distance-relative").type(float.class)
 				.help("distance of the camera from the object in relation to its size");
+		renderParser.addArgument("-orx", "--obj-rot-x").type(float.class).help("rotation of the object on the x axis").setDefault(0);
+		renderParser.addArgument("-ory", "--obj-rot-y").type(float.class).help("rotation of the object on the y axis").setDefault(0);
+		renderParser.addArgument("-orz", "--obj-rot-z").type(float.class).help("rotation of the object on the z axis").setDefault(0);
 		renderParser.addArgument("-lri", "--light-rot-inclination").type(float.class);
 		renderParser.addArgument("-lra", "--light-rot-azimuth").type(float.class);
 		renderParser.addArgument("-ms", "--material-switch").type(int.class).setDefault(0);
@@ -223,6 +226,11 @@ public class EditorCli {
 
 		if (hasArg("distance_relative")) {
 			r.appTask(app -> app.setRelativeDistance(parseResult.getFloat("distance_relative")));
+		}
+
+		if (hasArg("obj_rot_x") && hasArg("obj_rot_y") && hasArg("obj_rot_z")) {
+			r.appTask(app -> app.setObjectRotationDeg(parseResult.getFloat("obj_rot_x"), parseResult.getFloat("obj_rot_y"),
+					parseResult.getFloat("obj_rot_z")));
 		}
 
 		if (hasArg("light_rot_inclination") || hasArg("light_rot_azimuth")) {
