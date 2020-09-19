@@ -17,25 +17,33 @@ import de.george.lrentnode.archive.ArchiveFile;
 import de.george.lrentnode.archive.eCEntity;
 import de.george.lrentnode.classes.gCAnchor_PS;
 import de.george.lrentnode.classes.desc.CD;
+import de.george.lrentnode.enums.G3Enums;
+import de.george.lrentnode.enums.G3Enums.gEAnchorType;
 
 public class CheckInvalidAnchors extends AbstractEntityCheck {
 	private static class Anchor {
 		private final EntityDescriptor descriptor;
 		private final Set<String> interactPoints;
+		private final boolean dynamic;
+		private final int anchorType;
 
-		public Anchor(EntityDescriptor descriptor, Set<String> interactPoints) {
+		public Anchor(EntityDescriptor descriptor, Set<String> interactPoints, boolean dynamic, int anchorType) {
 			this.descriptor = descriptor;
 			this.interactPoints = interactPoints;
+			this.dynamic = dynamic;
+			this.anchorType = anchorType;
 		}
 	}
 
 	private static class InteractPoint {
 		private final EntityDescriptor descriptor;
 		private final String anchor;
+		private final boolean dynamic;
 
-		public InteractPoint(EntityDescriptor descriptor, String anchor) {
+		public InteractPoint(EntityDescriptor descriptor, String anchor, boolean dynamic) {
 			this.descriptor = descriptor;
 			this.anchor = anchor;
+			this.dynamic = dynamic;
 		}
 	}
 
@@ -55,10 +63,11 @@ public class CheckInvalidAnchors extends AbstractEntityCheck {
 
 		if (entity.hasClass(CD.gCAnchor_PS.class)) {
 			gCAnchor_PS anchor = entity.getClass(CD.gCAnchor_PS.class);
-			anchors.put(entity.getGuid(), new Anchor(descriptor.get(), ImmutableSet.copyOf(anchor.interactPoints.getNativeEntries())));
+			anchors.put(entity.getGuid(), new Anchor(descriptor.get(), ImmutableSet.copyOf(anchor.interactPoints.getNativeEntries()),
+					archiveFile.isLrentdat(), anchor.property(CD.gCAnchor_PS.AnchorType).getEnumValue()));
 		} else if (entity.hasClass(CD.gCInteraction_PS.class)) {
 			String anchorPoint = entity.getProperty(CD.gCInteraction_PS.AnchorPoint).getGuid();
-			interactPoints.put(entity.getGuid(), new InteractPoint(descriptor.get(), anchorPoint));
+			interactPoints.put(entity.getGuid(), new InteractPoint(descriptor.get(), anchorPoint, archiveFile.isLrentdat()));
 		}
 
 		return EntityPassStatus.Next;
@@ -67,6 +76,13 @@ public class CheckInvalidAnchors extends AbstractEntityCheck {
 	@Override
 	public void reportProblems(ProblemConsumer problemConsumer) {
 		for (Anchor anchor : anchors.values()) {
+			if (!anchor.dynamic) {
+				postEntityProblem(problemConsumer, anchor.descriptor, Severity.Fatal,
+						"Anchor befindet sich in .node (UserCount nicht Teil des Spielstands)",
+						HtmlCreator.renderList("AnchorType: " + G3Enums.asString(gEAnchorType.class, anchor.anchorType),
+								"Interact Points: " + anchor.interactPoints.size()));
+			}
+
 			for (String interactPointGuid : anchor.interactPoints) {
 				InteractPoint interactPoint = interactPoints.get(interactPointGuid);
 				if (interactPoint != null) {
