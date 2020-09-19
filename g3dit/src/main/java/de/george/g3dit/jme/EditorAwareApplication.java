@@ -1,12 +1,17 @@
 package de.george.g3dit.jme;
 
 import java.io.File;
+import java.util.Collections;
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CountDownLatch;
+import java.util.stream.Collectors;
 
 import com.jme3.app.SimpleApplication;
 import com.jme3.asset.AssetManager;
+import com.jme3.font.BitmapText;
 import com.jme3.input.KeyInput;
+import com.jme3.input.controls.ActionListener;
 import com.jme3.input.controls.KeyTrigger;
 import com.jme3.light.AmbientLight;
 import com.jme3.light.DirectionalLight;
@@ -15,6 +20,7 @@ import com.jme3.math.ColorRGBA;
 import com.jme3.math.FastMath;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Spatial;
+import com.jme3.scene.Spatial.CullHint;
 
 import de.george.g3dit.jme.asset.SwitchedMaterialKey;
 import de.george.g3dit.jme.asset.SwitchedModelKey;
@@ -26,6 +32,9 @@ public abstract class EditorAwareApplication extends SimpleApplication {
 	protected AmbientLight ambientLight;
 
 	protected ExtScreenshotAppState screenShotState;
+
+	private BitmapText stateText;
+	private boolean showStateText;
 
 	public EditorAwareApplication(AssetManager assetManager) {
 		this.assetManager = assetManager;
@@ -43,6 +52,18 @@ public abstract class EditorAwareApplication extends SimpleApplication {
 		screenShotState = new ExtScreenshotAppState();
 		inputManager.addMapping("ScreenShot", new KeyTrigger(KeyInput.KEY_F1));
 		stateManager.attach(screenShotState);
+
+		stateText = new BitmapText(guiFont);
+		stateText.setCullHint(CullHint.Always);
+		guiNode.attachChild(stateText);
+		showStateText = false;
+		inputManager.addMapping("Toggle Info", new KeyTrigger(KeyInput.KEY_F2));
+		inputManager.addListener((ActionListener) (name, isPressed, tpf) -> {
+			if (isPressed) {
+				showStateText = !showStateText;
+				stateText.setCullHint(showStateText ? CullHint.Never : CullHint.Always);
+			}
+		}, "Toggle Info");
 
 		appIsInited.countDown();
 	}
@@ -96,5 +117,17 @@ public abstract class EditorAwareApplication extends SimpleApplication {
 
 	public void makeScreenshot(File outFile, String format, CompletableFuture<Boolean> complete) {
 		screenShotState.takeScreenshot(outFile, format, complete);
+	}
+
+	@Override
+	public void update() {
+		super.update();
+		List<String> stateTextLines = getStateText();
+		stateText.setLocalTranslation(0, stateText.getLineHeight() * stateTextLines.size(), 0);
+		stateText.setText(stateTextLines.stream().collect(Collectors.joining("\n")));
+	}
+
+	protected List<String> getStateText() {
+		return Collections.emptyList();
 	}
 }

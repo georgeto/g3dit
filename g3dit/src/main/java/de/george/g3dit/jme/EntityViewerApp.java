@@ -1,5 +1,8 @@
 package de.george.g3dit.jme;
 
+import java.util.Arrays;
+import java.util.List;
+
 import com.jme3.asset.AssetManager;
 import com.jme3.bounding.BoundingBox;
 import com.jme3.input.ChaseCamera;
@@ -7,11 +10,14 @@ import com.jme3.input.KeyInput;
 import com.jme3.input.controls.ActionListener;
 import com.jme3.input.controls.KeyTrigger;
 import com.jme3.math.FastMath;
+import com.jme3.math.Quaternion;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
 
 public class EntityViewerApp extends EditorAwareApplication implements ActionListener {
+	private static final float RELATIVE_MAX_DISTANCE = 80.0f;
+
 	private Node entitiesNode;
 
 	private ChaseCamera pivotCam;
@@ -126,7 +132,7 @@ public class EntityViewerApp extends EditorAwareApplication implements ActionLis
 			if (Float.isNaN(defaultAbsoluteDistance)) {
 				float extent = worldBound.getExtent(null).length();
 				pivotCam.setDefaultDistance(extent * defaultRelativeDistance);
-				pivotCam.setMaxDistance(extent * 80f);
+				pivotCam.setMaxDistance(extent * RELATIVE_MAX_DISTANCE);
 				pivotCam.setZoomSensitivity(extent * 0.5f);
 			}
 		}
@@ -135,7 +141,7 @@ public class EntityViewerApp extends EditorAwareApplication implements ActionLis
 	public void setRelativeDistance(float distance) {
 		defaultAbsoluteDistance = Float.NaN;
 		defaultRelativeDistance = distance;
-		pivotCam.setDefaultDistance(pivotCam.getMaxDistance() / 80.0f * defaultRelativeDistance);
+		pivotCam.setDefaultDistance(pivotCam.getMaxDistance() / RELATIVE_MAX_DISTANCE * defaultRelativeDistance);
 	}
 
 	public void setAbsoluteDistance(float distance) {
@@ -169,5 +175,28 @@ public class EntityViewerApp extends EditorAwareApplication implements ActionLis
 
 	public void setObjectRotationDeg(float x, float y, float z) {
 		setObjectRotation(x * FastMath.DEG_TO_RAD, y * FastMath.DEG_TO_RAD, z * FastMath.DEG_TO_RAD);
+	}
+
+	@Override
+	protected List<String> getStateText() {
+		float[] objectRotation = new float[3];
+		entitiesNode.getLocalRotation().toAngles(objectRotation);
+
+		String cameraDistanceType;
+		float cameraDistance;
+		if (Float.isNaN(defaultAbsoluteDistance)) {
+			cameraDistanceType = "relative";
+			cameraDistance = pivotCam.getDistanceToTarget() / (pivotCam.getMaxDistance() / RELATIVE_MAX_DISTANCE);
+		} else {
+			cameraDistanceType = "absolute";
+			cameraDistance = pivotCam.getDistanceToTarget();
+		}
+
+		return Arrays.asList(
+				String.format("Camera rotation: %.2f / %.2f", pivotCam.getHorizontalRotation() * FastMath.RAD_TO_DEG,
+						pivotCam.getVerticalRotation() * FastMath.RAD_TO_DEG),
+				String.format("Camera distance: %.2f (%s)", cameraDistance, cameraDistanceType),
+				String.format("Object rotation: %.2f / %.2f / %.2f", objectRotation[0] * FastMath.RAD_TO_DEG,
+						objectRotation[1] * FastMath.RAD_TO_DEG, objectRotation[2] * FastMath.RAD_TO_DEG));
 	}
 }
