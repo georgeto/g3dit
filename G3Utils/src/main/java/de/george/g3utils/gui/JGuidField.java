@@ -7,7 +7,7 @@ import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JTextField;
 
-import org.netbeans.validation.api.AbstractValidator;
+import org.netbeans.validation.api.Validator;
 import org.netbeans.validation.api.ui.ValidationGroup;
 
 import de.george.g3utils.structure.GuidUtil;
@@ -55,7 +55,7 @@ public class JGuidField extends JPanel {
 	}
 
 	@SuppressWarnings({"rawtypes", "unchecked"})
-	public void initValidation(ValidationGroup group, String fieldName, AbstractValidator... validators) {
+	public void initValidation(ValidationGroup group, String fieldName, Validator... validators) {
 		tfGuid.setName(fieldName);
 		group.add(tfGuid, validators);
 	}

@@ -30,6 +30,10 @@ public abstract class JSearchNamedGuidField extends JSearchGuidField {
 	}
 
 	public void setFieldLayout(Layout layout) {
+		setFieldLayout(layout, -1);
+	}
+
+	public void setFieldLayout(Layout layout, int distribution) {
 		tfGuidText.setFont(defaultGuidTextFont);
 		removeAll();
 		if (layout == Layout.Vertical) {
@@ -41,8 +45,11 @@ public abstract class JSearchNamedGuidField extends JSearchGuidField {
 			add(tfGuid, "width 100%, height 19!, wrap");
 			add(tfGuidText, "width 100%, height 19!");
 		} else if (layout == Layout.Horizontal) {
-			add(tfGuid, "width 70%, height 19!, egy fields, id tfGuid");
-			add(getOrCreateTextFieldName(), "width 30%, height 19!, egy fields, y tfGuid.y");
+			if (distribution == -1) {
+				distribution = 70;
+			}
+			add(tfGuid, "width " + distribution + "%, height 19!, egy fields, id tfGuid");
+			add(getOrCreateTextFieldName(), "width " + (100 - distribution) + "%, height 19!, egy fields, y tfGuid.y");
 		}
 	}
 

@@ -20,4 +20,12 @@ public class gCParty_PS extends G3Class {
 	protected void writePostClassVersion(G3FileWriter writer) {
 		writer.write(members);
 	}
+
+	public bTObjArray_eCEntityProxy getMembers() {
+		return members;
+	}
+
+	public void setMembers(bTObjArray_eCEntityProxy members) {
+		this.members = members;
+	}
 }

@@ -4,6 +4,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import de.george.g3utils.io.G3Serializable;
+import de.george.lrentnode.properties.PropertyInstantiator;
 import de.george.lrentnode.properties.bTArray;
 
 public class PropertyDescriptor<T extends G3Serializable> {
@@ -43,7 +44,11 @@ public class PropertyDescriptor<T extends G3Serializable> {
 		} else {
 			elementDataTypeName = null;
 		}
-		this.defaultValue = defaultValue;
+		if (defaultValue != null) {
+			this.defaultValue = defaultValue;
+		} else {
+			this.defaultValue = (T) PropertyInstantiator.getPropertyDefaultValue(name, dataTypeName).orElse(null);
+		}
 	}
 
 	public String getName() {

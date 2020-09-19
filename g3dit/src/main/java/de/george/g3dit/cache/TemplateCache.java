@@ -21,6 +21,7 @@ import com.google.common.collect.ImmutableSet;
 import de.george.g3dit.EditorContext;
 import de.george.g3dit.util.AbstractDialogFileWorker;
 import de.george.lrentnode.classes.G3Class;
+import de.george.lrentnode.classes.desc.ClassDescriptor;
 import de.george.lrentnode.iterator.TemplateFileIterator;
 import de.george.lrentnode.template.TemplateEntity;
 import de.george.lrentnode.template.TemplateFile;
@@ -213,6 +214,16 @@ public class TemplateCache extends AbstractCache<TemplateCache> {
 
 		public Set<String> getClasses() {
 			return classes;
+		}
+
+		@SafeVarargs
+		public final boolean hasAnyClass(Class<? extends ClassDescriptor>... propertySets) {
+			for (Class<? extends ClassDescriptor> propertySet : propertySets) {
+				if (classes.contains(ClassDescriptor.getName(propertySet))) {
+					return true;
+				}
+			}
+			return false;
 		}
 
 		@Override

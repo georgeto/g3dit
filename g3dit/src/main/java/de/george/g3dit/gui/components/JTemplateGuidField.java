@@ -19,6 +19,7 @@ public class JTemplateGuidField extends JSearchNamedGuidField {
 	private boolean all;
 	private Predicate<TemplateCacheEntry> filter;
 	private TemplateCache cache;
+	private TemplateIntelliHints intelliHints;
 
 	public JTemplateGuidField(EditorContext ctx) {
 		this(ctx, null, false);
@@ -30,13 +31,17 @@ public class JTemplateGuidField extends JSearchNamedGuidField {
 		this.all = all;
 
 		cache = Caches.template(ctx);
-		// Add name auto completion to guid field
-		new TemplateIntelliHints(getOrCreateTextFieldName(), cache);
+		intelliHints = new TemplateIntelliHints(getOrCreateTextFieldName(), cache, filter, all);
 		// Update name when cache changes
 		cache.addUpdateListener(this, c -> lookupName(getText()));
 
 		SwingUtils.addKeyStroke(this, "Open", KeyEvent.VK_F3, () -> openTemplate(ctx, getText()));
 		SwingUtils.addKeyStroke(this, "Search", KeyEvent.VK_F4, () -> searchTemplate(ctx, getText()));
+	}
+
+	public void setFilter(Predicate<TemplateCacheEntry> filter) {
+		this.filter = filter;
+		intelliHints.setFilter(filter);
 	}
 
 	@Override

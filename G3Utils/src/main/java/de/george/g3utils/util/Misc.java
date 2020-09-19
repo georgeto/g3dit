@@ -9,6 +9,7 @@ import java.util.Optional;
 import java.util.Random;
 import java.util.function.BiFunction;
 import java.util.function.Function;
+import java.util.function.Supplier;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -406,5 +407,9 @@ public class Misc {
 				return each.apply(it.next(), iu.next());
 			}
 		};
+	}
+
+	public static <R> R evaluate(Supplier<R> supplier) {
+		return supplier.get();
 	}
 }

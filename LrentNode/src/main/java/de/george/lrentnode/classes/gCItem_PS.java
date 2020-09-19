@@ -81,11 +81,51 @@ public class gCItem_PS extends G3Class {
 			this("", "", "", "", "");
 		}
 
-		public ScriptLine(String commands, String entity1, String entity2, String id1, String id2) {
-			command = commands;
+		public ScriptLine(String command, String entity1, String entity2, String id1, String id2) {
+			this.command = command;
 			this.entity1 = entity1;
 			this.entity2 = entity2;
 			this.id1 = id1;
+			this.id2 = id2;
+		}
+
+		public String getCommand() {
+			return command;
+		}
+
+		public void setCommand(String command) {
+			this.command = command;
+		}
+
+		public String getEntity1() {
+			return entity1;
+		}
+
+		public void setEntity1(String entity1) {
+			this.entity1 = entity1;
+		}
+
+		public String getEntity2() {
+			return entity2;
+		}
+
+		public void setEntity2(String entity2) {
+			this.entity2 = entity2;
+		}
+
+		public String getId1() {
+			return id1;
+		}
+
+		public void setId1(String id1) {
+			this.id1 = id1;
+		}
+
+		public String getId2() {
+			return id2;
+		}
+
+		public void setId2(String id2) {
 			this.id2 = id2;
 		}
 

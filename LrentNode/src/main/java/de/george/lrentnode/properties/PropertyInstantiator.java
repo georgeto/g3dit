@@ -104,6 +104,15 @@ public class PropertyInstantiator {
 		}
 	}
 
+	public static <T extends G3Serializable> Optional<T> getPropertyDefaultValue(String name, Class<T> clazz) {
+		try {
+			return Optional.of(clazz.getConstructor().newInstance());
+		} catch (ReflectiveOperationException | SecurityException e) {
+			logger.warn("Error while instantiating property with default value: {} - {}", name, clazz.getSimpleName(), e);
+			return Optional.empty();
+		}
+	}
+
 	public static Set<String> getKnownTypes() {
 		return Collections.unmodifiableSet(classMap.keySet());
 	}

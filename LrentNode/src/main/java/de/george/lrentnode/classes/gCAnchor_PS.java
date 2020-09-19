@@ -20,4 +20,12 @@ public class gCAnchor_PS extends G3Class {
 	protected void writePostClassVersion(G3FileWriter writer) {
 		writer.write(interactPoints);
 	}
+
+	public bTObjArray_eCEntityProxy getInteractPoints() {
+		return interactPoints;
+	}
+
+	public void setInteractPoints(bTObjArray_eCEntityProxy interactPoints) {
+		this.interactPoints = interactPoints;
+	}
 }

@@ -1,8 +1,6 @@
 package de.george.g3dit.tab.shared;
 
 import java.awt.Container;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -21,6 +19,8 @@ import de.george.g3dit.gui.components.JTemplateGuidField;
 import de.george.g3dit.gui.dialogs.TemplateIntelliHints;
 import de.george.g3dit.gui.dialogs.TemplateNameSearchDialog;
 import de.george.g3dit.gui.dialogs.TemplateNameSearchDialog.TemplateSearchListener;
+import de.george.g3dit.gui.edit.PropertyPanel;
+import de.george.g3dit.gui.edit.handler.LambdaPropertyHandler;
 import de.george.g3dit.gui.validation.TemplateExistenceValidator;
 import de.george.g3dit.util.Icons;
 import de.george.g3utils.gui.SwingUtils;
@@ -37,11 +37,7 @@ import de.george.lrentnode.util.ClassUtil;
 import de.george.lrentnode.util.PropertyUtil;
 import net.miginfocom.swing.MigLayout;
 
-public class SharedInventarTab extends AbstractSharedTab {
-	private static final int TREASURE_SET_NUMBER = 5;
-
-	private List<JTextField> treasureSets;
-
+public class SharedInventarTab extends AbstractPropertySharedTab {
 	private InventarStacksPanel stacksPanel;
 
 	public SharedInventarTab(EditorContext ctx, Container container) {
@@ -49,28 +45,21 @@ public class SharedInventarTab extends AbstractSharedTab {
 	}
 
 	@Override
-	public void initComponents(ValidationGroup validation, JScrollPane scrollPane) {
-		container.setLayout(new MigLayout("fillx", "[]20px[]20px[]push[]"));
-
-		JLabel lblTreasureSets = SwingUtils.createBoldLabel("TreasureSets");
-		container.add(lblTreasureSets, "wrap");
-
-		treasureSets = new ArrayList<>(5);
-		for (int i = 1; i <= TREASURE_SET_NUMBER; i++) {
-			container.add(new JLabel("TreasureSet" + i), "gapleft 7, wrap");
-			JTextField tfTreasureSet = SwingUtils.createUndoTF();
-			treasureSets.add(tfTreasureSet);
-			container.add(tfTreasureSet, "gapleft 7, width 100:300:300, spanx 2, wrap");
+	protected void initPropertyPanel(PropertyPanel propertyPanel, ValidationGroup validation, JScrollPane scrollPane) {
+		propertyPanel.addHeadline("TreasureSets");
+		TemplateCache tpleCache = Caches.template(ctx);
+		for (int i = 1; i <= 5; i++) {
+			propertyPanel.add(PropertyUtil.GetTreasureSetProperty(i))
+					.<JTextField>customize(tfTreasureSet -> new TemplateIntelliHints(tfTreasureSet, tpleCache,
+							e -> e.getClasses().contains("gCTreasureSet_PS"), false))
+					.fullWidth().done();
 		}
 
-		initAutoCompleters();
-
-		JLabel lblInventoryStacks = SwingUtils.createBoldLabel("InventoryStacks");
-		container.add(lblInventoryStacks, "gaptop 7, wrap");
-
+		propertyPanel.addHeadline("InventoryStacks");
 		stacksPanel = new InventarStacksPanel(scrollPane);
 		stacksPanel.initValidation(validation);
-		container.add(stacksPanel, "width 100:300:450, spanx 4, grow, wrap");
+		propertyPanel.add(new LambdaPropertyHandler(stacksPanel, stacksPanel::loadValues, stacksPanel::saveValues)).grow()
+				.constraints("width 100:300:450, wrap").done();
 	}
 
 	@Override
@@ -84,37 +73,6 @@ public class SharedInventarTab extends AbstractSharedTab {
 	@Override
 	public boolean isActive(G3ClassContainer entity) {
 		return entity.hasClass(CD.gCInventory_PS.class);
-	}
-
-	@Override
-	public void loadValues(G3ClassContainer entity) {
-		gCInventory_PS inv = entity.getClass(CD.gCInventory_PS.class);
-
-		// TreasureSets
-		for (int i = 1; i <= TREASURE_SET_NUMBER; i++) {
-			treasureSets.get(i - 1).setText(inv.property(PropertyUtil.GetTreasureSetProperty(i)).getString());
-		}
-
-		stacksPanel.loadValues(entity);
-	}
-
-	@Override
-	public void saveValues(G3ClassContainer entity) {
-		gCInventory_PS inv = entity.getClass(CD.gCInventory_PS.class);
-
-		// TreasureSets
-		for (int i = 1; i <= TREASURE_SET_NUMBER; i++) {
-			inv.property(PropertyUtil.GetTreasureSetProperty(i)).setString(treasureSets.get(i - 1).getText());
-		}
-
-		stacksPanel.saveValues(entity);
-	}
-
-	private void initAutoCompleters() {
-		TemplateCache tpleCache = Caches.template(ctx);
-		for (int i = 0; i < TREASURE_SET_NUMBER; i++) {
-			new TemplateIntelliHints(treasureSets.get(i), tpleCache, e -> e.getClasses().contains("gCTreasureSet_PS"), false);
-		}
 	}
 
 	class InventarStacksPanel extends AbstractElementsPanel<G3ClassContainer> {

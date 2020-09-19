@@ -3,7 +3,6 @@ package de.george.g3dit.tab.shared;
 import java.awt.Container;
 import java.util.List;
 
-import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -12,7 +11,8 @@ import org.netbeans.validation.api.ui.ValidationGroup;
 
 import de.george.g3dit.EditorContext;
 import de.george.g3dit.gui.components.JEnumComboBox;
-import de.george.g3dit.util.PropertySync;
+import de.george.g3dit.gui.edit.PropertyPanel;
+import de.george.g3dit.gui.edit.handler.LambdaPropertyHandler;
 import de.george.g3utils.gui.SwingUtils;
 import de.george.g3utils.gui.UndoableTextField;
 import de.george.g3utils.structure.bCEulerAngles;
@@ -22,15 +22,13 @@ import de.george.g3utils.structure.bCVector;
 import de.george.g3utils.util.Misc;
 import de.george.g3utils.validation.ValidationGroupWrapper;
 import de.george.lrentnode.archive.G3ClassContainer;
-import de.george.lrentnode.classes.G3Class;
 import de.george.lrentnode.classes.desc.CD;
 import de.george.lrentnode.enums.G3Enums.gEDirection;
 import de.george.lrentnode.properties.gInt;
 import net.miginfocom.swing.MigLayout;
 import one.util.streamex.StreamEx;
 
-public class SharedNavOffsetTab extends AbstractSharedTab {
-	private JCheckBox cbOffsetCircle;
+public class SharedNavOffsetTab extends AbstractPropertySharedTab {
 	private NavOffsetsPanel navOffsetsPanel;
 
 	public SharedNavOffsetTab(EditorContext ctx, Container container) {
@@ -38,21 +36,21 @@ public class SharedNavOffsetTab extends AbstractSharedTab {
 	}
 
 	@Override
-	public void initComponents(ValidationGroup validation, JScrollPane scrollPane) {
-		container.setLayout(new MigLayout("fillx"));
-
-		container.add(SwingUtils.createBoldLabel("Eigenschaften"), "gaptop 7, wrap");
-
-		cbOffsetCircle = new JCheckBox("OffsetCircle");
-		cbOffsetCircle.setToolTipText(SwingUtils.getMultilineText("Animation kann auf einem Kreis um dieses Objekt ausgeführt werden.",
-				"Der Radius des Kreises wird durch den ersten NavOffset definiert."));
-		container.add(cbOffsetCircle, "gapleft 7, wrap");
-
-		container.add(SwingUtils.createBoldLabel("NavOffsets"), "gaptop 7, wrap");
-
+	protected void initPropertyPanel(PropertyPanel propertyPanel, ValidationGroup validation, JScrollPane scrollPane) {
 		navOffsetsPanel = new NavOffsetsPanel(scrollPane);
 		navOffsetsPanel.initValidation(validation);
-		container.add(navOffsetsPanel, "grow, wrap");
+
+		// @foff
+		propertyPanel
+			.addHeadline("Eigenschaften")
+			.add(CD.gCNavOffset_PS.OffsetCircle)
+				.tooltip(SwingUtils.getMultilineText("Animation kann auf einem Kreis um dieses Objekt ausgeführt werden.",
+						 "Der Radius des Kreises wird durch den ersten NavOffset definiert."))
+			.addHeadline("NavOffsets")
+			.add(new LambdaPropertyHandler(navOffsetsPanel, navOffsetsPanel::loadValues, navOffsetsPanel::saveValues))
+				.grow().constraints("width 100:300:450, wrap")
+			.done();
+		// @fon
 	}
 
 	@Override
@@ -63,20 +61,6 @@ public class SharedNavOffsetTab extends AbstractSharedTab {
 	@Override
 	public boolean isActive(G3ClassContainer entity) {
 		return entity.hasClass(CD.gCNavOffset_PS.class);
-	}
-
-	@Override
-	public void loadValues(G3ClassContainer entity) {
-		G3Class navOffset = entity.getClass(CD.gCNavOffset_PS.class);
-		PropertySync.wrap(navOffset).readBool(cbOffsetCircle, CD.gCNavOffset_PS.OffsetCircle);
-		navOffsetsPanel.loadValues(navOffset);
-	}
-
-	@Override
-	public void saveValues(G3ClassContainer entity) {
-		G3Class navOffset = entity.getClass(CD.gCNavOffset_PS.class);
-		PropertySync.wrap(navOffset).writeBool(cbOffsetCircle, CD.gCNavOffset_PS.OffsetCircle);
-		navOffsetsPanel.saveValues(navOffset);
 	}
 
 	private static class NavOffset {
@@ -90,22 +74,22 @@ public class SharedNavOffsetTab extends AbstractSharedTab {
 
 	}
 
-	private class NavOffsetsPanel extends AbstractElementsPanel<G3Class> {
+	private class NavOffsetsPanel extends AbstractElementsPanel<G3ClassContainer> {
 		public NavOffsetsPanel(JScrollPane navScroll) {
 			super("NavOffset", navScroll, true);
 
 			setLayout(new MigLayout("fillx, insets 0 5 0 0", "[]"));
 		}
 
-		private void clearNavOffsets(G3Class navOffsetPs) {
-			navOffsetPs.property(CD.gCNavOffset_PS.OffsetPose).clear();
-			navOffsetPs.property(CD.gCNavOffset_PS.AniDirection).clear();
+		private void clearNavOffsets(G3ClassContainer entity) {
+			entity.getProperty(CD.gCNavOffset_PS.OffsetPose).clear();
+			entity.getProperty(CD.gCNavOffset_PS.AniDirection).clear();
 		}
 
 		@Override
-		public void loadValuesInternal(G3Class navOffsetPs) {
-			List<bCMotion> poses = navOffsetPs.property(CD.gCNavOffset_PS.OffsetPose).getEntries();
-			List<gInt> directions = navOffsetPs.property(CD.gCNavOffset_PS.AniDirection).getEntries();
+		public void loadValuesInternal(G3ClassContainer entity) {
+			List<bCMotion> poses = entity.getProperty(CD.gCNavOffset_PS.OffsetPose).getEntries();
+			List<gInt> directions = entity.getProperty(CD.gCNavOffset_PS.AniDirection).getEntries();
 
 			if (poses.size() != directions.size()) {
 				throw new IllegalArgumentException("gCNavOffset_PS hat unterschiedlich viele OffsetPoses und AniDirections.");
@@ -118,18 +102,18 @@ public class SharedNavOffsetTab extends AbstractSharedTab {
 		}
 
 		@Override
-		public void saveValuesInternal(G3Class navOffsetPs) {
-			clearNavOffsets(navOffsetPs);
+		public void saveValuesInternal(G3ClassContainer entity) {
+			clearNavOffsets(entity);
 			for (int i = 0; i < getComponentCount(); i++) {
 				NavOffset navOffset = ((NavOffsetPanel) getComponent(i)).save();
-				navOffsetPs.property(CD.gCNavOffset_PS.OffsetPose).getEntries().add(navOffset.motion.clone());
-				navOffsetPs.property(CD.gCNavOffset_PS.AniDirection).getEntries().add(new gInt(navOffset.direction));
+				entity.getProperty(CD.gCNavOffset_PS.OffsetPose).getEntries().add(navOffset.motion.clone());
+				entity.getProperty(CD.gCNavOffset_PS.AniDirection).getEntries().add(new gInt(navOffset.direction));
 			}
 		}
 
 		@Override
-		protected void removeValuesInternal(G3Class navOffsetPs) {
-			clearNavOffsets(navOffsetPs);
+		protected void removeValuesInternal(G3ClassContainer entity) {
+			clearNavOffsets(entity);
 		}
 
 		@Override

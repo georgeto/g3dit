@@ -46,6 +46,11 @@ public class eCEntityProxy implements G3Serializable {
 	}
 
 	@Override
+	public eCEntityProxy clone() {
+		return new eCEntityProxy(guid);
+	}
+
+	@Override
 	public String toString() {
 		return Strings.nullToEmpty(guid);
 	}

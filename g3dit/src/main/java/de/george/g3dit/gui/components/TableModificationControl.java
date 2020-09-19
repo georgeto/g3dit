@@ -11,15 +11,11 @@ import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.table.TableModel;
 
-import org.jdesktop.swingx.JXTable;
-
 import com.google.common.collect.ImmutableSortedSet;
 
 import ca.odell.glazedlists.EventList;
-import ca.odell.glazedlists.swing.AdvancedTableModel;
 import de.george.g3dit.gui.table.TableUtil;
 import de.george.g3dit.util.FileChangeMonitor;
-import de.george.g3dit.util.GuidWithComment;
 import de.george.g3dit.util.Icons;
 import de.george.g3utils.gui.ListTableModel;
 import net.miginfocom.swing.MigLayout;
@@ -72,7 +68,4 @@ public class TableModificationControl<T> extends JPanel {
 			}
 		});
 	}
-
-	public TableModificationControl(Object changeMonitor, JXTable table, AdvancedTableModel<GuidWithComment> tableModel,
-			Supplier<GuidWithComment> entrySupplier) {}
 }

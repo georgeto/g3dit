@@ -1,6 +1,5 @@
 package de.george.g3dit.gui.table;
 
-import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -37,6 +36,7 @@ import ca.odell.glazedlists.gui.WritableTableFormat;
 import ca.odell.glazedlists.swing.AdvancedTableModel;
 import ca.odell.glazedlists.swing.GlazedListsSwing;
 import ca.odell.glazedlists.swing.TableComparatorChooser;
+import de.george.g3utils.gui.SwingUtils;
 import one.util.streamex.StreamEx;
 
 public abstract class TableUtil {
@@ -261,8 +261,18 @@ public abstract class TableUtil {
 		}
 	}
 
+	public static <T, V extends T> SortableEventTable<T> createTable(EventList<T> source, Class<V> sourceClass,
+			TableColumnDef... tableColumns) {
+		return createSortableTable(source, sourceClass, false, tableColumns);
+	}
+
 	public static <T, V extends T> SortableEventTable<T> createSortableTable(EventList<T> source, Class<V> sourceClass,
 			TableColumnDef... tableColumns) {
+		return createSortableTable(source, sourceClass, true, tableColumns);
+	}
+
+	private static <T, V extends T> SortableEventTable<T> createSortableTable(EventList<T> source, Class<V> sourceClass, boolean sortable,
+			TableColumnDef[] tableColumns) {
 		@SuppressWarnings("unchecked")
 		TableFormat<T> tableFormat = (TableFormat<T>) TableUtil.tableFormat(sourceClass, tableColumns);
 
@@ -272,7 +282,7 @@ public abstract class TableUtil {
 		AdvancedTableModel<T> tableModel = GlazedListsSwing.eventTableModelWithThreadProxyList(sortedSource, tableFormat);
 
 		JXTable table = new JXTable();
-		table.setFont(new Font("Lucida Console", Font.PLAIN, table.getFont().getSize()));
+		SwingUtils.monospaceFont(table);
 		table.setAutoCreateRowSorter(false);
 		table.setSortable(false);
 		table.setRowSorter(null);
@@ -280,7 +290,9 @@ public abstract class TableUtil {
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 		table.setColumnFactory(TableUtil.columnFactory(tableColumns));
 		table.setModel(tableModel);
-		TableComparatorChooser.install(table, sortedSource, AbstractTableComparatorChooser.MULTIPLE_COLUMN_KEYBOARD, tableFormat);
+		if (sortable) {
+			TableComparatorChooser.install(table, sortedSource, AbstractTableComparatorChooser.MULTIPLE_COLUMN_KEYBOARD, tableFormat);
+		}
 
 		// Prevent visual artifacts, when the number of table entries changes.
 		tableModel.addTableModelListener(l -> table.repaint());

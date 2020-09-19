@@ -41,33 +41,33 @@ import de.george.lrentnode.archive.eCEntity;
 public class EntityView extends SingleEntityArchiveView {
 	private static final Logger logger = LoggerFactory.getLogger(EntityView.class);
 
-	private JSplittedTypedTabbedPane<AbstractEntityTab> tabs;
-	private List<AbstractEntityTab> listTabs;
+	private List<AbstractEntityTab> tabs;
+	private JSplittedTypedTabbedPane<AbstractEntityTab> tbTabs;
 
 	public EntityView(EditorArchiveTab ctx) {
 		super(ctx);
 
-		tabs = new JSplittedTypedTabbedPane<>(false);
-		tabs.eventBus().register(this);
+		tbTabs = new JSplittedTypedTabbedPane<>(false);
+		tbTabs.eventBus().register(this);
 
-		listTabs = new ArrayList<>();
-		listTabs.add(new AllgemeinTab(ctx).createValiditionPanel());
-		listTabs.add(new NPCTab(ctx).createValiditionPanel());
-		listTabs.add(new NavigationTab(ctx).createScrolledValiditionPanel());
-		listTabs.add(new SharedEntityTabWrapper(SharedInventarTab.class, ctx).createScrolledValiditionPanel());
-		listTabs.add(new InteractionTab(ctx).createValiditionPanel());
-		listTabs.add(new VegetationTab(ctx).createValiditionPanel());
-		listTabs.add(new NavZoneTab(ctx).createValiditionPanel());
-		listTabs.add(new NavPathTab(ctx).createValiditionPanel());
-		listTabs.add(new AnchorTab(ctx).createValiditionPanel());
-		listTabs.add(new PartyTab(ctx).createValiditionPanel());
-		listTabs.add(new AIZoneTab(ctx).createValiditionPanel());
-		listTabs.add(new SharedEntityTabWrapper(SharedEnclaveTab.class, ctx).createValiditionPanel());
-		listTabs.add(new SharedEntityTabWrapper(SharedMeshTab.class, ctx).createValiditionPanel());
-		listTabs.add(new SharedEntityTabWrapper(SharedAnimationTab.class, ctx).createValiditionPanel());
-		listTabs.add(new SharedEntityTabWrapper(SharedCollisionShapeTab.class, ctx).createScrolledValiditionPanel());
-		listTabs.add(new TeachTab(ctx).createValiditionPanel());
-		listTabs.add(new SharedEntityTabWrapper(SharedNavOffsetTab.class, ctx).createScrolledValiditionPanel());
+		tabs = new ArrayList<>();
+		tabs.add(new AllgemeinTab(ctx).createValiditionPanel());
+		tabs.add(new NPCTab(ctx).createValiditionPanel());
+		tabs.add(new NavigationTab(ctx).createScrolledValiditionPanel());
+		tabs.add(new SharedEntityTabWrapper(SharedInventarTab.class, ctx).createScrolledValiditionPanel());
+		tabs.add(new InteractionTab(ctx).createValiditionPanel());
+		tabs.add(new VegetationTab(ctx).createValiditionPanel());
+		tabs.add(new NavZoneTab(ctx).createValiditionPanel());
+		tabs.add(new NavPathTab(ctx).createValiditionPanel());
+		tabs.add(new AnchorTab(ctx).createValiditionPanel());
+		tabs.add(new PartyTab(ctx).createValiditionPanel());
+		tabs.add(new AIZoneTab(ctx).createValiditionPanel());
+		tabs.add(new SharedEntityTabWrapper(SharedEnclaveTab.class, ctx).createValiditionPanel());
+		tabs.add(new SharedEntityTabWrapper(SharedMeshTab.class, ctx).createValiditionPanel());
+		tabs.add(new SharedEntityTabWrapper(SharedAnimationTab.class, ctx).createValiditionPanel());
+		tabs.add(new SharedEntityTabWrapper(SharedCollisionShapeTab.class, ctx).createScrolledValiditionPanel());
+		tabs.add(new TeachTab(ctx).createValiditionPanel());
+		tabs.add(new SharedEntityTabWrapper(SharedNavOffsetTab.class, ctx).createScrolledValiditionPanel());
 	}
 
 	@Subscribe
@@ -81,12 +81,12 @@ public class EntityView extends SingleEntityArchiveView {
 	 */
 	@Override
 	public void loadInternal(eCEntity entity) {
-		for (AbstractEntityTab tab : listTabs) {
+		for (AbstractEntityTab tab : tabs) {
 			if (tab.isActive(entity)) {
-				tabs.addTab(tab);
+				tbTabs.addTab(tab);
 				tab.loadValues(entity);
 			} else {
-				tabs.removeTab(tab);
+				tbTabs.removeTab(tab);
 			}
 		}
 	}
@@ -100,9 +100,9 @@ public class EntityView extends SingleEntityArchiveView {
 			return;
 		}
 
-		for (AbstractEntityTab tab : listTabs) {
+		for (AbstractEntityTab tab : tabs) {
 			try {
-				if (tabs.containsTab(tab) && tab.isActive(entity)) {
+				if (tbTabs.containsTab(tab) && tab.isActive(entity)) {
 					tab.saveValues(entity);
 				}
 			} catch (Exception e) {
@@ -114,7 +114,7 @@ public class EntityView extends SingleEntityArchiveView {
 
 	@Override
 	public Component getContent() {
-		return tabs.getComponent();
+		return tbTabs.getComponent();
 	}
 
 	@Override
@@ -129,8 +129,8 @@ public class EntityView extends SingleEntityArchiveView {
 
 	@Override
 	public void cleanUp() {
-		tabs = null;
-		for (AbstractEntityTab tab : listTabs) {
+		tbTabs = null;
+		for (AbstractEntityTab tab : tabs) {
 			tab.cleanUp();
 		}
 	}

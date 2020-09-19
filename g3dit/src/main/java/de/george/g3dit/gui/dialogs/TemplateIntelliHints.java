@@ -86,4 +86,7 @@ public class TemplateIntelliHints extends AbstractListIntelliHints {
 		_caseSensitive = caseSensitive;
 	}
 
+	public void setFilter(Predicate<TemplateCacheEntry> filter) {
+		this.filter = filter;
+	}
 }

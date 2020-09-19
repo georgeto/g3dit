@@ -1,0 +1,33 @@
+package de.george.g3dit.gui.edit.handler;
+
+import javax.swing.JPanel;
+
+import de.george.g3dit.gui.edit.PropertyPanelDef;
+import de.george.g3utils.gui.SwingUtils;
+import de.george.g3utils.gui.UndoableTextField;
+import de.george.lrentnode.properties.bCString;
+
+public class TextPropertyHandler extends TitledPropertyHandler<bCString> {
+	private UndoableTextField tfValue;
+
+	public TextPropertyHandler(PropertyPanelDef def) {
+		super(def);
+	}
+
+	@Override
+	protected void addValueComponent(JPanel content) {
+		tfValue = SwingUtils.createUndoTF();
+		def.apply(tfValue);
+		content.add(tfValue, "width 100:100:, grow");
+	}
+
+	@Override
+	protected void load(bCString value) {
+		tfValue.setText(value.getString());
+	}
+
+	@Override
+	protected bCString save() {
+		return new bCString(tfValue.getText());
+	}
+}
