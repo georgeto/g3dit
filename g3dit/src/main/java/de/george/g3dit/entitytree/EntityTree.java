@@ -223,7 +223,7 @@ public class EntityTree extends JPanel {
 
 	private EntityTreeNode getNodeFromEntity(eCEntity entity) {
 		@SuppressWarnings("unchecked")
-		Enumeration<EntityTreeNode> enumeration = ((EntityTreeNode) treeModel.getRoot()).depthFirstEnumeration();
+		Enumeration<EntityTreeNode> enumeration = (Enumeration)((EntityTreeNode) treeModel.getRoot()).depthFirstEnumeration();
 		while (enumeration.hasMoreElements()) {
 			EntityTreeNode node = enumeration.nextElement();
 			if (node.getEntity().equals(entity)) {
@@ -432,7 +432,7 @@ public class EntityTree extends JPanel {
 		EntityTreeNode newOne = new EntityTreeNode(orig.getEntity());
 
 		@SuppressWarnings("unchecked")
-		Enumeration<EntityTreeNode> enm = orig.children();
+		Enumeration<EntityTreeNode> enm = (Enumeration)orig.children();
 
 		while (enm.hasMoreElements()) {
 

@@ -13,8 +13,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-import javax.xml.bind.DatatypeConverter;
-
 import de.george.g3utils.structure.bCEulerAngles;
 import de.george.g3utils.structure.bCMatrix;
 import de.george.g3utils.structure.bCVector;
@@ -48,14 +46,13 @@ public class Misc {
 		return new String(chars);
 	}
 
-	/*
-	 * public static byte[] asByte(String s) { int len = s.length(); byte[] data = new byte[len /
-	 * 2]; for (int i = 0; i < len; i += 2) { data[i / 2] = (byte) ((Character.digit(s.charAt(i),
-	 * 16) << 4) + Character.digit(s.charAt(i+1), 16)); } return data; }
-	 */
-
-	public static byte[] asByte(String hex) {
-		return DatatypeConverter.parseHexBinary(hex);
+	public static byte[] asByte(String s) {
+		int len = s.length();
+		byte[] data = new byte[len / 2];
+		for (int i = 0; i < len; i += 2) {
+			data[i / 2] = (byte) ((Character.digit(s.charAt(i), 16) << 4) + Character.digit(s.charAt(i + 1), 16));
+		}
+		return data;
 	}
 
 	public static boolean isValidHex(String hex) {

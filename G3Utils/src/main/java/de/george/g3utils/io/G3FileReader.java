@@ -301,8 +301,8 @@ public abstract class G3FileReader extends G3FileBase implements AutoCloseable {
 	@Override
 	public void close() throws IOException {
 		if (buffer != null && buffer instanceof MappedByteBuffer) {
-			sun.misc.Cleaner cleaner = ((DirectBuffer) buffer).cleaner();
-			cleaner.clean();
+			//sun.misc.Cleaner cleaner = ((DirectBuffer) buffer).cleaner();
+			//cleaner.clean();
 		}
 	}
 
