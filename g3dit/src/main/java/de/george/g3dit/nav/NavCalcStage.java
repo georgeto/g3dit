@@ -228,7 +228,7 @@ public abstract class NavCalcStage {
 		JButton btnNext = new JButton(String.format("-> Next (%s)", state.name()));
 		btnNext.setFocusable(false);
 		btnNext.addActionListener(a -> gotoState(state));
-		SwingUtils.addWindowKeyStroke(btnNext, "Back", KeyEvent.VK_RIGHT, InputEvent.ALT_DOWN_MASK, () -> gotoState(state));
+		SwingUtils.addWindowKeyStroke(btnNext, "Next", KeyEvent.VK_RIGHT, InputEvent.ALT_DOWN_MASK, () -> gotoState(state));
 		mainPanel.add(btnNext, "spanx, alignx right");
 	}
 
@@ -258,7 +258,7 @@ public abstract class NavCalcStage {
 		progressBar.setStringPainted(true);
 		progressBar.setString("");
 
-		mainPanel.add(progressBar, "spanx 10, pushx, growx 100, id progressbar");
+		mainPanel.add(progressBar, "spanx 10, split 2, pushx, growx 100, id progressbar");
 
 		mainPanel.add(SwingUtils.keyStrokeButton("Execute Scan", Icons.getImageIcon(Icons.Action.DIFF), KeyEvent.VK_E,
 				InputEvent.CTRL_DOWN_MASK, this::onExecute), "wrap");
