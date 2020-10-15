@@ -6,6 +6,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 import javax.swing.JComponent;
 import javax.swing.JPanel;
@@ -71,15 +72,24 @@ public class InteractObjectStage extends NavCalcStage {
 
 					NavArea area = navCalc.getZone(entity, false, false).orElse(null);
 
+					Supplier<EntityDescriptor> descriptor = () -> new EntityDescriptor(entity,
+							new FileDescriptor(file, archive.getArchiveType()));
+
 					if (area != null) {
 						if (entity.hasClass(CD.gCAIHelper_FreePoint_PS.class) && !area.isNavPath) {
-							// TODO: Shouldn't we test he NavOffset instead of world position?
+							// TODO: Shouldn't we test the NavOffset instead of world position?
 							// (Bug in Gothic 3 code?)
-							if (!navCalc.testPointAgainstNegCircles(area.areaId, entity.getWorldPosition())
-									|| !navCalc.testPointAgainstNegZones(area.areaId, entity.getWorldPosition())) {
+							String insideNegDetails = null;
+							if (!navCalc.testPointAgainstNegCircles(area.areaId, entity.getWorldPosition())) {
+								insideNegDetails = "InteractObject is inside of NegCircle.";
+							} else if (!navCalc.testPointAgainstNegZones(area.areaId, entity.getWorldPosition())) {
+								insideNegDetails = "InteractObject is inside of NegZone.";
+							}
+
+							if (insideNegDetails != null) {
 								// Inside NegZone or NegCircle -> Assign OUT_OF_NAV_AREA_ID
 								area.areaId = NavMap.OUT_OF_NAV_AREA_ID;
-								// TODO: Critical warning?
+								addChange(new CriticalInteractObject(descriptor.get(), entity.getWorldPosition(), insideNegDetails));
 							}
 						}
 					} else {
@@ -89,13 +99,11 @@ public class InteractObjectStage extends NavCalcStage {
 
 					Optional<NavArea> navMapAreaOpt = navMapInteractables.get(entity.getGuid());
 					if (navMapAreaOpt == null) {
-						addChange(new NotInNavmap(new EntityDescriptor(entity, new FileDescriptor(file, archive.getArchiveType())),
-								entity.getWorldPosition(), area));
+						addChange(new NotInNavmap(descriptor.get(), entity.getWorldPosition(), area));
 					} else {
 						NavArea navMapArea = navMapAreaOpt.orElseGet(() -> new NavArea(NavMap.OUT_OF_NAV_AREA_ID, false));
 						if (!area.equals(navMapArea)) {
-							addChange(new AreaChanged(new EntityDescriptor(entity, new FileDescriptor(file, archive.getArchiveType())),
-									entity.getWorldPosition(), area, navMapArea));
+							addChange(new AreaChanged(descriptor.get(), entity.getWorldPosition(), area, navMapArea));
 						}
 					}
 				}
@@ -219,5 +227,16 @@ public class InteractObjectStage extends NavCalcStage {
 		}
 
 		// TODO: Show the changed zones!
+	}
+
+	private class CriticalInteractObject extends BaseExtInteractObjectChange {
+		public CriticalInteractObject(EntityDescriptor entity, bCVector position, String details) {
+			super(entity, position, Severity.Info, "Critical InteractObject.", details);
+		}
+
+		@Override
+		protected boolean fixable() {
+			return false;
+		}
 	}
 }
