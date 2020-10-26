@@ -2,10 +2,10 @@ package de.george.g3dit.util;
 
 import java.awt.Window;
 import java.io.File;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Function;
 
 import javax.swing.JCheckBox;
 import javax.swing.JComponent;
@@ -68,42 +68,65 @@ public class ImportHelper {
 					AbstractSelectDialog.SELECTION_MULTIPLE, aFile);
 			if (dialog.openAndWasSuccessful()) {
 				List<eCEntity> entities = dialog.getSelectedEntries();
+				Function<eCEntity, eCEntity> cloneEntity = eCEntity::clone;
 				if (convert) {
-					// Convert Entities
-					List<eCEntity> cEntities = new ArrayList<>(entities.size());
-					for (eCEntity entity : entities) {
-						cEntities.add(currentFile.isLrentdat() ? EntityUtil.convertToLrentdatEntity((ArchiveEntity) entity)
-								: EntityUtil.convertToNodeEntity((ArchiveEntity) entity));
+					if (currentFile.isLrentdat()) {
+						cloneEntity = cloneEntity
+								.andThen((Function) (Function<ArchiveEntity, LrentdatEntity>) EntityUtil::convertToLrentdatEntity);
+					} else {
+						cloneEntity = cloneEntity
+								.andThen((Function) (Function<ArchiveEntity, NodeEntity>) EntityUtil::convertToNodeEntity);
+					}
+				}
+
+				if (dialog.isGenerateRandomGuids()) {
+					cloneEntity = cloneEntity.andThen((entity) -> {
+						entity.setGuid(GuidUtil.randomGUID());
+						return entity;
+					});
+				}
+
+				Set<eCEntity> alreadyCopied = new HashSet<>();
+
+				final boolean convertFinal = convert;
+				Function<eCEntity, eCEntity> cloneNpc = (entity) -> {
+					if (!convertFinal && NPCUtil.isNPC(entity)) {
+						alreadyCopied.addAll(entity.getChilds());
+						return dialog.isGenerateRandomGuids() ? NPCUtil.cloneNPC(entity) : NPCUtil.copyNPC(entity);
+					} else {
+						return null;
+					}
+				};
+
+				for (eCEntity importEntity : entities) {
+					eCEntity clonedEntity;
+					if (dialog.isImportChilds()) {
+						clonedEntity = EntityUtil.cloneEntityRecursive(importEntity, cloneEntity, entity -> {
+							// Mark entity as copied
+							alreadyCopied.add(entity);
+
+							return cloneNpc.apply(entity);
+						}, alreadyCopied::contains);
+					} else {
+						if (!alreadyCopied.add(importEntity)) {
+							continue;
+						}
+
+						clonedEntity = cloneNpc.apply(importEntity);
+						if (clonedEntity == null) {
+							clonedEntity = cloneEntity.apply(importEntity);
+						}
 					}
 
-					entities = cEntities;
+					if (clonedEntity != null) {
+						clonedEntity.moveToWorldNode(currentFile.getGraph());
 
-					// Import Entities
-					for (eCEntity entity : entities) {
-						if (entity instanceof ArchiveEntity) {
-							((ArchiveEntity) entity).setFile(currentFile);
-						}
-						if (dialog.isGenerateRandomGuids()) {
-							entity.setGuid(GuidUtil.randomGUID());
-						}
-						entity.moveToWorldNode(currentFile.getGraph());
-					}
-
-				} else {
-					// TODO: Set new file
-					Set<eCEntity> alreadyCopied = new HashSet<>();
-					for (eCEntity entity : entities) {
-						if (NPCUtil.isNPC(entity)) {
-							eCEntity npc = dialog.isGenerateRandomGuids() ? NPCUtil.cloneNPC(entity) : NPCUtil.copyNPC(entity);
-							npc.moveToWorldNode(currentFile.getGraph());
-							alreadyCopied.addAll(entity.getChilds());
-						} else if (!alreadyCopied.contains(entity)) {
-							eCEntity clonedEntity = entity.clone();
-							if (dialog.isGenerateRandomGuids()) {
-								clonedEntity.setGuid(GuidUtil.randomGUID());
+						// Set new file
+						clonedEntity.getIndirectChilds().append(clonedEntity).forEach(entity -> {
+							if (entity instanceof ArchiveEntity) {
+								((ArchiveEntity) entity).setFile(currentFile);
 							}
-							clonedEntity.moveToWorldNode(currentFile.getGraph());
-						}
+						});
 					}
 				}
 				return true;
@@ -145,7 +168,7 @@ public class ImportHelper {
 	}
 
 	private static class ImportTreeEntitySelectDialog extends TreeEntitySelectDialog {
-		private JCheckBox cbRandomGuids;
+		private JCheckBox cbRandomGuids, cbImportChilds;
 
 		public ImportTreeEntitySelectDialog(EditorContext ctx, String title, int selectionType, ArchiveFile file) {
 			super(ctx, title, selectionType, file);
@@ -155,13 +178,21 @@ public class ImportHelper {
 		public JComponent createContentPanel() {
 			JPanel contentPanel = new JPanel(new MigLayout("ins 0, fill", "[]", "[fill][]"));
 			contentPanel.add(super.createContentPanel(), "grow, wrap");
+			cbImportChilds = new JCheckBox("Childs-Entities importieren");
+			cbImportChilds.setSelected(true);
+			contentPanel.add(cbImportChilds, "gapleft 5, split 2");
 			cbRandomGuids = new JCheckBox("Zufällige Guids generieren");
-			contentPanel.add(cbRandomGuids, "gapleft 5");
+			cbRandomGuids.setSelected(true);
+			contentPanel.add(cbRandomGuids);
 			return contentPanel;
 		}
 
 		public boolean isGenerateRandomGuids() {
 			return cbRandomGuids.isSelected();
+		}
+
+		public boolean isImportChilds() {
+			return cbImportChilds.isSelected();
 		}
 	};
 }

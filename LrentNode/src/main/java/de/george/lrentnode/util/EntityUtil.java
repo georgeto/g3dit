@@ -3,6 +3,8 @@ package de.george.lrentnode.util;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.Optional;
+import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -36,6 +38,33 @@ public class EntityUtil {
 		eCEntity entity = sEntity.clone();
 		entity.setGuid(GuidUtil.randomGUID());
 		return entity;
+	}
+
+	public static eCEntity cloneEntityRecursive(eCEntity entity) {
+		return cloneEntityRecursive(entity, EntityUtil::cloneEntity, null, null);
+	}
+
+	public static eCEntity cloneEntityRecursive(eCEntity entity, Function<eCEntity, eCEntity> clone,
+			Function<eCEntity, eCEntity> beforeClone, Predicate<eCEntity> isExcluded) {
+		if (isExcluded != null && isExcluded.test(entity)) {
+			return null;
+		}
+
+		if (beforeClone != null) {
+			eCEntity clonedEntity = beforeClone.apply(entity);
+			if (clonedEntity != null) {
+				return clonedEntity;
+			}
+		}
+
+		eCEntity clonedEntity = clone.apply(entity);
+		for (eCEntity childEntity : entity.getChilds()) {
+			eCEntity clonedChildEntity = cloneEntityRecursive(childEntity, clone, beforeClone, isExcluded);
+			if (clonedChildEntity != null) {
+				clonedChildEntity.moveToWorldNode(clonedEntity);
+			}
+		}
+		return clonedEntity;
 	}
 
 	/**

@@ -66,6 +66,17 @@ public class TreePopupExtension implements ITreePopupExtension {
 		});
 		menu.add(miClone);
 
+		if (!NPCUtil.isNPC(clickedEntity) && !clickedEntity.getChilds().isEmpty()) {
+			JMenuItem miCloneChilds = new JMenuItem("'" + clickedEntity + "' und Child-Entities klonen",
+					Icons.getImageIcon(Icons.Action.CLONE));
+			miCloneChilds.addActionListener(e -> {
+				EntityUtil.cloneEntityRecursive(clickedEntity).moveToWorldNode(archiveFile.getGraph());
+
+				tree.refreshTree(false, false);
+			});
+			menu.add(miCloneChilds);
+		}
+
 		// Entity für verschieben markieren
 		boolean show = true;
 		checkFailed: for (eCEntity markedEntity : selEntities) {
