@@ -94,7 +94,7 @@ public class JmeAppFrame<T extends EditorAwareApplication> {
 		panel.setPreferredSize(new Dimension(ctx.getSettings().getWidth(), ctx.getSettings().getHeight()));
 		ctx.setInputSource(panel);
 
-		app.enqueue(() -> panel.attachTo(true, app.getViewPort(), app.getGuiViewPort()));
+		app.enqueue(() -> panel.attachTo(true, app.getViewPort(), app.getOverlayView(), app.getGuiViewPort()));
 	}
 
 	public T getApp() {

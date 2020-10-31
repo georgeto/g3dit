@@ -19,6 +19,7 @@ import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.FastMath;
 import com.jme3.math.Vector3f;
+import com.jme3.renderer.ViewPort;
 import com.jme3.scene.Spatial;
 import com.jme3.scene.Spatial.CullHint;
 
@@ -27,6 +28,8 @@ import de.george.g3dit.jme.asset.SwitchedModelKey;
 
 public abstract class EditorAwareApplication extends SimpleApplication {
 	private CountDownLatch appIsInited = new CountDownLatch(1);
+
+	private ViewPort overlayView;
 
 	protected DirectionalLight directionalLight;
 	protected AmbientLight ambientLight;
@@ -43,6 +46,10 @@ public abstract class EditorAwareApplication extends SimpleApplication {
 	@Override
 	public void initialize() {
 		super.initialize();
+
+		overlayView = getRenderManager().createMainView("Overlay", cam);
+		overlayView.setClearFlags(false, true, false);
+		guiViewPort.setClearFlags(false, false, false);
 
 		directionalLight = new DirectionalLight(new Vector3f(0f, -0.7f, -1.0f).normalizeLocal(), ColorRGBA.White);
 		rootNode.addLight(directionalLight);
@@ -129,5 +136,9 @@ public abstract class EditorAwareApplication extends SimpleApplication {
 
 	protected List<String> getStateText() {
 		return Collections.emptyList();
+	}
+
+	public ViewPort getOverlayView() {
+		return overlayView;
 	}
 }

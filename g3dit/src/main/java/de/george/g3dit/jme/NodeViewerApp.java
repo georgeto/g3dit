@@ -35,6 +35,9 @@ public class NodeViewerApp extends EditorAwareApplication {
 	private Spatial selectedEntity;
 	private Geometry boundingBoxGeometry;
 
+	private SceneComposerToolController toolController;
+	private SceneEditorController editorController;
+
 	public NodeViewerApp(AssetManager assetManager) {
 		super(assetManager);
 	}
@@ -47,6 +50,8 @@ public class NodeViewerApp extends EditorAwareApplication {
 		rootNode.scale(1f, 1f, -1f);
 		entitiesNode = new Node("entities");
 		rootNode.attachChild(entitiesNode);
+
+		enqueue(this::initTools);
 	}
 
 	private void initCameras() {
@@ -135,6 +140,8 @@ public class NodeViewerApp extends EditorAwareApplication {
 
 		// Attach bounding box
 		rootNode.attachChild(boundingBoxGeometry);
+
+		toolController.updateSelection(selectedEntity);
 	}
 
 	public void centerCamera() {
@@ -144,5 +151,39 @@ public class NodeViewerApp extends EditorAwareApplication {
 
 	public Node getEntitiesNode() {
 		return entitiesNode;
+	}
+
+	private void initTools() {
+		editorController = new SceneEditorController() {
+
+			@Override
+			public void setToolController(SceneComposerToolController toolController) {
+
+			}
+
+			@Override
+			public void setNeedsSave(boolean needsSave) {}
+
+			@Override
+			public Object getCurrentDataObject() {
+				return null;
+			}
+		};
+
+		toolController = new SceneComposerToolController(this, assetManager);
+		toolController.setEditorController(editorController);
+		toolController.createOnTopToolNode();
+		// SelectTool tool = new SelectTool();
+		MoveTool tool = new MoveTool();
+		toolController.showEditTool(tool);
+		toolController.setShowSelection(true);
+		toolController.setShowGrid(true);
+
+		editorController.setToolController(toolController);
+	}
+
+	public ShortcutManager getShortcutManager() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
