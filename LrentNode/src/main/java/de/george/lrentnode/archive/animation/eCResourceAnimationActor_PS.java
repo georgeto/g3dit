@@ -17,58 +17,6 @@ import de.george.g3utils.structure.bCVector;
 import de.george.lrentnode.archive.animation.Chunks.Chunk;
 
 public class eCResourceAnimationActor_PS extends GenomeFile {
-
-	public static class Illumination implements G3Serializable {
-		public static class MaterialReference implements G3Serializable {
-			public int index;
-			public String name;
-
-			@Override
-			public void read(G3FileReader reader) {
-				reader.skip(2);
-				index = reader.readUnsignedShort();
-				try {
-					name = reader.readEntry();
-				} catch (IndexOutOfBoundsException e) {
-					// Workaround for broken Rimy3D meshes (they don't have a stringtable, but still
-					// refer to stringtable entries here)
-					name = "";
-				}
-			}
-
-			@Override
-			public void write(G3FileWriter writer) {
-				writer.writeUnsignedShort(0).writeUnsignedShort(index).writeEntry(name);
-			}
-		}
-
-		public List<MaterialReference> materials;
-		// eCWrapper_emfx2Actor::CalculateAmbientOcclusion | ColorVertexAttribute
-		public List<List<Integer>> ambientOcclusion;
-		public List<List<bCVector>> tangentVertices; // TangentVertexAttribute
-
-		@Override
-		public void read(G3FileReader reader) {
-			materials = reader.readList(MaterialReference.class);
-
-			// Per LoD
-			ambientOcclusion = reader.readPrefixedList(r -> r.readPrefixedList(G3FileReader::readInt));
-			tangentVertices = new ArrayList<>(ambientOcclusion.size());
-			for (int i = 0; i < ambientOcclusion.size(); i++) {
-				int totalVertexCount = ambientOcclusion.get(i).size();
-				tangentVertices.add(reader.readList(bCVector.class, totalVertexCount));
-			}
-		}
-
-		@Override
-		public void write(G3FileWriter writer) {
-			writer.writeList(materials);
-			writer.writeInt(ambientOcclusion.size());
-			writer.writePrefixedList(ambientOcclusion, (w, v) -> w.writePrefixedList(v, G3FileWriter::writeInt));
-			writer.write(tangentVertices, G3FileWriter::write);
-		}
-	}
-
 	public static class eSLookAtConstraintData implements G3Serializable {
 		public String nodeName;
 		public float interpolationSpeed;
@@ -93,9 +41,40 @@ public class eCResourceAnimationActor_PS extends GenomeFile {
 	};
 
 	public static class eCWrapper_emfx2Actor implements G3Serializable {
+		public static class MaterialReference implements G3Serializable {
+			// LoD level inside a emfx2Actor (not to be confused with LoD level in
+			// eCResourceAnimationActor_PS), seems to be always zero
+			public int lodIndex;
+			public int matIndex;
+			public String name;
+
+			@Override
+			public void read(G3FileReader reader) {
+				// MaterialID = matIndex | lodIndex
+				lodIndex = reader.readUnsignedShort();
+				matIndex = reader.readUnsignedShort();
+				try {
+					name = reader.readEntry();
+				} catch (IndexOutOfBoundsException e) {
+					// Workaround for broken Rimy3D meshes (they don't have a stringtable, but still
+					// refer to stringtable entries here)
+					name = "";
+				}
+			}
+
+			@Override
+			public void write(G3FileWriter writer) {
+				writer.writeUnsignedShort(lodIndex).writeUnsignedShort(matIndex).writeEntry(name);
+			}
+		}
+
 		private int highVersion, lowVersion;
 		public List<Chunk> chunks;
-		public Illumination illumination;
+		// MaterialsLoDMappings: MaterialID -> MaterialReference
+		public List<MaterialReference> materials;
+		// eCWrapper_emfx2Actor::CalculateAmbientOcclusion | ColorVertexAttribute
+		public List<List<Integer>> ambientOcclusion;
+		public List<List<bCVector>> tangentVertices; // TangentVertexAttribute
 
 		@SuppressWarnings("unchecked")
 		public <T extends Chunk> T getChunkByType(int chunkId) {
@@ -130,7 +109,15 @@ public class eCResourceAnimationActor_PS extends GenomeFile {
 			}
 
 			chunks = Chunks.readChunks(reader, offsetEnd);
-			illumination = reader.read(Illumination.class);
+			materials = reader.readList(MaterialReference.class);
+
+			// Per LoD
+			ambientOcclusion = reader.readPrefixedList(r -> r.readPrefixedList(G3FileReader::readInt));
+			tangentVertices = new ArrayList<>(ambientOcclusion.size());
+			for (int i = 0; i < ambientOcclusion.size(); i++) {
+				int totalVertexCount = ambientOcclusion.get(i).size();
+				tangentVertices.add(reader.readList(bCVector.class, totalVertexCount));
+			}
 		}
 
 		@Override
@@ -142,7 +129,10 @@ public class eCResourceAnimationActor_PS extends GenomeFile {
 			writer.writeUnsignedByte(highVersion).writeUnsignedByte(lowVersion);
 			Chunks.writeChunks(writer, chunks);
 			writer.writeInt(sizeOffset, writer.position() - sizeOffset - 4);
-			writer.write(illumination);
+			writer.writeList(materials);
+			writer.writeInt(ambientOcclusion.size());
+			writer.writePrefixedList(ambientOcclusion, (w, v) -> w.writePrefixedList(v, G3FileWriter::writeInt));
+			writer.write(tangentVertices, G3FileWriter::write);
 		}
 	}
 

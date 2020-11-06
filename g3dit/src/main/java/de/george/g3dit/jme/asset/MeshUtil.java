@@ -7,6 +7,7 @@ import static de.george.lrentnode.enums.G3Enums.eEVertexStreamArrayType.eEVertex
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,8 +19,10 @@ import de.george.lrentnode.archive.animation.Chunks.MeshChunk;
 import de.george.lrentnode.archive.animation.Chunks.Submesh;
 import de.george.lrentnode.archive.animation.Chunks.Vertex;
 import de.george.lrentnode.archive.animation.eCResourceAnimationActor_PS;
+import de.george.lrentnode.archive.animation.eCResourceAnimationActor_PS.eCWrapper_emfx2Actor.MaterialReference;
 import de.george.lrentnode.classes.eCResourceMeshComplex_PS;
 import de.george.lrentnode.structures.eCMeshElement;
+import one.util.streamex.StreamEx;
 
 public class MeshUtil {
 	private static final Logger logger = LoggerFactory.getLogger(MeshUtil.class);
@@ -100,13 +103,24 @@ public class MeshUtil {
 
 		List<MeshChunk> chunks = sourceActor.actor.getChunksByType(LMA_CHUNK.LMA_CHUNK_MESH);
 		for (MeshChunk chunk : chunks) {
-			List<MaterialChunk> materials = sourceActor.actor.getChunksByType(LMA_CHUNK.LMA_CHUNK_MATERIAL);
+			List<MaterialReference> materials = sourceActor.actor.materials;
+			List<MaterialChunk> materialChunks = sourceActor.actor.getChunksByType(LMA_CHUNK.LMA_CHUNK_MATERIAL);
 			for (int i = 0; i < chunk.submeshes.size(); i++) {
 				Submesh submesh = chunk.submeshes.get(i);
 				IntermediateMesh mesh = new IntermediateMesh();
 
-				if (submesh.matID >= 0 && submesh.matID < materials.size()) {
-					mesh.materialName = materials.get(submesh.matID).materialName.replace("|", "") + ".xshmat";
+				Optional<MaterialReference> material = StreamEx.of(materials).findFirst(m -> m.matIndex == submesh.matID);
+				// We don't go all the way and check whether the material exists, but instead test
+				// for an empty material name as approximation (sufficient for meshes created by
+				// Rimy3D).
+				if (material.isPresent() && !material.get().name.isEmpty()) {
+					mesh.materialName = material.get().name;
+				} else
+				// If Gothic 3 fails to resolve / load at least one material in the
+				// actors MaterialsLoDMappings, it uses the material chunks of the actor to
+				// recreate the MaterialsLoDMappings.
+				if (submesh.matID >= 0 && submesh.matID < materialChunks.size()) {
+					mesh.materialName = materialChunks.get(submesh.matID).materialName.replace("|", "") + ".xshmat";
 				} else {
 					throw new IllegalMeshException(i, Integer.toString(submesh.matID), "Reference to non exisiting material.");
 				}
