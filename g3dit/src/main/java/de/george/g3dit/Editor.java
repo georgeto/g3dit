@@ -220,7 +220,7 @@ public class Editor extends JFrame implements EditorContext {
 		SwingUtilities.invokeLater(() -> {
 			DisplayTextDialog dialog = new DisplayTextDialog(
 					String.format("Dateivergleich - [%s - %s]", new File(base).getName(), new File(mine).getName()),
-					mapPrintingVisitor.getMessagesAsString(), this, true);
+					mapPrintingVisitor.getMessagesAsString(), this, false);
 			// dialog.setLocationRelativeTo(editor.getOwner());
 			dialog.setVisible(true);
 		});
