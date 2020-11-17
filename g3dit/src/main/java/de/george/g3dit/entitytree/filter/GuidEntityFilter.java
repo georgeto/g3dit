@@ -62,7 +62,7 @@ public class GuidEntityFilter extends AbstractEntityFilter {
 
 	public GuidEntityFilter(MatchMode matchMode, String guidToMatch) {
 		this.matchMode = matchMode;
-		this.guidToMatch = guidToMatch;
+		this.guidToMatch = processGuid(guidToMatch);
 	}
 
 	private String processGuid(String text) {
