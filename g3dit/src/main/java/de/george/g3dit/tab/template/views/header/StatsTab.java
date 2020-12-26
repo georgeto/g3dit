@@ -73,7 +73,7 @@ public class StatsTab extends AbstractPropertyTemplateTab {
 		}
 
 		addAttributeHeader(propertyPanel, "Modify Attribute");
-		for (int i = 1; i <= 4; i++) {
+		for (int i = 1; i <= 6; i++) {
 			propertyPanel
 				.add(Integer.toString(i)).horizontalStart()
 				.add(MOD_ATTRIB_TAGS.get(i - 1))
