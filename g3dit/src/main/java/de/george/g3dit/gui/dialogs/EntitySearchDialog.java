@@ -33,6 +33,7 @@ import de.george.g3dit.check.FileDescriptor;
 import de.george.g3dit.entitytree.filter.GuidEntityFilter;
 import de.george.g3dit.entitytree.filter.NameEntityFilter;
 import de.george.g3dit.entitytree.filter.PositionEntityFilter;
+import de.george.g3dit.gui.components.search.ByteSearchFilterBuilder;
 import de.george.g3dit.gui.components.search.EntityGuidSearchFilterBuilder;
 import de.george.g3dit.gui.components.search.EntityNameSearchFilterBuilder;
 import de.george.g3dit.gui.components.search.EntityPositionSearchFilterBuilder;
@@ -128,7 +129,7 @@ public class EntitySearchDialog extends AbstractTableProgressDialog {
 		JPanel mainPanel = new JPanel(new MigLayout("fill"));
 
 		searchPanel = new ModularSearchPanel(ctx, EntityNameSearchFilterBuilder.class, EntityGuidSearchFilterBuilder.class,
-				EntityPositionSearchFilterBuilder.class, PropertySearchFilterBuilder.class);
+				EntityPositionSearchFilterBuilder.class, PropertySearchFilterBuilder.class, ByteSearchFilterBuilder.class);
 		btnSearch = registerAction("Suchen", Icons.getImageIcon(Icons.Action.FIND), this::doWork, true);
 		JButton btnErase = new JButton(Icons.getImageIcon(Icons.Action.ERASE));
 		btnErase.setFocusable(false);
