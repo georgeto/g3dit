@@ -326,6 +326,8 @@ public class MainMenu extends JMenuBar {
 
 		JMenuItem miSearchTemplateEntity = new JMenuItem("Template-Suche", Icons.getImageIcon(Icons.Action.FIND));
 		muTools.add(miSearchTemplateEntity);
+		miSearchTemplateEntity
+				.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_T, InputEvent.CTRL_DOWN_MASK | InputEvent.SHIFT_DOWN_MASK));
 		miSearchTemplateEntity.addActionListener(e -> TemplateSearchDialog.openTemplateSearch(ctx));
 
 		JMenuItem miOpenTemplate = new JMenuItem("Template öffnen", Icons.getImageIcon(Icons.Action.FIND));
