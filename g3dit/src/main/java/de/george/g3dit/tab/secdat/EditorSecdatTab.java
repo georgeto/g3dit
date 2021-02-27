@@ -16,6 +16,7 @@ import de.george.g3dit.EditorContext;
 import de.george.g3dit.tab.EditorAbstractFileTab;
 import de.george.g3dit.util.FileDialogWrapper;
 import de.george.g3dit.util.Icons;
+import de.george.g3utils.io.G3FileReaderEx;
 import de.george.g3utils.io.Saveable;
 import de.george.g3utils.util.IOUtils;
 import de.george.lrentnode.archive.SecDat;
@@ -72,9 +73,10 @@ public class EditorSecdatTab extends EditorAbstractFileTab {
 
 	@Override
 	public boolean openFile(File file) {
-		try {
-			SecDat secdat = FileUtil.openSecdat(file);
+		try (G3FileReaderEx reader = new G3FileReaderEx(file)) {
+			SecDat secdat = FileUtil.openSecdat(reader);
 			setCurrentFile(secdat, file);
+			updateChecksum(reader.getBuffer());
 			return true;
 		} catch (IOException e) {
 			TaskDialogs.showException(e);

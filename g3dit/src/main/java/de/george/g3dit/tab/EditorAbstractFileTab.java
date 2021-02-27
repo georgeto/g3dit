@@ -1,11 +1,14 @@
 package de.george.g3dit.tab;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.nio.ByteBuffer;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.util.Optional;
+import java.util.zip.CRC32;
 
 import javax.swing.SwingWorker;
 
@@ -23,9 +26,11 @@ import de.george.g3utils.io.Saveable;
 import net.tomahawk.ExtensionsFilter;
 
 public abstract class EditorAbstractFileTab extends EditorTab implements FileChangeMonitor {
+	private static final long NO_CHECKSUM = Long.MAX_VALUE;
 
 	private File dataFile;
 	private boolean fileChanged;
+	private long checksum = NO_CHECKSUM;
 
 	public EditorAbstractFileTab(EditorContext ctx, EditorTabType type) {
 		super(ctx, type);
@@ -72,6 +77,10 @@ public abstract class EditorAbstractFileTab extends EditorTab implements FileCha
 		return fileChanged;
 	}
 
+	public boolean isFileChangedReliable() {
+		return false;
+	}
+
 	public void setFileChanged(boolean fileChanged) {
 		if (this.fileChanged != fileChanged) {
 			this.fileChanged = fileChanged;
@@ -85,6 +94,35 @@ public abstract class EditorAbstractFileTab extends EditorTab implements FileCha
 	@Override
 	public void fileChanged() {
 		setFileChanged(true);
+	}
+
+	protected void updateChecksum(ByteBuffer data) {
+		if (ctx.getOptionStore().get(EditorOptions.Misc.IMPROVE_CHANGE_DETECTION)) {
+			int position = data.position();
+			data.position(0);
+			CRC32 crc32 = new CRC32();
+			crc32.update(data);
+			checksum = crc32.getValue();
+			data.position(position);
+		} else {
+			checksum = NO_CHECKSUM;
+		}
+	}
+
+	protected Optional<Boolean> validateChecksum() {
+		if (checksum == NO_CHECKSUM || !ctx.getOptionStore().get(EditorOptions.Misc.IMPROVE_CHANGE_DETECTION)) {
+			return Optional.empty();
+		}
+
+		try {
+			ByteArrayOutputStream buf = new ByteArrayOutputStream();
+			getSaveable().save(buf);
+			CRC32 crc32 = new CRC32();
+			crc32.update(buf.toByteArray());
+			return Optional.of(checksum == crc32.getValue());
+		} catch (Exception e) {
+			return Optional.of(true);
+		}
 	}
 
 	/**
@@ -191,7 +229,9 @@ public abstract class EditorAbstractFileTab extends EditorTab implements FileCha
 	 * @return false, wenn Abbrechenoption gewählt wurde bzw. die Datei nicht verändert wurde
 	 */
 	private boolean askSaveChanges(String message) {
-		if (isFileChanged()) {
+		Optional<Boolean> checksum = validateChecksum();
+		boolean changed = checksum.isPresent() ? !checksum.get() : isFileChanged();
+		if (changed) {
 			switch (Dialogs.askSaveChanges(ctx.getParentWindow(), String.format(message, getTitle()))) {
 				case Yes:
 					showSaveFileAsDialog();

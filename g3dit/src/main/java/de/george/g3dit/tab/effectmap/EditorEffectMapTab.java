@@ -13,6 +13,7 @@ import de.george.g3dit.settings.EditorOptions;
 import de.george.g3dit.tab.EditorAbstractFileTab;
 import de.george.g3dit.util.FileDialogWrapper;
 import de.george.g3dit.util.Icons;
+import de.george.g3utils.io.G3FileReaderEx;
 import de.george.g3utils.io.Saveable;
 import de.george.lrentnode.effect.gCEffectMap;
 import net.tomahawk.ExtensionsFilter;
@@ -65,8 +66,11 @@ public class EditorEffectMapTab extends EditorAbstractFileTab {
 	@Override
 	public boolean openFile(File file) {
 		try {
-			gCEffectMap effectMap = new gCEffectMap(file);
-			setCurrentFile(effectMap, file);
+			try (G3FileReaderEx reader = new G3FileReaderEx(file)) {
+				gCEffectMap effectMap = new gCEffectMap(reader);
+				setCurrentFile(effectMap, file);
+				updateChecksum(reader.getBuffer());
+			}
 			return true;
 		} catch (IOException e) {
 			TaskDialogs.showException(e);

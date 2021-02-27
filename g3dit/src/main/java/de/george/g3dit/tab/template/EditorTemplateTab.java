@@ -33,6 +33,7 @@ import de.george.g3dit.util.FileDialogWrapper;
 import de.george.g3dit.util.Icons;
 import de.george.g3dit.util.StringtableHelper;
 import de.george.g3utils.gui.SwingUtils;
+import de.george.g3utils.io.G3FileReaderEx;
 import de.george.g3utils.io.Saveable;
 import de.george.g3utils.structure.Guid;
 import de.george.g3utils.util.Pair;
@@ -144,10 +145,11 @@ public class EditorTemplateTab extends EditorAbstractFileTab {
 
 	@Override
 	public boolean openFile(File file) {
-		try {
+		try (G3FileReaderEx reader = new G3FileReaderEx(file)) {
 			TemplateFile template = FileUtil.openTemplate(file);
 			if (checkIntegrity(template)) {
 				setCurrentFile(template, file);
+				updateChecksum(reader.getBuffer());
 				return true;
 			}
 		} catch (Exception e) {

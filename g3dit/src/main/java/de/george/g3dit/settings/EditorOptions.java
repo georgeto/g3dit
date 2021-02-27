@@ -88,6 +88,12 @@ public abstract class EditorOptions {
 						"Speicherverbrauch optimieren (Laden, Speichern und Schließen von Dateien kann länger dauern)"),
 				"EditorOptions.Misc.OPTIMIZE_MEMORY_USAGE", "Speicherverbrauch optimieren");
 
+		public static final Option<Boolean> IMPROVE_CHANGE_DETECTION = new LambdaOption<>(true,
+				(parent) -> new BooleanOptionHandler(parent, "Hashbasierte Änderungserkennung beim Schließen von Dateien",
+						SwingUtils.getMultilineText("Vermeidet unnötige 'Änderungen speichern'-Dialoge beim Schließen von Dateien,",
+								"auf langsamen Systemen kann aber dafür das Laden und Schließen von Dateien länger dauern.")),
+				"EditorOptions.Misc.IMPROVE_CHANGE_DETECTION", "Verbesserte Änderungserkennung");
+
 		public static final Option<Boolean> NAVPATH_DEBUG = new LambdaOption<>(false,
 				(parent) -> new BooleanOptionHandler(parent, "Debuginformationen bei der Berechnung von NavPaths anzeigen"),
 				"EditorOptions.Misc.NAVPATH_DEBUG", "NavPath Debuginformationen");

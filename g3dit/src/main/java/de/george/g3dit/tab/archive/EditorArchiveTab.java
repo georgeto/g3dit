@@ -35,6 +35,7 @@ import de.george.g3dit.util.FileDialogWrapper;
 import de.george.g3dit.util.Icons;
 import de.george.g3dit.util.StringtableHelper;
 import de.george.g3utils.gui.SwingUtils;
+import de.george.g3utils.io.G3FileReaderEx;
 import de.george.g3utils.io.Saveable;
 import de.george.g3utils.structure.bCBox;
 import de.george.g3utils.util.IOUtils;
@@ -169,6 +170,11 @@ public class EditorArchiveTab extends EditorAbstractFileTab {
 			return worker.isFileLoaded();
 		}
 		return false;
+	}
+
+	@Override
+	public boolean isFileChangedReliable() {
+		return true;
 	}
 
 	@Override
@@ -397,9 +403,12 @@ public class EditorArchiveTab extends EditorAbstractFileTab {
 		@Override
 		protected ArchiveFile doInBackground() throws Exception {
 			long time = System.currentTimeMillis();
-			ArchiveFile aFile = FileUtil.openArchive(file, true);
-			logger.info("{} Load Time: {} s", file.getName(), (System.currentTimeMillis() - time) / 1000F);
-			return aFile;
+			try (G3FileReaderEx reader = new G3FileReaderEx(file)) {
+				ArchiveFile aFile = FileUtil.openArchive(reader, true);
+				logger.info("{} Load Time: {} s", file.getName(), (System.currentTimeMillis() - time) / 1000F);
+				updateChecksum(reader.getBuffer());
+				return aFile;
+			}
 		}
 
 		@Override

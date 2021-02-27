@@ -65,6 +65,7 @@ public class SettingsDialog extends ExtStandardDialog {
 				.addOption(EditorOptions.Misc.MAKE_BACKUP)
 				.addOption(EditorOptions.Misc.CLEAN_STRINGTABLE)
 				.addHeadline("Sonstiges")
+				.addOption(EditorOptions.Misc.IMPROVE_CHANGE_DETECTION)
 				.addOption(EditorOptions.Misc.OPTIMIZE_MEMORY_USAGE)
 				.addOption(EditorOptions.Misc.NAVPATH_DEBUG));
 
