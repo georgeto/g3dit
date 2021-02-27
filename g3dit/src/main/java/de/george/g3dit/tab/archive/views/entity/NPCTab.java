@@ -48,13 +48,13 @@ public class NPCTab extends AbstractPropertyEntityTab {
 		//@foff
 		propertyPanel
 			.addHeadline("Eigenschaften")
-			.add(CD.gCNPC_PS.Voice).name("Stimme").horizontalStart()
+			.add(CD.gCNPC_PS.Voice).name("Stimme").horizontalStart(2).constraints("x level.x, x2 levelMax.x2")
 				.valueList(Iterables.toArray(voices.getContent(), String.class))
 				.<JComboBox<?>>customize(c -> c.setEditable(true))
 				.validate(validation(), EmtpyWarnValidator.INSTANCE)
-			.add(CD.gCNPC_PS.Level).name("Level").horizontal().sizegroup("level")
+			.add(CD.gCNPC_PS.Level).name("Level").horizontalStart().sizegroup("level").constraints("id level")
 				.validate(validation(), StringValidators.REQUIRE_NON_NEGATIVE_NUMBER, StringValidators.REQUIRE_VALID_INTEGER)
-			.add(CD.gCNPC_PS.LevelMax).name("Maximales Level").horizontal().sizegroup("level")
+			.add(CD.gCNPC_PS.LevelMax).name("Maximales Level").horizontal().sizegroup("level").constraints("id levelMax")
 				.validate(validation(), StringValidators.REQUIRE_NON_NEGATIVE_NUMBER, StringValidators.REQUIRE_VALID_INTEGER)
 			.add(CD.gCNPC_PS.Gender).name("Geschlecht").horizontalStart().sizegroup("level")
 			.add(CD.gCNPC_PS.Species).name("Rasse").horizontal()
