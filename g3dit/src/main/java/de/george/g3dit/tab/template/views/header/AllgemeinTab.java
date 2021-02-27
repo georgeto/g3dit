@@ -14,6 +14,7 @@ import de.george.g3dit.entitytree.filter.GuidEntityFilter.MatchMode;
 import de.george.g3dit.gui.components.JFocusNameField;
 import de.george.g3dit.gui.components.JSearchGuidField;
 import de.george.g3dit.gui.dialogs.EntitySearchDialog;
+import de.george.g3dit.gui.dialogs.TemplateSearchDialog;
 import de.george.g3dit.tab.shared.BoundingBoxPanel;
 import de.george.g3dit.tab.shared.PositionPanel;
 import de.george.g3dit.tab.template.EditorTemplateTab;
@@ -84,8 +85,10 @@ public class AllgemeinTab extends AbstractTemplateTab {
 		tfRefGuid.initValidation(validation(), "Reference Guid", GuidValidator.INSTANCE);
 		add(tfRefGuid, "width 100:300:300");
 
-		tfRefGuid.addMenuItem("Alle Referenzen auf diese Template auflisten", Icons.getImageIcon(Icons.Misc.GLOBE),
+		tfRefGuid.addMenuItem("Alle Referenzen in Entities auf diese Template auflisten", Icons.getImageIcon(Icons.Misc.GLOBE),
 				(ctx, g) -> EntitySearchDialog.openEntitySearchGuid(ctx, MatchMode.Template, g));
+		tfRefGuid.addMenuItem("Alle Referenzen in Templates auf diese Template auflisten", Icons.getImageIcon(Icons.Misc.GLOBE),
+				(ctx, g) -> TemplateSearchDialog.openTemplateSearchGuid(ctx, MatchMode.Template, g));
 
 		JButton btnRandomRefGuid = new JButton(Icons.getImageIcon(Icons.Data.COUNTER));
 		btnRandomRefGuid.setToolTipText("Zufällige Guid generieren");
