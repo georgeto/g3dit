@@ -77,7 +77,8 @@ public class XshmatLoader implements AssetLoader {
 			material.getAdditionalRenderState().setBlendEquation(BlendEquation.Add);
 			material.getAdditionalRenderState().setBlendEquationAlpha(BlendEquationAlpha.Max);
 			if (blendMode == eEShaderMaterialBlendMode.eEShaderMaterialBlendMode_Masked) {
-				float discardThreshhold = (shader.property(CD.eCShaderBase.MaskReference).getChar() & 0xFF) / 255f;
+				// Invert MaskReference to get AlphaDiscardThreshold
+				float discardThreshhold = 0.95f - (shader.property(CD.eCShaderBase.MaskReference).getChar() & 0xFF) / 255f;
 				material.setFloat("AlphaDiscardThreshold", discardThreshhold);
 				logger.info(
 						G3Enums.asString(eEShaderMaterialBlendMode.class, blendMode) + " -> AlphaDiscardThreshold: " + discardThreshhold);
