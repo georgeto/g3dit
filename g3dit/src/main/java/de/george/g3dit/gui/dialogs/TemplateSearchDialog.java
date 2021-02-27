@@ -170,7 +170,7 @@ public class TemplateSearchDialog extends AbstractTableProgressDialog {
 	}
 
 	private void onTabEvent(EditorTab tab, Consumer<EditorTemplateTab> callback) {
-		if (tab.type() == EditorTabType.Archive) {
+		if (tab.type() == EditorTabType.Template) {
 			EditorTemplateTab templateTab = (EditorTemplateTab) tab;
 			if (!templateTab.getDataFile().isPresent()) {
 				return;
