@@ -207,14 +207,14 @@ public class FileManager {
 		return new LinkedList<>(locations);
 	}
 
-	public FileLocator getFileLocator(String relativePath, boolean noRefreshOnCacheMiss) {
+	public FileLocator getFileLocator(String relativePath, boolean refreshOnCacheMiss) {
 		CompositeFileLocator locator = new CompositeFileLocator();
 
 		for (String dataFolder : getDataFolders()) {
 			try {
 				String rootPath = dataFolder + relativePath;
 				if (new File(rootPath).exists()) {
-					locator.addLocator(new RecursiveFileLocator(rootPath, noRefreshOnCacheMiss));
+					locator.addLocator(new RecursiveFileLocator(rootPath, refreshOnCacheMiss));
 				}
 			} catch (IOException e) {
 				logger.warn("Fehler beim setzen des RootPaths.", e);

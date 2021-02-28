@@ -49,6 +49,8 @@ import de.george.lrentnode.util.FileUtil;
 import de.george.lrentnode.util.NPCUtil;
 
 public class AssetResolver {
+	private final boolean recurse;
+
 	private int materialSwitch;
 	private eCShaderBase shader;
 
@@ -57,16 +59,13 @@ public class AssetResolver {
 	private FileLocator materialLocator;
 	private FileLocator textureLocator;
 
-	public AssetResolver(EditorContext ctx, boolean noRefreshOnCacheMiss) {
-		this(ctx, noRefreshOnCacheMiss, false);
-	}
-
-	public AssetResolver(EditorContext ctx, boolean noRefreshOnCacheMiss, boolean supportAbsolutePaths) {
+	private AssetResolver(EditorContext ctx, boolean refreshOnCacheMiss, boolean supportAbsolutePaths, boolean recurse) {
+		this.recurse = recurse;
 		FileManager fileManager = ctx.getFileManager();
-		meshLocator = fileManager.getFileLocator(FileManager.RP_COMPILED_MESH, noRefreshOnCacheMiss);
-		animatedLocator = fileManager.getFileLocator(FileManager.RP_COMPILED_ANIMATION, noRefreshOnCacheMiss);
-		materialLocator = fileManager.getFileLocator(FileManager.RP_COMPILED_MATERIAL, noRefreshOnCacheMiss);
-		textureLocator = fileManager.getFileLocator(FileManager.RP_COMPILED_IMAGE, noRefreshOnCacheMiss);
+		meshLocator = fileManager.getFileLocator(FileManager.RP_COMPILED_MESH, refreshOnCacheMiss);
+		animatedLocator = fileManager.getFileLocator(FileManager.RP_COMPILED_ANIMATION, refreshOnCacheMiss);
+		materialLocator = fileManager.getFileLocator(FileManager.RP_COMPILED_MATERIAL, refreshOnCacheMiss);
+		textureLocator = fileManager.getFileLocator(FileManager.RP_COMPILED_IMAGE, refreshOnCacheMiss);
 
 		if (supportAbsolutePaths) {
 			meshLocator = new CompositeFileLocator(AbsoluteFileLocator.instance(), meshLocator);
@@ -79,7 +78,7 @@ public class AssetResolver {
 	public List<MeshAsset> resolveEntity(eCEntity entity) {
 		List<MeshAsset> assets = new ArrayList<>();
 		assets.add(resolveContainer(entity));
-		if (NPCUtil.isNPC(entity)) {
+		if (recurse && NPCUtil.isNPC(entity)) {
 			entity.getChilds().stream().map(this::resolveContainer).filter(MeshAsset::isFound).forEach(assets::add);
 		}
 		return assets;
@@ -90,7 +89,11 @@ public class AssetResolver {
 		if (meshAndMaterialSwitch != null) {
 			int materialSwitch = meshAndMaterialSwitch.el1();
 			String mesh = EntityUtil.cleanAnimatedMeshName(meshAndMaterialSwitch.el0());
-			return resolveMesh(mesh, materialSwitch);
+			if (recurse) {
+				return resolveMesh(mesh, materialSwitch);
+			} else {
+				return new MeshAsset(mesh, true, null);
+			}
 		}
 		return new MeshAsset("", false, "Container hat kein Mesh.");
 	}
@@ -104,7 +107,11 @@ public class AssetResolver {
 				meshes = MeshUtil.toIntermediateMesh(FileUtil.openAnimationActor(animatedLocator.locate(meshFile).get()), true);
 			} else if (meshFile.toLowerCase().endsWith(".xlmsh")) {
 				eCResourceMeshLoD_PS lodMesh = FileUtil.openLodMesh(meshLocator.locate(meshFile).get());
-				return resolveMesh(lodMesh.getMeshes().get(0), materialSwitch);
+				if (recurse) {
+					return resolveMesh(lodMesh.getMeshes().get(0), materialSwitch);
+				} else {
+					return new MeshAsset(lodMesh.getMeshes().get(0), true, null);
+				}
 			} else {
 				throw new NoSuchElementException();
 			}
@@ -116,7 +123,11 @@ public class AssetResolver {
 
 		MeshAsset asset = new MeshAsset(meshFile, true, null);
 		for (IntermediateMesh mesh : meshes) {
-			asset.getMaterials().add(resolveMaterial(mesh.materialName, materialSwitch));
+			if (recurse) {
+				asset.getMaterials().add(resolveMaterial(mesh.materialName, materialSwitch));
+			} else {
+				asset.getMaterials().add(new MaterialAsset(mesh.materialName, materialSwitch, true, null));
+			}
 		}
 		return asset;
 	}
@@ -442,6 +453,43 @@ public class AssetResolver {
 				writer.println("!!! " + getError() + " !!!");
 			}
 			writer.unindent();
+		}
+	}
+
+	public static final Builder with(EditorContext ctx) {
+		return new Builder().ctx(ctx);
+	}
+
+	public static final class Builder {
+		private EditorContext ctx;
+		private boolean refreshOnCacheMiss = false;
+		private boolean supportAbsolutePaths = false;
+		private boolean recurse = true;
+
+		private Builder() {}
+
+		public Builder ctx(EditorContext ctx) {
+			this.ctx = ctx;
+			return this;
+		}
+
+		public Builder refreshOnCacheMiss() {
+			refreshOnCacheMiss = true;
+			return this;
+		}
+
+		public Builder supportAbsolutePaths() {
+			supportAbsolutePaths = true;
+			return this;
+		}
+
+		public Builder noRecurse() {
+			recurse = false;
+			return this;
+		}
+
+		public AssetResolver build() {
+			return new AssetResolver(ctx, refreshOnCacheMiss, supportAbsolutePaths, recurse);
 		}
 	}
 }

@@ -24,7 +24,7 @@ public class ScriptSpotMissingTextures implements IScript {
 
 	@Override
 	public boolean execute(IScriptEnvironment env) {
-		AssetResolver assetResolver = new AssetResolver(env.getEditorContext(), true);
+		AssetResolver assetResolver = AssetResolver.with(env.getEditorContext()).build();
 
 		for (File file : env.getFileManager().listFiles(FileManager.RP_COMPILED_MATERIAL, (file) -> file.getName().endsWith(".xshmat"))) {
 			try (FileInputStream is = new FileInputStream(file)) {

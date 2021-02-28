@@ -121,7 +121,7 @@ public class TemplateContentPane extends JPanel {
 		toolBar.add(btnAssetInfo);
 		btnAssetInfo.addActionListener(e -> {
 			eCEntity template = ctx.getCurrentTemplate().getReferenceHeader();
-			AssetResolver resolver = new AssetResolver(ctx, false);
+			AssetResolver resolver = AssetResolver.with(ctx).build();
 			new DisplayTextDialog("Asset-Info", resolver.resolveContainer(template).print(), ctx.getParentWindow(), false).open();
 		});
 		toolBar.addSeparator();

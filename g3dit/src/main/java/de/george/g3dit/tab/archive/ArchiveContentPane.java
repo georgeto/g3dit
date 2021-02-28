@@ -177,7 +177,7 @@ public class ArchiveContentPane extends JPanel {
 		toolBar.add(btnAssetInfo);
 		btnAssetInfo.addActionListener(e -> {
 			eCEntity entity = ctx.getCurrentEntity();
-			AssetResolver resolver = new AssetResolver(ctx, false);
+			AssetResolver resolver = AssetResolver.with(ctx).build();
 			new DisplayTextDialog("Asset-Info", resolver.resolveContainer(entity).print(), ctx.getParentWindow(), false).open();
 		});
 

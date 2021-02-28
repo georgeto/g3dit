@@ -15,15 +15,15 @@ public class RecursiveFileLocator implements FileLocator {
 	private String lastRootPath;
 	private Map<String, String> fileTable = new HashMap<>();
 
-	private boolean noRefreshOnCacheMiss;
+	private boolean refreshOnCacheMiss;
 
-	public RecursiveFileLocator(boolean noRefreshOnCacheMiss) {
-		this.noRefreshOnCacheMiss = noRefreshOnCacheMiss;
+	public RecursiveFileLocator(boolean refreshOnCacheMiss) {
+		this.refreshOnCacheMiss = refreshOnCacheMiss;
 	}
 
-	public RecursiveFileLocator(String rootPath, boolean noRefreshOnCacheMiss) throws IOException {
+	public RecursiveFileLocator(String rootPath, boolean refreshOnCacheMiss) throws IOException {
 		setRootPath(rootPath);
-		this.noRefreshOnCacheMiss = noRefreshOnCacheMiss;
+		this.refreshOnCacheMiss = refreshOnCacheMiss;
 	}
 
 	/*
@@ -72,7 +72,7 @@ public class RecursiveFileLocator implements FileLocator {
 			}
 		}
 
-		if (!noRefreshOnCacheMiss && !file.exists()) {
+		if (refreshOnCacheMiss && !file.exists()) {
 			return IOUtils.findFirstFile(root.getAbsolutePath(), (ftf) -> ftf.getName().equalsIgnoreCase(name));
 		}
 

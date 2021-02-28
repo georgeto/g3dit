@@ -383,7 +383,7 @@ public class EditorCli {
 		Holder<eCEntity> entityHolder = new Holder<>();
 
 		if (getSource(meshHolder::hold, materialHolder::hold, entityHolder::hold)) {
-			AssetResolver assetResolver = new AssetResolver(editor, true, true);
+			AssetResolver assetResolver = AssetResolver.with(editor).supportAbsolutePaths().build();
 			List<AbstractAsset> resolvedAssets = new ArrayList<>();
 			if (meshHolder.held() != null) {
 				resolvedAssets.add(assetResolver.resolveMesh(meshHolder.held(), getMaterialSwitch()));
