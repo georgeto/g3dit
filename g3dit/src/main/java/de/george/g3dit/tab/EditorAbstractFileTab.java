@@ -1,7 +1,7 @@
 package de.george.g3dit.tab;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.file.Files;
@@ -22,7 +22,9 @@ import de.george.g3dit.util.Dialogs;
 import de.george.g3dit.util.FileChangeMonitor;
 import de.george.g3dit.util.FileDialogWrapper;
 import de.george.g3dit.util.SettingsHelper;
+import de.george.g3utils.io.Crc32OutputStream;
 import de.george.g3utils.io.Saveable;
+import de.george.g3utils.io.TeeOutputStream;
 import net.tomahawk.ExtensionsFilter;
 
 public abstract class EditorAbstractFileTab extends EditorTab implements FileChangeMonitor {
@@ -115,10 +117,8 @@ public abstract class EditorAbstractFileTab extends EditorTab implements FileCha
 		}
 
 		try {
-			ByteArrayOutputStream buf = new ByteArrayOutputStream();
-			getSaveable().save(buf);
-			CRC32 crc32 = new CRC32();
-			crc32.update(buf.toByteArray());
+			Crc32OutputStream crc32 = new Crc32OutputStream();
+			getSaveable().save(crc32);
 			return Optional.of(checksum == crc32.getValue());
 		} catch (Exception e) {
 			return Optional.of(true);
@@ -297,7 +297,15 @@ public abstract class EditorAbstractFileTab extends EditorTab implements FileCha
 				Files.move(sourcePath, destPath, StandardCopyOption.REPLACE_EXISTING);
 			}
 			file.getParentFile().mkdirs();
-			fileToSave.save(file);
+			try (FileOutputStream out = new FileOutputStream(file)) {
+				if (ctx.getOptionStore().get(EditorOptions.Misc.IMPROVE_CHANGE_DETECTION)) {
+					Crc32OutputStream crc32 = new Crc32OutputStream();
+					fileToSave.save(new TeeOutputStream(out, crc32));
+					checksum = crc32.getValue();
+				} else {
+					fileToSave.save(out);
+				}
+			}
 			return null;
 		}
 
