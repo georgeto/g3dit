@@ -9,6 +9,8 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import com.google.common.base.Predicates;
+
 import de.george.g3dit.util.FileManager;
 import de.george.g3utils.structure.bCVector;
 import de.george.g3utils.util.Misc;
@@ -105,6 +107,9 @@ public class ScriptListUnusedCollisionMesh implements IScript {
 
 		env.log("\n\n=== Missing collision meshes ===");
 		missingMeshes.forEach(env::log);
+
+		env.log("\n\n=== Used collision meshes ===");
+		StreamEx.ofValues(meshes, Predicates.not(unseenMeshes::contains)).map(File::getName).sorted().forEach(env::log);
 
 		return true;
 	}
