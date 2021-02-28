@@ -6,7 +6,6 @@ import java.io.FileInputStream;
 import de.george.g3dit.util.AssetResolver;
 import de.george.g3dit.util.AssetResolver.MaterialAsset;
 import de.george.g3dit.util.AssetResolver.TextureAsset;
-import de.george.g3dit.util.FileManager;
 import de.george.lrentnode.classes.eCResourceShaderMaterial_PS;
 import de.george.lrentnode.util.FileUtil;
 
@@ -26,7 +25,7 @@ public class ScriptSpotMissingTextures implements IScript {
 	public boolean execute(IScriptEnvironment env) {
 		AssetResolver assetResolver = AssetResolver.with(env.getEditorContext()).build();
 
-		for (File file : env.getFileManager().listFiles(FileManager.RP_COMPILED_MATERIAL, (file) -> file.getName().endsWith(".xshmat"))) {
+		for (File file : env.getFileManager().listMaterials()) {
 			try (FileInputStream is = new FileInputStream(file)) {
 				eCResourceShaderMaterial_PS material = FileUtil.openMaterial(is);
 

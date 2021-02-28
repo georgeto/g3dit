@@ -200,7 +200,7 @@ public class FileSearchDialog extends AbstractTableProgressDialog {
 		}
 
 		if (cbMesh.isSelected()) {
-			fileProviders.add(() -> fileManager.listFiles(FileManager.RP_COMPILED_MESH, IOUtils.meshFilter));
+			fileProviders.add(fileManager::listMeshes);
 		}
 
 		worker = new SearchFileWorker(IOUtils.joinFileCallables(fileProviders), filter);

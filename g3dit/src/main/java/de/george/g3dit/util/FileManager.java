@@ -325,4 +325,24 @@ public class FileManager {
 			return Optional.empty();
 		}
 	}
+
+	public List<File> listMeshes() {
+		return listFiles(FileManager.RP_COMPILED_MESH, IOUtils.meshFilter);
+	}
+
+	public List<File> listStaticMeshes() {
+		return listFiles(FileManager.RP_COMPILED_MESH, (file) -> file.getName().endsWith(".xcmsh"));
+	}
+
+	public List<File> listLodMeshes() {
+		return listFiles(FileManager.RP_COMPILED_MESH, (file) -> file.getName().endsWith(".xlmsh"));
+	}
+
+	public List<File> listAnimatedMeshes() {
+		return listFiles(FileManager.RP_COMPILED_ANIMATION, (file) -> file.getName().endsWith(".xact"));
+	}
+
+	public List<File> listMaterials() {
+		return listFiles(FileManager.RP_COMPILED_MATERIAL, (file) -> file.getName().endsWith(".xshmat"));
+	}
 }

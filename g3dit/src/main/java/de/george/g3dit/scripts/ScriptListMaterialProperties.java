@@ -3,7 +3,6 @@ package de.george.g3dit.scripts;
 import java.io.File;
 import java.io.FileInputStream;
 
-import de.george.g3dit.util.FileManager;
 import de.george.lrentnode.classes.eCResourceShaderMaterial_PS;
 import de.george.lrentnode.classes.eCShaderBase;
 import de.george.lrentnode.classes.desc.CD;
@@ -25,7 +24,7 @@ public class ScriptListMaterialProperties implements IScript {
 
 	@Override
 	public boolean execute(IScriptEnvironment env) {
-		for (File file : env.getFileManager().listFiles(FileManager.RP_COMPILED_MATERIAL, (file) -> file.getName().endsWith(".xshmat"))) {
+		for (File file : env.getFileManager().listMaterials()) {
 			try (FileInputStream is = new FileInputStream(file)) {
 				eCResourceShaderMaterial_PS material = FileUtil.openMaterial(is);
 				eCShaderBase shader = material.getShader();

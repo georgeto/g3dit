@@ -10,7 +10,6 @@ import java.util.stream.Collectors;
 
 import com.google.common.collect.Sets;
 
-import de.george.g3dit.util.FileManager;
 import de.george.lrentnode.archive.ArchiveFile;
 import de.george.lrentnode.archive.G3ClassContainer;
 import de.george.lrentnode.archive.eCEntity;
@@ -37,14 +36,13 @@ public class ScriptListUnusedMeshes implements IScript {
 
 	@Override
 	public boolean execute(IScriptEnvironment env) {
-		Map<String, File> meshes = env.getFileManager()
-				.listFiles(FileManager.RP_COMPILED_MESH, (file) -> file.getName().endsWith(".xcmsh")).stream()
+		Map<String, File> meshes = env.getFileManager().listStaticMeshes().stream()
 				.collect(Collectors.toMap(f -> f.getName().toLowerCase(), f -> f));
 
-		meshes.putAll(env.getFileManager().listFiles(FileManager.RP_COMPILED_ANIMATION, (file) -> file.getName().endsWith(".xact"))
-				.stream().collect(Collectors.toMap(f -> f.getName().toLowerCase(), f -> f)));
+		meshes.putAll(
+				env.getFileManager().listAnimatedMeshes().stream().collect(Collectors.toMap(f -> f.getName().toLowerCase(), f -> f)));
 
-		List<File> lodMeshes = env.getFileManager().listFiles(FileManager.RP_COMPILED_MESH, (file) -> file.getName().endsWith(".xlmsh"));
+		List<File> lodMeshes = env.getFileManager().listLodMeshes();
 
 		meshes.putAll(lodMeshes.stream().collect(Collectors.toMap(f -> f.getName().toLowerCase(), f -> f)));
 
