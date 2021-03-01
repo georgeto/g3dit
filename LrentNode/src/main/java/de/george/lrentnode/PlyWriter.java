@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.util.List;
-import java.util.Locale;
 
 import com.google.common.base.Joiner;
 
@@ -29,7 +28,7 @@ public class PlyWriter {
 	}
 
 	private void format(String format, Object... args) throws IOException {
-		writer.append(String.format(Locale.US, format, args)).append("\n");
+		writer.append(String.format(format, args)).append("\n");
 	}
 
 	public void write(eCResourceMeshComplex_PS meshComplex, OutputStreamWriter out) throws IOException {

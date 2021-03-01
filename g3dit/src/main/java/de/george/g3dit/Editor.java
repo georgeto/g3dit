@@ -13,6 +13,8 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
+import java.util.Locale.Category;
 import java.util.Optional;
 import java.util.concurrent.Executors;
 import java.util.logging.Level;
@@ -139,6 +141,8 @@ public class Editor extends JFrame implements EditorContext {
 	}
 
 	private void init(final String[] args) {
+		Locale.setDefault(Category.FORMAT, Locale.UK);
+
 		eventBus = new EventBus("g3dit");
 		eventBus.register(this);
 		executorService = MoreExecutors.listeningDecorator(Executors.newCachedThreadPool());
