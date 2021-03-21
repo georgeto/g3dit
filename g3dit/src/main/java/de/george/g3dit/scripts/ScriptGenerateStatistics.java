@@ -57,6 +57,10 @@ public class ScriptGenerateStatistics implements IScript {
 			}
 		}
 
+		int originalNpcsCount = originalNPCs.size();
+		int originalMonstersCount = originalMonsters.size();
+		int originalObjectsCount = originalObjects.size();
+
 		Map<String, String> newNPCs = new HashMap<>();
 		Map<String, String> newMonsters = new HashMap<>();
 		Map<String, String> newObjects = new HashMap<>();
@@ -88,15 +92,16 @@ public class ScriptGenerateStatistics implements IScript {
 			}
 		}
 
-		env.log(originalNPCs.size() + " NPCs gelöscht.");
-		env.log(originalMonsters.size() + " Monster gelöscht.");
-		env.log(originalObjects.size() + " Objekte gelöscht.");
-		env.log(newNPCs.size() + " NPCs erstellt.");
-		env.log(newMonsters.size() + " Monster erstellt.");
-		env.log(newObjects.size() + " Objekte erstellt.");
-		env.log("%d (%+d) Vegetationsobjekte", vegetationObjectCount, vegetationObjectCount - originalVegetationObjectCount);
+		logDiff(env, "NPCs", originalNpcsCount, newNPCs.size(), originalNPCs.size());
+		logDiff(env, "Monster", originalMonstersCount, newMonsters.size(), originalMonsters.size());
+		logDiff(env, "Objekte", originalObjectsCount, newObjects.size(), originalObjects.size());
+		env.log("Vegetationsobjekte: %d (%+d)", vegetationObjectCount, vegetationObjectCount - originalVegetationObjectCount);
 
 		return true;
+	}
+
+	private static void logDiff(IScriptEnvironment env, String name, int original, int created, int deleted) {
+		env.log("%s: %d (Gothic3) + %d (neu) - %d (entfernt) = %d", name, original, created, deleted, original + created + deleted);
 	}
 
 	private static boolean isIncluded(eCEntity entity) {
