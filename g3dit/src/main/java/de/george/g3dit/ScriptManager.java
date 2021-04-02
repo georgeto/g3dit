@@ -171,7 +171,14 @@ public class ScriptManager implements IScriptEnvironment {
 			area.setText(null);
 			IScript selectedValue = scriptList.getSelectedValue();
 			log("'" + selectedValue.getTitle() + "' wird ausgeführt.");
-			boolean result = selectedValue.execute(ScriptManager.this);
+			boolean result;
+			try {
+				result = selectedValue.execute(ScriptManager.this);
+			} catch (Exception e) {
+				result = false;
+				log("Exception: %s", e.getMessage());
+				logger.warn("Error while executing script '{}'.", selectedValue.getTitle(), e);
+			}
 			log("Ausführung " + (result ? "erfolgreich." : "fehlgeschlagen."));
 			ctx.runGC();
 		}
