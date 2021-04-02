@@ -69,11 +69,15 @@ public class ScriptListUnusedCollisionMesh implements IScript {
 				meshConsumer.accept(mesh);
 
 				int shapeType = shape.property(CD.eCCollisionShape.ShapeType).getEnumValue();
-				if (shapeType == eECollisionShapeType.eECollisionShapeType_ConvexHull) {
+				if (shapeType == eECollisionShapeType.eECollisionShapeType_ConvexHull
+						|| shapeType == eECollisionShapeType.eECollisionShapeType_TriMesh) {
 					bCVector scaling = entity.getWorldMatrix().getPureScaling();
+					boolean uniform = Misc.compareFloat(scaling.getX(), scaling.getY(), 0.0001f)
+							&& Misc.compareFloat(scaling.getX(), scaling.getZ(), 0.0001f);
 					String scalingFormatted = null;
-					if (Misc.compareFloat(scaling.getX(), scaling.getY(), 0.0001f)
-							&& Misc.compareFloat(scaling.getX(), scaling.getZ(), 0.0001f)) {
+					// Convex collision meshes can only be scaled with a uniform factor (artificial
+					// limitation in Gothic 3 collision shape loader).
+					if (shapeType == eECollisionShapeType.eECollisionShapeType_ConvexHull || uniform) {
 						if (!Misc.compareFloat(scaling.getX(), 1.0f, 0.0001f)) {
 							// Uniform scaling
 							scalingFormatted = String.format("_SC_%.4f", scaling.getX()).replace(".", "_");
