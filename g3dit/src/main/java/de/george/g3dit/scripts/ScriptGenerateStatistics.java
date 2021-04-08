@@ -101,7 +101,7 @@ public class ScriptGenerateStatistics implements IScript {
 	}
 
 	private static void logDiff(IScriptEnvironment env, String name, int original, int created, int deleted) {
-		env.log("%s: %d (Gothic3) + %d (neu) - %d (entfernt) = %d", name, original, created, deleted, original + created + deleted);
+		env.log("%s: %d (Gothic3) + %d (neu) - %d (entfernt) = %d", name, original, created, deleted, original + created - deleted);
 	}
 
 	private static boolean isIncluded(eCEntity entity) {
