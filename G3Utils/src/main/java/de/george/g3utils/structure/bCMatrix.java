@@ -51,6 +51,10 @@ public class bCMatrix implements G3Serializable {
 		modifyTranslation(t);
 	}
 
+	public bCMatrix(bCEulerAngles a) {
+		this.setToRotation(a);
+	}
+
 	public void setToArray(float[][] matrix) {
 		xAxis.setToArray(matrix[0]);
 		yAxis.setToArray(matrix[1]);
