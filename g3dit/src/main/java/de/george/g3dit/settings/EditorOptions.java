@@ -154,7 +154,7 @@ public abstract class EditorOptions {
 	}
 
 	public static abstract class TheVoid {
-		public static final Option<Void> FILE_EXTENSIONS = new LambdaOption<>(null, (parent) -> new FileExtensionOptionHandler(parent),
+		public static final Option<Void> FILE_EXTENSIONS = new LambdaOption<>(null, FileExtensionOptionHandler::new,
 				"EditorOptions.TheVoid.FILE_EXTENSIONS", "Dateiendungen");
 	}
 

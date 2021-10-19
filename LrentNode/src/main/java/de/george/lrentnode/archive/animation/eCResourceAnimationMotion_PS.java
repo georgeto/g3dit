@@ -29,7 +29,7 @@ public class eCResourceAnimationMotion_PS extends GenomeFile {
 			writer.writeUnsignedShort(keyFrame);
 			writer.writeEntry(effectName);
 		}
-	};
+	}
 
 	public static class eCWrapper_emfx2Motion implements G3Serializable {
 		public int highVersion; // high version (2 in case of v2.34)

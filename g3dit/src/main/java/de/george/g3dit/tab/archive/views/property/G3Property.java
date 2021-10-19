@@ -37,8 +37,7 @@ public class G3Property extends AbstractProperty {
 	public G3Property(ClassProperty classProperty, String propertySet) {
 		this.propertySet = propertySet;
 		this.classProperty = classProperty;
-		if (classProperty.getValue() instanceof bTPropertyObject) {
-			bTPropertyObject propertyObject = (bTPropertyObject) classProperty.getValue();
+		if (classProperty.getValue() instanceof bTPropertyObject propertyObject) {
 			subProperties = ImmutableList.copyOf(FluentIterable.from(propertyObject.getClazz().properties())
 					.transform(p -> new G3Property(p, propertyObject.getClassName())));
 		}
@@ -198,7 +197,7 @@ public class G3Property extends AbstractProperty {
 
 	@Override
 	public Property[] getSubProperties() {
-		return subProperties.toArray(new Property[subProperties.size()]);
+		return subProperties.toArray(new Property[0]);
 	}
 
 	@Override

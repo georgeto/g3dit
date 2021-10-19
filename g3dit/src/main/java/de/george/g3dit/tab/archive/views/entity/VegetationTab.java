@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -99,7 +100,7 @@ public class VegetationTab extends AbstractEntityTab {
 		filterPanel.add(btnPastePosition, "width 27!, height 27!");
 		add(filterPanel, "wrap");
 
-		DocumentListener tfDocumentListener = SwingUtils.createDocumentListener(() -> filterPlants());
+		DocumentListener tfDocumentListener = SwingUtils.createDocumentListener(this::filterPlants);
 		tfPosX.getDocument().addDocumentListener(tfDocumentListener);
 		tfPosY.getDocument().addDocumentListener(tfDocumentListener);
 		tfPosZ.getDocument().addDocumentListener(tfDocumentListener);
@@ -121,9 +122,7 @@ public class VegetationTab extends AbstractEntityTab {
 			// Änderungen durchführen
 			PlantRegionEntry plantEntry = tableEntry.entry;
 			plantEntry.position = tableEntry.position;
-			if (rotation.isPresent()) {
-				plantEntry.rotation = rotation.get();
-			}
+			rotation.ifPresent(r -> plantEntry.rotation = r);
 			plantEntry.scaleHeight = tableEntry.scaleHeight;
 			plantEntry.scaleWidth = tableEntry.scaleWidth;
 			plantEntry.meshID = tableEntry.meshID;
@@ -385,30 +384,19 @@ public class VegetationTab extends AbstractEntityTab {
 
 		@Override
 		public Object getValueAt(PlantTableEntry entry, int col) {
-			switch (col) {
-				case 0:
-					return Misc.round(entry.position.getX(), 2);
-				case 1:
-					return Misc.round(entry.position.getY(), 2);
-				case 2:
-					return Misc.round(entry.position.getZ(), 2);
-				case 3:
-					return Misc.round(entry.pitch, 2);
-				case 4:
-					return Misc.round(entry.yaw, 2);
-				case 5:
-					return Misc.round(entry.roll, 2);
-				case 6:
-					return Misc.round(entry.scaleHeight, 2);
-				case 7:
-					return Misc.round(entry.scaleWidth, 2);
-				case 8:
-					return vegetationPS.getMeshClass(entry.meshID).getName();
-				case 9:
-					return new Color(entry.colorARGB);
-				default:
-					return null;
-			}
+			return switch (col) {
+				case 0 -> Misc.round(entry.position.getX(), 2);
+				case 1 -> Misc.round(entry.position.getY(), 2);
+				case 2 -> Misc.round(entry.position.getZ(), 2);
+				case 3 -> Misc.round(entry.pitch, 2);
+				case 4 -> Misc.round(entry.yaw, 2);
+				case 5 -> Misc.round(entry.roll, 2);
+				case 6 -> Misc.round(entry.scaleHeight, 2);
+				case 7 -> Misc.round(entry.scaleWidth, 2);
+				case 8 -> vegetationPS.getMeshClass(entry.meshID).getName();
+				case 9 -> new Color(entry.colorARGB);
+				default -> null;
+			};
 		}
 
 		@Override
@@ -483,7 +471,7 @@ public class VegetationTab extends AbstractEntityTab {
 				if (changed == 1) {
 					if (!isInsideStaticNode(position)) {
 						boolean result = TaskDialogs.isConfirmed(ctx.getParentWindow(), "Soll die neue Position gespeichert werden?",
-								"Die neue Position (" + position.toString() + "), des Objektes '"
+								"Die neue Position (" + position + "), des Objektes '"
 										+ vegetationPS.getMeshClass(tableEntry.meshID).getName() + "',"
 										+ "\nliegt außerhalb des Zuständigkeitsbereiches dieser Datei."
 										+ "\nDas Objekt sollte stattdessen in die für den Bereich zuständige Datei verschoben werden.");
@@ -521,7 +509,7 @@ public class VegetationTab extends AbstractEntityTab {
 		public void configureTableColumn(TableModel model, TableColumnExt column) {
 			super.configureTableColumn(model, column);
 			if (column.getModelIndex() <= 7) {
-				column.setComparator((Float u1, Float u2) -> u1.compareTo(u2));
+				column.setComparator(Comparator.naturalOrder());
 			}
 
 			if (column.getModelIndex() == 9) {
@@ -535,26 +523,11 @@ public class VegetationTab extends AbstractEntityTab {
 			// Height", "Scale
 			// Width", "Typ");
 			switch (columnExt.getTitle()) {
-				case "Position X":
-				case "Position Y":
-				case "Position Z":
-					columnExt.setPreferredWidth(85);
-					break;
-				case "Pitch":
-				case "Yaw":
-				case "Roll":
-					columnExt.setPreferredWidth(60);
-					break;
-				case "Scale Height":
-				case "Scale Width":
-					columnExt.setPreferredWidth(60);
-					break;
-				case "Typ":
-					columnExt.setPreferredWidth(200);
-					break;
-				case "Color":
-					columnExt.setPreferredWidth(40);
-					break;
+				case "Position X", "Position Y", "Position Z" -> columnExt.setPreferredWidth(85);
+				case "Pitch", "Yaw", "Roll" -> columnExt.setPreferredWidth(60);
+				case "Scale Height", "Scale Width" -> columnExt.setPreferredWidth(60);
+				case "Typ" -> columnExt.setPreferredWidth(200);
+				case "Color" -> columnExt.setPreferredWidth(40);
 			}
 		}
 	}
@@ -571,7 +544,7 @@ public class VegetationTab extends AbstractEntityTab {
 		}
 
 		@Override
-		public boolean include(RowFilter.Entry<? extends Object, ? extends Object> value) {
+		public boolean include(RowFilter.Entry<?, ?> value) {
 			Float posX = (Float) value.getValue(0);
 			Float posY = (Float) value.getValue(1);
 			Float posZ = (Float) value.getValue(2);

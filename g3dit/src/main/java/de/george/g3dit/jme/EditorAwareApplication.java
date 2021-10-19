@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CountDownLatch;
-import java.util.stream.Collectors;
 
 import com.jme3.app.SimpleApplication;
 import com.jme3.asset.AssetManager;
@@ -124,7 +123,7 @@ public abstract class EditorAwareApplication extends SimpleApplication {
 		super.update();
 		List<String> stateTextLines = getStateText();
 		stateText.setLocalTranslation(0, stateText.getLineHeight() * stateTextLines.size(), 0);
-		stateText.setText(stateTextLines.stream().collect(Collectors.joining("\n")));
+		stateText.setText(String.join("\n", stateTextLines));
 	}
 
 	protected List<String> getStateText() {

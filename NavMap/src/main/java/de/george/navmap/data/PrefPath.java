@@ -178,7 +178,7 @@ public class PrefPath implements G3Serializable {
 
 	@Override
 	public PrefPath clone() {
-		return new PrefPath(points.stream().map(p -> p.clone()).collect(Collectors.toList()), new ArrayList<>(pointRadius), radius,
+		return new PrefPath(points.stream().map(bCVector::clone).collect(Collectors.toList()), new ArrayList<>(pointRadius), radius,
 				radiusOffset.clone(), zoneGuid, virtualGuid);
 	}
 

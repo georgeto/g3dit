@@ -63,11 +63,10 @@ public class EntityDescriptor {
 
 	@Override
 	public boolean equals(final Object other) {
-		if (!(other instanceof EntityDescriptor)) {
+		if (!(other instanceof EntityDescriptor castOther)) {
 			return false;
 		}
 
-		EntityDescriptor castOther = (EntityDescriptor) other;
 		return Objects.equals(name, castOther.name) && Objects.equals(guid, castOther.guid) && Objects.equals(index, castOther.index)
 				&& Objects.equals(file, castOther.file);
 	}

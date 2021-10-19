@@ -41,7 +41,7 @@ public class TemplateContentPane extends JPanel {
 
 	public static enum TemplateViewType {
 		ENTITY,
-		PROPERTY;
+		PROPERTY
 	}
 
 	private Map<TemplateViewType, TemplateView> views = new HashMap<>();
@@ -112,9 +112,7 @@ public class TemplateContentPane extends JPanel {
 		JButton btn3dView = new JButton("3D-Ansicht", Icons.getImageIcon(Icons.Data.THREED));
 		btn3dView.setFocusable(false);
 		toolBar.add(btn3dView);
-		btn3dView.addActionListener(e -> {
-			EntityViewer.getInstance(ctx).showContainer(ctx.getCurrentTemplate().getReferenceHeader());
-		});
+		btn3dView.addActionListener(e -> EntityViewer.getInstance(ctx).showContainer(ctx.getCurrentTemplate().getReferenceHeader()));
 		JButton btnAssetInfo = new JButton("Asset-Info", Icons.getImageIcon(Icons.Data.INFORMATION));
 		btnAssetInfo.setToolTipText("Ermittelt die von der Template verwendeten Assets und kopiert sie in die Zwischenablage.");
 		btnAssetInfo.setFocusable(false);

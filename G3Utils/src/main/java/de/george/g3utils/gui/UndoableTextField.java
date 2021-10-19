@@ -89,7 +89,7 @@ public class UndoableTextField extends JTextField {
 		}
 	}
 
-	class CustomUndoPlainDocument extends PlainDocument {
+	static class CustomUndoPlainDocument extends PlainDocument {
 		private CompoundEdit compoundEdit;
 
 		@Override

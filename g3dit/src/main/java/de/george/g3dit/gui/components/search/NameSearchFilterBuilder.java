@@ -53,8 +53,7 @@ public class NameSearchFilterBuilder implements SearchFilterBuilder<eCEntity> {
 
 	@Override
 	public boolean loadFilter(SearchFilter<eCEntity> filter) {
-		if (filter instanceof NameEntityFilter) {
-			NameEntityFilter typedFilter = (NameEntityFilter) filter;
+		if (filter instanceof NameEntityFilter typedFilter) {
 			cbMatchMode.setSelectedItem(typedFilter.getMatchMode());
 			tfFilter.setText(typedFilter.getTextToMatch());
 			cbRegex.setSelected(typedFilter.isRegex());

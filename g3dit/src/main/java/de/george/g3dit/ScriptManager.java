@@ -5,6 +5,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -49,7 +50,7 @@ public class ScriptManager implements IScriptEnvironment {
 	private ScriptDialog scriptDialog;
 
 	public ScriptManager(EditorContext ctx) {
-		scripts = new TreeSet<>((s1, s2) -> s1.getTitle().compareTo(s2.getTitle()));
+		scripts = new TreeSet<>(Comparator.comparing(IScript::getTitle));
 		this.ctx = ctx;
 	}
 
@@ -187,8 +188,7 @@ public class ScriptManager implements IScriptEnvironment {
 		public JComponent createContentPanel() {
 			JPanel mainPanel = new JPanel(new MigLayout("", "[]10px[fill, grow 100]", "[fill][fill, grow 100]"));
 
-			SortedList<IScript> sortedScripts = new SortedList<>(GlazedLists.eventList(scripts),
-					(e1, e2) -> e1.getTitle().compareTo(e2.getTitle()));
+			SortedList<IScript> sortedScripts = new SortedList<>(GlazedLists.eventList(scripts), Comparator.comparing(IScript::getTitle));
 			scriptList = new JEventList<>(sortedScripts);
 			scriptList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 			scriptList.addListSelectionListener(e -> scriptSelected());

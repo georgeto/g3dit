@@ -94,11 +94,11 @@ public class PropertySync {
 	}
 
 	public void writeInt(JTextComponent tc, PropertyDescriptor<gInt> prop) {
-		clazz.property(prop).setInt(Integer.valueOf(tc.getText()));
+		clazz.property(prop).setInt(Integer.parseInt(tc.getText()));
 	}
 
 	public void writeLong(JTextComponent tc, PropertyDescriptor<gLong> prop) {
-		clazz.property(prop).setLong(Integer.valueOf(tc.getText()));
+		clazz.property(prop).setLong(Integer.parseInt(tc.getText()));
 	}
 
 	public void writeGuid(JGuidField gf, PropertyDescriptor<eCEntityProxy> prop) {
@@ -114,7 +114,7 @@ public class PropertySync {
 	}
 
 	public void writeFloat(JTextComponent tc, PropertyDescriptor<gFloat> prop) {
-		clazz.property(prop).setFloat(Float.valueOf(tc.getText()));
+		clazz.property(prop).setFloat(Float.parseFloat(tc.getText()));
 	}
 
 	public void writeVector(JTextComponent tc, PropertyDescriptor<bCVector> prop) {

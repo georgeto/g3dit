@@ -45,8 +45,7 @@ public class ItemUtil {
 			bCOrientedBox box = ((BoxShape) shape).getOrientedBox();
 			range += Math.abs(box.getExtent().getTransformed(box.getOrientation()).getZ());
 			range += box.getCenter().getZ();
-		} else if (shape instanceof CapsuleShape) {
-			CapsuleShape capsule = (CapsuleShape) shape;
+		} else if (shape instanceof CapsuleShape capsule) {
 			range += capsule.getHeight() / 2 + capsule.getRadius() + capsule.getCenter().getZ();
 		} else {
 			return Optional.empty();

@@ -44,7 +44,7 @@ public class TemplateIntelliHints extends AbstractListIntelliHints {
 		if (filter != null) {
 			tpleStream = tpleStream.filter(filter);
 		}
-		Object[] objects = tpleStream.filter(e -> compare(context, e.getName())).map(e -> e.getName())
+		Object[] objects = tpleStream.map(TemplateCacheEntry::getName).filter(name -> compare(context, name))
 				.sorted(new StringAutoCompleteSorter((String) context, _caseSensitive)).toArray();
 		setListData(objects);
 		return objects.length > 0;

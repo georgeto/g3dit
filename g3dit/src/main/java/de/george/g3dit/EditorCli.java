@@ -49,11 +49,11 @@ public class EditorCli {
 		private static final ArgumentParser INSTANCE = createParser();
 	}
 
-	private static final ArgumentParser getParser() {
+	private static ArgumentParser getParser() {
 		return ArgumentParserHolder.INSTANCE;
 	}
 
-	private static final ArgumentParser createParser() {
+	private static ArgumentParser createParser() {
 		ArgumentParser parser = ArgumentParsers.newFor("g3dit").build().defaultHelp(true).description("Editor for Gothic 3");
 		Subparsers subparsers = parser.addSubparsers().title("subcommands").description("valid subcommands");
 
@@ -162,7 +162,7 @@ public class EditorCli {
 		}
 	}
 
-	public static final boolean isInConsoleMode() {
+	public static boolean isInConsoleMode() {
 		return Objects.equals(System.getProperty("g3dit.mode"), "console");
 	}
 
@@ -187,16 +187,12 @@ public class EditorCli {
 	private boolean handleCache() {
 		List<Class> caches = new ArrayList<>();
 		switch (parseResult.getString("update")) {
-			case "all":
+			case "all" -> {
 				caches.add(TemplateCache.class);
 				caches.add(EntityCache.class);
-				break;
-			case "template":
-				caches.add(TemplateCache.class);
-				break;
-			case "entity":
-				caches.add(EntityCache.class);
-				break;
+			}
+			case "template" -> caches.add(TemplateCache.class);
+			case "entity" -> caches.add(EntityCache.class);
 		}
 		for (Class cache : caches) {
 			writer.printf("Update %s...", cache.getSimpleName()).flush();
@@ -268,27 +264,29 @@ public class EditorCli {
 			String sourceName = parseResult.getString("source");
 			String sourceNameExt = Files.getFileExtension(sourceName);
 			switch (sourceNameExt.toLowerCase()) {
-				case "xcmsh":
-				case "xact":
+				case "xcmsh", "xact" -> {
 					returnMesh.accept(sourceName);
 					return true;
-				case "xshmat":
+				}
+				case "xshmat" -> {
 					returnMaterial.accept(sourceName);
 					return true;
-				case "tple": {
+				}
+				case "tple" -> {
 					// .tple -> fileName
 					Optional<TemplateCacheEntry> tpleCacheEntry = Caches.template(editor).getAllEntities()
 							.filter(t -> t.getFile().getName().equalsIgnoreCase(sourceName)).findFirst();
 					return loadTemplate(tpleCacheEntry, "file name ", sourceName, returnEntity);
 				}
-				case "": {
+				case "" -> {
 					// no extension -> template
 					Optional<TemplateCacheEntry> tpleCacheEntry = Caches.template(editor).getEntryByName(sourceName);
 					return loadTemplate(tpleCacheEntry, "name", sourceName, returnEntity);
 				}
-				default:
+				default -> {
 					writer.printf("Unsupported file extension %s.", sourceNameExt).println();
 					return false;
+				}
 			}
 		} else if (hasArg("source_guid")) {
 			String guid = getGuidArg("source_guid");
@@ -325,19 +323,21 @@ public class EditorCli {
 
 			String sourceFileExt = Files.getFileExtension(sourceFile.getName());
 			switch (sourceFileExt.toLowerCase()) {
-				case "xcmsh":
-				case "xact":
+				case "xcmsh", "xact" -> {
 					returnMesh.accept(sourceFile.getAbsolutePath());
 					return true;
-				case "xshmat":
+				}
+				case "xshmat" -> {
 					returnMaterial.accept(sourceFile.getAbsolutePath());
 					return true;
-				case "tple": {
+				}
+				case "tple" -> {
 					return loadTemplate(sourceFile, returnEntity);
 				}
-				default:
+				default -> {
 					writer.printf("Unsupported file extension '%s'.", sourceFileExt).println();
 					return false;
+				}
 			}
 		}
 	}
@@ -370,7 +370,7 @@ public class EditorCli {
 			}
 
 			if (objectProvider != null) {
-				EntityRenderer.getInstance(editor).renderScene(outFile, format, this::setupScene, objectProvider);
+				success = EntityRenderer.getInstance(editor).renderScene(outFile, format, this::setupScene, objectProvider);
 			}
 		}
 

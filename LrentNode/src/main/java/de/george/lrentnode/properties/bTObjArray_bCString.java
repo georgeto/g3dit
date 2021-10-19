@@ -10,11 +10,11 @@ public class bTObjArray_bCString extends bTArray<bCString> {
 	}
 
 	public List<String> getNativeEntries() {
-		return getEntries(s -> s.getString());
+		return getEntries(bCString::getString);
 	}
 
 	public void setNativeEntries(List<String> entries) {
-		setEntries(entries, s -> new bCString(s));
+		setEntries(entries, bCString::new);
 	}
 
 }

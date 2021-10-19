@@ -40,11 +40,7 @@ public class ExtensionsFilter extends javax.swing.filechooser.FileFilter {
 			return true;
 		}
 		String filename = f.getName().toLowerCase();
-		if (filename == null) {
-			return false;
-		}
-		for (int i = 0; i < extensions.size(); i++) {
-			String ext = extensions.get(i);
+		for (String ext : extensions) {
 			if (filename.endsWith(POINT + ext)) {
 				return true;
 			}

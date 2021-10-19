@@ -2,8 +2,8 @@
 package de.george.navmap.util;
 
 public class UnionFind {
-	private int id[]; // id[i] = parents of node i
-	private int sz[]; // sz[i] = size of node i
+	private int[] id; // id[i] = parents of node i
+	private int[] sz; // sz[i] = size of node i
 	private int count; // number of connected components
 
 	public UnionFind(int n) {

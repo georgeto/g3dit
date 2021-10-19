@@ -383,6 +383,7 @@ public final class OneInstance {
 				server.start();
 			} catch (PortAlreadyInUseException e) {
 				// Ignored, trying next port.
+				continue;
 			}
 			return;
 		}

@@ -44,8 +44,8 @@ import net.miginfocom.swing.MigLayout;
 @SearchFilterBuilderDesc(title = "Property")
 public class PropertySearchFilterBuilder<T extends G3ClassContainer> implements SearchFilterBuilder<T> {
 	private static final List<Class<ClassDescriptor>> NON_EMPTY_ENTITY_PROPERTY_SETS = CD.getClassDescriptors()
-			.filter(d -> CD.eCEntityPropertySet.class.isAssignableFrom(d))
-			.filter(d -> ClassDescriptor.getAllProperties(d).findAny().isPresent()).sortedBy(ClassDescriptor::getName).toImmutableList();
+			.filter(CD.eCEntityPropertySet.class::isAssignableFrom).filter(d -> ClassDescriptor.getAllProperties(d).findAny().isPresent())
+			.sortedBy(ClassDescriptor::getName).toImmutableList();
 
 	private static final ImmutableMap<CompareOperation, String> RENDER_COMPARE_OPERATION = ImmutableMap.<CompareOperation, String>builder()
 			.put(CompareOperation.Equals, "==").put(CompareOperation.NotEquals, "!=").put(CompareOperation.GreaterThanEquals, ">=")
@@ -244,8 +244,7 @@ public class PropertySearchFilterBuilder<T extends G3ClassContainer> implements 
 
 	@Override
 	public boolean loadFilter(SearchFilter<T> filter) {
-		if (filter instanceof PropertySearchFilter) {
-			PropertySearchFilter<T> typedFilter = (PropertySearchFilter<T>) filter;
+		if (filter instanceof PropertySearchFilter<T> typedFilter) {
 			PropertyDescriptor<?> propertyDesc = typedFilter.getPropertyDesc();
 			if (propertyDesc != null) {
 				cbPropertySet.setSelectedItem(propertyDesc.getPropertySet());

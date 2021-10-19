@@ -345,21 +345,17 @@ public class ImportStaticLightdataDialog extends AbstractTableProgressDialog {
 
 		@Override
 		public Object getValueAt(Result entry, int col) {
-			switch (col) {
-				case 0:
-					return entry.getName();
-				case 1:
-					return entry.getGuid();
-				case 2:
-					return entry.getFile();
-				case 3:
-					return entry.getLog();
-			}
-			return null;
+			return switch (col) {
+				case 0 -> entry.getName();
+				case 1 -> entry.getGuid();
+				case 2 -> entry.getFile();
+				case 3 -> entry.getLog();
+				default -> null;
+			};
 		}
 	}
 
-	public class Result {
+	public static class Result {
 		private EntityDescriptor entity;
 		private String log;
 		private boolean filtered;
@@ -401,7 +397,7 @@ public class ImportStaticLightdataDialog extends AbstractTableProgressDialog {
 		}
 	}
 
-	private class Sldat {
+	private static class Sldat {
 		private String entityName;
 		private Guid entityGuid;
 		public StaticLights lights;

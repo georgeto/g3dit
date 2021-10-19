@@ -67,13 +67,13 @@ public abstract class BaseEntityViewer {
 
 	public void showContainer(G3ClassContainer entity) {
 		assureAppRunning();
-		appTask(() -> app.clearEntities());
+		appTask(app::clearEntities);
 		addContainer(entity);
 	}
 
 	public void showEntity(eCEntity entity) {
 		assureAppRunning();
-		appTask(() -> app.clearEntities());
+		appTask(app::clearEntities);
 		addContainer(entity);
 		if (NPCUtil.isNPC(entity)) {
 			for (eCEntity wearable : entity.getChilds()) {
@@ -84,7 +84,7 @@ public abstract class BaseEntityViewer {
 
 	public void showMesh(String mesh, int materialSwitch) {
 		assureAppRunning();
-		appTask(() -> app.clearEntities());
+		appTask(app::clearEntities);
 		addMesh(mesh, materialSwitch);
 	}
 

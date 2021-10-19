@@ -23,4 +23,4 @@ public class SeverityMatcherEditor<T> extends AbstractMatcherEditor<T> {
 			fireMatchAll();
 		}
 	}
-};
+}

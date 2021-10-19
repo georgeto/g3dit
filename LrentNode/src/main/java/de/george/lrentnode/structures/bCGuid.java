@@ -52,10 +52,9 @@ public class bCGuid implements G3Serializable {
 
 	@Override
 	public boolean equals(final Object other) {
-		if (!(other instanceof bCGuid)) {
+		if (!(other instanceof bCGuid castOther)) {
 			return false;
 		}
-		bCGuid castOther = (bCGuid) other;
 		return Objects.equals(guid, castOther.guid) && isValid() == castOther.isValid();
 	}
 

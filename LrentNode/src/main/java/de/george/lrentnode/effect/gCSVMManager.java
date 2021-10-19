@@ -30,7 +30,7 @@ public class gCSVMManager extends GenomeFile {
 		public void write(G3FileWriter writer) {
 			writer.writePrefixedList(entries, G3FileWriter::writeEntry);
 		}
-	};
+	}
 
 	public static class SBlock implements G3Serializable {
 		public static class Entry implements G3Serializable {
@@ -69,7 +69,7 @@ public class gCSVMManager extends GenomeFile {
 		public void write(G3FileWriter writer) {
 			writer.writePrefixedList(entries);
 		}
-	};
+	}
 
 	public Map<String, SVoice> voiceList;
 	public Map<String, SBlock> blockList;

@@ -139,7 +139,7 @@ public class NavZoneTab extends AbstractNavTab {
 
 		// TODO: Gothic 3 initialisiert die LocalNodeBoundary mit min = max = Null-Vektor - WARUM?
 		bCBox localNodeBoundary = new bCBox();
-		sticks.forEach(s -> localNodeBoundary.merge(s));
+		sticks.forEach(localNodeBoundary::merge);
 		entity.updateLocalNodeBoundary(localNodeBoundary);
 
 		// Update NavCache

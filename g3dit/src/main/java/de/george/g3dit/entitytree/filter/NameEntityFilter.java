@@ -83,30 +83,22 @@ public class NameEntityFilter extends AbstractEntityFilter {
 
 	@Override
 	public boolean matches(eCEntity entity) {
-		switch (matchMode) {
-			case Name:
-				return regex ? pattern.matcher(entity.toString()).find() : entity.toString().toLowerCase().contains(lowerTextToMatch);
-			case Position:
-				return ignoredByFilter == null || ignoredByFilter.equals(entity);
-			case FocusName:
-				return namesToMatch.contains(entity.getName());
-			default:
-				throw new IllegalStateException();
-		}
+		return switch (matchMode) {
+			case Name -> regex ? pattern.matcher(entity.toString()).find() : entity.toString().toLowerCase().contains(lowerTextToMatch);
+			case Position -> ignoredByFilter == null || ignoredByFilter.equals(entity);
+			case FocusName -> namesToMatch.contains(entity.getName());
+			default -> throw new IllegalStateException();
+		};
 	}
 
 	@Override
 	public boolean isValid() {
-		switch (matchMode) {
-			case Name:
-				return regex ? pattern != null : !lowerTextToMatch.isEmpty();
-			case Position:
-				return ignoredByFilter != null;
-			case FocusName:
-				return namesToMatch != null;
-			default:
-				throw new IllegalStateException();
-		}
+		return switch (matchMode) {
+			case Name -> regex ? pattern != null : !lowerTextToMatch.isEmpty();
+			case Position -> ignoredByFilter != null;
+			case FocusName -> namesToMatch != null;
+			default -> throw new IllegalStateException();
+		};
 	}
 
 	public MatchMode getMatchMode() {

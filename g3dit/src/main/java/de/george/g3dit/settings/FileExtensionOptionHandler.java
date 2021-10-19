@@ -91,7 +91,7 @@ public class FileExtensionOptionHandler extends AbstractOptionHandler<Void> {
 		return new MigLayout("ins 0, fill");
 	}
 
-	private class Extension {
+	private static class Extension {
 		private String name;
 		private boolean wasRegistered = false;
 

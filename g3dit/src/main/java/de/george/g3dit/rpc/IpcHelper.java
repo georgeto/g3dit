@@ -8,7 +8,7 @@ public class IpcHelper {
 		static {
 			IPC = new GothicIpc("localhost", 5555);
 			IPC.start();
-			Runtime.getRuntime().addShutdownHook(new Thread(() -> IPC.stop()));
+			Runtime.getRuntime().addShutdownHook(new Thread(IPC::stop));
 		}
 	}
 

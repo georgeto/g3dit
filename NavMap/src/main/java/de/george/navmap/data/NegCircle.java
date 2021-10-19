@@ -175,7 +175,7 @@ public class NegCircle implements G3Serializable {
 
 	@Override
 	public NegCircle clone() {
-		NegCircle cloned = new NegCircle(circleOffsets.stream().map(c -> c.clone()).collect(Collectors.toList()),
+		NegCircle cloned = new NegCircle(circleOffsets.stream().map(bCVector::clone).collect(Collectors.toList()),
 				new ArrayList<>(circleRadius), new ArrayList<>(zoneGuids), circleGuid, objectY);
 		cloned.obstacleType = obstacleType;
 		return cloned;

@@ -134,8 +134,9 @@ public class NavZone extends Zone {
 
 	@Override
 	public NavZone clone() {
-		return new NavZone(getGuid(), getPoints().stream().map(s -> s.clone()).collect(Collectors.toList()), getWorldMatrix(), getRadius(),
-				getRadiusOffset().clone(), isCcw(), topTolerance, bottomTolerance, linkInnerArea, linkInnerTopArea, linkInnerBottomArea);
+		return new NavZone(getGuid(), getPoints().stream().map(bCVector::clone).collect(Collectors.toList()), getWorldMatrix(),
+				getRadius(), getRadiusOffset().clone(), isCcw(), topTolerance, bottomTolerance, linkInnerArea, linkInnerTopArea,
+				linkInnerBottomArea);
 	}
 
 	public boolean test3DPointInInternalNegZone(bCVector point, Iterable<NegZone> negZones) {

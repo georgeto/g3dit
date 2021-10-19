@@ -219,7 +219,7 @@ public class ChestEditor extends JFrame {
 			}
 
 			try (BufferedWriter writer = Files.newBufferedWriter(file.toPath(), StandardCharsets.UTF_8);
-					CSVPrinter printer = CSVFormat.DEFAULT.withHeader(Iterables.toArray(Chest.FIELD_NAMES, String.class)).print(writer);) {
+					CSVPrinter printer = CSVFormat.DEFAULT.withHeader(Iterables.toArray(Chest.FIELD_NAMES, String.class)).print(writer)) {
 
 				for (Chest chest : map.getItems()) {
 					for (String field : Chest.FIELDS) {
@@ -517,14 +517,10 @@ public class ChestEditor extends JFrame {
 			super.configureTableColumn(model, columnExt);
 
 			switch (columnExt.getTitle()) {
-				case "Name":
-					columnExt.setPrototypeValue("Unique_Chest");
-					break;
-				case "Gebiet":
-					columnExt.setPrototypeValue("Myrtana_Outdoor");
-					break;
-				case "Beschreibung":
-					columnExt.setPrototypeValue("Ruinenfelder westlich von Mora Sul, am östlichen Rand, sehr gut versteckt");
+				case "Name" -> columnExt.setPrototypeValue("Unique_Chest");
+				case "Gebiet" -> columnExt.setPrototypeValue("Myrtana_Outdoor");
+				case "Beschreibung" -> columnExt
+						.setPrototypeValue("Ruinenfelder westlich von Mora Sul, am östlichen Rand, sehr gut versteckt");
 			}
 
 			if (columnExt.getModelIndex() >= 3) {
@@ -548,7 +544,7 @@ public class ChestEditor extends JFrame {
 		public static final ImmutableList<String> FIELD_NAMES = FIELD_MAPPING.values().asList();
 
 		public static final ImmutableMap<String, BeanProperty<Chest>> FIELD_ACCESORS = Chest.FIELD_MAPPING.entrySet().stream()
-				.collect(ImmutableMap.toImmutableMap(e -> e.getKey(), e -> new BeanProperty<>(Chest.class, e.getKey(), true, true)));
+				.collect(ImmutableMap.toImmutableMap(Map.Entry::getKey, e -> new BeanProperty<>(Chest.class, e.getKey(), true, true)));
 
 		@JsonProperty
 		private String guid;

@@ -68,6 +68,6 @@ public class QualityPanel extends JPanel {
 				qualities.add(QUALITIES[i]);
 			}
 		}
-		return qualities.isEmpty() ? "-" : qualities.stream().collect(Collectors.joining(" | "));
+		return qualities.isEmpty() ? "-" : String.join(" | ", qualities);
 	}
 }

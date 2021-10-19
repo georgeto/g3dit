@@ -46,8 +46,7 @@ public class Guid {
 			return getGuid().equals(GuidUtil.parseGuid((String) obj));
 		}
 
-		if (obj instanceof Guid) {
-			Guid other = (Guid) obj;
+		if (obj instanceof Guid other) {
 			return other.isValid() && getGuid().equals(other.getGuid());
 		}
 

@@ -130,7 +130,7 @@ public class EditorSecdatTab extends EditorAbstractFileTab {
 	public void processSector() {
 		File dataFile = getDataFile().get();
 		File sector = new File(IOUtils.changeExtension(dataFile.getAbsolutePath(), "sec"));
-		if (!sector.exists() && !ctx.getFileManager().moveFromPrimaryToSecondary(sector).filter(f -> f.exists()).isPresent()) {
+		if (!sector.exists() && !ctx.getFileManager().moveFromPrimaryToSecondary(sector).filter(File::exists).isPresent()) {
 			boolean result = TaskDialogs.ask(ctx.getParentWindow(), ".sec erstellen",
 					"Für '" + dataFile.getName() + "' konnte keine zugehörige .sec gefunden werden.\nSoll eine .sec erstellt werden?");
 			if (result) {

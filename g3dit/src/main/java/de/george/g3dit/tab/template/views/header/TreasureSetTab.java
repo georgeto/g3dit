@@ -201,23 +201,15 @@ public class TreasureSetTab extends AbstractTemplateTab {
 		int minTransferStacks = treasureSet.getProperty(CD.gCTreasureSet_PS.MinTransferStacks).getLong();
 		int maxTransferStacks = treasureSet.getProperty(CD.gCTreasureSet_PS.MaxTransferStacks).getLong();
 
-		boolean useTransferStacks = false;
-		switch (treasureDistribution) {
-			case gETreasureDistribution_Plunder:
-			case gETreasureDistribution_Trade_Generate:
-			case gETreasureDistribution_Ammunition:
-				useTransferStacks = true;
-				break;
-		}
+		boolean useTransferStacks = switch (treasureDistribution) {
+			case gETreasureDistribution_Plunder, gETreasureDistribution_Trade_Generate, gETreasureDistribution_Ammunition -> true;
+			default -> false;
+		};
 
-		boolean random = false;
-		switch (treasureDistribution) {
-			case gETreasureDistribution_Plunder:
-			case gETreasureDistribution_Trade_Generate:
-			case gETreasureDistribution_Trade_Refresh:
-				random = true;
-				break;
-		}
+		boolean random = switch (treasureDistribution) {
+			case gETreasureDistribution_Plunder, gETreasureDistribution_Trade_Generate, gETreasureDistribution_Trade_Refresh -> true;
+			default -> false;
+		};
 
 		buffer.append(treasureSet.getName()).append(": ");
 		buffer.append(G3Enums.asString(gETreasureDistribution.class, treasureDistribution));

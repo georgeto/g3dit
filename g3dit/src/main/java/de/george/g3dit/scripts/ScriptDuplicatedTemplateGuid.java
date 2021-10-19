@@ -1,7 +1,5 @@
 package de.george.g3dit.scripts;
 
-import java.util.stream.Collectors;
-
 import com.google.common.collect.SortedSetMultimap;
 import com.google.common.collect.TreeMultimap;
 
@@ -32,17 +30,15 @@ public class ScriptDuplicatedTemplateGuid implements IScript {
 			refGuidMap.put(tple.getReferenceHeader().getGuid(), tple.getFileName());
 		}
 
-		itemGuidMap.asMap().entrySet().forEach(e -> {
-			if (e.getValue().size() > 1) {
-				env.log("Mehrfach vorkommende Item-Guid " + e.getKey() + ": \n  "
-						+ e.getValue().stream().collect(Collectors.joining("\n  ")) + "\n");
+		itemGuidMap.asMap().forEach((key, value) -> {
+			if (value.size() > 1) {
+				env.log("Mehrfach vorkommende Item-Guid " + key + ": \n  " + String.join("\n  ", value) + "\n");
 			}
 		});
 
-		refGuidMap.asMap().entrySet().forEach(e -> {
-			if (e.getValue().size() > 1) {
-				env.log("Mehrfach vorkommende Reference-Guid " + e.getKey() + ": \n  "
-						+ e.getValue().stream().collect(Collectors.joining("\n  ")) + "\n");
+		refGuidMap.asMap().forEach((key, value) -> {
+			if (value.size() > 1) {
+				env.log("Mehrfach vorkommende Reference-Guid " + key + ": \n  " + String.join("\n  ", value) + "\n");
 			}
 		});
 

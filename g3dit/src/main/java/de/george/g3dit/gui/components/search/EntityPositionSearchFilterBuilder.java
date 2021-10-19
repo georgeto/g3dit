@@ -56,8 +56,7 @@ public class EntityPositionSearchFilterBuilder implements SearchFilterBuilder<eC
 
 	@Override
 	public boolean loadFilter(SearchFilter<eCEntity> filter) {
-		if (filter instanceof PositionEntityFilter) {
-			PositionEntityFilter typedFilter = (PositionEntityFilter) filter;
+		if (filter instanceof PositionEntityFilter typedFilter) {
 			tfFilter.setText(typedFilter.getPositonToMatch() != null ? typedFilter.getPositonToMatch().toString() : "");
 			fsDistance.setVal(typedFilter.getPositionTolerance());
 			cbIgnoreY.setSelected(typedFilter.isIgnoreY());

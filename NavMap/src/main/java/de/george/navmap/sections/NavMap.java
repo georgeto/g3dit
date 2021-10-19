@@ -170,11 +170,11 @@ public class NavMap extends GenomeFile {
 	}
 
 	public StreamEx<NegZone> getNegZones() {
-		return StreamEx.of(sec2.getNegZones()).map(n -> n.clone());
+		return StreamEx.of(sec2.getNegZones()).map(NegZone::clone);
 	}
 
 	public Optional<NegZone> getNegZone(String guid) {
-		return Optional.ofNullable(sec2.getNegZone(guid)).map(n -> n.clone());
+		return Optional.ofNullable(sec2.getNegZone(guid)).map(NegZone::clone);
 	}
 
 	public boolean hasNegZone(String guid) {
@@ -191,11 +191,11 @@ public class NavMap extends GenomeFile {
 	}
 
 	public StreamEx<NegCircle> getNegCircles() {
-		return StreamEx.of(sec3a.getNegCircles()).map(n -> n.clone());
+		return StreamEx.of(sec3a.getNegCircles()).map(NegCircle::clone);
 	}
 
 	public Optional<NegCircle> getNegCircle(String guid) {
-		return Optional.ofNullable(sec3a.getNegCircle(guid)).map(n -> n.clone());
+		return Optional.ofNullable(sec3a.getNegCircle(guid)).map(NegCircle::clone);
 	}
 
 	public Optional<Geometry> getNegCircleConvexHull(String guid) {
@@ -216,7 +216,7 @@ public class NavMap extends GenomeFile {
 	}
 
 	public StreamEx<PrefPath> getPrefPaths() {
-		return StreamEx.of(sec3b1.prefPaths).map(n -> n.clone());
+		return StreamEx.of(sec3b1.prefPaths).map(PrefPath::clone);
 	}
 
 	public Optional<PrefPath> getPrefPath(String virtualGuid) {
@@ -698,29 +698,17 @@ public class NavMap extends GenomeFile {
 	}
 
 	public void addInteractable(String interactable, Optional<NavArea> area) {
-		if (area.isPresent()) {
-			validateInteractableDependencies(area.get());
-		}
-
-		modify(() -> {
-			sec3e.addInteractable(interactable, area);
-		});
+		area.ifPresent(this::validateInteractableDependencies);
+		modify(() -> sec3e.addInteractable(interactable, area));
 	}
 
 	public void updateInteractable(String interactable, Optional<NavArea> area) {
-		if (area.isPresent()) {
-			validateInteractableDependencies(area.get());
-		}
-
-		modify(() -> {
-			sec3e.updateInteractable(interactable, area);
-		});
+		area.ifPresent(this::validateInteractableDependencies);
+		modify(() -> sec3e.updateInteractable(interactable, area));
 	}
 
 	public void removeInteractable(String interactable) {
-		modify(() -> {
-			sec3e.removeInteractable(interactable);
-		});
+		modify(() -> sec3e.removeInteractable(interactable));
 	}
 
 	public float calcDistance(bCVector start, String startZone, bCVector end, String endZone, List<String> traversedNavPaths) {

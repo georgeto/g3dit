@@ -49,8 +49,7 @@ public abstract class AbstractCache<T extends AbstractCache<T>> implements Seria
 	}
 
 	protected Object[] loadIntern(Object object) throws Exception {
-		if (object instanceof Object[]) {
-			Object[] data = (Object[]) object;
+		if (object instanceof Object[] data) {
 			creationTimestamp = (long) data[0];
 			return data;
 		} else {

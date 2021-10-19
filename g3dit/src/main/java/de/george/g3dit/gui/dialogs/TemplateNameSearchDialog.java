@@ -94,7 +94,7 @@ public class TemplateNameSearchDialog extends ExtStandardDialog {
 	public ButtonPanel createButtonPanel() {
 		ButtonPanel buttonPanel = newButtonPanel();
 
-		saveAction = SwingUtils.createAction("Übernehmen", () -> callListener());
+		saveAction = SwingUtils.createAction("Übernehmen", this::callListener);
 		saveAction.setEnabled(false);
 
 		addButton(buttonPanel, saveAction, ButtonPanel.AFFIRMATIVE_BUTTON);

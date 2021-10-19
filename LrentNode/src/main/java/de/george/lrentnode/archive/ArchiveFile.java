@@ -17,7 +17,7 @@ public abstract class ArchiveFile extends AbstractEntityFile<eCEntity> {
 	public enum ArchiveType {
 		Lrentdat,
 		Node
-	};
+	}
 
 	private boolean verifyEntityGraph;
 	private List<eCEntity> orphanEntities;

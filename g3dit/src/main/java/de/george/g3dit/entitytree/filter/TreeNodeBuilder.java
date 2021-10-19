@@ -28,7 +28,7 @@ public class TreeNodeBuilder {
 		if (!keep) {
 			eCEntity entity = node.getEntity();
 
-			keep = filter != null ? filter.matches(entity) : true;
+			keep = filter == null || filter.matches(entity);
 
 			if (keep && extension != null) {
 				keep = extension.filterLeave(entity);

@@ -134,8 +134,8 @@ public class NavCache extends AbstractCache<NavCache> {
 
 			// Edge case: File from secondary data folder opened in editor, would otherwise
 			// "override" the corresponding unopened file in the prirmary data folder
-			myZonesS.entrySet().forEach(e -> zones.putIfAbsent(e.getKey(), e.getValue()));
-			myPathsS.entrySet().forEach(e -> paths.putIfAbsent(e.getKey(), e.getValue()));
+			myZonesS.forEach(zones::putIfAbsent);
+			myPathsS.forEach(paths::putIfAbsent);
 
 			// TODO: Can still produce "ghost" entries (NavZones/Paths only present in file from
 			// secondary data folder, so deleted in primary file).

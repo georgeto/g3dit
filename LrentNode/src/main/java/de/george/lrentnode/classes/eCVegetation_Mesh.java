@@ -143,10 +143,9 @@ public class eCVegetation_Mesh extends G3Class {
 
 		@Override
 		public boolean equals(final Object other) {
-			if (!(other instanceof eSVegetationMeshID)) {
+			if (!(other instanceof eSVegetationMeshID castOther)) {
 				return false;
 			}
-			eSVegetationMeshID castOther = (eSVegetationMeshID) other;
 			return Objects.equals(type, castOther.type) && Objects.equals(index, castOther.index);
 		}
 

@@ -1,7 +1,6 @@
 package de.george.navmap.sections;
 
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
@@ -48,9 +47,7 @@ public class Section1 implements G3Serializable {
 	@Override
 	public void write(G3FileWriter writer) {
 		writer.writePrefixedArray(navGrid, (writer1, navGridRow) -> {
-			writer1.writePrefixedArray(navGridRow, (writer2, navGridCell) -> {
-				writer2.writePrefixedList(navGridCell);
-			});
+			writer1.writePrefixedArray(navGridRow, G3FileWriter::writePrefixedList);
 		});
 
 		writer.writeFloatArray(minGridX, maxGridX, minGridZ, maxGridZ, cellSizeX, cellSizeZ);
@@ -238,12 +235,7 @@ public class Section1 implements G3Serializable {
 	public void remove(String guid) {
 		for (int r = 0; r < navGrid.length; r++) {
 			for (int t = 0; t < navGrid[r].length; t++) {
-				Iterator<eCPropertySetProxy> iter = navGrid[r][t].iterator();
-				while (iter.hasNext()) {
-					if (guid.equals(iter.next().getGuid())) {
-						iter.remove();
-					}
-				}
+				navGrid[r][t].removeIf(nav -> guid.equals(nav.getGuid()));
 			}
 		}
 	}

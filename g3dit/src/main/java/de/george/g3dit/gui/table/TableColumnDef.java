@@ -13,14 +13,14 @@ public class TableColumnDef {
 	private final int maxSize;
 	private final Object preferredSizeExample;
 	private final boolean editable;
-	private final BiFunction<? super Object, ? super Object, ? extends Object> cellValueTransformer;
+	private final BiFunction<? super Object, ? super Object, ?> cellValueTransformer;
 	private final TableCellRenderer cellRenderer;
 	private final TableCellEditor cellEditor;
 	private final Comparator<?> comparator;
 
 	private TableColumnDef(String fieldName, String displayName, int preferredSize, Object preferredSizeExample, int maxSize,
-			boolean editable, BiFunction<? super Object, ? super Object, ? extends Object> cellValueTransformer,
-			TableCellRenderer cellRenderer, TableCellEditor cellEditor, Comparator<?> comparator) {
+			boolean editable, BiFunction<? super Object, ? super Object, ?> cellValueTransformer, TableCellRenderer cellRenderer,
+			TableCellEditor cellEditor, Comparator<?> comparator) {
 		this.fieldName = fieldName;
 		this.displayName = displayName;
 		this.preferredSize = preferredSize;
@@ -69,7 +69,7 @@ public class TableColumnDef {
 		return editable;
 	}
 
-	public BiFunction<? super Object, ? super Object, ? extends Object> getCellValueTransformer() {
+	public BiFunction<? super Object, ? super Object, ?> getCellValueTransformer() {
 		return cellValueTransformer;
 	}
 
@@ -108,7 +108,7 @@ public class TableColumnDef {
 		private Object preferredSizeExample;
 		private int maxSize = -1;
 		private boolean editable = false;
-		private BiFunction<? super Object, ? super Object, ? extends Object> cellValueTransformer;
+		private BiFunction<? super Object, ? super Object, ?> cellValueTransformer;
 		private TableCellRenderer cellRenderer;
 		private TableCellEditor cellEditor;
 		private Comparator<?> comparator;

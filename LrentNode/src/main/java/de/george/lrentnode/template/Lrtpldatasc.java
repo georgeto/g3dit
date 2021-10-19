@@ -32,7 +32,7 @@ public class Lrtpldatasc implements Saveable {
 		StringBuilder builder = new StringBuilder("[TemplateList]" + System.lineSeparator());
 		entries.forEach((guid, name) -> builder.append(GuidUtil.hexToLrtpldatasc(guid.getGuid()) + "=" + name + System.lineSeparator()));
 		return builder;
-	};
+	}
 
 	@Override
 	public void save(File file) throws IOException {
@@ -57,7 +57,7 @@ public class Lrtpldatasc implements Saveable {
 	}
 
 	public Entry get(String templateName) {
-		Guid templateGuid = entries.entrySet().stream().filter(e -> e.getValue().equals(templateName)).map(e -> e.getKey()).findAny()
+		Guid templateGuid = entries.entrySet().stream().filter(e -> e.getValue().equals(templateName)).map(Map.Entry::getKey).findAny()
 				.orElse(new Guid(null));
 		return new Entry(templateGuid, templateName);
 	}
@@ -116,7 +116,7 @@ public class Lrtpldatasc implements Saveable {
 		public DuplicateEntryException(String message) {
 			super(message);
 		}
-	};
+	}
 
 	public static class InvalidEntryException extends RuntimeException {
 		public InvalidEntryException() {}

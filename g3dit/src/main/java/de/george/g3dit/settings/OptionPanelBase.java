@@ -65,30 +65,30 @@ public class OptionPanelBase<T extends OptionPanelBase<T>> {
 		return (T) this;
 	}
 
-	public T addOption(Option<? extends Object> option) {
+	public T addOption(Option<?> option) {
 		return addOption(option, "grow");
 	}
 
-	public T addOptionHorizontalStart(Option<? extends Object> option, String constraints, int count) {
+	public T addOptionHorizontalStart(Option<?> option, String constraints, int count) {
 		return addOptionInternal(option,
 				Joiner.on(", ").skipNulls().join("newline", "gapleft i", "split " + count, Strings.emptyToNull(constraints)));
 	}
 
-	public T addOptionHorizontal(Option<? extends Object> option, String constraints) {
+	public T addOptionHorizontal(Option<?> option, String constraints) {
 		return addOptionInternal(option, Joiner.on(", ").skipNulls().join("gapleft i", Strings.emptyToNull(constraints)));
 	}
 
-	public T addOption(Option<? extends Object> option, String constraints) {
+	public T addOption(Option<?> option, String constraints) {
 		return addOptionInternal(option, Joiner.on(", ").skipNulls().join("newline, gapleft i", Strings.emptyToNull(constraints)));
 	}
 
 	@SuppressWarnings("unchecked")
-	private T addOptionInternal(Option<? extends Object> option, String constraints) {
+	private T addOptionInternal(Option<?> option, String constraints) {
 		if (handlers.isEmpty()) {
 			addResetButton();
 		}
 
-		OptionHandler<? extends Object> handler = option.createOptionHandler(parent);
+		OptionHandler<?> handler = option.createOptionHandler(parent);
 		content.add(handler.getContent(), constraints);
 		handlers.put(handler, option);
 		return (T) this;
@@ -106,12 +106,12 @@ public class OptionPanelBase<T extends OptionPanelBase<T>> {
 
 	@SuppressWarnings("unchecked")
 	public void load(OptionStore optionStore) {
-		handlers.entrySet().forEach(k -> k.getKey().load(optionStore, k.getValue()));
+		handlers.forEach((key, value) -> key.load(optionStore, value));
 	}
 
 	@SuppressWarnings("unchecked")
 	public void save(OptionStore optionStore) {
-		handlers.entrySet().forEach(k -> k.getKey().save(optionStore, k.getValue()));
+		handlers.forEach((key, value) -> key.save(optionStore, value));
 	}
 
 	@SuppressWarnings("unchecked")

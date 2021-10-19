@@ -65,7 +65,7 @@ public abstract class TableUtil {
 	}
 
 	public static StreamEx<Integer> getSelectedRows(JTable table) {
-		return StreamEx.of(Arrays.stream(table.getSelectedRows()).mapToObj(r -> table.convertRowIndexToModel(r))
+		return StreamEx.of(Arrays.stream(table.getSelectedRows()).mapToObj(table::convertRowIndexToModel)
 				.filter(r -> r < table.getModel().getRowCount()));
 	}
 

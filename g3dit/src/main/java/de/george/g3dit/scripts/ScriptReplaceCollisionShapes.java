@@ -65,8 +65,7 @@ public class ScriptReplaceCollisionShapes implements IScript {
 				throw new IllegalArgumentException("Invalid ShapeMaterial: " + newShapeMaterial);
 			}
 			switch (this.newShapeType) {
-				case eECollisionShapeType.eECollisionShapeType_TriMesh:
-				case eECollisionShapeType.eECollisionShapeType_ConvexHull:
+				case eECollisionShapeType.eECollisionShapeType_TriMesh, eECollisionShapeType.eECollisionShapeType_ConvexHull -> {
 					Optional<File> colFile = fileManager.searchFile(FileManager.RP_COMPILED_PHYSIC, newColShape);
 					if (colFile.isPresent()) {
 						eCResourceCollisionMesh_PS colMesh = FileUtil.openCollisionMesh(colFile.get());
@@ -80,16 +79,15 @@ public class ScriptReplaceCollisionShapes implements IScript {
 					} else {
 						throw new IllegalArgumentException("Unable to find CollisionShape: " + newColShape);
 					}
-					break;
-				case eECollisionShapeType.eECollisionShapeType_Box:
+				}
+				case eECollisionShapeType.eECollisionShapeType_Box -> {
 					// Center|Extent|Pitch|Yaw|Roll
 					String[] splitted = newColShape.split("\\|");
 					this.newColShape = new BoxShape(new bCOrientedBox(bCVector.fromString(splitted[0]), bCVector.fromString(splitted[1]),
 							new bCMatrix3(bCEulerAngles.fromDegree(Misc.parseFloat(splitted[3]), Misc.parseFloat(splitted[2]),
 									Misc.parseFloat(splitted[4])))));
-					break;
-				default:
-					throw new IllegalArgumentException("Unsupported ShapeType: " + newShapeType);
+				}
+				default -> throw new IllegalArgumentException("Unsupported ShapeType: " + newShapeType);
 			}
 			rawNewColShape = newColShape;
 		}

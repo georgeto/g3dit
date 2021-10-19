@@ -463,7 +463,7 @@ public class EntityTree extends JPanel {
 
 	public void setPopupExtension(ITreePopupExtension popupExtension) {
 		this.popupExtension = popupExtension;
-		tree.setDragEnabled(popupExtension == null ? false : true);
+		tree.setDragEnabled(popupExtension != null);
 	}
 
 	public void addTreeSelectionListener(TreeSelectionListener treeSelectionListener) {
@@ -564,7 +564,7 @@ public class EntityTree extends JPanel {
 					}
 				}
 				if (status) {
-					return new ArchiveEntityTransferable(cleanEntities.toArray(new eCEntity[cleanEntities.size()]));
+					return new ArchiveEntityTransferable(cleanEntities.toArray(new eCEntity[0]));
 				}
 			}
 			return null;

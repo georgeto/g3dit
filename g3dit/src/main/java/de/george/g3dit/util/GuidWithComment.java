@@ -33,10 +33,9 @@ public class GuidWithComment implements Cloneable {
 
 	@Override
 	public boolean equals(final Object other) {
-		if (!(other instanceof GuidWithComment)) {
+		if (!(other instanceof GuidWithComment castOther)) {
 			return false;
 		}
-		GuidWithComment castOther = (GuidWithComment) other;
 		return Objects.equals(guid, castOther.guid);
 	}
 

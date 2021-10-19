@@ -83,7 +83,7 @@ public class GuidUtil {
 		} else if (rawGuid.length() >= 38
 				&& rawGuid.matches("[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{12}:\\d{1,10}")) {
 			String[] counterSplit = rawGuid.split(":");
-			Long counter = Long.valueOf(counterSplit[1]);
+			long counter = Long.parseLong(counterSplit[1]);
 			return counter < 0 || counter > 4294967295L ? null
 					: groupToHex(counterSplit[0]) + Converter.LongToWordLittle(counter, 8).toUpperCase();
 		}

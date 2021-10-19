@@ -26,4 +26,4 @@ public class ComboBoxMatcherEditor<T, V> extends AbstractMatcherEditor<T> {
 			fireMatchAll();
 		}
 	}
-};
+}

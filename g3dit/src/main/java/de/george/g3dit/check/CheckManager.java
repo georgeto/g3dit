@@ -460,28 +460,27 @@ public class CheckManager {
 				TableFormat<Problem> tableFormat;
 				ColumnFactory tableColumnFactory;
 				switch (category) {
-					case Entity:
+					case Entity -> {
 						treeFormat = new EntityProblemTreeFormat();
 						tableFormat = new EntityProblemTableFormat();
 						tableColumnFactory = new EntityProblemTableColumnFactory();
-						break;
-					case Template:
+					}
+					case Template -> {
 						treeFormat = new TemplateProblemTreeFormat();
 						tableFormat = new TemplateProblemTableFormat();
 						tableColumnFactory = new TemplateProblemTableColumnFactory();
-						break;
-					case Misc:
+					}
+					case Misc -> {
 						treeFormat = new EntityProblemTreeFormat();
 						tableFormat = new EntityProblemTableFormat();
 						tableColumnFactory = new EntityProblemTableColumnFactory();
-						break;
-					case Navigation:
+					}
+					case Navigation -> {
 						treeFormat = new EntityProblemTreeFormat();
 						tableFormat = new EntityProblemTableFormat();
 						tableColumnFactory = new EntityProblemTableColumnFactory();
-						break;
-					default:
-						throw new IllegalArgumentException();
+					}
+					default -> throw new IllegalArgumentException();
 				}
 
 				treeList = new TreeList<>(filteredList, treeFormat, TreeList.nodesStartExpanded());
@@ -632,14 +631,14 @@ public class CheckManager {
 				Optional<String> scheme = UriUtil.getScheme(uri);
 				if (scheme.isPresent()) {
 					switch (scheme.get()) {
-						case "file":
+						case "file" -> {
 							FileDescriptor file = UriUtil.decodeUriAsJson(uri, FileDescriptor.class).el1();
 							ctx.getEditor().openOrSelectFile(file.getPath());
-							break;
-						case "entity":
+						}
+						case "entity" -> {
 							EntityDescriptor entity = UriUtil.decodeUriAsJson(uri, EntityDescriptor.class).el1();
 							ctx.getEditor().openEntity(entity);
-							break;
+						}
 					}
 				}
 			}
@@ -660,7 +659,7 @@ public class CheckManager {
 
 			@Override
 			public FileHelper getFileHelper(FileDescriptor file) {
-				return fileHelpers.computeIfAbsent(file, d -> new FileHelper(d));
+				return fileHelpers.computeIfAbsent(file, FileHelper::new);
 			}
 
 		}
@@ -675,7 +674,7 @@ public class CheckManager {
 				reversePath.add(curElement);
 				curElement = curElement.getParent();
 			} while (curElement != null);
-			Lists.reverse(reversePath).forEach(path::add);
+			path.addAll(Lists.reverse(reversePath));
 		}
 
 		@Override
@@ -708,34 +707,26 @@ public class CheckManager {
 		}
 	}
 
-	private abstract class ProblemTableFormat implements TableFormat<Problem> {
+	private abstract static class ProblemTableFormat implements TableFormat<Problem> {
 		@Override
 		public String getColumnName(int column) {
-			switch (column) {
-				case 0:
-					return "Name";
-				default:
-					throw new IllegalArgumentException();
-			}
+			return switch (column) {
+				case 0 -> "Name";
+				default -> throw new IllegalArgumentException();
+			};
 		}
 
 		@Override
 		public Object getColumnValue(Problem problem, int column) {
 			switch (column) {
-				case 0:
+				case 0 -> {
 					String icon = null;
 					if (problem.getSeverity() != null) {
-						switch (problem.getSeverity()) {
-							case Info:
-								icon = Icons.Signal.INFO;
-								break;
-							case Warning:
-								icon = Icons.Signal.WARN;
-								break;
-							case Fatal:
-								icon = Icons.Signal.ERROR;
-								break;
-						}
+						icon = switch (problem.getSeverity()) {
+							case Info -> Icons.Signal.INFO;
+							case Warning -> Icons.Signal.WARN;
+							case Fatal -> Icons.Signal.ERROR;
+						};
 					}
 
 					// Strip all html tags
@@ -745,8 +736,8 @@ public class CheckManager {
 					} else {
 						return message;
 					}
-				default:
-					throw new IllegalArgumentException();
+				}
+				default -> throw new IllegalArgumentException();
 			}
 		}
 	}
@@ -754,16 +745,12 @@ public class CheckManager {
 	private static class EntityProblemTreeFormat extends ProblemTreeFormat {
 		@Override
 		public Comparator<? super Problem> getComparator(int depth) {
-			switch (depth) {
-				case 0:
-					return ProblemTreeFormat::compareFileHelper;
-				case 1:
-					return ProblemTreeFormat::compareEntityHelper;
-				case 2:
-					return (p1, p2) -> compareProblem(p1, p2, ProblemTreeFormat::compareEntityHelper);
-				default:
-					return null;
-			}
+			return switch (depth) {
+				case 0 -> ProblemTreeFormat::compareFileHelper;
+				case 1 -> ProblemTreeFormat::compareEntityHelper;
+				case 2 -> (p1, p2) -> compareProblem(p1, p2, ProblemTreeFormat::compareEntityHelper);
+				default -> null;
+			};
 		}
 	}
 
@@ -775,18 +762,13 @@ public class CheckManager {
 
 		@Override
 		public String getColumnName(int column) {
-			switch (column) {
-				case 0:
-					return super.getColumnName(column);
-				case 1:
-					return "Guid";
-				case 2:
-					return "Index";
-				case 3:
-					return "Pfad";
-				default:
-					throw new IllegalArgumentException();
-			}
+			return switch (column) {
+				case 0 -> super.getColumnName(column);
+				case 1 -> "Guid";
+				case 2 -> "Index";
+				case 3 -> "Pfad";
+				default -> throw new IllegalArgumentException();
+			};
 		}
 
 		@Override
@@ -817,31 +799,31 @@ public class CheckManager {
 		public void configureTableColumn(TableModel model, TableColumnExt columnExt) {
 			super.configureTableColumn(model, columnExt);
 			if (columnExt.getTitle().equals("Index")) {
-				columnExt.setComparator((Integer u1, Integer u2) -> u1.compareTo(u2));
+				columnExt.setComparator(Comparator.naturalOrder());
 			}
 		}
 
 		@Override
 		public void configureColumnWidths(JXTable table, TableColumnExt columnExt) {
 			switch (columnExt.getTitle()) {
-				case "Name":
+				case "Name" -> {
 					columnExt.setPreferredWidth(500);
 					columnExt.setMaxWidth(1000);
 					columnExt.setHideable(false);
-					break;
-				case "Guid":
+				}
+				case "Guid" -> {
 					columnExt.setPreferredWidth(300);
 					columnExt.setMaxWidth(300);
-					break;
-				case "Index":
+				}
+				case "Index" -> {
 					columnExt.setMinWidth(40);
 					columnExt.setPreferredWidth(45);
 					columnExt.setMaxWidth(45);
-					break;
-				case "Pfad":
+				}
+				case "Pfad" -> {
 					columnExt.setPreferredWidth(75);
 					columnExt.setMaxWidth(1000);
-					break;
+				}
 			}
 		}
 	}
@@ -849,14 +831,11 @@ public class CheckManager {
 	private static class TemplateProblemTreeFormat extends ProblemTreeFormat {
 		@Override
 		public Comparator<? super Problem> getComparator(int depth) {
-			switch (depth) {
-				case 0:
-					return ProblemTreeFormat::compareFileHelper;
-				case 2:
-					return (p1, p2) -> compareProblem(p1, p2, ProblemTreeFormat::compareFileHelper);
-				default:
-					return null;
-			}
+			return switch (depth) {
+				case 0 -> ProblemTreeFormat::compareFileHelper;
+				case 2 -> (p1, p2) -> compareProblem(p1, p2, ProblemTreeFormat::compareFileHelper);
+				default -> null;
+			};
 		}
 	}
 
@@ -868,26 +847,20 @@ public class CheckManager {
 
 		@Override
 		public String getColumnName(int column) {
-			switch (column) {
-				case 0:
-					return super.getColumnName(column);
-				case 1:
-					return "Pfad";
-				default:
-					throw new IllegalArgumentException();
-			}
+			return switch (column) {
+				case 0 -> super.getColumnName(column);
+				case 1 -> "Pfad";
+				default -> throw new IllegalArgumentException();
+			};
 		}
 
 		@Override
 		public Object getColumnValue(Problem problem, int column) {
-			switch (column) {
-				case 0:
-					return super.getColumnValue(problem, column);
-				case 1:
-					return getFileHelperPath(problem);
-				default:
-					throw new IllegalArgumentException();
-			}
+			return switch (column) {
+				case 0 -> super.getColumnValue(problem, column);
+				case 1 -> getFileHelperPath(problem);
+				default -> throw new IllegalArgumentException();
+			};
 		}
 	}
 
@@ -895,15 +868,15 @@ public class CheckManager {
 		@Override
 		public void configureColumnWidths(JXTable table, TableColumnExt columnExt) {
 			switch (columnExt.getTitle()) {
-				case "Name":
+				case "Name" -> {
 					columnExt.setPreferredWidth(500);
 					columnExt.setMaxWidth(1000);
 					columnExt.setHideable(false);
-					break;
-				case "Pfad":
+				}
+				case "Pfad" -> {
 					columnExt.setPreferredWidth(75);
 					columnExt.setMaxWidth(1000);
-					break;
+				}
 			}
 		}
 	}

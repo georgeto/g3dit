@@ -49,8 +49,8 @@ public class NavObjectOverlay<T extends EntityMapItem> extends Overlay {
 	}
 
 	private void drawZone(Graphics2D g, AffineTransform transform, Zone zone) {
-		int xPoints[] = new int[zone.getPointCount()];
-		int yPoints[] = new int[zone.getPointCount()];
+		int[] xPoints = new int[zone.getPointCount()];
+		int[] yPoints = new int[zone.getPointCount()];
 		List<bCVector> worldPoints = zone.getWorldPoints();
 		for (int i = 0; i < zone.getPointCount(); i++) {
 			Point2D stick = transformPoint(worldPoints.get(i), transform);

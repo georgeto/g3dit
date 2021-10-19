@@ -162,7 +162,7 @@ public class GothicIpc {
 					}
 					responses.add(response);
 				} catch (InvalidProtocolBufferException e) {
-					logger.warn("Received invalid protocol buffer, skipping it: {}", e);
+					logger.warn("Received invalid protocol buffer, skipping it.", e);
 				}
 			}
 

@@ -5,8 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class G3Enums {
-	public static class G3Enum {
-	}
+	public static class G3Enum {}
 
 	@SuppressWarnings("unchecked")
 	public static Class<? extends G3Enum> byName(String name) {
@@ -1716,45 +1715,29 @@ public class G3Enums {
 		public static final int gESlot_Helmet = 18;
 
 		public static int fromUseType(int useType) {
-			switch (useType) {
-				case gEUseType.gEUseType_Beard:
-					return gESlot_Beard;
-				case gEUseType.gEUseType_Bow:
-					return gESlot_Bow;
-				case gEUseType.gEUseType_CrossBow:
-					return gESlot_Crossbow;
-				case gEUseType.gEUseType_Armor:
-					return gESlot_Armor;
-				case gEUseType.gEUseType_Amulet:
-					return gESlot_Amulet;
-				case gEUseType.gEUseType_Hair:
-					return gESlot_Hair;
-				case gEUseType.gEUseType_Head:
-					return gESlot_Head;
-				case gEUseType.gEUseType_Body:
-					return gESlot_Body;
-				case gEUseType.gEUseType_Helmet:
-					return gESlot_Helmet;
-				default:
-					return gESlot_None;
-			}
+			return switch (useType) {
+				case gEUseType.gEUseType_Beard -> gESlot_Beard;
+				case gEUseType.gEUseType_Bow -> gESlot_Bow;
+				case gEUseType.gEUseType_CrossBow -> gESlot_Crossbow;
+				case gEUseType.gEUseType_Armor -> gESlot_Armor;
+				case gEUseType.gEUseType_Amulet -> gESlot_Amulet;
+				case gEUseType.gEUseType_Hair -> gESlot_Hair;
+				case gEUseType.gEUseType_Head -> gESlot_Head;
+				case gEUseType.gEUseType_Body -> gESlot_Body;
+				case gEUseType.gEUseType_Helmet -> gESlot_Helmet;
+				default -> gESlot_None;
+			};
 		}
 
 		public static String getSlotName(int slotType) {
-			switch (slotType) {
-				case gESlot_Head:
-					return "Slot_Head";
-				case gESlot_Body:
-					return "Slot_Body";
-				case gESlot_Beard:
-					return "Slot_Beard";
-				case gESlot_Hair:
-					return "Slot_Hair";
-				case gESlot_Helmet:
-					return "Slot_Helmet";
-				default:
-					return null;
-			}
+			return switch (slotType) {
+				case gESlot_Head -> "Slot_Head";
+				case gESlot_Body -> "Slot_Body";
+				case gESlot_Beard -> "Slot_Beard";
+				case gESlot_Hair -> "Slot_Hair";
+				case gESlot_Helmet -> "Slot_Helmet";
+				default -> null;
+			};
 		}
 	}
 
@@ -2060,7 +2043,7 @@ public class G3Enums {
 		public static final int eEVertexTypeStruct_GEU16 = 3;
 		public static final int eEVertexTypeStruct_GEU32 = 4;
 		public static final int eEVertexTypeStruct_GEFloat = 5;
-	};
+	}
 
 	public static class eEVertexStreamArrayType extends G3Enum {
 		/**
@@ -2183,7 +2166,7 @@ public class G3Enums {
 		public static final int eEVertexStreamArrayType_71 = 71;
 		public static final int eEVertexStreamArrayType_72 = 72;
 		public static final int eEVertexStreamArrayType_UVLightmapGroups = 73;
-	};
+	}
 
 	public static class D3DFVF extends G3Enum {
 		public static final int D3DFVF_RESERVED0 = 0x1;
@@ -2225,7 +2208,7 @@ public class G3Enums {
 		// #define D3DFVF_TEXCOORDSIZE4(CoordIndex) (D3DFVF_TEXTUREFORMAT4 << (CoordIndex*2 + 16))
 		// #define D3DFVF_TEXCOORDSIZE1(CoordIndex) (D3DFVF_TEXTUREFORMAT1 << (CoordIndex*2 + 16))
 
-	};
+	}
 
 	public static class gEEffectCommand extends G3Enum {
 		public static final int gEEffectCommand_SpawnEntity = 0;

@@ -60,11 +60,10 @@ public class ScriptListUnusedCollisionMesh implements IScript {
 			}
 
 			for (eCCollisionShape shape : collision.getShapes()) {
-				if (!(shape.getShape() instanceof FileShape)) {
+				if (!(shape.getShape() instanceof FileShape fileShape)) {
 					continue;
 				}
 
-				FileShape fileShape = (FileShape) shape.getShape();
 				String mesh = fileShape.getShapeFile();
 				meshConsumer.accept(mesh);
 

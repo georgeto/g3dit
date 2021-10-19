@@ -13,7 +13,7 @@ public class MonotonicallyOrderedIpc {
 	public void sendRequest(GeneratedMessage request, ResponseCallback responseCallback) {
 		IpcHelper.getIpc().sendRequest(request, (s, rc, ud) -> {
 			int id = (int) ud;
-			if (id > lastReceived.getAndUpdate(prev -> id > prev ? id : prev)) {
+			if (id > lastReceived.getAndUpdate(prev -> Math.max(id, prev))) {
 				responseCallback.notify(s, rc, null);
 			}
 		}, idCounter.incrementAndGet());
@@ -23,7 +23,7 @@ public class MonotonicallyOrderedIpc {
 		IpcHelper.getIpc().sendRequest(request, (s, rc, ud) -> {
 			Object[] data = (Object[]) ud;
 			int id = (int) data[0];
-			if (id > lastReceived.getAndUpdate(prev -> id > prev ? id : prev)) {
+			if (id > lastReceived.getAndUpdate(prev -> Math.max(id, prev))) {
 				responseCallback.notify(s, rc, data[1]);
 			}
 		}, new Object[] {idCounter.incrementAndGet(), userData});

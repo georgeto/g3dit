@@ -197,8 +197,8 @@ public class AABBTree<T extends AABBTreePrimitive> {
 
 		// TODO: Optimize sort peformance (kth order statistic)
 		Function<bCVector, Float> axisGetter = axis;
-		Collections.sort(primitives.subList(begin, end),
-				(p1, p2) -> Float.compare(axisGetter.apply(p1.getReferencePoint()), axisGetter.apply(p2.getReferencePoint())));
+		primitives.subList(begin, end)
+				.sort((p1, p2) -> Float.compare(axisGetter.apply(p1.getReferencePoint()), axisGetter.apply(p2.getReferencePoint())));
 
 		int mid = begin + (end - begin) / 2;
 		bCBox leftBounds = computeBounds(begin, mid);

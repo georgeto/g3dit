@@ -57,7 +57,7 @@ public class IlluminationView extends JPanel implements ArchiveView {
 			logger.info("Fehler beim Laden des Light-Caches.");
 		}
 
-		lightCache.addUpdateListener(this, l -> updateLightCacheStatus(l));
+		lightCache.addUpdateListener(this, this::updateLightCacheStatus);
 
 		setLayout(new MigLayout("fill", "[]30[][grow]push[]", "[][][][]10[grow]"));
 

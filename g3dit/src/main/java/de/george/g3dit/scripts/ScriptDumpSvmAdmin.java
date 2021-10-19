@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
@@ -64,12 +65,12 @@ public class ScriptDumpSvmAdmin implements IScript {
 			if (!asJson) {
 				List<String> lines = new ArrayList<>();
 				lines.add("Voices:");
-				StreamEx.of(manager.voiceList.entrySet()).sortedBy(e -> e.getKey())
+				StreamEx.of(manager.voiceList.entrySet()).sortedBy(Map.Entry::getKey)
 						.map(e -> "  " + e.getKey() + ": " + e.getValue().entries.stream().sorted().collect(Collectors.joining(", ")))
 						.forEach(lines::add);
 				lines.add("");
 				lines.add("Block:");
-				StreamEx.of(manager.blockList.entrySet()).sortedBy(e -> e.getKey())
+				StreamEx.of(manager.blockList.entrySet()).sortedBy(Map.Entry::getKey)
 						.map(e -> "  " + e.getKey() + ": "
 								+ e.getValue().entries.stream().map(ed -> ed.id).sorted().collect(Collectors.joining(", ")))
 						.forEach(lines::add);

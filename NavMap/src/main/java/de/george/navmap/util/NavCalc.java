@@ -37,10 +37,9 @@ public class NavCalc {
 
 		@Override
 		public boolean equals(final Object other) {
-			if (!(other instanceof NavArea)) {
+			if (!(other instanceof NavArea castOther)) {
 				return false;
 			}
-			NavArea castOther = (NavArea) other;
 			return Objects.equals(areaId, castOther.areaId) && Objects.equals(isNavPath, castOther.isNavPath);
 		}
 

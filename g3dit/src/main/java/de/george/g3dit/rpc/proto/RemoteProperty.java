@@ -123,7 +123,7 @@ public abstract class RemoteProperty {
 				PropertyIdentifier identifier = serialized.getIdentifier();
 
 				if (!serialized.hasData()) {
-					result.completeExceptionally(new RemotePropertyException("Failed to find property: " + identifier.toString()));
+					result.completeExceptionally(new RemotePropertyException("Failed to find property: " + identifier));
 					return;
 				}
 
@@ -150,19 +150,14 @@ public abstract class RemoteProperty {
 							eCEntity entity;
 							String entityType = reader.readEntry();
 							switch (entityType) {
-								case "Dynamic":
-									entity = new LrentdatEntity(false);
-									break;
-								case "Spatial":
-									entity = new NodeEntity(false);
-									break;
-								case "Template":
-									entity = new TemplateEntity(false);
-									break;
-								default:
+								case "Dynamic" -> entity = new LrentdatEntity(false);
+								case "Spatial" -> entity = new NodeEntity(false);
+								case "Template" -> entity = new TemplateEntity(false);
+								default -> {
 									result.completeExceptionally(
 											new RemotePropertyException("Received entity with unknown type: " + entityType));
 									return;
+								}
 							}
 							entity.read(reader, false);
 							result.complete(entity);

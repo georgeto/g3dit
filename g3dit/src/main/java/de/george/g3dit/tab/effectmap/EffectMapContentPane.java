@@ -196,8 +196,7 @@ public class EffectMapContentPane extends JPanel {
 				}
 			}
 
-			if (command instanceof gCEffectCommandPlaySound) {
-				gCEffectCommandPlaySound soundCommand = (gCEffectCommandPlaySound) command;
+			if (command instanceof gCEffectCommandPlaySound soundCommand) {
 				sampleModel.setEntries(soundCommand.samples);
 				sampleHidingGroup.setVisible(true);
 			} else {
@@ -210,8 +209,7 @@ public class EffectMapContentPane extends JPanel {
 			TableUtil.stopEditing(commandSheet.getTable());
 			TableUtil.stopEditing(sampleTable);
 
-			if (command != null && command instanceof gCEffectCommandPlaySound) {
-				gCEffectCommandPlaySound soundCommand = (gCEffectCommandPlaySound) command;
+			if (command != null && command instanceof gCEffectCommandPlaySound soundCommand) {
 				soundCommand.samples = new ArrayList<>(sampleModel.getEntries());
 			}
 		}
@@ -223,13 +221,11 @@ public class EffectMapContentPane extends JPanel {
 
 			@Override
 			public Object getValueAt(Sample entry, int col) {
-				switch (col) {
-					case 0:
-						return entry.name;
-					case 1:
-						return entry.probability;
-				}
-				return null;
+				return switch (col) {
+					case 0 -> entry.name;
+					case 1 -> entry.probability;
+					default -> null;
+				};
 			}
 
 			@Override
@@ -259,14 +255,9 @@ public class EffectMapContentPane extends JPanel {
 			public void configureColumnWidths(JXTable table, TableColumnExt columnExt) {
 				columnExt.setEditable(true);
 				switch (columnExt.getTitle()) {
-					case "Name":
-						columnExt.setPreferredWidth(300);
-						break;
-					case "Probability":
-						columnExt.setPreferredWidth(100);
-						break;
-					default:
-						super.configureColumnWidths(table, columnExt);
+					case "Name" -> columnExt.setPreferredWidth(300);
+					case "Probability" -> columnExt.setPreferredWidth(100);
+					default -> super.configureColumnWidths(table, columnExt);
 				}
 			}
 		}

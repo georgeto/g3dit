@@ -114,25 +114,23 @@ public abstract class ExtStandardDialog extends StandardDialog {
 		buttonPanel.addButton(btn, type);
 		btn.setAction(action);
 		switch (type) {
-			case ButtonPanel.AFFIRMATIVE_BUTTON:
+			case ButtonPanel.AFFIRMATIVE_BUTTON -> {
 				setDefaultAction(action);
 				getRootPane().setDefaultButton(btn);
-				break;
-			case ButtonPanel.CANCEL_BUTTON:
-				setDefaultCancelAction(action);
-				break;
-			default:
-				break;
+			}
+			case ButtonPanel.CANCEL_BUTTON -> setDefaultCancelAction(action);
+			default -> {
+			}
 		}
 	}
 
 	protected void addDefaultButton(ButtonPanel buttonPanel, String title) {
-		Action action = SwingUtils.createAction(title, () -> affirm());
+		Action action = SwingUtils.createAction(title, this::affirm);
 		addButton(buttonPanel, action, ButtonPanel.AFFIRMATIVE_BUTTON);
 	}
 
 	protected void addDefaultCancelButton(ButtonPanel buttonPanel) {
-		Action action = SwingUtils.createAction("Abbrechen", () -> cancel());
+		Action action = SwingUtils.createAction("Abbrechen", this::cancel);
 		addButton(buttonPanel, action, ButtonPanel.CANCEL_BUTTON);
 	}
 

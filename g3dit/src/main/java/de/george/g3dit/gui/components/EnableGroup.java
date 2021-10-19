@@ -71,6 +71,6 @@ public class EnableGroup {
 	}
 
 	public boolean isEnabled() {
-		return elements.stream().allMatch(e -> e.isEnabled()) && actions.stream().allMatch(e -> e.isEnabled());
+		return elements.stream().allMatch(Component::isEnabled) && actions.stream().allMatch(Action::isEnabled);
 	}
 }

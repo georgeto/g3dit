@@ -250,34 +250,19 @@ public class SharedCollisionShapeTab extends AbstractSharedTab {
 			}
 
 			Shape shape = colShape.getShape();
-			switch (cbShapeType.getSelectedValue()) {
-				case eECollisionShapeType.eECollisionShapeType_TriMesh:
-				case eECollisionShapeType.eECollisionShapeType_ConvexHull:
-					shapePanel = new FileShapePanel();
-					break;
-				case eECollisionShapeType.eECollisionShapeType_Box:
-					shapePanel = new BoxShapePanel();
-					break;
-				case eECollisionShapeType.eECollisionShapeType_Capsule:
-					shapePanel = new CapsuleShapePanel();
-					break;
-				case eECollisionShapeType.eECollisionShapeType_Sphere:
-					shapePanel = new SphereShapePanel();
-					break;
-				case eECollisionShapeType.eECollisionShapeType_Point:
-					shapePanel = new PointShapePanel();
-					break;
-				default:
-					// reader.info(logger, "Unknown ShapeType {}", shapeType);
-					// shape = new UnknownShape(reader, deadcodePosition - reader.getPos() - 38);
-					break;
-			}
+			shapePanel = switch (cbShapeType.getSelectedValue()) {
+				case eECollisionShapeType.eECollisionShapeType_TriMesh, eECollisionShapeType.eECollisionShapeType_ConvexHull -> new FileShapePanel();
+				case eECollisionShapeType.eECollisionShapeType_Box -> new BoxShapePanel();
+				case eECollisionShapeType.eECollisionShapeType_Capsule -> new CapsuleShapePanel();
+				case eECollisionShapeType.eECollisionShapeType_Sphere -> new SphereShapePanel();
+				case eECollisionShapeType.eECollisionShapeType_Point -> new PointShapePanel();
+				default -> null;
+			};
 
 			if (shapePanel != null) {
 				shapePanel.load(shape);
 				this.add(shapePanel, "cell 0 2, gaptop 7, spanx 3, grow, wrap");
 			}
-
 		}
 
 		public eCCollisionShape saveShape() {
@@ -308,7 +293,7 @@ public class SharedCollisionShapeTab extends AbstractSharedTab {
 		}
 	}
 
-	private abstract class ShapePanel<T extends Shape> extends JPanel {
+	private abstract static class ShapePanel<T extends Shape> extends JPanel {
 		public abstract boolean hasChanged();
 
 		public abstract void load(T shape);

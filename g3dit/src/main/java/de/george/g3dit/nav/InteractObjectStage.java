@@ -98,7 +98,7 @@ public class InteractObjectStage extends NavCalcStage {
 					}
 
 					Optional<NavArea> navMapAreaOpt = navMapInteractables.get(entity.getGuid());
-					if (navMapAreaOpt == null) {
+					if (!navMapAreaOpt.isPresent()) {
 						addChange(new NotInNavmap(descriptor.get(), entity.getWorldPosition(), area));
 					} else {
 						NavArea navMapArea = navMapAreaOpt.orElseGet(() -> new NavArea(NavMap.OUT_OF_NAV_AREA_ID, false));
@@ -132,7 +132,7 @@ public class InteractObjectStage extends NavCalcStage {
 		}
 	}
 
-	public abstract class BaseInteractObjectChange extends BaseChange {
+	public abstract static class BaseInteractObjectChange extends BaseChange {
 		public BaseInteractObjectChange(String guid, Severity severity, String message, String details) {
 			super(guid, severity, message, details);
 		}

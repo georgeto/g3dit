@@ -176,7 +176,7 @@ public class FileSearchDialog extends AbstractTableProgressDialog {
 		} else {
 			try {
 				Pattern pattern = Pattern.compile(text);
-				filter = f -> pattern.matcher(ctx.getFileManager().getRelativePath(f).orElseGet(() -> f.getName())).find();
+				filter = f -> pattern.matcher(ctx.getFileManager().getRelativePath(f).orElseGet(f::getName)).find();
 			} catch (PatternSyntaxException e) {
 				progressBar.setString("Ungültiger Regulärer Ausdruck");
 				return;

@@ -52,7 +52,7 @@ public class AllgemeinTab extends AbstractTemplateTab {
 	public void initComponents() {
 		setLayout(new MigLayout("", "[][]push[grow]"));
 
-		DocumentListener documentListener = SwingUtils.createDocumentListener(() -> handleUpdateDataFile());
+		DocumentListener documentListener = SwingUtils.createDocumentListener(this::handleUpdateDataFile);
 
 		add(new JLabel("Name"), "wrap");
 		tfName = new JFocusNameField(ctx);
@@ -106,10 +106,10 @@ public class AllgemeinTab extends AbstractTemplateTab {
 		addValidators(tfChangeTime, IsALongValidator.INSTANCE);
 		add(tfChangeTime, "width 50:100:100, wrap");
 
-		plWorldPosition = new PositionPanel("Position", ctx.getParentWindow(), positionMatrix -> changeWorldPosition(positionMatrix));
+		plWorldPosition = new PositionPanel("Position", ctx.getParentWindow(), this::changeWorldPosition);
 		add(plWorldPosition, "width 100:300:400, spanx 3, grow, wrap");
 
-		plLocalNodeBoundary = new BoundingBoxPanel("BoundingBox", ctx, box -> changeLocalNodeBoundary(box), () -> {
+		plLocalNodeBoundary = new BoundingBoxPanel("BoundingBox", ctx, this::changeLocalNodeBoundary, () -> {
 			ctx.saveView(); // Mesh wurde eventuell im Mesh Tab bearbeitet
 			return EntityUtil.getMesh(ctx.getCurrentTemplate().getReferenceHeader()).orElse(null);
 		}, () -> tfName.getText());

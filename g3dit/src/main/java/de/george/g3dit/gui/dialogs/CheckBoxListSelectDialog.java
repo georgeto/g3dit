@@ -68,11 +68,7 @@ public class CheckBoxListSelectDialog<T> extends AbstractSelectDialog<T> {
 		addDefaultCancelButton(buttonPanel);
 
 		list.getCheckBoxListSelectionModel().addListSelectionListener(e -> {
-			if (!list.getCheckBoxListSelectionModel().isSelectionEmpty()) {
-				okAction.setEnabled(true);
-			} else {
-				okAction.setEnabled(false);
-			}
+			okAction.setEnabled(!list.getCheckBoxListSelectionModel().isSelectionEmpty());
 		});
 
 		return buttonPanel;

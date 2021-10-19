@@ -51,26 +51,17 @@ public class bCBox implements G3Serializable {
 	}
 
 	public bCVector getVertex(int index) {
-		switch (index) {
-			case 0:
-				return new bCVector(max.getX(), max.getY(), max.getZ());
-			case 1:
-				return new bCVector(max.getX(), min.getY(), max.getZ());
-			case 2:
-				return new bCVector(min.getX(), min.getY(), max.getZ());
-			case 3:
-				return new bCVector(min.getX(), max.getY(), max.getZ());
-			case 4:
-				return new bCVector(max.getX(), max.getY(), min.getZ());
-			case 5:
-				return new bCVector(max.getX(), min.getY(), min.getZ());
-			case 6:
-				return new bCVector(min.getX(), min.getY(), min.getZ());
-			case 7:
-				return new bCVector(min.getX(), max.getY(), min.getZ());
-			default:
-				return null;
-		}
+		return switch (index) {
+			case 0 -> new bCVector(max.getX(), max.getY(), max.getZ());
+			case 1 -> new bCVector(max.getX(), min.getY(), max.getZ());
+			case 2 -> new bCVector(min.getX(), min.getY(), max.getZ());
+			case 3 -> new bCVector(min.getX(), max.getY(), max.getZ());
+			case 4 -> new bCVector(max.getX(), max.getY(), min.getZ());
+			case 5 -> new bCVector(max.getX(), min.getY(), min.getZ());
+			case 6 -> new bCVector(min.getX(), min.getY(), min.getZ());
+			case 7 -> new bCVector(min.getX(), max.getY(), min.getZ());
+			default -> null;
+		};
 	}
 
 	@Override

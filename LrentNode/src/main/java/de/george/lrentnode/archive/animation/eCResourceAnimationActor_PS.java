@@ -38,7 +38,7 @@ public class eCResourceAnimationActor_PS extends GenomeFile {
 			writer.writeVector(minConstraints);
 			writer.writeVector(maxConstraints);
 		}
-	};
+	}
 
 	public static class eCWrapper_emfx2Actor implements G3Serializable {
 		public static class MaterialReference implements G3Serializable {
@@ -114,8 +114,8 @@ public class eCResourceAnimationActor_PS extends GenomeFile {
 			// Per LoD
 			ambientOcclusion = reader.readPrefixedList(r -> r.readPrefixedList(G3FileReader::readInt));
 			tangentVertices = new ArrayList<>(ambientOcclusion.size());
-			for (int i = 0; i < ambientOcclusion.size(); i++) {
-				int totalVertexCount = ambientOcclusion.get(i).size();
+			for (List<Integer> lodVertices : ambientOcclusion) {
+				int totalVertexCount = lodVertices.size();
 				tangentVertices.add(reader.readList(bCVector.class, totalVertexCount));
 			}
 		}

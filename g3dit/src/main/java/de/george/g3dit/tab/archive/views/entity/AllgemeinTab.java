@@ -112,15 +112,14 @@ public class AllgemeinTab extends AbstractEntityTab {
 		btnCopyGuid.addActionListener(a -> IOUtils.copyToClipboard(tfGuid.getText()));
 		add(btnCopyGuid, "width 27!, height 27!, wrap");
 
-		plWorldPosition = new PositionPanel("World-Position", ctx.getParentWindow(), positionMatrix -> changeWorldPosition(positionMatrix),
-				positionMatrix -> changeWorldPositionKeepChilds(positionMatrix));
+		plWorldPosition = new PositionPanel("World-Position", ctx.getParentWindow(), this::changeWorldPosition,
+				this::changeWorldPositionKeepChilds);
 		add(plWorldPosition, "width 100:300:400, spanx 4, grow, wrap");
 
-		plLocalPosition = new PositionPanel("Local-Position", ctx.getParentWindow(),
-				positionMatrix -> changeLocalPosition(positionMatrix));
+		plLocalPosition = new PositionPanel("Local-Position", ctx.getParentWindow(), this::changeLocalPosition);
 		add(plLocalPosition, "width 100:300:400, spanx 4, grow, wrap");
 
-		plLocalNodeBoundary = new BoundingBoxPanel("BoundingBox", ctx, box -> changeLocalNodeBoundary(box), () -> {
+		plLocalNodeBoundary = new BoundingBoxPanel("BoundingBox", ctx, this::changeLocalNodeBoundary, () -> {
 			ctx.saveView(); // Mesh wurde eventuell im Mesh Tab bearbeitet
 			return EntityUtil.getMesh(ctx.getCurrentEntity()).orElse(null);
 		}, () -> tfName.getText());
@@ -232,9 +231,9 @@ public class AllgemeinTab extends AbstractEntityTab {
 
 	private void changeWorldPositionKeepChilds(bCMatrix worldMatrix) {
 		eCEntity entity = ctx.getCurrentEntity();
-		Map<eCEntity, bCMatrix> childPositions = entity.getChilds().stream().collect(Collectors.toMap(c -> c, c -> c.getWorldMatrix()));
+		Map<eCEntity, bCMatrix> childPositions = entity.getChilds().stream().collect(Collectors.toMap(c -> c, eCEntity::getWorldMatrix));
 		ctx.modifyEntityMatrix(entity, e -> e.setToWorldMatrix(worldMatrix));
-		childPositions.forEach((e, p) -> e.setToWorldMatrix(p));
+		childPositions.forEach(eCEntity::setToWorldMatrix);
 	}
 
 	private void changeLocalPosition(bCMatrix localMatrix) {

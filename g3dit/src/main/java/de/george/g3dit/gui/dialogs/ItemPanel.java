@@ -77,17 +77,13 @@ public class ItemPanel extends JPanel {
 
 		@Override
 		public Object getValueAt(InventoryStack entry, int col) {
-			switch (col) {
-				case 0:
-					return entry.getRefId();
-				case 1:
-					return entry.getName();
-				case 2:
-					return entry.getAmount();
-				case 3:
-					return entry.getQuality();
-			}
-			return null;
+			return switch (col) {
+				case 0 -> entry.getRefId();
+				case 1 -> entry.getName();
+				case 2 -> entry.getAmount();
+				case 3 -> entry.getQuality();
+				default -> null;
+			};
 		}
 
 		@Override
@@ -161,25 +157,20 @@ public class ItemPanel extends JPanel {
 		public void configureColumnWidths(JXTable table, TableColumnExt columnExt) {
 			columnExt.setEditable(true);
 			switch (columnExt.getTitle()) {
-				case "Reference ID":
-					columnExt.setPreferredWidth(250);
-					break;
-				case "Name":
+				case "Reference ID" -> columnExt.setPreferredWidth(250);
+				case "Name" -> {
 					columnExt.setPreferredWidth(150);
 					UndoableTextField tf = SwingUtils.createUndoTF();
 					new TemplateIntelliHints(tf, Caches.template(ctx));
 					columnExt.setCellEditor(new DefaultCellEditor(tf));
-					break;
-				case "Amount":
-					columnExt.setPreferredWidth(50);
-					break;
-				case "Quality":
+				}
+				case "Amount" -> columnExt.setPreferredWidth(50);
+				case "Quality" -> {
 					columnExt.setPreferredWidth(100);
 					columnExt.setCellRenderer(new QualityCellRenderer());
 					columnExt.setCellEditor(new QualityCellEditor());
-					break;
-				default:
-					super.configureColumnWidths(table, columnExt);
+				}
+				default -> super.configureColumnWidths(table, columnExt);
 			}
 		}
 	}

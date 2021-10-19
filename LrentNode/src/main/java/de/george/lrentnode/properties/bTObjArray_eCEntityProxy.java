@@ -10,10 +10,10 @@ public class bTObjArray_eCEntityProxy extends bTArray<eCEntityProxy> {
 	}
 
 	public List<String> getNativeEntries() {
-		return getEntries(s -> s.getGuid());
+		return getEntries(eCEntityProxy::getGuid);
 	}
 
 	public void setNativeEntries(List<String> entries) {
-		setEntries(entries, s -> new eCEntityProxy(s));
+		setEntries(entries, eCEntityProxy::new);
 	}
 }

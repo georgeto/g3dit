@@ -31,7 +31,6 @@ public class bCQuaternion implements G3Serializable {
 
 	public bCQuaternion(bCEulerAngles angles) {
 		setToAngles(angles);
-		;
 	}
 
 	public void multiply(bCQuaternion q) {

@@ -188,7 +188,7 @@ public class EditVegetationMeshesDialog extends ExtStandardDialog {
 
 		addButton(buttonPanel, importAction, ButtonPanel.OTHER_BUTTON);
 
-		setDefaultCancelAction(SwingUtils.createAction(() -> dispose()));
+		setDefaultCancelAction(SwingUtils.createAction(this::dispose));
 
 		return buttonPanel;
 	}

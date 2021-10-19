@@ -274,8 +274,7 @@ public class SharedPropertyView extends JPanel {
 
 	private void updatePropertySet(BiFunction<String, G3Class, CompletableFuture<G3Class>> remotePropertyProvider) {
 		G3Class propertySet = getSelectedPropertySet().orElse(null);
-		if (propertySet != null && container instanceof eCEntity) {
-			eCEntity entity = (eCEntity) container;
+		if (propertySet != null && container instanceof eCEntity entity) {
 			try {
 				G3Class result = remotePropertyProvider.apply(entity.getGuid(), propertySet).get(2, TimeUnit.SECONDS);
 				entity.replaceClass(result);
@@ -298,8 +297,7 @@ public class SharedPropertyView extends JPanel {
 			TriFunction<String, String, ClassProperty<G3Serializable>, CompletableFuture<ClassProperty<G3Serializable>>> remotePropertyProvider) {
 		G3Class propertySet = getSelectedPropertySet().orElse(null);
 		ClassProperty<G3Serializable> property = getSelectedProperty().map(G3Property::getClassProperty).orElse(null);
-		if (propertySet != null && property != null && container instanceof eCEntity) {
-			eCEntity entity = (eCEntity) container;
+		if (propertySet != null && property != null && container instanceof eCEntity entity) {
 			try {
 				ClassProperty<G3Serializable> result = remotePropertyProvider.apply(entity.getGuid(), propertySet.getClassName(), property)
 						.get(2, TimeUnit.SECONDS);
@@ -336,7 +334,7 @@ public class SharedPropertyView extends JPanel {
 
 	}
 
-	private class HeaderClass extends G3Class {
+	private static class HeaderClass extends G3Class {
 		private G3ClassContainer container;
 
 		public HeaderClass(G3ClassContainer container) {
@@ -378,5 +376,5 @@ public class SharedPropertyView extends JPanel {
 
 		@Override
 		public void removeListDataListener(ListDataListener l) {}
-	};
+	}
 }

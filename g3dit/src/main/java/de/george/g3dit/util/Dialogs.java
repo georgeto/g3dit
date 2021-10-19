@@ -9,23 +9,18 @@ public class Dialogs {
 	public enum Answer {
 		Yes,
 		No,
-		Cancel;
+		Cancel
 	}
 
 	public static Answer askSaveChanges(Window parent, String message) {
 		int answer = TaskDialogs.choice(parent, "Änderungen speichern", message, 0, new CommandLink("Ja", ""), new CommandLink("Nein", ""),
 				new CommandLink("Abbrechen", ""));
 
-		switch (answer) {
-			case 0:
-				return Answer.Yes;
-			case 1:
-				return Answer.No;
-			case 2:
-			case -1:
-				return Answer.Cancel;
-			default:
-				throw new IllegalStateException();
-		}
+		return switch (answer) {
+			case 0 -> Answer.Yes;
+			case 1 -> Answer.No;
+			case 2, -1 -> Answer.Cancel;
+			default -> throw new IllegalStateException();
+		};
 	}
 }

@@ -12,7 +12,6 @@ import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import de.george.g3utils.structure.bCVector;
 import de.george.lrentnode.archive.animation.Chunks.LMA_CHUNK;
 import de.george.lrentnode.archive.animation.Chunks.MaterialChunk;
 import de.george.lrentnode.archive.animation.Chunks.MeshChunk;
@@ -71,14 +70,12 @@ public class MeshUtil {
 
 				// Vertices
 				if (sourceMesh.hasStreamArray(eEVertexStreamArrayType_VertexPosition)) {
-					List<bCVector> vertices = sourceMesh.getStreamArrayByType(eEVertexStreamArrayType_VertexPosition);
-					mesh.vertices = vertices;
+					mesh.vertices = sourceMesh.getStreamArrayByType(eEVertexStreamArrayType_VertexPosition);
 				}
 
 				// Normals
 				if (sourceMesh.hasStreamArray(eEVertexStreamArrayType_Normal)) {
-					List<bCVector> normals = sourceMesh.getStreamArrayByType(eEVertexStreamArrayType_Normal);
-					mesh.normals = normals;
+					mesh.normals = sourceMesh.getStreamArrayByType(eEVertexStreamArrayType_Normal);
 				}
 
 				// Texture coordinates

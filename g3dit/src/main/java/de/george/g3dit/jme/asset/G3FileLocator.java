@@ -28,7 +28,7 @@ public class G3FileLocator implements AssetLocator {
 	private File root;
 	private String lastRootPath;
 	private List<String> extensions;
-	private Map<String, String> fileTable = new HashMap<>();;
+	private Map<String, String> fileTable = new HashMap<>();
 
 	@Override
 	public void setRootPath(String rootPath) {
@@ -43,7 +43,7 @@ public class G3FileLocator implements AssetLocator {
 			throw new IllegalArgumentException("Given root path \"" + rootPath + "\" has an invalid syntax");
 		}
 
-		extensions = StreamEx.of(Splitter.on(";").splitToList(splitted.get(0))).map(e -> e.toLowerCase()).toList();
+		extensions = StreamEx.of(Splitter.on(";").splitToList(splitted.get(0))).map(String::toLowerCase).toList();
 
 		try {
 			root = new File(splitted.get(1)).getCanonicalFile();

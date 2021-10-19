@@ -323,7 +323,7 @@ public class EditorArchiveTab extends EditorAbstractFileTab {
 		if (archiveFile.getArchiveType() == ArchiveType.Lrentdat) {
 			File dynamicLayer = new File(IOUtils.changeExtension(dataFile.getAbsolutePath(), "lrent"));
 			if (!dynamicLayer.exists()
-					&& !ctx.getFileManager().moveFromPrimaryToSecondary(dynamicLayer).filter(f -> f.exists()).isPresent()) {
+					&& !ctx.getFileManager().moveFromPrimaryToSecondary(dynamicLayer).filter(File::exists).isPresent()) {
 				boolean result = TaskDialogs.ask(ctx.getParentWindow(), ".lrent erstellen", "Für '" + dataFile.getName()
 						+ "' konnte keine zugehörige .lrent gefunden werden.\nSoll eine .lrent erstellt werden?");
 				if (result) {
@@ -339,10 +339,9 @@ public class EditorArchiveTab extends EditorAbstractFileTab {
 			File geometryLayer = new File(IOUtils.changeExtension(dataFile.getAbsolutePath(), "lrgeo"));
 			File geometryLayerDat = new File(IOUtils.changeExtension(dataFile.getAbsolutePath(), "lrgeodat"));
 			bCBox newContextBox = currentFile.getGraph() != null ? currentFile.getGraph().getWorldTreeBoundary() : new bCBox();
-			if (!geometryLayer.exists()
-					&& !ctx.getFileManager().moveFromPrimaryToSecondary(geometryLayer).filter(f -> f.exists()).isPresent()
+			if (!geometryLayer.exists() && !ctx.getFileManager().moveFromPrimaryToSecondary(geometryLayer).filter(File::exists).isPresent()
 					|| !geometryLayerDat.exists()
-							&& !ctx.getFileManager().moveFromPrimaryToSecondary(geometryLayerDat).filter(f -> f.exists()).isPresent()) {
+							&& !ctx.getFileManager().moveFromPrimaryToSecondary(geometryLayerDat).filter(File::exists).isPresent()) {
 				boolean result = TaskDialogs.ask(ctx.getParentWindow(), ".lrgeo/.lrgeodat erstellen", "Für '" + dataFile.getName()
 						+ "' konnte keine zugehörige .lrgeo/.lrgeodat gefunden werden.\nSoll eine .lrgeo/.lrgeodat erstellt werden?");
 				if (result) {

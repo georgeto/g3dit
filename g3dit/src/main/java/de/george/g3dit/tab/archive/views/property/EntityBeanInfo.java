@@ -28,13 +28,13 @@ public class EntityBeanInfo extends BaseBeanInfo {
 		addProperty("InsertType").setCategory("General").setShortDescription("eEInsertType");
 		addProperty("LastRenderPriority").setCategory("General").setShortDescription("byte");
 		addProperty("SpecialDepthTexPassEnabled").setCategory("General").setShortDescription("bool");
-		;
+
 		ExtendedPropertyDescriptor unkFlag2 = addProperty("UnkFlag2").setCategory("General");
 		unkFlag2.setDisplayName("UnkFlag2 (Must Compiled Static ?)");
 		unkFlag2.setShortDescription("bool");
 		addProperty("Name").setCategory("General").setShortDescription("bCString");
 		addProperty("VisualLoDFactor").setCategory("General").setShortDescription("float");
-		;
+
 		ExtendedPropertyDescriptor unkFlag3 = addProperty("UnkFlag3").setCategory("General");
 		unkFlag3.setDisplayName("UnkFlag3 (Derived Template ?)");
 		unkFlag3.setShortDescription("bool");

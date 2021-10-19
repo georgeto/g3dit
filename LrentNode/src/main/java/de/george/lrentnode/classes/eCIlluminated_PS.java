@@ -33,27 +33,13 @@ public class eCIlluminated_PS extends G3Class {
 				}
 				StaticLight light = lights.getLights().get(i);
 				switch (b) {
-					case 0:
-						writer.writeFloat(light.position.getX());
-						break;
-					case 1:
-						writer.writeFloat(light.position.getY());
-						break;
-					case 2:
-						writer.writeFloat(light.position.getZ());
-						break;
-					case 3:
-						writer.writeFloat(light.color.getX());
-						break;
-					case 4:
-						writer.writeFloat(light.color.getY());
-						break;
-					case 5:
-						writer.writeFloat(light.color.getZ());
-						break;
-					case 6:
-						writer.write(light.intensity);
-						break;
+					case 0 -> writer.writeFloat(light.position.getX());
+					case 1 -> writer.writeFloat(light.position.getY());
+					case 2 -> writer.writeFloat(light.position.getZ());
+					case 3 -> writer.writeFloat(light.color.getX());
+					case 4 -> writer.writeFloat(light.color.getY());
+					case 5 -> writer.writeFloat(light.color.getZ());
+					case 6 -> writer.write(light.intensity);
 				}
 			}
 		}
@@ -85,18 +71,14 @@ public class eCIlluminated_PS extends G3Class {
 			if (obj == null) {
 				return false;
 			}
-			if (!(obj instanceof StaticLights)) {
+			if (!(obj instanceof StaticLights other)) {
 				return false;
 			}
-			StaticLights other = (StaticLights) obj;
 			if (lights == null) {
-				if (other.lights != null) {
-					return false;
-				}
-			} else if (!lights.equals(other.lights)) {
-				return false;
+				return other.lights == null;
 			}
-			return true;
+
+			return lights.equals(other.lights);
 		}
 
 		public List<StaticLight> getLights() {
@@ -115,10 +97,9 @@ public class eCIlluminated_PS extends G3Class {
 
 		@Override
 		public boolean equals(final Object other) {
-			if (!(other instanceof StaticLight)) {
+			if (!(other instanceof StaticLight castOther)) {
 				return false;
 			}
-			StaticLight castOther = (StaticLight) other;
 			return Objects.equals(position, castOther.position) && Objects.equals(color, castOther.color)
 					&& Objects.equals(intensity, castOther.intensity);
 		}

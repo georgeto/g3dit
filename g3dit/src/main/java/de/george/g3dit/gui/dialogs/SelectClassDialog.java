@@ -36,7 +36,7 @@ public class SelectClassDialog extends ExtStandardDialog {
 		JPanel panel = new JPanel(new BorderLayout(10, 10));
 		panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 0, 10));
 
-		G3Class[] classes = container.getClasses().toArray(new G3Class[container.getClasses().size()]);
+		G3Class[] classes = container.getClasses().toArray(new G3Class[0]);
 		cbList = new CheckBoxList(classes);
 		JScrollPane scroll = new JScrollPane(cbList);
 		panel.add(scroll, BorderLayout.CENTER);

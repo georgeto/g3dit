@@ -43,14 +43,14 @@ public final class PropertyValueConverterRegistry {
 		return Holder.INSTANCE;
 	}
 
-	private ConcurrentHashMap<Class<? extends G3Serializable>, PropertyValueConverter<? extends G3Serializable, ? extends Object>> registeredConverters = new ConcurrentHashMap<>();
+	private ConcurrentHashMap<Class<? extends G3Serializable>, PropertyValueConverter<? extends G3Serializable, ?>> registeredConverters = new ConcurrentHashMap<>();
 
 	@SuppressWarnings("unchecked")
 	public PropertyValueConverter<G3Serializable, Object> getConverter(Class<?> type) {
 		return (PropertyValueConverter<G3Serializable, Object>) registeredConverters.get(type);
 	}
 
-	public <T extends G3Serializable> void registerConverter(PropertyValueConverter<T, ? extends Object> converter) {
+	public <T extends G3Serializable> void registerConverter(PropertyValueConverter<T, ?> converter) {
 		registeredConverters.put(converter.getPropertyType(), converter);
 	}
 
@@ -75,8 +75,8 @@ public final class PropertyValueConverterRegistry {
 		// add(bCMatrix.class, "bCMatrix");
 		registerConverter(LambdaConverter.ofInplace(bCPropertyID.class, String.class, bCPropertyID::getGuid,
 				(g, v) -> g.setGuid(GuidUtil.parseGuid(v))));
-		registerConverter(DictPropertyValueConverter.builder(bCRange1.class).with("Min", Float.TYPE, f -> f.toString(), Float::valueOf)
-				.with("Max", Float.TYPE, f -> f.toString(), Float::valueOf).build());
+		registerConverter(DictPropertyValueConverter.builder(bCRange1.class).with("Min", Float.TYPE, Object::toString, Float::valueOf)
+				.with("Max", Float.TYPE, Object::toString, Float::valueOf).build());
 		registerConverter(
 				DictPropertyValueConverter.builder(bCRange3.class).with("Min", bCVector.class, bCVector::toString, bCVector::fromString)
 						.with("Max", bCVector.class, bCVector::toString, bCVector::fromString).build());
@@ -84,7 +84,7 @@ public final class PropertyValueConverterRegistry {
 		registerConverter(BeanPropertyValueConverter.with(bCString.class, String.class, "String"));
 		registerConverter(LambdaConverter.of(bCVector.class, String.class, bCVector::toString, bCVector::fromString));
 		// add(bCVector2.class, "bCVector2");
-		registerConverter(ArrayPropertyValueConverter.of(bTObjArray_bCString.class, s -> s.getString(), s -> new bCString(s)));
+		registerConverter(ArrayPropertyValueConverter.of(bTObjArray_bCString.class, bCString::getString, bCString::new));
 		registerConverter(ArrayPropertyValueConverter.of(bTObjArray_eCEntityProxy.class, eCEntityProxy::getGuid,
 				g -> new eCEntityProxy(GuidUtil.parseGuid(g))));
 		// add(bTValArray_bCMotion.class, "bTValArray<class bCMotion>");
@@ -92,14 +92,14 @@ public final class PropertyValueConverterRegistry {
 				g -> new bCPropertyID(GuidUtil.parseGuid(g))));
 		registerConverter(ArrayPropertyValueConverter.of(bTValArray_bCVector.class, bCVector::toString, bCVector::fromString));
 		registerConverter(ArrayPropertyValueConverter.of(bTValArray_bool.class, b -> Boolean.toString(b.isBool()),
-				s -> new gBool(Boolean.valueOf(s))));
+				s -> new gBool(Boolean.parseBoolean(s))));
 		registerConverter(ArrayPropertyValueConverter.of(bTValArray_float.class, f -> Float.toString(f.getFloat()),
-				s -> new gFloat(Float.valueOf(s))));
+				s -> new gFloat(Float.parseFloat(s))));
 		// add(bTValArray_gEDirection.class, "bTValArray<enum gEDirection>");
 		registerConverter(ArrayPropertyValueConverter.of(bTValArray_long.class, l -> Integer.toString(l.getLong()),
-				s -> new gLong(Integer.valueOf(s))));
+				s -> new gLong(Integer.parseInt(s))));
 		registerConverter(ArrayPropertyValueConverter.of(bTValArray_unsigned_short.class, u -> Integer.toString(u.getUnsignedShort()),
-				s -> new gUnsignedShort(Integer.valueOf(s))));
+				s -> new gUnsignedShort(Integer.parseInt(s))));
 		registerConverter(LambdaConverter.ofInplace(eCEntityProxy.class, String.class, eCEntityProxy::getGuid,
 				(g, v) -> g.setGuid(GuidUtil.parseGuid(v))));
 		registerConverter(BeanPropertyValueConverter.with(gBool.class, Boolean.TYPE, "Bool"));

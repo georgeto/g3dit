@@ -35,10 +35,9 @@ public class G3EnumWrapper {
 
 	@Override
 	public boolean equals(final Object other) {
-		if (!(other instanceof G3EnumWrapper)) {
+		if (!(other instanceof G3EnumWrapper castOther)) {
 			return false;
 		}
-		G3EnumWrapper castOther = (G3EnumWrapper) other;
 		return Objects.equals(enumValue, castOther.enumValue) && Objects.equals(enumClass, castOther.enumClass);
 	}
 

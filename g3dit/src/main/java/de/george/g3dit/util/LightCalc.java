@@ -132,73 +132,40 @@ public class LightCalc {
 		if (!meshName.endsWith(".xcmsh")) {
 			meshName += ".xcmsh";
 		}
-		switch (meshName) {
-			case "G3_Object_Fire_Chandelier_01.xcmsh":
-				return "BD378635";
-			case "G3_Object_Candle_01.xcmsh":
-				return "DC693A37";
-			case "G3_Object_Candle_02.xcmsh":
-				return "F5F40837";
-			case "G3_Object_Candle_03.xcmsh":
-				return "F5F40837";
-			case "G3_Object_Crystal_01.xcmsh":
-				return "FB9BEE34";
-			case "G3_Object_Crystal_02.xcmsh":
-				return "FB9BEE34";
-			case "G3_Object_Fire_Cage_01.xcmsh":
-				return "FB9BEE35";
-			case "G3_Object_Fire_Latern_01.xcmsh":
-				return "BD378636";
-			case "G3_Object_Fire_Pelvis_01.xcmsh":
-				return "BD378635";
-			case "G3_Object_Fire_Pelvis_02.xcmsh":
-				return "BD378635";
-			case "G3_Object_Fireplace_03.xcmsh":
-				return "BBC4B935";
-			case "G3_Object_Fireplace_04.xcmsh":
-				return "FB9BEE35";
-			case "G3_Object_Fireplace_Large_01.xcmsh":
-				return "BD378635";
-			case "G3_Object_Interact_Campfire_01.xcmsh":
-				return "FB9BEE35";
-			case "G3_Object_Interact_Campfire_02.xcmsh":
-				return "FB9BEE35";
-			case "G3_Object_Interact_Campfire_03.xcmsh":
-				return "FB9BEE35";
-			case "G3_Object_Interact_Campfire_04.xcmsh":
-				return "BD378635";
-			case "G3_Object_Latern_Oil_01.xcmsh":
-				return "17B7D136";
-			case "G3_Object_Tablestuff_Poor_Double_01.xcmsh":
-				return "F5F40837";
-			case "G3_Object_Tablestuff_Poor_Double_02.xcmsh":
-				return "F5F40837";
-			case "G3_Object_Tablestuff_Poor_Single_01.xcmsh":
-				return "F5F40837";
-			case "G3_Object_Tablestuff_Poor_Single_02.xcmsh":
-				return "F5F40837";
-			case "G3_Object_Tablestuff_Rich_Double_01.xcmsh":
-				return "F5F40837";
-			case "G3_Object_Tablestuff_Rich_Double_02.xcmsh":
-				return "F5F40837";
-			case "G3_Object_Tablestuff_Rich_Single_01.xcmsh":
-				return "F5F40837";
-			case "G3_Object_Tablestuff_Rich_Single_02.xcmsh":
-				return "F5F40837";
-			case "G3_Object_Torch_01.xcmsh":
-				return "FB9BEE35";
-			case "G3_Object_Torch_02.xcmsh":
-				return "F5D85D36";
-			case "G3_Object_Varant_Firebasin_01.xcmsh":
-				return "FB9BEE35";
-			case "G3_Object_Varant_Oillamp_01.xcmsh":
-				return "F5F40837";
-			case "G3_Object_Varant_Oillamp_02.xcmsh":
-				return "17B7D136";
-			case "G3_Object_Varant_Oillamp_03.xcmsh":
-				return "17B7D136";
-			default:
-				return "FB9BEE35";
-		}
+		return switch (meshName) {
+			case "G3_Object_Fire_Chandelier_01.xcmsh" -> "BD378635";
+			case "G3_Object_Candle_01.xcmsh" -> "DC693A37";
+			case "G3_Object_Candle_02.xcmsh" -> "F5F40837";
+			case "G3_Object_Candle_03.xcmsh" -> "F5F40837";
+			case "G3_Object_Crystal_01.xcmsh" -> "FB9BEE34";
+			case "G3_Object_Crystal_02.xcmsh" -> "FB9BEE34";
+			case "G3_Object_Fire_Cage_01.xcmsh" -> "FB9BEE35";
+			case "G3_Object_Fire_Latern_01.xcmsh" -> "BD378636";
+			case "G3_Object_Fire_Pelvis_01.xcmsh" -> "BD378635";
+			case "G3_Object_Fire_Pelvis_02.xcmsh" -> "BD378635";
+			case "G3_Object_Fireplace_03.xcmsh" -> "BBC4B935";
+			case "G3_Object_Fireplace_04.xcmsh" -> "FB9BEE35";
+			case "G3_Object_Fireplace_Large_01.xcmsh" -> "BD378635";
+			case "G3_Object_Interact_Campfire_01.xcmsh" -> "FB9BEE35";
+			case "G3_Object_Interact_Campfire_02.xcmsh" -> "FB9BEE35";
+			case "G3_Object_Interact_Campfire_03.xcmsh" -> "FB9BEE35";
+			case "G3_Object_Interact_Campfire_04.xcmsh" -> "BD378635";
+			case "G3_Object_Latern_Oil_01.xcmsh" -> "17B7D136";
+			case "G3_Object_Tablestuff_Poor_Double_01.xcmsh" -> "F5F40837";
+			case "G3_Object_Tablestuff_Poor_Double_02.xcmsh" -> "F5F40837";
+			case "G3_Object_Tablestuff_Poor_Single_01.xcmsh" -> "F5F40837";
+			case "G3_Object_Tablestuff_Poor_Single_02.xcmsh" -> "F5F40837";
+			case "G3_Object_Tablestuff_Rich_Double_01.xcmsh" -> "F5F40837";
+			case "G3_Object_Tablestuff_Rich_Double_02.xcmsh" -> "F5F40837";
+			case "G3_Object_Tablestuff_Rich_Single_01.xcmsh" -> "F5F40837";
+			case "G3_Object_Tablestuff_Rich_Single_02.xcmsh" -> "F5F40837";
+			case "G3_Object_Torch_01.xcmsh" -> "FB9BEE35";
+			case "G3_Object_Torch_02.xcmsh" -> "F5D85D36";
+			case "G3_Object_Varant_Firebasin_01.xcmsh" -> "FB9BEE35";
+			case "G3_Object_Varant_Oillamp_01.xcmsh" -> "F5F40837";
+			case "G3_Object_Varant_Oillamp_02.xcmsh" -> "17B7D136";
+			case "G3_Object_Varant_Oillamp_03.xcmsh" -> "17B7D136";
+			default -> "FB9BEE35";
+		};
 	}
 }

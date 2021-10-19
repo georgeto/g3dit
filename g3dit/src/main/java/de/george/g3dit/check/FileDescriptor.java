@@ -41,11 +41,10 @@ public class FileDescriptor implements Comparable<FileDescriptor> {
 
 	@Override
 	public boolean equals(final Object other) {
-		if (!(other instanceof FileDescriptor)) {
+		if (!(other instanceof FileDescriptor castOther)) {
 			return false;
 		}
 
-		FileDescriptor castOther = (FileDescriptor) other;
 		return Objects.equals(path, castOther.path) && Objects.equals(type, castOther.type);
 	}
 

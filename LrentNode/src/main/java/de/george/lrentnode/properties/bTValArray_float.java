@@ -10,10 +10,10 @@ public class bTValArray_float extends bTArray<gFloat> {
 	}
 
 	public List<Float> getNativeEntries() {
-		return getEntries(f -> f.getFloat());
+		return getEntries(gFloat::getFloat);
 	}
 
 	public void setNativeEntries(List<Float> entries) {
-		setEntries(entries, f -> new gFloat(f));
+		setEntries(entries, gFloat::new);
 	}
 }

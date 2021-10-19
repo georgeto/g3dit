@@ -3,7 +3,6 @@ package de.george.g3dit.check.checks;
 import java.io.File;
 import java.util.List;
 import java.util.function.Supplier;
-import java.util.stream.Collectors;
 
 import de.george.g3dit.check.Check;
 import de.george.g3dit.check.EntityDescriptor;
@@ -144,7 +143,7 @@ public abstract class AbstractEntityCheck implements Check {
 
 		default void postIfDetailsNotEmpy(Severity severity, String message, List<String> details) {
 			if (details != null && !details.isEmpty()) {
-				post(severity, message, details.stream().collect(Collectors.joining("<br>")));
+				post(severity, message, String.join("<br>", details));
 			}
 		}
 	}

@@ -83,33 +83,20 @@ public class EntityViewerApp extends EditorAwareApplication implements ActionLis
 		}
 
 		switch (name) {
-			case "Reset Camera":
+			case "Reset Camera" -> {
 				pivotCam.setDefaultHorizontalRotation(defaultHorizontalRotation);
 				pivotCam.setDefaultVerticalRotation(defaultVerticalRotation);
 				pivotCam.setDefaultDistance(pivotCam.getMaxDistance() / RELATIVE_MAX_DISTANCE * defaultRelativeDistance);
-				break;
-
-			case "Toggle Camera":
+			}
+			case "Toggle Camera" -> {
 				boolean flyCamEnabled = flyCam.isEnabled();
 				flyCam.setEnabled(!flyCamEnabled);
 				pivotCam.setEnabled(flyCamEnabled);
-				break;
-
-			case "Rotate X":
-				entitiesNode.rotate(getRotationStep(), 0, 0);
-				break;
-
-			case "Rotate Y":
-				entitiesNode.rotate(0, getRotationStep(), 0);
-				break;
-
-			case "Rotate Z":
-				entitiesNode.rotate(0, 0, getRotationStep());
-				break;
-
-			case "Reset Rotation":
-				setObjectRotation(0, 0, 0);
-				break;
+			}
+			case "Rotate X" -> entitiesNode.rotate(getRotationStep(), 0, 0);
+			case "Rotate Y" -> entitiesNode.rotate(0, getRotationStep(), 0);
+			case "Rotate Z" -> entitiesNode.rotate(0, 0, getRotationStep());
+			case "Reset Rotation" -> setObjectRotation(0, 0, 0);
 		}
 	}
 

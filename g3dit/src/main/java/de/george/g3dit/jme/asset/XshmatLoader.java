@@ -87,15 +87,13 @@ public class XshmatLoader implements AssetLoader {
 			logger.info(G3Enums.asString(eEShaderMaterialBlendMode.class, blendMode) + " -> UseAlpha: " + getUseAlpha(blendMode));
 			logger.info(G3Enums.asString(eEShaderMaterialBlendMode.class, blendMode) + " -> " + getBlendMode(blendMode));
 
-			if (shader instanceof eCShaderSkin) {
-				eCShaderSkin shaderSkin = (eCShaderSkin) shader;
+			if (shader instanceof eCShaderSkin shaderSkin) {
 				shaderSkin.getElement(shaderSkin.getColorSrcDiffuse().getGuid()).ifPresent(e -> parseDiffuse((eCColorSrcBase) e));
 				shaderSkin.getElement(shaderSkin.getColorSrcNormal().getGuid()).ifPresent(e -> parseNormal((eCColorSrcBase) e));
 				shaderSkin.getElement(shaderSkin.getColorSrcSpecular().getGuid()).ifPresent(e -> parseSpecular((eCColorSrcBase) e));
 			}
 
-			if (shader instanceof eCShaderDefault) {
-				eCShaderDefault shaderDefault = (eCShaderDefault) shader;
+			if (shader instanceof eCShaderDefault shaderDefault) {
 				shaderDefault.getElement(shaderDefault.getColorSrcDiffuse().getGuid()).ifPresent(e -> parseDiffuse((eCColorSrcBase) e));
 				shaderDefault.getElement(shaderDefault.getColorSrcNormal().getGuid()).ifPresent(e -> parseNormal((eCColorSrcBase) e));
 				shaderDefault.getElement(shaderDefault.getColorSrcSpecular().getGuid()).ifPresent(e -> parseSpecular((eCColorSrcBase) e));

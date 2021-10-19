@@ -15,51 +15,32 @@ public interface PropertyComparator<T extends G3Serializable> {
 	 * @param <V> Type of the value to compare against, must be identical to {@code T} excpect for
 	 *            {@link CompareOperation#Contains}, {@link CompareOperation#Regex} and
 	 *            {@link CompareOperation#RegexIgnoreCase}.
-	 * @param operation Must be one of the operations returned by
-	 *            {@link getSupportedCompareOperations}.
+	 * @param operation Must be one of the operations returned by {@link getSupportedCompareOperations}.
 	 * @param object
 	 * @param value
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
 	public default <V> boolean satisfies(CompareOperation operation, T object, V value) {
-		switch (operation) {
-			case Equals:
-				return equals(object, (T) value);
-			case NotEquals:
-				return !equals(object, (T) value);
-			case Greater:
-				return ((ComparablePropertyComparator<T>) this).compare(object, (T) value) > 0;
-			case GreaterThanEquals:
-				return ((ComparablePropertyComparator<T>) this).compare(object, (T) value) >= 0;
-			case Less:
-				return ((ComparablePropertyComparator<T>) this).compare(object, (T) value) < 0;
-			case LessThanEquals:
-				return ((ComparablePropertyComparator<T>) this).compare(object, (T) value) <= 0;
-			case EqualsIgnoreCase:
-				return ((TextPropertyComparator<T>) this).equalsIgnoreCase(object, (T) value);
-			case NotEqualsIgnoreCase:
-				return !((TextPropertyComparator<T>) this).equalsIgnoreCase(object, (T) value);
-			case Contains:
-				return ((TextPropertyComparator<T>) this).contains(object, (T) value);
-			case ContainsIgnoreCase:
-				return ((TextPropertyComparator<T>) this).containsIgnoreCase(object, (T) value);
-			case StartsWith:
-				return ((TextPropertyComparator<T>) this).startsWith(object, (T) value);
-			case StartsWithIgnoreCase:
-				return ((TextPropertyComparator<T>) this).startsWithIgnoreCase(object, (T) value);
-			case EndsWith:
-				return ((TextPropertyComparator<T>) this).endsWith(object, (T) value);
-			case EndsWithIgnoreCase:
-				return ((TextPropertyComparator<T>) this).endsWithIgnoreCase(object, (T) value);
-			case Regex:
-			case RegexIgnoreCase:
-				return ((TextPropertyComparator<T>) this).regex(object, (Pattern) value);
-			case ContainsElement:
-				return ((ContainerPropertyComparator<T, V>) this).contains(object, value);
-			default:
-				throw new IllegalStateException();
-		}
+		return switch (operation) {
+			case Equals -> equals(object, (T) value);
+			case NotEquals -> !equals(object, (T) value);
+			case Greater -> ((ComparablePropertyComparator<T>) this).compare(object, (T) value) > 0;
+			case GreaterThanEquals -> ((ComparablePropertyComparator<T>) this).compare(object, (T) value) >= 0;
+			case Less -> ((ComparablePropertyComparator<T>) this).compare(object, (T) value) < 0;
+			case LessThanEquals -> ((ComparablePropertyComparator<T>) this).compare(object, (T) value) <= 0;
+			case EqualsIgnoreCase -> ((TextPropertyComparator<T>) this).equalsIgnoreCase(object, (T) value);
+			case NotEqualsIgnoreCase -> !((TextPropertyComparator<T>) this).equalsIgnoreCase(object, (T) value);
+			case Contains -> ((TextPropertyComparator<T>) this).contains(object, (T) value);
+			case ContainsIgnoreCase -> ((TextPropertyComparator<T>) this).containsIgnoreCase(object, (T) value);
+			case StartsWith -> ((TextPropertyComparator<T>) this).startsWith(object, (T) value);
+			case StartsWithIgnoreCase -> ((TextPropertyComparator<T>) this).startsWithIgnoreCase(object, (T) value);
+			case EndsWith -> ((TextPropertyComparator<T>) this).endsWith(object, (T) value);
+			case EndsWithIgnoreCase -> ((TextPropertyComparator<T>) this).endsWithIgnoreCase(object, (T) value);
+			case Regex, RegexIgnoreCase -> ((TextPropertyComparator<T>) this).regex(object, (Pattern) value);
+			case ContainsElement -> ((ContainerPropertyComparator<T, V>) this).contains(object, value);
+			default -> throw new IllegalStateException();
+		};
 	}
 
 	public default Set<CompareOperation> getSupportedCompareOperations() {

@@ -79,7 +79,7 @@ public class PositionDialog extends ExtStandardDialog {
 		taRawText.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		mainPanel.add(taRawText, "spanx 4, height 80!, grow");
 
-		taRawText.getDocument().addDocumentListener(SwingUtils.createDocumentListener(() -> parseTextArea()));
+		taRawText.getDocument().addDocumentListener(SwingUtils.createDocumentListener(this::parseTextArea));
 
 		loadPosition();
 		return mainPanel;

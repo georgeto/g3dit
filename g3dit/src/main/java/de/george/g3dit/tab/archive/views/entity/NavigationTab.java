@@ -77,13 +77,13 @@ public class NavigationTab extends AbstractEntityTab {
 			// Routinen laden
 			G3Class navigation = entity.getClass(CD.gCNavigation_PS.class);
 			List<String> routineNames = new ArrayList<>(
-					navigation.property(CD.gCNavigation_PS.RoutineNames).getEntries(e -> e.getString()));
+					navigation.property(CD.gCNavigation_PS.RoutineNames).getEntries(bCString::getString));
 			List<String> workingPoints = new ArrayList<>(
-					navigation.property(CD.gCNavigation_PS.WorkingPoints).getEntries(p -> p.getGuid()));
+					navigation.property(CD.gCNavigation_PS.WorkingPoints).getEntries(bCPropertyID::getGuid));
 			List<String> relaxingPoints = new ArrayList<>(
-					navigation.property(CD.gCNavigation_PS.RelaxingPoints).getEntries(p -> p.getGuid()));
+					navigation.property(CD.gCNavigation_PS.RelaxingPoints).getEntries(bCPropertyID::getGuid));
 			List<String> sleepingPoints = new ArrayList<>(
-					navigation.property(CD.gCNavigation_PS.SleepingPoints).getEntries(p -> p.getGuid()));
+					navigation.property(CD.gCNavigation_PS.SleepingPoints).getEntries(bCPropertyID::getGuid));
 
 			// Startroutine laden
 			String routineName = navigation.property(CD.gCNavigation_PS.Routine).getString();
@@ -134,10 +134,10 @@ public class NavigationTab extends AbstractEntityTab {
 			}
 
 			G3Class navigation = entity.getClass(CD.gCNavigation_PS.class);
-			navigation.property(CD.gCNavigation_PS.RoutineNames).setEntries(routineNames, r -> new bCString(r));
-			navigation.property(CD.gCNavigation_PS.WorkingPoints).setEntries(workingPoints, p -> new bCPropertyID(p));
-			navigation.property(CD.gCNavigation_PS.RelaxingPoints).setEntries(relaxingPoints, p -> new bCPropertyID(p));
-			navigation.property(CD.gCNavigation_PS.SleepingPoints).setEntries(sleepingPoints, p -> new bCPropertyID(p));
+			navigation.property(CD.gCNavigation_PS.RoutineNames).setEntries(routineNames, bCString::new);
+			navigation.property(CD.gCNavigation_PS.WorkingPoints).setEntries(workingPoints, bCPropertyID::new);
+			navigation.property(CD.gCNavigation_PS.RelaxingPoints).setEntries(relaxingPoints, bCPropertyID::new);
+			navigation.property(CD.gCNavigation_PS.SleepingPoints).setEntries(sleepingPoints, bCPropertyID::new);
 
 			// Startroutine speichern
 			String routineName = navigation.property(CD.gCNavigation_PS.Routine).getString();
@@ -206,7 +206,7 @@ public class NavigationTab extends AbstractEntityTab {
 			tfSleeping.addMenuItem(miListAllEntities);
 			add(tfSleeping, "cell 1 3, width 100:300:300");
 
-			tfName.getDocument().addDocumentListener(SwingUtils.createDocumentListener(() -> updateBorderTitle()));
+			tfName.getDocument().addDocumentListener(SwingUtils.createDocumentListener(this::updateBorderTitle));
 
 			JPanel operationPanel = getOperationPanel();
 			add(operationPanel, "cell 2 1, spanx 2, spany 3");

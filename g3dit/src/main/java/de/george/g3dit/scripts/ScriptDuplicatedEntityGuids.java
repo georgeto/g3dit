@@ -1,7 +1,5 @@
 package de.george.g3dit.scripts;
 
-import java.util.stream.Collectors;
-
 import com.google.common.collect.SortedSetMultimap;
 import com.google.common.collect.TreeMultimap;
 
@@ -37,10 +35,9 @@ public class ScriptDuplicatedEntityGuids implements IScript {
 			}
 		}
 
-		entityGuidMap.asMap().entrySet().forEach(e -> {
-			if (e.getValue().size() > 1) {
-				env.log("Mehrfach vorkommende Entity-Guid " + e.getKey() + ": \n  "
-						+ e.getValue().stream().collect(Collectors.joining("\n  ")) + "\n");
+		entityGuidMap.asMap().forEach((key, value) -> {
+			if (value.size() > 1) {
+				env.log("Mehrfach vorkommende Entity-Guid " + key + ": \n  " + String.join("\n  ", value) + "\n");
 			}
 		});
 

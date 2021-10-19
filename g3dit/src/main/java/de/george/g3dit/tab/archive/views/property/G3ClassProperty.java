@@ -67,7 +67,7 @@ public class G3ClassProperty extends AbstractProperty {
 
 	@Override
 	public Property[] getSubProperties() {
-		return clazz.properties().stream().map(p -> new G3Property(p, clazz.getClassName())).toArray(s -> new G3Property[s]);
+		return clazz.properties().stream().map(p -> new G3Property(p, clazz.getClassName())).toArray(G3Property[]::new);
 	}
 
 	@Override

@@ -54,7 +54,7 @@ public abstract class GenomeFile implements Saveable {
 
 	protected void writeInternalAfterDeadbeef(G3FileWriterEx writer, int deadbeef) {
 
-	};
+	}
 
 	private G3FileWriterEx prepareSave() throws IOException {
 		G3FileWriterEx writer = new G3FileWriterEx("");

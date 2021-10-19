@@ -206,8 +206,7 @@ public class SwingUtils {
 	}
 
 	public static void bringToFront(Window window) {
-		if (window instanceof Frame) {
-			Frame frame = (Frame) window;
+		if (window instanceof Frame frame) {
 			if (frame.getState() == Frame.ICONIFIED) {
 				frame.setState(Frame.NORMAL);
 			}

@@ -54,7 +54,7 @@ public class ArchiveContentPane extends JPanel {
 		ENTITY,
 		ILLUMINATION,
 		NEGCIRCLE,
-		PROPERTY;
+		PROPERTY
 	}
 
 	private JSplitPane splitPane;

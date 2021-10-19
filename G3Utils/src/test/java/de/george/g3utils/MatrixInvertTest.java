@@ -23,7 +23,6 @@ public class MatrixInvertTest {
 		bCMatrix invMatrix = matrix.getInverted();
 		assertArrayEquals(Floats.concat(bCMatrix.getIdentity().toArray()), Floats.concat(matrix.getProduct(invMatrix).toArray()), 0.01f);
 		assertArrayEquals(Floats.concat(bCMatrix.getIdentity().toArray()), Floats.concat(invMatrix.getProduct(matrix).toArray()), 0.01f);
-		;
 
 		bCVector vec = new bCVector(123, 321, -1540);
 		bCVector vec2 = vec.getTransformed(matrix).getTransformed(invMatrix);

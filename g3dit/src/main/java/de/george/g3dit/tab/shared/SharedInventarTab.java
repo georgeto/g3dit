@@ -157,7 +157,8 @@ public class SharedInventarTab extends AbstractPropertySharedTab {
 			tfTemplate.addGuidFiedListener(newGuid -> {
 				TemplateCache tpleCache = Caches.template(ctx);
 				if (tpleCache.isValid()) {
-					title = tpleCache.getEntryByGuid(newGuid).map(e -> e.getName()).orElse("<keine Template gefunden>");
+					title = tpleCache.getEntryByGuid(newGuid).map(TemplateCache.TemplateCacheEntry::getName)
+							.orElse("<keine Template gefunden>");
 					updateBorderTitle();
 				}
 			});
@@ -169,9 +170,7 @@ public class SharedInventarTab extends AbstractPropertySharedTab {
 			btnTple = new JButton(Icons.getImageIcon(Icons.Action.BOOK));
 			btnTple.setToolTipText("Template laden");
 			operationPanel.add(btnTple, "cell 1 1, width 27!, height 27!");
-			btnTple.addActionListener(e -> {
-				new TemplateNameSearchDialog(InventarStackPanel.this, ctx).open();
-			});
+			btnTple.addActionListener(e -> new TemplateNameSearchDialog(InventarStackPanel.this, ctx).open());
 
 			add(new JLabel("Quality"), "cell 0 3");
 			qualityPanel = new QualityPanel();

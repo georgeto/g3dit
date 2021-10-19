@@ -322,13 +322,10 @@ public class bCVector implements G3Serializable, Serializable {
 
 	@Override
 	public boolean equals(Object raw) {
-		if (raw instanceof bCVector) {
-			bCVector vec = (bCVector) raw;
-			if (vec.getX() == getX() && vec.getY() == getY() && vec.getZ() == getZ()) {
-				return true;
-			}
-		}
-		return false;
+		if (raw instanceof bCVector vec)
+			return vec.getX() == getX() && vec.getY() == getY() && vec.getZ() == getZ();
+		else
+			return false;
 	}
 
 	public boolean simliar(bCVector vec, float epsilon) {

@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.Callable;
 
+import com.google.common.base.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -104,7 +105,7 @@ public class LightCache extends AbstractCache<LightCache> {
 						light.castShadows = clazz.property(CD.eCStaticPointLight_PS.CastShadows).isBool();
 						light.color = clazz.property(CD.eCStaticPointLight_PS.Color);
 						light.name = entity.getName();
-						if (light.name == "") {
+						if (Strings.isNullOrEmpty(light.name)) {
 							light.name = EntityUtil.getMesh(entity).orElse(null);
 						}
 						lightsMap.put(light.position, light);

@@ -239,12 +239,12 @@ public class Misc {
 	}
 
 	public static float stringToPrefixedValue(String text, float defaultValue, String... prefixes) {
-		String aliases = Arrays.stream(prefixes).collect(Collectors.joining("|"));
+		String aliases = String.join("|", prefixes);
 		return Misc.regexSearchFloat("(?i)(?<=(" + aliases + "):\\s{0,10})" + FLOAT_REGEX, text, defaultValue);
 	}
 
 	public static String stringToPrefixedValue(String text, String defaultValue, String... prefixes) {
-		String aliases = Arrays.stream(prefixes).collect(Collectors.joining("|"));
+		String aliases = String.join("|", prefixes);
 		String result = Misc.regexSearch("(?i)(?<=(" + aliases + "):\\s{0,10})\\w+", text);
 		return result != null ? result : defaultValue;
 	}
@@ -292,12 +292,7 @@ public class Misc {
 	}
 
 	public static <T> List<T> removeEntry(List<T> list, T entry) {
-		Iterator<T> iterList = list.iterator();
-		while (iterList.hasNext()) {
-			if (iterList.next().equals(entry)) {
-				iterList.remove();
-			}
-		}
+		list.removeIf(t -> t.equals(entry));
 		return list;
 	}
 

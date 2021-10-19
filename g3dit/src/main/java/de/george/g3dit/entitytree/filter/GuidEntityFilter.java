@@ -72,25 +72,16 @@ public class GuidEntityFilter extends AbstractEntityFilter {
 
 	@Override
 	public boolean matches(eCEntity entity) {
-		switch (matchMode) {
-			case Guid:
-				return matchesGuid(entity);
-			case Stack:
-				return matchesStack(entity);
-			case Routine:
-				return matchesRoutine(entity);
-			case Enclave:
-				return matchesEnclave(entity);
-			case AnchorPoint:
-				return matchesAnchorPoint(entity);
-			case PartyLeader:
-				return matchesPartyLeader(entity);
-			case Entity:
-				return matchesEntity(entity);
-			case Template:
-				return matchesTemplate(entity);
-		}
-		return false;
+		return switch (matchMode) {
+			case Guid -> matchesGuid(entity);
+			case Stack -> matchesStack(entity);
+			case Routine -> matchesRoutine(entity);
+			case Enclave -> matchesEnclave(entity);
+			case AnchorPoint -> matchesAnchorPoint(entity);
+			case PartyLeader -> matchesPartyLeader(entity);
+			case Entity -> matchesEntity(entity);
+			case Template -> matchesTemplate(entity);
+		};
 	}
 
 	private boolean matchesGuid(eCEntity entity) {

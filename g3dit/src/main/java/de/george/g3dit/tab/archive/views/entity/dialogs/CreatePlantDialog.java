@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Window;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -121,7 +122,7 @@ public class CreatePlantDialog extends ExtStandardDialog {
 		taRawText = new JTextArea();
 		taRawText.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		mainPanel.add(new JScrollPane(taRawText), "spanx 4, pushy, gaptop 7, grow, wrap");
-		taRawText.getDocument().addDocumentListener(SwingUtils.createDocumentListener(() -> parseTextArea()));
+		taRawText.getDocument().addDocumentListener(SwingUtils.createDocumentListener(this::parseTextArea));
 
 		loadMeshList();
 
@@ -167,8 +168,7 @@ public class CreatePlantDialog extends ExtStandardDialog {
 				lastSelectedEntry = meshEntry;
 			}
 		}
-		SortedList<MeshEntry> sortedMeshList = new SortedList<>(GlazedLists.eventList(meshEntries),
-				(e1, e2) -> e1.mesh.compareTo(e2.mesh));
+		SortedList<MeshEntry> sortedMeshList = new SortedList<>(GlazedLists.eventList(meshEntries), Comparator.comparing(e -> e.mesh));
 		cbMesh.setModel(GlazedListsSwing.eventComboBoxModel(sortedMeshList));
 
 		if (lastSelectedEntry != null) {
@@ -216,7 +216,7 @@ public class CreatePlantDialog extends ExtStandardDialog {
 		return createdEntry;
 	}
 
-	private class MeshEntry {
+	private static class MeshEntry {
 		private String mesh;
 		private eSVegetationMeshID meshID;
 

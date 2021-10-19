@@ -35,7 +35,7 @@ public class PlayerPositionOverlay<T extends MapItem> extends Overlay {
 	private MapModel<T> model;
 	private Supplier<Boolean> isActive;
 	private MonotonicallyOrderedIpc ipcPlayerPosition = new MonotonicallyOrderedIpc();
-	private ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();;
+	private ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
 
 	private boolean lastActive = false;
 	private boolean validPosition;

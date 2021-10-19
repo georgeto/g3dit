@@ -51,7 +51,7 @@ public class LowPolyMeshCache extends AbstractCache<LowPolyMeshCache> {
 					.collect(ImmutableSet.toImmutableSet());
 
 			return Pair.of(lowPolyMeshes, lowPolyMeshesLowerCase);
-		}, new FutureCallback<Pair<ImmutableSet<String>, ImmutableSet<String>>>() {
+		}, new FutureCallback<>() {
 
 			@Override
 			public void onSuccess(Pair<ImmutableSet<String>, ImmutableSet<String>> result) {

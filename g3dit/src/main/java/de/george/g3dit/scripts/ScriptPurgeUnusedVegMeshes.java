@@ -28,7 +28,7 @@ public class ScriptPurgeUnusedVegMeshes implements IScript {
 					eCVegetation_PS veg = entity.getClass(CD.eCVegetation_PS.class);
 					List<eCVegetation_Mesh> unusedMeshes = veg.getMeshClasses().stream()
 							.filter(m -> veg.getMeshUseCount(m.getMeshID()) == 0).collect(Collectors.toList());
-					unusedMeshes.forEach(m -> veg.removeMeshClass(m));
+					unusedMeshes.forEach(veg::removeMeshClass);
 
 					if (!unusedMeshes.isEmpty()) {
 						env.log("Entferne " + unusedMeshes.size() + " unbenutzte Meshes in " + file.getName() + "#" + entity.getGuid());

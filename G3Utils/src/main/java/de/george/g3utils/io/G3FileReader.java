@@ -145,10 +145,7 @@ public abstract class G3FileReader extends G3FileBase implements AutoCloseable {
 	}
 
 	public boolean readBool() {
-		if ((buffer.get() & 0xFF) == 1) {
-			return true;
-		}
-		return false;
+		return (buffer.get() & 0xFF) == 1;
 	}
 
 	public byte readByte() {

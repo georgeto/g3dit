@@ -87,7 +87,7 @@ public class LivePositionFrame extends JFrame {
 	private EditorContext ctx;
 
 	private MonotonicallyOrderedIpc ipcUpdatePosition = new MonotonicallyOrderedIpc();
-	private ScheduledExecutorService ex = Executors.newSingleThreadScheduledExecutor();;
+	private ScheduledExecutorService ex = Executors.newSingleThreadScheduledExecutor();
 
 	private UndoableTextField tfSearchField;
 
@@ -111,7 +111,7 @@ public class LivePositionFrame extends JFrame {
 	private String name;
 	private String guid;
 
-	private Object searchLock = new Object();
+	private final Object searchLock = new Object();
 	private volatile String searchString;
 	private volatile EntityRequest.IdentifierCase searchMode;
 	private volatile boolean updateSpinners;
@@ -152,7 +152,7 @@ public class LivePositionFrame extends JFrame {
 			}
 		}, 0, 250, TimeUnit.MILLISECONDS);
 
-		setDefaultCancelAction(SwingUtils.createAction(() -> dispose()));
+		setDefaultCancelAction(SwingUtils.createAction(this::dispose));
 	}
 
 	private void createSearchSection(Container mainPanel) {
@@ -445,8 +445,7 @@ public class LivePositionFrame extends JFrame {
 				searchString = Optional.of(tfSearchField.getText()).filter(e -> !e.isEmpty()).orElse(null);
 				searchMode = IdentifierCase.NAME;
 			} else {
-				String guid = GuidUtil.parseGuid(tfSearchField.getText());
-				searchString = guid;
+				searchString = GuidUtil.parseGuid(tfSearchField.getText());
 				searchMode = IdentifierCase.GUID;
 			}
 			updateSpinners = true;
@@ -503,22 +502,13 @@ public class LivePositionFrame extends JFrame {
 				return;
 			}
 
-			switch (searchMode) {
-				case NAME:
-					request = EntityRequest.newBuilder().setName(searchString).build();
-					break;
-				case GUID:
-					request = EntityRequest.newBuilder().setGuid(GuidUtil.hexToGuidText(searchString)).build();
-					break;
-				case FOCUS:
-					request = EntityRequest.newBuilder().setFocus(true).build();
-					break;
-				case EDITOR:
-					request = EntityRequest.newBuilder().setEditor(true).build();
-					break;
-				default:
-					throw new IllegalStateException();
-			}
+			request = switch (searchMode) {
+				case NAME -> EntityRequest.newBuilder().setName(searchString).build();
+				case GUID -> EntityRequest.newBuilder().setGuid(GuidUtil.hexToGuidText(searchString)).build();
+				case FOCUS -> EntityRequest.newBuilder().setFocus(true).build();
+				case EDITOR -> EntityRequest.newBuilder().setEditor(true).build();
+				default -> throw new IllegalStateException();
+			};
 		}
 
 		ipcUpdatePosition.sendRequest(request, (s, rc, ud) -> {

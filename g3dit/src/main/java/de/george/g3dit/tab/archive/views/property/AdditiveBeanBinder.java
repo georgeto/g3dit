@@ -49,8 +49,7 @@ public class AdditiveBeanBinder implements PropertyChangeListener {
 	public void unbind() {
 		sheet.removePropertySheetChangeListener(this);
 		for (Property prop : sheet.getProperties()) {
-			if (prop instanceof PropertyDescriptorAdapter) {
-				PropertyDescriptorAdapter adapter = (PropertyDescriptorAdapter) prop;
+			if (prop instanceof PropertyDescriptorAdapter adapter) {
 				if (Arrays.asList(info.getPropertyDescriptors()).contains(adapter.getDescriptor())) {
 					sheet.removeProperty(prop);
 				}
@@ -63,8 +62,7 @@ public class AdditiveBeanBinder implements PropertyChangeListener {
 
 		Property prop = (Property) event.getSource();
 
-		if (prop instanceof PropertyDescriptorAdapter) {
-			PropertyDescriptorAdapter adapter = (PropertyDescriptorAdapter) prop;
+		if (prop instanceof PropertyDescriptorAdapter adapter) {
 			if (Arrays.asList(info.getPropertyDescriptors()).contains(adapter.getDescriptor())) {
 				try {
 					prop.writeToObject(object);

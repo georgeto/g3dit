@@ -100,9 +100,7 @@ public class G3Matrix implements Serializable {
 		double[] angles = new double[3];
 		angles[0] = Math.toDegrees(anglesRadian[0]);
 		angles[1] = Math.toDegrees(anglesRadian[1]);
-		;
 		angles[2] = Math.toDegrees(anglesRadian[2]);
-		;
 		return angles;
 	}
 
@@ -216,7 +214,7 @@ public class G3Matrix implements Serializable {
 		}
 
 		for (int i = 0; i < mat[0].length; i++) {
-			float temp[][] = new float[mat.length - 1][mat[0].length - 1];
+			float[][] temp = new float[mat.length - 1][mat[0].length - 1];
 
 			for (int j = 1; j < mat.length; j++) {
 				System.arraycopy(mat[j], 0, temp[j - 1], 0, i);

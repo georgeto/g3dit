@@ -99,9 +99,9 @@ public abstract class G3Class {
 		readPostClassVersion(reader);
 	}
 
-	protected void readPreClassVersion(G3FileReader reader) {};
+	protected void readPreClassVersion(G3FileReader reader) {}
 
-	protected void readPostClassVersion(G3FileReader reader) {};
+	protected void readPostClassVersion(G3FileReader reader) {}
 
 	public final void write(G3FileWriter writer) {
 		writer.writeUnsignedShort(0x53);
@@ -126,9 +126,9 @@ public abstract class G3Class {
 		writer.replaceInt(writer.getSize() - sizeOffset - 4, sizeOffset); // Size Until Dead Code
 	}
 
-	protected void writePreClassVersion(G3FileWriter writer) {};
+	protected void writePreClassVersion(G3FileWriter writer) {}
 
-	protected void writePostClassVersion(G3FileWriter writer) {};
+	protected void writePostClassVersion(G3FileWriter writer) {}
 
 	public String getClassName() {
 		return className;
@@ -274,11 +274,11 @@ public abstract class G3Class {
 	}
 
 	public boolean hasProperty(PropertyDescriptor<?> desc) {
-		return properties.stream().filter(p -> p.nameEqual(desc.getName())).findAny().isPresent();
+		return properties.stream().anyMatch(p -> p.nameEqual(desc.getName()));
 	}
 
 	public boolean hasProperty(String name) {
-		return properties.stream().filter(p -> p.nameEqual(name)).findAny().isPresent();
+		return properties.stream().anyMatch(p -> p.nameEqual(name));
 	}
 
 	@SuppressWarnings("unchecked")

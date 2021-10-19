@@ -194,5 +194,5 @@ public class ImportHelper {
 		public boolean isImportChilds() {
 			return cbImportChilds.isSelected();
 		}
-	};
+	}
 }

@@ -153,8 +153,7 @@ public class ModularSearchPanel<T> implements SearchFilterBuilder<T> {
 		int depth = 0;
 		while (!stack.isEmpty()) {
 			SearchBuilderContainer container = stack.pop();
-			if (container instanceof ModularSearchPanel.SearchCombinatorContainer) {
-				SearchCombinatorContainer combinator = (SearchCombinatorContainer) container;
+			if (container instanceof SearchCombinatorContainer combinator) {
 				if (combinator.filterBuilders.isEmpty()) {
 					panel.add(combinator, String.format("cell %d %d, gapright 15", depth, row));
 					row++;
@@ -282,8 +281,7 @@ public class ModularSearchPanel<T> implements SearchFilterBuilder<T> {
 
 		@Override
 		public boolean loadFilter(SearchFilter<T> filter) {
-			if (filter instanceof BooleanSearchFilter) {
-				BooleanSearchFilter<T> typedFilter = (BooleanSearchFilter<T>) filter;
+			if (filter instanceof BooleanSearchFilter<T> typedFilter) {
 				tbNegate.setSelected(typedFilter.isNegate());
 				cbOperator.setSelectedItem(typedFilter.getOperator());
 

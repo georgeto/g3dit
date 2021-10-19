@@ -2,7 +2,6 @@ package de.george.g3dit.gui.components;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -64,12 +63,7 @@ public abstract class RecentFileMenu extends JMenu {
 	 */
 	public void addEntry(String inFilePath) {
 		// Eintrag entfernen wenn bereits vorhanden
-		Iterator<String> fileIter = recentFiles.iterator();
-		while (fileIter.hasNext()) {
-			if (fileIter.next().equals(inFilePath)) {
-				fileIter.remove();
-			}
-		}
+		recentFiles.removeIf(s -> s.equals(inFilePath));
 
 		// Datei an den Anfang der Liste setzen
 		recentFiles.add(0, inFilePath);
@@ -139,7 +133,7 @@ public abstract class RecentFileMenu extends JMenu {
 		Lists.reverse(files).forEach(this::addEntry);
 	}
 
-	private class JFileMenuItem extends JMenuItem {
+	private static class JFileMenuItem extends JMenuItem {
 
 		private KeyStroke accelerator;
 

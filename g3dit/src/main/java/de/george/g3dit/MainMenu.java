@@ -226,9 +226,7 @@ public class MainMenu extends JMenuBar {
 		JMenuItem miSearchFile = new JMenuItem("Nach Datei suchen...", Icons.getImageIcon(Icons.Action.FIND));
 		miSearchFile.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F, InputEvent.CTRL_DOWN_MASK));
 		muData.add(miSearchFile);
-		miSearchFile.addActionListener(e -> {
-			new FileSearchDialog(ctx, "Nach Datei suchen...").open();
-		});
+		miSearchFile.addActionListener(e -> new FileSearchDialog(ctx, "Nach Datei suchen...").open());
 
 		JMenuItem miOpenFileManager = new JMenuItem("Anzeigen in Dateimanager", Icons.getImageIcon(Icons.IO.FOLDER_EXPLORE));
 		miOpenFileManager.setMnemonic(KeyEvent.VK_X);
@@ -358,7 +356,7 @@ public class MainMenu extends JMenuBar {
 		JMenuItem miGenerateLowPoly = new JMenuItem("Generate LowPoly", Icons.getImageIcon(Icons.Action.DIFF));
 		muTools.add(miGenerateLowPoly);
 		miGenerateLowPoly.addActionListener(a -> {
-			String result = LowPolyGenerator.generate(ctx).stream().collect(Collectors.joining("\n"));
+			String result = String.join("\n", LowPolyGenerator.generate(ctx));
 			new DisplayTextDialog("Generate LowPoly", result, ctx.getParentWindow(), false).open();
 		});
 
@@ -506,9 +504,7 @@ public class MainMenu extends JMenuBar {
 		JMenuItem miReloadNavMap = new JMenuItem("Neuladen", Icons.getImageIcon(Icons.Arrow.CIRCLE_DOUBLE));
 		miReloadNavMap.setMnemonic(KeyEvent.VK_N);
 		muNavMap.add(miReloadNavMap);
-		miReloadNavMap.addActionListener(e -> {
-			ctx.getNavMapManager().loadNavMap(true);
-		});
+		miReloadNavMap.addActionListener(e -> ctx.getNavMapManager().loadNavMap(true));
 
 		muNavMap.addSeparator();
 

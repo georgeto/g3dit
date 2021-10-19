@@ -156,7 +156,7 @@ public class IOUtils {
 
 	public static Callable<List<File>> joinFileCallables(List<Callable<List<File>>> callables) {
 		if (callables.isEmpty()) {
-			return () -> Collections.emptyList();
+			return Collections::emptyList;
 		}
 
 		if (callables.size() == 1) {
@@ -175,7 +175,7 @@ public class IOUtils {
 
 	public static byte[] readFileBytes(File file) throws IOException {
 		byte[] fileBytes;
-		try (BufferedInputStream in = new BufferedInputStream(new FileInputStream(file));) {
+		try (BufferedInputStream in = new BufferedInputStream(new FileInputStream(file))) {
 			fileBytes = new byte[(int) file.length()];
 			int readBytes = 0;
 			while (readBytes < file.length()) {
@@ -190,7 +190,7 @@ public class IOUtils {
 	}
 
 	public static void writeFileBytes(File file, byte[] bytes) throws IOException {
-		try (BufferedOutputStream outf = new BufferedOutputStream(new FileOutputStream(file));) {
+		try (BufferedOutputStream outf = new BufferedOutputStream(new FileOutputStream(file))) {
 			outf.write(bytes);
 			outf.flush();
 			outf.close();

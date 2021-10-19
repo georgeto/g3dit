@@ -50,8 +50,8 @@ public class DictPropertyValueConverter<T extends G3Serializable> extends Abstra
 		public <P> PropertyField(String accessorName, Method read, Method write, Function<P, String> toString,
 				Function<String, P> fromString) {
 			this.accessorName = accessorName;
-			this.read = obj -> read.invoke(obj);
-			this.write = (obj, value) -> write.invoke(obj, value);
+			this.read = read::invoke;
+			this.write = write::invoke;
 			this.toString = (Function<Object, String>) toString;
 			this.fromString = (Function<String, Object>) fromString;
 		}

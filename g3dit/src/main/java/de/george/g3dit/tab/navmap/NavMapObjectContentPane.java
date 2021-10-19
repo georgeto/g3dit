@@ -101,7 +101,7 @@ public abstract class NavMapObjectContentPane extends ValidationPanelContainer<N
 		return SwingUtils.getMultilineText("Guid ODER Position und Radius im Format x/y/z// r");
 	}
 
-	protected class NavMapObjectMatcherEditor extends AbstractTextComponentMatcherEditor<String> {
+	protected static class NavMapObjectMatcherEditor extends AbstractTextComponentMatcherEditor<String> {
 		private Function<String, Optional<bCVector>> positionExtractor;
 
 		public NavMapObjectMatcherEditor(JTextComponent textComponent, Function<String, Optional<bCVector>> positionExtractor) {

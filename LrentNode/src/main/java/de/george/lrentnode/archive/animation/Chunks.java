@@ -403,15 +403,10 @@ public abstract class Chunks {
 			animationType = AnimationType.fromMnemonic(reader.readChar());
 			reader.skip(2); // Padding
 
-			switch (animationType) {
-				case Position:
-				case Scaling:
-					track = reader.readList(VectorKeyFrame.class, keyFrameCount);
-					break;
-				case Rotation:
-					track = reader.readList(QuaternionKeyFrame.class, keyFrameCount);
-					break;
-			}
+			track = switch (animationType) {
+				case Position, Scaling -> reader.readList(VectorKeyFrame.class, keyFrameCount);
+				case Rotation -> reader.readList(QuaternionKeyFrame.class, keyFrameCount);
+			};
 		}
 
 		@Override

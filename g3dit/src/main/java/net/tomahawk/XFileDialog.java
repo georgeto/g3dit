@@ -4,6 +4,7 @@ import java.applet.Applet;
 import java.awt.Component;
 import java.awt.FileDialog;
 import java.io.File;
+import java.nio.charset.StandardCharsets;
 
 import javax.swing.JFileChooser;
 
@@ -483,7 +484,7 @@ public class XFileDialog {
 		//
 
 		try {
-			str = new String(data, "UTF-16");
+			str = new String(data, StandardCharsets.UTF_16);
 			// trace("JNI>>: " + str);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -504,35 +505,29 @@ public class XFileDialog {
 
 	private void setJavaSelectionMode(Mode mode) {
 		switch (mode) {
-			case LOAD_FILE:
-			case SAVE_FILE:
+			case LOAD_FILE, SAVE_FILE -> {
 				failsafe.setFileSelectionMode(JFileChooser.FILES_ONLY);
 				failsafe.setMultiSelectionEnabled(false);
-				break;
-			case LOAD_FOLDER:
+			}
+			case LOAD_FOLDER -> {
 				failsafe.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 				failsafe.setMultiSelectionEnabled(false);
-				break;
-			case LOAD_FILES:
+			}
+			case LOAD_FILES -> {
 				failsafe.setFileSelectionMode(JFileChooser.FILES_ONLY);
 				failsafe.setMultiSelectionEnabled(true);
-				break;
-			case LOAD_FOLDERS:
+			}
+			case LOAD_FOLDERS -> {
 				failsafe.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 				failsafe.setMultiSelectionEnabled(true);
+			}
 		}
 	}
 
 	private void showJavaDialog(Component component, Mode mode) {
 		switch (mode) {
-			case LOAD_FILE:
-			case LOAD_FILES:
-			case LOAD_FOLDER:
-			case LOAD_FOLDERS:
-				failsafe.showOpenDialog(component);
-				break;
-			case SAVE_FILE:
-				failsafe.showSaveDialog(component);
+			case LOAD_FILE, LOAD_FILES, LOAD_FOLDER, LOAD_FOLDERS -> failsafe.showOpenDialog(component);
+			case SAVE_FILE -> failsafe.showSaveDialog(component);
 		}
 	}
 

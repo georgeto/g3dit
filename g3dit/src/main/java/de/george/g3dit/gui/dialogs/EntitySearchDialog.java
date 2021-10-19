@@ -110,7 +110,7 @@ public class EntitySearchDialog extends AbstractTableProgressDialog {
 	}
 
 	private static final TableColumnDef COLUMN_POSITION = TableColumnDef.withName("Position").maxSize(60)
-			.comparator((Integer u1, Integer u2) -> u1.compareTo(u2)).b();
+			.comparator(Comparator.naturalOrder()).b();
 
 	private static final TableColumnDef COLUMN_NAME = TableColumnDef.withName("Name").size(300).b();
 
@@ -258,8 +258,7 @@ public class EntitySearchDialog extends AbstractTableProgressDialog {
 		ListIterator<Result> iter = results.listIterator();
 		while (iter.hasNext()) {
 			Result result = iter.next();
-			if (result instanceof MemoryResult) {
-				MemoryResult memoryResult = (MemoryResult) result;
+			if (result instanceof MemoryResult memoryResult) {
 				if (tab.equals(memoryResult.weakTab.get())) {
 					iter.set(memoryResult.toFileResult(tab.getDataFile().get()));
 				}
@@ -272,8 +271,7 @@ public class EntitySearchDialog extends AbstractTableProgressDialog {
 		ListIterator<Result> iter = results.listIterator();
 		while (iter.hasNext()) {
 			Result result = iter.next();
-			if (result instanceof FileResult) {
-				FileResult fileResult = (FileResult) result;
+			if (result instanceof FileResult fileResult) {
 				if (tab.getDataFile().get().equals(fileResult.getFile())) {
 					iter.set(fileResult.toMemoryResult(tab));
 				}

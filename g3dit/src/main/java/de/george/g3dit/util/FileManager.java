@@ -235,7 +235,7 @@ public class FileManager {
 			return Optional.empty();
 		}
 
-		return Optional.ofNullable(Paths.get(dataFolder, RP_LOCAL_CONFIG, relativePath).toFile());
+		return Optional.of(Paths.get(dataFolder, RP_LOCAL_CONFIG, relativePath).toFile());
 	}
 
 	public File getDefaultConfigFile(String relativePath) {
@@ -279,17 +279,12 @@ public class FileManager {
 								"Unter gleichem relativen Pfad im primären Data-Verzeichnis abspeichern."));
 			}
 
-			switch (result) {
-				case 0:
-					return Optional.of(file);
-				case -1:
-				case 1:
-					return Optional.empty();
-				case 2:
-					return moveFromSecondaryToPrimary(file);
-				default:
-					throw new IllegalStateException();
-			}
+			return switch (result) {
+				case 0 -> Optional.of(file);
+				case -1, 1 -> Optional.empty();
+				case 2 -> moveFromSecondaryToPrimary(file);
+				default -> throw new IllegalStateException();
+			};
 		} else {
 			return Optional.of(file);
 		}

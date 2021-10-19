@@ -42,8 +42,7 @@ public class ByteSearchFilterBuilder implements SearchFilterBuilder<eCEntity> {
 
 	@Override
 	public boolean loadFilter(SearchFilter<eCEntity> filter) {
-		if (filter instanceof ByteSearchFilter) {
-			ByteSearchFilter typedFilter = (ByteSearchFilter) filter;
+		if (filter instanceof ByteSearchFilter typedFilter) {
 			cbMatchMode.setSelectedItem(typedFilter.getMatchMode());
 			tfFilter.setText(typedFilter.getDataToMatch());
 			return true;

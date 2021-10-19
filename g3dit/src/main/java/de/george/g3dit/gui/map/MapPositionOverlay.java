@@ -63,7 +63,6 @@ public class MapPositionOverlay extends Overlay implements ImageMouseMotionAdapt
 			return null;
 		}
 
-		bCVector lastPosition = data.pixelsToPosition(new bCVector2(lastMousePosition.x, lastMousePosition.y));
-		return lastPosition;
+		return data.pixelsToPosition(new bCVector2(lastMousePosition.x, lastMousePosition.y));
 	}
 }

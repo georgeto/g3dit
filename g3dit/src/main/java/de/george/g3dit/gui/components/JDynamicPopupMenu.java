@@ -13,9 +13,8 @@ public class JDynamicPopupMenu extends JidePopupMenu {
 	@Override
 	public void show(Component invoker, int x, int y) {
 		for (Component comp : getComponents()) {
-			if (comp instanceof JMenuItem) {
+			if (comp instanceof JMenuItem mi) {
 				// Trigger fireStateChanged so that isEnabled() is checked
-				JMenuItem mi = (JMenuItem) comp;
 				mi.setArmed(!mi.isArmed());
 				mi.setArmed(!mi.isArmed());
 			}

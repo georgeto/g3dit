@@ -22,6 +22,7 @@ import de.george.lrentnode.archive.eCEntity;
 import de.george.lrentnode.classes.G3Class;
 import de.george.lrentnode.classes.desc.CD;
 import de.george.lrentnode.iterator.ArchiveFileIterator;
+import de.george.lrentnode.properties.bCString;
 import de.george.lrentnode.properties.bTObjArray_bCString;
 import de.george.lrentnode.properties.bTObjArray_eCEntityProxy;
 import de.george.lrentnode.properties.eCEntityProxy;
@@ -59,12 +60,8 @@ public class ScriptListTeachers implements IScript {
 					bTObjArray_bCString teachAttribs = npc.property(CD.gCNPC_PS.TeachAttribs);
 					String name = entity.getName();
 
-					Pair<List<String>, List<String>> pair = pairs.get(name);
-					if (pair == null) {
-						pair = Pair.of(new ArrayList<>(), new ArrayList<>());
-						pairs.put(name, pair);
-					}
-					pair.el0().addAll(teachAttribs.getEntries(e -> e.getString()));
+					var pair = pairs.computeIfAbsent(name, k -> Pair.of(new ArrayList<>(), new ArrayList<>()));
+					pair.el0().addAll(teachAttribs.getEntries(bCString::getString));
 
 					bTObjArray_eCEntityProxy teachSkills = npc.property(CD.gCNPC_PS.TeachSkills);
 

@@ -80,9 +80,7 @@ public class CreatePropertyDialog extends ExtStandardDialog {
 		String name = getPropertyName();
 		Optional<PropertyDescriptor<?>> property = ClassDescriptor.getAllProperties(propertySet)
 				.filterBy(PropertyDescriptor::getName, name).findAny();
-		if (property.isPresent()) {
-			cbType.setSelectedItem(property.get().getDataTypeName());
-		}
+		property.ifPresent(propertyDescriptor -> cbType.setSelectedItem(propertyDescriptor.getDataTypeName()));
 	}
 
 	public String getPropertyName() {

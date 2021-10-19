@@ -66,26 +66,16 @@ public class eCCollisionShape extends G3Class {
 	protected void readPostClassVersion(G3FileReader reader) {
 		int shapeType = property(CD.eCCollisionShape.ShapeType).getEnumValue();
 		switch (shapeType) {
-			case eECollisionShapeType.eECollisionShapeType_TriMesh:
-			case eECollisionShapeType.eECollisionShapeType_ConvexHull:
-				shape = reader.read(FileShape.class);
-				break;
-			case eECollisionShapeType.eECollisionShapeType_Box:
-				shape = reader.read(BoxShape.class);
-				break;
-			case eECollisionShapeType.eECollisionShapeType_Capsule:
-				shape = reader.read(CapsuleShape.class);
-				break;
-			case eECollisionShapeType.eECollisionShapeType_Sphere:
-				shape = reader.read(SphereShape.class);
-				break;
-			case eECollisionShapeType.eECollisionShapeType_Point:
-				shape = reader.read(PointShape.class);
-				break;
-			default:
+			case eECollisionShapeType.eECollisionShapeType_TriMesh, eECollisionShapeType.eECollisionShapeType_ConvexHull -> shape = reader
+					.read(FileShape.class);
+			case eECollisionShapeType.eECollisionShapeType_Box -> shape = reader.read(BoxShape.class);
+			case eECollisionShapeType.eECollisionShapeType_Capsule -> shape = reader.read(CapsuleShape.class);
+			case eECollisionShapeType.eECollisionShapeType_Sphere -> shape = reader.read(SphereShape.class);
+			case eECollisionShapeType.eECollisionShapeType_Point -> shape = reader.read(PointShape.class);
+			default -> {
 				reader.info(logger, "Unknown ShapeType {}", shapeType);
 				shape = reader.read(UnknownShape.class, deadcodePosition - reader.getPos() - 38);
-				break;
+			}
 		}
 
 		// eCCollisionShape internal data
@@ -136,17 +126,14 @@ public class eCCollisionShape extends G3Class {
 	private void calcShapeAABBLocal() {
 		if (shape instanceof FileShape) {
 			outerAABBLocal = ((FileShape) shape).getShapeBoundary().clone();
-		} else if (shape instanceof BoxShape) {
-			BoxShape box = (BoxShape) shape;
+		} else if (shape instanceof BoxShape box) {
 			bCOrientedBox orientedBox = box.getOrientedBox();
 			bCBox circumAxisBox = orientedBox.getCircumAxisBox();
 			outerAABBLocal.setMin(circumAxisBox.getMin());
 			outerAABBLocal.setMax(circumAxisBox.getMax());
-		} else if (shape instanceof SphereShape) {
-			SphereShape sphere = (SphereShape) shape;
+		} else if (shape instanceof SphereShape sphere) {
 			outerAABBLocal.setBox(sphere.getSphere().getPosition(), sphere.getSphere().getRadius());
-		} else if (shape instanceof CapsuleShape) {
-			CapsuleShape capsule = (CapsuleShape) shape;
+		} else if (shape instanceof CapsuleShape capsule) {
 			bCVector xOffset = capsule.orientation.getXAxis().getScaled(capsule.radius);
 			float height = capsule.height * 0.5f + capsule.radius;
 			bCVector yOffset = capsule.orientation.getYAxis().getScaled(height);
@@ -160,25 +147,19 @@ public class eCCollisionShape extends G3Class {
 	}
 
 	public static Shape getDefaultShape(int shapeType) {
-		switch (shapeType) {
-			case eECollisionShapeType.eECollisionShapeType_TriMesh:
-			case eECollisionShapeType.eECollisionShapeType_ConvexHull:
-				return new FileShape("", 0);
-			case eECollisionShapeType.eECollisionShapeType_Box:
-				return new BoxShape(new bCOrientedBox());
-			case eECollisionShapeType.eECollisionShapeType_Capsule:
-				return new CapsuleShape(0, 0, bCMatrix3.getIdentity(), bCVector.nullVector());
-			case eECollisionShapeType.eECollisionShapeType_Sphere:
-				return new SphereShape(new bCSphere());
-			case eECollisionShapeType.eECollisionShapeType_Point:
-				return new PointShape(bCVector.nullVector());
-			default:
-				return null;
-		}
+		return switch (shapeType) {
+			case eECollisionShapeType.eECollisionShapeType_TriMesh, eECollisionShapeType.eECollisionShapeType_ConvexHull -> new FileShape(
+					"", 0);
+			case eECollisionShapeType.eECollisionShapeType_Box -> new BoxShape(new bCOrientedBox());
+			case eECollisionShapeType.eECollisionShapeType_Capsule -> new CapsuleShape(0, 0, bCMatrix3.getIdentity(),
+					bCVector.nullVector());
+			case eECollisionShapeType.eECollisionShapeType_Sphere -> new SphereShape(new bCSphere());
+			case eECollisionShapeType.eECollisionShapeType_Point -> new PointShape(bCVector.nullVector());
+			default -> null;
+		};
 	}
 
-	public interface Shape extends G3Serializable {
-	}
+	public interface Shape extends G3Serializable {}
 
 	public static class FileShape implements Shape {
 

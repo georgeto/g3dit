@@ -34,7 +34,7 @@ public class FloatCalcDialog extends JDialog {
 		tfFloatIn.setBounds(10, 26, 86, 20);
 		getContentPane().add(tfFloatIn);
 		tfFloatIn.setColumns(10);
-		tfFloatIn.getDocument().addDocumentListener(SwingUtils.createDocumentListener(() -> floatToHex()));
+		tfFloatIn.getDocument().addDocumentListener(SwingUtils.createDocumentListener(this::floatToHex));
 
 		JLabel lblNewLabel_1 = new JLabel("->");
 		lblNewLabel_1.setBounds(102, 29, 14, 14);
@@ -54,7 +54,7 @@ public class FloatCalcDialog extends JDialog {
 		tfHexIn.setColumns(10);
 		tfHexIn.setBounds(10, 72, 86, 20);
 		getContentPane().add(tfHexIn);
-		tfHexIn.getDocument().addDocumentListener(SwingUtils.createDocumentListener(() -> hexToFloat()));
+		tfHexIn.getDocument().addDocumentListener(SwingUtils.createDocumentListener(this::hexToFloat));
 
 		JLabel lblFloat = new JLabel("Float");
 		lblFloat.setBounds(120, 57, 46, 14);

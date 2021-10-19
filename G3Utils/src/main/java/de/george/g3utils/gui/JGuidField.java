@@ -29,7 +29,7 @@ public class JGuidField extends JPanel {
 		tfGuid = SwingUtils.createUndoTF();
 		SwingUtils.monospaceFont(tfGuid);
 		add(tfGuid, "width 100%, height 20!, wrap");
-		tfGuid.getDocument().addDocumentListener(SwingUtils.createDocumentListener(() -> updateText()));
+		tfGuid.getDocument().addDocumentListener(SwingUtils.createDocumentListener(this::updateText));
 
 		tfGuidText = new JTextField();
 		add(tfGuidText, "width 100%, height 20!");

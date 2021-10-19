@@ -105,7 +105,7 @@ public class eCMeshElement implements G3Serializable {
 			this.vertexTypeStruct = vertexTypeStruct;
 			this.fvf = fvf;
 		}
-	};
+	}
 
 	private static final ImmutableMap<Integer, eSFVF> vertexStreamToStructMap = ImmutableMap.<Integer, eSFVF>builder()
 			.put(eEVertexStreamArrayType_Face, new eSFVF(eEVertexStreamArrayType_Face, eEVertexTypeStruct_GEU32, 0x0))
@@ -315,22 +315,15 @@ public class eCMeshElement implements G3Serializable {
 
 	@SuppressWarnings("unchecked")
 	public static <T, A extends eCVertexStructArrayBase<T>> A createVertexStructArray(int vertexStreamArrayType) {
-		switch (vertexStreamToStructMap.get(vertexStreamArrayType).vertexTypeStruct) {
-			case eEVertexTypeStruct_bCVector2:
-				return (A) new eCVertexStructArray_bCVector2(vertexStreamArrayType);
-			case eEVertexTypeStruct_bCVector3:
-				return (A) new eCVertexStructArray_bCVector3(vertexStreamArrayType);
-			case eEVertexTypeStruct_bCVector4:
-				return (A) new eCVertexStructArray_bCVector4(vertexStreamArrayType);
-			case eEVertexTypeStruct_GEU16:
-				return (A) new eCVertexStructArray_GEU16(vertexStreamArrayType);
-			case eEVertexTypeStruct_GEU32:
-				return (A) new eCVertexStructArray_GEU32(vertexStreamArrayType);
-			case eEVertexTypeStruct_GEFloat:
-				return (A) new eCVertexStructArray_GEFloat(vertexStreamArrayType);
-			default:
-				throw new IllegalArgumentException();
-		}
+		return (A) switch (vertexStreamToStructMap.get(vertexStreamArrayType).vertexTypeStruct) {
+			case eEVertexTypeStruct_bCVector2 -> new eCVertexStructArray_bCVector2(vertexStreamArrayType);
+			case eEVertexTypeStruct_bCVector3 -> new eCVertexStructArray_bCVector3(vertexStreamArrayType);
+			case eEVertexTypeStruct_bCVector4 -> new eCVertexStructArray_bCVector4(vertexStreamArrayType);
+			case eEVertexTypeStruct_GEU16 -> new eCVertexStructArray_GEU16(vertexStreamArrayType);
+			case eEVertexTypeStruct_GEU32 -> new eCVertexStructArray_GEU32(vertexStreamArrayType);
+			case eEVertexTypeStruct_GEFloat -> new eCVertexStructArray_GEFloat(vertexStreamArrayType);
+			default -> throw new IllegalArgumentException();
+		};
 	}
 
 	private int version;

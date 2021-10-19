@@ -15,6 +15,7 @@ import de.george.lrentnode.classes.G3Class;
 import de.george.lrentnode.classes.desc.CD;
 import de.george.lrentnode.enums.G3Enums.gESpecies;
 import de.george.lrentnode.iterator.ArchiveFileIterator;
+import de.george.lrentnode.properties.bCPropertyID;
 
 public class ScriptSpotNonExistentRoutineGuids implements IScript {
 
@@ -44,27 +45,25 @@ public class ScriptSpotNonExistentRoutineGuids implements IScript {
 					int species = entity.getClass(CD.gCNPC_PS.class).property(CD.gCNPC_PS.Species).getEnumValue();
 					if (species == gESpecies.gESpecies_Human || species == gESpecies.gESpecies_Orc) {
 						G3Class nav = entity.getClass(CD.gCNavigation_PS.class);
-						String entityIdentifier = worldFilesIterator.nextFile().getName() + "#" + entity.toString() + " ("
-								+ entity.getGuid() + ")";
+						String entityIdentifier = worldFilesIterator.nextFile().getName() + "#" + entity + " (" + entity.getGuid() + ")";
 						entityRoutineMap.put(entityIdentifier, nav);
 					}
 				}
 			}
 		}
 
-		entityRoutineMap.entrySet().forEach(e -> {
-			G3Class navigation = e.getValue();
+		entityRoutineMap.forEach((key, navigation) -> {
 
 			List<String> messages = new ArrayList<>();
 
 			// Routinen laden
 			List<String> routineNames = new ArrayList<>(navigation.property(CD.gCNavigation_PS.RoutineNames).getNativeEntries());
 			List<String> workingPoints = new ArrayList<>(
-					navigation.property(CD.gCNavigation_PS.WorkingPoints).getEntries(p -> p.getGuid()));
+					navigation.property(CD.gCNavigation_PS.WorkingPoints).getEntries(bCPropertyID::getGuid));
 			List<String> relaxingPoints = new ArrayList<>(
-					navigation.property(CD.gCNavigation_PS.RelaxingPoints).getEntries(p -> p.getGuid()));
+					navigation.property(CD.gCNavigation_PS.RelaxingPoints).getEntries(bCPropertyID::getGuid));
 			List<String> sleepingPoints = new ArrayList<>(
-					navigation.property(CD.gCNavigation_PS.SleepingPoints).getEntries(p -> p.getGuid()));
+					navigation.property(CD.gCNavigation_PS.SleepingPoints).getEntries(bCPropertyID::getGuid));
 
 			// Startroutine laden
 			String routineName = navigation.property(CD.gCNavigation_PS.Routine).getString();
@@ -103,7 +102,7 @@ public class ScriptSpotNonExistentRoutineGuids implements IScript {
 			}
 
 			if (!messages.isEmpty()) {
-				env.log(e.getKey());
+				env.log(key);
 				messages.stream().map(s -> "  " + s).forEach(env::log);
 				env.log("");
 			}

@@ -44,8 +44,7 @@ public class EntityGuidSearchFilterBuilder implements SearchFilterBuilder<eCEnti
 
 	@Override
 	public boolean loadFilter(SearchFilter<eCEntity> filter) {
-		if (filter instanceof GuidEntityFilter) {
-			GuidEntityFilter typedFilter = (GuidEntityFilter) filter;
+		if (filter instanceof GuidEntityFilter typedFilter) {
 			cbMatchMode.setSelectedItem(typedFilter.getMatchMode());
 			tfFilter.setText(typedFilter.getGuidToMatch());
 			return true;

@@ -100,7 +100,7 @@ public class EntityMap extends JFrame {
 		setVisible(true);
 	}
 
-	private static FileDescriptor XNAV_FILE_DESC = new FileDescriptor(new File("NavigationMap.xnav"), FileType.Other);
+	private static final FileDescriptor XNAV_FILE_DESC = new FileDescriptor(new File("NavigationMap.xnav"), FileType.Other);
 
 	private String getNameFromCache(String baseName, String guid) {
 		String name = Caches.entity(ctx).getDisplayName(guid);
@@ -302,9 +302,7 @@ public class EntityMap extends JFrame {
 			super.configureTableColumn(model, columnExt);
 
 			switch (columnExt.getTitle()) {
-				case "Name":
-					columnExt.setPrototypeValue("G3_Object_Bookshelf_Scrolls_01");
-					break;
+				case "Name" -> columnExt.setPrototypeValue("G3_Object_Bookshelf_Scrolls_01");
 			}
 		}
 	}

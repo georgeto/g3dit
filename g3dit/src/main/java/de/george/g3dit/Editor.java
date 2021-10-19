@@ -237,7 +237,7 @@ public class Editor extends JFrame implements EditorContext {
 		}
 
 		// NavigationMap
-		try (G3FileReaderEx baseFile = new G3FileReaderEx(new File(base)); G3FileReaderEx mineFile = new G3FileReaderEx(new File(mine));) {
+		try (G3FileReaderEx baseFile = new G3FileReaderEx(new File(base)); G3FileReaderEx mineFile = new G3FileReaderEx(new File(mine))) {
 			NavMap baseMap = new NavMap(baseFile);
 			File baseDump = File.createTempFile(baseFile.getFileName(), null);
 			baseDump.deleteOnExit();
@@ -269,23 +269,21 @@ public class Editor extends JFrame implements EditorContext {
 			eCEntity baseRoot;
 			eCEntity mineRoot;
 			switch (baseExt) {
-				case "node":
-				case "lrentdat":
+				case "node", "lrentdat" -> {
 					baseRoot = FileUtil.openArchive(baseFile, true).getGraph();
 					mineRoot = FileUtil.openArchive(mineFile, true).getGraph();
 					diffEntity(base, mine, baseRoot, mineRoot);
-					break;
-				case "tple":
+				}
+				case "tple" -> {
 					baseRoot = FileUtil.openTemplate(baseFile).getGraph();
 					mineRoot = FileUtil.openTemplate(mineFile).getGraph();
 					diffEntity(base, mine, baseRoot, mineRoot);
-					break;
-				case "xnav":
-					diffNavigationMap(base, mine);
-					break;
-				default:
+				}
+				case "xnav" -> diffNavigationMap(base, mine);
+				default -> {
 					logger.error("Zu diffende Dateien haben nicht unterstützte Dateiendung '{}'.", baseExt);
 					return;
+				}
 			}
 		} catch (IOException e) {
 			logger.error("Fehler beim Öffnen der zu vergleichenden Dateien.", e);
@@ -460,11 +458,10 @@ public class Editor extends JFrame implements EditorContext {
 
 	public <T extends EditorTab> StreamEx<T> getTabsInDataFolders(EditorTabType type) {
 		return this.<T>getTabs(type).filter(tab -> {
-			if (!(tab instanceof EditorAbstractFileTab)) {
+			if (!(tab instanceof EditorAbstractFileTab fileTab)) {
 				return false;
 			}
 
-			EditorAbstractFileTab fileTab = (EditorAbstractFileTab) tab;
 			return fileTab.getDataFile().isPresent() && (fileManager.isInPrimaryDataFolder(fileTab.getDataFile().get())
 					|| fileManager.isInSecondaryDataFolder(fileTab.getDataFile().get()));
 		});
@@ -565,10 +562,9 @@ public class Editor extends JFrame implements EditorContext {
 
 	public boolean openOrSelectFile(File file) {
 		for (EditorTab tab : getTabs()) {
-			if (!(tab instanceof EditorAbstractFileTab)) {
+			if (!(tab instanceof EditorAbstractFileTab fileTab)) {
 				continue;
 			}
-			EditorAbstractFileTab fileTab = (EditorAbstractFileTab) tab;
 			if (fileTab.getDataFile().filter(file::equals).isPresent()) {
 				selectTab(fileTab);
 				return true;
@@ -670,12 +666,7 @@ public class Editor extends JFrame implements EditorContext {
 	}
 
 	public boolean openEntity(String guid) {
-		Optional<EntityDescriptor> descriptor = getEntityDescriptor(guid);
-		if (descriptor.isPresent()) {
-			return openEntity(descriptor.get());
-		} else {
-			return false;
-		}
+		return getEntityDescriptor(guid).map(this::openEntity).orElse(false);
 	}
 
 	public boolean modifyEntity(EntityDescriptor entityDescriptor, boolean hidden) {
@@ -685,11 +676,7 @@ public class Editor extends JFrame implements EditorContext {
 
 	public boolean openTemplate(String guid) {
 		Optional<File> templateFile = Caches.template(this).getEntryByGuid(guid).map(TemplateCacheEntry::getFile);
-		if (templateFile.isPresent()) {
-			return openOrSelectFile(templateFile.get());
-		} else {
-			return false;
-		}
+		return templateFile.map(this::openOrSelectFile).orElse(false);
 	}
 
 	@Override
@@ -736,12 +723,12 @@ public class Editor extends JFrame implements EditorContext {
 	}
 
 	public void saveCurrentTab() {
-		getSelectedTab().ifPresent(t -> t.onSave());
+		getSelectedTab().ifPresent(EditorTab::onSave);
 		runGC();
 	}
 
 	public void saveCurrentTabAs() {
-		getSelectedTab().ifPresent(t -> t.onSaveAs());
+		getSelectedTab().ifPresent(EditorTab::onSaveAs);
 		runGC();
 	}
 

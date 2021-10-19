@@ -92,7 +92,7 @@ public class NodeExporter {
 					negCirclePS.property(CD.gCCollisionCircle_PS.Offset).setEntries(points);
 					negCirclePS.property(CD.gCCollisionCircle_PS.Radius).setNativeEntries(negCircle.circleRadius);
 					negCirclePS.property(CD.gCCollisionCircle_PS.Type).setEnumValue(negCircle.obstacleType);
-					negCirclePS.property(CD.gCCollisionCircle_PS.ZoneEntityIDs).setEntries(negCircle.zoneGuids, g -> new bCPropertyID(g));
+					negCirclePS.property(CD.gCCollisionCircle_PS.ZoneEntityIDs).setEntries(negCircle.zoneGuids, bCPropertyID::new);
 				});
 	}
 

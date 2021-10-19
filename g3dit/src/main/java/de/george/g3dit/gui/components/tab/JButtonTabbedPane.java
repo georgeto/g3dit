@@ -86,11 +86,7 @@ public class JButtonTabbedPane extends JTabbedPane {
 	}
 
 	public void addTabAction(int index, Action action, Icon icon, boolean front) {
-		Optional<JButtonTabComponent> tabComponent = buttonTabComponentAt(index);
-		if (tabComponent.isPresent()) {
-			tabComponent.get().addButton(action, icon, front);
-		}
-
+		buttonTabComponentAt(index).ifPresent(tabComponent -> tabComponent.addButton(action, icon, front));
 		internalRefreshTabComponentAt(index);
 	}
 
@@ -102,30 +98,18 @@ public class JButtonTabbedPane extends JTabbedPane {
 
 	@Override
 	public void setIconAt(int index, Icon icon) {
-		Optional<JButtonTabComponent> tabComponent = buttonTabComponentAt(index);
-		if (tabComponent.isPresent()) {
-			tabComponent.get().setIcon(icon);
-		}
-
+		buttonTabComponentAt(index).ifPresent(tabComponent -> tabComponent.setIcon(icon));
 		internalRefreshTabComponentAt(index);
 	}
 
 	@Override
 	public void setTitleAt(int index, String title) {
-		Optional<JButtonTabComponent> tabComponent = buttonTabComponentAt(index);
-		if (tabComponent.isPresent()) {
-			tabComponent.get().setTitle(title);
-		}
-
+		buttonTabComponentAt(index).ifPresent(tabComponent -> tabComponent.setTitle(title));
 		internalRefreshTabComponentAt(index);
 	}
 
 	public void setTitleColorAt(int index, Color titleColor) {
-		Optional<JButtonTabComponent> tabComponent = buttonTabComponentAt(index);
-		if (tabComponent.isPresent()) {
-			tabComponent.get().setTitleColor(titleColor);
-		}
-
+		buttonTabComponentAt(index).ifPresent(tabComponent -> tabComponent.setTitleColor(titleColor));
 		internalRefreshTabComponentAt(index);
 	}
 
@@ -135,10 +119,7 @@ public class JButtonTabbedPane extends JTabbedPane {
 	}
 
 	final private void internalRefreshTabComponentAt(final int index) {
-		Optional<JButtonTabComponent> tabComponent = buttonTabComponentAt(index);
-		if (tabComponent.isPresent()) {
-			tabComponent.get().rebuild(index == getSelectedIndex());
-		}
+		buttonTabComponentAt(index).ifPresent(tabComponent -> tabComponent.rebuild(index == getSelectedIndex()));
 		repaint();
 	}
 

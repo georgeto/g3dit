@@ -6,10 +6,9 @@ import ca.odell.glazedlists.gui.WritableTableFormat;
 
 public class TransformingBeanTableFormat<T> implements WritableTableFormat<T> {
 	private final WritableTableFormat<T> wrapped;
-	private BiFunction<T, ? super Object, ? extends Object>[] transformers;
+	private BiFunction<T, ? super Object, ?>[] transformers;
 
-	public TransformingBeanTableFormat(WritableTableFormat<T> wrapped,
-			BiFunction<T, ? super Object, ? extends Object>[] cellValueTransformer) {
+	public TransformingBeanTableFormat(WritableTableFormat<T> wrapped, BiFunction<T, ? super Object, ?>[] cellValueTransformer) {
 		this.wrapped = wrapped;
 		this.transformers = cellValueTransformer;
 	}

@@ -18,10 +18,9 @@ public class SwitchedModelKey extends ModelKey {
 
 	@Override
 	public boolean equals(final Object other) {
-		if (!(other instanceof SwitchedModelKey)) {
+		if (!(other instanceof SwitchedModelKey castOther)) {
 			return false;
 		}
-		SwitchedModelKey castOther = (SwitchedModelKey) other;
 		return Objects.equals(name, castOther.name) && Objects.equals(materialSwitch, castOther.materialSwitch);
 	}
 

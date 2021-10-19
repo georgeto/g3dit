@@ -33,7 +33,7 @@ public class CheckLightmaps extends AbstractEntityCheck {
 	private Set<String> primaryGuids = new HashSet<>();
 
 	public CheckLightmaps(EditorContext ctx) {
-		super("Ungültige Lightmaps ermittelt", "Ermittelt Lightmaps deren Guid nicht existiert oder bei denen der Meshname nicht passt.",
+		super("Ungültige Lightmaps ermitteln", "Ermittelt Lightmaps deren Guid nicht existiert oder bei denen der Meshname nicht passt.",
 				0, 1);
 		this.ctx = ctx;
 	}

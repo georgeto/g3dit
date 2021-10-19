@@ -129,9 +129,7 @@ public class JSplittedTypedTabbedPane<T extends ITypedTab> extends EventBusProvi
 	public void removeTab(T tab) {
 		if (tabs.remove(tab)) {
 			Optional<TabIndex> index = getTabIndex(tab);
-			if (index.isPresent()) {
-				index.get().getTabbedPane().removeTab(tab);
-			}
+			index.ifPresent(tabIndex -> tabIndex.getTabbedPane().removeTab(tab));
 			layoutSplitPaneDivider();
 		}
 
@@ -139,14 +137,12 @@ public class JSplittedTypedTabbedPane<T extends ITypedTab> extends EventBusProvi
 
 	public boolean closeTab(T tab) {
 		Optional<TabIndex> index = getTabIndex(tab);
-		return index.isPresent() ? index.get().getTabbedPane().closeTab(tab) : false;
+		return index.isPresent() && index.get().getTabbedPane().closeTab(tab);
 	}
 
 	public void updateTab(T tab) {
 		Optional<TabIndex> index = getTabIndex(tab);
-		if (index.isPresent()) {
-			index.get().getTabbedPane().updateTab(tab);
-		}
+		index.ifPresent(tabIndex -> tabIndex.getTabbedPane().updateTab(tab));
 	}
 
 	public void selectTab(T tab) {
@@ -174,10 +170,7 @@ public class JSplittedTypedTabbedPane<T extends ITypedTab> extends EventBusProvi
 	}
 
 	public void addTabAction(T tab, Action action, Icon icon, boolean front) {
-		Optional<TabIndex> index = getTabIndex(tab);
-		if (index.isPresent()) {
-			index.get().getTabbedPane().addTabAction(tab, action, icon, front);
-		}
+		getTabIndex(tab).ifPresent(tabIndex -> tabIndex.getTabbedPane().addTabAction(tab, action, icon, front));
 	}
 
 	protected void afterTabAdded(final T tab) {
@@ -186,7 +179,7 @@ public class JSplittedTypedTabbedPane<T extends ITypedTab> extends EventBusProvi
 		addTabAction(tab, SwingUtils.createAction(() -> {
 			Optional<TabIndex> tabIndex = getTabIndex(tab);
 			if (tabIndex.isPresent()) {
-				Side side = getTabIndex(tab).get().getPosition() == TabbedPanePosition.LEFT ? Side.RIGHT : Side.LEFT;
+				Side side = tabIndex.get().getPosition() == TabbedPanePosition.LEFT ? Side.RIGHT : Side.LEFT;
 				lockTabSelectEvent = true;
 				removeTab(tab);
 				addTab(tab, side);
@@ -245,14 +238,11 @@ public class JSplittedTypedTabbedPane<T extends ITypedTab> extends EventBusProvi
 	}
 
 	private JTypedTabbedPane<T> getTabbedPane(TabbedPanePosition position) {
-		switch (position) {
-			case LEFT:
-				return leftTabs;
-			case RIGHT:
-				return rightTabs;
-			default:
-				return null;
-		}
+		return switch (position) {
+			case LEFT -> leftTabs;
+			case RIGHT -> rightTabs;
+			default -> null;
+		};
 	}
 
 	/**
