@@ -1,12 +1,11 @@
 package de.george.lrentnode;
 
-import javax.xml.bind.DatatypeConverter;
-
 import org.junit.Assert;
 import org.junit.Test;
 
 import de.george.g3utils.io.G3FileReaderEx;
 import de.george.g3utils.io.G3FileWriterEx;
+import de.george.g3utils.util.Misc;
 import de.george.lrentnode.properties.ClassProperty;
 import de.george.lrentnode.util.ClassUtil;
 import de.george.lrentnode.util.ClassUtil.G3ClassHolder;
@@ -30,7 +29,7 @@ public class SerializationTest {
 		ClassUtil.writeClass(writer, holder);
 		byte[] serializedData = packWriter(writer);
 
-		Assert.assertEquals(className, data, DatatypeConverter.printHexBinary(serializedData));
+		Assert.assertEquals(className, data, Misc.asHex(serializedData));
 	}
 
 	private void testProperty(String propertyName, String data) {
@@ -42,7 +41,7 @@ public class SerializationTest {
 		property.write(writer);
 		byte[] serializedData = packWriter(writer);
 
-		Assert.assertEquals(propertyName, data, DatatypeConverter.printHexBinary(serializedData));
+		Assert.assertEquals(propertyName, data, Misc.asHex(serializedData));
 	}
 
 	@Test

@@ -68,6 +68,24 @@ public abstract class ReflectionUtils {
 		accessibleObject.setAccessible(true);
 	}
 
+	public static Class<?> getClassForName(String name) {
+		try {
+			return Class.forName(name);
+		} catch (ReflectiveOperationException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	public static Method getMethod(Class<?> clazz, String name, Class<?>... parameterTypes) {
+		try {
+			Method method = clazz.getDeclaredMethod(name, parameterTypes);
+			method.setAccessible(true);
+			return method;
+		} catch (ReflectiveOperationException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
 	public static Field getField(Class<?> clazz, String name) {
 		try {
 			Field field = clazz.getDeclaredField(name);
@@ -112,9 +130,9 @@ public abstract class ReflectionUtils {
 		}
 	}
 
-	public static Object invoke(Method method, Object obj, Object... args) {
+	public static <T> T invoke(Method method, Object obj, Object... args) {
 		try {
-			return method.invoke(obj, args);
+			return (T) method.invoke(obj, args);
 		} catch (ReflectiveOperationException e) {
 			throw new RuntimeException(e);
 		}

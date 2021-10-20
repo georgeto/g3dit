@@ -97,6 +97,14 @@ public class SwingUtils {
 		}
 	}
 
+	public static void setLookAndFeel(String lookAndFeelClassName) {
+		try {
+			UIManager.setLookAndFeel(lookAndFeelClassName);
+		} catch (Exception e) {
+			logger.warn("Error while changing Look and Feel.");
+		}
+	}
+
 	public static ImageIcon loadIcon(String path) {
 		return new ImageIcon(loadImage(path));
 	}

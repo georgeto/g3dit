@@ -2,6 +2,7 @@ package de.george.g3utils.util;
 
 import java.io.Closeable;
 import java.io.IOException;
+import java.lang.reflect.Method;
 import java.nio.file.DirectoryIteratorException;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
@@ -9,8 +10,6 @@ import java.nio.file.Path;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayDeque;
 import java.util.Iterator;
-
-import sun.nio.fs.BasicFileAttributesHolder;
 
 /**
  * Stripped down reimplementation of {@link FileTreeWalker} to get maximum performance.
@@ -76,6 +75,10 @@ public class FastFileTreeWalker implements Closeable {
 		}
 	}
 
+	private static final Class<?> CLASS_BASIC_FILE_ATTRIBUTES_HOLDER = ReflectionUtils
+			.getClassForName("sun.nio.fs.BasicFileAttributesHolder");
+	private static final Method METHOD_GET_ATTRIBUTES = ReflectionUtils.getMethod(CLASS_BASIC_FILE_ATTRIBUTES_HOLDER, "get");
+
 	/**
 	 * Returns the attributes of the given file, taking into account whether the walk is following
 	 * sym links is not. The {@code canUseCached} argument determines whether this method can use
@@ -83,11 +86,10 @@ public class FastFileTreeWalker implements Closeable {
 	 */
 	private BasicFileAttributes getAttributes(Path file, boolean canUseCached) throws IOException {
 		// if attributes are cached then use them if possible
-		if (canUseCached && file instanceof BasicFileAttributesHolder) {
-			BasicFileAttributes cached = ((BasicFileAttributesHolder) file).get();
-			if (cached != null) {
+		if (canUseCached && CLASS_BASIC_FILE_ATTRIBUTES_HOLDER.isInstance(file)) {
+			BasicFileAttributes cached = ReflectionUtils.invoke(METHOD_GET_ATTRIBUTES, file);
+			if (cached != null)
 				return cached;
-			}
 		}
 
 		// attempt to get attributes of file. If fails and we are following

@@ -35,7 +35,6 @@ import com.google.common.io.Files;
 import com.google.common.util.concurrent.ListeningExecutorService;
 import com.google.common.util.concurrent.MoreExecutors;
 import com.jgoodies.looks.Options;
-import com.jgoodies.looks.windows.WindowsLookAndFeel;
 import com.jidesoft.plaf.LookAndFeelFactory;
 import com.jme3.system.JmeSystem;
 import com.tulskiy.keymaster.common.Provider;
@@ -363,7 +362,7 @@ public class Editor extends JFrame implements EditorContext {
 		setExtendedState(optionStore.get(EditorOptions.MainWindow.EXTENDED_STATE));
 		setTitle(EDITOR_TITLE);
 		setIconImage(SwingUtils.getG3Icon());
-		SwingUtils.setLookAndFeel(new WindowsLookAndFeel());
+		SwingUtils.setLookAndFeel("com.jgoodies.looks.windows.WindowsLookAndFeel");
 		Options.setUseNarrowButtons(true);
 		LookAndFeelFactory.installJideExtension(LookAndFeelFactory.EXTENSION_STYLE_VSNET_WITHOUT_MENU);
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);

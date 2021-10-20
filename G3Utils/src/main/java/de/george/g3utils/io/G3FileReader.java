@@ -8,7 +8,6 @@ import java.io.RandomAccessFile;
 import java.lang.reflect.Array;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
-import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -27,7 +26,6 @@ import de.george.g3utils.structure.bCBox;
 import de.george.g3utils.structure.bCVector;
 import de.george.g3utils.util.Converter;
 import de.george.g3utils.util.Misc;
-import sun.nio.ch.DirectBuffer;
 
 public abstract class G3FileReader extends G3FileBase implements AutoCloseable {
 	static final Logger logger = LoggerFactory.getLogger(G3FileReader.class);
@@ -307,10 +305,9 @@ public abstract class G3FileReader extends G3FileBase implements AutoCloseable {
 
 	@Override
 	public void close() throws IOException {
-		if (buffer != null && buffer instanceof MappedByteBuffer) {
-			sun.misc.Cleaner cleaner = ((DirectBuffer) buffer).cleaner();
-			cleaner.clean();
-		}
+		// Ensure that buffer is unmapped, because on Windows otherwise the file is locked until the
+		// JVM exits or the ByteBuffer is garbage collected.
+		ByteBufferCleaner.clean(buffer);
 	}
 
 	public <T extends G3Serializable> T read(Class<T> type) {
