@@ -7,5 +7,5 @@ repositories {
 dependencies {
 	api project(':G3Utils')
 	api group: 'de.danielbechler', name: 'java-object-diff', version: '0.95-RC6-g3'
-	testImplementation group: 'junit', name: 'junit', version: '4.13'
+	testImplementation group: 'junit', name: 'junit', version: '4.13.2'
 }
