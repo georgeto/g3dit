@@ -742,8 +742,6 @@ public class NavMap extends GenomeFile {
 			}
 
 			distance += currentLink.intersection.getInvTranslated(currentPosition).length();
-			// distance +=
-			// nextLink.intersection.getInvTranslated(currentLink.intersection).length();
 			distance += sec4.waypoints.get(currentIndex).cons.stream().filter(w -> w.backRoad && w.index == nextIndex).findFirst()
 					.get().distance;
 			currentZone = nextLink.zoneGuid;

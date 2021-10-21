@@ -388,8 +388,6 @@ public class CheckManager {
 			mainPanel.add(tfSearch, "spanx, growx, wrap");
 			TextComponentMatcherEditor<Problem> filteredProblemsMatcherEditor = new TextComponentMatcherEditor<>(tfSearch,
 					GlazedLists.textFilterator("Message", "Details"));
-			// cbSearchProperty.addItemListener(l ->
-			// filteredChestsMatcherEditor.setFilterator(getTextFilterator()));
 
 			problems = new BasicEventList<>();
 			filteredProblems = new FilterList<>(problems, filteredProblemsMatcherEditor);
@@ -406,40 +404,6 @@ public class CheckManager {
 			}
 
 			mainPanel.add(tabbedPane.getComponent(), "gaptop 7, push, span, grow, wrap");
-
-			// @foff
-			/*JPanel mainPanel = new JPanel(new MigLayout("", "[]10px[fill, grow 100]", "[fill][fill, grow 100]"));
-
-			SortedList<Check> sortedChecks = new SortedList<>(GlazedLists.eventList(checks),
-					(e1, e2) -> e1.getTitle().compareTo(e2.getTitle()));
-			checkList = new JEventList<>(sortedChecks);
-			checkList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-			checkList.addListSelectionListener(e -> checkSelected());
-			checkList.setCellRenderer(new BeanListCellRenderer("Title"));
-			mainPanel.add(new JScrollPane(checkList), "spany 2, cell 0 0");
-
-			JPanel infoPanel = new JPanel(new MigLayout("fillx", "[]", "[][fill, grow 100][]"));
-
-			lblName = SwingUtils.createBoldLabel("");
-			infoPanel.add(lblName, "wrap");
-
-			lblDecheckion = new MultilineLabel("");
-			infoPanel.add(lblDecheckion, "gapleft 7, growx 100, wrap");
-
-			btnExecute = new JButton("Check ausführen");
-			btnExecute.addActionListener(a -> executeCheck());
-			infoPanel.add(btnExecute, "alignx right, wrap");
-			ListUtil.enableOnEqual(checkList, btnExecute, 1);
-			mainPanel.add(infoPanel, "cell 1 0");
-
-			epDetails = new JTextAreaExt();
-			epDetails.getScrollPane().setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
-			TextLineNumber tln = new TextLineNumber(epDetails);
-			epDetails.getScrollPane().setRowHeaderView(tln);
-			epDetails.setEditable(false);
-			mainPanel.add(epDetails.getScrollPane(), "cell 1 1");*/
-			// @fon
-
 			return mainPanel;
 		}
 

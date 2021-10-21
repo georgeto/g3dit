@@ -4,8 +4,6 @@ import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.StringSelection;
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileFilter;
@@ -171,31 +169,6 @@ public class IOUtils {
 				return Stream.empty();
 			}
 		}).collect(Collectors.toList());
-	}
-
-	public static byte[] readFileBytes(File file) throws IOException {
-		byte[] fileBytes;
-		try (BufferedInputStream in = new BufferedInputStream(new FileInputStream(file))) {
-			fileBytes = new byte[(int) file.length()];
-			int readBytes = 0;
-			while (readBytes < file.length()) {
-				int temp = in.read(fileBytes, readBytes, (int) file.length() - readBytes);
-				if (temp == -1) {
-					break;
-				}
-				readBytes += temp;
-			}
-		}
-		return fileBytes;
-	}
-
-	public static void writeFileBytes(File file, byte[] bytes) throws IOException {
-		try (BufferedOutputStream outf = new BufferedOutputStream(new FileOutputStream(file))) {
-			outf.write(bytes);
-			outf.flush();
-			outf.close();
-		}
-
 	}
 
 	public static List<String> readTextFile(File file, Charset charset) throws IOException {

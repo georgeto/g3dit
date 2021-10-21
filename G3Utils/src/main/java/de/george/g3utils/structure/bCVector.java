@@ -233,8 +233,6 @@ public class bCVector implements G3Serializable, Serializable {
 
 	public bCVector transform(bCMatrix matrix) {
 		if (matrix.isExcentric()) {
-			// logger.warn("bCMatrix ist exzentrisch, Transformation nicht implementiert.");
-			// return this;
 			float excentrixMod = matrix.getXAxis().getW() * x + matrix.getYAxis().getW() * y + matrix.getZAxis().getW() * z
 					+ matrix.getTranslation4().getW();
 			if (Math.abs(excentrixMod) >= 0.0000099999997f) {

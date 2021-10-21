@@ -3,16 +3,16 @@ package de.george.g3utils.io;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.Arrays;
 
-import de.george.g3utils.util.IOUtils;
 import de.george.g3utils.util.Misc;
 import gr.zdimensions.jsquish.Squish;
 import gr.zdimensions.jsquish.Squish.CompressionType;
 
 public class XimgIO {
 	public static BufferedImage decompressXimg(File file, boolean ignoreTransparency) throws Exception {
-		byte[] ximgfile = IOUtils.readFileBytes(file);
+		byte[] ximgfile = Files.readAllBytes(file.toPath());
 		if (ximgfile.length < 87) {
 			throw new IOException("Keine ximg Datei");
 		}

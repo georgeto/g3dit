@@ -10,7 +10,6 @@ import org.junit.experimental.theories.Theories;
 import org.junit.experimental.theories.Theory;
 import org.junit.runner.RunWith;
 
-import de.george.g3utils.structure.G3Matrix;
 import de.george.g3utils.structure.bCEulerAngles;
 import de.george.g3utils.structure.bCMatrix;
 import de.george.g3utils.structure.bCMatrix3;
@@ -80,13 +79,6 @@ public class EulerAnglesTest {
 	public void testQuaternion(bCEulerAngles angles) {
 		bCQuaternion quaternion = new bCQuaternion(angles);
 		assertThat(new bCEulerAngles(quaternion), equalTo(angles, EulerAnglesTest::compareAnglesEpsilon));
-	}
-
-	@Theory
-	public void testMe(bCEulerAngles angles) {
-		G3Matrix matrix = new G3Matrix(angles.getPitchDeg(), angles.getYawDeg(), angles.getRollDeg());
-		assertThat(bCEulerAngles.fromDegree(matrix.getYawF(), matrix.getPitchF(), matrix.getRollF()),
-				equalTo(angles, EulerAnglesTest::compareAnglesEpsilon));
 	}
 
 	public static boolean compareAngles(bCEulerAngles a1, bCEulerAngles a2) {

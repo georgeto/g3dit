@@ -380,8 +380,7 @@ public abstract class eCEntity extends G3ClassContainer {
 		if (parent != null) {
 			parent.updateParentDependencies();
 		} else {
-			// TODO: Context
-			// currentContext.setContextBox(tmpWorldTreeBoundary);
+			// Context box of context is updated when the file containing the root entity is saved.
 		}
 
 		// Originale Gothic 3 Implementierung

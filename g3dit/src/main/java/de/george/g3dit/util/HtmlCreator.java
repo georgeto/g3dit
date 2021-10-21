@@ -40,30 +40,4 @@ public class HtmlCreator {
 		return Collectors.joining(LINE_SEPERATOR);
 	}
 
-	final StringBuilder sb = new StringBuilder();
-	// @foff
-	/*HTMLEditorKit.ParserCallback parserCallback = new HTMLEditorKit.ParserCallback() {
-	    public boolean readyForNewline;
-
-	    @Override
-	    public void handleText(final char[] data, final int pos) {
-	        String s = new String(data);
-	        sb.append(s.trim());
-	        readyForNewline = true;
-	    }
-
-	    @Override
-	    public void handleStartTag(final HTML.Tag t, final MutableAttributeSet a, final int pos) {
-	        if (readyForNewline && (t == HTML.Tag.DIV || t == HTML.Tag.BR || t == HTML.Tag.P)) {
-	            sb.append("\n");
-	            readyForNewline = false;
-	        }
-	    }
-
-	    @Override
-	    public void handleSimpleTag(final HTML.Tag t, final MutableAttributeSet a, final int pos) {
-	        handleStartTag(t, a, pos);
-	    }
-	};
-	new ParserDelegator().parse(new StringReader(html), parserCallback, false);*/
 }

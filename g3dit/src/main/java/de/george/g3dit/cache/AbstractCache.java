@@ -78,9 +78,6 @@ public abstract class AbstractCache<T extends AbstractCache<T>> implements Seria
 		Calendar mydate = Calendar.getInstance();
 		mydate.setTimeInMillis(getCreationTimestamp());
 		return new SimpleDateFormat("dd.MM.yyyy HH:mm").format(new Date(getCreationTimestamp()));
-		// return mydate.get(Calendar.DAY_OF_MONTH) + "." + mydate.get(Calendar.MONTH) + "." +
-		// mydate.get(Calendar.YEAR)
-		// + " " + mydate.get(Calendar.HOUR_OF_DAY) + ":" + mydate.get(Calendar.MINUTE);
 	}
 
 	public String getSavePath() {

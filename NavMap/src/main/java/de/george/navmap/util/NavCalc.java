@@ -75,11 +75,6 @@ public class NavCalc {
 		}
 	}
 
-	public static class SingleZoneResult {
-		public boolean foundArea;
-		public NavArea area;
-	}
-
 	private Function<String, Optional<NavZone>> lookupNavZone;
 	private Function<String, Optional<NavPath>> lookupNavPath;
 	private NavMap navMap;
