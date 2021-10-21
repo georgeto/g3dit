@@ -446,7 +446,6 @@ public abstract class eCEntity extends G3ClassContainer {
 	 * Parents) aktualisieren
 	 *
 	 * @param child
-	 * @param updateParentDependencies
 	 */
 	public void attachChild(eCEntity child) {
 		if (child.hasParent()) {
@@ -462,7 +461,6 @@ public abstract class eCEntity extends G3ClassContainer {
 	 * ParentDependencies dieser Entity aktualisieren
 	 *
 	 * @param child
-	 * @param updateParentDependencies
 	 */
 	public void detachChild(eCEntity child) {
 		child.setParent(null);

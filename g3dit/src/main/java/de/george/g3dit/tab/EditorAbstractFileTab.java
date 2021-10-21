@@ -191,7 +191,6 @@ public abstract class EditorAbstractFileTab extends EditorTab implements FileCha
 	/**
 	 * Speichert die aktuelle geöffnete Datei
 	 *
-	 * @param file Pfad des Speicherortes
 	 * @return true, wenn Speichern erfolgreich
 	 */
 	private boolean showSaveFileAsDialog() {
