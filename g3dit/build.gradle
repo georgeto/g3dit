@@ -46,6 +46,11 @@ dependencies {
 	implementation group: 'commons-io', name: 'commons-io', version: '2.11.0' // Used by net.sf.cssbox.swingbox
 	implementation group: 'ca.phon.ui', name: 'jbreadcrumb', version: '4'
 	implementation group: 'net.sourceforge.argparse4j', name: 'argparse4j', version: '0.9.0'
+	implementation group: 'com.formdev', name: 'flatlaf', version: '1.6.4'
+	implementation group: 'com.formdev', name: 'flatlaf-intellij-themes', version: '1.6.4'
+	implementation group: 'com.formdev', name: 'flatlaf-extras', version: '1.6.4'
+	implementation group: 'com.formdev', name: 'flatlaf-swingx', version: '1.6.4'
+	implementation group: 'com.formdev', name: 'flatlaf-jide-oss', version: '1.6.4'
 	implementation files('libs/l2fprod-common-shared-10.0.jar', 'libs/l2fprod-common-sheet-10.0.jar')
 	testImplementation group: 'junit', name: 'junit', version: '4.13.2'
 }
@@ -92,6 +97,10 @@ application {
 
 tasks.run {
 	workingDir = "$projectDir/out"
+}
+
+tasks.shadowJar {
+	mergeServiceFiles()
 }
 
 task copyBinlib(type: Copy) {

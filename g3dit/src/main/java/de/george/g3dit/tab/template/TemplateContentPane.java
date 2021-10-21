@@ -1,23 +1,17 @@
 package de.george.g3dit.tab.template;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JToolBar;
-import javax.swing.SwingConstants;
 
 import com.ezware.dialog.task.TaskDialogs;
-import com.jidesoft.plaf.UIDefaultsLookup;
-import com.jidesoft.swing.PartialGradientLineBorder;
-import com.jidesoft.swing.PartialSide;
 
 import de.danielbechler.diff.node.DiffNode;
 import de.danielbechler.diff.node.ToMapPrintingVisitor;
@@ -29,6 +23,7 @@ import de.george.g3dit.tab.template.views.TemplateHeaderView;
 import de.george.g3dit.tab.template.views.TemplateView;
 import de.george.g3dit.util.AssetResolver;
 import de.george.g3dit.util.Icons;
+import de.george.g3dit.util.ToolbarUtil;
 import de.george.lrentnode.archive.eCEntity;
 import de.george.lrentnode.classes.G3Class;
 import de.george.lrentnode.diff.EntityDiffer;
@@ -67,12 +62,7 @@ public class TemplateContentPane extends JPanel {
 	}
 
 	private void createToolbar() {
-		toolBar = new JToolBar(SwingConstants.HORIZONTAL);
-		toolBar.setFloatable(false);
-		toolBar.setBorder(BorderFactory.createCompoundBorder(
-				BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(0, 0, 3, 0), new PartialGradientLineBorder(
-						new Color[] {new Color(0, 0, 128), UIDefaultsLookup.getColor("control")}, 2, PartialSide.SOUTH)),
-				BorderFactory.createEmptyBorder(0, 0, 2, 0)));
+		toolBar = ToolbarUtil.createTopToolbar();
 
 		JButton btnAddClasses = new JButton(Icons.getImageIcon(Icons.Data.CLASS_PLUS));
 		btnAddClasses.setToolTipText("Klassen hinzufügen");

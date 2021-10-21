@@ -11,6 +11,7 @@ import javax.swing.JPanel;
 
 import com.ezware.dialog.task.TaskDialogs;
 
+import de.george.g3dit.gui.theme.LayoutUtils;
 import de.george.g3dit.tab.archive.views.entity.dialogs.PositionDialog;
 import de.george.g3dit.util.Icons;
 import de.george.g3utils.structure.bCEulerAngles;
@@ -57,29 +58,29 @@ public class PositionPanel extends JPanel {
 
 		JButton btnCopyPosition = new JButton(Icons.getImageIcon(Icons.Misc.COOKIE));
 		btnCopyPosition.setToolTipText("Position in Zwischenablage kopieren");
-		add(btnCopyPosition, "width 27!, height 27!" + (changePositionConsumerKeepChilds != null ? ", skip" : ""));
+		add(btnCopyPosition, LayoutUtils.sqrBtn() + (changePositionConsumerKeepChilds != null ? ", skip" : ""));
 		btnCopyPosition.addActionListener(e -> handleCopyPosition());
 
 		JButton btnCopyMarvinPosition = new JButton(Icons.getImageIcon(Icons.Misc.COOKIE_BITE));
 		btnCopyMarvinPosition.setToolTipText("Position in Zwischenablage kopieren (gerundet für Konsole)");
-		add(btnCopyMarvinPosition, "width 27!, height 27!, wrap");
+		add(btnCopyMarvinPosition, LayoutUtils.sqrBtn("wrap"));
 		btnCopyMarvinPosition.addActionListener(e -> handleCopyMarvinPosition());
 
 		if (changePositionConsumerKeepChilds != null) {
 			JButton btnEditPositionKeepChilds = new JButton(Icons.getImageIcon(Icons.Action.LAYER_EDIT));
 			btnEditPositionKeepChilds.setToolTipText("Position ändern, aber World-Position der Child-Entities beibehalten");
-			add(btnEditPositionKeepChilds, "width 27!, height 27!");
+			add(btnEditPositionKeepChilds, LayoutUtils.sqrBtn());
 			btnEditPositionKeepChilds.addActionListener(e -> handleChangePosition(true));
 		}
 
 		JButton btnEditPosition = new JButton(Icons.getImageIcon(Icons.Action.EDIT));
 		btnEditPosition.setToolTipText("Position ändern");
-		add(btnEditPosition, "width 27!, height 27!");
+		add(btnEditPosition, LayoutUtils.sqrBtn());
 		btnEditPosition.addActionListener(e -> handleChangePosition(false));
 
 		JButton btnPastePosition = new JButton(Icons.getImageIcon(Icons.IO.IMPORT));
 		btnPastePosition.setToolTipText("Position aus Zwischenablage verwenden");
-		add(btnPastePosition, "width 27!, height 27!");
+		add(btnPastePosition, LayoutUtils.sqrBtn());
 		btnPastePosition.addActionListener(e -> handlePastePosition());
 	}
 

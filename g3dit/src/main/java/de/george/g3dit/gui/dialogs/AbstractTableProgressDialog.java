@@ -1,6 +1,5 @@
 package de.george.g3dit.gui.dialogs;
 
-import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -17,7 +16,6 @@ import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
 import javax.swing.KeyStroke;
 import javax.swing.WindowConstants;
-import javax.swing.plaf.basic.BasicProgressBarUI;
 
 import org.jdesktop.swingx.JXTable;
 
@@ -87,21 +85,7 @@ public abstract class AbstractTableProgressDialog extends ExtStandardDialog {
 
 	protected void appendBarAndTable(JPanel mainPanel, JXTable table) {
 		this.table = table;
-		progressBar = new JProgressBar();
-		progressBar.setUI(new BasicProgressBarUI() {
-			@Override
-			protected Color getSelectionForeground() {
-				return Color.WHITE;
-			}
-
-			@Override
-			protected Color getSelectionBackground() {
-				return Color.BLACK;
-			}
-		});
-		progressBar.setStringPainted(true);
-		progressBar.setString("");
-
+		progressBar = SwingUtils.createProgressBar();
 		mainPanel.add(progressBar, "width 100%, spanx, wrap");
 
 		JScrollPane tableScroll = new JScrollPane(table);

@@ -9,6 +9,7 @@ import javax.swing.border.TitledBorder;
 
 import org.netbeans.validation.api.ui.ValidationGroup;
 
+import de.george.g3dit.gui.theme.LayoutUtils;
 import de.george.g3dit.tab.shared.AbstractElementsPanel.InsertPosition;
 import de.george.g3dit.util.Icons;
 import de.george.g3utils.gui.SwingUtils;
@@ -30,27 +31,27 @@ public abstract class AbstractElementPanel extends JPanel {
 
 		upButton = new JButton(Icons.getImageIcon(Icons.Arrow.UP));
 		upButton.setToolTipText("Nach oben verschieben");
-		operationPanel.add(upButton, "cell 0 0, width 27!, height 27!");
+		operationPanel.add(upButton, LayoutUtils.sqrBtn("cell 0 0"));
 		upButton.addActionListener(e -> callback.moveUp(AbstractElementPanel.this));
 
 		deleteButton = new JButton(Icons.getImageIcon(Icons.Action.DELETE));
 		deleteButton.setToolTipText("Löschen");
-		operationPanel.add(deleteButton, "cell 0 1, width 27!, height 27!");
+		operationPanel.add(deleteButton, LayoutUtils.sqrBtn("cell 0 1"));
 		deleteButton.addActionListener(e -> callback.removeElement(AbstractElementPanel.this));
 
 		downButton = new JButton(Icons.getImageIcon(Icons.Arrow.DOWN));
 		downButton.setToolTipText("Nach unten verschieben");
-		operationPanel.add(downButton, "cell 0 2, width 27!, height 27!");
+		operationPanel.add(downButton, LayoutUtils.sqrBtn("cell 0 2"));
 		downButton.addActionListener(e -> callback.moveDown(AbstractElementPanel.this));
 
 		JButton insertBeforeButton = new JButton(Icons.getImageIcon(Icons.Arrow.RETURN_BEFORE));
 		insertBeforeButton.setToolTipText(elementName.concat(" davor einfügen"));
-		operationPanel.add(insertBeforeButton, "cell 1 0, width 27!, height 27!");
+		operationPanel.add(insertBeforeButton, LayoutUtils.sqrBtn("cell 1 0"));
 		insertBeforeButton.addActionListener(e -> callback.insertNewElement(AbstractElementPanel.this, InsertPosition.Before));
 
 		JButton insertAfterButton = new JButton(Icons.getImageIcon(Icons.Arrow.RETURN_AFTER));
 		insertAfterButton.setToolTipText(elementName.concat(" danach einfügen"));
-		operationPanel.add(insertAfterButton, "cell 1 2, width 27!, height 27!");
+		operationPanel.add(insertAfterButton, LayoutUtils.sqrBtn("cell 1 2"));
 		insertAfterButton.addActionListener(e -> callback.insertNewElement(AbstractElementPanel.this, InsertPosition.After));
 	}
 

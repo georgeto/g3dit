@@ -15,6 +15,7 @@ import javax.swing.JPanel;
 import com.ezware.dialog.task.TaskDialogs;
 
 import de.george.g3dit.gui.dialogs.TemplateNameSearchDialog;
+import de.george.g3dit.gui.theme.LayoutUtils;
 import de.george.g3dit.tab.EditorTab;
 import de.george.g3dit.tab.archive.views.entity.dialogs.BoundingBoxDialog;
 import de.george.g3dit.util.FileManager;
@@ -55,22 +56,22 @@ public class BoundingBoxPanel extends JPanel {
 
 		JButton btnEditBoundingBox = new JButton(Icons.getImageIcon(Icons.Action.EDIT));
 		btnEditBoundingBox.setToolTipText("BoundingBox ändern");
-		add(btnEditBoundingBox, "width 27!, height 27!");
+		add(btnEditBoundingBox, LayoutUtils.sqrBtn());
 		btnEditBoundingBox.addActionListener(e -> handleChangeBoundingBox());
 
 		JButton btnCopyBoundingBox = new JButton(Icons.getImageIcon(Icons.Action.COPY));
 		btnCopyBoundingBox.setToolTipText("BoundingBox in Zwischenablage kopieren");
-		add(btnCopyBoundingBox, "width 27!, height 27!, wrap");
+		add(btnCopyBoundingBox, LayoutUtils.sqrBtn("wrap"));
 		btnCopyBoundingBox.addActionListener(e -> handleCopyBoundingBox());
 
 		JButton btnLoadBoundingBoxTple = new JButton(Icons.getImageIcon(Icons.IO.UPLOAD));
 		btnLoadBoundingBoxTple.setToolTipText("BoundingBox aus Template laden");
-		add(btnLoadBoundingBoxTple, "width 27!, height 27!");
+		add(btnLoadBoundingBoxTple, LayoutUtils.sqrBtn());
 		btnLoadBoundingBoxTple.addActionListener(e -> handleLoadBoundingBoxTple());
 
 		JButton btnLoadBoundingBoxMesh = new JButton(Icons.getImageIcon(Icons.IO.IMPORT));
 		btnLoadBoundingBoxMesh.setToolTipText("BoundingBox aus Mesh laden");
-		add(btnLoadBoundingBoxMesh, "width 27!, height 27!");
+		add(btnLoadBoundingBoxMesh, LayoutUtils.sqrBtn());
 		btnLoadBoundingBoxMesh.addActionListener(e -> handleLoadBoundingBoxMesh());
 	}
 

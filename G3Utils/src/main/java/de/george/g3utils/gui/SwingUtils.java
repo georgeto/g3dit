@@ -28,6 +28,7 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JEditorPane;
 import javax.swing.JLabel;
+import javax.swing.JProgressBar;
 import javax.swing.KeyStroke;
 import javax.swing.LookAndFeel;
 import javax.swing.SwingUtilities;
@@ -58,6 +59,14 @@ public class SwingUtils {
 
 	public static UndoableTextField createUndoTF(String text) {
 		return new UndoableTextField(text);
+	}
+
+	public static UndoableTextField createNoBorderUndoTF() {
+		return new NoBorderUndoableTextField();
+	}
+
+	public static UndoableTextField createNoBorderUndoTF(String text) {
+		return new NoBorderUndoableTextField(text);
 	}
 
 	public static final int getComponentIndex(Component component) {
@@ -367,5 +376,12 @@ public class SwingUtils {
 	public static Component smallFont(Component component) {
 		component.setFont(component.getFont().deriveFont(component.getFont().getSize2D() * 0.75f));
 		return component;
+	}
+
+	public static JProgressBar createProgressBar() {
+		JProgressBar progressBar = new JProgressBar();
+		progressBar.setStringPainted(true);
+		progressBar.setString("");
+		return progressBar;
 	}
 }

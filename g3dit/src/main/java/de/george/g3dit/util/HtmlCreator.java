@@ -2,6 +2,7 @@ package de.george.g3dit.util;
 
 import static j2html.TagCreator.text;
 
+import java.awt.Color;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
@@ -40,4 +41,7 @@ public class HtmlCreator {
 		return Collectors.joining(LINE_SEPERATOR);
 	}
 
+	public static String formatColorAsHex(Color color) {
+		return String.format("#%06x", color.getRGB() & 0xffffff);
+	}
 }

@@ -1,5 +1,9 @@
 package de.george.g3dit.check.problem;
 
+import static j2html.TagCreator.dd;
+import static j2html.TagCreator.dl;
+import static j2html.TagCreator.dt;
+
 import de.george.g3dit.EditorContext;
 import de.george.g3dit.check.EntityDescriptor;
 
@@ -33,7 +37,8 @@ public class EntityHelper implements Problem {
 
 	@Override
 	public String getDetails() {
-		return String.format("Name: %s\nGuid: %s\nIndex: %d", descriptor.getDisplayName(), descriptor.getGuid(), descriptor.getIndex());
+		return dl(dt("Name"), dd(descriptor.getDisplayName()), dt("Guid"), dd(descriptor.getGuid()), dt("Index"),
+				dd(String.valueOf(descriptor.getIndex()))).render();
 	}
 
 	@Override

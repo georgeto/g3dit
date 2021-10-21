@@ -1,13 +1,21 @@
 package de.george.g3dit.check.problem;
 
+import static j2html.TagCreator.dd;
+import static j2html.TagCreator.dl;
+import static j2html.TagCreator.dt;
+
+import java.util.function.Function;
+
 import de.george.g3dit.EditorContext;
 import de.george.g3dit.check.FileDescriptor;
 
 public class FileHelper implements Problem {
 	private final FileDescriptor descriptor;
+	private final Function<Problem, String> pathResolver;
 
-	public FileHelper(FileDescriptor descriptor) {
+	public FileHelper(FileDescriptor descriptor, Function<Problem, String> pathResolver) {
 		this.descriptor = descriptor;
+		this.pathResolver = pathResolver;
 	}
 
 	public FileDescriptor getDescriptor() {
@@ -31,7 +39,7 @@ public class FileHelper implements Problem {
 
 	@Override
 	public String getDetails() {
-		return String.format("Pfad: %s", descriptor.getPath().getAbsolutePath());
+		return dl(dt("Name"), dd(descriptor.getPath().getName()), dt("Path"), dd(pathResolver.apply(this))).render();
 	}
 
 	@Override

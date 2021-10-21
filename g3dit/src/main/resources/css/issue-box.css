@@ -1,0 +1,22 @@
+body {
+    font-family: 'Liberation Mono', monospace;
+    font-size: 80%;
+    margin: 0.5em;
+    background-color: $BODY_BACKGROUND_COLOR;
+    color: $BODY_FOREGROUND_COLOR;
+}
+
+a[href] {
+    color: $HREF_COLOR;
+}
+
+dt {
+    float: left;
+    clear: left;
+    margin-right: 5px;
+    font-weight: bold;
+}
+
+dd {
+    margin-left: 0;
+}

@@ -109,8 +109,8 @@ public class TemplateSearchDialog extends AbstractTableProgressDialog {
 		btnErase.addActionListener(e -> searchPanel.reset(false));
 
 		mainPanel.add(searchPanel.getComponent(), "split 3, width 100%, spanx");
-		mainPanel.add(btnSearch, "height 23!");
-		mainPanel.add(btnErase, "width 23!, height 23!, wrap");
+		mainPanel.add(btnSearch);
+		mainPanel.add(btnErase, "wrap");
 
 		results = new BasicEventList<>();
 		SortedList<Result> sortedResults = new SortedList<>(results,

@@ -18,14 +18,14 @@ public class AboutDialog extends ExtStandardDialog {
 		super(owner, "Über g3dit", true);
 		setType(Type.UTILITY);
 		setResizable(false);
-		setSize(500, 420);
+		setSize(500, 450);
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 	}
 
 	@Override
 	public JComponent createBannerPanel() {
 		BannerPanel bannerPanel = new BannerPanel("g3dit " + Editor.EDITOR_VERSION,
-				"(c) 2014-2020 George\n\nCommunity Story Project - g3csp.de", SwingUtils.loadIcon("/res/g3gold.png"));
+				"(c) 2014-2021 George\n\nCommunity Story Project - g3csp.de", SwingUtils.loadIcon("/res/g3gold.png"));
 		return bannerPanel;
 	}
 
@@ -50,6 +50,7 @@ public class AboutDialog extends ExtStandardDialog {
 		libPanel.add(new JLinkLabel("OneInstance", "https://github.com/kayahr/oneinstance"), "gapleft 7, wrap");
 		libPanel.add(new JLinkLabel("WinRun4J", "https://github.com/poidasmith/winrun4j"), "gapleft 7, wrap");
 		libPanel.add(new JLinkLabel("JBreadcrumb", "https://github.com/ghedlund/jbreadcrumb"), "gapleft 7, wrap");
+		libPanel.add(new JLinkLabel("FlatLaf", "https://github.com/JFormDesigner/FlatLaf"), "gapleft 7, wrap");
 
 		iconPanel.add(SwingUtils.createBoldLabel("Icons"), "wrap");
 		iconPanel.add(new JLinkLabel("Fugue Icons", "http://p.yusukekamiyamane.com"), "gapleft 7, wrap");

@@ -41,4 +41,7 @@ public abstract class AbstractOptionHandler<T> implements OptionHandler<T> {
 	protected Window getParent() {
 		return parent;
 	}
+
+	@Override
+	public void cancel(OptionStore optionStore, Option<T> option) {}
 }

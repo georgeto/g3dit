@@ -1,19 +1,11 @@
 package de.george.g3dit.check;
 
 import static j2html.TagCreator.b;
-import static j2html.TagCreator.body;
-import static j2html.TagCreator.dd;
-import static j2html.TagCreator.dl;
-import static j2html.TagCreator.dt;
-import static j2html.TagCreator.head;
-import static j2html.TagCreator.html;
-import static j2html.TagCreator.meta;
 import static j2html.TagCreator.p;
 import static j2html.TagCreator.rawHtml;
 
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Dimension;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -39,7 +31,6 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
-import javax.swing.JEditorPane;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
@@ -49,14 +40,9 @@ import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkEvent.EventType;
-import javax.swing.plaf.basic.BasicProgressBarUI;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableModel;
 
-import org.fit.cssbox.io.DocumentSource;
-import org.fit.cssbox.layout.Viewport;
-import org.fit.cssbox.swingbox.SwingBoxEditorKit;
-import org.fit.cssbox.swingbox.util.DefaultAnalyzer;
 import org.jdesktop.swingx.JXTable;
 import org.jdesktop.swingx.table.ColumnFactory;
 import org.jdesktop.swingx.table.TableColumnExt;
@@ -88,6 +74,7 @@ import de.george.g3dit.check.problem.Problem;
 import de.george.g3dit.check.problem.ProblemConsumer;
 import de.george.g3dit.check.problem.Severity;
 import de.george.g3dit.gui.components.EnableGroup;
+import de.george.g3dit.gui.components.HtmlEditorPane;
 import de.george.g3dit.gui.components.tab.ITypedTab;
 import de.george.g3dit.gui.components.tab.JTypedTabbedPane;
 import de.george.g3dit.gui.dialogs.CheckBoxListSelectDialog;
@@ -106,7 +93,6 @@ import de.george.lrentnode.archive.ArchiveFile;
 import de.george.lrentnode.iterator.ArchiveFileIterator;
 import de.george.lrentnode.iterator.TemplateFileIterator;
 import de.george.lrentnode.template.TemplateFile;
-import j2html.tags.DomContent;
 import net.miginfocom.swing.MigLayout;
 import one.util.streamex.StreamEx;
 
@@ -357,21 +343,7 @@ public class CheckManager {
 			JPanel mainPanel = new JPanel(new MigLayout("fill"));
 			egCheck = new EnableGroup();
 
-			progressBar = new JProgressBar();
-			progressBar.setUI(new BasicProgressBarUI() {
-				@Override
-				protected Color getSelectionForeground() {
-					return Color.WHITE;
-				}
-
-				@Override
-				protected Color getSelectionBackground() {
-					return Color.BLACK;
-				}
-			});
-			progressBar.setStringPainted(true);
-			progressBar.setString("");
-
+			progressBar = SwingUtils.createProgressBar();
 			mainPanel.add(progressBar, "grow");
 
 			btnToggleChecks = new JButton("Checks auswählen");
@@ -413,7 +385,7 @@ public class CheckManager {
 			private JPanel tabContent;
 			private TreeList<Problem> treeList;
 			private AdvancedTableModel<Problem> problemTableModel;
-			private JEditorPane epDetails;
+			private HtmlEditorPane epDetails;
 
 			public ProblemTableTab(Category category) {
 				this.category = category;
@@ -478,26 +450,9 @@ public class CheckManager {
 
 				tabContent.add(new JScrollPane(problemTable), "height 80%, wrap");
 
-				epDetails = new JEditorPane();
-				JScrollPane spDetails = new JScrollPane(epDetails);
-				epDetails.setEditorKit(new SwingBoxEditorKit(new DefaultAnalyzer() {
-					// The size of a JEditorPane with a SwingBoxEditorKit depends on the available
-					// space. As a result the pane is always a bit to large for its JScrollPane.
-					// Therefore scrollbars are added although they are not really necessary.
-					@Override
-					public Viewport analyze(DocumentSource docSource, Dimension dim) throws Exception {
-						return super.analyze(docSource, new Dimension(spDetails.getWidth() - 30, spDetails.getHeight() - 30));
-					}
-
-					@Override
-					public Viewport update(Dimension dim) throws Exception {
-						return super.update(new Dimension(spDetails.getWidth() - 30, spDetails.getHeight() - 30));
-					}
-				}));
-				epDetails.setEditable(false);
-				epDetails.addHyperlinkListener(this::onHyperlink);
-
-				tabContent.add(spDetails, "height 20%");
+				epDetails = HtmlEditorPane.withCssTemplateFile("/css/issue-box.css");
+				epDetails.editorPane.addHyperlinkListener(this::onHyperlink);
+				tabContent.add(epDetails.scrollPane, "height 20%");
 			}
 
 			@Override
@@ -552,38 +507,19 @@ public class CheckManager {
 				}
 			}
 
-			private void setDetailsHtml(DomContent... content) {
-				String html;
-				if (content != null) {
-					html = html(head(meta().attr("charset", "UTF-8")), body(content)).render();
-					epDetails.setText(html);
-				} else {
-					html = html().render();
-					if (!html.equals(epDetails.getText())) {
-						epDetails.setText(html);
-					}
-				}
-			}
-
 			private void onSelect(Integer index) {
 				if (index == -1) {
-					setDetailsHtml((DomContent[]) null);
+					epDetails.setHtml();
 					return;
 				}
 
 				Problem problem = problemTableModel.getElementAt(index);
-
-				// setDetailsHtml(html(body(text("Name: "), text(problem.getMessage()), br(),
-				// text("Pfad: "), text(getFileHelperPath(problem)))).render());
-				if (problem instanceof FileHelper) {
-					setDetailsHtml(dl(dt("Name"), dd(problem.getMessage()), dt("Pfad"), dd(getFileHelperPath(problem))));
-				} else if (problem instanceof EntityHelper) {
-					setDetailsHtml(rawHtml(problem.getDetails()));
+				if (problem instanceof FileHelper || problem instanceof EntityHelper) {
+					epDetails.setHtml(rawHtml(problem.getDetails()));
 				} else {
-					setDetailsHtml(b(rawHtml(problem.getMessage())), p(),
+					epDetails.setHtml(b(rawHtml(problem.getMessage())), p(),
 							rawHtml(problem.getDetails() != null ? problem.getDetails() : ""));
 				}
-				epDetails.setCaretPosition(0);
 			}
 
 			private void onHyperlink(HyperlinkEvent e) {
@@ -623,7 +559,7 @@ public class CheckManager {
 
 			@Override
 			public FileHelper getFileHelper(FileDescriptor file) {
-				return fileHelpers.computeIfAbsent(file, FileHelper::new);
+				return fileHelpers.computeIfAbsent(file, f -> new FileHelper(f, CheckManager.this::getFileHelperPath));
 			}
 
 		}

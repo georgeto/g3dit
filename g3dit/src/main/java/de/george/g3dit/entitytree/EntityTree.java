@@ -158,7 +158,7 @@ public class EntityTree extends JPanel {
 
 		searchPanel = new JPanel(new MigLayout("fillx", "[][][]push[]"));
 
-		searchPanel.add(searchField, "cell 0 0, split 2, width 95%, spanx 4");
+		searchPanel.add(searchField, "id searchField, cell 0 0, split 2, width 95%, spanx 4");
 		searchPanel.add(btnErase, "width 23!, height 23!");
 
 		searchPanel.add(rbName, "cell 0 1");

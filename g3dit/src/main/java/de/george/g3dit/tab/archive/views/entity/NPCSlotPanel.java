@@ -13,6 +13,7 @@ import org.netbeans.validation.api.ui.ValidationGroup;
 import de.george.g3dit.gui.dialogs.AbstractSelectDialog;
 import de.george.g3dit.gui.dialogs.ListSelectDialog;
 import de.george.g3dit.gui.dialogs.TemplateNameSearchDialog.TemplateSearchListener;
+import de.george.g3dit.gui.theme.LayoutUtils;
 import de.george.g3dit.gui.validation.TemplateExistenceValidator;
 import de.george.g3dit.tab.archive.EditorArchiveTab;
 import de.george.g3dit.tab.archive.views.entity.dialogs.SlotDialog;
@@ -80,25 +81,25 @@ public class NPCSlotPanel extends JPanel implements TemplateSearchListener {
 
 		btnEdit = new JButton(Icons.getImageIcon(Icons.Action.EDIT));
 		btnEdit.setToolTipText("Werte bearbeiten");
-		add(btnEdit, "cell 2 0, width 27!, height 27!");
+		add(btnEdit, LayoutUtils.sqrBtn("cell 2 0"));
 		btnEdit.addActionListener(e -> handleEditManual());
 
 		btnTple = new JButton(Icons.getImageIcon(Icons.Action.BOOK));
 		btnTple.setToolTipText("Template laden");
-		add(btnTple, "cell 2 1, width 27!, height 27!");
+		add(btnTple, LayoutUtils.sqrBtn("cell 2 1"));
 		btnTple.addActionListener(e -> handleLoadTemplate());
 
 		// Platzhalter
-		add(new JLabel(), "cell 2 2, width 27!, height 27!");
+		add(new JLabel(), LayoutUtils.sqrBtn("cell 2 2"));
 
 		btnAdd = new JButton(Icons.getImageIcon(Icons.Action.ADD));
 		btnAdd.setToolTipText("Entity für diesen Slot auswählen");
-		add(btnAdd, "cell 2 3, width 27!, height 27!");
+		add(btnAdd, LayoutUtils.sqrBtn("cell 2 3"));
 		btnAdd.addActionListener(e -> handleAddSlot());
 
 		btnDelete = new JButton(Icons.getImageIcon(Icons.Action.DELETE));
 		btnDelete.setToolTipText("Slot löschen");
-		add(btnDelete, "cell 2 4, width 27!, height 27!");
+		add(btnDelete, LayoutUtils.sqrBtn("cell 2 4"));
 		btnDelete.addActionListener(e -> handleRemoveSlot());
 	}
 

@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 import com.ezware.dialog.task.TaskDialogs;
 import com.jidesoft.dialog.ButtonPanel;
 
+import de.george.g3dit.gui.theme.LayoutUtils;
 import de.george.g3dit.util.Icons;
 import de.george.g3utils.gui.JGuidField;
 import de.george.g3utils.gui.SwingUtils;
@@ -42,7 +43,7 @@ public class EnterGuidDialog extends ExtStandardDialog {
 		JButton btnRandomGuid = new JButton(Icons.getImageIcon(Icons.Data.COUNTER));
 		btnRandomGuid.setToolTipText("Zufällige Guid generieren");
 		btnRandomGuid.addActionListener(a -> gfGuid.setText(GuidUtil.randomGUID(), true));
-		panel.add(btnRandomGuid, "width 27!, height 27!");
+		panel.add(btnRandomGuid, LayoutUtils.sqrBtn());
 
 		return panel;
 	}

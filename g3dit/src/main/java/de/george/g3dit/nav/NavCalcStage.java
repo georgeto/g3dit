@@ -1,16 +1,10 @@
 package de.george.g3dit.nav;
 
 import static j2html.TagCreator.b;
-import static j2html.TagCreator.body;
-import static j2html.TagCreator.head;
-import static j2html.TagCreator.html;
-import static j2html.TagCreator.meta;
 import static j2html.TagCreator.p;
 import static j2html.TagCreator.rawHtml;
 
-import java.awt.Color;
 import java.awt.Component;
-import java.awt.Dimension;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.io.File;
@@ -23,18 +17,12 @@ import java.util.function.Consumer;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
-import javax.swing.JEditorPane;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.plaf.basic.BasicProgressBarUI;
 
-import org.fit.cssbox.io.DocumentSource;
-import org.fit.cssbox.layout.Viewport;
-import org.fit.cssbox.swingbox.SwingBoxEditorKit;
-import org.fit.cssbox.swingbox.util.DefaultAnalyzer;
 import org.jdesktop.swingx.JXTable;
 
 import com.google.common.base.Predicates;
@@ -53,6 +41,7 @@ import de.george.g3dit.EditorContext;
 import de.george.g3dit.cache.Caches;
 import de.george.g3dit.cache.NavCache;
 import de.george.g3dit.gui.components.ComboBoxMatcherEditor;
+import de.george.g3dit.gui.components.HtmlEditorPane;
 import de.george.g3dit.gui.components.JSeverityComboBox;
 import de.george.g3dit.gui.components.Severity;
 import de.george.g3dit.gui.components.SeverityImageIcon;
@@ -69,7 +58,6 @@ import de.george.g3utils.gui.SwingUtils;
 import de.george.g3utils.structure.GuidUtil;
 import de.george.navmap.sections.NavMap;
 import de.george.navmap.util.NavCalc;
-import j2html.tags.DomContent;
 import net.miginfocom.swing.MigLayout;
 import one.util.streamex.StreamEx;
 
@@ -86,7 +74,7 @@ public abstract class NavCalcStage {
 	private AdvancedTableModel<Change> changeTableModel;
 	private JLabel laFilteredCount;
 	private JXTable changeTable;
-	private JEditorPane epDetails;
+	private HtmlEditorPane epDetails;
 
 	private List<Runnable> repaintListeners;
 
@@ -243,21 +231,7 @@ public abstract class NavCalcStage {
 	protected <T extends Change> JPanel createMainPanel(Class<T> changeClass, TableColumnDef... columns) {
 		JPanel mainPanel = new JPanel(new MigLayout("fill"));
 
-		JProgressBar progressBar = new JProgressBar();
-		progressBar.setUI(new BasicProgressBarUI() {
-			@Override
-			protected Color getSelectionForeground() {
-				return Color.WHITE;
-			}
-
-			@Override
-			protected Color getSelectionBackground() {
-				return Color.BLACK;
-			}
-		});
-		progressBar.setStringPainted(true);
-		progressBar.setString("");
-
+		JProgressBar progressBar = SwingUtils.createProgressBar();
 		mainPanel.add(progressBar, "spanx 10, split 2, pushx, growx 100, id progressbar");
 
 		mainPanel.add(SwingUtils.keyStrokeButton("Execute Scan", Icons.getImageIcon(Icons.Action.DIFF), KeyEvent.VK_E,
@@ -280,7 +254,7 @@ public abstract class NavCalcStage {
 		mainPanel.add(cbFiles, "gaptop 7, split 3, width 350!");
 		mainPanel.add(cbSeverity, "gaptop 9");
 		laFilteredCount = new JLabel();
-		mainPanel.add(laFilteredCount, "width 150!, gapleft 10");
+		mainPanel.add(laFilteredCount, "wmax 200, gapleft 10");
 
 		filteredChanges = new FilterList<>(filteredChanges, new ComboBoxMatcherEditor<>(cbFiles, Change::getFile));
 
@@ -323,43 +297,11 @@ public abstract class NavCalcStage {
 		JPanel tabContent = new JPanel(new MigLayout("insets 0, fill"));
 		tabContent.add(new JScrollPane(changeTable), "height 80%, push, grow, wrap");
 
-		epDetails = new JEditorPane();
-		JScrollPane spDetails = new JScrollPane(epDetails);
-		epDetails.setEditorKit(new SwingBoxEditorKit(new DefaultAnalyzer() {
-			// The size of a JEditorPane with a SwingBoxEditorKit depends on the available
-			// space. As a result the pane is always a bit to large for its JScrollPane.
-			// Therefore scrollbars are added although they are not really necessary.
-			@Override
-			public Viewport analyze(DocumentSource docSource, Dimension dim) throws Exception {
-				return super.analyze(docSource, new Dimension(spDetails.getWidth() - 30, spDetails.getHeight() - 30));
-			}
-
-			@Override
-			public Viewport update(Dimension dim) throws Exception {
-				return super.update(new Dimension(spDetails.getWidth() - 30, spDetails.getHeight() - 30));
-			}
-		}));
-		epDetails.setEditable(false);
-		// epDetails.addHyperlinkListener(this::onHyperlink);
-
-		tabContent.add(spDetails, "height 20%, push, grow");
+		epDetails = HtmlEditorPane.withCssTemplateFile("/css/issue-box.css");
+		tabContent.add(epDetails.scrollPane, "height 20%, push, grow");
 		mainPanel.add(tabContent, "push, span, grow, wrap");
 
 		return mainPanel;
-	}
-
-	private void setDetailsHtml(DomContent... content) {
-		String html;
-		if (content != null) {
-			html = html(head(meta().attr("charset", "UTF-8")),
-					body(content).withStyle("font-family:lucida console; font-size:80%; margin: 3px")).render();
-			epDetails.setText(html);
-		} else {
-			html = html().render();
-			if (!html.equals(epDetails.getText())) {
-				epDetails.setText(html);
-			}
-		}
 	}
 
 	protected void repaintChanges() {
@@ -378,13 +320,12 @@ public abstract class NavCalcStage {
 	private void onSelect() {
 		Optional<Change> change = getSelectedChange();
 		if (!change.isPresent()) {
-			setDetailsHtml((DomContent[]) null);
+			epDetails.setHtml();
 			return;
 		}
 
-		setDetailsHtml(b(rawHtml(change.get().getMessage())), p().withStyle("font-size: 4px;"),
+		epDetails.setHtml(b(rawHtml(change.get().getMessage())), p(),
 				rawHtml(change.get().getDetails() != null ? change.get().getDetails() : ""));
-		epDetails.setCaretPosition(0);
 	}
 
 	private void onFix() {

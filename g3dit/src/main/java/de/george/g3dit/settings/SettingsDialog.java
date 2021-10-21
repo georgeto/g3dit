@@ -31,7 +31,7 @@ public class SettingsDialog extends ExtStandardDialog {
 
 		setType(Type.UTILITY);
 		setResizable(true);
-		setSize(650, 600);
+		setSize(650, 650);
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 	}
 
@@ -83,6 +83,10 @@ public class SettingsDialog extends ExtStandardDialog {
 				.addHeadline("Screenshots")
 				.addOption(EditorOptions.D3View.SCREENSHOT_FOLDER));
 
+		tbTabs.addTab(new OptionsTab("Theme")
+				.addHeadline("Themes")
+				.addOption(EditorOptions.TheVoid.THEME, "push, grow"));
+
 		tbTabs.addTab(new OptionsTab("Dateiendungen", "fill")
 				.addHeadline("Mit g3dit verknüpfte Dateiendungen")
 				.addOption(EditorOptions.TheVoid.FILE_EXTENSIONS, "push, grow"));
@@ -100,8 +104,7 @@ public class SettingsDialog extends ExtStandardDialog {
 		Action okAction = SwingUtils.createAction("OK", () -> {
 			tbTabs.getTabs().forEach(t -> t.save(optionStore));
 
-			setDialogResult(RESULT_AFFIRMED);
-			dispose();
+			affirm();
 			settingsUpdatedCallback.run();
 		});
 
@@ -112,9 +115,14 @@ public class SettingsDialog extends ExtStandardDialog {
 			settingsUpdatedCallback.run();
 		});
 
+		Action cancelAction = SwingUtils.createAction("Abbrechen", () -> {
+			tbTabs.getTabs().forEach(t -> t.cancel(optionStore));
+			cancel();
+		});
+
 		addButton(buttonPanel, okAction, ButtonPanel.AFFIRMATIVE_BUTTON);
 		addButton(buttonPanel, applyAction, ButtonPanel.OTHER_BUTTON);
-		addDefaultCancelButton(buttonPanel);
+		addButton(buttonPanel, cancelAction, ButtonPanel.CANCEL_BUTTON);
 
 		return buttonPanel;
 	}

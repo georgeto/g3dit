@@ -20,6 +20,7 @@ import java.util.concurrent.Executors;
 import java.util.logging.Level;
 
 import javax.swing.JFrame;
+import javax.swing.LookAndFeel;
 import javax.swing.SwingUtilities;
 import javax.swing.ToolTipManager;
 
@@ -58,6 +59,9 @@ import de.george.g3dit.gui.components.tab.JSplittedTypedTabbedPane.Side;
 import de.george.g3dit.gui.components.tab.TabCloseEvent;
 import de.george.g3dit.gui.components.tab.TabSelectedEvent;
 import de.george.g3dit.gui.dialogs.DisplayTextDialog;
+import de.george.g3dit.gui.theme.EditorUnitConverter;
+import de.george.g3dit.gui.theme.ThemeInfo;
+import de.george.g3dit.gui.theme.ThemeManager;
 import de.george.g3dit.jme.EntityViewer;
 import de.george.g3dit.jme.JmeTransparentDesktopSystem;
 import de.george.g3dit.settings.EditorOptions;
@@ -96,7 +100,7 @@ import de.george.navmap.sections.NavMap;
 import net.tomahawk.XFileDialog;
 import one.util.streamex.StreamEx;
 
-public class Editor extends JFrame implements EditorContext {
+public class Editor implements EditorContext {
 	private static final Logger logger = LoggerFactory.getLogger(Editor.class);
 
 	public static final String EDITOR_TITLE = "g3dit";
@@ -110,6 +114,7 @@ public class Editor extends JFrame implements EditorContext {
 	private NavMapManager navMapManager;
 	private Provider hotKeyProvider;
 	private VisibilityManager visibilityManager;
+	private JFrame frame;
 	private MainMenu mainMenu;
 	private StatusBar statusBar;
 
@@ -173,8 +178,12 @@ public class Editor extends JFrame implements EditorContext {
 
 		JmeSystem.setSystemDelegate(new JmeTransparentDesktopSystem());
 
+		EditorUnitConverter.register();
+		applyTheme(true);
+		frame = new JFrame();
+
 		hotKeyProvider = Provider.getCurrentProvider(true);
-		visibilityManager = new VisibilityManager(this, hotKeyProvider);
+		visibilityManager = new VisibilityManager(frame, hotKeyProvider);
 
 		ipcMonitor = new IpcMonitor();
 
@@ -190,7 +199,7 @@ public class Editor extends JFrame implements EditorContext {
 		FileFilter dropFilter = f -> f.isFile() && FileDialogWrapper.COMBINED_FILTER.accept(f);
 		FileDropListener dropListener = new FileDropListener(dropFilter);
 		dropListener.eventBus().register(new EditorFileDropSubscriber(Side.LEFT));
-		new DropTarget(this, dropListener);
+		new DropTarget(frame, dropListener);
 
 		// Drag'n'Drop auf die einzelnen TabbedPanes
 		tbTabs.addDropListener(Side.LEFT, new FileDropListener(dropFilter)).eventBus().register(new EditorFileDropSubscriber(Side.LEFT));
@@ -211,7 +220,7 @@ public class Editor extends JFrame implements EditorContext {
 		if (!diff.hasChanges()) {
 			String binaryCompare = getOptionStore().get(EditorOptions.Path.BINARY_COMPARE);
 			if (binaryCompare.isEmpty()) {
-				TaskDialogs.error(this, "", "Kein Vergleichsprogramm für Binärdateien konfiguriert.");
+				TaskDialogs.error(frame, "", "Kein Vergleichsprogramm für Binärdateien konfiguriert.");
 				return;
 			}
 
@@ -223,7 +232,7 @@ public class Editor extends JFrame implements EditorContext {
 		SwingUtilities.invokeLater(() -> {
 			DisplayTextDialog dialog = new DisplayTextDialog(
 					String.format("Dateivergleich - [%s - %s]", new File(base).getName(), new File(mine).getName()),
-					mapPrintingVisitor.getMessagesAsString(), this, false);
+					mapPrintingVisitor.getMessagesAsString(), frame, false);
 			// dialog.setLocationRelativeTo(editor.getOwner());
 			dialog.setVisible(true);
 		});
@@ -232,7 +241,7 @@ public class Editor extends JFrame implements EditorContext {
 	private void diffNavigationMap(String base, String mine) throws IOException {
 		String textCompare = getOptionStore().get(EditorOptions.Path.TEXT_COMPARE);
 		if (textCompare.isEmpty()) {
-			TaskDialogs.error(this, "", "Kein Vergleichsprogramm für Textdateien konfiguriert.");
+			TaskDialogs.error(frame, "", "Kein Vergleichsprogramm für Textdateien konfiguriert.");
 			return;
 		}
 
@@ -258,12 +267,12 @@ public class Editor extends JFrame implements EditorContext {
 			String baseExt = Files.getFileExtension(base).toLowerCase();
 			String mineExt = Files.getFileExtension(mine).toLowerCase();
 			if (!baseExt.equals(mineExt)) {
-				TaskDialogs.error(this, "", "Zu vergleichende Dateien haben unterschiedliche Dateiendungen.");
+				TaskDialogs.error(frame, "", "Zu vergleichende Dateien haben unterschiedliche Dateiendungen.");
 				return;
 			}
 
 			if (FileUtils.contentEquals(baseFile, mineFile)) {
-				TaskDialogs.inform(this, "", "Zu vergleichende Dateien sind identisch.");
+				TaskDialogs.inform(frame, "", "Zu vergleichende Dateien sind identisch.");
 			}
 
 			eCEntity baseRoot;
@@ -304,7 +313,7 @@ public class Editor extends JFrame implements EditorContext {
 		OneInstance.getInstance().setListener((workingDir, args1, writer, exitCode) -> {
 			SwingUtilities.invokeLater(() -> {
 				try {
-					setState(Frame.NORMAL);
+					frame.setState(Frame.NORMAL);
 					exitCode.accept(processArguments(workingDir, args1, writer) ? EditorCli.EXIT_CODE_OK : EditorCli.EXIT_CODE_ERROR);
 				} finally {
 					writer.close();
@@ -355,35 +364,35 @@ public class Editor extends JFrame implements EditorContext {
 
 	public final void createAndShowGUI() {
 		// GUI initialisieren
-		setSize(optionStore.get(EditorOptions.MainWindow.SIZE));
-		setLocation(optionStore.get(EditorOptions.MainWindow.LOCATION));
-		setExtendedState(optionStore.get(EditorOptions.MainWindow.EXTENDED_STATE));
-		setTitle(EDITOR_TITLE);
-		setIconImage(SwingUtils.getG3Icon());
-		SwingUtils.setLookAndFeel("com.jgoodies.looks.windows.WindowsLookAndFeel");
+		frame.setSize(optionStore.get(EditorOptions.MainWindow.SIZE));
+		frame.setLocation(optionStore.get(EditorOptions.MainWindow.LOCATION));
+		frame.setExtendedState(optionStore.get(EditorOptions.MainWindow.EXTENDED_STATE));
+		frame.setTitle(EDITOR_TITLE);
+		frame.setIconImage(SwingUtils.getG3Icon());
+
 		Options.setUseNarrowButtons(true);
 		LookAndFeelFactory.installJideExtension(LookAndFeelFactory.EXTENSION_STYLE_VSNET_WITHOUT_MENU);
-		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		ToolTipManager.sharedInstance().setDismissDelay(6000);
 
 		// Hauptfenster
 		tbTabs = new JSplittedTypedTabbedPane<>(true);
-		add(tbTabs.getComponent(), BorderLayout.CENTER);
+		frame.add(tbTabs.getComponent(), BorderLayout.CENTER);
 		tbTabs.eventBus().register(this);
 
 		// Menü
 		mainMenu = new MainMenu(this);
-		setJMenuBar(mainMenu);
+		frame.setJMenuBar(mainMenu);
 
 		// StatusBar
 		statusBar = new StatusBar(this);
 		statusBar.addCacheStatus(TemplateCache.class, e -> (int) e.getEntities().count());
 		statusBar.addCacheStatus(NavCache.class, e -> e.getZones().size() + e.getPaths().size());
 		statusBar.addCacheStatus(EntityCache.class, e -> e.getGuids().size());
-		add(statusBar, BorderLayout.SOUTH);
+		frame.add(statusBar, BorderLayout.SOUTH);
 
 		// Programm wird geschlossen
-		addWindowListener(new WindowAdapter() {
+		frame.addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {
 				// Alle Tabs schließen
@@ -401,7 +410,7 @@ public class Editor extends JFrame implements EditorContext {
 				}
 
 				if (navMapManager.isNavMapChanged()) {
-					switch (Dialogs.askSaveChanges(Editor.this, "Änderungen an NavMap vor dem Beenden speichern?")) {
+					switch (Dialogs.askSaveChanges(frame, "Änderungen an NavMap vor dem Beenden speichern?")) {
 						case Yes:
 							navMapManager.saveMap();
 						case No:
@@ -422,7 +431,7 @@ public class Editor extends JFrame implements EditorContext {
 			}
 		});
 
-		setVisible(true);
+		frame.setVisible(true);
 	}
 
 	@Override
@@ -509,14 +518,23 @@ public class Editor extends JFrame implements EditorContext {
 		refreshTitle();
 		// Add data folders to file dialog places
 		FileDialogWrapper.setPlaces(getFileManager().getDataFolders());
+		// Apply theme
+		applyTheme(false);
+	}
+
+	private LookAndFeel nativeLookAndFeel;
+
+	private void applyTheme(boolean early) {
+		ThemeInfo theme = getOptionStore().get(EditorOptions.TheVoid.THEME);
+		ThemeManager.setThemeOrDefault(theme, early);
 	}
 
 	private void refreshTitle() {
 		Optional<EditorTab> tab = getSelectedTab();
 		if (tab.isPresent()) {
-			setTitle(tab.get().getEditorTitle());
+			frame.setTitle(tab.get().getEditorTitle());
 		} else {
-			setTitle(Editor.EDITOR_TITLE);
+			frame.setTitle(Editor.EDITOR_TITLE);
 		}
 	}
 
@@ -709,7 +727,7 @@ public class Editor extends JFrame implements EditorContext {
 
 	@Override
 	public Window getParentWindow() {
-		return this;
+		return frame;
 	}
 
 	@Override
@@ -748,10 +766,10 @@ public class Editor extends JFrame implements EditorContext {
 	 * Speichert Größe, Position der GUI und alle weiteren Einstellungen
 	 */
 	private void saveSettings() {
-		optionStore.put(EditorOptions.MainWindow.LOCATION, getLocation());
-		optionStore.put(EditorOptions.MainWindow.SIZE, getSize());
+		optionStore.put(EditorOptions.MainWindow.LOCATION, frame.getLocation());
+		optionStore.put(EditorOptions.MainWindow.SIZE, frame.getSize());
 		optionStore.put(EditorOptions.MainWindow.EXTENDED_STATE,
-				getExtendedState() != Frame.ICONIFIED ? getExtendedState() : Frame.NORMAL);
+				frame.getExtendedState() != Frame.ICONIFIED ? frame.getExtendedState() : Frame.NORMAL);
 		mainMenu.saveSettings(optionStore);
 		optionStore.save();
 	}
@@ -770,6 +788,6 @@ public class Editor extends JFrame implements EditorContext {
 	}
 
 	public static void main(final String[] args) {
-		SwingUtilities.invokeLater(() -> new Editor(args));
+		new Editor(args);
 	}
 }

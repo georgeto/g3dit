@@ -115,6 +115,11 @@ public class OptionPanelBase<T extends OptionPanelBase<T>> {
 	}
 
 	@SuppressWarnings("unchecked")
+	public void cancel(OptionStore optionStore) {
+		handlers.forEach((key, value) -> key.cancel(optionStore, value));
+	}
+
+	@SuppressWarnings("unchecked")
 	public void resetToDefaults() {
 		CheckBoxListSelectDialog<Option> dialog = new CheckBoxListSelectDialog<>(parent, "Einstellungen zurücksetzen", handlers.values(),
 				new BeanListCellRenderer("displayName"));

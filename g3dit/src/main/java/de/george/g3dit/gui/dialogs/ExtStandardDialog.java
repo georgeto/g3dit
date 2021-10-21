@@ -6,6 +6,8 @@ import java.awt.Frame;
 import java.awt.GraphicsConfiguration;
 import java.awt.HeadlessException;
 import java.awt.Window;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.Action;
 import javax.swing.BorderFactory;
@@ -83,6 +85,15 @@ public abstract class ExtStandardDialog extends StandardDialog {
 	}
 
 	private void installDefaultCancelAction() {
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				Action cancelAction = getDefaultCancelAction();
+				if (cancelAction != null)
+					cancelAction.actionPerformed(null);
+				super.windowClosing(e);
+			}
+		});
 		setDefaultCancelAction(SwingUtils.createAction(this::dispose));
 	}
 

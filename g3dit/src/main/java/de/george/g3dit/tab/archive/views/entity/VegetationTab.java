@@ -28,6 +28,7 @@ import com.ezware.dialog.task.TaskDialogs;
 import com.l2fprod.common.swing.renderer.ColorCellRenderer;
 
 import de.george.g3dit.gui.table.TableUtil;
+import de.george.g3dit.gui.theme.LayoutUtils;
 import de.george.g3dit.rpc.IpcUtil;
 import de.george.g3dit.tab.archive.EditorArchiveTab;
 import de.george.g3dit.tab.archive.views.entity.dialogs.CreatePlantDialog;
@@ -97,7 +98,7 @@ public class VegetationTab extends AbstractEntityTab {
 		filterPanel.add(tfPosZ, "width 50:100:150");
 		filterPanel.add(tfRadius, "width 50:100:150");
 		filterPanel.add(cbInvert);
-		filterPanel.add(btnPastePosition, "width 27!, height 27!");
+		filterPanel.add(btnPastePosition, LayoutUtils.sqrBtn());
 		add(filterPanel, "wrap");
 
 		DocumentListener tfDocumentListener = SwingUtils.createDocumentListener(this::filterPlants);

@@ -76,6 +76,16 @@ public abstract class ReflectionUtils {
 		}
 	}
 
+	public static <T> Constructor<T> getConstructor(Class<T> clazz, Class<?>... parameterTypes) {
+		try {
+			Constructor<T> constructor = clazz.getDeclaredConstructor(parameterTypes);
+			constructor.setAccessible(true);
+			return constructor;
+		} catch (ReflectiveOperationException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
 	public static Method getMethod(Class<?> clazz, String name, Class<?>... parameterTypes) {
 		try {
 			Method method = clazz.getDeclaredMethod(name, parameterTypes);
@@ -100,9 +110,9 @@ public abstract class ReflectionUtils {
 		return getFieldValue(field, null);
 	}
 
-	public static Object getFieldValue(Field field, Object instance) {
+	public static <T> T getFieldValue(Field field, Object instance) {
 		try {
-			return field.get(instance);
+			return (T) field.get(instance);
 		} catch (IllegalAccessException e) {
 			throw new RuntimeException(e);
 		}
@@ -125,6 +135,14 @@ public abstract class ReflectionUtils {
 			modifiersField.setInt(field, field.getModifiers() & ~Modifier.FINAL);
 
 			field.set(null, newValue);
+		} catch (ReflectiveOperationException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	public static <T> T newInstance(Constructor<T> constructor, Object... args) {
+		try {
+			return constructor.newInstance(args);
 		} catch (ReflectiveOperationException e) {
 			throw new RuntimeException(e);
 		}

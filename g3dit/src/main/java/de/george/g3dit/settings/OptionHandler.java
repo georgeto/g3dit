@@ -8,4 +8,6 @@ public interface OptionHandler<T> {
 	public void load(OptionStore optionStore, Option<T> option);
 
 	public void save(OptionStore optionStore, Option<T> option);
+
+	public void cancel(OptionStore optionStore, Option<T> option);
 }

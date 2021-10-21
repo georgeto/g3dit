@@ -32,7 +32,8 @@ public class AliasFolderPathOptionHandler extends AbstractOptionHandler<String> 
 
 		// Titel
 		content.add(new JLabel(title + " (Alias:"), "split 3");
-		tfPathAlias = SwingUtils.createUndoTF();
+		tfPathAlias = SwingUtils.createNoBorderUndoTF();
+		tfPathAlias.setBorder(null);
 		content.add(tfPathAlias, "grow, width 50:50:150, height 15!");
 		content.add(new JLabel(")"), "wrap");
 

@@ -19,6 +19,7 @@ import com.ezware.dialog.task.TaskDialogs;
 
 import de.george.g3dit.EditorContext;
 import de.george.g3dit.gui.components.JEnumComboBox;
+import de.george.g3dit.gui.theme.LayoutUtils;
 import de.george.g3dit.tab.shared.AbstractElementsPanel.InsertPosition;
 import de.george.g3dit.util.FileDialogWrapper;
 import de.george.g3dit.util.FileManager;
@@ -204,7 +205,7 @@ public class SharedCollisionShapeTab extends AbstractSharedTab {
 
 			btnTple = new JButton(Icons.getImageIcon(Icons.Action.BOOK));
 			btnTple.setToolTipText("Template laden");
-			operationPanel.add(btnTple, "cell 1 1, width 27!, height 27!");
+			operationPanel.add(btnTple, LayoutUtils.sqrBtn("cell 1 1"));
 
 			loadShape();
 			lastShapeType = colShape.property(CD.eCCollisionShape.ShapeType).getEnumValue();

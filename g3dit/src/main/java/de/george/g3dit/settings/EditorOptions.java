@@ -11,6 +11,8 @@ import javax.swing.JFrame;
 
 import com.google.common.collect.ImmutableList;
 
+import de.george.g3dit.gui.theme.ThemeInfo;
+import de.george.g3dit.gui.theme.ThemeManager;
 import de.george.g3dit.util.FileDialogWrapper;
 import de.george.g3utils.gui.SwingUtils;
 
@@ -154,6 +156,9 @@ public abstract class EditorOptions {
 	}
 
 	public static abstract class TheVoid {
+		public static final Option<ThemeInfo> THEME = new LambdaOption<>(ThemeManager.getNativeTheme(), ThemeOptionHandler::new,
+				"EditorOptions.TheVoid.THEME", "Theme");
+
 		public static final Option<Void> FILE_EXTENSIONS = new LambdaOption<>(null, FileExtensionOptionHandler::new,
 				"EditorOptions.TheVoid.FILE_EXTENSIONS", "Dateiendungen");
 	}

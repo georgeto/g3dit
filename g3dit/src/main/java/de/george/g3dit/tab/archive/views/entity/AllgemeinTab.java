@@ -26,6 +26,7 @@ import de.george.g3dit.gui.components.JTemplateGuidField;
 import de.george.g3dit.gui.dialogs.DisplayTextDialog;
 import de.george.g3dit.gui.dialogs.EntitySearchDialog;
 import de.george.g3dit.gui.dialogs.TemplateNameSearchDialog;
+import de.george.g3dit.gui.theme.LayoutUtils;
 import de.george.g3dit.gui.validation.ChangeTimeValidator;
 import de.george.g3dit.gui.validation.TemplateExistenceValidator;
 import de.george.g3dit.tab.archive.EditorArchiveTab;
@@ -105,12 +106,12 @@ public class AllgemeinTab extends AbstractEntityTab {
 		JButton btnRandomGuid = new JButton(Icons.getImageIcon(Icons.Data.COUNTER));
 		btnRandomGuid.setToolTipText("Zufällige Guid generieren");
 		btnRandomGuid.addActionListener(a -> tfGuid.setText(GuidUtil.randomGUID(), true));
-		add(btnRandomGuid, "spanx 3, split 3, width 27!, height 27!");
+		add(btnRandomGuid, LayoutUtils.sqrBtn("spanx 3, split 3"));
 
 		JButton btnCopyGuid = new JButton(Icons.getImageIcon(Icons.Action.COPY));
 		btnCopyGuid.setToolTipText("Guid in Zwischenablage kopieren");
 		btnCopyGuid.addActionListener(a -> IOUtils.copyToClipboard(tfGuid.getText()));
-		add(btnCopyGuid, "width 27!, height 27!, wrap");
+		add(btnCopyGuid, LayoutUtils.sqrBtn("wrap"));
 
 		plWorldPosition = new PositionPanel("World-Position", ctx.getParentWindow(), this::changeWorldPosition,
 				this::changeWorldPositionKeepChilds);
@@ -135,12 +136,12 @@ public class AllgemeinTab extends AbstractEntityTab {
 
 		btnLoadFromTemplate = new JButton(Icons.getImageIcon(Icons.IO.UPLOAD));
 		btnLoadFromTemplate.setToolTipText("Reference Guid und ChangeTime aus Template laden");
-		add(btnLoadFromTemplate, "width 27!, height 27!");
+		add(btnLoadFromTemplate, LayoutUtils.sqrBtn());
 		btnLoadFromTemplate.addActionListener(e -> handleLoadFromTemplate());
 
 		btnDiffTemplate = new JButton(Icons.getImageIcon(Icons.Action.DIFF));
 		btnDiffTemplate.setToolTipText("Mit Template vergleichen");
-		add(btnDiffTemplate, "width 27!, height 27!, wrap");
+		add(btnDiffTemplate, LayoutUtils.sqrBtn("wrap"));
 		btnDiffTemplate.addActionListener(e -> handleDiffTemplate());
 
 		lblChangeTime = new JLabel("ChangeTime");

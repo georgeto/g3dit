@@ -15,6 +15,7 @@ import de.george.g3dit.gui.components.JFocusNameField;
 import de.george.g3dit.gui.components.JSearchGuidField;
 import de.george.g3dit.gui.dialogs.EntitySearchDialog;
 import de.george.g3dit.gui.dialogs.TemplateSearchDialog;
+import de.george.g3dit.gui.theme.LayoutUtils;
 import de.george.g3dit.tab.shared.BoundingBoxPanel;
 import de.george.g3dit.tab.shared.PositionPanel;
 import de.george.g3dit.tab.template.EditorTemplateTab;
@@ -72,13 +73,13 @@ public class AllgemeinTab extends AbstractTemplateTab {
 		JButton btnRandomItemGuid = new JButton(Icons.getImageIcon(Icons.Data.COUNTER));
 		btnRandomItemGuid.setToolTipText("Zufällige Guid generieren");
 		btnRandomItemGuid.addActionListener(a -> tfItemGuid.setText(GuidUtil.randomGUID(), true));
-		add(btnRandomItemGuid, "width 27!, height 27!");
+		add(btnRandomItemGuid, LayoutUtils.sqrBtn());
 
 		JButton btnCopyEntry = new JButton(Icons.getImageIcon(Icons.Action.COPY));
 		btnCopyEntry.setToolTipText(".lrtpldatasc Eintrag in Zwischenablage kopieren");
 		btnCopyEntry.addActionListener(a -> IOUtils.copyToClipboard(
 				GuidUtil.hexToLrtpldatasc(tfItemGuid.getText()) + "=" + tfFilePrefix.getText() + "_" + tfName.getText() + ".tple"));
-		add(btnCopyEntry, "width 27!, height 27!, wrap");
+		add(btnCopyEntry, LayoutUtils.sqrBtn("wrap"));
 
 		add(new JLabel("Reference Guid"), "wrap");
 		tfRefGuid = new JSearchGuidField(ctx);
@@ -93,12 +94,12 @@ public class AllgemeinTab extends AbstractTemplateTab {
 		JButton btnRandomRefGuid = new JButton(Icons.getImageIcon(Icons.Data.COUNTER));
 		btnRandomRefGuid.setToolTipText("Zufällige Guid generieren");
 		btnRandomRefGuid.addActionListener(a -> tfRefGuid.setText(GuidUtil.randomGUID(), true));
-		add(btnRandomRefGuid, "width 27!, height 27!");
+		add(btnRandomRefGuid, LayoutUtils.sqrBtn());
 
 		JButton btnCopyGuid = new JButton(Icons.getImageIcon(Icons.Action.COPY));
 		btnCopyGuid.setToolTipText("Guid in Zwischenablage kopieren");
 		btnCopyGuid.addActionListener(a -> IOUtils.copyToClipboard(tfRefGuid.getText()));
-		add(btnCopyGuid, "width 27!, height 27!, wrap");
+		add(btnCopyGuid, LayoutUtils.sqrBtn("wrap"));
 
 		add(new JLabel("ChangeTime"), "wrap");
 		tfChangeTime = SwingUtils.createUndoTF();

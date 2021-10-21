@@ -38,6 +38,7 @@ import de.george.g3dit.gui.components.EnableGroup;
 import de.george.g3dit.gui.components.FloatSpinner;
 import de.george.g3dit.gui.dialogs.DisplayTextDialog;
 import de.george.g3dit.gui.dialogs.NavigateTemplateDialog;
+import de.george.g3dit.gui.theme.LayoutUtils;
 import de.george.g3dit.rpc.IpcHelper;
 import de.george.g3dit.rpc.IpcUtil;
 import de.george.g3dit.rpc.MonotonicallyOrderedIpc;
@@ -227,7 +228,7 @@ public class LivePositionFrame extends JFrame {
 
 		JButton btnCopyInfo = new JButton(Icons.getImageIcon(Icons.Misc.COOKIE_CHOCO_SPRINKLES));
 		btnCopyInfo.setToolTipText("Name, Guid und Position in Zwischenablage kopieren");
-		btnPanel.add(btnCopyInfo, "sg btn, width 27!, height 27!");
+		btnPanel.add(btnCopyInfo, LayoutUtils.sqrBtn("sg btn"));
 		btnCopyInfo.addActionListener(e -> IOUtils.copyToClipboard(
 				"Name: " + name + "\nGuid: " + GuidUtil.parseGuid(guid) + "\n" + Misc.positionToString(translation, rotation, scale)));
 
@@ -362,12 +363,12 @@ public class LivePositionFrame extends JFrame {
 
 		JButton btnPastePosition = new JButton(Icons.getImageIcon(Icons.IO.IMPORT));
 		btnPastePosition.setToolTipText("Position aus Zwischenablage verwenden");
-		mainPanel.add(btnPastePosition, "split 3, width 27!, height 27!");
+		mainPanel.add(btnPastePosition, LayoutUtils.sqrBtn("split 3"));
 		btnPastePosition.addActionListener(e -> handlePastePosition());
 
 		JButton btnPutToGround = new JButton(Icons.getImageIcon(Icons.Arrow.DOWN));
 		btnPutToGround.setToolTipText("Auf Bodenhöhe verschieben");
-		mainPanel.add(btnPutToGround, "width 27!, height 27!");
+		mainPanel.add(btnPutToGround, LayoutUtils.sqrBtn());
 		btnPutToGround.addActionListener(e -> handlePutToGround());
 		ifValidSearchResult.add(btnPutToGround);
 
@@ -389,7 +390,7 @@ public class LivePositionFrame extends JFrame {
 
 		JButton btnSpawn = new JButton(Icons.getImageIcon(Icons.Misc.WAND_MAGIC));
 		btnSpawn.setToolTipText("Template spawnen (Position über Kontextmenü einstellbar)");
-		mainPanel.add(btnSpawn, "split 2, alignx center, width 27!, height 27!");
+		mainPanel.add(btnSpawn, LayoutUtils.sqrBtn("split 2, alignx center"));
 		btnSpawn.addActionListener(e -> spawnTemplate());
 
 		JPopupMenu pmSpawn = new JPopupMenu();
@@ -401,7 +402,7 @@ public class LivePositionFrame extends JFrame {
 
 		JButton btnShowLog = new JButton(Icons.getImageIcon(Icons.Data.LOG));
 		btnShowLog.setToolTipText("Log anzeigen");
-		mainPanel.add(btnShowLog, "width 27!, height 27!");
+		mainPanel.add(btnShowLog, LayoutUtils.sqrBtn());
 		btnShowLog.addActionListener(e -> showLog());
 
 		SwingUtils.addKeyStroke(btnLoad, JComponent.WHEN_IN_FOCUSED_WINDOW, "Refresh",

@@ -21,6 +21,7 @@ import de.george.g3dit.gui.dialogs.TemplateNameSearchDialog;
 import de.george.g3dit.gui.dialogs.TemplateNameSearchDialog.TemplateSearchListener;
 import de.george.g3dit.gui.edit.PropertyPanel;
 import de.george.g3dit.gui.edit.handler.LambdaPropertyHandler;
+import de.george.g3dit.gui.theme.LayoutUtils;
 import de.george.g3dit.gui.validation.TemplateExistenceValidator;
 import de.george.g3dit.util.Icons;
 import de.george.g3utils.gui.SwingUtils;
@@ -169,7 +170,8 @@ public class SharedInventarTab extends AbstractPropertySharedTab {
 
 			btnTple = new JButton(Icons.getImageIcon(Icons.Action.BOOK));
 			btnTple.setToolTipText("Template laden");
-			operationPanel.add(btnTple, "cell 1 1, width 27!, height 27!");
+
+			operationPanel.add(btnTple, LayoutUtils.sqrBtn("cell 1 1"));
 			btnTple.addActionListener(e -> new TemplateNameSearchDialog(InventarStackPanel.this, ctx).open());
 
 			add(new JLabel("Quality"), "cell 0 3");
