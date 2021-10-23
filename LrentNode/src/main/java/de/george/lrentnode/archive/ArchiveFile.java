@@ -6,10 +6,11 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
 
 import de.george.g3utils.io.G3FileReaderEx;
 import de.george.g3utils.io.G3FileWriterEx;
+import de.george.g3utils.util.IndexGenerator;
 
 public abstract class ArchiveFile extends AbstractEntityFile<eCEntity> {
 
@@ -174,16 +175,16 @@ public abstract class ArchiveFile extends AbstractEntityFile<eCEntity> {
 	@Override
 	protected void writeInternal(G3FileWriterEx writer) {
 		// Entities schreiben
-		ImmutableList<eCEntity> entities = getEntities().toList();
+		ImmutableMap<eCEntity, Integer> entities = getEntities().toMap(new IndexGenerator<>());
 		writer.writeInt(entities.size());
-		for (eCEntity entity : entities) {
+		for (eCEntity entity : entities.keySet()) {
 			writeEntity(writer, entity);
 		}
 
 		// SubEntityDefinition schreiben
-		for (eCEntity entity : entities) {
+		for (eCEntity entity : entities.keySet()) {
 			for (eCEntity child : entity.getChilds()) {
-				writer.writeInt(entities.indexOf(entity)).writeInt(entities.indexOf(child));
+				writer.writeInt(entities.get(entity)).writeInt(entities.get(child));
 			}
 		}
 
