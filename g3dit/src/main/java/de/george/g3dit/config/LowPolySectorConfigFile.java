@@ -9,8 +9,8 @@ import com.fasterxml.jackson.databind.type.TypeFactory;
 import com.google.common.collect.ImmutableList;
 
 import de.george.g3dit.EditorContext;
-import de.george.g3dit.util.JsonUtil;
 import de.george.g3dit.util.LowPolyGenerator.LowPolySector;
+import de.george.g3dit.util.json.JsonUtil;
 
 public class LowPolySectorConfigFile extends ReloadableConfigFile<ImmutableList<LowPolySector>> {
 	public LowPolySectorConfigFile(EditorContext ctx, String path) {

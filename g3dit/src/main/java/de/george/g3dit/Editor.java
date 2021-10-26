@@ -65,6 +65,7 @@ import de.george.g3dit.gui.theme.ThemeManager;
 import de.george.g3dit.jme.EntityViewer;
 import de.george.g3dit.jme.JmeTransparentDesktopSystem;
 import de.george.g3dit.settings.EditorOptions;
+import de.george.g3dit.settings.JsonFileOptionStore;
 import de.george.g3dit.settings.KryoFileOptionStore;
 import de.george.g3dit.settings.MigratableOptionStore;
 import de.george.g3dit.settings.OptionStore;
@@ -334,8 +335,18 @@ public class Editor implements EditorContext {
 
 	private void loadOptionStore() {
 		String basePath = EDITOR_CONFIG_FOLDER + File.separator + EDITOR_TITLE;
+		File jsonStoreFile = new File(basePath + ".json");
 		File kryoStoreFile = new File(basePath + ".options");
-		optionStore = new KryoFileOptionStore(kryoStoreFile);
+		if (jsonStoreFile.exists()) {
+			optionStore = new JsonFileOptionStore(jsonStoreFile);
+			if (kryoStoreFile.exists())
+				kryoStoreFile.delete();
+		} else if (!kryoStoreFile.exists()) {
+			optionStore = new JsonFileOptionStore(jsonStoreFile);
+		} else {
+			KryoFileOptionStore kryoOptionStore = new KryoFileOptionStore(kryoStoreFile);
+			optionStore = new JsonFileOptionStore(jsonStoreFile, kryoOptionStore.getOptions());
+		}
 
 		if (optionStore instanceof MigratableOptionStore) {
 			new OptionStoreMigrator((MigratableOptionStore) optionStore).migrate();

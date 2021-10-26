@@ -9,7 +9,7 @@ import com.fasterxml.jackson.databind.type.TypeFactory;
 import com.google.common.collect.ImmutableList;
 
 import de.george.g3dit.EditorContext;
-import de.george.g3dit.util.JsonUtil;
+import de.george.g3dit.util.json.JsonUtil;
 import de.george.navmap.data.NegCircle.NegCirclePrototype;
 
 public class NegCirclePrototypeConfigFile extends ReloadableConfigFile<ImmutableList<NegCirclePrototype>> {

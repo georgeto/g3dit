@@ -17,10 +17,9 @@ import com.esotericsoftware.kryo.io.Output;
 
 import de.george.g3utils.util.IOUtils;
 
-public class KryoFileOptionStore implements MigratableOptionStore {
+public class KryoFileOptionStore extends AbstractConcurrentOptionStore {
 	private Logger logger = LoggerFactory.getLogger(KryoFileOptionStore.class);
 
-	private ConcurrentHashMap<String, Object> options = new ConcurrentHashMap<>();
 	private String fileName;
 
 	@SuppressWarnings("unchecked")
@@ -55,25 +54,9 @@ public class KryoFileOptionStore implements MigratableOptionStore {
 				// Nichts, vielleicht existiert noch keine Config datei
 				logger.info("Fehler beim Öffnen der Konfigurationsdatei: {}", e.getMessage());
 			} catch (KryoException e) {
-				logger.warn("Fehler beim Laden der Konfigurationsdatei: {}", e);
+				logger.warn("Fehler beim Laden der Konfigurationsdatei.", e);
 			}
 		}
-	}
-
-	@Override
-	public <T> void put(Option<T> option, T value) {
-		options.put(option.getName(), value);
-	}
-
-	@Override
-	@SuppressWarnings("unchecked")
-	public <T> T get(Option<T> option) {
-		return (T) options.getOrDefault(option.getName(), option.getDefaultValue());
-	}
-
-	@Override
-	public <T> void remove(Option<T> option) {
-		options.remove(option.getName());
 	}
 
 	@Override
@@ -97,21 +80,5 @@ public class KryoFileOptionStore implements MigratableOptionStore {
 				return false;
 			}
 		}
-	}
-
-	@Override
-	public <T> void put(String optionName, T value) {
-		options.put(optionName, value);
-	}
-
-	@Override
-	@SuppressWarnings("unchecked")
-	public <T> T get(String optionName) {
-		return (T) options.get(optionName);
-	}
-
-	@Override
-	public void remove(String optionName) {
-		options.remove(optionName);
 	}
 }

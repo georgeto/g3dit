@@ -12,7 +12,7 @@ import com.google.common.collect.ImmutableSet;
 
 import de.george.g3dit.EditorContext;
 import de.george.g3dit.util.GuidWithComment;
-import de.george.g3dit.util.JsonUtil;
+import de.george.g3dit.util.json.JsonUtil;
 
 public class GuidWithCommentConfigFile extends ReloadableConfigFile<ImmutableSet<GuidWithComment>> {
 	public GuidWithCommentConfigFile(EditorContext ctx, String path) {

@@ -38,6 +38,7 @@ dependencies {
 	implementation group: 'net.java.dev.jna', name: 'jna', version: '5.9.0'
 	implementation group: 'net.java.dev.jna', name: 'jna-platform', version: '5.9.0'
 	implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.13.0'
+	implementation group: 'com.fasterxml.jackson.module', name: 'jackson-module-parameter-names', version: '2.13.0'
 	implementation group: 'com.j2html', name: 'j2html', version: '1.5.0'
 	implementation group: 'hu.kazocsaba', name: 'image-viewer', version: '1.2.5-g3dit'
 	implementation group: 'org.apache.commons', name: 'commons-csv', version: '1.8'
@@ -128,7 +129,7 @@ task dist(type: Zip) {
 	}
 	into('config') {
 		from 'out/config'
-		exclude 'g3dit.options'
+		exclude 'g3dit.json'
 	}
 	destinationDirectory = file('dist')
 	archiveFileName = project.name + '_' + project.version.replace(' ', '_') + ".zip"

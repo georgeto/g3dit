@@ -18,7 +18,7 @@ import de.george.g3dit.settings.LambdaOption;
 import de.george.g3dit.settings.Option;
 import de.george.g3dit.settings.OptionPanel;
 import de.george.g3dit.util.FileDialogWrapper;
-import de.george.g3dit.util.JsonUtil;
+import de.george.g3dit.util.json.JsonUtil;
 import de.george.g3utils.util.IOUtils;
 import de.george.lrentnode.effect.gCSVMManager;
 import one.util.streamex.StreamEx;

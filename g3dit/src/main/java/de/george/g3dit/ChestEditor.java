@@ -30,6 +30,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.table.TableModel;
 
+import de.george.g3dit.util.json.JsonUtil;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVPrinter;
@@ -62,7 +63,6 @@ import de.george.g3dit.rpc.IpcUtil;
 import de.george.g3dit.tab.shared.QualityPanel;
 import de.george.g3dit.util.Dialogs;
 import de.george.g3dit.util.FileDialogWrapper;
-import de.george.g3dit.util.JsonUtil;
 import de.george.g3utils.gui.SwingUtils;
 import de.george.g3utils.gui.UndoableTextField;
 import de.george.g3utils.structure.bCVector;
