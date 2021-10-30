@@ -192,9 +192,7 @@ public class PropertyPanelDef {
 		 */
 		public Builder<T> name(String name) {
 			this.name = name;
-			if (title == null) {
-				title = name;
-			}
+			this.title = name;
 			return this;
 		}
 
