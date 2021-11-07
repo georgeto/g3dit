@@ -531,16 +531,13 @@ public class MainMenu extends JMenuBar {
 		muNavMap.addSeparator();
 
 		JMenuItem miEditNegZones = new JMenuItem(I.tr("NegZones bearbeiten"), Icons.getImageIcon(Icons.Action.EDIT));
-		miEditNegZones.setMnemonic(KeyEvent.VK_B);
 		muNavMap.add(miEditNegZones);
 		miEditNegZones.addActionListener(l -> ctx.getEditor().openEditNegZones());
 
 		JMenuItem miEditNegCircles = new JMenuItem(I.tr("NegCircles bearbeiten"), Icons.getImageIcon(Icons.Action.EDIT));
-		miEditNegCircles.setMnemonic(KeyEvent.VK_B);
 		muNavMap.add(miEditNegCircles);
 		miEditNegCircles.addActionListener(l -> ctx.getEditor().openEditNegCircles());
 
-		JMenuItem miEditPrefPaths = new JMenuItem(I.tr("PrefPaths bearbeiten"), Icons.getImageIcon(Icons.Action.EDIT));
 		JMenuItem miEditNegCirclesWithoutObject = new JMenuItem(I.tr("Edit NegCircles without object"),
 				Icons.getImageIcon(Icons.Action.EDIT));
 		muNavMap.add(miEditNegCirclesWithoutObject);
@@ -553,12 +550,49 @@ public class MainMenu extends JMenuBar {
 		miEditObjectsWithoutNegCircle.addActionListener(l -> new EditGuidWithCommentConfigDialog(ctx.getParentWindow(),
 				I.tr("Edit objects without NegCircle"), ConfigFiles.objectsWithoutNegCircles(ctx)).open());
 
+		JMenuItem miEditPrefPaths = new JMenuItem(I.tr("PrefPaths bearbeiten"), Icons.getImageIcon(Icons.Action.EDIT));
+		muNavMap.add(miEditPrefPaths);
+		miEditPrefPaths.addActionListener(l -> ctx.getEditor().openEditPrefPaths());
+
 		JMenuItem miNavMapSync = new JMenuItem(I.tr("NavMap synchronisieren"), Icons.getImageIcon(Icons.Action.DIFF));
 		miNavMapSync.setMnemonic(KeyEvent.VK_S);
 		muNavMap.add(miNavMapSync);
 		miNavMapSync.addActionListener(l -> new NavMapSync(ctx).setVisible(true));
 
 		muNavMap.addSeparator();
+
+		JMenuItem miExNegZones = new JMenuItem(I.tr("NegZones exportieren"), Icons.getImageIcon(Icons.Document.EXPORT));
+		miExNegZones.setMnemonic(KeyEvent.VK_Z);
+		muNavMap.add(miExNegZones);
+		miExNegZones.addActionListener(e -> {
+			File outDir = FileDialogWrapper.chooseDirectory(I.tr("Ausgabeverzeichnis wählen"), ctx.getParentWindow());
+			if (outDir == null) {
+				return;
+			}
+
+			NavMap navMap = ctx.getNavMapManager().getNavMap(true);
+			if (navMap == null) {
+				return;
+			}
+
+			ArchiveFile aFile = NodeExporter.exportNegZones(navMap.getNegZones());
+			try {
+				outDir = new File(outDir, "Nav_NegZones");
+				outDir.mkdirs();
+
+				aFile.save(new File(outDir, "Nav_NegZones_01_SHyb.node"));
+
+				SecDat secDat = new SecDat();
+				secDat.addNodeFile("Nav_NegZones_01_SHyb");
+				secDat.save(new File(outDir, "Nav_NegZones.secdat"));
+				FileUtil.createSec(new File(outDir, "Nav_NegZones"));
+
+				FileUtil.createLrgeo(new File(outDir, "Nav_NegZones_01_SHyb"));
+				FileUtil.createLrgeodat(new File(outDir, "Nav_NegZones_01_SHyb"), aFile.getGraph().getWorldTreeBoundary());
+			} catch (Exception e1) {
+				TaskDialogs.showException(e1);
+			}
+		});
 
 		JMenuItem miExNegCircles = new JMenuItem(I.tr("NegCircles exportieren"), Icons.getImageIcon(Icons.Document.EXPORT));
 		miExNegCircles.setMnemonic(KeyEvent.VK_C);
@@ -591,39 +625,6 @@ public class MainMenu extends JMenuBar {
 				}
 				secDat.save(new File(outDir, "Nav_NegCircles.secdat"));
 				FileUtil.createSec(new File(outDir, "Nav_NegCircles"));
-			} catch (Exception e1) {
-				TaskDialogs.showException(e1);
-			}
-		});
-
-		JMenuItem miExNegZones = new JMenuItem(I.tr("NegZones exportieren"), Icons.getImageIcon(Icons.Document.EXPORT));
-		miExNegZones.setMnemonic(KeyEvent.VK_Z);
-		muNavMap.add(miExNegZones);
-		miExNegZones.addActionListener(e -> {
-			File outDir = FileDialogWrapper.chooseDirectory(I.tr("Ausgabeverzeichnis wählen"), ctx.getParentWindow());
-			if (outDir == null) {
-				return;
-			}
-
-			NavMap navMap = ctx.getNavMapManager().getNavMap(true);
-			if (navMap == null) {
-				return;
-			}
-
-			ArchiveFile aFile = NodeExporter.exportNegZones(navMap.getNegZones());
-			try {
-				outDir = new File(outDir, "Nav_NegZones");
-				outDir.mkdirs();
-
-				aFile.save(new File(outDir, "Nav_NegZones_01_SHyb.node"));
-
-				SecDat secDat = new SecDat();
-				secDat.addNodeFile("Nav_NegZones_01_SHyb");
-				secDat.save(new File(outDir, "Nav_NegZones.secdat"));
-				FileUtil.createSec(new File(outDir, "Nav_NegZones"));
-
-				FileUtil.createLrgeo(new File(outDir, "Nav_NegZones_01_SHyb"));
-				FileUtil.createLrgeodat(new File(outDir, "Nav_NegZones_01_SHyb"), aFile.getGraph().getWorldTreeBoundary());
 			} catch (Exception e1) {
 				TaskDialogs.showException(e1);
 			}
