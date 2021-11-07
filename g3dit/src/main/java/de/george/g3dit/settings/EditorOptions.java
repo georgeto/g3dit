@@ -12,6 +12,7 @@ import javax.swing.JFrame;
 import com.google.common.collect.ImmutableList;
 import com.teamunify.i18n.I;
 
+import de.george.g3dit.Editor.UiLanguage;
 import de.george.g3dit.gui.theme.ThemeInfo;
 import de.george.g3dit.gui.theme.ThemeManager;
 import de.george.g3dit.util.FileDialogWrapper;
@@ -72,6 +73,10 @@ public abstract class EditorOptions {
 	}
 
 	public static abstract class Language {
+		public static final Option<UiLanguage> UI_LANGUAGE = new LambdaOption<>(UiLanguage.DEFAULT,
+				(parent) -> new ComboBoxOptionHandler<>(parent, I.tr("UI language"), ImmutableList.copyOf(UiLanguage.values()), false),
+				"EditorOptions.Language.UI_LANGUAGE", I.tr("UI language"));
+
 		public static final Option<String> STRINGTABLE_LANGUAGE = new LambdaOption<>("German",
 				(parent) -> new ComboBoxOptionHandler<>(parent, I.tr("Stringtable-Sprache"), ImmutableList.of("German", "English",
 						"Italian", "French", "Spanish", "Czech", "Hungarian", "Polish", "Russian", "TRC"), true),

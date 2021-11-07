@@ -110,6 +110,26 @@ public class Editor implements EditorContext {
 	public static final String EDITOR_VERSION = IOUtils.getManifestAttribute(Editor.class, "g3dit-Version");
 	public static final String EDITOR_CONFIG_FOLDER = "config";
 
+	public enum UiLanguage {
+		EN("en", "English"),
+		DE("de", "Deutsch");
+
+		public static final UiLanguage DEFAULT = UiLanguage.EN;
+
+		public final String name;
+		public final String displayName;
+
+		private UiLanguage(String name, String displayName) {
+			this.name = name;
+			this.displayName = displayName;
+		}
+
+		@Override
+		public String toString() {
+			return displayName;
+		}
+	}
+
 	private EventBus eventBus;
 
 	private CacheManager cacheManager;
@@ -136,9 +156,6 @@ public class Editor implements EditorContext {
 	}
 
 	public Editor(final String[] args) {
-		LanguageSetting.translationPackage = "de.george.g3dit.translation";
-		I.setLanguage("en");
-
 		registerOneInstanceListener(args);
 
 		try {
@@ -154,8 +171,6 @@ public class Editor implements EditorContext {
 	}
 
 	private void init(final String[] args) {
-		Locale.setDefault(Category.FORMAT, Locale.UK);
-
 		eventBus = new EventBus("g3dit");
 		eventBus.register(this);
 		executorService = MoreExecutors.listeningDecorator(Executors.newCachedThreadPool());
@@ -166,6 +181,15 @@ public class Editor implements EditorContext {
 			configDir.mkdir();
 		}
 		loadOptionStore();
+
+		// TODO: Remove this...?
+		Locale.setDefault(Category.FORMAT, Locale.UK);
+		LanguageSetting.translationPackage = "de.george.g3dit.translation";
+		// Hack to ensure that the EditorOptions are only initialized, after the UI language has
+		// been set.
+		UiLanguage uiLanguage = Optional.ofNullable(((MigratableOptionStore) getOptionStore()).get("EditorOptions.Language.UI_LANGUAGE"))
+				.filter(UiLanguage.class::isInstance).map(UiLanguage.class::cast).orElse(UiLanguage.DEFAULT);
+		I.setLanguage(uiLanguage.name);
 
 		fileManager = new FileManager(this);
 

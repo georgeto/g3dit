@@ -26,7 +26,7 @@ public class ScriptGenerateStatistics implements IScript {
 
 	@Override
 	public String getDescription() {
-		return I.tr("Generiert Stastiken zu den vorgenommenen Veränderungen.");
+		return I.tr("Generiert Statistiken zu den vorgenommenen Veränderungen.");
 	}
 
 	@Override

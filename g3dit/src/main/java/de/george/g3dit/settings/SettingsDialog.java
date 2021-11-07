@@ -6,6 +6,7 @@ import java.awt.Window;
 import javax.swing.Action;
 import javax.swing.Icon;
 import javax.swing.JComponent;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.WindowConstants;
@@ -59,7 +60,10 @@ public class SettingsDialog extends ExtStandardDialog {
 
 		tbTabs.addTab(new OptionsTab(I.tr("Sprache"))
 				.addHeadline(I.tr("Sprache"))
-				.addOption(EditorOptions.Language.STRINGTABLE_LANGUAGE));
+				.addOption(EditorOptions.Language.UI_LANGUAGE)
+				.addOption(EditorOptions.Language.STRINGTABLE_LANGUAGE)
+				.addComponent(new JLabel(I.tr("After changing the UI language, g3dit must be restarted.")),
+						"pushy, alignx right, aligny bottom"));
 
 		tbTabs.addTab(new OptionsTab(I.tr("Diverses"))
 				.addHeadline(I.tr("Speichern"))
