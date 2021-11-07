@@ -91,7 +91,7 @@ public class PrefPathContentPane extends NavMapObjectContentPane {
 		}
 
 		private void setupComponents() {
-			setLayout(new MigLayout("fill", "[]10[][fill, grow]push[]", "[][][][][]push[fill, grow]push[]"));
+			setLayout(new MigLayout());
 
 			tfRadius = SwingUtils.createUndoTF();
 			tfRadius.setEditable(false);
@@ -120,9 +120,9 @@ public class PrefPathContentPane extends NavMapObjectContentPane {
 			taRadius.getScrollPane().setRowHeaderView(new TextLineNumber(taRadius));
 
 			this.add(new JLabel("Sticks (x-Pos/y-Pos/z-Pos//)"), "gaptop 7, spanx 3");
-			this.add(new JLabel("Radius"), "gapleft 10, gaptop 7, wrap");
-			this.add(taSticks.getScrollPane(), "spanx 3, grow");
-			this.add(taRadius.getScrollPane(), "gapleft 10, width 50:120:150, grow, wrap");
+			this.add(new JLabel("Radius"), "wrap");
+			this.add(taSticks.getScrollPane(), "spanx 3, width 100:500:500, pushy, grow");
+			this.add(taRadius.getScrollPane(), "width 100:125:150, pushy, grow, wrap");
 
 			JButton btnCalc = new JButton("Errechne PrefPath aus Sticks");
 			this.add(btnCalc, "split 2, spanx 3");

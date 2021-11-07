@@ -113,7 +113,7 @@ public class NegZoneContentPane extends NavMapObjectContentPane {
 		}
 
 		private void setupComponents() {
-			setLayout(new MigLayout("fill", "[]10[]push[fill, grow]", "[][][][][][][]push[fill, grow]push[]"));
+			setLayout(new MigLayout());
 
 			gfGuid = new JGuidField();
 			gfGuid.setEditable(false);
@@ -157,7 +157,7 @@ public class NegZoneContentPane extends NavMapObjectContentPane {
 			JLabel lblStickList = new JLabel("Sticks (x-Pos/y-Pos/z-Pos//)");
 
 			this.add(lblStickList, "gaptop 7, wrap");
-			this.add(taSticks.getScrollPane(), "spanx 3, grow, wrap");
+			this.add(taSticks.getScrollPane(), "spanx 3, width 100:500:500, pushy, grow, wrap");
 
 			JButton btnCalc = new JButton("Errechne NegZone aus Sticks");
 			this.add(btnCalc, "split 2, spanx 3");

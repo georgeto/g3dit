@@ -98,7 +98,7 @@ public class NegCircleContentPane extends NavMapObjectContentPane {
 		}
 
 		private void setupComponents() {
-			setLayout(new MigLayout(""));
+			setLayout(new MigLayout());
 
 			gfCircleGuid = new JGuidField();
 			gfCircleGuid.setEditable(false);
@@ -134,14 +134,14 @@ public class NegCircleContentPane extends NavMapObjectContentPane {
 			add(gfCircleGuid, "width 100:300:300, wrap");
 			add(new JLabel("ObstaceType"), "wrap");
 			add(ecbObstacleType, "wrap");
-			add(new JLabel("Offsets (x-Pos/y-Pos/z-Pos//)"), "gaptop 7, spanx, split 2");
+			add(new JLabel("Offsets (x-Pos/y-Pos/z-Pos//)"), "gaptop 7");
 			add(new JLabel("Radius"), "gaptop 7, wrap");
-			add(taOffsets.getScrollPane(), "spanx, split 2, wmax 500, push, grow");
-			add(taRadius.getScrollPane(), "width 50:120:150, grow, wrap");
+			add(taOffsets.getScrollPane(), "width 100:500:500, pushy, grow");
+			add(taRadius.getScrollPane(), "width 100:125:150, pushy, grow, wrap");
 			add(new JLabel("ObjectY"), "wrap");
 			add(tfObjectY, "wrap");
 			add(new JLabel("NavZones"), "gaptop 7, spanx, wrap");
-			add(taZonesGuids.getScrollPane(), "spanx, flowy, aligny top, split 2, hmax 200, wmax 500, push, grow");
+			add(taZonesGuids.getScrollPane(), "spanx, flowy, aligny top, split 2, hmax 200, wmax 500, pushy, grow");
 
 			JButton btnCalc = new JButton("Errechne NegCircle aus Offsets");
 			this.add(btnCalc, "");
