@@ -33,17 +33,17 @@ public class ScriptListTeachers implements IScript {
 
 	@Override
 	public String getTitle() {
-		return I.tr("Lehrer auflisten");
+		return I.tr("List teachers");
 	}
 
 	@Override
 	public String getDescription() {
-		return I.tr("Erstellt eine Liste aller Lehrer mit den Perks und Attributen die sie lehren.");
+		return I.tr("Creates a list of all teachers with the perks and attributes they teach.");
 	}
 
 	@Override
 	public boolean execute(IScriptEnvironment env) {
-		File saveFile = FileDialogWrapper.saveFile(I.tr("Lehrer-Auflistung speichern unter..."), env.getParentWindow());
+		File saveFile = FileDialogWrapper.saveFile(I.tr("Save teacher listing as..."), env.getParentWindow());
 		if (saveFile == null) {
 			return false;
 		}
@@ -92,7 +92,7 @@ public class ScriptListTeachers implements IScript {
 
 			output.add(entry.getKey());
 			if (attributes.size() > 0) {
-				output.add("\t" + I.tr("Attribute") + ":");
+				output.add("\t" + I.tr("Attributes") + ":");
 				attributes.forEach(attr -> output.add("\t\t" + attr));
 			}
 
@@ -107,7 +107,7 @@ public class ScriptListTeachers implements IScript {
 		try {
 			IOUtils.writeTextFile(output, saveFile, StandardCharsets.UTF_8);
 		} catch (IOException e) {
-			env.log(I.trf("Datei konnte nicht gespeichert werden: {0}", e.getMessage()));
+			env.log(I.trf("File could not be saved: {0}", e.getMessage()));
 			return false;
 		}
 		return true;

@@ -37,18 +37,18 @@ public class NPCTab extends AbstractPropertyEntityTab {
 	@Override
 	public void initPropertyPanel(PropertyPanel propertyPanel) {
 		slotTabs = new JTabbedPane();
-		slotTabs.addTab(I.tr("Kopf"), new NPCSlotPanel(gESlot.gESlot_Head, ctx));
-		slotTabs.addTab(I.tr("Körper"), new NPCSlotPanel(gESlot.gESlot_Body, ctx));
-		slotTabs.addTab(I.tr("Haare"), new NPCSlotPanel(gESlot.gESlot_Hair, ctx));
-		slotTabs.addTab(I.tr("Bart"), new NPCSlotPanel(gESlot.gESlot_Beard, ctx));
-		slotTabs.addTab(I.tr("Helm"), new NPCSlotPanel(gESlot.gESlot_Helmet, ctx));
+		slotTabs.addTab(I.tr("Head"), new NPCSlotPanel(gESlot.gESlot_Head, ctx));
+		slotTabs.addTab(I.tr("Body"), new NPCSlotPanel(gESlot.gESlot_Body, ctx));
+		slotTabs.addTab(I.tr("Hair"), new NPCSlotPanel(gESlot.gESlot_Hair, ctx));
+		slotTabs.addTab(I.tr("Beard"), new NPCSlotPanel(gESlot.gESlot_Beard, ctx));
+		slotTabs.addTab(I.tr("Helmet"), new NPCSlotPanel(gESlot.gESlot_Helmet, ctx));
 		for (int i = 0; i < slotTabs.getTabCount(); i++) {
 			((NPCSlotPanel) slotTabs.getComponentAt(i)).initValidation(validation());
 		}
 
 		//@foff
 		propertyPanel
-			.addHeadline(I.tr("Eigenschaften"))
+			.addHeadline(I.tr("Properties"))
 			.add(CD.gCNPC_PS.Voice).horizontalStart(2).constraints("x level.x, x2 levelMax.x2")
 				.valueList(Iterables.toArray(voices.getContent(), String.class))
 				.<JComboBox<?>>customize(c -> c.setEditable(true))
@@ -64,17 +64,17 @@ public class NPCTab extends AbstractPropertyEntityTab {
 			.add(CD.gCNPC_PS.Type).horizontal()
 			.add(CD.gCDialog_PS.TradeEnabled).horizontal()
 				.hideIf(entity -> !entity.hasClass(CD.gCDialog_PS.class))
-			.addHeadline(I.tr("Wache"))
+			.addHeadline(I.tr("Guard"))
 			.add(CD.gCNPC_PS.GuardPoint).horizontalStart(2)
 				.validate(validation(), GuidValidator.INSTANCE_ALLOW_EMPTY, new EntityExistenceValidator(validation(), ctx))
 			.add(CD.gCNPC_PS.GuardStatus).horizontal()
-			.addHeadline(I.tr("Sonstiges"))
+			.addHeadline(I.tr("Misc"))
 			.add(CD.gCNPC_PS.Enclave)
 				.validate(validation(), GuidValidator.INSTANCE_ALLOW_EMPTY, new EntityExistenceValidator(validation(), ctx))
 				.<JEntityGuidField>customize(tfEnclave ->
-					tfEnclave.addMenuItem(I.tr("Alle Mitglieder dieser Enclave auflisten"), Icons.getImageIcon(Icons.Misc.GLOBE),
+					tfEnclave.addMenuItem(I.tr("List all members of this enclave"), Icons.getImageIcon(Icons.Misc.GLOBE),
 						(c, text) -> EntitySearchDialog.openEntitySearchGuid(c, MatchMode.Enclave, text)))
-			.addHeadline(I.tr("Körperteile"))
+			.addHeadline(I.tr("Body parts"))
 			.add(new LambdaPropertyHandler(slotTabs, entity -> {
 				for (int i = 0; i < slotTabs.getTabCount(); i++) {
 					((NPCSlotPanel) slotTabs.getComponentAt(i)).loadSlot(entity);

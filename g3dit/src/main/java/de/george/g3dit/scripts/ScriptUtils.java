@@ -24,7 +24,7 @@ public class ScriptUtils {
 
 	public static final boolean processAndSaveWorldFiles(IScriptEnvironment env, BiFunction<ArchiveFile, File, Integer> processor,
 			String formatString) {
-		File saveDir = FileDialogWrapper.chooseDirectory(I.tr("Speicherpfad auswählen"), env.getParentWindow());
+		File saveDir = FileDialogWrapper.chooseDirectory(I.tr("Select save path"), env.getParentWindow());
 		if (saveDir == null) {
 			return false;
 		}
@@ -46,7 +46,7 @@ public class ScriptUtils {
 				FileManager fileManager = env.getFileManager();
 				Optional<String> relativePath = fileManager.getRelativePath(file);
 				if (!relativePath.isPresent()) {
-					env.log(I.trf("Relativer Pfad von {0} konnte nicht ermittelt werden, übernehmen der Änderungen nicht möglich.",
+					env.log(I.trf("Relative path of {0} could not be determined, applying changes not possible.",
 							file.getAbsolutePath()));
 					continue;
 				}
@@ -55,7 +55,7 @@ public class ScriptUtils {
 					out.getParentFile().mkdirs();
 					archive.save(out);
 				} catch (IOException e) {
-					env.log(I.trf("Speichern von {0} fehlgeschlagen: {1}", file.getAbsolutePath(), e.getMessage()));
+					env.log(I.trf("Failed to save {0}: {1}", file.getAbsolutePath(), e.getMessage()));
 					logger.warn("Error while saving file {}.", file.getAbsolutePath(), e);
 				}
 			}

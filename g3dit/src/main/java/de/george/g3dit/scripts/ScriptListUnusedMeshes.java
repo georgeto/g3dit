@@ -27,12 +27,12 @@ public class ScriptListUnusedMeshes implements IScript {
 
 	@Override
 	public String getTitle() {
-		return I.tr("Nicht verwendete Meshes auflisten");
+		return I.tr("List unused meshes");
 	}
 
 	@Override
 	public String getDescription() {
-		return I.tr("Erstellt eine Liste aller nicht verwendeten Meshes.");
+		return I.tr("Creates a list of all unused meshes.");
 	}
 
 	@Override
@@ -88,7 +88,7 @@ public class ScriptListUnusedMeshes implements IScript {
 			containerConsumer.accept(aFile.getReferenceHeader());
 		}
 
-		env.log("----------\n" + I.tr("Übersicht") + "\n----------");
+		env.log("----------\n" + I.tr("Overview") + "\n----------");
 
 		String path = null;
 		for (File e : Sets.newTreeSet(meshes.values())) {
@@ -103,7 +103,7 @@ public class ScriptListUnusedMeshes implements IScript {
 			env.log("\t" + e.getName());
 		}
 
-		env.log("\n\n----------\n" + I.tr("Liste") + "\n----------");
+		env.log("\n\n----------\n" + I.tr("List") + "\n----------");
 		Sets.newTreeSet(meshes.values()).forEach(e -> env.log(e.getAbsolutePath()));
 
 		return true;

@@ -265,20 +265,19 @@ public class FileManager {
 		if (isInSecondaryDataFolder(file)) {
 			int result;
 			if (moveFromSecondaryToPrimary(file).map(File::exists).orElse(false)) {
-				result = TaskDialogs.choice(ctx.getParentWindow(), I.tr("Soll die Datei wirklich gespeichert werden?"),
-						I.trf("'{0}' befindet sich im sekundären Data-Verzeichnis.\n"
-								+ "Normalerweise sollten an Dateien in diesem Verzeichnis keine Änderungen vorgenommen werden.\n\n"
-								+ "Im primären Data-Verzeichnis existiert unter dem gleichen relativen Pfad bereits eine Datei.\n\n"
-								+ "Soll sie trotzdem gespeichert werden?", file.getName()),
-						1, new CommandLink(I.tr("Ja"), ""), new CommandLink(I.tr("Nein"), ""));
+				result = TaskDialogs.choice(ctx.getParentWindow(), I.tr("Do you really want to save the file?"),
+						I.trf("''{0}'' is located in the secondary data directory.\n"
+								+ "Normally, no changes should be made to files in this directory.\n\n"
+								+ "A file already exists in the primary data directory under the same relative path.\n\n"
+								+ "Should it be saved anyway?", file.getName()),
+						1, new CommandLink(I.tr("Yes"), ""), new CommandLink(I.tr("No"), ""));
 			} else {
-				result = TaskDialogs.choice(ctx.getParentWindow(), I.tr("Soll die Datei wirklich gespeichert werden?"),
-						I.trf("'{0}' befindet sich im sekundären Data-Verzeichnis.\n"
-								+ "Normalerweise sollten an Dateien in diesem Verzeichnis keine Änderungen vorgenommen werden.\n\n"
-								+ "Soll sie trotzdem gespeichert werden?", file.getName()),
-						1, new CommandLink(I.tr("Ja"), ""), new CommandLink(I.tr("Nein"), ""),
-						new CommandLink(I.tr("Primäres Data-Verzeichnis"),
-								I.tr("Unter gleichem relativen Pfad im primären Data-Verzeichnis abspeichern.")));
+				result = TaskDialogs.choice(ctx.getParentWindow(), I.tr("Do you really want to save the file?"),
+						I.trf("''{0}'' is located in the secondary data directory.\n"
+								+ "Normally, no changes should be made to files in this directory.\n\n" + "Should it be saved anyway?",
+								file.getName()),
+						1, new CommandLink(I.tr("Yes"), ""), new CommandLink(I.tr("No"), ""), new CommandLink(
+								I.tr("Primary data directory"), I.tr("Save under the same relative path in the primary data directory.")));
 			}
 
 			return switch (result) {

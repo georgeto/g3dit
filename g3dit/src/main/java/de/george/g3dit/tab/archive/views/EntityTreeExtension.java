@@ -50,7 +50,7 @@ public class EntityTreeExtension implements ITreeExtension {
 
 		// Überprüfen
 		if (EntityUtil.checkOwnerMapping(entity) == 1) {
-			warnings.add(I.tr("Owner-Entity ungleich Parent-Entity"));
+			warnings.add(I.tr("Owner entity not equal to parent entity"));
 			// TODO: Add even more checks (CheckManager...)
 		}
 
@@ -62,9 +62,9 @@ public class EntityTreeExtension implements ITreeExtension {
 				long creatorChangeTime = entry.get().getChangeTime();
 				if (entityChangeTime != creatorChangeTime) {
 					warnings.add(entityChangeTime < creatorChangeTime
-							? I.trf("ChangeTime-Wert ({0, number}) kleiner als in referenzierter Template ({1, number})", entityChangeTime,
+							? I.trf("ChangeTime value ({0, number}) smaller than in referenced template ({1, number})", entityChangeTime,
 									creatorChangeTime)
-							: I.trf("ChangeTime-Wert ({0, number}) größer als in referenzierter Template ({1, number})", entityChangeTime,
+							: I.trf("ChangeTime value ({0, number}) greater than in referenced template ({1, number})", entityChangeTime,
 									creatorChangeTime));
 				}
 			}

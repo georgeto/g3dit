@@ -31,8 +31,8 @@ public abstract class AbstractNavTab extends AbstractEntityTab {
 	}
 
 	protected void setupComponents(String strManualCoord) {
-		rbRelative = new JRadioButton(I.tr("Relative Koordinaten"), true);
-		rbAbsolut = new JRadioButton(I.tr("Absolute Koordinaten"));
+		rbRelative = new JRadioButton(I.tr("Relative coordinates"), true);
+		rbAbsolut = new JRadioButton(I.tr("Absolute coordinates"));
 		SwingUtils.createButtonGroup(rbRelative, rbAbsolut);
 
 		taSticks = new JTextAreaExt(true);
@@ -45,7 +45,7 @@ public abstract class AbstractNavTab extends AbstractEntityTab {
 		cbManualCoords = new JCheckBox(strManualCoord, false);
 		cbManualCoords.setEnabled(false);
 
-		JLabel lblStickList = new JLabel(I.tr("Sticks (x-Pos/y-Pos/z-Pos//)"));
+		JLabel lblStickList = new JLabel(I.tr("Sticks (x-pos/y-pos/z-pos//)"));
 		add(lblStickList, "gaptop 7, wrap");
 
 		add(rbRelative, "");

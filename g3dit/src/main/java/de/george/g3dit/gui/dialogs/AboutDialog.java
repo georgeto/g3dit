@@ -16,7 +16,7 @@ import net.miginfocom.swing.MigLayout;
 
 public class AboutDialog extends ExtStandardDialog {
 	public AboutDialog(Window owner) {
-		super(owner, I.tr("Über g3dit"), true);
+		super(owner, I.tr("About g3dit"), true);
 		setType(Type.UTILITY);
 		setResizable(false);
 		setSize(500, 450);
@@ -39,7 +39,7 @@ public class AboutDialog extends ExtStandardDialog {
 		mainPanel.add(libPanel, "width 50%, growy");
 		mainPanel.add(iconPanel, "width 50%, growy, wrap");
 
-		libPanel.add(SwingUtils.createBoldLabel(I.tr("Bibliotheken")), "wrap");
+		libPanel.add(SwingUtils.createBoldLabel(I.tr("Libraries")), "wrap");
 		libPanel.add(new JLinkLabel("MigLayout", "http://www.miglayout.com/"), "gapleft 7, wrap");
 		libPanel.add(new JLinkLabel("Simple Validation 1.5", "https://kenai.com/projects/simplevalidation"), "gapleft 7, wrap");
 		libPanel.add(new JLinkLabel("XFileDialog", "http://code.google.com/p/xfiledialog/"), "gapleft 7, wrap");

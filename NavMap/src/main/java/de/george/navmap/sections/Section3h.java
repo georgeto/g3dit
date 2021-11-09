@@ -91,7 +91,7 @@ public class Section3h implements G3Serializable {
 		}
 
 		if (!noThrow && (link1 == null || link2 == null)) {
-			throw new IllegalArgumentException(I.trf("Ungültiger NavPath Eintrag in Section3h: {0}", pathGuid));
+			throw new IllegalArgumentException(I.trf("Invalid NavPath entry in Section3h: {0}", pathGuid));
 		}
 
 		return new Pair<>(link1, link2);
@@ -112,7 +112,7 @@ public class Section3h implements G3Serializable {
 		}
 
 		if (!noThrow && (link1 == -1 || link2 == -1)) {
-			throw new IllegalArgumentException(I.trf("Ungültiger NavPath Eintrag in Section3h: {0}", pathGuid));
+			throw new IllegalArgumentException(I.trf("Invalid NavPath entry in Section3h: {0}", pathGuid));
 		}
 
 		return new Pair<>(link1, link2);

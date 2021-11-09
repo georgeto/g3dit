@@ -206,7 +206,7 @@ public class Section1 implements G3Serializable {
 	public void addNavZone(NavZone navZone) {
 		if (!isInGrid(navZone)) {
 			throw new IllegalArgumentException(I.tr(
-					"NavZone befindet sich außerhalb des Navigation-Grids. Die Vergrößerung des Grids wird bisher nicht unterstützt."));
+					"NavZone is located outside the navigation grid. The enlargement of the grid is not supported yet."));
 		}
 		applyNavZoneBoundary(navZone, calcNavZoneBoundary(navZone));
 	}
@@ -214,7 +214,7 @@ public class Section1 implements G3Serializable {
 	public void addNavPath(NavPath navPath) {
 		if (!isInGrid(navPath)) {
 			throw new IllegalArgumentException(I.tr(
-					"NavPath befindet sich außerhalb des Navigation-Grids. Die Vergrößerung des Grids wird bisher nicht unterstützt."));
+					"NavPath is located outside the navigation grid. The enlargement of the grid is not supported yet."));
 		}
 		applyNavPathBoundary(navPath, calcNavPathBoundary(navPath));
 	}

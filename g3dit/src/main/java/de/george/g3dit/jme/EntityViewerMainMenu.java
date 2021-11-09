@@ -23,7 +23,7 @@ public class EntityViewerMainMenu extends JMenuBar {
 	}
 
 	private void createMenuData() {
-		JMenu muColor = new JMenu(I.tr("Farben"));
+		JMenu muColor = new JMenu(I.tr("Colors"));
 		muColor.setMnemonic(KeyEvent.VK_D);
 		add(muColor);
 

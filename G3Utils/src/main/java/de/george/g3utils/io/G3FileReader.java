@@ -34,7 +34,7 @@ public abstract class G3FileReader extends G3FileBase implements AutoCloseable {
 
 	private static Objenesis objenesis = new ObjenesisStd(true);
 
-	protected String fileName = I.tr("<Quelle ist keine Datei>");
+	protected String fileName = I.tr("<source is not a file>");
 
 	public G3FileReader(String hex) {
 		this(Misc.asByte(hex));

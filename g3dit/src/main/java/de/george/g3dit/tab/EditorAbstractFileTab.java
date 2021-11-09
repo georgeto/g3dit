@@ -44,7 +44,7 @@ public abstract class EditorAbstractFileTab extends EditorTab implements FileCha
 		if (getDataFile().isPresent()) {
 			return getDataFile().get().getName();
 		}
-		return I.tr("<Nicht gespeichert>");
+		return I.tr("<Not saved>");
 	}
 
 	@Override
@@ -52,7 +52,7 @@ public abstract class EditorAbstractFileTab extends EditorTab implements FileCha
 		if (getDataFile().isPresent()) {
 			return (isFileChanged() ? "*" : "") + getDataFile().get().getName();
 		}
-		return I.tr("<Nicht gespeichert>");
+		return I.tr("<Not saved>");
 	}
 
 	@Override
@@ -179,7 +179,7 @@ public abstract class EditorAbstractFileTab extends EditorTab implements FileCha
 			return true;
 
 		} else {
-			TaskDialogs.error(ctx.getParentWindow(), I.tr("Speichern fehlgeschlagen"), I.tr("Momentan ist keine Datei geöffnet."));
+			TaskDialogs.error(ctx.getParentWindow(), I.tr("Saving failed"), I.tr("Currently no file is open."));
 			return false;
 		}
 
@@ -208,7 +208,7 @@ public abstract class EditorAbstractFileTab extends EditorTab implements FileCha
 		}
 
 		String absolutePath = dataFile.map(File::getAbsolutePath).orElse(null);
-		File file = FileDialogWrapper.saveFile(I.tr("Speichern unter"), absolutePath, getDefaultFileExtension(), ctx.getParentWindow(),
+		File file = FileDialogWrapper.saveFile(I.tr("Save as"), absolutePath, getDefaultFileExtension(), ctx.getParentWindow(),
 				getFileFilter());
 		if (file != null) {
 			if (!this.saveFile(Optional.ofNullable(file))) {
@@ -217,7 +217,7 @@ public abstract class EditorAbstractFileTab extends EditorTab implements FileCha
 			ctx.getEditor().getMainMenu().addRecentFile(file.getAbsolutePath());
 			return true;
 		} else {
-			TaskDialogs.inform(ctx.getParentWindow(), I.tr("Speichern fehlgeschlagen"), I.tr("Es wurde kein Speicherort ausgewählt."));
+			TaskDialogs.inform(ctx.getParentWindow(), I.tr("Saving failed"), I.tr("No save location has been selected."));
 			return false;
 		}
 	}
@@ -247,7 +247,7 @@ public abstract class EditorAbstractFileTab extends EditorTab implements FileCha
 
 	@Override
 	public boolean onClose(boolean appExit) {
-		String message = appExit ? I.tr("Änderungen an '{0}' vor dem Beenden speichern?") : I.tr("Änderungen an '{0}' Speichern?");
+		String message = appExit ? I.tr("Save changes to ''{0}'' before exiting?") : I.tr("Save changes to ''{0}''?");
 		return askSaveChanges(message);
 	}
 
@@ -273,7 +273,7 @@ public abstract class EditorAbstractFileTab extends EditorTab implements FileCha
 		private boolean makeBackup;
 
 		public SaveFileWorker(File file, Saveable fileToSave) {
-			progDlg = new ProgressDialog(ctx.getParentWindow(), I.tr("Speichere Datei..."), file.getName(), false);
+			progDlg = new ProgressDialog(ctx.getParentWindow(), I.tr("Saving file..."), file.getName(), false);
 			progDlg.setLocationRelativeTo(ctx.getParentWindow());
 			progDlg.getProgressBar().setIndeterminate(true);
 			this.file = file;

@@ -82,8 +82,8 @@ public class LightCache extends AbstractCache<LightCache> {
 	private class CreateLightCacheWorker extends AbstractDialogFileWorker<Set<LightSource>> {
 
 		public CreateLightCacheWorker(Callable<List<File>> fileProvider) {
-			super(fileProvider, null, I.tr("Erstelle LightCache"), ctx.getParentWindow());
-			statusFormat = I.tr("{0, number} Lichtquellen gefunden");
+			super(fileProvider, null, I.tr("Create LightCache"), ctx.getParentWindow());
+			statusFormat = I.tr("{0, number} light sources found");
 		}
 
 		@Override
@@ -117,7 +117,7 @@ public class LightCache extends AbstractCache<LightCache> {
 				publish(lightsMap.size());
 			}
 
-			statusFormat = I.trf("{0, number} Lichtquellen gefunden. Sammle weitere Daten...", lightsMap.size());
+			statusFormat = I.trf("{0, number} light sources found. Collect further data...", lightsMap.size());
 
 			// Load Intensities
 			filesDone.set(0);

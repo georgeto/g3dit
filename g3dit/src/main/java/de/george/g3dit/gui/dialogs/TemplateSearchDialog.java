@@ -61,7 +61,7 @@ public class TemplateSearchDialog extends AbstractTableProgressDialog {
 	private SortableEventTable<Result> table;
 
 	public static final TemplateSearchDialog openTemplateSearch(EditorContext ctx) {
-		TemplateSearchDialog searchDialog = new TemplateSearchDialog(ctx, I.tr("Template-Suche"));
+		TemplateSearchDialog searchDialog = new TemplateSearchDialog(ctx, I.tr("Template Search"));
 		searchDialog.open();
 		return searchDialog;
 	}
@@ -103,10 +103,10 @@ public class TemplateSearchDialog extends AbstractTableProgressDialog {
 
 		searchPanel = new ModularSearchPanel(ctx, TemplateNameSearchFilterBuilder.class, EntityGuidSearchFilterBuilder.class,
 				EntityPositionSearchFilterBuilder.class, PropertySearchFilterBuilder.class, ByteSearchFilterBuilder.class);
-		btnSearch = registerAction(I.tr("Suchen"), Icons.getImageIcon(Icons.Action.FIND), this::doWork, true);
+		btnSearch = registerAction(I.tr("Search"), Icons.getImageIcon(Icons.Action.FIND), this::doWork, true);
 		JButton btnErase = new JButton(Icons.getImageIcon(Icons.Action.ERASE));
 		btnErase.setFocusable(false);
-		btnErase.setToolTipText(I.tr("Suche leeren"));
+		btnErase.setToolTipText(I.tr("Clear search"));
 		btnErase.addActionListener(e -> searchPanel.reset(false));
 
 		mainPanel.add(searchPanel.getComponent(), "split 3, width 100%, spanx");
@@ -135,7 +135,7 @@ public class TemplateSearchDialog extends AbstractTableProgressDialog {
 	public void doWork() {
 		SearchFilter<eCEntity> filter = searchPanel.buildFilter();
 		if (!filter.isValid() || worker != null) {
-			progressBar.setString(I.tr("Ungültige Filtereinstellungen"));
+			progressBar.setString(I.tr("Invalid filter settings"));
 			return;
 		}
 
@@ -210,8 +210,8 @@ public class TemplateSearchDialog extends AbstractTableProgressDialog {
 		private SearchFilter<eCEntity> filter;
 
 		protected SearchEntityWorker(Callable<List<File>> fileProvider, List<File> openFiles, SearchFilter<eCEntity> filter) {
-			super(fileProvider, openFiles, I.tr("Ermittele zu durchsuchende Dateien..."),
-					I.tr("{0, number}/{1, number} Dateien durchsucht"), I.tr("Suche abgeschlossen"));
+			super(fileProvider, openFiles, I.tr("Determine files to be searched..."),
+					I.tr("{0, number}/{1, number} files searched"), I.tr("Search completed"));
 			this.filter = filter;
 			setProgressBar(progressBar);
 			doneMessageSupplier = this::getDoneMessage;
@@ -259,7 +259,7 @@ public class TemplateSearchDialog extends AbstractTableProgressDialog {
 		}
 
 		private String getDoneMessage() {
-			return I.trf("Suche abgeschlossen ({0, number} Templates gefunden)", results.size());
+			return I.trf("Search completed ({0, number} templates found)", results.size());
 		}
 	}
 
@@ -329,16 +329,16 @@ public class TemplateSearchDialog extends AbstractTableProgressDialog {
 			if (archiveTab != null) {
 				return archiveTab.getTitle();
 			}
-			return I.tr("<Inzwischen geschlossen>");
+			return I.tr("<Meanwhile closed>");
 		}
 
 		@Override
 		public String getPath() {
 			EditorTemplateTab templateTab = weakTab.get();
 			if (templateTab != null) {
-				return I.trf("Geladen: {0}", templateTab.getTitle());
+				return I.trf("Loaded: {0}", templateTab.getTitle());
 			}
-			return I.tr("<Inzwischen geschlossen>");
+			return I.tr("<Meanwhile closed>");
 		}
 
 		@Override

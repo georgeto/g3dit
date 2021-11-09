@@ -21,12 +21,12 @@ public class ScriptGenerateStatistics implements IScript {
 
 	@Override
 	public String getTitle() {
-		return I.tr("Änderungsstatistiken generieren");
+		return I.tr("Generate modification statistics");
 	}
 
 	@Override
 	public String getDescription() {
-		return I.tr("Generiert Statistiken zu den vorgenommenen Veränderungen.");
+		return I.tr("Generates statistics on the modifications made.");
 	}
 
 	@Override
@@ -96,14 +96,14 @@ public class ScriptGenerateStatistics implements IScript {
 
 		logDiff(env, I.tr("NPCs"), originalNpcsCount, newNPCs.size(), originalNPCs.size());
 		logDiff(env, I.tr("Monster"), originalMonstersCount, newMonsters.size(), originalMonsters.size());
-		logDiff(env, I.tr("Objekte"), originalObjectsCount, newObjects.size(), originalObjects.size());
-		env.log(I.tr("Vegetationsobjekte") + ": %d (%+d)", vegetationObjectCount, vegetationObjectCount - originalVegetationObjectCount);
+		logDiff(env, I.tr("Objects"), originalObjectsCount, newObjects.size(), originalObjects.size());
+		env.log(I.tr("Vegetation objects") + ": %d (%+d)", vegetationObjectCount, vegetationObjectCount - originalVegetationObjectCount);
 
 		return true;
 	}
 
 	private static void logDiff(IScriptEnvironment env, String name, int original, int created, int deleted) {
-		env.log("%s: %d (Gothic3) + %d (%s) - %d (%s) = %d", name, original, created, I.tr("neu"), deleted, I.tr("entfernt"),
+		env.log("%s: %d (Gothic3) + %d (%s) - %d (%s) = %d", name, original, created, I.tr("new"), deleted, I.tr("removed"),
 				original + created - deleted);
 	}
 

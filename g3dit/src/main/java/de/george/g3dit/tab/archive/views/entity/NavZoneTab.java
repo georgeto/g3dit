@@ -49,7 +49,7 @@ public class NavZoneTab extends AbstractNavTab {
 		tfRadiusOffset.setEditable(false);
 
 		cbZoneIsCCW = new JCheckBox();
-		cbZoneIsCCW.setToolTipText(I.tr("Sticks sind entgegen dem Uhrzeigersinn ausgerichtet. (wird automatisch berechnet)"));
+		cbZoneIsCCW.setToolTipText(I.tr("Sticks are oriented counterclockwise. (is calculated automatically)"));
 
 		add(lblRadius, "");
 		add(lblRadiusOffset, "wrap");
@@ -58,9 +58,9 @@ public class NavZoneTab extends AbstractNavTab {
 		add(new JLabel(I.tr("ZoneIsCCW")), "wrap");
 		add(cbZoneIsCCW, "wrap");
 
-		setupComponents(I.tr("NavZone-Koordinaten beibehalten"));
+		setupComponents(I.tr("Preserve NavZone coordinates"));
 
-		JButton btnCalc = new JButton(I.tr("Errechne NavZone aus Sticks"));
+		JButton btnCalc = new JButton(I.tr("Calculate NavZone from sticks"));
 		add(btnCalc, "split 2, spanx 4");
 		btnCalc.addActionListener(l -> handleCalcZone());
 
@@ -98,11 +98,11 @@ public class NavZoneTab extends AbstractNavTab {
 		try {
 			sticks = Misc.parseVectorList(taSticks.getText());
 		} catch (IllegalArgumentException e) {
-			TaskDialogs.inform(ctx.getParentWindow(), "", I.tr("Mindestens für einen Stick wurden fehlerhafte Koordinaten eingegeben."));
+			TaskDialogs.inform(ctx.getParentWindow(), "", I.tr("Malformed coordinates were provided for at least one stick."));
 			return;
 		}
 		if (sticks.size() < 3) {
-			TaskDialogs.inform(ctx.getParentWindow(), "", I.tr("Eine NavZone muss aus mindestens 3 Sticks bestehen."));
+			TaskDialogs.inform(ctx.getParentWindow(), "", I.tr("A NavZone must consist of at least 3 sticks."));
 			return;
 		}
 

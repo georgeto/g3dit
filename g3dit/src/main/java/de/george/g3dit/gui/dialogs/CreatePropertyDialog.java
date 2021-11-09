@@ -25,7 +25,7 @@ public class CreatePropertyDialog extends ExtStandardDialog {
 	private JComboBox<String> cbType;
 
 	public CreatePropertyDialog(Window owner, String propertySetName) {
-		super(owner, I.trf("Property erstellen für {0}", propertySetName), true);
+		super(owner, I.trf("Create property for {0}", propertySetName), true);
 		propertySet = CD.getClassDescriptor(propertySetName).get();
 		setSize(500, 170);
 

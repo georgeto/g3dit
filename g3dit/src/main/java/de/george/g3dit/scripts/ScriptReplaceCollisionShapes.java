@@ -38,12 +38,12 @@ import de.george.lrentnode.util.FileUtil;
 public class ScriptReplaceCollisionShapes implements IScript {
 	@Override
 	public String getTitle() {
-		return I.tr("CollisionShapes ersetzen");
+		return I.tr("Replace collision shapes");
 	}
 
 	@Override
 	public String getDescription() {
-		return I.tr("Ersetzt CollisionShapes gemäß einer Liste von Ersetzungsregeln.");
+		return I.tr("Replaces collision shapes according to a list of replacement rules.");
 	}
 
 	private static class ReplaceRule {
@@ -97,7 +97,7 @@ public class ScriptReplaceCollisionShapes implements IScript {
 
 	@Override
 	public boolean execute(IScriptEnvironment env) {
-		File ruleFile = FileDialogWrapper.openFile(I.tr("Ersetzungsregeln laden"), env.getParentWindow(), FileDialogWrapper.CSV_FILTER);
+		File ruleFile = FileDialogWrapper.openFile(I.tr("Load replacement rules"), env.getParentWindow(), FileDialogWrapper.CSV_FILTER);
 		if (ruleFile == null) {
 			return false;
 		}
@@ -150,6 +150,6 @@ public class ScriptReplaceCollisionShapes implements IScript {
 				}
 			}
 			return replaced;
-		}, I.tr("Es wurden insgesamt {0, number} CollisionShapes ersetzt."));
+		}, I.tr("A total of {0, number} collision shapes were replaced."));
 	}
 }

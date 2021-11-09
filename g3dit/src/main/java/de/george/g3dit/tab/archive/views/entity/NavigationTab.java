@@ -180,7 +180,7 @@ public class NavigationTab extends AbstractEntityTab {
 			tfName = SwingUtils.createUndoTF(name);
 			add(tfName, "cell 1 0, width 100:300:300");
 
-			GuildFieldMenuItem miListAllEntities = new GuildFieldMenuItem(I.tr("Alle Nutzer dieses Interaktionspunktes auflisten"),
+			GuildFieldMenuItem miListAllEntities = new GuildFieldMenuItem(I.tr("List all users of this interaction point"),
 					Icons.getImageIcon(Icons.Misc.GLOBE),
 					(ctx, text) -> EntitySearchDialog.openEntitySearchGuid(ctx, MatchMode.Routine, text));
 

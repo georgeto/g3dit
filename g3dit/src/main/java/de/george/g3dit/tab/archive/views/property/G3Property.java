@@ -128,7 +128,8 @@ public class G3Property extends AbstractProperty {
 			}
 		} catch (Exception e) {
 			logger.warn("Failed to display the value of the property '{}'.", getName(), e);
-			TaskDialogs.error(null, I.tr("Fehler beim Anzeigen"), I.trf("Fehler beim Anzeigen des Wertes der Property '{0}'.", getName()));
+			TaskDialogs.error(null, I.tr("Error while displaying"),
+					I.trf("Error while displaying the value of the property ''{0}''.", getName()));
 			throw new RuntimeException(e);
 		}
 
@@ -168,7 +169,7 @@ public class G3Property extends AbstractProperty {
 		} catch (Exception e) {
 			logger.warn("Failed to parse the entered value '{}' for the property '{}'.", value, getName(), e);
 			TaskDialogs.error(null, "Fehler beim Parsen",
-					I.trf("Fehler beim Parsen des eingegebenen Wertes '{0}' für Property '{1}'.", value, getName()));
+					I.trf("Error while parsing the entered value ''{0}'' for property ''{1}''.", value, getName()));
 		} finally {
 			// Call afterwards, as it triggers the PropertySheetPanelListeners
 			super.setValue(value);

@@ -16,7 +16,7 @@ import net.miginfocom.swing.MigLayout;
 
 public class GuidFormatsDialog extends ExtStandardDialog {
 	public GuidFormatsDialog(Window owner) {
-		super(owner, I.tr("Guid Formate"), false);
+		super(owner, I.tr("Guid formats"), false);
 		setType(Type.UTILITY);
 		setSize(400, 300);
 		setDefaultCancelAction(SwingUtils.createAction(this::cancel));
@@ -26,7 +26,7 @@ public class GuidFormatsDialog extends ExtStandardDialog {
 	public JComponent createContentPanel() {
 		JPanel panel = new JPanel(new MigLayout("insets 10, fill", "[fill, grow]"));
 
-		panel.add(new JLabel(I.tr("Guid eingeben")), "wrap");
+		panel.add(new JLabel(I.tr("Enter Guid")), "wrap");
 		UndoableTextField tfEnterGuid = SwingUtils.createUndoTF();
 		panel.add(tfEnterGuid, "wrap");
 

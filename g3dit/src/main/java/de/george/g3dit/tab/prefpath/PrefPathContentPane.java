@@ -125,7 +125,7 @@ public class PrefPathContentPane extends NavMapObjectContentPane {
 			this.add(taSticks.getScrollPane(), "spanx 3, width 100:500:500, pushy, grow");
 			this.add(taRadius.getScrollPane(), "width 100:125:150, pushy, grow, wrap");
 
-			JButton btnCalc = new JButton(I.tr("Errechne PrefPath aus Sticks"));
+			JButton btnCalc = new JButton(I.tr("Calculate PrefPath from sticks"));
 			this.add(btnCalc, "split 2, spanx 3");
 			btnCalc.addActionListener(l -> handlePrefPath());
 
@@ -152,7 +152,7 @@ public class PrefPathContentPane extends NavMapObjectContentPane {
 				sticks = Misc.parseVectorList(taSticks.getText());
 			} catch (IllegalArgumentException e) {
 				TaskDialogs.inform(ctx.getParentWindow(), "",
-						I.tr("Mindestens für einen Stick wurden fehlerhafte Koordinaten eingegeben."));
+						I.tr("Malformed coordinates were provided for at least one stick."));
 				return;
 			}
 
@@ -161,12 +161,12 @@ public class PrefPathContentPane extends NavMapObjectContentPane {
 				pointRadius = Misc.parseFloatList(taRadius.getText());
 			} catch (IllegalArgumentException e) {
 				TaskDialogs.inform(ctx.getParentWindow(), "",
-						I.tr("Mindestens für einen Stick wurden fehlerhafte Koordinaten eingegeben."));
+						I.tr("Malformed coordinates were provided for at least one stick."));
 				return;
 			}
 
 			if (sticks.size() != pointRadius.size()) {
-				TaskDialogs.inform(ctx.getParentWindow(), "", I.tr("Anzahl von Sticks und Radien unterscheidet sich."));
+				TaskDialogs.inform(ctx.getParentWindow(), "", I.tr("Number of sticks and radii differs."));
 				return;
 			}
 

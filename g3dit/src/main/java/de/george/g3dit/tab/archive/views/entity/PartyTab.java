@@ -26,7 +26,7 @@ public class PartyTab extends AbstractPropertyEntityTab {
 		propertyPanel
 			.add(CD.gCParty_PS.PartyLeaderEntity)
 				.name("PartyLeader")
-				.<JSearchNamedGuidField>customize(tfPartyLeader -> tfPartyLeader.addMenuItem(I.tr("Alle PartyMember des PartyLeaders auflisten"), Icons.getImageIcon(Icons.Misc.GLOBE),
+				.<JSearchNamedGuidField>customize(tfPartyLeader -> tfPartyLeader.addMenuItem(I.tr("List all PartyMembers of the PartyLeader"), Icons.getImageIcon(Icons.Misc.GLOBE),
 					(c, text) -> EntitySearchDialog.openEntitySearchGuid(c, MatchMode.PartyLeader, text)))
 			.add(CD.gCParty_PS.PartyMemberType)
 			.add(CD.gCParty_PS.class, gCParty_PS::getMembers, gCParty_PS::setMembers, bTObjArray_eCEntityProxy::new, bTObjArray_eCEntityProxy.class, "bTObjArray<class eCEntityProxy>")

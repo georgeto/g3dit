@@ -82,12 +82,12 @@ public class NPCSlotPanel extends JPanel implements TemplateSearchListener {
 		addComponents();
 
 		btnEdit = new JButton(Icons.getImageIcon(Icons.Action.EDIT));
-		btnEdit.setToolTipText(I.tr("Werte bearbeiten"));
+		btnEdit.setToolTipText(I.tr("Edit values"));
 		add(btnEdit, LayoutUtils.sqrBtn("cell 2 0"));
 		btnEdit.addActionListener(e -> handleEditManual());
 
 		btnTple = new JButton(Icons.getImageIcon(Icons.Action.BOOK));
-		btnTple.setToolTipText(I.tr("Template laden"));
+		btnTple.setToolTipText(I.tr("Load template"));
 		add(btnTple, LayoutUtils.sqrBtn("cell 2 1"));
 		btnTple.addActionListener(e -> handleLoadTemplate());
 
@@ -95,12 +95,12 @@ public class NPCSlotPanel extends JPanel implements TemplateSearchListener {
 		add(new JLabel(), LayoutUtils.sqrBtn("cell 2 2"));
 
 		btnAdd = new JButton(Icons.getImageIcon(Icons.Action.ADD));
-		btnAdd.setToolTipText(I.tr("Entity für diesen Slot auswählen"));
+		btnAdd.setToolTipText(I.tr("Select entity for this slot"));
 		add(btnAdd, LayoutUtils.sqrBtn("cell 2 3"));
 		btnAdd.addActionListener(e -> handleAddSlot());
 
 		btnDelete = new JButton(Icons.getImageIcon(Icons.Action.DELETE));
-		btnDelete.setToolTipText(I.tr("Slot löschen"));
+		btnDelete.setToolTipText(I.tr("Delete slot"));
 		add(btnDelete, LayoutUtils.sqrBtn("cell 2 4"));
 		btnDelete.addActionListener(e -> handleRemoveSlot());
 	}
@@ -170,12 +170,12 @@ public class NPCSlotPanel extends JPanel implements TemplateSearchListener {
 			slot = inv.getErrorSlot(slotType);
 			if (slot != null) {
 				int innerSlotType = slot.property(CD.gCInventorySlot.Slot).getEnumValue();
-				String message = I.trf("Innerer Slot-Typ '{0}' weicht von äußerem '{1}' ab.",
+				String message = I.trf("Inner slot type ''{0}'' differs from outer slot type ''{1}''.",
 						G3Enums.asString(gESlot.class, innerSlotType), G3Enums.asString(gESlot.class, slotType));
 				slotError(message);
 				btnDelete.setEnabled(true);
 			} else {
-				slotError(I.tr("Slot nicht vorhanden"));
+				slotError(I.tr("Slot not present"));
 			}
 			return;
 		}
@@ -187,8 +187,8 @@ public class NPCSlotPanel extends JPanel implements TemplateSearchListener {
 		slotEntity = ctx.getCurrentFile().getEntityByGuid(itemGuid).orElse(null);
 		if (slotEntity != null) {
 			if (ownerEntity != slotEntity.getParent()) {
-				slotError(I.trf("Slot-Entity '{0}' ({1}) ist kein Child dieses NPCs, sondern ein Child von '{2}' ({3})",
-						slotEntity.getName(), slotEntity.getGuid(), slotEntity.getParent().getName(), slotEntity.getParent().getGuid()));
+				slotError(I.trf("Slot entity ''{0}'' ({1}) is not a child of this NPC, but a child of ''{2}'' ({3})", slotEntity.getName(),
+						slotEntity.getGuid(), slotEntity.getParent().getName(), slotEntity.getParent().getGuid()));
 				return;
 			}
 
@@ -202,11 +202,11 @@ public class NPCSlotPanel extends JPanel implements TemplateSearchListener {
 				btnTple.setEnabled(true);
 				btnAdd.setEnabled(false);
 			} else {
-				slotError(I.trf("Slot-Entity '{0}' hat keine Mesh-Klasse", slotEntity.getName()));
+				slotError(I.trf("Slot entity ''{0}'' has no mesh class", slotEntity.getName()));
 			}
 
 		} else {
-			slotError(I.trf("Slot-Entity mit Guid '{0}' wurde nicht gefunden", itemGuid));
+			slotError(I.trf("Slot entity with guid ''{0}'' was not found", itemGuid));
 		}
 	}
 
@@ -310,10 +310,10 @@ public class NPCSlotPanel extends JPanel implements TemplateSearchListener {
 	private void handleEditManual() {
 		// Editieren Modus aktivieren
 		if (btnEdit.getIcon().equals(Icons.getImageIcon(Icons.Action.EDIT))) {
-			changeButtons(true, I.tr("Änderungen speichern"), Icons.getImageIcon(Icons.Select.TICK), I.tr("Änderungen verwerfen"),
+			changeButtons(true, I.tr("Apply changes"), Icons.getImageIcon(Icons.Select.TICK), I.tr("Discard changes"),
 					Icons.getImageIcon(Icons.Select.CANCEL));
 		} else {
-			changeButtons(false, I.tr("Werte bearbeiten"), Icons.getImageIcon(Icons.Action.EDIT), I.tr("Template laden"),
+			changeButtons(false, I.tr("Edit values"), Icons.getImageIcon(Icons.Action.EDIT), I.tr("Load template"),
 					Icons.getImageIcon(Icons.Action.BOOK));
 			saveSlot();
 			ctx.refreshTree(false);
@@ -326,20 +326,20 @@ public class NPCSlotPanel extends JPanel implements TemplateSearchListener {
 		if (btnTple.getIcon().equals(Icons.getImageIcon(Icons.Action.BOOK))) {
 			new SlotDialog(NPCSlotPanel.this, ctx).open();
 		} else {
-			changeButtons(false, I.tr("Werte bearbeiten"), Icons.getImageIcon(Icons.Action.EDIT), I.tr("Template laden"),
+			changeButtons(false, I.tr("Edit values"), Icons.getImageIcon(Icons.Action.EDIT), I.tr("Load template"),
 					Icons.getImageIcon(Icons.Action.BOOK));
 			loadSlot(ownerEntity);
 		}
 	}
 
 	private void handleAddSlot() {
-		ListSelectDialog<eCEntity> dialog = new ListSelectDialog<>(ctx.getParentWindow(), I.tr("Entity auswählen"),
+		ListSelectDialog<eCEntity> dialog = new ListSelectDialog<>(ctx.getParentWindow(), I.tr("Select entity"),
 				AbstractSelectDialog.SELECTION_SINGLE, ownerEntity.getChilds());
 
 		if (dialog.openAndWasSuccessful()) {
 			eCEntity entity = dialog.getSelectedEntries().get(0);
 			if (slotType != gESlot.fromUseType(EntityUtil.getUseType(entity))) {
-				slotError(I.tr("Ausgewählte Entity passt nicht zu diesem Slot-Typ"));
+				slotError(I.tr("Selected entity is not suitable for this slot type"));
 				return;
 			}
 

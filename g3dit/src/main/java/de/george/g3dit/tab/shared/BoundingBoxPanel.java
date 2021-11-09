@@ -56,22 +56,22 @@ public class BoundingBoxPanel extends JPanel {
 		add(lblMax, "");
 
 		JButton btnEditBoundingBox = new JButton(Icons.getImageIcon(Icons.Action.EDIT));
-		btnEditBoundingBox.setToolTipText(I.tr("BoundingBox ändern"));
+		btnEditBoundingBox.setToolTipText(I.tr("Change BoundingBox"));
 		add(btnEditBoundingBox, LayoutUtils.sqrBtn());
 		btnEditBoundingBox.addActionListener(e -> handleChangeBoundingBox());
 
 		JButton btnCopyBoundingBox = new JButton(Icons.getImageIcon(Icons.Action.COPY));
-		btnCopyBoundingBox.setToolTipText(I.tr("BoundingBox in Zwischenablage kopieren"));
+		btnCopyBoundingBox.setToolTipText(I.tr("Copy BoundingBox to clipboard"));
 		add(btnCopyBoundingBox, LayoutUtils.sqrBtn("wrap"));
 		btnCopyBoundingBox.addActionListener(e -> handleCopyBoundingBox());
 
 		JButton btnLoadBoundingBoxTple = new JButton(Icons.getImageIcon(Icons.IO.UPLOAD));
-		btnLoadBoundingBoxTple.setToolTipText(I.tr("BoundingBox aus Template laden"));
+		btnLoadBoundingBoxTple.setToolTipText(I.tr("Load BoundingBox from template"));
 		add(btnLoadBoundingBoxTple, LayoutUtils.sqrBtn());
 		btnLoadBoundingBoxTple.addActionListener(e -> handleLoadBoundingBoxTple());
 
 		JButton btnLoadBoundingBoxMesh = new JButton(Icons.getImageIcon(Icons.IO.IMPORT));
-		btnLoadBoundingBoxMesh.setToolTipText(I.tr("BoundingBox aus Mesh laden"));
+		btnLoadBoundingBoxMesh.setToolTipText(I.tr("Loading BoundingBox from mesh"));
 		add(btnLoadBoundingBoxMesh, LayoutUtils.sqrBtn());
 		btnLoadBoundingBoxMesh.addActionListener(e -> handleLoadBoundingBoxMesh());
 	}
@@ -98,13 +98,13 @@ public class BoundingBoxPanel extends JPanel {
 	private void handleLoadBoundingBoxMesh() {
 		String meshName = meshNameSupplier.get();
 		if (meshName == null || !meshName.endsWith("xcmsh")) {
-			TaskDialogs.error(ctx.getParentWindow(), "", I.tr("Entity hat kein statisches Mesh."));
+			TaskDialogs.error(ctx.getParentWindow(), "", I.tr("Entity does not have a static mesh."));
 			return;
 		}
 
 		Optional<File> meshFile = ctx.getFileManager().searchFile(FileManager.RP_COMPILED_MESH, meshName);
 		if (!meshFile.isPresent()) {
-			TaskDialogs.error(ctx.getParentWindow(), "", I.tr("Mesh konnte nicht gefunden werden") + ": " + meshName);
+			TaskDialogs.error(ctx.getParentWindow(), "", I.tr("Mesh could not be found") + ": " + meshName);
 			return;
 		}
 

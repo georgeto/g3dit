@@ -555,11 +555,11 @@ public abstract class Zone implements Comparable<Zone> {
 		List<String> errors = new LinkedList<>();
 
 		if (getPointCount() < 3) {
-			errors.add(I.trf("Zone benötigt mindestens 3 Sticks, hat aber nur {0, number}.", getPointCount()));
+			errors.add(I.trf("Zone needs at least 3 sticks, but has only {0, number}.", getPointCount()));
 		} else if (!isLinearRingValid()) {
-			errors.add(I.tr("Zone in 2D nicht gültig, aber möglicherweise in 3D."));
+			errors.add(I.tr("Zone not valid in 2D, but may be valid in 3D."));
 		} else if (isCcw() != arePointsCcw().get()) {
-			errors.add(I.tr("Orientierung der Sticks entspricht nicht der CCW Eigenschaft"));
+			errors.add(I.tr("Orientation of the sticks does not correspond to the CCW property"));
 		}
 
 		return errors;

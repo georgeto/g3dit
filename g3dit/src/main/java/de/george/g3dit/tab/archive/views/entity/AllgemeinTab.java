@@ -92,33 +92,33 @@ public class AllgemeinTab extends AbstractEntityTab {
 		tfGuid.initValidation(validation(), I.tr("Guid"), GuidValidator.INSTANCE);
 		add(tfGuid, "width 100:300:300");
 
-		tfGuid.addMenuItem(I.tr("Alle Nutzer dieses Freepoints auflisten"), Icons.getImageIcon(Icons.Misc.GLOBE),
+		tfGuid.addMenuItem(I.tr("List all users of this freepoint"), Icons.getImageIcon(Icons.Misc.GLOBE),
 				(ctx, g) -> EntitySearchDialog.openEntitySearchGuid(ctx, MatchMode.Routine, g), (ctx, g) -> interact);
 
-		tfGuid.addMenuItem(I.tr("Alle PartyMember dieses NPCs auflisten"), Icons.getImageIcon(Icons.Misc.GLOBE),
+		tfGuid.addMenuItem(I.tr("List all PartyMembers of this NPC"), Icons.getImageIcon(Icons.Misc.GLOBE),
 				(ctx, g) -> EntitySearchDialog.openEntitySearchGuid(ctx, MatchMode.PartyLeader, g), (ctx, g) -> npc && party);
 
-		tfGuid.addMenuItem(I.tr("Alle InteractionPoints dieses Anchors auflisten"), Icons.getImageIcon(Icons.Misc.GLOBE),
+		tfGuid.addMenuItem(I.tr("List all interaction points of this anchor"), Icons.getImageIcon(Icons.Misc.GLOBE),
 				(ctx, g) -> EntitySearchDialog.openEntitySearchGuid(ctx, MatchMode.AnchorPoint, g), (ctx, g) -> anchor);
 
-		tfGuid.addMenuItem(I.tr("Alle Mitglieder dieser Enclave auflisten"), Icons.getImageIcon(Icons.Misc.GLOBE),
+		tfGuid.addMenuItem(I.tr("List all members of this enclave"), Icons.getImageIcon(Icons.Misc.GLOBE),
 				(ctx, g) -> EntitySearchDialog.openEntitySearchGuid(ctx, MatchMode.Enclave, g), (ctx, g) -> enclave);
 
 		JButton btnRandomGuid = new JButton(Icons.getImageIcon(Icons.Data.COUNTER));
-		btnRandomGuid.setToolTipText(I.tr("Zufällige Guid generieren"));
+		btnRandomGuid.setToolTipText(I.tr("Generate random guid"));
 		btnRandomGuid.addActionListener(a -> tfGuid.setText(GuidUtil.randomGUID(), true));
 		add(btnRandomGuid, LayoutUtils.sqrBtn("spanx 3, split 3"));
 
 		JButton btnCopyGuid = new JButton(Icons.getImageIcon(Icons.Action.COPY));
-		btnCopyGuid.setToolTipText(I.tr("Guid in Zwischenablage kopieren"));
+		btnCopyGuid.setToolTipText(I.tr("Copy Guid to Clipboard"));
 		btnCopyGuid.addActionListener(a -> IOUtils.copyToClipboard(tfGuid.getText()));
 		add(btnCopyGuid, LayoutUtils.sqrBtn("wrap"));
 
-		plWorldPosition = new PositionPanel(I.tr("World-Position"), ctx.getParentWindow(), this::changeWorldPosition,
+		plWorldPosition = new PositionPanel(I.tr("World position"), ctx.getParentWindow(), this::changeWorldPosition,
 				this::changeWorldPositionKeepChilds);
 		add(plWorldPosition, "width 100:300:400, spanx 4, grow, wrap");
 
-		plLocalPosition = new PositionPanel(I.tr("Local-Position"), ctx.getParentWindow(), this::changeLocalPosition);
+		plLocalPosition = new PositionPanel(I.tr("Local position"), ctx.getParentWindow(), this::changeLocalPosition);
 		add(plLocalPosition, "width 100:300:400, spanx 4, grow, wrap");
 
 		plLocalNodeBoundary = new BoundingBoxPanel(I.tr("BoundingBox"), ctx, this::changeLocalNodeBoundary, () -> {
@@ -136,12 +136,12 @@ public class AllgemeinTab extends AbstractEntityTab {
 		add(tfRefGuid, "width 100:300:300");
 
 		btnLoadFromTemplate = new JButton(Icons.getImageIcon(Icons.IO.UPLOAD));
-		btnLoadFromTemplate.setToolTipText(I.tr("Reference Guid und ChangeTime aus Template laden"));
+		btnLoadFromTemplate.setToolTipText(I.tr("Load Reference Guid and ChangeTime from Template"));
 		add(btnLoadFromTemplate, LayoutUtils.sqrBtn());
 		btnLoadFromTemplate.addActionListener(e -> handleLoadFromTemplate());
 
 		btnDiffTemplate = new JButton(Icons.getImageIcon(Icons.Action.DIFF));
-		btnDiffTemplate.setToolTipText(I.tr("Mit Template vergleichen"));
+		btnDiffTemplate.setToolTipText(I.tr("Compare with template"));
 		add(btnDiffTemplate, LayoutUtils.sqrBtn("wrap"));
 		btnDiffTemplate.addActionListener(e -> handleDiffTemplate());
 
@@ -159,7 +159,7 @@ public class AllgemeinTab extends AbstractEntityTab {
 
 	@Override
 	public String getTabTitle() {
-		return I.tr("Allgemein");
+		return I.tr("General");
 	}
 
 	@Override
@@ -274,7 +274,7 @@ public class AllgemeinTab extends AbstractEntityTab {
 				DiffNode diff = new EntityDiffer(true).diff(ctx.getCurrentEntity(), tple.getReferenceHeader());
 				ToMapPrintingVisitor mapPrintingVisitor = new ToMapPrintingVisitor(ctx.getCurrentEntity(), tple.getReferenceHeader());
 				diff.visit(mapPrintingVisitor);
-				DisplayTextDialog dialog = new DisplayTextDialog(I.tr("Vergleich: Template - Entity"),
+				DisplayTextDialog dialog = new DisplayTextDialog(I.tr("Comparison: Template - Entity"),
 						mapPrintingVisitor.getMessagesAsString(), ctx.getParentWindow(), false);
 				dialog.setVisible(true);
 			} catch (IOException e) {

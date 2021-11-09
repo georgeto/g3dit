@@ -103,8 +103,7 @@ public class PrefPathStage extends NavCalcStage {
 
 	private class InvalidPrefPath extends BasePrefPathChange {
 		public InvalidPrefPath(PrefPath prefPath) {
-			super(prefPath, Severity.Info, String.format(I.tr("Invalid PrefPath with only %d points."), prefPath.getPoints().size()),
-					null);
+			super(prefPath, Severity.Info, I.trf("Invalid PrefPath with only {0, number} points.", prefPath.getPoints().size()), null);
 		}
 
 		@Override

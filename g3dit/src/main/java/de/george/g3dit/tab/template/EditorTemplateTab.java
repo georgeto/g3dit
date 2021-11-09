@@ -66,7 +66,7 @@ public class EditorTemplateTab extends EditorAbstractFileTab {
 		statusBarExtension = new JPanel(new MigLayout("ins 0"));
 		statusBarExtension.setOpaque(false);
 		JToggleButton btnEntity = new JToggleButton("E", true);
-		btnEntity.setToolTipText(I.tr("Template bearbeiten"));
+		btnEntity.setToolTipText(I.tr("Edit template"));
 		btnEntity.setMargin(new Insets(0, 0, 0, 0));
 		btnEntity.addActionListener(l -> contentPane.showView(TemplateViewType.ENTITY));
 		btnEntity.setMnemonic(KeyEvent.VK_1);
@@ -155,7 +155,7 @@ public class EditorTemplateTab extends EditorAbstractFileTab {
 			}
 		} catch (Exception e) {
 			logger.warn("Failed to open template.", e);
-			TaskDialogs.error(ctx.getParentWindow(), I.tr("Template konnte nicht geöffnet werden"), e.getMessage());
+			TaskDialogs.error(ctx.getParentWindow(), I.tr("Template could not be opened"), e.getMessage());
 		}
 		return false;
 	}
@@ -226,14 +226,12 @@ public class EditorTemplateTab extends EditorAbstractFileTab {
 
 	private boolean checkIntegrity(TemplateFile tple) {
 		if (tple.getItemHeader() == null) {
-			TaskDialogs.error(ctx.getParentWindow(), I.tr("Template konnte nicht geöffnet werden"),
-					I.tr("Template hat keinen Item-Header."));
+			TaskDialogs.error(ctx.getParentWindow(), I.tr("Template could not be opened"), I.tr("Template has no item header."));
 			return false;
 		}
 
 		if (tple.getReferenceHeader() == null) {
-			TaskDialogs.error(ctx.getParentWindow(), I.tr("Template konnte nicht geöffnet werden"),
-					I.tr("Template hat keinen Reference-Header."));
+			TaskDialogs.error(ctx.getParentWindow(), I.tr("Template could not be opened"), I.tr("Template has no reference header."));
 			return false;
 		}
 
@@ -242,9 +240,9 @@ public class EditorTemplateTab extends EditorAbstractFileTab {
 
 		if (!itemName.equals(refName)) {
 			int result = TaskDialogs.choice(ctx.getParentWindow(), I.tr("Where is the guru?"),
-					I.tr("Template hat unterschiedliche Namen im Item und Reference Header.\nWelcher soll übernommen werden?"), 1,
+					I.tr("Template has different names in item and reference header.\nWhich one should be kept?"), 1,
 					new CommandLink("Item", itemName), new CommandLink("Reference", refName),
-					new CommandLink(I.tr("Abbrechen"), I.tr("Ladevorgang der Template abbrechen.")));
+					new CommandLink(I.tr("Cancel"), I.tr("Cancel loading the template.")));
 
 			switch (result) {
 				case 0:
@@ -276,43 +274,44 @@ public class EditorTemplateTab extends EditorAbstractFileTab {
 				if (secondaryFileTpleContext.isPresent() && secondaryFileTpleContext.get().exists()) {
 					fileTpleContext = secondaryFileTpleContext.get();
 				} else {
-					return Pair.of(false, I.tr("Es konnte kein passender TemplateContext gefunden werden."));
+					return Pair.of(false, I.tr("No suitable TemplateContext could be found."));
 				}
 			}
 
 			try {
 				Lrtpldatasc tpleContext = new Lrtpldatasc(fileTpleContext);
 				if (!tpleContext.contains(tpleGuid) && !tpleContext.contains(tpleName)) {
-					return Pair.of(false, I.tr("Es existiert kein Eintrag im zugehörigen TemplateContext."));
+					return Pair.of(false, I.tr("There is no entry in the corresponding TemplateContext."));
 				}
 
 				if (!tpleContext.contains(tpleGuid) && tpleContext.contains(tpleName)) {
 					return Pair.of(false,
 							SwingUtils.getMultilineText(
-									I.tr("Für den Namen der Template existiert bereits ein Eintrag im zugehörigen TemplateContext,\n"
-											+ "allerdings unter einer anderen Guid.")));
+									I.tr("For the name of the template there is already an entry in the corresponding TemplateContext,\n"
+											+ "but under a different guid.")));
 				}
 
 				if (tpleContext.contains(tpleGuid) && !tpleContext.contains(tpleName)) {
-					return Pair.of(false,
-							SwingUtils.getMultilineText(I.trf(
-									"Für die Guid der Template existiert bereits ein Eintrag im zugehörigen TemplateContext,\n"
-											+ "allerdings in Kombination mit dem Namen {0}.",
-									tpleContext.get(tpleGuid).getTemplateName())));
+					return Pair
+							.of(false,
+									SwingUtils.getMultilineText(I.trf(
+											"For the guid of the template already exists an entry in the corresponding TemplateContext,\n"
+													+ "but in combination with the name {0}.",
+											tpleContext.get(tpleGuid).getTemplateName())));
 				}
 
 				return Pair.of(true, null);
 			} catch (IOException e) {
 				String message = SwingUtils.getMultilineText(I.trcf("Invalid template context",
-						"Fehler beim Öffnen des zugehörigen TemplateContexts {0}", fileTpleContext.getName()) + ":", e.getMessage());
+						"Error opening the corresponding TemplateContext {0}", fileTpleContext.getName()) + ":", e.getMessage());
 				return Pair.of(false, message);
 			} catch (DuplicateEntryException | InvalidEntryException e) {
 				String reason = e instanceof DuplicateEntryException
-						? I.trc("Invalid template context", "da dieser für eine Guid mehrere Einträge enthält.")
-						: I.trc("Invalid template context", "da dieser mindestens eine ungültige Guid enthält.");
+						? I.trc("Invalid template context", "as it contains multiple entries with the same guid.")
+						: I.trc("Invalid template context", "as it contains at least one invalid guid.");
 
 				String message = SwingUtils.getMultilineText(I.trcf("Invalid template context",
-						"Fehler beim Öffnen des zugehörigen TemplateContexts {0}", fileTpleContext.getName()) + ",", reason);
+						"Error opening the corresponding TemplateContext {0}", fileTpleContext.getName()) + ",", reason);
 				return Pair.of(false, message);
 			}
 		}, new Consumer<Pair<Boolean, String>>() {
@@ -357,10 +356,10 @@ public class EditorTemplateTab extends EditorAbstractFileTab {
 			} catch (DuplicateEntryException | InvalidEntryException e) {
 				logger.warn("Error while opening TemplateContext {}: {}", fileTpleContext.getName(), e.getMessage());
 				String reason = e instanceof DuplicateEntryException
-						? I.trc("Invalid lrtpldatasc", "da sie für eine Guid mehrere Einträge enthält")
-						: I.trc("Invalid lrtpldatasc", "da sie mindestens eine ungültige Guid enthält");
-				if (TaskDialogs.isConfirmed(ctx.getParentWindow(), I.tr(".lrtpldatasc Eintrag"), I.trcf("Invalid lrtpldatasc",
-						"Die für '{0}' zuständige .lrtpldatasc '{1}' konnte nicht geöffnet werden,\n{2} ({3}).\nSoll sie im Dateimanager geöffnet werden?",
+						? I.trc("Invalid lrtpldatasc", "as it contains multiple entries with the same guid")
+						: I.trc("Invalid lrtpldatasc", "as it contains at least one invalid guid");
+				if (TaskDialogs.isConfirmed(ctx.getParentWindow(), I.tr(".lrtpldatasc entry"), I.trcf("Invalid lrtpldatasc",
+						"The .lrtpldatasc ''{1}'' responsible for ''{0}'' could not be opened,\n{2} ({3}).\nShould it be opened in the file manager?",
 						template.getEntityName(), fileTpleContext.getName(), reason, e.getMessage()))) {
 					ctx.getFileManager().explorePath(fileTpleContext);
 				}
@@ -380,16 +379,16 @@ public class EditorTemplateTab extends EditorAbstractFileTab {
 		}
 
 		if (tpleContext == null) {
-			int result = TaskDialogs.choice(ctx.getParentWindow(), I.tr(".lrtpldatasc erstellen"),
-					I.trf("Für '{0}' konnte keine passende .lrtpldatasc gefunden werden.", tpleName), 0,
-					new CommandLink(I.tr("Neue .lrtpldatasc erstellen"), ""), new CommandLink(I.tr("Nach .lrtpldatasc suchen"), ""),
-					new CommandLink(I.tr("Ignorieren"), ""));
+			int result = TaskDialogs.choice(ctx.getParentWindow(), I.tr("Create .lrtpldatasc"),
+					I.trf("No suitable .lrtpldatasc could be found for ''{0}''.", tpleName), 0,
+					new CommandLink(I.tr("Create new .lrtpldatasc"), ""), new CommandLink(I.tr("Search for .lrtpldatasc"), ""),
+					new CommandLink(I.tr("Ignore"), ""));
 
 			if (result == 0) {
 				tpleContext = new Lrtpldatasc();
 				contextCreated = true;
 			} else if (result == 1) {
-				File file = FileDialogWrapper.openFile(I.tr("Nach .lrtpldatasc suchen"), ctx.getParentWindow(),
+				File file = FileDialogWrapper.openFile(I.tr("Search for .lrtpldatasc"), ctx.getParentWindow(),
 						FileDialogWrapper.createFilter(".lrtpldatasc", "lrtpldatasc"));
 				if (file != null) {
 					try {
@@ -406,17 +405,17 @@ public class EditorTemplateTab extends EditorAbstractFileTab {
 		if (tpleContext != null) {
 			boolean contextChanged = false;
 			if (!tpleContext.contains(tpleGuid) && !tpleContext.contains(tpleName)) {
-				boolean confirmed = TaskDialogs.ask(ctx.getParentWindow(), I.tr(".lrtpldatasc Eintrag erstellen"),
-						I.trf("Soll für {0} ein Eintrag in '{1}' erstellt werden?", template.getEntityName(), fileTpleContext.getName()));
+				boolean confirmed = TaskDialogs.ask(ctx.getParentWindow(), I.tr("Create .lrtpldatasc entry"),
+						I.trf("Should an entry be created for {0} in ''{1}''?", template.getEntityName(), fileTpleContext.getName()));
 
 				if (confirmed) {
 					tpleContext.add(tpleGuid, tpleName);
 					contextChanged = true;
 				}
 			} else if (!tpleContext.contains(tpleGuid) && tpleContext.contains(tpleName)) {
-				boolean confirmed = TaskDialogs.ask(ctx.getParentWindow(), I.tr(".lrtpldatasc Eintrag aktualisieren"), I.trf(
-						"Für {0} existiert bereits ein Eintrag in '{1}',\nallerdings unter einer anderen Guid.\n\nSoll der Eintrag aktualisiert werden?",
-						template.getEntityName(), fileTpleContext.getName()));
+				boolean confirmed = TaskDialogs.ask(ctx.getParentWindow(), I.tr("Update .lrtpldatasc entry"),
+						I.trf("For {0} there is already an entry in ''{1}'',\nbut under a different guid.\n\nShould the entry be updated?",
+								template.getEntityName(), fileTpleContext.getName()));
 
 				if (confirmed) {
 					tpleContext.remove(tpleName);
@@ -424,8 +423,8 @@ public class EditorTemplateTab extends EditorAbstractFileTab {
 					contextChanged = true;
 				}
 			} else if (tpleContext.contains(tpleGuid) && !tpleContext.contains(tpleName)) {
-				boolean confirmed = TaskDialogs.ask(ctx.getParentWindow(), I.tr(".lrtpldatasc Eintrag aktualisieren"), I.trf(
-						"Für die Guid von {0} existiert bereits ein Eintrag in '{1}',\nallerdings in Kombination mit dem Namen {2}.\n\nSoll der Eintrag aktualisiert werden?",
+				boolean confirmed = TaskDialogs.ask(ctx.getParentWindow(), I.tr("Update .lrtpldatasc entry"), I.trf(
+						"For the guid of {0} there is already an entry in ''{1}'',\nbut in combination with the name {2}.\n\nShould the entry be updated?",
 						template.getEntityName(), fileTpleContext.getName(), tpleContext.get(tpleGuid).getTemplateName()));
 
 				if (confirmed) {
@@ -445,7 +444,7 @@ public class EditorTemplateTab extends EditorAbstractFileTab {
 				}
 			} catch (IOException e) {
 				logger.warn("Error while saving TemplateContext {}.", fileTpleContext.getName(), e);
-				TaskDialogs.error(ctx.getParentWindow(), "", I.trf("'{0}' konnte nicht gespeichert werden.", fileTpleContext.getName()));
+				TaskDialogs.error(ctx.getParentWindow(), "", I.trf("''{0}'' could not be saved.", fileTpleContext.getName()));
 			}
 		}
 	}

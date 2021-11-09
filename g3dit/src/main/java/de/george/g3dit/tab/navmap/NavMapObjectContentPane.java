@@ -72,13 +72,13 @@ public abstract class NavMapObjectContentPane extends ValidationPanelContainer<N
 
 		JToolBar toolBar = ToolbarUtil.createTopToolbar();
 
-		JButton btnGoto = SwingUtils.keyStrokeButton(I.tr("Goto"), I.tr("Teleportiert den Spieler zu dem ausgewählten Objekt."),
+		JButton btnGoto = SwingUtils.keyStrokeButton(I.tr("Goto"), I.tr("Teleports the player to the selected object."),
 				Icons.getImageIcon(Icons.Misc.GEOLOCATION), KeyEvent.VK_G, InputEvent.CTRL_DOWN_MASK,
 				() -> edit.getSelectedValues().stream().findFirst().ifPresent(this::onGoto));
 		toolBar.add(btnGoto);
 		ctx.getIpcMonitor().addListener(this, ipcMonitor -> btnGoto.setEnabled(ipcMonitor.isAvailable()), true, false, true);
 
-		JButton btnShowOnMap = SwingUtils.keyStrokeButton(I.tr("Karte"), I.tr("Zeigt ausgewählte Objekte auf Karte an."),
+		JButton btnShowOnMap = SwingUtils.keyStrokeButton(I.tr("Map"), I.tr("Shows selected objects on map."),
 				Icons.getImageIcon(Icons.Misc.MAP), KeyEvent.VK_M, InputEvent.CTRL_DOWN_MASK, () -> onShowOnMap(edit.getSelectedValues()));
 		toolBar.add(btnShowOnMap);
 
@@ -99,7 +99,7 @@ public abstract class NavMapObjectContentPane extends ValidationPanelContainer<N
 	protected abstract ListManageAndEdit<String> createContent();
 
 	protected String getSearchTooltip() {
-		return SwingUtils.getMultilineText(I.tr("Guid ODER Position und Radius im Format x/y/z// r"));
+		return SwingUtils.getMultilineText(I.tr("Guid OR position and radius in format x/y/z// r"));
 	}
 
 	protected static class NavMapObjectMatcherEditor extends AbstractTextComponentMatcherEditor<String> {

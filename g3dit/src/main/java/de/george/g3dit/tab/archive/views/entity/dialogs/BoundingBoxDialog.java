@@ -25,7 +25,7 @@ public class BoundingBoxDialog extends ExtStandardDialog {
 	private bCBox box;
 
 	public BoundingBoxDialog(Window owner, bCBox box) {
-		super(owner, I.tr("BoundingBox ändern"), true);
+		super(owner, I.tr("Change BoundingBox"), true);
 		this.box = box.clone();
 
 		setType(Type.UTILITY);
@@ -69,7 +69,7 @@ public class BoundingBoxDialog extends ExtStandardDialog {
 		buttonPanel.setAlignment(SwingConstants.CENTER);
 		buttonPanel.setMinButtonWidth(80);
 
-		Action saveAction = SwingUtils.createAction(I.tr("Speichern"), () -> {
+		Action saveAction = SwingUtils.createAction(I.tr("Save"), () -> {
 			try {
 				box.setMin(new bCVector(Float.parseFloat(tfMinX.getText()), Float.parseFloat(tfMinY.getText()),
 						Float.parseFloat(tfMinZ.getText())));

@@ -132,11 +132,11 @@ public class ArchiveContentPane extends JPanel {
 		toolBar = ToolbarUtil.createTopToolbar();
 
 		JButton btnRemClasses = new JButton(Icons.getImageIcon(Icons.Data.CLASS_MINUS));
-		btnRemClasses.setToolTipText(I.tr("Klassen entfernen"));
+		btnRemClasses.setToolTipText(I.tr("Remove classes"));
 		toolBar.add(btnRemClasses);
 		btnRemClasses.addActionListener(e -> {
 			eCEntity entity = ctx.getCurrentEntity();
-			SelectClassDialog dialog = new SelectClassDialog(ctx.getParentWindow(), I.tr("Klassen entfernen"), I.tr("Entfernen"), entity);
+			SelectClassDialog dialog = new SelectClassDialog(ctx.getParentWindow(), I.tr("Remove classes"), I.tr("Remove"), entity);
 			if (dialog.openAndWasSuccessful()) {
 				for (G3Class clazz : dialog.getResultClasses()) {
 					entity.removeClass(clazz.getClassName());
@@ -146,16 +146,16 @@ public class ArchiveContentPane extends JPanel {
 		});
 
 		JButton btnAddClasses = new JButton(Icons.getImageIcon(Icons.Data.CLASS_PLUS));
-		btnAddClasses.setToolTipText(I.tr("Klassen hinzufügen"));
+		btnAddClasses.setToolTipText(I.tr("Add classes"));
 		toolBar.add(btnAddClasses);
 		btnAddClasses.addActionListener(e -> {
 			eCEntity entity = ctx.getCurrentEntity();
-			TreeEntitySelectDialog entitySelect = new TreeEntitySelectDialog(ctx, I.tr("Entity auswählen"),
+			TreeEntitySelectDialog entitySelect = new TreeEntitySelectDialog(ctx, I.tr("Select entity"),
 					AbstractSelectDialog.SELECTION_SINGLE, ctx.getCurrentFile());
 			if (entitySelect.openAndWasSuccessful()) {
 				eCEntity classContainer = entitySelect.getSelectedEntries().get(0);
-				SelectClassDialog classSelect = new SelectClassDialog(ctx.getParentWindow(), I.tr("Klassen hinzufügen"),
-						I.tr("Hinzufügen"), classContainer);
+				SelectClassDialog classSelect = new SelectClassDialog(ctx.getParentWindow(), I.tr("Add classes"), I.tr("Add"),
+						classContainer);
 				if (classSelect.openAndWasSuccessful()) {
 					for (G3Class clazz : classSelect.getResultClasses()) {
 						entity.addClass(ClassUtil.clone(clazz), classContainer.getClassVersion(clazz));
@@ -167,27 +167,26 @@ public class ArchiveContentPane extends JPanel {
 
 		toolBar.addSeparator();
 
-		JButton btn3dView = new JButton(I.tr("3D-Ansicht"), Icons.getImageIcon(Icons.Data.THREED));
+		JButton btn3dView = new JButton(I.tr("3D view"), Icons.getImageIcon(Icons.Data.THREED));
 		btn3dView.setFocusable(false);
 		toolBar.add(btn3dView);
 		btn3dView.addActionListener(e -> EntityViewer.getInstance(ctx).showEntity(ctx.getCurrentEntity()));
 
-		JButton btnAssetInfo = new JButton(I.tr("Asset-Info"), Icons.getImageIcon(Icons.Data.INFORMATION));
-		btnAssetInfo.setToolTipText(I.tr("Ermittelt die von der Entity verwendeten Assets und kopiert sie in die Zwischenablage."));
+		JButton btnAssetInfo = new JButton(I.tr("Asset info"), Icons.getImageIcon(Icons.Data.INFORMATION));
+		btnAssetInfo.setToolTipText(I.tr("Determines the assets used by the entity and copies them to the clipboard."));
 		btnAssetInfo.setFocusable(false);
 		toolBar.add(btnAssetInfo);
 		btnAssetInfo.addActionListener(e -> {
 			eCEntity entity = ctx.getCurrentEntity();
 			AssetResolver resolver = AssetResolver.with(ctx).build();
-			new DisplayTextDialog(I.tr("Asset-Info"), resolver.resolveContainer(entity).print(), ctx.getParentWindow(), false).open();
+			new DisplayTextDialog(I.tr("Asset info"), resolver.resolveContainer(entity).print(), ctx.getParentWindow(), false).open();
 		});
 
 		toolBar.addSeparator();
 
 		JButton btnGotoEntity = new JButton(I.tr("Goto"), Icons.getImageIcon(Icons.Misc.GEOLOCATION));
-		btnGotoEntity.setToolTipText(SwingUtils.getMultilineText(I.tr("Teleportiert den Spieler zur Entity."),
-				I.tr("Wenn beim Klicken Strg gedrückt ist, wird nicht die Guid,\n"
-						+ "sondern die Position zur Ermittlung des Ziels verwendet.")));
+		btnGotoEntity.setToolTipText(SwingUtils.getMultilineText(I.tr("Teleports the player to the entity."),
+				I.tr("If Ctrl is pressed when clicking, not the guid,\nbut the position is used to determine the target.")));
 		btnGotoEntity.setFocusable(false);
 		toolBar.add(btnGotoEntity);
 		btnGotoEntity.addActionListener(e -> {
@@ -201,8 +200,8 @@ public class ArchiveContentPane extends JPanel {
 		});
 		ctx.getIpcMonitor().addListener(this, ipcMonitor -> btnGotoEntity.setEnabled(ipcMonitor.isAvailable()), true, false, true);
 
-		JButton btnShowOnMap = new JButton(I.tr("Karte"), Icons.getImageIcon(Icons.Misc.MAP));
-		btnShowOnMap.setToolTipText(I.tr("Zeigt ausgewählte Entities auf Karte an."));
+		JButton btnShowOnMap = new JButton(I.tr("Map"), Icons.getImageIcon(Icons.Misc.MAP));
+		btnShowOnMap.setToolTipText(I.tr("Shows selected entities on map."));
 		btnShowOnMap.setFocusable(false);
 		toolBar.add(btnShowOnMap);
 		btnShowOnMap.addActionListener(e -> {
@@ -213,16 +212,16 @@ public class ArchiveContentPane extends JPanel {
 		});
 
 		toolBar.addSeparator();
-		JButton btnDiff = new JButton(I.tr("Mit Originaldaten vergleichen"), Icons.getImageIcon(Icons.Action.DIFF));
-		btnDiff.setToolTipText(I.tr("Vergleicht Entity mit Version aus den Originaldaten."));
+		JButton btnDiff = new JButton(I.tr("Compare with original data"), Icons.getImageIcon(Icons.Action.DIFF));
+		btnDiff.setToolTipText(I.tr("Compares entity with version from original data."));
 		btnDiff.setFocusable(false);
 		toolBar.add(btnDiff);
 		btnDiff.addActionListener(a -> {
 			try {
 				Optional<File> originalFile = ctx.getFileManager().moveFromPrimaryToSecondary(ctx.getDataFile().get());
 				if (!originalFile.isPresent() || !originalFile.get().isFile()) {
-					TaskDialogs.error(ctx.getParentWindow(), "", I.tr(I.tr(
-							"Es gibt keine Version der Datei in den Originaldaten bzw. die Datei befindet sich selbst in den Originaldaten.")));
+					TaskDialogs.error(ctx.getParentWindow(), "", I
+							.tr(I.tr("There is no version of the file in the original data or the file itself is in the original data.")));
 					return;
 				}
 
@@ -230,14 +229,14 @@ public class ArchiveContentPane extends JPanel {
 				eCEntity entity = ctx.getCurrentEntity();
 				eCEntity originalEntity = archive.getEntityByGuid(entity.getGuid()).orElse(null);
 				if (originalEntity == null) {
-					TaskDialogs.error(ctx.getParentWindow(), "", I.tr("Es gibt keine Version der Entity in den Originaldaten."));
+					TaskDialogs.error(ctx.getParentWindow(), "", I.tr("There is no version of the entity in the original data."));
 					return;
 				}
 
 				DiffNode diff = new EntityDiffer(true).diff(entity, originalEntity);
 				ToMapPrintingVisitor mapPrintingVisitor = new ToMapPrintingVisitor(entity, originalEntity);
 				diff.visit(mapPrintingVisitor);
-				DisplayTextDialog dialog = new DisplayTextDialog(I.tr("Vergleich: Entity - Original-Entity"),
+				DisplayTextDialog dialog = new DisplayTextDialog(I.tr("Comparison: Entity - Original Entity"),
 						mapPrintingVisitor.getMessagesAsString(), ctx.getParentWindow(), true);
 				dialog.setVisible(true);
 			} catch (IOException e) {
@@ -336,7 +335,7 @@ public class ArchiveContentPane extends JPanel {
 
 		List<eCEntity> orphanEntities = aFile.pullOrphanEntities();
 		if (orphanEntities.size() > 0) {
-			ListSelectDialog<eCEntity> dialog = new ListSelectDialog<>(ctx.getParentWindow(), I.tr("Fehlerhafte SubEntityDefintion"),
+			ListSelectDialog<eCEntity> dialog = new ListSelectDialog<>(ctx.getParentWindow(), I.tr("Faulty SubEntityDefintion"),
 					AbstractSelectDialog.SELECTION_MULTIPLE, orphanEntities);
 			if (dialog.openAndWasSuccessful()) {
 				List<eCEntity> selected = dialog.getSelectedEntries();

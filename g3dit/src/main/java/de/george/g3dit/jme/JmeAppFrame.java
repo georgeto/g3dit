@@ -111,7 +111,7 @@ public class JmeAppFrame<T extends EditorAwareApplication> {
 	}
 
 	public void createFrame() {
-		frame = new JFrame(I.tr("3D-Ansicht"));
+		frame = new JFrame(I.tr("3D view"));
 		frame.setIconImage(SwingUtils.getG3Icon());
 		frame.setSize(width, height);
 		frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);

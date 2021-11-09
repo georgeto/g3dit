@@ -32,7 +32,7 @@ public class TemplateExistenceValidator extends AbstractValidator<String> {
 
 		TemplateCache cache = Caches.template(ctx);
 		if (cache.isValid() && GuidUtil.isValid(model) && !cache.getEntryByGuid(GuidUtil.parseGuid(model), all).isPresent()) {
-			problems.append(I.trf("{0} enthält eine Guid zu der keine Template existiert.", compName), Severity.WARNING);
+			problems.append(I.trf("{0} contains a guid for which no template exists.", compName), Severity.WARNING);
 		}
 	}
 

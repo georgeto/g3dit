@@ -29,7 +29,7 @@ public class Section2 implements G3Serializable {
 
 	public int addNegZone(NegZone negZone) {
 		if (guidMapping.containsKey(negZone.getGuid())) {
-			throw new IllegalArgumentException(I.trf("Section2 enthält bereits eine NegZone mit der Guid '{0}'.", negZone.getGuid()));
+			throw new IllegalArgumentException(I.trf("Section2 already contains a NegZone with the Guid ''{0}''.", negZone.getGuid()));
 		}
 		negZones.add(negZone);
 		guidMapping.put(negZone.getGuid(), negZone);
@@ -50,7 +50,7 @@ public class Section2 implements G3Serializable {
 
 	public void updateNegZone(int index, NegZone negZone) {
 		if (!negZone.getGuid().equals(getNegZone(index).getGuid())) {
-			throw new IllegalArgumentException(I.tr("Guid der NegZone darf sich nicht ändern."));
+			throw new IllegalArgumentException(I.tr("Guid of the NegZone must not change."));
 		}
 		negZones.set(index, negZone);
 		guidMapping.put(negZone.getGuid(), negZone);

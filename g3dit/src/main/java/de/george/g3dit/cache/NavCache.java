@@ -159,8 +159,8 @@ public class NavCache extends AbstractCache<NavCache> {
 
 	private class CreateNavCacheWorker extends AbstractDialogFileWorker<Pair<Map<String, NavZone>, Map<String, NavPath>>> {
 		public CreateNavCacheWorker(Callable<List<File>> fileProvider, List<File> openFiles) {
-			super(fileProvider, openFiles, I.tr("Erstelle NavCache"), ctx.getParentWindow());
-			statusFormat = I.tr("{0, number} NavZones und NavPaths gefunden");
+			super(fileProvider, openFiles, I.tr("Create NavCache"), ctx.getParentWindow());
+			statusFormat = I.tr("{0, number} NavZones and NavPaths found");
 		}
 
 		@Override

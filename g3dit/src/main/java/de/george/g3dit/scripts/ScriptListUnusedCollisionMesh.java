@@ -31,12 +31,12 @@ public class ScriptListUnusedCollisionMesh implements IScript {
 
 	@Override
 	public String getTitle() {
-		return I.tr("Nicht verwendete oder fehlende CollisionMeshes auflisten");
+		return I.tr("List unused or missing collision meshes");
 	}
 
 	@Override
 	public String getDescription() {
-		return I.tr("Erstellt eine Liste aller nicht verwendeten oder fehlende CollisionMeshes.");
+		return I.tr("Creates a list of all unused or missing collision meshes.");
 	}
 
 	@Override

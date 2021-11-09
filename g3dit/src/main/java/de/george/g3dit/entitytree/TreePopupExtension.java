@@ -40,9 +40,9 @@ public class TreePopupExtension implements ITreePopupExtension {
 			if (show) {
 				String moveTitle;
 				if (markedEntities.size() == 1) {
-					moveTitle = I.trf("'{0}' zu SubEntity von '{1}' machen", markedEntities.get(0), clickedEntity);
+					moveTitle = I.trf("Make ''{0}'' a child entity of ''{1}''", markedEntities.get(0), clickedEntity);
 				} else {
-					moveTitle = I.trf("{0, number} Entities zu SubEntites von '{1}' machen", markedEntities.size(), clickedEntity);
+					moveTitle = I.trf("Make {0, number} entities child entities of ''{1}''", markedEntities.size(), clickedEntity);
 				}
 				JMenuItem miMove = new JMenuItem(moveTitle, Icons.getImageIcon(Icons.Arrow.CURVE));
 				miMove.addActionListener(e -> {
@@ -57,7 +57,7 @@ public class TreePopupExtension implements ITreePopupExtension {
 		}
 
 		// Entity klonen
-		JMenuItem miClone = new JMenuItem(I.trf("'{0}' klonen", clickedEntity), Icons.getImageIcon(Icons.Action.CLONE));
+		JMenuItem miClone = new JMenuItem(I.trf("Clone '{0}", clickedEntity), Icons.getImageIcon(Icons.Action.CLONE));
 		miClone.addActionListener(e -> {
 			if (NPCUtil.isNPC(clickedEntity)) {
 				eCEntity cloneNPC = NPCUtil.cloneNPC(clickedEntity);
@@ -71,7 +71,7 @@ public class TreePopupExtension implements ITreePopupExtension {
 		menu.add(miClone);
 
 		if (!NPCUtil.isNPC(clickedEntity) && !clickedEntity.getChilds().isEmpty()) {
-			JMenuItem miCloneChilds = new JMenuItem(I.trf("'{0}' und Child-Entities klonen", clickedEntity),
+			JMenuItem miCloneChilds = new JMenuItem(I.trf("Clone ''{0}'' and child entities", clickedEntity),
 					Icons.getImageIcon(Icons.Action.CLONE));
 			miCloneChilds.addActionListener(e -> {
 				EntityUtil.cloneEntityRecursive(clickedEntity).moveToWorldNode(archiveFile.getGraph());
@@ -93,9 +93,9 @@ public class TreePopupExtension implements ITreePopupExtension {
 		}
 
 		if (show) {
-			String markTitle = I.trf("'{0}' markieren", clickedEntity);
+			String markTitle = I.trf("Mark '{0}", clickedEntity);
 			if (elCount > 1) {
-				markTitle = I.trf("{0, number} Entities markieren", elCount);
+				markTitle = I.trf("Mark {0, number} entities", elCount);
 			}
 			JMenuItem miMark = new JMenuItem(markTitle, Icons.getImageIcon(Icons.Select.SELECT));
 			miMark.addActionListener(e -> tree.setMarkedEntities(selEntities));
@@ -104,9 +104,9 @@ public class TreePopupExtension implements ITreePopupExtension {
 
 		// Entity löschen
 		if (elCount > 1 || clickedEntity != archiveFile.getGraph()) {
-			String title = I.trf("'{0}' löschen", clickedEntity);
+			String title = I.trf("Delete '{0}", clickedEntity);
 			if (elCount > 1) {
-				title = I.trf("{0, number} Entities löschen", elCount);
+				title = I.trf("Delete {0, number} entities", elCount);
 			}
 			JMenuItem miDelete = new JMenuItem(title, Icons.getImageIcon(Icons.Action.DELETE));
 			miDelete.addActionListener(e -> {

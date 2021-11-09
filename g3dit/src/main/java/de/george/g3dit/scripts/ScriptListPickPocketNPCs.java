@@ -23,17 +23,17 @@ public class ScriptListPickPocketNPCs implements IScript {
 
 	@Override
 	public String getTitle() {
-		return I.tr("Beklaubare NPCs auflisten");
+		return I.tr("List NPCs that can be stolen from");
 	}
 
 	@Override
 	public String getDescription() {
-		return I.tr("Erstellt eine Liste aller beklaubaren NPCs (dazu zählen auch Truhen) und deren PickPocket TreasureSets.");
+		return I.tr("Creates a list of all NPCs that can be stolen from (including chests) and their PickPocket TreasureSets.");
 	}
 
 	@Override
 	public boolean execute(IScriptEnvironment env) {
-		File saveFile = FileDialogWrapper.saveFile(I.tr("Auflistung speichern unter..."), env.getParentWindow(),
+		File saveFile = FileDialogWrapper.saveFile(I.tr("Save listing as..."), env.getParentWindow(),
 				FileDialogWrapper.CSV_FILTER);
 		if (saveFile == null) {
 			return false;
@@ -74,7 +74,7 @@ public class ScriptListPickPocketNPCs implements IScript {
 		try {
 			IOUtils.writeTextFile(output, saveFile, StandardCharsets.UTF_8);
 		} catch (IOException e) {
-			env.log(I.trf("Datei konnte nicht gespeichert werden: {0}", e.getMessage()));
+			env.log(I.trf("File could not be saved: {0}", e.getMessage()));
 		}
 		return true;
 	}

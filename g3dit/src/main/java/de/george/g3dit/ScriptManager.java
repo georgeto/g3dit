@@ -131,7 +131,7 @@ public class ScriptManager implements IScriptEnvironment {
 		private OptionPanel optionPanel;
 
 		public ScriptDialog() {
-			super(ctx.getParentWindow(), I.tr("Scripts ausführen"), true);
+			super(ctx.getParentWindow(), I.tr("Execute scripts"), true);
 			setSize(1000, 700);
 			addWindowListener(new WindowAdapter() {
 				@Override
@@ -172,7 +172,7 @@ public class ScriptManager implements IScriptEnvironment {
 
 			area.setText(null);
 			IScript selectedValue = scriptList.getSelectedValue();
-			log(I.trf("'{0}' wird ausgeführt.", selectedValue.getTitle()));
+			log(I.trf("''{0}'' is executed.", selectedValue.getTitle()));
 			boolean result;
 			try {
 				result = selectedValue.execute(ScriptManager.this);
@@ -181,7 +181,7 @@ public class ScriptManager implements IScriptEnvironment {
 				log("Exception: %s", e.getMessage());
 				logger.warn("Error while executing script '{}'.", selectedValue.getTitle(), e);
 			}
-			log(result ? I.tr("Ausführung erfolgreich.") : I.tr("Ausführung fehlgeschlagen."));
+			log(result ? I.tr("Execution successful.") : I.tr("Execution failed."));
 			ctx.runGC();
 		}
 
@@ -197,7 +197,7 @@ public class ScriptManager implements IScriptEnvironment {
 			mainPanel.add(new JScrollPane(scriptList), "spany 2, cell 0 0");
 
 			lblDescription = new MultilineLabel("");
-			btnExecute = new JButton(I.tr("Script ausführen"));
+			btnExecute = new JButton(I.tr("Execute script"));
 			btnExecute.addActionListener(a -> executeScript());
 			ListUtil.enableOnEqual(scriptList, btnExecute, 1);
 

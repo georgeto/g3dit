@@ -51,21 +51,21 @@ public class ImportHelper {
 
 			if (currentFile.isLrentdat()) {
 				if (!aFile.isLrentdat()) {
-					message = I.tr("Entities aus einer *.node können nicht in eine *.lrentdat importiert werden.");
+					message = I.tr("Entities from a *.node cannot be imported into a *.lrentdat.");
 				}
 			} else if (aFile.isLrentdat()) {
-				message = I.tr("Entities aus einer *.lrentdat können nicht in eine *.node importiert werden.");
+				message = I.tr("Entities from a *.lrentdat cannot be imported into a *.node.");
 			}
 
 			if (message != null) {
-				convert = TaskDialogs.ask(ctx.getParentWindow(), I.tr("Inkompatible Dateitypen"),
-						message + "\n" + I.tr("Sollen die Entities konvertiert werden?"));
+				convert = TaskDialogs.ask(ctx.getParentWindow(), I.tr("Incompatible file types"),
+						message + "\n" + I.tr("Should the entities be converted?"));
 				if (!convert) {
 					return false;
 				}
 			}
 
-			ImportTreeEntitySelectDialog dialog = new ImportTreeEntitySelectDialog(ctx, I.tr("Entities importieren"),
+			ImportTreeEntitySelectDialog dialog = new ImportTreeEntitySelectDialog(ctx, I.tr("Import entities"),
 					AbstractSelectDialog.SELECTION_MULTIPLE, aFile);
 			if (dialog.openAndWasSuccessful()) {
 				List<eCEntity> entities = dialog.getSelectedEntries();
@@ -179,10 +179,10 @@ public class ImportHelper {
 		public JComponent createContentPanel() {
 			JPanel contentPanel = new JPanel(new MigLayout("ins 0, fill", "[]", "[fill][]"));
 			contentPanel.add(super.createContentPanel(), "grow, wrap");
-			cbImportChilds = new JCheckBox(I.tr("Childs-Entities importieren"));
+			cbImportChilds = new JCheckBox(I.tr("Import child entities"));
 			cbImportChilds.setSelected(true);
 			contentPanel.add(cbImportChilds, "gapleft 5, split 2");
-			cbRandomGuids = new JCheckBox(I.tr("Zufällige Guids generieren"));
+			cbRandomGuids = new JCheckBox(I.tr("Generate random guids"));
 			cbRandomGuids.setSelected(true);
 			contentPanel.add(cbRandomGuids);
 			return contentPanel;

@@ -9,7 +9,7 @@ public class SlotDialog extends TemplateNameSearchDialog {
 	public SlotDialog(TemplateSearchListener pCallback, EditorContext ctx) {
 		super(pCallback, ctx);
 
-		setTitle(I.tr("Slot aus Template laden"));
+		setTitle(I.tr("Load slot from template"));
 	}
 
 	@Override
@@ -18,7 +18,7 @@ public class SlotDialog extends TemplateNameSearchDialog {
 			if (callback.templateSearchCallback(tpleFile)) {
 				dispose();
 			} else {
-				lblStatus.setText(I.tr("Template passt nicht zu diesem Slot."));
+				lblStatus.setText(I.tr("Template is not suitable for this slot."));
 			}
 		}
 	}

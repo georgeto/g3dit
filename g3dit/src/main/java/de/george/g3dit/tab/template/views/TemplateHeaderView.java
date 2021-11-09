@@ -108,8 +108,7 @@ public class TemplateHeaderView implements TemplateView {
 					tab.saveValues(tple);
 				}
 			} catch (Exception e) {
-				TaskDialogs.error(ctx.getParentWindow(), I.trf("Fehler beim Speichern des Tabs '{0}'.", tab.getTabTitle()),
-						e.getMessage());
+				TaskDialogs.error(ctx.getParentWindow(), I.trf("Error while saving the tab ''{0}''.", tab.getTabTitle()), e.getMessage());
 				logger.warn("Error while saving the tab '{}'.", tab.getTabTitle(), e);
 			}
 		}

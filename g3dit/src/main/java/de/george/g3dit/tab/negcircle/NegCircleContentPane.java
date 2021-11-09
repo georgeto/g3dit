@@ -55,7 +55,7 @@ public class NegCircleContentPane extends NavMapObjectContentPane {
 	}
 
 	private Optional<String> addNegCircle() {
-		EnterGuidDialog dialog = new EnterGuidDialog(ctx.getParentWindow(), I.tr("NegCircle erstellen"), I.tr("Erstellen"),
+		EnterGuidDialog dialog = new EnterGuidDialog(ctx.getParentWindow(), I.tr("Create NegCircle"), I.tr("Create"),
 				GuidUtil.randomGUID());
 
 		if (dialog.openAndWasSuccessful()) {
@@ -145,7 +145,7 @@ public class NegCircleContentPane extends NavMapObjectContentPane {
 			add(new JLabel("NavZones"), "gaptop 7, spanx, wrap");
 			add(taZonesGuids.getScrollPane(), "spanx, flowy, aligny top, split 2, hmax 200, wmax 500, pushy, grow");
 
-			JButton btnCalc = new JButton(I.tr("Errechne NegCircle aus Offsets"));
+			JButton btnCalc = new JButton(I.tr("Calculate NegCircle from offsets"));
 			this.add(btnCalc, "");
 			btnCalc.addActionListener(l -> handleCalcNegCircle());
 
@@ -177,17 +177,17 @@ public class NegCircleContentPane extends NavMapObjectContentPane {
 				radius = Misc.parseFloatList(taRadius.getText());
 			} catch (IllegalArgumentException e) {
 				TaskDialogs.inform(ctx.getParentWindow(), "",
-						I.tr("Mindestens für einen Offset oder Radius wurden ungültige Werte eingegeben."));
+						I.tr("Invalid values were entered for at least one offset or radius."));
 				return;
 			}
 
 			if (offsets.size() <= 0) {
-				TaskDialogs.inform(ctx.getParentWindow(), "", I.tr("Eine NegCircle muss mindestens einen Offset haben."));
+				TaskDialogs.inform(ctx.getParentWindow(), "", I.tr("A NegCircle must have at least one offset."));
 				return;
 			}
 
 			if (offsets.size() != radius.size()) {
-				TaskDialogs.inform(ctx.getParentWindow(), "", I.tr("Anzahl von Offsets und Radien stimmt nicht überein."));
+				TaskDialogs.inform(ctx.getParentWindow(), "", I.tr("Number of offsets and radii differs."));
 				return;
 			}
 

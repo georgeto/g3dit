@@ -124,8 +124,8 @@ public class TemplateCache extends AbstractCache<TemplateCache> {
 
 	private class CreateTemplateCacheWorker extends AbstractDialogFileWorker<List<TemplateCacheEntry>> {
 		public CreateTemplateCacheWorker(Callable<List<File>> fileProvider) {
-			super(fileProvider, null, I.tr("Erstelle TemplateCache"), ctx.getParentWindow());
-			statusFormat = I.tr("{0, number} Templates gefunden");
+			super(fileProvider, null, I.tr("Create TemplateCache"), ctx.getParentWindow());
+			statusFormat = I.tr("{0, number} templates found");
 		}
 
 		@Override

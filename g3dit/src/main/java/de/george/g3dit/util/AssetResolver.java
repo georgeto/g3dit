@@ -96,7 +96,7 @@ public class AssetResolver {
 				return new MeshAsset(mesh, true, null);
 			}
 		}
-		return new MeshAsset("", false, I.tr("Container hat kein Mesh."));
+		return new MeshAsset("", false, I.tr("Container has no mesh."));
 	}
 
 	public MeshAsset resolveMesh(String meshFile, int materialSwitch) {
@@ -117,9 +117,9 @@ public class AssetResolver {
 				throw new NoSuchElementException();
 			}
 		} catch (IOException | IllegalMeshException e) {
-			return new MeshAsset(meshFile, false, I.trf("Fehler beim Öffnen des Meshes: {0}", e.getMessage()));
+			return new MeshAsset(meshFile, false, I.trf("Error while opening the mesh: {0}", e.getMessage()));
 		} catch (NoSuchElementException e) {
-			return new MeshAsset(meshFile, false, I.tr("Kein Mesh mit diesem Namen gefunden."));
+			return new MeshAsset(meshFile, false, I.tr("No mesh with this name found."));
 		}
 
 		MeshAsset asset = new MeshAsset(meshFile, true, null);
@@ -138,9 +138,9 @@ public class AssetResolver {
 			eCResourceShaderMaterial_PS material = FileUtil.openMaterial(materialLocator.locate(materialFile).get());
 			return parseMaterial(materialFile, material, materialSwitch);
 		} catch (IOException e) {
-			return new MaterialAsset(materialFile, materialSwitch, false, I.trf("Fehler beim Öffnen des Materials: {0}", e.getMessage()));
+			return new MaterialAsset(materialFile, materialSwitch, false, I.trf("Error while opening the material: {0}", e.getMessage()));
 		} catch (NoSuchElementException e) {
-			return new MaterialAsset(materialFile, materialSwitch, false, I.tr("Kein Material mit diesem Namen gefunden."));
+			return new MaterialAsset(materialFile, materialSwitch, false, I.tr("No material with this name found."));
 		}
 	}
 
@@ -227,7 +227,7 @@ public class AssetResolver {
 
 			if (textureCount == 0) {
 				return new TextureAsset(switched, textureName, switchRepeat, textureName, false,
-						I.tr("Keine Textur mit diesem Namen gefunden."));
+						I.tr("No texture with this name found."));
 			}
 
 			int textureIndex = 0;
@@ -260,7 +260,7 @@ public class AssetResolver {
 
 		if (!textureLocator.locate(textureName).isPresent()) {
 			return new TextureAsset(switched, textureName, switchRepeat, textureName, false,
-					I.tr("Keine Textur mit diesem Namen gefunden."));
+					I.tr("No texture with this name found."));
 		}
 
 		return new TextureAsset(switched, textureName, switchRepeat, textureName, true, null);
@@ -444,11 +444,11 @@ public class AssetResolver {
 
 		@Override
 		public void print(IndentPrintWriter writer) {
-			writer.println(I.tr("Textur") + ": " + getName());
+			writer.println(I.tr("Texture") + ": " + getName());
 			writer.indent();
-			writer.println(I.tr("Verwendung") + ": " + getUseType());
+			writer.println(I.tr("Usage") + ": " + getUseType());
 			if (switched) {
-				writer.println(I.tr("Basisname") + ": " + getBaseName());
+				writer.println(I.tr("Base name") + ": " + getBaseName());
 				writer.println(I.tr("SwitchRepeat") + ": " + G3Enums.asString(eEColorSrcSwitchRepeat.class, switchRepeat));
 			}
 			if (!isFound()) {

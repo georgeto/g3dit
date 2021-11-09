@@ -17,7 +17,7 @@ public class CheckOutsideStaticNode extends AbstractEntityCheck {
 	private bCBox staticNodeBoundary;
 
 	public CheckOutsideStaticNode() {
-		super(I.tr("Entity außerhalb Zuständigkeitsbereich von statischer .node"), "", 0, 1);
+		super(I.tr("Entity outside scope of static .node"), "", 0, 1);
 	}
 
 	@Override
@@ -39,7 +39,7 @@ public class CheckOutsideStaticNode extends AbstractEntityCheck {
 			Supplier<EntityDescriptor> descriptor, StringProblemConsumer problemConsumer) {
 		if (entity.getWorldNodeBoundary().isValid() && !entity.hasClass(CD.eCVegetation_PS.class)
 				&& !entity.getName().contains("_Landscape_") && !entity.getWorldNodeBoundary().intersects(staticNodeBoundary)) {
-			problemConsumer.fatal(I.tr("Befindet sich außerhalb des Zuständigkeitsbereich seiner statischen .node"));
+			problemConsumer.fatal(I.tr("Lies outside the scope of its static .node"));
 		}
 
 		return EntityPassStatus.Next;

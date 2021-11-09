@@ -127,7 +127,7 @@ public class LivePositionFrame extends JFrame {
 		this.setSize(450, 450);
 		setResizable(true);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-		logDialog = new DisplayTextDialog(I.tr("LivePosition-Log"), "", this, false);
+		logDialog = new DisplayTextDialog(I.tr("Live position log"), "", this, false);
 		logDialog.setDefaultCloseOperation(HIDE_ON_CLOSE);
 		logDialog.initialize();
 		createContentPanel();
@@ -156,10 +156,10 @@ public class LivePositionFrame extends JFrame {
 
 		JButton btnErase = new JButton(Icons.getImageIcon(Icons.Action.ERASE));
 		btnErase.setFocusable(false);
-		btnErase.setToolTipText(I.tr("Suche leeren"));
+		btnErase.setToolTipText(I.tr("Clear search"));
 		btnErase.addActionListener(e -> tfSearchField.setText(null));
 
-		Action searchAction = SwingUtils.createAction(I.tr("Suchen"), Icons.getImageIcon(Icons.Action.FIND), () -> searchEntity(null));
+		Action searchAction = SwingUtils.createAction(I.tr("Search"), Icons.getImageIcon(Icons.Action.FIND), () -> searchEntity(null));
 		setDefaultAction(searchAction);
 		JButton btnSearch = new JButton(searchAction);
 		btnSearch.setFocusable(false);
@@ -174,15 +174,15 @@ public class LivePositionFrame extends JFrame {
 		rbGuid.setFocusable(false);
 		SwingUtils.createButtonGroup(rbName, rbGuid);
 
-		JButton btnSearchHero = new JButton(I.tr("Held"));
+		JButton btnSearchHero = new JButton(I.tr("Hero"));
 		btnSearchHero.addActionListener(e -> searchForName(PC_HERO));
-		JButton btnSearchCamera = new JButton(I.tr("Kamera"));
+		JButton btnSearchCamera = new JButton(I.tr("Camera"));
 		btnSearchCamera.addActionListener(e -> searchForName(PC_CAMERA));
 
-		JCheckBox cbFocus = new JCheckBox(I.tr("Fokussierte Entity"));
-		JCheckBox cbEditor = new JCheckBox(I.tr("Editor-Entity"));
-		cbEditor.setToolTipText(SwingUtils.getMultilineText(I.tr("Zeigt im Ingame-Editor ausgewählte Entity an."),
-				I.tr("Besonders nützlich, wenn man ingame den 'Pick Mode' zur Entity-Auswahl verwendet.")));
+		JCheckBox cbFocus = new JCheckBox(I.tr("Focused entity"));
+		JCheckBox cbEditor = new JCheckBox(I.tr("Editor entity"));
+		cbEditor.setToolTipText(SwingUtils.getMultilineText(I.tr("Displays the entity selected in the in-game editor."),
+				I.tr("Especially useful when using 'pick mode' ingame for entity selection.")));
 
 		EnableGroup groupFocus = EnableGroup.create(tfSearchField, btnSearch, btnErase, rbName, rbGuid).add(searchAction);
 		EnableGroup groupEditor = EnableGroup.create(groupFocus);
@@ -214,51 +214,51 @@ public class LivePositionFrame extends JFrame {
 	}
 
 	private void createCurrentPositionSection(Container mainPanel) {
-		mainPanel.add(SwingUtils.createBoldLabel(I.tr("Aktuelle Position")), "spanx 3, wrap");
-		lblPosition = new JLabel(I.tr("-- Bitte Suche starten --"));
+		mainPanel.add(SwingUtils.createBoldLabel(I.tr("Current position")), "spanx 3, wrap");
+		lblPosition = new JLabel(I.tr("-- Please start search --"));
 		int height = SwingUtils.getMultilabelHeight(5);
 		mainPanel.add(lblPosition, "gapleft 7, spanx 3, height " + height + "!");
 
 		JPanel btnPanel = new JPanel(new MigLayout("ins 0"));
 
 		JButton btnCopyInfo = new JButton(Icons.getImageIcon(Icons.Misc.COOKIE_CHOCO_SPRINKLES));
-		btnCopyInfo.setToolTipText(I.tr("Name, Guid und Position in Zwischenablage kopieren"));
+		btnCopyInfo.setToolTipText(I.tr("Copy name, guid and position to clipboard"));
 		btnPanel.add(btnCopyInfo, LayoutUtils.sqrBtn("sg btn"));
 		btnCopyInfo.addActionListener(e -> IOUtils.copyToClipboard(
 				I.trf("Name: {0}\nGuid: {1}\n{2}", name, GuidUtil.parseGuid(guid), Misc.positionToString(translation, rotation, scale))));
 
 		JButton btnCopyPosition = new JButton(Icons.getImageIcon(Icons.Misc.COOKIE));
-		btnCopyPosition.setToolTipText(I.tr("Position in Zwischenablage kopieren"));
+		btnCopyPosition.setToolTipText(I.tr("Copy position to clipboard"));
 		btnPanel.add(btnCopyPosition, "sg btn, wrap");
 		btnCopyPosition.addActionListener(e -> IOUtils.copyToClipboard(Misc.positionToString(translation, rotation, scale)));
 
 		JButton btnCopyGuid = new JButton(Icons.getImageIcon(Icons.Misc.COOKIE_CHOCO));
-		btnCopyGuid.setToolTipText(I.tr("Guid in Zwischenablage kopieren"));
+		btnCopyGuid.setToolTipText(I.tr("Copy Guid to Clipboard"));
 		btnPanel.add(btnCopyGuid, "sg btn");
 		btnCopyGuid.addActionListener(e -> IOUtils.copyToClipboard(GuidUtil.parseGuid(guid)));
 
 		JButton btnCopyMarvinPosition = new JButton(Icons.getImageIcon(Icons.Misc.COOKIE_BITE));
-		btnCopyMarvinPosition.setToolTipText(I.tr("Position in Zwischenablage kopieren (gerundet für Konsole)"));
+		btnCopyMarvinPosition.setToolTipText(I.tr("Copy position to clipboard (rounded for console)"));
 		btnPanel.add(btnCopyMarvinPosition, "sg btn, wrap");
 		btnCopyMarvinPosition.addActionListener(e -> IOUtils.copyToClipboard(translation.toMarvinString()));
 
 		JButton btnShowEntity = new JButton(Icons.getImageIcon(Icons.Action.FIND));
-		btnShowEntity.setToolTipText(I.tr("Entity öffnen"));
+		btnShowEntity.setToolTipText(I.tr("Open entity"));
 		btnPanel.add(btnShowEntity, "sg btn");
 		btnShowEntity.addActionListener(e -> showEntity(false));
 
 		JButton btnApplyToEntity = new JButton(Icons.getImageIcon(Icons.Document.EXPORT));
-		btnApplyToEntity.setToolTipText(I.tr("Position für Entity in Weltdaten übernehmen"));
+		btnApplyToEntity.setToolTipText(I.tr("Apply position for entity in world data"));
 		btnPanel.add(btnApplyToEntity, "sg btn, wrap");
 		btnApplyToEntity.addActionListener(e -> showEntity(true));
 
 		JButton btnGotoEntity = new JButton(Icons.getImageIcon(Icons.Misc.GEOLOCATION));
-		btnGotoEntity.setToolTipText(I.tr("Teleportiert den Spieler zur Entity."));
+		btnGotoEntity.setToolTipText(I.tr("Teleports the player to the entity."));
 		btnPanel.add(btnGotoEntity, "sg btn");
 		btnGotoEntity.addActionListener(e -> IpcUtil.gotoGuid(guid));
 
 		JButton btnDumpEntity = new JButton(Icons.getImageIcon(Icons.IO.IMPORT));
-		btnDumpEntity.setToolTipText(I.tr("Entity dumpen"));
+		btnDumpEntity.setToolTipText(I.tr("Dump entity"));
 		btnPanel.add(btnDumpEntity, "sg btn");
 		btnDumpEntity.addActionListener(e -> {
 			RemoteProperty.getEntity(guid).whenComplete((entity, exception) -> SwingUtilities.invokeLater(() -> {
@@ -289,7 +289,7 @@ public class LivePositionFrame extends JFrame {
 	}
 
 	private void createChangePositionSection(Container mainPanel) {
-		mainPanel.add(SwingUtils.createBoldLabel(I.tr("Position bearbeiten")), "gaptop 10, spanx 3");
+		mainPanel.add(SwingUtils.createBoldLabel(I.tr("Edit position")), "gaptop 10, spanx 3");
 		mainPanel.add(SwingUtils.createBoldLabel(I.tr("+/-")), "wrap");
 
 		mainPanel.add(new JLabel(I.tr("x-pos")), "gapleft 7");
@@ -346,31 +346,30 @@ public class LivePositionFrame extends JFrame {
 		mainPanel.add(tfStepScale, "gapleft 7, sg step, wrap");
 		FloatSpinner.bindStepSizeEditor(tfStepScale, spScaleX, spScaleY, spScaleZ);
 
-		JButton btnApply = new JButton(I.tr("Ändern"));
+		JButton btnApply = new JButton(I.tr("Change"));
 		btnApply.addActionListener(e -> applyPosition());
 		mainPanel.add(btnApply, "gapleft 7");
 		ifValidSearchResult.add(btnApply);
 
-		JButton btnLoad = new JButton(I.tr("Aktuelle laden"));
+		JButton btnLoad = new JButton(I.tr("Load current"));
 		btnLoad.addActionListener(e -> updateSpinners());
 		mainPanel.add(btnLoad, "");
 		ifValidSearchResult.add(btnLoad);
 
 		JButton btnPastePosition = new JButton(Icons.getImageIcon(Icons.IO.IMPORT));
-		btnPastePosition.setToolTipText(I.tr("Position aus Zwischenablage verwenden"));
+		btnPastePosition.setToolTipText(I.tr("Use position from clipboard"));
 		mainPanel.add(btnPastePosition, LayoutUtils.sqrBtn("split 3"));
 		btnPastePosition.addActionListener(e -> handlePastePosition());
 
 		JButton btnPutToGround = new JButton(Icons.getImageIcon(Icons.Arrow.DOWN));
-		btnPutToGround.setToolTipText(I.tr("Auf Bodenhöhe verschieben"));
+		btnPutToGround.setToolTipText(I.tr("Move to floor level"));
 		mainPanel.add(btnPutToGround, LayoutUtils.sqrBtn());
 		btnPutToGround.addActionListener(e -> handlePutToGround());
 		ifValidSearchResult.add(btnPutToGround);
 
 		JCheckBox cbCapture = new JCheckBox(I.tr("Capture"));
-		cbCapture
-				.setToolTipText(I.trf("Aktiviere globalen Hotkey ({0} oder {1}) zur Erfassung der aktuellen Position im LivePosition-Log.",
-						SwingUtils.getKeyStrokeText(KEYSTROKE_CAPTURE_1), SwingUtils.getKeyStrokeText(KEYSTROKE_CAPTURE_2)));
+		cbCapture.setToolTipText(I.trf("Activate global hotkey ({0} or {1}) to capture the current position in the Live position log.",
+				SwingUtils.getKeyStrokeText(KEYSTROKE_CAPTURE_1), SwingUtils.getKeyStrokeText(KEYSTROKE_CAPTURE_2)));
 		cbCapture.addActionListener(e -> {
 			Provider hotKeyProvider = ctx.getEditor().getHotKeyProvider();
 			if (cbCapture.isSelected()) {
@@ -384,19 +383,19 @@ public class LivePositionFrame extends JFrame {
 		mainPanel.add(cbCapture, "gapafter push");
 
 		JButton btnSpawn = new JButton(Icons.getImageIcon(Icons.Misc.WAND_MAGIC));
-		btnSpawn.setToolTipText(I.tr("Template spawnen (Position über Kontextmenü einstellbar)"));
+		btnSpawn.setToolTipText(I.tr("Spawn template (position adjustable via context menu)"));
 		mainPanel.add(btnSpawn, LayoutUtils.sqrBtn("split 2, alignx center"));
 		btnSpawn.addActionListener(e -> spawnTemplate());
 
 		JPopupMenu pmSpawn = new JPopupMenu();
-		rbSpawnAtHero = (JRadioButtonMenuItem) pmSpawn.add(new JRadioButtonMenuItem(I.tr("Held"), true));
-		rbSpawnAtCamera = (JRadioButtonMenuItem) pmSpawn.add(new JRadioButtonMenuItem(I.tr("Kamera")));
-		rbSpawnAtCurrent = (JRadioButtonMenuItem) pmSpawn.add(new JRadioButtonMenuItem(I.tr("Aktuelle Position")));
+		rbSpawnAtHero = (JRadioButtonMenuItem) pmSpawn.add(new JRadioButtonMenuItem(I.tr("Hero"), true));
+		rbSpawnAtCamera = (JRadioButtonMenuItem) pmSpawn.add(new JRadioButtonMenuItem(I.tr("Camera")));
+		rbSpawnAtCurrent = (JRadioButtonMenuItem) pmSpawn.add(new JRadioButtonMenuItem(I.tr("Current position")));
 		SwingUtils.createButtonGroup(rbSpawnAtHero, rbSpawnAtCamera, rbSpawnAtCurrent);
 		btnSpawn.setComponentPopupMenu(pmSpawn);
 
 		JButton btnShowLog = new JButton(Icons.getImageIcon(Icons.Data.LOG));
-		btnShowLog.setToolTipText(I.tr("Log anzeigen"));
+		btnShowLog.setToolTipText(I.tr("Show log"));
 		mainPanel.add(btnShowLog, LayoutUtils.sqrBtn());
 		btnShowLog.addActionListener(e -> showLog());
 
@@ -449,9 +448,9 @@ public class LivePositionFrame extends JFrame {
 
 		if (searchString == null && searchMode != IdentifierCase.FOCUS && searchMode != IdentifierCase.EDITOR) {
 			if (searchMode == IdentifierCase.GUID) {
-				lblPosition.setText(I.tr("Guid ist ungültig"));
+				lblPosition.setText(I.tr("Guid is invalid"));
 			} else if (searchMode == IdentifierCase.NAME) {
-				lblPosition.setText(I.tr("Name darf nicht leer sein."));
+				lblPosition.setText(I.tr("Name must not be empty."));
 			}
 			isValidSearchActive = false;
 			ifValidSearchResult.setEnabled(false);
@@ -514,10 +513,10 @@ public class LivePositionFrame extends JFrame {
 				}
 
 				if (s == ResponseCallback.Status.Timeout) {
-					lblPosition.setText(I.tr("-- Gothic 3 nicht erreichbar -- "));
+					lblPosition.setText(I.tr("-- Gothic 3 not reachable -- "));
 					ifValidSearchResult.setEnabled(false);
 				} else if (rc.getStatus() == ResponseContainer.Status.FAILED) {
-					lblPosition.setText(I.tr("-- Entity nicht gefunden --"));
+					lblPosition.setText(I.tr("-- Entity not found --"));
 					ifValidSearchResult.setEnabled(false);
 				} else {
 					Position position = rc.getEntityResponse().getPosition();
@@ -563,7 +562,7 @@ public class LivePositionFrame extends JFrame {
 		if (position != null) {
 			updateSpinners(position, Misc.stringToRotation(clipboardContent), Misc.stringToScaling(clipboardContent));
 		} else {
-			TaskDialogs.inform(this, I.tr("Zwischenablage enthält keine Positionsdaten"), null);
+			TaskDialogs.inform(this, I.tr("Clipboard does not contain position data"), null);
 		}
 	}
 
@@ -593,11 +592,11 @@ public class LivePositionFrame extends JFrame {
 				}
 
 				IpcHelper.getIpc().sendRequest(request.build(), (s, rc, ud) -> SwingUtilities.invokeLater(() -> {
-					log(I.trf("Spawne '{0}'", tple.getName()));
+					log(I.trf("Spawn ''{0}''", tple.getName()));
 					if (s == ResponseCallback.Status.Timeout) {
-						log(I.tr("Gothic 3 nicht erreichbar"));
+						log(I.tr("Gothic 3 not reachable"));
 					} else if (rc.getStatus() == ResponseContainer.Status.FAILED) {
-						log(I.tr("Aus unbekannten Grund fehlgeschlagen."));
+						log(I.tr("Failed for unknown reason."));
 					} else {
 						Position position = rc.getEntityResponse().getPosition();
 						bCVector translation = DTC.convert(position.getTranslation());
@@ -606,8 +605,8 @@ public class LivePositionFrame extends JFrame {
 						String name = rc.getEntityResponse().getName();
 						String guid = GuidUtil.parseGuid(rc.getEntityResponse().getGuid());
 
-						log(I.trf("Name: '{0}'", name));
-						log(I.trf("Guid: '{0}'", guid));
+						log(I.trf("Name: ''{0}''", name));
+						log(I.trf("Guid: ''{0}''", guid));
 						log(Misc.positionToString(translation, rotation, scale));
 
 						searchForGuid(guid);
@@ -662,8 +661,8 @@ public class LivePositionFrame extends JFrame {
 
 			archiveTab.getEntityTree().selectEntity(entity);
 		} else {
-			TaskDialogs.error(this, I.tr("Entity nicht gefunden"),
-					I.trf("Die Entity '{0}' mit der Guid '{1}' konnte nicht gefunden werden.", entityName, entityGuid));
+			TaskDialogs.error(this, I.tr("Entity not found"),
+					I.trf("The entity ''{0}'' with the Guid ''{1}'' could not be found.", entityName, entityGuid));
 		}
 
 	}
@@ -673,9 +672,9 @@ public class LivePositionFrame extends JFrame {
 		private Optional<File> result;
 
 		public FindEntityWorker(String entityGuid, Callable<List<File>> fileProvider, Window parent) {
-			super(fileProvider, null, I.tr("Suche Entity"), parent);
+			super(fileProvider, null, I.tr("Search entity"), parent);
 			this.entityGuid = entityGuid;
-			statusFormat = I.tr("Entity wird gesucht...");
+			statusFormat = I.tr("Searching for entity...");
 		}
 
 		@Override

@@ -58,29 +58,29 @@ public class PositionPanel extends JPanel {
 		add(lblScaling, "");
 
 		JButton btnCopyPosition = new JButton(Icons.getImageIcon(Icons.Misc.COOKIE));
-		btnCopyPosition.setToolTipText(I.tr("Position in Zwischenablage kopieren"));
+		btnCopyPosition.setToolTipText(I.tr("Copy position to clipboard"));
 		add(btnCopyPosition, LayoutUtils.sqrBtn() + (changePositionConsumerKeepChilds != null ? ", skip" : ""));
 		btnCopyPosition.addActionListener(e -> handleCopyPosition());
 
 		JButton btnCopyMarvinPosition = new JButton(Icons.getImageIcon(Icons.Misc.COOKIE_BITE));
-		btnCopyMarvinPosition.setToolTipText(I.tr("Position in Zwischenablage kopieren (gerundet für Konsole)"));
+		btnCopyMarvinPosition.setToolTipText(I.tr("Copy position to clipboard (rounded for console)"));
 		add(btnCopyMarvinPosition, LayoutUtils.sqrBtn("wrap"));
 		btnCopyMarvinPosition.addActionListener(e -> handleCopyMarvinPosition());
 
 		if (changePositionConsumerKeepChilds != null) {
 			JButton btnEditPositionKeepChilds = new JButton(Icons.getImageIcon(Icons.Action.LAYER_EDIT));
-			btnEditPositionKeepChilds.setToolTipText(I.tr("Position ändern, aber World-Position der Child-Entities beibehalten"));
+			btnEditPositionKeepChilds.setToolTipText(I.tr("Change position, preserve keep world position of child entities"));
 			add(btnEditPositionKeepChilds, LayoutUtils.sqrBtn());
 			btnEditPositionKeepChilds.addActionListener(e -> handleChangePosition(true));
 		}
 
 		JButton btnEditPosition = new JButton(Icons.getImageIcon(Icons.Action.EDIT));
-		btnEditPosition.setToolTipText(I.tr("Position ändern"));
+		btnEditPosition.setToolTipText(I.tr("Change position"));
 		add(btnEditPosition, LayoutUtils.sqrBtn());
 		btnEditPosition.addActionListener(e -> handleChangePosition(false));
 
 		JButton btnPastePosition = new JButton(Icons.getImageIcon(Icons.IO.IMPORT));
-		btnPastePosition.setToolTipText(I.tr("Position aus Zwischenablage verwenden"));
+		btnPastePosition.setToolTipText(I.tr("Use position from clipboard"));
 		add(btnPastePosition, LayoutUtils.sqrBtn());
 		btnPastePosition.addActionListener(e -> handlePastePosition());
 	}
@@ -106,7 +106,7 @@ public class PositionPanel extends JPanel {
 
 	private void handleChangePosition(boolean keepChildPosition) {
 		PositionDialog dialog = new PositionDialog(dialogOwner,
-				keepChildPosition ? I.trf("{0} ändern (Child Position unverändert)", title) : I.trf("{0} ändern", title), positionMatrix);
+				keepChildPosition ? I.trf("Change {0} (child position unchanged)", title) : I.trf("Change {0}", title), positionMatrix);
 
 		if (dialog.openAndWasSuccessful(this)) {
 			if (!keepChildPosition) {
@@ -137,7 +137,7 @@ public class PositionPanel extends JPanel {
 
 			changePositionConsumer.accept(worldMatrix);
 		} else {
-			TaskDialogs.inform(dialogOwner, I.tr("Zwischenablage enthält keine Positionsdaten"), null);
+			TaskDialogs.inform(dialogOwner, I.tr("Clipboard does not contain position data"), null);
 		}
 	}
 }

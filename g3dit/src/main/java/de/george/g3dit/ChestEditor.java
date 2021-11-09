@@ -94,7 +94,7 @@ public class ChestEditor extends JFrame {
 
 	public ChestEditor(EditorContext ctx) {
 		this.ctx = ctx;
-		setTitle(I.tr("Truheneditor"));
+		setTitle(I.tr("Chest Editor"));
 		setIconImage(SwingUtils.getG3Icon());
 		setSize(SwingUtils.getScreenWorkingWidth(), SwingUtils.getScreenWorkingHeight());
 		setResizable(true);
@@ -103,7 +103,7 @@ public class ChestEditor extends JFrame {
 			@Override
 			public void windowClosing(WindowEvent e) {
 				if (chestsChanged) {
-					switch (Dialogs.askSaveChanges(ChestEditor.this, I.tr("Änderungen vor dem Schließen speichern?"))) {
+					switch (Dialogs.askSaveChanges(ChestEditor.this, I.tr("Save changes before closing?"))) {
 						case Cancel:
 							return;
 						case Yes:
@@ -126,7 +126,7 @@ public class ChestEditor extends JFrame {
 
 	private void loadFromJson() {
 		try {
-			File file = FileDialogWrapper.openFile(I.tr("Truhen laden"), this, FileDialogWrapper.JSON_FILTER);
+			File file = FileDialogWrapper.openFile(I.tr("Load chests"), this, FileDialogWrapper.JSON_FILTER);
 			if (file != null) {
 				List<Chest> loaded = JsonUtil.noAutodetectMapper().readValue(file,
 						TypeFactory.defaultInstance().constructCollectionLikeType(ArrayList.class, Chest.class));
@@ -143,7 +143,7 @@ public class ChestEditor extends JFrame {
 		}
 
 		try {
-			File file = FileDialogWrapper.saveFile(I.tr("Truhen speichern"), this, FileDialogWrapper.JSON_FILTER);
+			File file = FileDialogWrapper.saveFile(I.tr("Save chests"), this, FileDialogWrapper.JSON_FILTER);
 			if (file != null) {
 				JsonUtil.noAutodetectMapper().writeValue(file, map.getItems());
 				chestsChanged = false;
@@ -155,7 +155,7 @@ public class ChestEditor extends JFrame {
 
 	private void loadFromCsv() {
 		try {
-			File file = FileDialogWrapper.openFile(I.tr("Truhen laden"), this, FileDialogWrapper.CSV_FILTER);
+			File file = FileDialogWrapper.openFile(I.tr("Load chests"), this, FileDialogWrapper.CSV_FILTER);
 			if (file == null) {
 				return;
 			}
@@ -180,11 +180,10 @@ public class ChestEditor extends JFrame {
 						BeanProperty<Chest> accessor = Chest.FIELD_ACCESORS.get(field);
 						if (accessor.getValueClass() == boolean.class) {
 							boolean parsedValue = false;
-							if (value.equalsIgnoreCase(I.tr("Ja"))) {
+							if (value.equalsIgnoreCase(I.tr("Yes"))) {
 								parsedValue = true;
-							} else if (!value.equalsIgnoreCase(I.tr("Nein"))) {
-								throw new IllegalArgumentException(
-										I.trf("'{0}' kann nicht in einen boolschen Wert konvertiert werden.", value));
+							} else if (!value.equalsIgnoreCase(I.tr("No"))) {
+								throw new IllegalArgumentException(I.trf("''{0}'' cannot be converted to a boolean value.", value));
 							}
 							accessor.set(chest, parsedValue);
 						} else if (accessor.getValueClass() == int.class) {
@@ -215,7 +214,7 @@ public class ChestEditor extends JFrame {
 		}
 
 		try {
-			File file = FileDialogWrapper.saveFile(I.tr("Truhen speichern"), this, FileDialogWrapper.CSV_FILTER);
+			File file = FileDialogWrapper.saveFile(I.tr("Save chests"), this, FileDialogWrapper.CSV_FILTER);
 			if (file == null) {
 				return;
 			}
@@ -227,7 +226,7 @@ public class ChestEditor extends JFrame {
 					for (String field : Chest.FIELDS) {
 						BeanProperty<Chest> accesor = Chest.FIELD_ACCESORS.get(field);
 						if (accesor.getValueClass() == boolean.class) {
-							printer.print((boolean) accesor.get(chest) ? I.tr("Ja") : I.tr("Nein"));
+							printer.print((boolean) accesor.get(chest) ? I.tr("Yes") : I.tr("No"));
 						} else {
 							printer.print(accesor.get(chest));
 						}
@@ -256,27 +255,27 @@ public class ChestEditor extends JFrame {
 		map.setCallbackGoto(this::onGoto);
 		map.setCallbackNavigate(this::onNavigate);
 
-		JButton btnSaveJson = new JButton(I.tr("Truhen als .json speichern"));
+		JButton btnSaveJson = new JButton(I.tr("Save chests as .json"));
 		btnSaveJson.addActionListener(e -> saveAsJson());
 
-		JButton btnLoadJson = new JButton(I.tr("Truhen aus .json laden"));
+		JButton btnLoadJson = new JButton(I.tr("Load chests from .json"));
 		btnLoadJson.addActionListener(e -> loadFromJson());
 
-		JButton btnSaveCsv = new JButton(I.tr("Truhen als .csv speichern"));
+		JButton btnSaveCsv = new JButton(I.tr("Save chests as .csv"));
 		btnSaveCsv.addActionListener(e -> saveAsCsv());
 
-		JButton btnLoadCsv = new JButton(I.tr("Truhen aus .csv laden"));
+		JButton btnLoadCsv = new JButton(I.tr("Load chests from .csv"));
 		btnLoadCsv.addActionListener(e -> loadFromCsv());
 
-		JButton btnSetProperty = new JButton(I.tr("Wert für alle Ausgewählten setzen"));
+		JButton btnSetProperty = new JButton(I.tr("Set value for all selected"));
 		btnSetProperty.addActionListener(a -> {
-			List<String> choices = Arrays.asList(I.tr("Name"), I.tr("Gebiet"), I.tr("Beschreibung"));
-			int index = TaskDialogs.radioChoice(this, I.tr("Eigenschaft auswählen"), null, 1, choices);
+			List<String> choices = Arrays.asList(I.tr("Name"), I.tr("Area"), I.tr("Description"));
+			int index = TaskDialogs.radioChoice(this, I.tr("Select property"), null, 1, choices);
 			if (index == -1) {
 				return;
 			}
 
-			String input = TaskDialogs.input(this, I.tr("Wert eingeben"), null, "");
+			String input = TaskDialogs.input(this, I.tr("Enter value"), null, "");
 			if (input == null) {
 				return;
 			}
@@ -289,19 +288,19 @@ public class ChestEditor extends JFrame {
 			}
 		});
 
-		JButton btnLoadAll = new JButton(I.tr("Alle Truhen aus Weltdaten laden"));
+		JButton btnLoadAll = new JButton(I.tr("Load all chests from world data"));
 		btnLoadAll.addActionListener(e -> loadAll());
 
-		JButton btnLoadFile = new JButton(I.tr("Truhen aus .lrentdat laden"));
+		JButton btnLoadFile = new JButton(I.tr("Load chests from .lrentdat"));
 		btnLoadFile.addActionListener(e -> loadFromLrentdat());
 
-		JButton btnSyncFile = new JButton(I.tr("Truhen in .lrentdat übertragen"));
+		JButton btnSyncFile = new JButton(I.tr("Transfer chests to .lrentdat"));
 		btnSyncFile.addActionListener(e -> syncToLrentdat());
 
-		JButton btnHelp = new JButton(I.tr("Hilfe"));
+		JButton btnHelp = new JButton(I.tr("Help"));
 		btnHelp.addActionListener(a -> {
 			try {
-				new DisplayHtmlDialog(I.tr("Hilfe zu Truheneditor"),
+				new DisplayHtmlDialog(I.tr("Help for chest editor"),
 						Resources.toString(Resources.getResource(ChestEditor.class, "/res/ChestEditorHelp.html"), StandardCharsets.UTF_8),
 						ChestEditor.this, 700, 700, false).setVisible(true);
 			} catch (IOException e) {
@@ -361,7 +360,7 @@ public class ChestEditor extends JFrame {
 	}
 
 	private void loadFromLrentdat() {
-		File file = FileDialogWrapper.openFile(I.tr("Truhen aus .lrentdat laden"), this, FileDialogWrapper.LRENTDAT_FILTER);
+		File file = FileDialogWrapper.openFile(I.tr("Load chests from .lrentdat"), this, FileDialogWrapper.LRENTDAT_FILTER);
 		if (file == null) {
 			return;
 		}
@@ -381,7 +380,7 @@ public class ChestEditor extends JFrame {
 	}
 
 	private void syncToLrentdat() {
-		File file = FileDialogWrapper.openFile(I.tr("Truhen in .lrentdat synchronisieren"), this, FileDialogWrapper.LRENTDAT_FILTER);
+		File file = FileDialogWrapper.openFile(I.tr("Synchronize chests to .lrentdat"), this, FileDialogWrapper.LRENTDAT_FILTER);
 		if (file == null) {
 			return;
 		}
@@ -525,7 +524,7 @@ public class ChestEditor extends JFrame {
 					case "Name" -> columnExt.setPrototypeValue("Unique_Chest");
 					case "Region" -> columnExt.setPrototypeValue("Myrtana_Outdoor");
 					case "Description" -> columnExt
-							.setPrototypeValue(I.tr("Ruinenfelder westlich von Mora Sul, am östlichen Rand, sehr gut versteckt"));
+							.setPrototypeValue(I.tr("Ruin fields west of Mora Sul, on the eastern edge, very well hidden"));
 				}
 			}
 
@@ -539,12 +538,12 @@ public class ChestEditor extends JFrame {
 		public static final Comparator<String> REGION_COMPARATOR = Ordering.natural().nullsLast();
 
 		public static final ImmutableMap<String, String> FIELD_MAPPING = ImmutableMap.<String, String>builder().put("Name", I.tr("Name"))
-				.put("Region", I.tr("Gebiet")).put("Description", I.tr("Beschreibung")).put("Guid", I.tr("Guid"))
+				.put("Region", I.tr("Area")).put("Description", I.tr("Description")).put("Guid", I.tr("Guid"))
 				.put("Position", I.tr("Position")).put("TreasureSet1", I.tr("TS1")).put("TreasureSet2", I.tr("TS2"))
 				.put("TreasureSet3", I.tr("TS3")).put("TreasureSet4", I.tr("TS4")).put("TreasureSet5", I.tr("TS5"))
-				.put("Locked", I.tr("Verschlossen")).put("Difficulty", I.tr("Schwierigkeit")).put("Key", I.tr("Schlüssel"))
-				.put("Kind", I.tr("Truhenart")).put("Deleted", I.tr("Gelöscht")).put("Moved", I.tr("Verschoben"))
-				.put("Stacks", I.tr("Fester Inhalt")).put("File", I.tr("Datei")).put("OldDescription", I.tr("Alte Beschreibung")).build();
+				.put("Locked", I.trc("Chest", "Locked")).put("Difficulty", I.tr("Difficulty")).put("Key", I.tr("Key"))
+				.put("Kind", I.tr("Chest type")).put("Deleted", I.tr("Deleted")).put("Moved", I.tr("Moved"))
+				.put("Stacks", I.tr("Fixed content")).put("File", I.tr("File")).put("OldDescription", I.tr("Old description")).build();
 
 		public static final ImmutableList<String> FIELDS = FIELD_MAPPING.keySet().asList();
 

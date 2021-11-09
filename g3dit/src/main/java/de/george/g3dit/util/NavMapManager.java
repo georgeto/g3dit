@@ -49,8 +49,8 @@ public class NavMapManager extends EventBusProvider {
 			navMap = null;
 			eventBus().post(new NavMapLoadedEvent(false));
 			if (displayErrorDialog) {
-				TaskDialogs.error(ctx.getParentWindow(), I.tr("NavMap konnte nicht gefunden werden"), I.tr(
-						"Die NavMap (NavigationMap.xnav) konnte nicht gefunden werden.\nBitte überprüfen sie, ob die Data-Verzeichnisse korrekt konfiguriert sind."));
+				TaskDialogs.error(ctx.getParentWindow(), I.tr("NavMap could not be found"), I.tr(
+						"The NavMap (NavigationMap.xnav) could not be found.\nPlease check if the data directories are configured correctly."));
 			}
 			return false;
 		}
@@ -61,8 +61,8 @@ public class NavMapManager extends EventBusProvider {
 			eventBus().post(new NavMapLoadedEvent(false));
 			logger.warn("Error while loading NavMap.", e);
 			if (displayErrorDialog) {
-				TaskDialogs.error(ctx.getParentWindow(), I.tr("Fehler beim Laden der NavMap"),
-						I.tr("Beim Laden der NavMap ist ein Fehler aufgetreten:") + "\n" + e.getMessage());
+				TaskDialogs.error(ctx.getParentWindow(), I.tr("Error while loading the NavMap"),
+						I.tr("An error occurred while loading the NavMap:") + "\n" + e.getMessage());
 			}
 			return false;
 		}
@@ -88,15 +88,15 @@ public class NavMapManager extends EventBusProvider {
 			navMapFile = file;
 			navMap.save(file);
 		} catch (IOException e) {
-			TaskDialogs.error(ctx.getParentWindow(), I.tr("Speichern fehlgeschlagen"),
-					I.trf("NavMap konnte nicht gespeichert werden: {0}", e.getMessage()));
+			TaskDialogs.error(ctx.getParentWindow(), I.tr("Saving failed"),
+					I.trf("NavMap could not be saved: {0}", e.getMessage()));
 			return false;
 		}
 		return true;
 	}
 
 	public boolean saveNavMapAs() {
-		File navMapSave = FileDialogWrapper.saveFile(I.tr("NavMap speichern unter"), "NavigationMap.xnav", ctx.getParentWindow(),
+		File navMapSave = FileDialogWrapper.saveFile(I.tr("Save NavMap as"), "NavigationMap.xnav", ctx.getParentWindow(),
 				FileDialogWrapper.XNAV_FILTER);
 		if (navMapSave != null) {
 			if (!this.saveMap(navMapSave)) {

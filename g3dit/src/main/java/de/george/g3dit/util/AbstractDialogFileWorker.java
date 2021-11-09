@@ -16,9 +16,9 @@ public abstract class AbstractDialogFileWorker<T> extends AbstractFileWorker<T, 
 	protected String statusFormat;
 
 	protected AbstractDialogFileWorker(Callable<List<File>> fileProvider, List<File> openFiles, String dialogTitle, Window parent) {
-		super(fileProvider, openFiles, "", I.tr("{0, number}/{1, number} Dateien verarbeitet"), I.tr("Verarbeitung abgeschlossen"));
+		super(fileProvider, openFiles, "", I.tr("{0, number}/{1, number} files processed"), I.tr("Processing completed"));
 
-		progDlg = new ProgressDialog(parent, dialogTitle, I.tr("Ermittele zu bearbeitende Dateien..."), true);
+		progDlg = new ProgressDialog(parent, dialogTitle, I.tr("Determine files to be processed..."), true);
 		progDlg.setLocationRelativeTo(parent);
 		progDlg.setCancelListener(() -> cancel(false));
 

@@ -68,7 +68,7 @@ public class FileSearchDialog extends AbstractTableProgressDialog {
 
 	@Override
 	public JComponent createContentPanel() {
-		btnSearch = registerAction(I.tr("Suchen"), Icons.getImageIcon(Icons.Action.FIND), this::doWork, true);
+		btnSearch = registerAction(I.tr("Search"), Icons.getImageIcon(Icons.Action.FIND), this::doWork, true);
 
 		JPanel mainPanel = new JPanel(new MigLayout("fill", "[][][]"));
 
@@ -77,7 +77,7 @@ public class FileSearchDialog extends AbstractTableProgressDialog {
 
 		JButton btnErase = new JButton(Icons.getImageIcon(Icons.Action.ERASE));
 		btnErase.setFocusable(false);
-		btnErase.setToolTipText(I.tr("Suche leeren"));
+		btnErase.setToolTipText(I.tr("Clear search"));
 		btnErase.addActionListener(e -> tfSearchField.setText(null));
 
 		mainPanel.add(tfSearchField, "split 4, width 100%, spanx 4");
@@ -95,7 +95,7 @@ public class FileSearchDialog extends AbstractTableProgressDialog {
 				try {
 					Pattern.compile(model);
 				} catch (Exception e) {
-					problems.append(I.trf("{0} enthält ungültigen regulären Ausdruck.", compName));
+					problems.append(I.trf("{0} contains invalid regular expression.", compName));
 				}
 			}
 		});
@@ -112,7 +112,7 @@ public class FileSearchDialog extends AbstractTableProgressDialog {
 		cbTple.setSelectedIcon(Icons.getImageIcon(Icons.Document.LETTER_T));
 		cbMesh = new JCheckBox(I.tr("Mesh"), Icons.getDisabledImageIcon(Icons.Document.LETTER_M), false);
 		cbMesh.setSelectedIcon(Icons.getImageIcon(Icons.Document.LETTER_M));
-		btnImport = new JButton(I.tr("Entities aus ausgewählter Datei importieren"), Icons.getImageIcon(Icons.IO.IMPORT));
+		btnImport = new JButton(I.tr("Import entities from selected file"), Icons.getImageIcon(Icons.IO.IMPORT));
 		btnImport.setEnabled(false);
 		mainPanel.add(cbLrentdat, "split 5, spanx 4");
 		mainPanel.add(cbNode, "gapleft 7");
@@ -167,7 +167,7 @@ public class FileSearchDialog extends AbstractTableProgressDialog {
 		Predicate<File> filter;
 		String text = tfSearchField.getText();
 		if (text.isEmpty() || !cbLrentdat.isSelected() && !cbNode.isSelected() && !cbTple.isSelected() && !cbMesh.isSelected()) {
-			progressBar.setString(I.tr("Ungültige Filtereinstellungen"));
+			progressBar.setString(I.tr("Invalid filter settings"));
 			return;
 		}
 
@@ -179,7 +179,7 @@ public class FileSearchDialog extends AbstractTableProgressDialog {
 				Pattern pattern = Pattern.compile(text);
 				filter = f -> pattern.matcher(ctx.getFileManager().getRelativePath(f).orElseGet(f::getName)).find();
 			} catch (PatternSyntaxException e) {
-				progressBar.setString(I.tr("Ungültiger Regulärer Ausdruck"));
+				progressBar.setString(I.tr("Invalid regular expression"));
 				return;
 			}
 		}
@@ -212,8 +212,8 @@ public class FileSearchDialog extends AbstractTableProgressDialog {
 		private Predicate<File> filter;
 
 		protected SearchFileWorker(Callable<List<File>> fileProvider, Predicate<File> filter) {
-			super(fileProvider, I.tr("Erstelle Liste aller Dateien..."), I.tr("{0, number}/{1, number} Dateien betrachtet"),
-					I.tr("Suche abgeschlossen"));
+			super(fileProvider, I.tr("Creating list of all files..."), I.tr("{0, number}/{1, number} files scanned"),
+					I.tr("Search completed"));
 			this.filter = filter;
 			setProgressBar(progressBar);
 			doneMessageSupplier = this::getDoneMessage;
@@ -250,7 +250,7 @@ public class FileSearchDialog extends AbstractTableProgressDialog {
 		}
 
 		private String getDoneMessage() {
-			return I.trf("Suche abgeschlossen ({0, number} Dateien gefunden)", results.size());
+			return I.trf("Search completed ({0, number} files found)", results.size());
 		}
 	}
 

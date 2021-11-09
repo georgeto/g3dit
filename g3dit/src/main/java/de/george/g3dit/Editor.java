@@ -39,6 +39,7 @@ import com.jgoodies.looks.Options;
 import com.jidesoft.plaf.LookAndFeelFactory;
 import com.jme3.system.JmeSystem;
 import com.teamunify.i18n.I;
+import com.teamunify.i18n.settings.GlobalLanguageSettingsProvider;
 import com.teamunify.i18n.settings.LanguageSetting;
 import com.tulskiy.keymaster.common.Provider;
 
@@ -184,6 +185,9 @@ public class Editor implements EditorContext {
 
 		// TODO: Remove this...?
 		Locale.setDefault(Category.FORMAT, Locale.UK);
+		I.setLanguageSettingsProvider(new GlobalLanguageSettingsProvider());
+		// TODO: I.setDefaultDateFormat();
+		// TODO: I.setDefaultLocaleForLanguage()
 		LanguageSetting.translationPackage = "de.george.g3dit.translation";
 		// Hack to ensure that the EditorOptions are only initialized, after the UI language has
 		// been set.
@@ -253,7 +257,7 @@ public class Editor implements EditorContext {
 		if (!diff.hasChanges()) {
 			String binaryCompare = getOptionStore().get(EditorOptions.Path.BINARY_COMPARE);
 			if (binaryCompare.isEmpty()) {
-				TaskDialogs.error(frame, "", I.tr("Kein Vergleichsprogramm für Binärdateien konfiguriert."));
+				TaskDialogs.error(frame, "", I.tr("No comparison program for binary files configured."));
 				return;
 			}
 
@@ -264,7 +268,7 @@ public class Editor implements EditorContext {
 		diff.visit(mapPrintingVisitor);
 		SwingUtilities.invokeLater(() -> {
 			DisplayTextDialog dialog = new DisplayTextDialog(
-					I.trf("Dateivergleich - [{0} - {1}]", new File(base).getName(), new File(mine).getName()),
+					I.trf("File comparison - [{0} - {1}]", new File(base).getName(), new File(mine).getName()),
 					mapPrintingVisitor.getMessagesAsString(), frame, false);
 			// dialog.setLocationRelativeTo(editor.getOwner());
 			dialog.setVisible(true);
@@ -274,7 +278,7 @@ public class Editor implements EditorContext {
 	private void diffNavigationMap(String base, String mine) throws IOException {
 		String textCompare = getOptionStore().get(EditorOptions.Path.TEXT_COMPARE);
 		if (textCompare.isEmpty()) {
-			TaskDialogs.error(frame, "", I.tr("Kein Vergleichsprogramm für Textdateien konfiguriert."));
+			TaskDialogs.error(frame, "", I.tr("No comparison program for text files configured."));
 			return;
 		}
 
@@ -300,12 +304,12 @@ public class Editor implements EditorContext {
 			String baseExt = Files.getFileExtension(base).toLowerCase();
 			String mineExt = Files.getFileExtension(mine).toLowerCase();
 			if (!baseExt.equals(mineExt)) {
-				TaskDialogs.error(frame, "", I.tr("Zu vergleichende Dateien haben unterschiedliche Dateiendungen."));
+				TaskDialogs.error(frame, "", I.tr("Files to be compared have different file extensions."));
 				return;
 			}
 
 			if (FileUtils.contentEquals(baseFile, mineFile)) {
-				TaskDialogs.inform(frame, "", I.tr("Zu vergleichende Dateien sind identisch."));
+				TaskDialogs.inform(frame, "", I.tr("Files to be compared are identical."));
 				return;
 			}
 
@@ -323,7 +327,7 @@ public class Editor implements EditorContext {
 					diffEntity(base, mine, baseRoot, mineRoot);
 				}
 				case "xnav" -> diffNavigationMap(base, mine);
-				default -> TaskDialogs.error(frame, "", I.trf("Zu diffende Dateien haben nicht unterstützte Dateiendung '{0}'.", baseExt));
+				default -> TaskDialogs.error(frame, "", I.trf("Files to be diffed have unsupported file extension ''{0}''.", baseExt));
 
 			}
 		} catch (IOException e) {
@@ -452,7 +456,7 @@ public class Editor implements EditorContext {
 				}
 
 				if (navMapManager.isNavMapChanged()) {
-					switch (Dialogs.askSaveChanges(frame, I.tr("Änderungen an NavMap vor dem Beenden speichern?"))) {
+					switch (Dialogs.askSaveChanges(frame, I.tr("Save changes to NavMap before exiting?"))) {
 						case Yes:
 							navMapManager.saveMap();
 						case No:

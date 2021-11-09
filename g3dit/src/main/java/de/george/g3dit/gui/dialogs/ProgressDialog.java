@@ -40,7 +40,7 @@ public class ProgressDialog extends JDialog {
 		lblStatus.setBounds(10, 11, 274, 14);
 		getContentPane().add(lblStatus);
 
-		JButton btnCancel = new JButton(I.tr("Abbrechen"), Icons.getImageIcon(Icons.Action.DELETE));
+		JButton btnCancel = new JButton(I.tr("Cancel"), Icons.getImageIcon(Icons.Action.DELETE));
 		btnCancel.setBounds(94, 58, 105, 23);
 		btnCancel.setEnabled(cancelable);
 		btnCancel.setFocusable(false);

@@ -29,7 +29,7 @@ public class StringtableHelper {
 		if (!unknownClasses.isEmpty()) {
 			if (displayWarning) {
 				boolean isConfirmed = TaskDialogs.isConfirmed(parent, I.tr(
-						"Datei enthält unbekannte Klassen, durch das Aufräumen der Stringtable\nkönnten Stringtableeinträge gelöscht werden,\ndie noch von diesen Klassen verwendet werden.\nStringtable trotzdem aufräumen?"),
+						"The file file contains unknown classes, by cleaning up the stringtable\ncould delete string table entries that are still used by those classes.\nClean up the string table anyway?"),
 						Joiner.on("\n").join(unknownClasses));
 				if (isConfirmed) {
 					stringtable.clear();

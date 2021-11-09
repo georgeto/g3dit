@@ -53,8 +53,7 @@ public class CheckInvalidAnchors extends AbstractEntityCheck {
 	private Set<String> guids = new HashSet<>();
 
 	public CheckInvalidAnchors() {
-		super(I.tr("Ungültige Anchor ermitteln"), I.tr("Ermittelt Inkonsistenzen in der Zuordnung von Interaktionspunkten zu Anchors."), 0,
-				1);
+		super(I.tr("Find invalid anchors"), I.tr("Finds inconsistencies in the assignment of interaction points to anchors."), 0, 1);
 	}
 
 	@Override
@@ -80,9 +79,9 @@ public class CheckInvalidAnchors extends AbstractEntityCheck {
 		for (Anchor anchor : anchors.values()) {
 			if (!anchor.dynamic) {
 				postEntityProblem(problemConsumer, anchor.descriptor, Severity.Fatal,
-						I.tr("Anchor befindet sich in .node (UserCount nicht Teil des Spielstands)"),
+						I.tr("Anchor is inside .node (UserCount not part of the save game)"),
 						HtmlCreator.renderList("AnchorType: " + G3Enums.asString(gEAnchorType.class, anchor.anchorType),
-								I.tr("Interact Points: ") + anchor.interactPoints.size()));
+								I.tr("Interact points") + ": " + anchor.interactPoints.size()));
 			}
 
 			for (String interactPointGuid : anchor.interactPoints) {
@@ -90,20 +89,20 @@ public class CheckInvalidAnchors extends AbstractEntityCheck {
 				if (interactPoint != null) {
 					if (interactPoint.anchor == null) {
 						postEntityProblem(problemConsumer, anchor.descriptor, Severity.Fatal,
-								I.tr("Anchor verweist auf Interaktionspunkt, der keinen Anchor eingetragen hat."),
+								I.tr("Anchor refers to interaction point that has no anchor set."),
 								HtmlCreator.renderEntity(interactPoint.descriptor));
 					} else if (!anchor.descriptor.getGuid().equals(interactPoint.anchor)) {
 						postEntityProblem(problemConsumer, anchor.descriptor, Severity.Fatal,
-								I.tr("Anchor verweist auf Interaktionspunkt, der abweichenden Anchor eingetragen hat."),
+								I.tr("Anchor refers to interaction point that has different anchor set."),
 								HtmlCreator.renderEntity(interactPoint.descriptor));
 					}
 				} else {
 					if (guids.contains(interactPointGuid)) {
 						postEntityProblem(problemConsumer, anchor.descriptor, Severity.Fatal,
-								I.tr("Anchor verweist auf Entity, die kein Interaktionspunkt ist."), interactPointGuid);
+								I.tr("Anchor refers to entity, which is not an interaction point."), interactPointGuid);
 					} else {
 						postEntityProblem(problemConsumer, anchor.descriptor, Severity.Fatal,
-								I.tr("Anchor verweist auf nicht existente Entity."), interactPointGuid);
+								I.tr("Anchor refers to non-existent entity."), interactPointGuid);
 					}
 				}
 			}
@@ -118,16 +117,16 @@ public class CheckInvalidAnchors extends AbstractEntityCheck {
 			if (anchor != null) {
 				if (!anchor.interactPoints.contains(interactPoint.descriptor.getGuid())) {
 					postEntityProblem(problemConsumer, interactPoint.descriptor, Severity.Fatal,
-							I.tr("Interaktionspunkt verweist auf Anchor, der diesen nicht eingetragen hat."),
+							I.tr("Interaction point has an anchor set, which does not refer to it."),
 							HtmlCreator.renderEntity(anchor.descriptor));
 				}
 			} else {
 				if (guids.contains(interactPoint.anchor)) {
 					postEntityProblem(problemConsumer, interactPoint.descriptor, Severity.Fatal,
-							I.tr("Interaktionspunkt verweist auf Entity, die kein Anchor ist."), interactPoint.anchor);
+							I.tr("Interaction point refers to entity that is not an anchor."), interactPoint.anchor);
 				} else {
 					postEntityProblem(problemConsumer, interactPoint.descriptor, Severity.Fatal,
-							I.tr("Interaktionspunkt verweist auf nicht existente Entity."), interactPoint.anchor);
+							I.tr("Interaction point refers to non-existent entity."), interactPoint.anchor);
 				}
 			}
 		}

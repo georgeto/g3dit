@@ -181,17 +181,17 @@ public class GuidEntityFilter extends AbstractEntityFilter {
 	public static String getToolTipText() {
 		// @foff
 		return I.tr("<html>"
-				+ "Es kann sowohl nach vollständigen als auch unvollständigen Guids gesucht werden.<br>"
-				+ "Der Guid kann einer der folgenden Präfixe vorangestellt werden."
+				+ "Both complete and incomplete Guids can be searched for.<br>"
+				+ "The Guid can be prefixed with one of the following."
 				+ "<ul>"
-				+ "<li><b>Kein Präfix</b>: Guid</li>"
-				+ "<li><b>#i#</b>: Entity enthält InventoryStack mit passender Guid</li>"
-				+ "<li><b>#r#</b>: Entity hat Routine mit passender Guid</li>"
-				+ "<li><b>#e#</b>: Mitglieder der Enclave</li>"
-				+ "<li><b>#a#</b>: Entities des AnchorPoints</li>"
-				+ "<li><b>#p#</b>: PartyMember des PartyLeaders</li>"
-				+ "<li><b>#g#</b>: Entities die in irgendeiner ihrer Eigenschaften auf diese Entity verweisen</li>"
-				+ "<li><b>#t#</b>: Entities die in irgendeiner ihrer Eigenschaften auf dieses Template verweisen</li>"
+				+ "<li><b>No prefix</b>: Guid</li>"
+				+ "<li><b>#i#</b>: Entity contains InventoryStack with matching Guid</li>"
+				+ "<li><b>#r#</b>: Entity has Routine with matching Guid</li>"
+				+ "<li><b>#e#</b>: Members of Enclave</li>"
+				+ "<li><b>#a#</b>: Entities of AnchorPoints</li>"
+				+ "<li><b>#p#</b>: PartyMember of PartyLeader</li>"
+				+ "<li><b>#g#</b>: Entities that refer to this entity in any of their properties</li>"
+				+ "<li><b>#t#</b>: Entities that refer to this template in any of their properties</li>"
 				+ "</ul></html>");
 		// @fon
 	}

@@ -28,7 +28,7 @@ public class StatusBar extends JXStatusBar {
 
 	public StatusBar(EditorContext ctx) {
 		this.ctx = ctx;
-		lblFileStatus = new JLabel(I.tr("Keine Datei geöffnet"));
+		lblFileStatus = new JLabel(I.tr("No file opened"));
 		setLayout(new MigLayout("fillx, gapx 15, insets 2 5 2 5", ""));
 		add(lblFileStatus);
 
@@ -39,9 +39,9 @@ public class StatusBar extends JXStatusBar {
 		JLabel lblGothicRunning = new JLabel();
 		ctx.getIpcMonitor().addListener(this, ipcMonitor -> {
 			if (ipcMonitor.isAvailable()) {
-				lblGothicRunning.setText(I.trf("Gothic 3 erreichbar ({0})", ipcMonitor.getStatus().orElse(null)));
+				lblGothicRunning.setText(I.trf("Gothic 3 reachable ({0})", ipcMonitor.getStatus().orElse(null)));
 			} else {
-				lblGothicRunning.setText(I.tr("Gothic 3 nicht erreichbar"));
+				lblGothicRunning.setText(I.tr("Gothic 3 not reachable"));
 			}
 		}, true, true, true);
 		add(lblGothicRunning, "");
@@ -98,22 +98,22 @@ public class StatusBar extends JXStatusBar {
 			lblCacheStatus = new JLabel(cache.getSimpleName() + ": ");
 			add(lblCacheStatus);
 			btnCreateCache = new JButton(Icons.getImageIcon(Icons.Arrow.CIRCLE_DOUBLE));
-			btnCreateCache.setToolTipText(I.tr("Cache erstellen"));
+			btnCreateCache.setToolTipText(I.tr("Create cache"));
 			btnCreateCache.addActionListener(a -> {
-				setCacheStatus(I.tr("Wird erstellt..."), null, false);
+				setCacheStatus(I.tr("Creating..."), null, false);
 				ctx.getCacheManager().createCache(cache);
 			});
 			btnCreateCache.setFocusable(false);
 			add(btnCreateCache, "width 23!, height 23!");
 
-			setCacheStatus(I.tr("Wird geladen..."), null, false);
+			setCacheStatus(I.tr("Loading..."), null, false);
 
 			ctx.getCacheManager().getCache(cache).addUpdateListener(this, n -> {
 				if (n.isValid()) {
-					setCacheStatus(I.trf("{0, number} Einträge", entryCountSupplier.apply(ctx.getCacheManager().getCache(cache))),
-							I.trf("Erstellt am {0}", n.printCreationTimestamp()), true);
+					setCacheStatus(I.trf("{0, number} entries", entryCountSupplier.apply(ctx.getCacheManager().getCache(cache))),
+							I.trf("Created on {0}", n.printCreationTimestamp()), true);
 				} else {
-					setCacheStatus(I.tr("Existiert nicht"), null, true);
+					setCacheStatus(I.tr("Does not exist"), null, true);
 				}
 			});
 		}

@@ -118,10 +118,10 @@ public class NameEntityFilter extends AbstractEntityFilter {
 	public static String getToolTipText() {
 		// @foff
 		return I.tr("<html>"
-				+ "Dem Suchbegriff kann einer der folgenden Präfixe vorangestellt werden."
+				+ "The search term can be prefixed with one of the following prefixes."
 				+ "<ul>"
-				+ "<li><b>Kein Präfix</b>: Name enthält Suchbegriff</li>"
-				+ "<li><b>#f#</b>: Fokusname enthält Suchbegriff</li>"
+				+ "<li><b>No prefix</b>: Name contains search term</li>"
+				+ "<li><b>#f#</b>: Focus name contains search term</li>"
 				+ "</ul></html>");
 		// @fon
 	}

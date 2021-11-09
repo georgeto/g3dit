@@ -16,7 +16,7 @@ public class EmtpyWarnValidator extends AbstractValidator<String> {
 	@Override
 	public void validate(Problems problems, String compName, String model) {
 		if (model.isEmpty()) {
-			problems.append(I.trf("{0} sollte nicht leer sein.", compName), Severity.WARNING);
+			problems.append(I.trf("{0} should not be empty.", compName), Severity.WARNING);
 		}
 
 	}

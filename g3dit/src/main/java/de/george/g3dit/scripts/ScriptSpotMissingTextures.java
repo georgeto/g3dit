@@ -15,12 +15,12 @@ public class ScriptSpotMissingTextures implements IScript {
 
 	@Override
 	public String getTitle() {
-		return I.tr("Fehlende Texturen ermitteln");
+		return I.tr("Detect missing textures");
 	}
 
 	@Override
 	public String getDescription() {
-		return I.tr("Wenn eine im Material eingetragene Basistextur nicht existiert, wird diese als fehlend klassifiziert.");
+		return I.tr("If the base texture of a material does not exist, it is classified as missing.");
 	}
 
 	@Override
@@ -37,7 +37,7 @@ public class ScriptSpotMissingTextures implements IScript {
 				}
 			} catch (Exception e) {
 				env.log(I.tr("Material") + ": " + file.getName());
-				env.log(I.tr("Exception beim Parsen des Materials") + ": " + e.getMessage() + "\n\n");
+				env.log(I.tr("Exception while parsing the material") + ": " + e.getMessage() + "\n\n");
 			}
 		}
 

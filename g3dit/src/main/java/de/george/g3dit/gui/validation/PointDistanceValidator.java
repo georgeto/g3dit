@@ -26,12 +26,12 @@ public class PointDistanceValidator extends AbstractValidator<String> {
 
 			for (int s = points.size() - 1, e = 0; e < points.size(); s = e++) {
 				if (points.get(s).getInvTranslated(points.get(e)).getSquareMagnitude() < 3 * 3) {
-					problems.append(I.trf("{0} enthält zwei sehr nah beieinander liegende Sticks: {1, number} und {2, number}", compName,
+					problems.append(I.trf("{0} contains two sticks very close to each other: {1, number} and {2, number}", compName,
 							s + 1, e + 1), Severity.WARNING);
 				}
 			}
 		} catch (IllegalArgumentException e) {
-			problems.append(I.trf("{0} enthält fehlerhafte Koordinaten.", compName), Severity.FATAL);
+			problems.append(I.trf("{0} contains malformed  coordinates.", compName), Severity.FATAL);
 		}
 	}
 

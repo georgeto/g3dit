@@ -23,17 +23,17 @@ public class ScriptListUsedTreasureSets implements IScript {
 
 	@Override
 	public String getTitle() {
-		return I.tr("Verwendete TreasureSets pro NPC/Truhe");
+		return I.tr("TreasureSets used per NPC/chest");
 	}
 
 	@Override
 	public String getDescription() {
-		return I.tr("Erstellt eine Liste aller NPCs/Truhen mit all ihren TreasureSets.");
+		return I.tr("Creates a list of all NPCs/chests with all their TreasureSets.");
 	}
 
 	@Override
 	public boolean execute(IScriptEnvironment env) {
-		File saveFile = FileDialogWrapper.saveFile(I.tr("Auflistung speichern unter..."), env.getParentWindow(),
+		File saveFile = FileDialogWrapper.saveFile(I.tr("Save listing as..."), env.getParentWindow(),
 				FileDialogWrapper.CSV_FILTER);
 		if (saveFile == null) {
 			return false;
@@ -65,7 +65,7 @@ public class ScriptListUsedTreasureSets implements IScript {
 		try {
 			IOUtils.writeTextFile(output, saveFile, StandardCharsets.UTF_8);
 		} catch (IOException e) {
-			env.log(I.trf("Datei konnte nicht gespeichert werden: {0}", e.getMessage()));
+			env.log(I.trf("File could not be saved: {0}", e.getMessage()));
 			return false;
 		}
 		return true;

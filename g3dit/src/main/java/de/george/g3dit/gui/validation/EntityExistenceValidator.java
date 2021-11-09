@@ -26,7 +26,7 @@ public class EntityExistenceValidator extends AbstractValidator<String> {
 
 		EntityCache cache = Caches.entity(ctx);
 		if (cache.isValid() && GuidUtil.isValid(model) && !cache.isExisting(GuidUtil.parseGuid(model))) {
-			problems.append(I.trf("{0} enthält eine Guid zu der keine Entity existiert.", compName), Severity.WARNING);
+			problems.append(I.trf("{0} contains a guid for which no entity exists.", compName), Severity.WARNING);
 		}
 	}
 

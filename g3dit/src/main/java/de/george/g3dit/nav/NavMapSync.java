@@ -33,7 +33,7 @@ public class NavMapSync extends JFrame {
 
 	public NavMapSync(EditorContext ctx) {
 		this.ctx = ctx;
-		setTitle(I.tr("NavMap synchronisieren"));
+		setTitle(I.tr("Synchronize NavMap"));
 		setIconImage(SwingUtils.getG3Icon());
 		setSize(SwingUtils.getScreenWorkingWidth(), SwingUtils.getScreenWorkingHeight());
 		setResizable(true);

@@ -106,19 +106,19 @@ public class MainMenu extends JMenuBar {
 	}
 
 	private void createMenuData() {
-		JMenu muData = new JMenu(I.tr("Datei"));
+		JMenu muData = new JMenu(I.tr("File"));
 		muData.setMnemonic(KeyEvent.VK_D);
 		add(muData);
 
 		/*
 		 * Datei öffnen
 		 */
-		JMenuItem miOpen = new JMenuItem(I.tr("Öffnen"), Icons.getImageIcon(Icons.IO.OPEN));
+		JMenuItem miOpen = new JMenuItem(I.tr("Open"), Icons.getImageIcon(Icons.IO.OPEN));
 		miOpen.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, InputEvent.CTRL_DOWN_MASK));
 		miOpen.setMnemonic(KeyEvent.VK_F);
 		muData.add(miOpen);
 		miOpen.addActionListener(e -> {
-			List<File> files = FileDialogWrapper.openFiles(I.tr("Datei Öffnen"), ctx.getParentWindow(), FileDialogWrapper.COMBINED_FILTER,
+			List<File> files = FileDialogWrapper.openFiles(I.tr("Open file"), ctx.getParentWindow(), FileDialogWrapper.COMBINED_FILTER,
 					FileDialogWrapper.ARCHIVE_FILTER, FileDialogWrapper.TEMPLATE_FILTER, FileDialogWrapper.SECDAT_FILTER,
 					FileDialogWrapper.EFFECT_MAP_FILTER, FileDialogWrapper.MESH_FILTER, FileDialogWrapper.NO_FILTER);
 			for (File file : files) {
@@ -129,7 +129,7 @@ public class MainMenu extends JMenuBar {
 		/*
 		 * Zuletzt geöffnete Dateien
 		 */
-		fileMenu = new RecentFileMenu(I.tr("Letzte Dateien"), 10) {
+		fileMenu = new RecentFileMenu(I.tr("Recent files"), 10) {
 			@Override
 			public void onSelectFile(String filePath) {
 				File file = new File(filePath);
@@ -144,7 +144,7 @@ public class MainMenu extends JMenuBar {
 		/*
 		 * Neue Datei erstellen
 		 */
-		JMenu miNew = new JMenu(I.tr("Neu"));
+		JMenu miNew = new JMenu(I.tr("New"));
 		miNew.setMnemonic(KeyEvent.VK_N);
 		miNew.setIcon(Icons.getImageIcon(Icons.Document.PLUS));
 		muData.add(miNew);
@@ -164,13 +164,13 @@ public class MainMenu extends JMenuBar {
 		miNewSecdat.addActionListener(l -> ctx.getEditor().openSecdat(new SecDat(), true));
 		miNew.add(miNewSecdat);
 
-		JMenuItem miCompare = new JMenuItem(I.tr("Vergleichen"));
+		JMenuItem miCompare = new JMenuItem(I.tr("Compare"));
 		miCompare.setMnemonic(KeyEvent.VK_C);
 		miCompare.setIcon(Icons.getImageIcon(Icons.Action.DIFF));
 		muData.add(miCompare);
 		miCompare.addActionListener(l -> {
-			File base = FileDialogWrapper.openFile(I.tr("Ursprungsdatei"), ctx.getParentWindow());
-			File mine = FileDialogWrapper.openFile(I.tr("Veränderte Datei"), ctx.getParentWindow());
+			File base = FileDialogWrapper.openFile(I.tr("Original file"), ctx.getParentWindow());
+			File mine = FileDialogWrapper.openFile(I.tr("Modified file"), ctx.getParentWindow());
 			if (base != null && mine != null) {
 				ctx.getEditor().diffFiles(base, mine);
 			}
@@ -181,7 +181,7 @@ public class MainMenu extends JMenuBar {
 		/*
 		 * Speichern
 		 */
-		miSave = new JMenuItem(I.tr("Speichern"), Icons.getImageIcon(Icons.IO.SAVE));
+		miSave = new JMenuItem(I.tr("Save"), Icons.getImageIcon(Icons.IO.SAVE));
 		miSave.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_DOWN_MASK));
 		miSave.setMnemonic(KeyEvent.VK_S);
 		muData.add(miSave);
@@ -190,7 +190,7 @@ public class MainMenu extends JMenuBar {
 		/*
 		 * Speichern unter
 		 */
-		miSaveAs = new JMenuItem(I.tr("Speichern unter"), Icons.getImageIcon(Icons.IO.SAVE_AS));
+		miSaveAs = new JMenuItem(I.tr("Save as"), Icons.getImageIcon(Icons.IO.SAVE_AS));
 		miSaveAs.setMnemonic(KeyEvent.VK_U);
 		muData.add(miSaveAs);
 		miSaveAs.addActionListener(l -> ctx.getEditor().saveCurrentTabAs());
@@ -198,14 +198,14 @@ public class MainMenu extends JMenuBar {
 		/*
 		 * Aktualisieren
 		 */
-		JMenuItem miRefresh = new JMenuItem(I.tr("Aktualisieren"), Icons.getImageIcon(Icons.Arrow.CIRCLE_DOUBLE));
+		JMenuItem miRefresh = new JMenuItem(I.tr("Update"), Icons.getImageIcon(Icons.Arrow.CIRCLE_DOUBLE));
 		miRefresh.setMnemonic(KeyEvent.VK_A);
 		muData.add(miRefresh);
 		miRefresh.addActionListener(l -> {
 			EditorAbstractFileTab tab = (EditorAbstractFileTab) ctx.getEditor().getSelectedTab().get();
 			if (tab.isFileChanged()) {
 				if (!TaskDialogs.isConfirmed(ctx.getParentWindow(), "",
-						I.trf("Wollen sie wirklich alle Änderungen an '{0}' verwerfen\nund die Datei neu laden?",
+						I.trf("Do you really want to discard all changes to ''{0}''\nand reload the file?",
 								tab.getDataFile().get().getName()))) {
 					return;
 				}
@@ -217,20 +217,20 @@ public class MainMenu extends JMenuBar {
 		/*
 		 * Schließen
 		 */
-		miClose = new JMenuItem(I.tr("Schließen"), Icons.getImageIcon(Icons.Action.DELETE));
+		miClose = new JMenuItem(I.tr("Close"), Icons.getImageIcon(Icons.Action.DELETE));
 		miClose.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_W, InputEvent.CTRL_DOWN_MASK));
 		muData.add(miClose);
 		miClose.addActionListener(l -> ctx.getEditor().getSelectedTab().ifPresent(t -> ctx.getEditor().closeTab(t)));
 
 		muData.addSeparator();
 
-		JMenuItem miSearchFile = new JMenuItem(I.tr("Nach Datei suchen..."), Icons.getImageIcon(Icons.Action.FIND));
+		JMenuItem miSearchFile = new JMenuItem(I.tr("Search for file..."), Icons.getImageIcon(Icons.Action.FIND));
 		miSearchFile.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F, InputEvent.CTRL_DOWN_MASK));
 		muData.add(miSearchFile);
-		miSearchFile.addActionListener(e -> new FileSearchDialog(ctx, I.tr("Nach Datei suchen...")).open());
+		miSearchFile.addActionListener(e -> new FileSearchDialog(ctx, I.tr("Search for file...")).open());
 
-		JMenuItem miOpenFileManager = new JMenuItem(I.tr("Anzeigen in Dateimanager"), Icons.getImageIcon(Icons.IO.FOLDER_EXPLORE));
-		miOpenFileManager = new JMenuItem(I.tr("Anzeigen in Dateimanager"), Icons.getImageIcon(Icons.IO.FOLDER_EXPLORE));
+		JMenuItem miOpenFileManager = new JMenuItem(I.tr("Open in file manager"), Icons.getImageIcon(Icons.IO.FOLDER_EXPLORE));
+		miOpenFileManager = new JMenuItem(I.tr("Open in file manager"), Icons.getImageIcon(Icons.IO.FOLDER_EXPLORE));
 		miOpenFileManager.setMnemonic(KeyEvent.VK_X);
 		muData.add(miOpenFileManager);
 		miOpenFileManager.addActionListener(e -> {
@@ -238,7 +238,7 @@ public class MainMenu extends JMenuBar {
 		});
 		egHasDataFile.add(miOpenFileManager);
 
-		JMenuItem miCopyFileName = new JMenuItem(I.tr("Dateinamen in Zwischenablage kopieren"), Icons.getImageIcon(Icons.Misc.CLIPBOARD));
+		JMenuItem miCopyFileName = new JMenuItem(I.tr("Copy file name to clipboard"), Icons.getImageIcon(Icons.Misc.CLIPBOARD));
 		miCopyFileName.setMnemonic(KeyEvent.VK_X);
 		muData.add(miCopyFileName);
 		miCopyFileName.addActionListener(e -> {
@@ -247,7 +247,7 @@ public class MainMenu extends JMenuBar {
 		});
 		egHasDataFile.add(miCopyFileName);
 
-		JMenuItem miCopyFilePath = new JMenuItem(I.tr("Dateipfad in Zwischenablage kopieren"), Icons.getImageIcon(Icons.Misc.CLIPBOARD));
+		JMenuItem miCopyFilePath = new JMenuItem(I.tr("Copy file path to clipboard"), Icons.getImageIcon(Icons.Misc.CLIPBOARD));
 		miCopyFilePath.setMnemonic(KeyEvent.VK_X);
 		muData.add(miCopyFilePath);
 		miCopyFilePath.addActionListener(e -> {
@@ -256,7 +256,7 @@ public class MainMenu extends JMenuBar {
 		});
 		egHasDataFile.add(miCopyFilePath);
 
-		miOpenTinyHexer = new JMenuItem(I.tr("Öffnen in TinyHexer"), Icons.getImageIcon(Icons.Misc.TINY_HEXER));
+		miOpenTinyHexer = new JMenuItem(I.tr("Open in TinyHexer"), Icons.getImageIcon(Icons.Misc.TINY_HEXER));
 		miOpenTinyHexer.setMnemonic(KeyEvent.VK_T);
 		muData.add(miOpenTinyHexer);
 		miOpenTinyHexer.addActionListener(e -> {
@@ -266,7 +266,7 @@ public class MainMenu extends JMenuBar {
 				String script = ctx.getOptionStore().get(EditorOptions.Path.TINY_HEXER_SCRIPT);
 				new ProcessBuilder(executable, path, "/s", script).start();
 			} catch (Exception e1) {
-				TaskDialogs.error(ctx.getParentWindow(), I.tr("TinyHexer konnte nicht geöffnet werden."), e1.getMessage());
+				TaskDialogs.error(ctx.getParentWindow(), I.tr("TinyHexer could not be opened."), e1.getMessage());
 			}
 		});
 
@@ -275,7 +275,7 @@ public class MainMenu extends JMenuBar {
 		/*
 		 * Einstellungen
 		 */
-		JMenuItem miSettings = new JMenuItem(I.tr("Einstellungen"), Icons.getImageIcon(Icons.Data.SETTINGS));
+		JMenuItem miSettings = new JMenuItem(I.tr("Settings"), Icons.getImageIcon(Icons.Data.SETTINGS));
 		miSettings.setMnemonic(KeyEvent.VK_E);
 		muData.add(miSettings);
 		miSettings.addActionListener(e -> new SettingsDialog(ctx.getParentWindow(), ctx.getOptionStore(), this::settingsUpdated).open());
@@ -283,7 +283,7 @@ public class MainMenu extends JMenuBar {
 		/*
 		 * Programm beenden
 		 */
-		JMenuItem miExit = new JMenuItem(I.tr("Beenden"), Icons.getImageIcon(Icons.Data.EXIT));
+		JMenuItem miExit = new JMenuItem(I.tr("Exit"), Icons.getImageIcon(Icons.Data.EXIT));
 		miExit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_B, InputEvent.CTRL_DOWN_MASK));
 		miExit.setMnemonic(KeyEvent.VK_B);
 		muData.add(miExit);
@@ -301,7 +301,7 @@ public class MainMenu extends JMenuBar {
 		/*
 		 * Entities aus Datei importieren
 		 */
-		miImport = new JMenuItem(I.tr("Entities aus Datei importieren"), Icons.getImageIcon(Icons.IO.IMPORT));
+		miImport = new JMenuItem(I.tr("Import entities from file"), Icons.getImageIcon(Icons.IO.IMPORT));
 		miImport.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_I, InputEvent.CTRL_DOWN_MASK));
 		miImport.setMnemonic(KeyEvent.VK_I);
 		muTools.add(miImport);
@@ -311,26 +311,26 @@ public class MainMenu extends JMenuBar {
 				return;
 			}
 
-			File file = FileDialogWrapper.openFile(I.tr("Datei Öffnen"), ctx.getParentWindow(), FileDialogWrapper.ARCHIVE_FILTER,
+			File file = FileDialogWrapper.openFile(I.tr("Open file"), ctx.getParentWindow(), FileDialogWrapper.ARCHIVE_FILTER,
 					FileDialogWrapper.NO_FILTER);
 			if (file != null && ImportHelper.importFromFile(file, archiveTab.get().getCurrentFile(), ctx)) {
 				archiveTab.get().refreshTree(false);
 			}
 		});
 
-		JMenuItem miSearchEntity = new JMenuItem(I.tr("Entity-Suche"), Icons.getImageIcon(Icons.Action.FIND));
+		JMenuItem miSearchEntity = new JMenuItem(I.tr("Entity Search"), Icons.getImageIcon(Icons.Action.FIND));
 		miSearchEntity.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E, InputEvent.CTRL_DOWN_MASK));
 		miSearchEntity.setMnemonic(KeyEvent.VK_E);
 		muTools.add(miSearchEntity);
 		miSearchEntity.addActionListener(e -> EntitySearchDialog.openEntitySearch(ctx));
 
-		JMenuItem miSearchTemplateEntity = new JMenuItem(I.tr("Template-Suche"), Icons.getImageIcon(Icons.Action.FIND));
+		JMenuItem miSearchTemplateEntity = new JMenuItem(I.tr("Template Search"), Icons.getImageIcon(Icons.Action.FIND));
 		muTools.add(miSearchTemplateEntity);
 		miSearchTemplateEntity
 				.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_T, InputEvent.CTRL_DOWN_MASK | InputEvent.SHIFT_DOWN_MASK));
 		miSearchTemplateEntity.addActionListener(e -> TemplateSearchDialog.openTemplateSearch(ctx));
 
-		JMenuItem miOpenTemplate = new JMenuItem(I.tr("Template öffnen"), Icons.getImageIcon(Icons.Action.FIND));
+		JMenuItem miOpenTemplate = new JMenuItem(I.tr("Open template"), Icons.getImageIcon(Icons.Action.FIND));
 		miOpenTemplate.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_T, InputEvent.CTRL_DOWN_MASK));
 		miOpenTemplate.setMnemonic(KeyEvent.VK_T);
 		muTools.add(miOpenTemplate);
@@ -343,7 +343,7 @@ public class MainMenu extends JMenuBar {
 			}
 		});
 
-		JMenuItem miImportStaticLightdata = new JMenuItem(I.tr("StaticLightdata importieren"), Icons.getImageIcon(Icons.IO.IMPORT));
+		JMenuItem miImportStaticLightdata = new JMenuItem(I.tr("Import StaticLightdata"), Icons.getImageIcon(Icons.IO.IMPORT));
 		miImportStaticLightdata.setMnemonic(KeyEvent.VK_H);
 		muTools.add(miImportStaticLightdata);
 		miImportStaticLightdata.addActionListener(e -> new ImportStaticLightdataDialog(ctx).open());
@@ -367,7 +367,7 @@ public class MainMenu extends JMenuBar {
 		/*
 		 * Stringtable aufräumen
 		 */
-		miCleanStringtable = new JMenuItem(I.tr("Stringtable aufräumen"), Icons.getImageIcon(Icons.Data.OPEN_BOOK));
+		miCleanStringtable = new JMenuItem(I.tr("Clean up string table"), Icons.getImageIcon(Icons.Data.OPEN_BOOK));
 		muTools.add(miCleanStringtable);
 		miCleanStringtable.setMnemonic(KeyEvent.VK_A);
 		miCleanStringtable.addActionListener(e -> {
@@ -391,19 +391,19 @@ public class MainMenu extends JMenuBar {
 
 		muTools.addSeparator();
 
-		JMenuItem miWorldMap = new JMenuItem(I.tr("Weltkarte"), Icons.getImageIcon(Icons.Misc.MAP));
+		JMenuItem miWorldMap = new JMenuItem(I.tr("World map"), Icons.getImageIcon(Icons.Misc.MAP));
 		miWorldMap.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_M, InputEvent.CTRL_DOWN_MASK));
 		miWorldMap.setMnemonic(KeyEvent.VK_M);
 		miWorldMap.addActionListener(e -> EntityMap.getInstance(ctx).setVisible(true));
 		muTools.add(miWorldMap);
 
-		JMenuItem miEditChests = new JMenuItem(I.tr("Truheneditor"), Icons.getImageIcon(Icons.Misc.CHEST));
+		JMenuItem miEditChests = new JMenuItem(I.tr("Chest Editor"), Icons.getImageIcon(Icons.Misc.CHEST));
 		miEditChests.addActionListener(e -> new ChestEditor(ctx).setVisible(true));
 		muTools.add(miEditChests);
 
 		muTools.addSeparator();
 
-		JMenuItem miViewFile = new JMenuItem(I.tr("3D-Ansicht anzeigen"), Icons.getImageIcon(Icons.IO.IMPORT));
+		JMenuItem miViewFile = new JMenuItem(I.tr("Show 3D view"), Icons.getImageIcon(Icons.IO.IMPORT));
 		muTools.add(miViewFile);
 		miViewFile.addActionListener(e -> {
 			NodeViewer viewer = NodeViewer.getInstance(ctx);
@@ -421,7 +421,7 @@ public class MainMenu extends JMenuBar {
 		/*
 		 * Log anzeigen
 		 */
-		JMenuItem miLog = new JMenuItem(I.tr("Log anzeigen"), Icons.getImageIcon(Icons.Data.LOG));
+		JMenuItem miLog = new JMenuItem(I.tr("Show log"), Icons.getImageIcon(Icons.Data.LOG));
 		miLog.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_L, InputEvent.CTRL_DOWN_MASK));
 		miLog.setMnemonic(KeyEvent.VK_L);
 		muTools.add(miLog);
@@ -445,7 +445,7 @@ public class MainMenu extends JMenuBar {
 					}
 				}
 			} catch (Exception ex) {
-				TaskDialogs.error(ctx.getParentWindow(), I.tr("Log konnte nicht geöffnet werden."), ex.getMessage());
+				TaskDialogs.error(ctx.getParentWindow(), I.tr("Log could not be opened."), ex.getMessage());
 			}
 		});
 
@@ -458,7 +458,7 @@ public class MainMenu extends JMenuBar {
 			dialog.setVisible(true);
 		});
 
-		JMenuItem miGuidFormats = new JMenuItem(I.tr("Guid Formate"), Icons.getImageIcon(Icons.Document.CONVERT));
+		JMenuItem miGuidFormats = new JMenuItem(I.tr("Guid formats"), Icons.getImageIcon(Icons.Document.CONVERT));
 		miGuidFormats.setMnemonic(KeyEvent.VK_F);
 		muTools.add(miGuidFormats);
 		miGuidFormats.addActionListener(e -> new GuidFormatsDialog(ctx.getParentWindow()).open());
@@ -468,7 +468,7 @@ public class MainMenu extends JMenuBar {
 		final ScriptManager scriptManager = new ScriptManager(ctx);
 		scriptManager.addDefaultScripts();
 
-		JMenuItem miExecuteScripts = new JMenuItem(I.tr("Scripts ausführen"), Icons.getImageIcon(Icons.Misc.SCRIPT));
+		JMenuItem miExecuteScripts = new JMenuItem(I.tr("Execute scripts"), Icons.getImageIcon(Icons.Misc.SCRIPT));
 		miExecuteScripts.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q, InputEvent.CTRL_DOWN_MASK));
 		miExecuteScripts.setMnemonic(KeyEvent.VK_S);
 		muTools.add(miExecuteScripts);
@@ -477,7 +477,7 @@ public class MainMenu extends JMenuBar {
 		final CheckManager checkManager = new CheckManager(ctx);
 		checkManager.addDefaultChecks();
 
-		JMenuItem miExecuteChecks = new JMenuItem(I.tr("Checks ausführen"), Icons.getImageIcon(Icons.Misc.SCRIPT));
+		JMenuItem miExecuteChecks = new JMenuItem(I.tr("Execute checks"), Icons.getImageIcon(Icons.Misc.SCRIPT));
 		miExecuteChecks.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, InputEvent.CTRL_DOWN_MASK | InputEvent.SHIFT_DOWN_MASK));
 		miExecuteChecks.setMnemonic(KeyEvent.VK_C);
 		muTools.add(miExecuteChecks);
@@ -503,20 +503,20 @@ public class MainMenu extends JMenuBar {
 		muNavMap.setMnemonic(KeyEvent.VK_N);
 		add(muNavMap);
 
-		JMenuItem miReloadNavMap = new JMenuItem(I.tr("Neuladen"), Icons.getImageIcon(Icons.Arrow.CIRCLE_DOUBLE));
+		JMenuItem miReloadNavMap = new JMenuItem(I.tr("Reload"), Icons.getImageIcon(Icons.Arrow.CIRCLE_DOUBLE));
 		miReloadNavMap.setMnemonic(KeyEvent.VK_N);
 		muNavMap.add(miReloadNavMap);
 		miReloadNavMap.addActionListener(e -> ctx.getNavMapManager().loadNavMap(true));
 
 		muNavMap.addSeparator();
 
-		miSaveNavMap = new JMenuItem(I.tr("Speichern"), Icons.getImageIcon(Icons.IO.SAVE));
+		miSaveNavMap = new JMenuItem(I.tr("Save"), Icons.getImageIcon(Icons.IO.SAVE));
 		miSaveNavMap.setMnemonic(KeyEvent.VK_S);
 		miSaveNavMap.setEnabled(false);
 		muNavMap.add(miSaveNavMap);
 		miSaveNavMap.addActionListener(e -> ctx.getNavMapManager().saveMap());
 
-		miSaveNavMapAs = new JMenuItem(I.tr("Speichern unter"), Icons.getImageIcon(Icons.IO.SAVE_AS));
+		miSaveNavMapAs = new JMenuItem(I.tr("Save as"), Icons.getImageIcon(Icons.IO.SAVE_AS));
 		miSaveNavMapAs.setMnemonic(KeyEvent.VK_U);
 		miSaveNavMapAs.setEnabled(false);
 		muNavMap.add(miSaveNavMapAs);
@@ -524,17 +524,17 @@ public class MainMenu extends JMenuBar {
 
 		muNavMap.addSeparator();
 
-		JMenuItem miCreateNavCache = new JMenuItem(I.tr("NavZone-Cache erstellen"), Icons.getImageIcon(Icons.Arrow.CIRCLE_DOUBLE));
+		JMenuItem miCreateNavCache = new JMenuItem(I.tr("Create NavZone cache"), Icons.getImageIcon(Icons.Arrow.CIRCLE_DOUBLE));
 		miCreateNavCache.setMnemonic(KeyEvent.VK_A);
 		muNavMap.add(miCreateNavCache);
 		miCreateNavCache.addActionListener(e -> ctx.getCacheManager().createCache(NavCache.class));
 		muNavMap.addSeparator();
 
-		JMenuItem miEditNegZones = new JMenuItem(I.tr("NegZones bearbeiten"), Icons.getImageIcon(Icons.Action.EDIT));
+		JMenuItem miEditNegZones = new JMenuItem(I.tr("Edit NegZones"), Icons.getImageIcon(Icons.Action.EDIT));
 		muNavMap.add(miEditNegZones);
 		miEditNegZones.addActionListener(l -> ctx.getEditor().openEditNegZones());
 
-		JMenuItem miEditNegCircles = new JMenuItem(I.tr("NegCircles bearbeiten"), Icons.getImageIcon(Icons.Action.EDIT));
+		JMenuItem miEditNegCircles = new JMenuItem(I.tr("Edit NegCircles"), Icons.getImageIcon(Icons.Action.EDIT));
 		muNavMap.add(miEditNegCircles);
 		miEditNegCircles.addActionListener(l -> ctx.getEditor().openEditNegCircles());
 
@@ -550,22 +550,22 @@ public class MainMenu extends JMenuBar {
 		miEditObjectsWithoutNegCircle.addActionListener(l -> new EditGuidWithCommentConfigDialog(ctx.getParentWindow(),
 				I.tr("Edit objects without NegCircle"), ConfigFiles.objectsWithoutNegCircles(ctx)).open());
 
-		JMenuItem miEditPrefPaths = new JMenuItem(I.tr("PrefPaths bearbeiten"), Icons.getImageIcon(Icons.Action.EDIT));
+		JMenuItem miEditPrefPaths = new JMenuItem(I.tr("Edit PrefPaths"), Icons.getImageIcon(Icons.Action.EDIT));
 		muNavMap.add(miEditPrefPaths);
 		miEditPrefPaths.addActionListener(l -> ctx.getEditor().openEditPrefPaths());
 
-		JMenuItem miNavMapSync = new JMenuItem(I.tr("NavMap synchronisieren"), Icons.getImageIcon(Icons.Action.DIFF));
+		JMenuItem miNavMapSync = new JMenuItem(I.tr("Synchronize NavMap"), Icons.getImageIcon(Icons.Action.DIFF));
 		miNavMapSync.setMnemonic(KeyEvent.VK_S);
 		muNavMap.add(miNavMapSync);
 		miNavMapSync.addActionListener(l -> new NavMapSync(ctx).setVisible(true));
 
 		muNavMap.addSeparator();
 
-		JMenuItem miExNegZones = new JMenuItem(I.tr("NegZones exportieren"), Icons.getImageIcon(Icons.Document.EXPORT));
+		JMenuItem miExNegZones = new JMenuItem(I.tr("Export NegZones"), Icons.getImageIcon(Icons.Document.EXPORT));
 		miExNegZones.setMnemonic(KeyEvent.VK_Z);
 		muNavMap.add(miExNegZones);
 		miExNegZones.addActionListener(e -> {
-			File outDir = FileDialogWrapper.chooseDirectory(I.tr("Ausgabeverzeichnis wählen"), ctx.getParentWindow());
+			File outDir = FileDialogWrapper.chooseDirectory(I.tr("Select output directory"), ctx.getParentWindow());
 			if (outDir == null) {
 				return;
 			}
@@ -594,11 +594,11 @@ public class MainMenu extends JMenuBar {
 			}
 		});
 
-		JMenuItem miExNegCircles = new JMenuItem(I.tr("NegCircles exportieren"), Icons.getImageIcon(Icons.Document.EXPORT));
+		JMenuItem miExNegCircles = new JMenuItem(I.tr("Export NegCircles"), Icons.getImageIcon(Icons.Document.EXPORT));
 		miExNegCircles.setMnemonic(KeyEvent.VK_C);
 		muNavMap.add(miExNegCircles);
 		miExNegCircles.addActionListener(e -> {
-			File outDir = FileDialogWrapper.chooseDirectory(I.tr("Ausgabeverzeichnis wählen"), ctx.getParentWindow());
+			File outDir = FileDialogWrapper.chooseDirectory(I.tr("Select output directory"), ctx.getParentWindow());
 			if (outDir == null) {
 				return;
 			}
@@ -630,11 +630,11 @@ public class MainMenu extends JMenuBar {
 			}
 		});
 
-		JMenuItem miExPrefPaths = new JMenuItem(I.tr("PrefPaths exportieren"), Icons.getImageIcon(Icons.Document.EXPORT));
+		JMenuItem miExPrefPaths = new JMenuItem(I.tr("Export PrefPaths"), Icons.getImageIcon(Icons.Document.EXPORT));
 		miExPrefPaths.setMnemonic(KeyEvent.VK_P);
 		muNavMap.add(miExPrefPaths);
 		miExPrefPaths.addActionListener(e -> {
-			File outDir = FileDialogWrapper.chooseDirectory(I.tr("Ausgabeverzeichnis wählen"), ctx.getParentWindow());
+			File outDir = FileDialogWrapper.chooseDirectory(I.tr("Select output directory"), ctx.getParentWindow());
 			if (outDir == null) {
 				return;
 			}
@@ -668,7 +668,7 @@ public class MainMenu extends JMenuBar {
 		/*
 		 * Über g3dit
 		 */
-		final JMenu miAbout = new JMenu(I.tr("Über"));
+		final JMenu miAbout = new JMenu(I.tr("About"));
 		miAbout.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {

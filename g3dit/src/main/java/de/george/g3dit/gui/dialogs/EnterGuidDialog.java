@@ -42,7 +42,7 @@ public class EnterGuidDialog extends ExtStandardDialog {
 		panel.add(gfGuid, "grow");
 
 		JButton btnRandomGuid = new JButton(Icons.getImageIcon(Icons.Data.COUNTER));
-		btnRandomGuid.setToolTipText(I.tr("Zufällige Guid generieren"));
+		btnRandomGuid.setToolTipText(I.tr("Generate random guid"));
 		btnRandomGuid.addActionListener(a -> gfGuid.setText(GuidUtil.randomGUID(), true));
 		panel.add(btnRandomGuid, LayoutUtils.sqrBtn());
 
@@ -56,7 +56,7 @@ public class EnterGuidDialog extends ExtStandardDialog {
 		Action action = SwingUtils.createAction(actionTitle, () -> {
 			String guid = GuidUtil.parseGuid(gfGuid.getText());
 			if (guid == null) {
-				TaskDialogs.error(EnterGuidDialog.this, "", I.tr("Guid ist ungültig."));
+				TaskDialogs.error(EnterGuidDialog.this, "", I.tr("Guid is invalid."));
 				return;
 			}
 

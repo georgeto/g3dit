@@ -22,7 +22,7 @@ public class CheckDuplicatedEntityGuids extends AbstractEntityCheck {
 	private ListMultimap<String, EntityDescriptor> entityGuidMap = ArrayListMultimap.create(300000, 1);
 
 	public CheckDuplicatedEntityGuids() {
-		super(I.tr("Uneindeutige Entity-Guids ermitteln"), I.tr("Überprüft alle Entities nach mehrfach vorkommenden Guids."), 0, 1);
+		super(I.tr("Find non-unique entity guids"), I.tr("Checks all entities for duplicate guids."), 0, 1);
 	}
 
 	@Override
@@ -39,7 +39,7 @@ public class CheckDuplicatedEntityGuids extends AbstractEntityCheck {
 	}
 
 	protected void reportDuplicatedGuid(ProblemConsumer problemConsumer, String guid, Collection<EntityDescriptor> entities) {
-		String message = I.trf("Mehrfach vorkommende Entity-Guid: {0}", guid);
+		String message = I.trf("Duplicate entity guid: {0}", guid);
 		String details = entities.stream().map(e -> {
 			String entityIdentifier = String.format("%s (%s #%d)", e.getDisplayName(), e.getFile().getPath().getName(), e.getIndex());
 			return a(entityIdentifier).withHref(UriUtil.encodeEntity(e)).render();

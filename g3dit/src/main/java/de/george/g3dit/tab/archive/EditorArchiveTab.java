@@ -71,7 +71,7 @@ public class EditorArchiveTab extends EditorAbstractFileTab {
 		statusBarExtension = new JPanel(new MigLayout("ins 0"));
 		statusBarExtension.setOpaque(false);
 		JToggleButton btnEntity = new JToggleButton("E", true);
-		btnEntity.setToolTipText(I.tr("Entity bearbeiten"));
+		btnEntity.setToolTipText(I.tr("Edit entity"));
 		btnEntity.setMargin(new Insets(0, 0, 0, 0));
 		btnEntity.addActionListener(l -> contentPane.showView(ArchiveViewType.ENTITY));
 		btnEntity.setMnemonic(KeyEvent.VK_1);
@@ -81,7 +81,7 @@ public class EditorArchiveTab extends EditorAbstractFileTab {
 		btnPropertySheet.addActionListener(l -> contentPane.showView(ArchiveViewType.PROPERTY));
 		btnPropertySheet.setMnemonic(KeyEvent.VK_2);
 		JToggleButton btnIllumination = new JToggleButton("B", false);
-		btnIllumination.setToolTipText(I.tr("Beleuchtung berechnen"));
+		btnIllumination.setToolTipText(I.tr("Calculate lighting"));
 		btnIllumination.setMargin(new Insets(0, 0, 0, 0));
 		btnIllumination.addActionListener(l -> contentPane.showView(ArchiveViewType.ILLUMINATION));
 		btnIllumination.setMnemonic(KeyEvent.VK_3);
@@ -277,7 +277,7 @@ public class EditorArchiveTab extends EditorAbstractFileTab {
 		StatusBar statusBar = getStatusBar();
 		ArchiveFile archiveFile = getCurrentFile();
 		if (archiveFile != null) {
-			statusBar.setFileStatus(I.trf("Anzahl der Entities: {0, number}", archiveFile.getEntityCount()));
+			statusBar.setFileStatus(I.trf("Number of entities: {0, number}", archiveFile.getEntityCount()));
 			if (statusBarExtension == null) {
 				initStatusBarExtension();
 			}
@@ -325,15 +325,14 @@ public class EditorArchiveTab extends EditorAbstractFileTab {
 			File dynamicLayer = new File(IOUtils.changeExtension(dataFile.getAbsolutePath(), "lrent"));
 			if (!dynamicLayer.exists()
 					&& !ctx.getFileManager().moveFromPrimaryToSecondary(dynamicLayer).filter(File::exists).isPresent()) {
-				boolean result = TaskDialogs.ask(ctx.getParentWindow(), I.tr(".lrent erstellen"),
-						I.trf("Für '{0}' konnte keine zugehörige .lrent gefunden werden.\nSoll eine .lrent erstellt werden?",
-								dataFile.getName()));
+				boolean result = TaskDialogs.ask(ctx.getParentWindow(), I.tr("Create .lrent"),
+						I.trf("No corresponding .lrent could be found for ''{0}''.\nShould a .lrent be created?", dataFile.getName()));
 				if (result) {
 					try {
 						FileUtil.createLrent(dynamicLayer);
 					} catch (IOException e) {
 						TaskDialogs.error(ctx.getParentWindow(),
-								I.trf("Fehler beim Erstellen des DynamicLayers für {0}.", dataFile.getName()), e.getMessage());
+								I.trf("Error while creating the DynamicLayer for {0}.", dataFile.getName()), e.getMessage());
 					}
 				}
 			}
@@ -345,16 +344,16 @@ public class EditorArchiveTab extends EditorAbstractFileTab {
 			if (!geometryLayer.exists() && !ctx.getFileManager().moveFromPrimaryToSecondary(geometryLayer).filter(File::exists).isPresent()
 					|| !geometryLayerDat.exists()
 							&& !ctx.getFileManager().moveFromPrimaryToSecondary(geometryLayerDat).filter(File::exists).isPresent()) {
-				boolean result = TaskDialogs.ask(ctx.getParentWindow(), I.tr(".lrgeo/.lrgeodat erstellen"), I.trf(
-						"Für '{0}' konnte keine zugehörige .lrgeo/.lrgeodat gefunden werden.\nSoll eine .lrgeo/.lrgeodat erstellt werden?",
-						dataFile.getName()));
+				boolean result = TaskDialogs.ask(ctx.getParentWindow(), I.tr("Create .lrgeo/.lrgeodat"),
+						I.trf("No corresponding .lrgeo/.lrgeodat could be found for ''{0}''.\nShould a .lrgeo/.lrgeodat be created?",
+								dataFile.getName()));
 				if (result) {
 					try {
 						FileUtil.createLrgeo(geometryLayer);
 						FileUtil.createLrgeodat(geometryLayerDat, newContextBox);
 					} catch (IOException e) {
 						TaskDialogs.error(ctx.getParentWindow(),
-								I.trf("Fehler beim Erstellen des GeometryLayers für {0}.", dataFile.getName()), e.getMessage());
+								I.trf("Error while creating the GeometryLayer for {0}.", dataFile.getName()), e.getMessage());
 					}
 				}
 			} else {
@@ -390,7 +389,7 @@ public class EditorArchiveTab extends EditorAbstractFileTab {
 		private boolean fileLoaded = false;
 
 		public OpenFileWorker(File file) {
-			progDlg = new ProgressDialog(ctx.getParentWindow(), I.tr("Lade Datei..."), file.getName(), false);
+			progDlg = new ProgressDialog(ctx.getParentWindow(), I.tr("Loading file..."), file.getName(), false);
 			progDlg.setLocationRelativeTo(ctx.getParentWindow());
 			progDlg.getProgressBar().setIndeterminate(true);
 			this.file = file;
@@ -425,7 +424,7 @@ public class EditorArchiveTab extends EditorAbstractFileTab {
 			} catch (Exception ex) {
 				progDlg.dispose();
 				logger.warn("Failed to load the file {}.", file.getName(), ex);
-				TaskDialogs.error(ctx.getParentWindow(), I.tr("Fehler beim Öffnen der Datei."), ex.getMessage());
+				TaskDialogs.error(ctx.getParentWindow(), I.tr("Error while opening the file."), ex.getMessage());
 			}
 		}
 	}

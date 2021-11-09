@@ -120,7 +120,7 @@ public class Section4 implements G3Serializable {
 		int indexB = pair.el1();
 
 		if (addWaypoint() != indexA || addWaypoint() != indexB) {
-			throw new IllegalArgumentException(I.tr("Sektion4 hat nicht nicht dieselbe Anzahl an Einträgen wie Sektion3h!"));
+			throw new IllegalArgumentException(I.tr("Section4 does not have the same number of entries as Section3h!"));
 		}
 
 		processIntersection(navPath, navPath.zoneAGuid, indexA, indexB, navMap);
@@ -233,7 +233,7 @@ public class Section4 implements G3Serializable {
 			if (connection.backRoad) {
 				if (cons.size() > 0 && cons.get(0).backRoad) {
 					throw new IllegalArgumentException(I.trf(
-							"Einfügen von Partnerverbindung zu {0, number} fehlgeschlagen: Es besteht bereits eine Partnerverbindung zu Intersection {1, number}",
+							"Insertion of partner connection to {0, number} failed: A partner connection to Intersection {1, number} already exists.",
 							connection.index, cons.get(0).index));
 				}
 				cons.add(0, connection);
@@ -247,7 +247,7 @@ public class Section4 implements G3Serializable {
 
 					if (con.index == connection.index) {
 						throw new IllegalArgumentException(I.trf(
-								"Einfügen von Verbindung zu {0, number} fehlgeschlagen: Es besteht bereits eine Verbindung zu Intersection {1, number}",
+								"Insertion of connection to {0, number} failed: A connection to Intersection {1, number} already exists.",
 								connection.index, con.index));
 					}
 

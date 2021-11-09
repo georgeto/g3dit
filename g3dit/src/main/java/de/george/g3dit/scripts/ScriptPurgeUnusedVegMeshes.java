@@ -13,12 +13,12 @@ import de.george.lrentnode.classes.desc.CD;
 public class ScriptPurgeUnusedVegMeshes implements IScript {
 	@Override
 	public String getTitle() {
-		return I.tr("Nicht verwendete Vegetationsmeshes löschen");
+		return I.tr("Delete unused vegetation meshes");
 	}
 
 	@Override
 	public String getDescription() {
-		return I.tr("Löscht alle nicht verwendeten Vegetationsmeshes aus den Weltdaten.");
+		return I.tr("Deletes all unused vegetation meshes from the world data.");
 	}
 
 	@Override
@@ -33,13 +33,13 @@ public class ScriptPurgeUnusedVegMeshes implements IScript {
 					unusedMeshes.forEach(veg::removeMeshClass);
 
 					if (!unusedMeshes.isEmpty()) {
-						env.log(I.trf("Entferne {0, number} unbenutzte Meshes in {1}#{2}", unusedMeshes.size(), file.getName(),
+						env.log(I.trf("Removing {0, number} unused meshes in {1}#{2}", unusedMeshes.size(), file.getName(),
 								entity.getGuid()));
 						removed += unusedMeshes.size();
 					}
 				}
 			}
 			return removed;
-		}, I.tr("Es wurden insgesamt {0, number} unbenutzte Meshes entfernt."));
+		}, I.tr("A total of {0, number} unused meshes were removed."));
 	}
 }

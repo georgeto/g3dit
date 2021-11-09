@@ -68,7 +68,7 @@ public abstract class AbstractTableProgressDialog extends ExtStandardDialog {
 			}
 		});
 
-		Action cancelAction = SwingUtils.createAction(I.tr("Abbrechen"), Icons.getImageIcon(Icons.Select.CANCEL), () -> {
+		Action cancelAction = SwingUtils.createAction(I.tr("Cancel"), Icons.getImageIcon(Icons.Select.CANCEL), () -> {
 			if (worker != null) {
 				worker.cancel(true);
 			}

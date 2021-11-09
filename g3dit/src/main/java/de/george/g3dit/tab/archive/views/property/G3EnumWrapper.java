@@ -29,7 +29,7 @@ public class G3EnumWrapper {
 		String asString = G3Enums.asString(getEnumClass(), getEnumValue(), false);
 
 		if (asString == null) {
-			return I.trcf("Unknown enum value", "Unbekannt: {0}", getEnumValue());
+			return I.trcf("Unknown enum value", "Unknown: {0}", getEnumValue());
 		}
 
 		return asString;

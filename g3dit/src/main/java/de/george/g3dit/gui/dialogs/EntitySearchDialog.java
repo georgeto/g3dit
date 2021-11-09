@@ -79,7 +79,7 @@ public class EntitySearchDialog extends AbstractTableProgressDialog {
 	private SortableEventTable<Result> table;
 
 	public static final EntitySearchDialog openEntitySearch(EditorContext ctx) {
-		EntitySearchDialog searchDialog = new EntitySearchDialog(ctx, I.tr("Entity-Suche"));
+		EntitySearchDialog searchDialog = new EntitySearchDialog(ctx, I.tr("Entity Search"));
 		searchDialog.open();
 		return searchDialog;
 	}
@@ -131,21 +131,21 @@ public class EntitySearchDialog extends AbstractTableProgressDialog {
 
 		searchPanel = new ModularSearchPanel(ctx, EntityNameSearchFilterBuilder.class, EntityGuidSearchFilterBuilder.class,
 				EntityPositionSearchFilterBuilder.class, PropertySearchFilterBuilder.class, ByteSearchFilterBuilder.class);
-		btnSearch = registerAction(I.tr("Suchen"), Icons.getImageIcon(Icons.Action.FIND), this::doWork, true);
+		btnSearch = registerAction(I.tr("Search"), Icons.getImageIcon(Icons.Action.FIND), this::doWork, true);
 		JButton btnErase = new JButton(Icons.getImageIcon(Icons.Action.ERASE));
 		btnErase.setFocusable(false);
-		btnErase.setToolTipText(I.tr("Suche leeren"));
+		btnErase.setToolTipText(I.tr("Clear search"));
 		btnErase.addActionListener(e -> searchPanel.reset(false));
 
 		mainPanel.add(searchPanel.getComponent(), "split 3, width 100%, spanx");
 		mainPanel.add(btnSearch);
 		mainPanel.add(btnErase, "wrap");
 
-		cbPositionFromClipboard = new JCheckBox(I.tr("Position aus Zwischenablage"));
-		cbRandomGuids = new JCheckBox(I.tr("Zufällige Guid"));
-		btnImport = new JButton(I.tr("Entity importieren"), Icons.getImageIcon(Icons.IO.IMPORT));
+		cbPositionFromClipboard = new JCheckBox(I.tr("Position from clipboard"));
+		cbRandomGuids = new JCheckBox(I.tr("Random Guid"));
+		btnImport = new JButton(I.tr("Import entity"), Icons.getImageIcon(Icons.IO.IMPORT));
 		btnImport.setEnabled(false);
-		btnShowOnMap = new JButton(I.tr("Karte"), Icons.getImageIcon(Icons.Misc.MAP));
+		btnShowOnMap = new JButton(I.tr("Map"), Icons.getImageIcon(Icons.Misc.MAP));
 		btnShowOnMap.setEnabled(false);
 
 		mainPanel.add(cbPositionFromClipboard, "gapx push");
@@ -171,8 +171,8 @@ public class EntitySearchDialog extends AbstractTableProgressDialog {
 				Optional<bCMatrix> matrix = Misc.stringToMatrix(IOUtils.getClipboardContent());
 				if (matrix.isPresent()) {
 					entity.setToWorldMatrix(matrix.get());
-				} else if (!TaskDialogs.ask(ctx.getParentWindow(), I.tr("Zwischenablage enthält keine Positionsdaten"),
-						I.tr("Soll der Import, unter Verwendung der originalen Position, trotzdem fortgesetzt werden?"))) {
+				} else if (!TaskDialogs.ask(ctx.getParentWindow(), I.tr("Clipboard does not contain position data"),
+						I.tr("Should the import, using the original position, be continued anyway?"))) {
 					return;
 				}
 			}
@@ -200,7 +200,7 @@ public class EntitySearchDialog extends AbstractTableProgressDialog {
 	public void doWork() {
 		SearchFilter<eCEntity> filter = searchPanel.buildFilter();
 		if (!filter.isValid() || worker != null) {
-			progressBar.setString(I.tr("Ungültige Filtereinstellungen"));
+			progressBar.setString(I.tr("Invalid filter settings"));
 			return;
 		}
 
@@ -284,8 +284,8 @@ public class EntitySearchDialog extends AbstractTableProgressDialog {
 		private SearchFilter<eCEntity> filter;
 
 		protected SearchEntityWorker(Callable<List<File>> fileProvider, List<File> openFiles, SearchFilter<eCEntity> filter) {
-			super(fileProvider, openFiles, I.tr("Ermittele zu durchsuchende Dateien..."),
-					I.tr("{0, number}/{1, number} Dateien durchsucht"), I.tr("Suche abgeschlossen"));
+			super(fileProvider, openFiles, I.tr("Determine files to be searched..."),
+					I.tr("{0, number}/{1, number} files searched"), I.tr("Search completed"));
 			this.filter = filter;
 			setProgressBar(progressBar);
 			doneMessageSupplier = this::getDoneMessage;
@@ -333,7 +333,7 @@ public class EntitySearchDialog extends AbstractTableProgressDialog {
 		}
 
 		private String getDoneMessage() {
-			return I.trf("Suche abgeschlossen ({0, number} Entities gefunden)", results.size());
+			return I.trf("Search completed ({0, number} entities found)", results.size());
 		}
 	}
 
@@ -430,16 +430,16 @@ public class EntitySearchDialog extends AbstractTableProgressDialog {
 			if (archiveTab != null) {
 				return archiveTab.getTitle();
 			}
-			return I.tr("<Inzwischen geschlossen>");
+			return I.tr("<Meanwhile closed>");
 		}
 
 		@Override
 		public String getPath() {
 			EditorArchiveTab archiveTab = weakTab.get();
 			if (archiveTab != null) {
-				return I.trf("Geladen: {0}", archiveTab.getTitle());
+				return I.trf("Loaded: {0}", archiveTab.getTitle());
 			}
-			return I.tr("<Inzwischen geschlossen>");
+			return I.tr("<Meanwhile closed>");
 		}
 
 		@Override

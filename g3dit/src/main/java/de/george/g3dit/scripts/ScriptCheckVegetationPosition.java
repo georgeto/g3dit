@@ -18,12 +18,12 @@ public class ScriptCheckVegetationPosition implements IScript {
 
 	@Override
 	public String getTitle() {
-		return I.tr("Prüfe Position von Vegetations-Objekten");
+		return I.tr("Check position of vegetation objects");
 	}
 
 	@Override
 	public String getDescription() {
-		return I.tr("Prüft, ob alle Vegetations-Objekte, in der für ihren Bereich zuständigen VegetationRoot, positioniert sind.");
+		return I.tr("Checks whether all vegetation objects are in the VegetationRoot responsible for their area.");
 	}
 
 	@Override

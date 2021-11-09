@@ -53,7 +53,7 @@ public abstract class AbstractCache<T extends AbstractCache<T>> implements Seria
 			creationTimestamp = (long) data[0];
 			return data;
 		} else {
-			throw new IOException(I.tr("Cache-Datei ist ungülitg! Bitte den Cache neu erstellen."));
+			throw new IOException(I.tr("Cache file is invalid! Please recreate the cache."));
 		}
 	}
 

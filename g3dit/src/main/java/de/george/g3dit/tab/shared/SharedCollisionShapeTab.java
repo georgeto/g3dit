@@ -64,9 +64,9 @@ public class SharedCollisionShapeTab extends AbstractSharedTab {
 	public void initComponents(ValidationGroup validation, JScrollPane scrollPane) {
 		container.setLayout(new MigLayout("fillx"));
 
-		container.add(SwingUtils.createBoldLabel(I.tr("CollisionShapes")), "gaptop 7, wrap");
+		container.add(SwingUtils.createBoldLabel(I.tr("Collision shapes")), "gaptop 7, wrap");
 
-		JButton btnLoadFromXnvmsh = new JButton(I.tr("Aus .xnvmsh laden"), Icons.getImageIcon(Icons.IO.IMPORT));
+		JButton btnLoadFromXnvmsh = new JButton(I.tr("Load from .xnvmsh"), Icons.getImageIcon(Icons.IO.IMPORT));
 		btnLoadFromXnvmsh.addActionListener(a -> loadFromXnvmsh());
 		container.add(btnLoadFromXnvmsh, "gapleft 7, wrap");
 
@@ -97,7 +97,7 @@ public class SharedCollisionShapeTab extends AbstractSharedTab {
 	}
 
 	private void loadFromXnvmsh() {
-		File fileColMesh = FileDialogWrapper.openFile(I.tr("Aus .xnvmsh laden"), ctx.getParentWindow(),
+		File fileColMesh = FileDialogWrapper.openFile(I.tr("Load from .xnvmsh"), ctx.getParentWindow(),
 				FileDialogWrapper.COLLISION_MESH_FILTER);
 		if (fileColMesh == null) {
 			return;
@@ -128,7 +128,7 @@ public class SharedCollisionShapeTab extends AbstractSharedTab {
 
 	private class CollisionShapesPanel extends AbstractElementsPanel<eCCollisionShape_PS> {
 		public CollisionShapesPanel(JScrollPane navScroll) {
-			super(I.tr("CollisionShape"), navScroll, true);
+			super(I.tr("Collision shape"), navScroll, true);
 
 			setLayout(new MigLayout("fillx, insets 0 5 0 0", "[]"));
 		}
@@ -181,7 +181,7 @@ public class SharedCollisionShapeTab extends AbstractSharedTab {
 		private boolean shapeTypeChanged = false;
 
 		public CollisionShapePanel(eCCollisionShape colShape) {
-			super(I.tr("CollisionShape"), stacksPanel);
+			super(I.tr("Collision shape"), stacksPanel);
 			this.colShape = colShape;
 			setLayout(new MigLayout("fillx", "[]10[]10[]"));
 
@@ -205,7 +205,7 @@ public class SharedCollisionShapeTab extends AbstractSharedTab {
 			add(operationPanel, "cell 3 0, spanx 2, spany");
 
 			btnTple = new JButton(Icons.getImageIcon(Icons.Action.BOOK));
-			btnTple.setToolTipText(I.tr("Template laden"));
+			btnTple.setToolTipText(I.tr("Load template"));
 			operationPanel.add(btnTple, LayoutUtils.sqrBtn("cell 1 1"));
 
 			loadShape();
@@ -316,7 +316,7 @@ public class SharedCollisionShapeTab extends AbstractSharedTab {
 			add(tfShapeFile, "growx, width 75%");
 			tfResourceIndex = SwingUtils.createUndoTF();
 			tfResourceIndex.setToolTipText(I.tr(
-					"<html>Für CollisionMeshes die aus einem NXS-Mesh bestehen 0.<p>Für CollisionMeshes die aus zwei oder mehr NXS-Meshes bestehen,<br>müssen ebenso so viele CollisionShapes existieren,<br>mit einem aufsteigenden ResourceIndex beginnend bei 0.</html>"));
+					"<html>For CollisionMeshes consisting of one NXS mesh 0.<p>For CollisionMeshes consisting of two or more NXS meshes,<br>there must be as many CollisionShapes,<br>with an ascending ResourceIndex starting at 0.</html>"));
 			add(tfResourceIndex, "growx, width 25%, wrap");
 		}
 
@@ -330,8 +330,8 @@ public class SharedCollisionShapeTab extends AbstractSharedTab {
 		public FileShape save() {
 			FileShape fileShape = new FileShape(tfShapeFile.getText(), Integer.valueOf(tfResourceIndex.getText()));
 
-			boolean update = TaskDialogs.ask(ctx.getParentWindow(), I.tr("Boundary des CollisionShapes aktualisieren?"),
-					I.tr("Soll die Boundary dieses CollisionShapes aus dem angegeben CollisionMesh übernommen werden?"));
+			boolean update = TaskDialogs.ask(ctx.getParentWindow(), I.tr("Update the boundary of the collision shape?"),
+					I.tr("Should the Boundary of this collision shape be adopted from the specified collision mesh?"));
 			if (update) {
 				Optional<File> colFile = ctx.getFileManager().searchFile(FileManager.RP_COMPILED_PHYSIC, fileShape.getShapeFile());
 				if (colFile.isPresent()) {
@@ -341,9 +341,9 @@ public class SharedCollisionShapeTab extends AbstractSharedTab {
 						if (fileShape.getResourceIndex() < colMesh.getNxsBoundaries().size()) {
 							fileShape.setMeshBoundary(colMesh.getNxsBoundaries().get(fileShape.getResourceIndex()));
 						} else {
-							TaskDialogs.inform(ctx.getParentWindow(), I.tr("Ungültiger ResourceIndex"), I.trf(
-									"Der angegebene ResourceIndex {0, number} passt nicht zum CollisionMesh, welches {1, number} NXS-Meshes enthält.\n"
-											+ "Boundary wird auf ungültig gesetzt.",
+							TaskDialogs.inform(ctx.getParentWindow(), I.tr("Invalid ResourceIndex"), I.trf(
+									"The specified ResourceIndex {0, number} does not match the collision mesh, which contains {1, number} NXS meshes.\n"
+											+ "Boundary is set to invalid.",
 									fileShape.getResourceIndex(), colMesh.getNxsBoundaries().size()));
 						}
 
@@ -352,9 +352,8 @@ public class SharedCollisionShapeTab extends AbstractSharedTab {
 						TaskDialogs.showException(e);
 					}
 				} else {
-					TaskDialogs.inform(ctx.getParentWindow(), I.tr("CollisionMesh nicht gefunden"),
-							I.trf("Das CollisionMesh '{0}' konnte nicht gefunden werden.\nBoundary wird auf ungültig gesetzt.",
-									fileShape.getShapeFile()));
+					TaskDialogs.inform(ctx.getParentWindow(), I.tr("Collision mesh not found"),
+							I.trf("The CollisionMesh ''{0}'' could not be found.\nBoundary is set to invalid.", fileShape.getShapeFile()));
 				}
 			}
 

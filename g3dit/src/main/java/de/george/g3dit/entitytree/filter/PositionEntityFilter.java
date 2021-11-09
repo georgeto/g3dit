@@ -69,11 +69,11 @@ public class PositionEntityFilter extends AbstractEntityFilter {
 	public static String getToolTipText() {
 		// @foff
 		return I.tr("<html>"
-				+ "Koordinaten in der Form x/y/z//<br>"
-				+ "Der Position kann einer der folgenden Präfixe vorangestellt werden."
+				+ "Coordinates in the form x/y/z//<br>"
+				+ "The position can be prefixed with one of the following prefixes."
 				+ "<ul>"
-				+ "<li><b>Kein Präfix</b>: Distanz</li>"
-				+ "<li><b>#l#</b>: Distanz unter Vernachlässigung der Y-Komponente</li>"
+				+ "<li><b>No prefix</b>: Distance</li>"
+				+ "<li><b>#l#</b>: Distance ignoring the Y component</li>"
 				+ "</ul></html>");
 		// @fon
 	}

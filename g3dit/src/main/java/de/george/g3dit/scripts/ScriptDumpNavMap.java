@@ -18,17 +18,17 @@ public class ScriptDumpNavMap implements IScript {
 
 	@Override
 	public String getDescription() {
-		return I.tr("Wandelt die NavigationMap in eine Textdatei um.");
+		return I.tr("Converts the NavigationMap into a text file.");
 	}
 
 	@Override
 	public boolean execute(IScriptEnvironment env) {
-		File loadFile = FileDialogWrapper.openFile(I.tr("NavigationMap öffnen..."), env.getParentWindow(), FileDialogWrapper.XNAV_FILTER);
+		File loadFile = FileDialogWrapper.openFile(I.tr("Open NavigationMap..."), env.getParentWindow(), FileDialogWrapper.XNAV_FILTER);
 		if (loadFile == null) {
 			return false;
 		}
 
-		File saveFile = FileDialogWrapper.saveFile(I.tr("NavigationMap in Textform speichern"),
+		File saveFile = FileDialogWrapper.saveFile(I.tr("Save NavigationMap in text form"),
 				IOUtils.changeExtension(loadFile.getName(), "txt"), env.getParentWindow(), FileDialogWrapper.TXT_FILTER);
 		if (saveFile == null) {
 			return false;

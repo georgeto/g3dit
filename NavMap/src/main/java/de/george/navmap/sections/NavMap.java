@@ -319,7 +319,7 @@ public class NavMap extends GenomeFile {
 
 	private <T> void modify(T data, Consumer<T> work) {
 		if (isInvalid()) {
-			throw new IllegalStateException(I.tr("NavMap ist fehlerhaft, eine weitere Bearbeitung ist nicht möglich."));
+			throw new IllegalStateException(I.tr("NavMap is faulty, further editing is not possible."));
 		}
 
 		changed = true;
@@ -333,7 +333,7 @@ public class NavMap extends GenomeFile {
 
 	public void addNavZone(NavZone navZone) {
 		if (hasNavZone(navZone.getGuid())) {
-			throw new IllegalArgumentException(I.trf("NavMap enthält bereits NavZone mit der Guid '{0}'.", navZone.getGuid()));
+			throw new IllegalArgumentException(I.trf("NavMap already contains NavZone with the Guid ''{0}''.", navZone.getGuid()));
 		}
 
 		modify(navZone.clone(), nz -> {
@@ -346,18 +346,18 @@ public class NavMap extends GenomeFile {
 	private void validateNavPathDependencies(NavPath navPath) {
 		if (navPath.zoneAGuid != null && !hasNavZone(navPath.zoneAGuid)) {
 			throw new IllegalArgumentException(
-					I.tr("ZoneA des NavPaths nicht in der NavMap enthalten.\nBitte zuerst diese NavZone einfügen."));
+					I.tr("ZoneA of the NavPath not included in the NavMap.\nPlease insert this NavZone first."));
 		}
 
 		if (navPath.zoneBGuid != null && !hasNavZone(navPath.zoneBGuid)) {
 			throw new IllegalArgumentException(
-					I.tr("ZoneB des NavPaths nicht in der NavMap enthalten.\nBitte zuerst diese NavZone einfügen."));
+					I.tr("ZoneB of the NavPath not included in the NavMap.\nPlease insert this NavZone first."));
 		}
 	}
 
 	public void addNavPath(NavPath navPath) {
 		if (hasNavPath(navPath.guid)) {
-			throw new IllegalArgumentException(I.trf("NavMap enthält bereits NavPath mit der Guid '{0}'.", navPath.guid));
+			throw new IllegalArgumentException(I.trf("NavMap already contains NavPath with the Guid ''{0}''.", navPath.guid));
 		}
 		validateNavPathDependencies(navPath);
 
@@ -388,7 +388,7 @@ public class NavMap extends GenomeFile {
 	 */
 	public void updateNavZone(NavZone navZone) {
 		if (!hasNavZone(navZone.getGuid())) {
-			throw new IllegalArgumentException(I.trf("NavMap enthält keine NavZone mit der Guid '{0}'.", navZone.getGuid()));
+			throw new IllegalArgumentException(I.trf("NavMap does not contain a NavZone with the Guid ''{0}''.", navZone.getGuid()));
 		}
 
 		modify(navZone.clone(), nz -> {
@@ -404,7 +404,7 @@ public class NavMap extends GenomeFile {
 	 */
 	public void updateNavPath(NavPath navPath) {
 		if (!hasNavPath(navPath.guid)) {
-			throw new IllegalArgumentException(I.trf("NavMap enthält keinen NavPath mit der Guid '{0}'.", navPath.guid));
+			throw new IllegalArgumentException(I.trf("NavMap does not contain a NavPath with the Guid ''{0}''.", navPath.guid));
 		}
 		validateNavPathDependencies(navPath);
 
@@ -433,7 +433,7 @@ public class NavMap extends GenomeFile {
 	 */
 	public void removeNavZone(String navZone) {
 		if (!hasNavZone(navZone)) {
-			throw new IllegalArgumentException(I.trf("NavMap enthält keine NavZone mit der Guid '{0}'.", navZone));
+			throw new IllegalArgumentException(I.trf("NavMap does not contain a NavZone with the Guid ''{0}''.", navZone));
 		}
 
 		modify(() -> {
@@ -453,7 +453,7 @@ public class NavMap extends GenomeFile {
 
 	public void removeNavPath(String navPath) {
 		if (!hasNavPath(navPath)) {
-			throw new IllegalArgumentException(I.trf("NavMap enthält keinen NavPath mit der Guid '{0}'.", navPath));
+			throw new IllegalArgumentException(I.trf("NavMap does not contain a NavPath with the Guid ''{0}''.", navPath));
 		}
 
 		modify(() -> {
@@ -485,7 +485,7 @@ public class NavMap extends GenomeFile {
 	 */
 	public void addNegZone(NegZone negZone) {
 		if (hasNegZone(negZone.getGuid())) {
-			throw new IllegalArgumentException(I.trf("NavMap enthält bereits NegZone mit der Guid '{0}'.", negZone.getGuid()));
+			throw new IllegalArgumentException(I.trf("NavMap already contains NegZone with the Guid ''{0}''.", negZone.getGuid()));
 		}
 
 		modify(negZone.clone(), nz -> {
@@ -508,7 +508,7 @@ public class NavMap extends GenomeFile {
 	public void updateNegZone(NegZone negZone) {
 		int negZoneIndex = sec2.getNegZoneIndex(negZone.getGuid());
 		if (negZoneIndex == -1) {
-			throw new IllegalArgumentException(I.trf("NavMap enthält keine NegZone mit der Guid '{0}'.", negZone.getGuid()));
+			throw new IllegalArgumentException(I.trf("NavMap does not contain a NegZone with the Guid ''{0}''.", negZone.getGuid()));
 		}
 
 		modify(negZone.clone(), nz -> {
@@ -539,7 +539,7 @@ public class NavMap extends GenomeFile {
 	public void removeNegZone(String negZone) {
 		NegZone zone = sec2.getNegZone(negZone);
 		if (zone == null) {
-			throw new IllegalArgumentException(I.trf("NavMap enthält keine NegZone mit der Guid '{0}'.", negZone));
+			throw new IllegalArgumentException(I.trf("NavMap does not contain a NegZone with the Guid ''{0}''.", negZone));
 		}
 
 		modify(() -> {
@@ -557,7 +557,7 @@ public class NavMap extends GenomeFile {
 		for (String zoneGuid : circle.zoneGuids) {
 			if (!hasNavZone(zoneGuid) && !hasNavPath(zoneGuid)) {
 				throw new IllegalArgumentException(I.trf(
-						"Die NavZone ('{0}') in der sich der NegCircle befindet ist nicht in der NavMap enthalten.\nBitte zuerst diese NavZone einfügen.",
+						"The NavZone (''{0}'') in which the NegCircle is located is not included in the NavMap.\nPlease insert this NavZone first.",
 						zoneGuid));
 			}
 		}
@@ -565,7 +565,7 @@ public class NavMap extends GenomeFile {
 
 	public void addNegCircle(NegCircle circle) {
 		if (hasNegCircle(circle.circleGuid)) {
-			throw new IllegalArgumentException(I.trf("NavMap enthält bereits NegCircle mit der Guid '{0}'.", circle.circleGuid));
+			throw new IllegalArgumentException(I.trf("NavMap already contains NegCircle with the Guid ''{0}''.", circle.circleGuid));
 		}
 
 		validateNegCircleDependencies(circle);
@@ -582,7 +582,7 @@ public class NavMap extends GenomeFile {
 
 	public void updateNegCircle(NegCircle circle) {
 		if (!hasNegCircle(circle.circleGuid)) {
-			throw new IllegalArgumentException(I.trf("NavMap enthält keinen NegCircle mit der Guid '{0}'.", circle.circleGuid));
+			throw new IllegalArgumentException(I.trf("NavMap does not contain a NegCircle with the Guid ''{0}''.", circle.circleGuid));
 		}
 
 		validateNegCircleDependencies(circle);
@@ -603,7 +603,7 @@ public class NavMap extends GenomeFile {
 
 	public void removeNegCircle(String circleGuid) throws IllegalStateException {
 		if (!hasNegCircle(circleGuid)) {
-			throw new IllegalArgumentException(I.trf("NavMap enthält keinen NegCircle mit der Guid '{0}'.", circleGuid));
+			throw new IllegalArgumentException(I.trf("NavMap does not contain a NegCircle with the Guid ''{0}''.", circleGuid));
 		}
 
 		modify(() -> {
@@ -624,7 +624,7 @@ public class NavMap extends GenomeFile {
 	public void addPrefPath(PrefPath prefPath) {
 		if (sec3b1.getPrefPathIndex(prefPath.getVirtualGuid()) != -1) {
 			throw new IllegalArgumentException(
-					I.trf("NavMap enthält bereits PrefPath mit der virtuellen Guid '{0}'.", prefPath.getVirtualGuid()));
+					I.trf("NavMap already contains PrefPath with the virtual Guid ''{0}''.", prefPath.getVirtualGuid()));
 		}
 
 		modify(prefPath.clone(), pp -> {
@@ -648,7 +648,7 @@ public class NavMap extends GenomeFile {
 		int prefPathIndex = sec3b1.getPrefPathIndex(prefPath.getVirtualGuid());
 		if (prefPathIndex == -1) {
 			throw new IllegalArgumentException(
-					I.trf("NavMap enthält keinen PrefPath mit der virtuellen Guid '{0}'.", prefPath.getVirtualGuid()));
+					I.trf("NavMap does not contain a PrefPath with the virtual Guid ''{0}''.", prefPath.getVirtualGuid()));
 		}
 
 		modify(prefPath.clone(), pp -> {
@@ -679,7 +679,7 @@ public class NavMap extends GenomeFile {
 	public void removePrefPath(String prefPath) {
 		int pathIndex = sec3b1.getPrefPathIndex(prefPath);
 		if (pathIndex == -1) {
-			throw new IllegalArgumentException(I.trf("NavMap enthält keinen PrefPath mit der virtuellen Guid '{0}'.", prefPath));
+			throw new IllegalArgumentException(I.trf("NavMap does not contain a PrefPath with the virtual Guid ''{0}''.", prefPath));
 		}
 
 		modify(() -> {
@@ -694,10 +694,10 @@ public class NavMap extends GenomeFile {
 	private void validateInteractableDependencies(NavArea area) {
 		if (area.isNavPath) {
 			if (!hasNavPath(area.areaId)) {
-				throw new IllegalArgumentException(I.tr("NavPath des Interactables ist nicht in der NavMap enthalten."));
+				throw new IllegalArgumentException(I.tr("NavPath of the Interactable is not included in the NavMap."));
 			}
 		} else if (!hasNavZone(area.areaId) && !OUT_OF_NAV_AREA_ID.equals(area.areaId)) {
-			throw new IllegalArgumentException(I.tr("NavZone des Interactables ist nicht in der NavMap enthalten."));
+			throw new IllegalArgumentException(I.tr("NavZone of the Interactable is not included in the NavMap."));
 		}
 	}
 
@@ -878,7 +878,7 @@ public class NavMap extends GenomeFile {
 	@Override
 	public void save(File file) throws IOException {
 		if (isInvalid()) {
-			throw new IOException(I.tr("NavMap ist fehlerhaft, Speicherung nicht möglich."));
+			throw new IOException(I.tr("NavMap is faulty, saving not possible."));
 		}
 
 		super.save(file);
@@ -887,7 +887,7 @@ public class NavMap extends GenomeFile {
 	@Override
 	public void save(OutputStream out) throws IOException {
 		if (isInvalid()) {
-			throw new IOException(I.tr("NavMap ist fehlerhaft, Speicherung nicht möglich."));
+			throw new IOException(I.tr("NavMap is faulty, saving not possible."));
 		}
 
 		super.save(out);

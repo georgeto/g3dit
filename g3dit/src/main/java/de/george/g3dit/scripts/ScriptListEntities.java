@@ -24,22 +24,22 @@ import de.george.lrentnode.util.EntityUtil;
 
 public class ScriptListEntities implements IScript {
 	private static final Option<Boolean> ONLY_NAMED = new LambdaOption<>(true,
-			(parent) -> new BooleanOptionHandler(parent, I.tr("Nur benannte Entities auflisten")), "ScriptListEntities.ONLY_NAMED",
-			I.tr("Nur benannte Entities exportieren"));
+			(parent) -> new BooleanOptionHandler(parent, I.tr("List named entities only")), "ScriptListEntities.ONLY_NAMED",
+			I.tr("Export named entities only"));
 
 	@Override
 	public String getTitle() {
-		return I.tr("Entities auflisten");
+		return I.tr("List entities");
 	}
 
 	@Override
 	public String getDescription() {
-		return I.tr("Erstellt eine Liste aller Entities.");
+		return I.tr("Creates a list of all entities.");
 	}
 
 	@Override
 	public boolean execute(IScriptEnvironment env) {
-		File saveFile = FileDialogWrapper.saveFile(I.tr("Auflistung speichern unter..."), env.getParentWindow(),
+		File saveFile = FileDialogWrapper.saveFile(I.tr("Save listing as..."), env.getParentWindow(),
 				FileDialogWrapper.JSON_FILTER);
 		if (saveFile == null) {
 			return false;
@@ -90,7 +90,7 @@ public class ScriptListEntities implements IScript {
 			generator.writeEndArray();
 			generator.close();
 		} catch (IOException e) {
-			env.log(I.trf("Fehler beim Schreiben der Datei: {0}", e.getMessage()));
+			env.log(I.trf("Error while writing the file: {0}", e.getMessage()));
 			return false;
 		}
 		return true;

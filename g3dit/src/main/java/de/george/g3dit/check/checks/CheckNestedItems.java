@@ -14,11 +14,10 @@ import de.george.lrentnode.classes.desc.CD;
 
 public class CheckNestedItems extends AbstractEntityCheck {
 	public CheckNestedItems() {
-		super(I.tr("Items und Interaktionsobjekte mit Child-Entities ermitteln"),
-				I.tr("Interaktionsobjekte sollte überlicherweise keine Child-Entities haben, "
-						+ "da diese die Y-Position des Fokusnamens beeinflussen, "
-						+ "sofern FocusNameType auf gEFocusNameType_Entity steht.\n\n"
-						+ "Aufsammelbare Items werden beim Aufheben aus der Welt entfernt, zusammen mit ihren Child-Entities."),
+		super(I.tr("Find items and interaction objects with child entities"),
+				I.tr("Interaction objects should usually not have child entities, "
+						+ "as these affect the Y position of the focus name if FocusNameType is set to gEFocusNameType_Entity.\n\n"
+						+ "Collectable items are removed from the world when picked up, along with their child entities."),
 				0, 1);
 	}
 
@@ -31,9 +30,9 @@ public class CheckNestedItems extends AbstractEntityCheck {
 					.map(HtmlCreator::renderEntityShort).collect(Collectors.joining(", "));
 
 			if (entity.hasClass(CD.gCItem_PS.class)) {
-				problemConsumer.warning(I.tr("Item hat Child-Entities."), childDetails);
+				problemConsumer.warning(I.tr("Item has child entities."), childDetails);
 			} else {
-				problemConsumer.warning(I.tr("Interaktionsobjekt hat Child-Entities."), childDetails);
+				problemConsumer.warning(I.tr("Interaction object has child entities."), childDetails);
 			}
 		}
 

@@ -63,7 +63,7 @@ public class AllgemeinTab extends AbstractTemplateTab {
 		tfName.getDocument().addDocumentListener(documentListener);
 		add(tfName, "width 100:300:300, wrap");
 
-		add(new JLabel(I.tr("Datei Prefix")), "wrap");
+		add(new JLabel(I.tr("File prefix")), "wrap");
 		tfFilePrefix = SwingUtils.createUndoTF();
 		tfFilePrefix.getDocument().addDocumentListener(documentListener);
 		add(tfFilePrefix, "width 100:300:300, wrap");
@@ -73,12 +73,12 @@ public class AllgemeinTab extends AbstractTemplateTab {
 		tfItemGuid.initValidation(validation(), I.tr("Item Guid"), GuidValidator.INSTANCE);
 		add(tfItemGuid, "width 100:300:300");
 		JButton btnRandomItemGuid = new JButton(Icons.getImageIcon(Icons.Data.COUNTER));
-		btnRandomItemGuid.setToolTipText(I.tr("Zufällige Guid generieren"));
+		btnRandomItemGuid.setToolTipText(I.tr("Generate random guid"));
 		btnRandomItemGuid.addActionListener(a -> tfItemGuid.setText(GuidUtil.randomGUID(), true));
 		add(btnRandomItemGuid, LayoutUtils.sqrBtn());
 
 		JButton btnCopyEntry = new JButton(Icons.getImageIcon(Icons.Action.COPY));
-		btnCopyEntry.setToolTipText(I.tr(".lrtpldatasc Eintrag in Zwischenablage kopieren"));
+		btnCopyEntry.setToolTipText(I.tr("Copy .lrtpldatasc entry to clipboard"));
 		btnCopyEntry.addActionListener(a -> IOUtils.copyToClipboard(
 				GuidUtil.hexToLrtpldatasc(tfItemGuid.getText()) + "=" + tfFilePrefix.getText() + "_" + tfName.getText() + ".tple"));
 		add(btnCopyEntry, LayoutUtils.sqrBtn("wrap"));
@@ -88,18 +88,18 @@ public class AllgemeinTab extends AbstractTemplateTab {
 		tfRefGuid.initValidation(validation(), I.tr("Reference Guid"), GuidValidator.INSTANCE);
 		add(tfRefGuid, "width 100:300:300");
 
-		tfRefGuid.addMenuItem(I.tr("Alle Referenzen in Entities auf diese Template auflisten"), Icons.getImageIcon(Icons.Misc.GLOBE),
+		tfRefGuid.addMenuItem(I.tr("List all references in entities to this template"), Icons.getImageIcon(Icons.Misc.GLOBE),
 				(ctx, g) -> EntitySearchDialog.openEntitySearchGuid(ctx, MatchMode.Template, g));
-		tfRefGuid.addMenuItem(I.tr("Alle Referenzen in Templates auf diese Template auflisten"), Icons.getImageIcon(Icons.Misc.GLOBE),
+		tfRefGuid.addMenuItem(I.tr("List all references in templates to this template"), Icons.getImageIcon(Icons.Misc.GLOBE),
 				(ctx, g) -> TemplateSearchDialog.openTemplateSearchGuid(ctx, MatchMode.Template, g));
 
 		JButton btnRandomRefGuid = new JButton(Icons.getImageIcon(Icons.Data.COUNTER));
-		btnRandomRefGuid.setToolTipText(I.tr("Zufällige Guid generieren"));
+		btnRandomRefGuid.setToolTipText(I.tr("Generate random guid"));
 		btnRandomRefGuid.addActionListener(a -> tfRefGuid.setText(GuidUtil.randomGUID(), true));
 		add(btnRandomRefGuid, LayoutUtils.sqrBtn());
 
 		JButton btnCopyGuid = new JButton(Icons.getImageIcon(Icons.Action.COPY));
-		btnCopyGuid.setToolTipText(I.tr("Guid in Zwischenablage kopieren"));
+		btnCopyGuid.setToolTipText(I.tr("Copy Guid to Clipboard"));
 		btnCopyGuid.addActionListener(a -> IOUtils.copyToClipboard(tfRefGuid.getText()));
 		add(btnCopyGuid, LayoutUtils.sqrBtn("wrap"));
 
@@ -121,7 +121,7 @@ public class AllgemeinTab extends AbstractTemplateTab {
 
 	@Override
 	public String getTabTitle() {
-		return I.tr("Allgemein");
+		return I.tr("General");
 	}
 
 	@Override

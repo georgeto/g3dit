@@ -17,17 +17,17 @@ import de.george.lrentnode.classes.desc.CD;
 
 public class ScriptDeleteNPCs implements IScript {
 	private static final Option<String> WHITELIST = new LambdaOption<>("",
-			(parent) -> new TextFieldOptionHandler(parent, I.tr("Whitelist"), I.tr("Liste von NPC-Namen getrennt mit Kommas")),
+			(parent) -> new TextFieldOptionHandler(parent, I.tr("Whitelist"), I.tr("List of NPC names separated with commas")),
 			"ScriptDeleteNPCs.WHITELIST", I.tr("Whitelist"));
 
 	@Override
 	public String getTitle() {
-		return I.tr("NPCs löschen");
+		return I.tr("Delete NPCs");
 	}
 
 	@Override
 	public String getDescription() {
-		return I.tr("Löscht alle NPCs aus den Weltdaten.");
+		return I.tr("Deletes all NPCs from the world data.");
 	}
 
 	@Override
@@ -44,7 +44,7 @@ public class ScriptDeleteNPCs implements IScript {
 			}
 			toBeDeleted.forEach(e -> e.removeFromParent(false));
 			return toBeDeleted.size();
-		}, I.tr("Es wurden insgesamt {0} NPCs entfernt."));
+		}, I.tr("A total of {0} NPCs were removed."));
 	}
 
 	@Override

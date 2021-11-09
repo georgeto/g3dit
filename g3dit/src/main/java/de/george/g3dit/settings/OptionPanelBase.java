@@ -45,7 +45,7 @@ public class OptionPanelBase<T extends OptionPanelBase<T>> {
 		content = new JPanel(new MigLayout(layoutConstraints, colConstraints, rowConstraints));
 
 		btnReset = new JButton(Icons.getImageIcon(Icons.Document.TEMPLATE));
-		btnReset.setToolTipText(I.tr("Einstellungen zurücksetzen"));
+		btnReset.setToolTipText(I.tr("Reset settings"));
 		btnReset.setFocusable(false);
 		btnReset.addActionListener(a -> resetToDefaults());
 	}
@@ -122,7 +122,7 @@ public class OptionPanelBase<T extends OptionPanelBase<T>> {
 
 	@SuppressWarnings("unchecked")
 	public void resetToDefaults() {
-		CheckBoxListSelectDialog<Option> dialog = new CheckBoxListSelectDialog<>(parent, I.tr("Einstellungen zurücksetzen"),
+		CheckBoxListSelectDialog<Option> dialog = new CheckBoxListSelectDialog<>(parent, I.tr("Reset settings"),
 				handlers.values(), new BeanListCellRenderer("displayName"));
 		if (dialog.openAndWasSuccessful()) {
 			List<Option> entries = dialog.getSelectedEntries();

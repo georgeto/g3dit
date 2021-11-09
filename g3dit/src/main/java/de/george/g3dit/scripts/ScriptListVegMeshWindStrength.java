@@ -19,12 +19,12 @@ public class ScriptListVegMeshWindStrength implements IScript {
 
 	@Override
 	public String getTitle() {
-		return I.tr("WindStrength von Vegetations-Meshes auflisten");
+		return I.tr("List WindStrength of vegetation meshes");
 	}
 
 	@Override
 	public String getDescription() {
-		return I.tr("Erstellt einer Liste aller aller vorkommender Vegetations-Meshes, deren WindStrength variiert.");
+		return I.tr("Creates a list of all vegetation meshes whose WindStrength varies.");
 	}
 
 	@Override

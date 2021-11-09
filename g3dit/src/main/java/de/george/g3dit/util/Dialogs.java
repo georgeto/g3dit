@@ -14,8 +14,8 @@ public class Dialogs {
 	}
 
 	public static Answer askSaveChanges(Window parent, String message) {
-		int answer = TaskDialogs.choice(parent, I.tr("Änderungen speichern"), message, 0, new CommandLink(I.tr("Ja"), ""),
-				new CommandLink(I.tr("Nein"), ""), new CommandLink(I.tr("Abbrechen"), ""));
+		int answer = TaskDialogs.choice(parent, I.tr("Apply changes"), message, 0, new CommandLink(I.tr("Yes"), ""),
+				new CommandLink(I.tr("No"), ""), new CommandLink(I.tr("Cancel"), ""));
 
 		return switch (answer) {
 			case 0 -> Answer.Yes;

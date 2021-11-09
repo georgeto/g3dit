@@ -32,17 +32,17 @@ public class ScriptDumpSvmAdmin implements IScript {
 
 	@Override
 	public String getTitle() {
-		return I.tr("SVMAdmin.dat exportieren");
+		return I.tr("Export SVMAdmin.dat");
 	}
 
 	@Override
 	public String getDescription() {
-		return I.tr("Wandelt die SVMAdmin.dat in eine Textdatei um.");
+		return I.tr("Converts the SVMAdmin.dat into a text file.");
 	}
 
 	@Override
 	public boolean execute(IScriptEnvironment env) {
-		File loadFile = FileDialogWrapper.openFile(I.tr("SVMAdmin.dat öffnen..."), env.getParentWindow());
+		File loadFile = FileDialogWrapper.openFile(I.tr("Open SVMAdmin.dat..."), env.getParentWindow());
 		if (loadFile == null) {
 			return false;
 		}
@@ -50,10 +50,10 @@ public class ScriptDumpSvmAdmin implements IScript {
 		File saveFile;
 		boolean asJson = env.getOption(AS_JSON).booleanValue();
 		if (!asJson) {
-			saveFile = FileDialogWrapper.saveFile(I.tr("SVMAdmin.dat in Textform speichern"),
+			saveFile = FileDialogWrapper.saveFile(I.tr("Save SVMAdmin.dat in text form"),
 					IOUtils.changeExtension(loadFile.getName(), "txt"), env.getParentWindow(), FileDialogWrapper.TXT_FILTER);
 		} else {
-			saveFile = FileDialogWrapper.saveFile(I.tr("SVMAdmin.dat als Json speichern"),
+			saveFile = FileDialogWrapper.saveFile(I.tr("Save SVMAdmin.dat as Json"),
 					IOUtils.changeExtension(loadFile.getName(), "json"), env.getParentWindow(), FileDialogWrapper.JSON_FILTER);
 		}
 
@@ -82,7 +82,7 @@ public class ScriptDumpSvmAdmin implements IScript {
 			}
 		} catch (IOException e) {
 			logger.warn("Error during export.", e);
-			env.log(I.trf("Fehler beim Export: {0}", e.getMessage()));
+			env.log(I.trf("Error during export: {0}", e.getMessage()));
 
 		}
 

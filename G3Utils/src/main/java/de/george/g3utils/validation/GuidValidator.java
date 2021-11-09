@@ -28,7 +28,7 @@ public class GuidValidator extends AbstractValidator<String> {
 			return;
 		}
 
-		problems.append(I.trf("{0} enthält keine gültige Guid.", compName));
+		problems.append(I.trf("{0} does not contain a valid Guid.", compName));
 	}
 
 }

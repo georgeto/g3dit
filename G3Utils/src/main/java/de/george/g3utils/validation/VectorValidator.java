@@ -20,7 +20,7 @@ public class VectorValidator extends AbstractValidator<String> {
 		try {
 			bCVector.fromString(model);
 		} catch (IllegalArgumentException e) {
-			problems.append(I.trf("{0} enthält keinen gültige Vektor.", compName));
+			problems.append(I.trf("{0} does not contain a valid vector.", compName));
 		}
 	}
 }

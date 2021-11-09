@@ -48,9 +48,9 @@ public class JEntityGuidField extends JSearchNamedGuidField {
 
 	@Override
 	protected void addDefaultMenuItem() {
-		addMenuItem(I.tr("Entity zu dieser Guid öffnen [F3]"), Icons.getImageIcon(Icons.Arrow.CURVE), this::openEntity);
-		addMenuItem(I.tr("Nach Entity zu dieser Guid suchen [F4]"), Icons.getImageIcon(Icons.Action.FIND), this::searchEntity);
-		addMenuItem(I.tr("Zu Entity mit dieser Guid teleportieren"), Icons.getImageIcon(Icons.Misc.GEOLOCATION),
+		addMenuItem(I.tr("Open entity for this guid [F3]"), Icons.getImageIcon(Icons.Arrow.CURVE), this::openEntity);
+		addMenuItem(I.tr("Search for entity with this guid [F4]"), Icons.getImageIcon(Icons.Action.FIND), this::searchEntity);
+		addMenuItem(I.tr("Teleport to entity with this guid"), Icons.getImageIcon(Icons.Misc.GEOLOCATION),
 				(ctx, guid) -> IpcUtil.gotoGuid(guid), (ctx, guid) -> GuidUtil.isValid(guid) && ctx.getIpcMonitor().isAvailable());
 	}
 

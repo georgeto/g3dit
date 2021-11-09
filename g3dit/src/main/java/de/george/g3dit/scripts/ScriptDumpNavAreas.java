@@ -21,17 +21,17 @@ public class ScriptDumpNavAreas implements IScript {
 
 	@Override
 	public String getTitle() {
-		return I.tr("NavZones und NavPaths exportieren");
+		return I.tr("Export NavZones and NavPaths");
 	}
 
 	@Override
 	public String getDescription() {
-		return I.tr("Exportiert NavZones und NavPaths in eine Textdatei.");
+		return I.tr("Exports NavZones and NavPaths to a text file.");
 	}
 
 	@Override
 	public boolean execute(IScriptEnvironment env) {
-		File saveFile = FileDialogWrapper.saveFile(I.tr("NavZones und NavPaths in Textform speichern"), "NavAreas.txt",
+		File saveFile = FileDialogWrapper.saveFile(I.tr("Save NavZones and NavPaths in text form"), "NavAreas.txt",
 				env.getParentWindow(), FileDialogWrapper.TXT_FILTER);
 		if (saveFile == null) {
 			return false;

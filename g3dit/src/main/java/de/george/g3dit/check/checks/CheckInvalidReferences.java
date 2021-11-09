@@ -25,7 +25,7 @@ public class CheckInvalidReferences extends AbstractEntityCheck {
 	private Set<String> refGuids = new HashSet<>();
 
 	public CheckInvalidReferences() {
-		super(I.tr("Ungültige Referenzen ermitteln"), I.tr("Überprüft alle Templates auf ungültige Guids."), 2, 1);
+		super(I.tr("Find invalid references"), I.tr("Checks all templates for invalid guids."), 2, 1);
 	}
 
 	@Override
@@ -33,7 +33,7 @@ public class CheckInvalidReferences extends AbstractEntityCheck {
 			Supplier<EntityDescriptor> descriptor, StringProblemConsumer problemConsumer) {
 
 		if (entity.getCreator() != null && !refGuids.contains(entity.getCreator())) {
-			problemConsumer.fatal(I.tr("Reference Guid existiert nicht"), entity.getCreator());
+			problemConsumer.fatal(I.tr("Reference Guid does not exist"), entity.getCreator());
 		}
 
 		PropertyUtil.visitTemplateReferences(entity,
@@ -58,8 +58,8 @@ public class CheckInvalidReferences extends AbstractEntityCheck {
 	private boolean processTemplateProperty(eCEntityProxy value, ClassProperty<?> property, G3Class propertySet,
 			BiConsumer<String, String> problemConsumer) {
 		if (value.getGuid() != null && !refGuids.contains(value.getGuid())) {
-			String message = I.trf("Property {0}.{1} enthält nicht existente Guid", propertySet.getClassName(), property.getName());
-			String details = I.trf("Property {0}.{1} enthält nicht existente Guid\n{2}", propertySet.getClassName(), property.getName(),
+			String message = I.trf("Property {0}.{1} contains non-existent Guid", propertySet.getClassName(), property.getName());
+			String details = I.trf("Property {0}.{1} contains non-existent Guid\n{2}", propertySet.getClassName(), property.getName(),
 					value.getGuid());
 			problemConsumer.accept(message, details);
 		}

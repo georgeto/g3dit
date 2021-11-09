@@ -59,7 +59,7 @@ public class ItemTab extends AbstractTemplateTab {
 	public void initComponents() {
 		setLayout(new MigLayout("hidemode 3", "[]20[]20[]20[]"));
 
-		add(SwingUtils.createBoldLabel(I.tr("Eigenschaften")), "spanx, wrap");
+		add(SwingUtils.createBoldLabel(I.tr("Properties")), "spanx, wrap");
 		add(new JLabel("GoldValue"), "gapleft 7, spanx 2");
 		add(new JLabel("Category"), "spanx 2, wrap");
 		tfGoldValue = SwingUtils.createUndoTF();

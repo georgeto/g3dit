@@ -27,7 +27,7 @@ public class ColorChooserButton extends JButton {
 		setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
 		setSelectedColor(color);
 		addActionListener(arg0 -> {
-			Color newColor = ColorPicker.showDialog(owner, I.tr("Farbe auswählen"), current, showAlpha);
+			Color newColor = ColorPicker.showDialog(owner, I.tr("Select color"), current, showAlpha);
 			if (newColor != null) {
 				setSelectedColor(newColor);
 			}

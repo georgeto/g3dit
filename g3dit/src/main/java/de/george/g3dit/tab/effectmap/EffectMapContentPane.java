@@ -120,7 +120,7 @@ public class EffectMapContentPane extends JPanel {
 		}
 
 		private Optional<gCEffectCommand> inputCommand() {
-			EnterEnumDialog dialog = new EnterEnumDialog(ctx.getParentWindow(), I.tr("Neues EffectCommand erstellen"), I.tr("Erstellen"),
+			EnterEnumDialog dialog = new EnterEnumDialog(ctx.getParentWindow(), I.tr("Create new EffectCommand"), I.tr("Create"),
 					Arrays.stream(G3Enums.asArray(gEEffectCommand.class)).filter(c -> !c.equals("CreateDecal")).toArray(String[]::new),
 					G3Enums.asString(gEEffectCommand.class, gEEffectCommand.gEEffectCommand_PlaySound));
 
@@ -289,8 +289,8 @@ public class EffectMapContentPane extends JPanel {
 	}
 
 	private Optional<gCEffectCommandSequence> inputEffect() {
-		String input = TaskDialogs.input(ctx.getParentWindow(), I.tr("Neuen Effekt erstellen"), I.tr("Bitte Namen des Effekts eingeben"),
-				I.tr("Effekt einfügen"));
+		String input = TaskDialogs.input(ctx.getParentWindow(), I.tr("Create new effect"), I.tr("Please enter the name of the effect"),
+				I.tr("Insert effect"));
 
 		return Optional.ofNullable(input).filter(i -> !i.isEmpty()).map(gCEffectCommandSequence::new);
 	}

@@ -45,7 +45,7 @@ public class CheckInvalidParties extends AbstractEntityCheck {
 	private Set<String> guids = new HashSet<>();
 
 	public CheckInvalidParties() {
-		super(I.tr("Ungültige Gruppen ermitteln"), I.tr("Ermittelt Inkosistenzen in der Zuordnung von PartyMembern zu PartyLeadern."), 0,
+		super(I.tr("Find invalid groups"), I.tr("Finds inconsistencies in the assignment of PartyMembers to PartyLeaders."), 0,
 				1);
 	}
 
@@ -60,7 +60,7 @@ public class CheckInvalidParties extends AbstractEntityCheck {
 
 			String leader = party.property(CD.gCParty_PS.PartyLeaderEntity).getGuid();
 			if (leader != null && !party.members.getEntries().isEmpty()) {
-				problemConsumer.warning(I.tr("Entity ist sowohl PartyLeader als auch PartyMember."));
+				problemConsumer.warning(I.tr("Entity is both PartyLeader and PartyMember."));
 			}
 
 			if (!party.members.getEntries().isEmpty()) {
@@ -83,20 +83,20 @@ public class CheckInvalidParties extends AbstractEntityCheck {
 				if (member != null) {
 					if (member.leader == null) {
 						postEntityProblem(problemConsumer, leader.descriptor, Severity.Fatal,
-								I.tr("PartyLeader verweist auf PartyMember, der keinen PartyLeader eingetragen hat."),
+								I.tr("PartyLeader refers to PartyMember that has no PartyLeader."),
 								HtmlCreator.renderEntity(member.descriptor));
 					} else if (!leader.descriptor.getGuid().equals(member.leader)) {
 						postEntityProblem(problemConsumer, leader.descriptor, Severity.Fatal,
-								I.tr("PartyLeader verweist auf PartyMember, der abweichenden PartyLeader eingetragen hat."),
+								I.tr("PartyLeader refers to PartyMember that has a different PartyLeader."),
 								HtmlCreator.renderEntity(member.descriptor));
 					}
 				} else {
 					if (guids.contains(memberGuid)) {
 						postEntityProblem(problemConsumer, leader.descriptor, Severity.Fatal,
-								I.tr("PartyLeader verweist auf Entity, die kein PartyMember ist."), memberGuid);
+								I.tr("PartyLeader refers to entity that is not a PartyMember."), memberGuid);
 					} else {
 						postEntityProblem(problemConsumer, leader.descriptor, Severity.Fatal,
-								I.tr("PartyLeader verweist auf nicht existente Entity."), memberGuid);
+								I.tr("PartyLeader refers to non-existent entity."), memberGuid);
 					}
 				}
 			}
@@ -111,16 +111,16 @@ public class CheckInvalidParties extends AbstractEntityCheck {
 			if (leader != null) {
 				if (!leader.members.contains(member.descriptor.getGuid())) {
 					postEntityProblem(problemConsumer, member.descriptor, Severity.Fatal,
-							I.tr("PartyMember verweist auf PartyLeader, der diesen nicht eingetragen hat."),
+							I.tr("PartyMember refers to PartyLeader, which does not refer to it."),
 							HtmlCreator.renderEntity(leader.descriptor));
 				}
 			} else {
 				if (guids.contains(member.leader)) {
 					postEntityProblem(problemConsumer, member.descriptor, Severity.Fatal,
-							I.tr("PartyMember verweist auf Entity, die kein PartyLeader ist."), member.leader);
+							I.tr("PartyMember refers to entity that is not a PartyLeader."), member.leader);
 				} else {
 					postEntityProblem(problemConsumer, member.descriptor, Severity.Fatal,
-							I.tr("PartyMember verweist auf nicht existente Entity."), member.leader);
+							I.tr("PartyMember refers to non-existent entity."), member.leader);
 				}
 			}
 		}

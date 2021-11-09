@@ -92,7 +92,7 @@ public class PositionDialog extends ExtStandardDialog {
 		buttonPanel.setAlignment(SwingConstants.CENTER);
 		buttonPanel.setMinButtonWidth(80);
 
-		Action saveAction = SwingUtils.createAction(I.tr("Speichern"), () -> {
+		Action saveAction = SwingUtils.createAction(I.tr("Save"), () -> {
 			try {
 				positionMatrix.setToIdentity();
 				positionMatrix.modifyRotation(bCEulerAngles.fromDegree(Float.parseFloat(tfYaw.getText()),

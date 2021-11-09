@@ -70,7 +70,7 @@ public class SharedInventarTab extends AbstractPropertySharedTab {
 
 	@Override
 	public String getTabTitle() {
-		return I.tr("Inventar");
+		return I.tr("Inventory");
 	}
 
 	@Override
@@ -142,12 +142,12 @@ public class SharedInventarTab extends AbstractPropertySharedTab {
 			super(I.tr("Stack"), stacksPanel);
 			setLayout(new MigLayout("", "[]10px[]push[]"));
 
-			add(new JLabel(I.tr("Anzahl")), "cell 0 0");
+			add(new JLabel(I.tr("Amount")), "cell 0 0");
 
 			tfAmount = SwingUtils.createUndoTF(String.valueOf(inAmount));
 			add(tfAmount, "cell 1 0, width 50:100:100");
 
-			add(new JLabel(I.tr("Typ")), "cell 0 1");
+			add(new JLabel(I.tr("Type")), "cell 0 1");
 
 			cbStackType = new JEnumComboBox<>(gEStackType.class);
 			cbStackType.setSelectedValue(inStackType);
@@ -161,7 +161,7 @@ public class SharedInventarTab extends AbstractPropertySharedTab {
 				TemplateCache tpleCache = Caches.template(ctx);
 				if (tpleCache.isValid()) {
 					title = tpleCache.getEntryByGuid(newGuid).map(TemplateCache.TemplateCacheEntry::getName)
-							.orElse(I.tr("<keine Template gefunden>"));
+							.orElse(I.tr("<no template found>"));
 					updateBorderTitle();
 				}
 			});
@@ -171,7 +171,7 @@ public class SharedInventarTab extends AbstractPropertySharedTab {
 			add(operationPanel, "cell 2 0, spanx 2, spany 3");
 
 			btnTple = new JButton(Icons.getImageIcon(Icons.Action.BOOK));
-			btnTple.setToolTipText(I.tr("Template laden"));
+			btnTple.setToolTipText(I.tr("Load template"));
 
 			operationPanel.add(btnTple, LayoutUtils.sqrBtn("cell 1 1"));
 			btnTple.addActionListener(e -> new TemplateNameSearchDialog(InventarStackPanel.this, ctx).open());
@@ -185,9 +185,9 @@ public class SharedInventarTab extends AbstractPropertySharedTab {
 		@Override
 		@SuppressWarnings("unchecked")
 		public void initValidation(ValidationGroup group) {
-			tfAmount.setName(I.tr("Anzahl"));
+			tfAmount.setName(I.tr("Amount"));
 			group.add(tfAmount, StringValidators.REQUIRE_VALID_INTEGER, StringValidators.REQUIRE_NON_NEGATIVE_NUMBER);
-			tfTemplate.initValidation(group, I.tr("Template Guid"), GuidValidator.INSTANCE, new TemplateExistenceValidator(group, ctx));
+			tfTemplate.initValidation(group, I.tr("Template guid"), GuidValidator.INSTANCE, new TemplateExistenceValidator(group, ctx));
 		}
 
 		@Override

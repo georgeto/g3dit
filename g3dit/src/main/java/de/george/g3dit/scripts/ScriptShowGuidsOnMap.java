@@ -13,12 +13,12 @@ public class ScriptShowGuidsOnMap implements IScript {
 
 	@Override
 	public String getTitle() {
-		return I.tr("Objekte zu Guids auf Map anzeigen");
+		return I.tr("Display objects for guids on Map");
 	}
 
 	@Override
 	public String getDescription() {
-		return I.tr("Zeigt für Guids in der Zwischenablage die dazugehörigen Objekte (NavZone, NavPath, ...) auf der Karte an.");
+		return I.tr("Displays the corresponding objects (NavZone, NavPath, ...) for guids in the clipboard on the map.");
 	}
 
 	@Override

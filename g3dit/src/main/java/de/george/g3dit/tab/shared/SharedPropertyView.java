@@ -80,13 +80,13 @@ public class SharedPropertyView extends JPanel {
 		classList.addListSelectionListener(e -> classSelectionChanged());
 
 		JButton btnGetRemotePropertySet = new JButton(Icons.getImageIcon(Icons.Data.TABLE_IMPORT));
-		btnGetRemotePropertySet.setToolTipText(I.tr("Remote PropertySet lesen"));
+		btnGetRemotePropertySet.setToolTipText(I.tr("Read Remote PropertySet"));
 		add(btnGetRemotePropertySet, "split 2");
 		btnGetRemotePropertySet.addActionListener(e -> getRemotePropertySet());
 		enableOnSelectedPropertySetAndIpcAvailable(btnGetRemotePropertySet);
 
 		JButton btnSetRemotePropertySet = new JButton(Icons.getImageIcon(Icons.Data.TABLE_EXPORT));
-		btnSetRemotePropertySet.setToolTipText(I.tr("Remote PropertySet schreiben"));
+		btnSetRemotePropertySet.setToolTipText(I.tr("Write Remote PropertySet"));
 		add(btnSetRemotePropertySet);
 		btnSetRemotePropertySet.addActionListener(e -> setRemotePropertySet());
 		enableOnSelectedPropertySetAndIpcAvailable(btnSetRemotePropertySet);
@@ -94,24 +94,24 @@ public class SharedPropertyView extends JPanel {
 		this.add(sheet, "grow, spany, wrap");
 
 		JButton btnGetRemoteProperty = new JButton(Icons.getImageIcon(Icons.Data.CARD_IMPORT));
-		btnGetRemoteProperty.setToolTipText(I.tr("Remote Property lesen"));
+		btnGetRemoteProperty.setToolTipText(I.tr("Read remote property"));
 		add(btnGetRemoteProperty, "split 4");
 		btnGetRemoteProperty.addActionListener(e -> getRemoteProperty());
 		enableOnSelectedPropertyAndIpcAvailable(btnGetRemoteProperty);
 
 		JButton btnSetRemoteProperty = new JButton(Icons.getImageIcon(Icons.Data.CARD_EXPORT));
-		btnSetRemoteProperty.setToolTipText(I.tr("Remote Property schreiben"));
+		btnSetRemoteProperty.setToolTipText(I.tr("Write remote property"));
 		add(btnSetRemoteProperty);
 		btnSetRemoteProperty.addActionListener(e -> setRemoteProperty());
 		enableOnSelectedPropertyAndIpcAvailable(btnSetRemoteProperty);
 
 		JButton btnAddProperty = new JButton(Icons.getImageIcon(Icons.Data.CARD_PLUS));
-		btnAddProperty.setToolTipText(I.tr("Property hinzufügen"));
+		btnAddProperty.setToolTipText(I.tr("Add property"));
 		add(btnAddProperty);
 		btnAddProperty.addActionListener(e -> addProperty());
 
 		JButton btnRemProperty = new JButton(Icons.getImageIcon(Icons.Data.CARD_MINUS));
-		btnRemProperty.setToolTipText(I.tr("Property entfernen"));
+		btnRemProperty.setToolTipText(I.tr("Remove property"));
 		add(btnRemProperty, "wrap");
 		btnRemProperty.addActionListener(e -> removeProperty());
 		enableOnSelectedProperty(btnRemProperty);
@@ -248,12 +248,10 @@ public class SharedPropertyView extends JPanel {
 					selectedClass.addProperty(property);
 					classSelectionChanged();
 				} else {
-					TaskDialogs.error(dialog, "",
-							I.trf("Es konnte keine Instanz des Typs '{0}' erstellt werden.", dialog.getPropertyType()));
+					TaskDialogs.error(dialog, "", I.trf("Failed to create instance of type ''{0}''.", dialog.getPropertyType()));
 				}
 			} else {
-				TaskDialogs.error(dialog, "",
-						I.trf("PropertySet hat bereits eine Property mit dem Namen '{0}'.", dialog.getPropertyName()));
+				TaskDialogs.error(dialog, "", I.trf("PropertySet already has a property named ''{0}''.", dialog.getPropertyName()));
 			}
 		}
 	}

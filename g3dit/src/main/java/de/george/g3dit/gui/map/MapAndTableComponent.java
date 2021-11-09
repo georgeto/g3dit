@@ -121,7 +121,7 @@ public class MapAndTableComponent<T extends MapItem> {
 					}
 				});
 
-		cbOnlySelected = new JCheckBox(I.tr("Nur auf Karte Ausgewählte anzeigen"));
+		cbOnlySelected = new JCheckBox(I.tr("Show only selected on map"));
 		onlySelectedMatcher.init();
 	}
 

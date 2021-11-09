@@ -19,13 +19,13 @@ public class ScriptFindMisplacedEntities implements IScript {
 
 	@Override
 	public String getTitle() {
-		return I.tr("Falsch platzierte Entities ermitteln");
+		return I.tr("Find incorrectly placed entities");
 	}
 
 	@Override
 	public String getDescription() {
 		return I.tr(
-				"Ermittelt Entities die innerhalb einer Schwellwertdistanz keine bzw. wenige Nachbarentities haben. In den meisten Fällen liegt dann eine fehlerhafte Positionierung der Entity vor.");
+				"Finds entities that have no or only a few neighbor entities within a threshold distance. In most cases, this is due to incorrect positioning of the entity.");
 	}
 
 	private static class EntityAABBTreePrimitive implements AABBTreePrimitive {
@@ -68,24 +68,24 @@ public class ScriptFindMisplacedEntities implements IScript {
 
 	@Override
 	public boolean execute(IScriptEnvironment env) {
-		Integer k = TaskDialogs.input(env.getParentWindow(), I.tr("Anzahl der betrachteten nächsten Nachbarn"),
-				I.tr("Anzahl der Nachbarentities die innerhalb der Schwellwertdistanz liegen müssen."), 1);
+		Integer k = TaskDialogs.input(env.getParentWindow(), I.tr("Number of nearest neighbours considered"),
+				I.tr("Number of neighbor entities that must be within the threshold distance."), 1);
 		if (Objects.isNull(k)) {
 			return false;
 		}
 
-		Integer threshold = TaskDialogs.input(env.getParentWindow(), I.tr("Schwellwertdistanz"), I.tr(
-				"Alle Entities die innerhalb der Schwellwertdistanz keine bzw. nicht genug Nachbarn haben,\nwerden als 'falsch' platziert klassifiziert."),
+		Integer threshold = TaskDialogs.input(env.getParentWindow(), I.tr("Threshold distance"), I.tr(
+				"All entities that have no or not enough neighbors within the threshold distance,\nare classified as 'misplaced'."),
 				2000);
 		if (Objects.isNull(threshold)) {
 			return false;
 		}
 
-		boolean solidOnly = TaskDialogs.ask(env.getParentWindow(), I.tr("Solide Entities"),
-				I.tr("Sollen ausschließlich solide Entities, also solche die ein Mesh haben, betrachtet werden?"));
+		boolean solidOnly = TaskDialogs.ask(env.getParentWindow(), I.tr("Solid entities"),
+				I.tr("Should only solid entities, i.e. those that have a mesh, be considered?"));
 
-		env.log(I.trf("Anzahl der betrachteten nächsten Nachbarn: {0, number}", k));
-		env.log(I.trf("Schwellwert: {0, number}", threshold));
+		env.log(I.trf("Number of nearest neighbors considered: {0, number}", k));
+		env.log(I.trf("Threshold: {0, number}", threshold));
 
 		ArchiveFileIterator worldFilesIterator = env.getFileManager().worldFilesIterator();
 		AABBTree<EntityAABBTreePrimitive> aabbTree = new AABBTree<>();
@@ -103,13 +103,13 @@ public class ScriptFindMisplacedEntities implements IScript {
 		}
 
 		aabbTree.complete();
-		env.log(I.trf("{0, number} Entities erfasst.", aabbTree.getPrimitives().size()));
+		env.log(I.trf("{0, number} entities collected.", aabbTree.getPrimitives().size()));
 
 		for (EntityAABBTreePrimitive primitive : aabbTree.getPrimitives()) {
 			EntityAABBTreePrimitive neighbour = Lists.reverse(aabbTree.closestPrimitives(k + 1, primitive.getBounds())).get(0);
 			float distance = primitive.getBounds().distance(neighbour.getBounds());
 			if (distance > threshold) {
-				env.log(I.trf("{0} ({1}) an Position {2} alleine im Radius von {3, number}.", primitive.getName(), primitive.getGuid(),
+				env.log(I.trf("{0} ({1}) at position {2} alone in the radius of {3, number}.", primitive.getName(), primitive.getGuid(),
 						primitive.getPosition().toMarvinString(), distance));
 			}
 		}

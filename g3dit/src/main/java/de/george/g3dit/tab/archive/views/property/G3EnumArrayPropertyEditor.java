@@ -63,7 +63,7 @@ public class G3EnumArrayPropertyEditor extends AbstractPropertyEditor {
 		private EnumsPanel enumsPanel;
 
 		public PopupDialog() {
-			super((Frame) null, I.tr("Wert bearbeiten"), true);
+			super((Frame) null, I.tr("Edit value"), true);
 			setType(Type.UTILITY);
 			setResizable(true);
 			setSize(400, 475);
@@ -90,7 +90,7 @@ public class G3EnumArrayPropertyEditor extends AbstractPropertyEditor {
 				affirm();
 			});
 
-			Action cancelAction = SwingUtils.createAction(I.tr("Abbrechen"), () -> {
+			Action cancelAction = SwingUtils.createAction(I.tr("Cancel"), () -> {
 				// Hacky workaround to cancel cell editing
 				Object al = editorComponent.getInputMap(JComponent.WHEN_FOCUSED).get(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0));
 				if (al instanceof ActionListener) {

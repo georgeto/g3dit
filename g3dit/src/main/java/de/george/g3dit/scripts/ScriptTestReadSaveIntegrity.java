@@ -21,13 +21,13 @@ public class ScriptTestReadSaveIntegrity implements IScript {
 
 	@Override
 	public String getTitle() {
-		return I.tr("Teste auf Veränderungen beim Laden und Speichern");
+		return I.tr("Test for changes during loading and saving");
 	}
 
 	@Override
 	public String getDescription() {
 		return I.tr(
-				"Überprüft welche Dateien sich ändern, wenn sie eingelesen und anschließend wieder gespeichert werden. Es werden keine Änderungen auf dem Datenträger vorgenommen, die Überprüfung geschieht im Arbeitsspeicher.");
+				"Checks which files change when they are read in and then saved again. No changes are made on the disk, the check is done in memory.");
 	}
 
 	@Override
@@ -46,11 +46,11 @@ public class ScriptTestReadSaveIntegrity implements IScript {
 					}
 				} catch (IOException e) {
 					logger.warn("Error while comparing archive file.", e);
-					env.log(I.trf("Fehler beim Vergleich: {0}", e.getMessage()));
+					env.log(I.trf("Error while comparing: {0}", e.getMessage()));
 				}
 			} catch (IOException e) {
 				logger.warn("Error while loading archive file.", e);
-				env.log(I.trf("Fehler beim Laden: {0}", e.getMessage()));
+				env.log(I.trf("Error while loading: {0}", e.getMessage()));
 			}
 			totalArchiveFiles++;
 		}
@@ -70,15 +70,15 @@ public class ScriptTestReadSaveIntegrity implements IScript {
 					}
 				} catch (IOException e) {
 					logger.warn("Error while comparing template file.", e);
-					env.log(I.trf("Fehler beim Vergleich: {0}", e.getMessage()));
+					env.log(I.trf("Error while comparing: {0}", e.getMessage()));
 				}
 			} catch (IOException e) {
 				logger.warn("Error while loading template file.", e);
-				env.log(I.trf("Fehler beim Laden: {0}", e.getMessage()));
+				env.log(I.trf("Error while loading: {0}", e.getMessage()));
 			}
 			totalTemplateFiles++;
 		}
-		env.log(I.trf("{0} .tple überprüft.", totalTemplateFiles));
+		env.log(I.trf("{0} .tple checked.", totalTemplateFiles));
 
 		return true;
 	}

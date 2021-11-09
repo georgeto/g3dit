@@ -17,7 +17,7 @@ public class IsALongValidator extends AbstractValidator<String> {
 		try {
 			Long.parseLong(model);
 		} catch (NumberFormatException e) {
-			problems.append(I.trf("'{0}' in {1} ist keine gültige ganze Zahl.", model, compName));
+			problems.append(I.trf("''{0}'' in {1} is not a valid integer.", model, compName));
 		}
 	}
 }

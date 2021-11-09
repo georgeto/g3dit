@@ -25,8 +25,8 @@ public class CheckFindMisplacedEntities extends AbstractEntityCheck {
 	private boolean solidOnly;
 
 	public CheckFindMisplacedEntities() {
-		super(I.tr("Falsch platzierte Entities ermitteln"), I.tr(
-				"Ermittelt Entities die innerhalb einer Schwellwertdistanz keine bzw. wenige Nachbarentities haben. In den meisten Fällen liegt dann eine fehlerhafte Positionierung der Entity vor."),
+		super(I.tr("Find incorrectly placed entities"), I.tr(
+				"Finds entities that have no or only a few neighbor entities within a threshold distance. In most cases, this is due to incorrect positioning of the entity."),
 				0, 1);
 	}
 
@@ -110,7 +110,7 @@ public class CheckFindMisplacedEntities extends AbstractEntityCheck {
 			EntityAABBTreePrimitive neighbour = Lists.reverse(aabbTree.closestPrimitives(k + 1, primitive.getBounds())).get(0);
 			float distance = primitive.getBounds().distance(neighbour.getBounds());
 			if (distance > threshold) {
-				String message = I.trf("An Position {0} alleine im Radius von {1, number}.", primitive.getPosition().toMarvinString(),
+				String message = I.trf("At position {0} alone in the radius of {1, number}.", primitive.getPosition().toMarvinString(),
 						distance);
 				postEntityProblem(problemConsumer, primitive.getDescriptor(), Severity.Info, message, null);
 			}

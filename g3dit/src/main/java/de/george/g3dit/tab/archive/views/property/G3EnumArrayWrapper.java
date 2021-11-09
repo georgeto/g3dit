@@ -31,7 +31,7 @@ public class G3EnumArrayWrapper {
 	public String toString() {
 		return enumValues.stream()
 				.map(enumValue -> Optional.ofNullable(G3Enums.asString(getEnumClass(), enumValue, false))
-						.orElseGet(() -> I.trcf("Unknown enum value", "Unbekannt: {0}", enumValue)))
+						.orElseGet(() -> I.trcf("Unknown enum value", "Unknown: {0}", enumValue)))
 				.collect(Collectors.joining(", ", "[", "]"));
 	}
 

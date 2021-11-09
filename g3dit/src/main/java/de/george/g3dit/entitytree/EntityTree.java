@@ -114,23 +114,23 @@ public class EntityTree extends JPanel {
 
 		JButton btnErase = new JButton(Icons.getImageIcon(Icons.Action.ERASE));
 		btnErase.setFocusable(false);
-		btnErase.setToolTipText(I.tr("Suche leeren"));
+		btnErase.setToolTipText(I.tr("Clear search"));
 		btnErase.addActionListener(e -> searchField.setText(null));
 
-		JidePopupMenu pmSettings = new JidePopupMenu(I.tr("Einstellungen"));
+		JidePopupMenu pmSettings = new JidePopupMenu(I.tr("Settings"));
 
 		JButton btnSettings = new JButton(Icons.getImageIcon(Icons.Data.SETTINGS));
 		btnSettings.setFocusable(false);
 		btnSettings.addActionListener(l -> pmSettings.show(btnSettings, 15, 15));
 
-		final JCheckBoxMenuItem cbShowNumber = new JCheckBoxMenuItem(I.tr("Entity Nummer anzeigen"), Icons.getImageIcon(Icons.Data.NUMBER),
+		final JCheckBoxMenuItem cbShowNumber = new JCheckBoxMenuItem(I.tr("Show entity number"), Icons.getImageIcon(Icons.Data.NUMBER),
 				false);
 		cbShowNumber.addActionListener(e -> {
 			renderer.showEntityNumbers(cbShowNumber.isSelected());
 			refreshTree(false, false);
 		});
 
-		cbKeepChilds = new JCheckBoxMenuItem(I.tr("Subentities anzeigen"), Icons.getImageIcon(Icons.Data.SORT), false);
+		cbKeepChilds = new JCheckBoxMenuItem(I.tr("Show child entities"), Icons.getImageIcon(Icons.Data.SORT), false);
 		cbKeepChilds.addActionListener(e -> filterTree(false));
 
 		pmSettings.add(cbShowNumber);

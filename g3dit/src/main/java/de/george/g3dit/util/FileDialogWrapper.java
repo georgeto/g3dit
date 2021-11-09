@@ -15,10 +15,10 @@ import net.tomahawk.ExtensionsFilter;
 import net.tomahawk.XFileDialog;
 
 public class FileDialogWrapper {
-	public static final ExtensionsFilter NO_FILTER = createFilter(I.tr("Alle"), "*");
+	public static final ExtensionsFilter NO_FILTER = createFilter(I.tr("All"), "*");
 	public static final ExtensionsFilter LRENTDAT_FILTER = createFilter("Lrentdat", "lrentdat");
 	public static final ExtensionsFilter NODE_FILTER = createFilter("Node", "node");
-	public static final ExtensionsFilter ARCHIVE_FILTER = createFilter(I.tr("Weltdaten"), "lrentdat", "node");
+	public static final ExtensionsFilter ARCHIVE_FILTER = createFilter(I.tr("World data"), "lrentdat", "node");
 	public static final ExtensionsFilter TEMPLATE_FILTER = createFilter("Template", "tple");
 	public static final ExtensionsFilter SECDAT_FILTER = createFilter("Secdat", "secdat");
 	public static final ExtensionsFilter EFFECT_MAP_FILTER = createFilter("EffectMap", "efm");

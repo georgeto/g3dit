@@ -177,9 +177,9 @@ public class EntityCache extends AbstractCache<EntityCache> {
 
 		public CreateEntityCacheWorker(ConcurrentMap<String, EntityCacheEntry> openEntries, Callable<List<File>> fileProvider,
 				List<File> openFiles) {
-			super(fileProvider, openFiles, I.tr("Erstelle EntityCache"), ctx.getParentWindow());
+			super(fileProvider, openFiles, I.tr("Create EntityCache"), ctx.getParentWindow());
 			workerEntries = openEntries;
-			statusFormat = I.tr("{0, number} Entities gefunden");
+			statusFormat = I.tr("{0, number} entities found");
 		}
 
 		@Override

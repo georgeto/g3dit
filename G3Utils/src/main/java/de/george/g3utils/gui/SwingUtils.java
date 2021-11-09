@@ -173,8 +173,8 @@ public class SwingUtils {
 		Color severity = errors.isEmpty() ? new Color(255, 100, 0) : Color.RED;
 		comp.setForeground(severity);
 
-		ArrayList<String> entries = Lists.newArrayList(Iterables.concat(StreamEx.of(errors).map(e -> "[" + I.tr("Fehler") + "] " + e),
-				StreamEx.of(warnings).map(e -> "[" + I.tr("Warnung") + "] " + e)));
+		ArrayList<String> entries = Lists.newArrayList(Iterables.concat(StreamEx.of(errors).map(e -> "[" + I.tr("Error") + "] " + e),
+				StreamEx.of(warnings).map(e -> "[" + I.tr("Warning") + "] " + e)));
 		if (totalCount == 1) {
 			comp.setToolTipText(entries.get(0));
 		} else {

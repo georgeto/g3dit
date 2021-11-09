@@ -33,7 +33,7 @@ public abstract class AbstractElementsPanel<T> extends JPanel {
 
 		setLayout(new MigLayout("fillx, insets 0 5 0 0", "[]"));
 
-		addElementBtn = new JButton(I.trf("{0} hinzufügen", elementName), Icons.getImageIcon(Icons.Action.ADD));
+		addElementBtn = new JButton(I.trf("Add {0}", elementName), Icons.getImageIcon(Icons.Action.ADD));
 		addElementBtn.addActionListener(e -> insertNewElement(null, InsertPosition.After));
 	}
 

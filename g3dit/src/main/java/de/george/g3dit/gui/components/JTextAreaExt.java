@@ -37,25 +37,25 @@ public class JTextAreaExt extends JTextArea {
 					JPopupMenu menu = new JPopupMenu();
 
 					// Kopieren
-					JMenuItem miCopy = new JMenuItem(I.tr("Kopieren"));
+					JMenuItem miCopy = new JMenuItem(I.tr("Copy"));
 					menu.add(miCopy);
 					miCopy.addActionListener(e1 -> copy());
 
 					if (isEditable()) {
 						// Ausschneiden
-						JMenuItem miCut = new JMenuItem(I.tr("Ausschneiden"));
+						JMenuItem miCut = new JMenuItem(I.tr("Cut"));
 						menu.add(miCut);
 						miCut.addActionListener(e1 -> cut());
 
 						// Einfügen
-						JMenuItem miPaste = new JMenuItem(I.tr("Einfügen"));
+						JMenuItem miPaste = new JMenuItem(I.tr("Insert"));
 						menu.add(miPaste);
 						miPaste.addActionListener(e1 -> paste());
 					}
 
 					if (clearable) {
 						// Leeren
-						JMenuItem miClear = new JMenuItem(I.tr("Inhalt löschen"));
+						JMenuItem miClear = new JMenuItem(I.tr("Delete content"));
 						menu.add(miClear);
 						miClear.addActionListener(e1 -> setText(null));
 					}

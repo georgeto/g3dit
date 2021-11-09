@@ -42,7 +42,7 @@ public class TableModificationControl<T> extends JPanel {
 
 		TableModel model = table.getModel();
 
-		JButton btnAdd = new JButton(I.tr("Hinzufügen"), Icons.getImageIcon(Icons.Action.ADD));
+		JButton btnAdd = new JButton(I.tr("Add"), Icons.getImageIcon(Icons.Action.ADD));
 		btnAdd.addActionListener(a -> {
 			T newEntry = entrySupplier.get();
 			if (newEntry != null) {
@@ -59,7 +59,7 @@ public class TableModificationControl<T> extends JPanel {
 		add(lblCount, "width 30!");
 		model.addTableModelListener(e -> lblCount.setText(Integer.toString(model.getRowCount())));
 
-		JButton btnRemove = new JButton(I.tr("Löschen"), Icons.getImageIcon(Icons.Action.DELETE));
+		JButton btnRemove = new JButton(I.tr("Delete"), Icons.getImageIcon(Icons.Action.DELETE));
 		add(btnRemove, "sg tmcbtn, growx");
 		btnRemove.addActionListener(a -> {
 			if (removeEntries.apply(TableUtil.getSelectedRows(table))) {

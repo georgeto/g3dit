@@ -32,27 +32,27 @@ public abstract class AbstractElementPanel extends JPanel {
 		operationPanel = new JPanel(new MigLayout("insets 0"));
 
 		upButton = new JButton(Icons.getImageIcon(Icons.Arrow.UP));
-		upButton.setToolTipText(I.tr("Nach oben verschieben"));
+		upButton.setToolTipText(I.tr("Move up"));
 		operationPanel.add(upButton, LayoutUtils.sqrBtn("cell 0 0"));
 		upButton.addActionListener(e -> callback.moveUp(AbstractElementPanel.this));
 
 		deleteButton = new JButton(Icons.getImageIcon(Icons.Action.DELETE));
-		deleteButton.setToolTipText(I.tr("Löschen"));
+		deleteButton.setToolTipText(I.tr("Delete"));
 		operationPanel.add(deleteButton, LayoutUtils.sqrBtn("cell 0 1"));
 		deleteButton.addActionListener(e -> callback.removeElement(AbstractElementPanel.this));
 
 		downButton = new JButton(Icons.getImageIcon(Icons.Arrow.DOWN));
-		downButton.setToolTipText(I.tr("Nach unten verschieben"));
+		downButton.setToolTipText(I.tr("Move down"));
 		operationPanel.add(downButton, LayoutUtils.sqrBtn("cell 0 2"));
 		downButton.addActionListener(e -> callback.moveDown(AbstractElementPanel.this));
 
 		JButton insertBeforeButton = new JButton(Icons.getImageIcon(Icons.Arrow.RETURN_BEFORE));
-		insertBeforeButton.setToolTipText(I.trf("{0} davor einfügen", elementName));
+		insertBeforeButton.setToolTipText(I.trf("Insert {0} before", elementName));
 		operationPanel.add(insertBeforeButton, LayoutUtils.sqrBtn("cell 1 0"));
 		insertBeforeButton.addActionListener(e -> callback.insertNewElement(AbstractElementPanel.this, InsertPosition.Before));
 
 		JButton insertAfterButton = new JButton(Icons.getImageIcon(Icons.Arrow.RETURN_AFTER));
-		insertAfterButton.setToolTipText(I.trf("{0} danach einfügen", elementName));
+		insertAfterButton.setToolTipText(I.trf("Insert {0} behind", elementName));
 		operationPanel.add(insertAfterButton, LayoutUtils.sqrBtn("cell 1 2"));
 		insertAfterButton.addActionListener(e -> callback.insertNewElement(AbstractElementPanel.this, InsertPosition.After));
 	}

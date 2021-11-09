@@ -16,12 +16,12 @@ public class ScriptListMaterialProperties implements IScript {
 
 	@Override
 	public String getTitle() {
-		return I.tr("Material Eigenschaften auflisten");
+		return I.tr("List material properties");
 	}
 
 	@Override
 	public String getDescription() {
-		return I.tr("Material Eigenschaften auflisten");
+		return I.tr("List material properties");
 	}
 
 	@Override

@@ -22,17 +22,17 @@ public class ScriptListVoices implements IScript {
 
 	@Override
 	public String getTitle() {
-		return I.tr("NPC-Stimmen auflisten");
+		return I.tr("List NPC voices");
 	}
 
 	@Override
 	public String getDescription() {
-		return I.tr("Erstellt eine Liste, die zu jedem NPC dessen Stimme enthält.");
+		return I.tr("Creates a list that contains each NPC's voice.");
 	}
 
 	@Override
 	public boolean execute(IScriptEnvironment env) {
-		File saveFile = FileDialogWrapper.saveFile(I.tr("NPC-Stimmen Auflistung speichern unter..."), env.getParentWindow(),
+		File saveFile = FileDialogWrapper.saveFile(I.tr("Save NPC voices listing as..."), env.getParentWindow(),
 				FileDialogWrapper.CSV_FILTER);
 		if (saveFile == null) {
 			return false;
@@ -69,7 +69,7 @@ public class ScriptListVoices implements IScript {
 		try {
 			IOUtils.writeTextFile(output, saveFile, StandardCharsets.UTF_8);
 		} catch (IOException e) {
-			env.log(I.trf("Datei konnte nicht gespeichert werden: {0}", e.getMessage()));
+			env.log(I.trf("File could not be saved: {0}", e.getMessage()));
 			return false;
 		}
 		return true;

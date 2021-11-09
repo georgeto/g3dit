@@ -61,8 +61,8 @@ public class SecdatContentPane extends JPanel {
 	}
 
 	private Optional<String> inputEntry(String name) {
-		String input = TaskDialogs.input(ctx.getParentWindow(), I.tr("Neuen Eintrag erstellen"),
-				I.trf("Bitte Namen der {0} eingeben", name), I.trf("{0} einfügen", name));
+		String input = TaskDialogs.input(ctx.getParentWindow(), I.tr("Create new entry"),
+				I.trf("Please enter the name of the {0}", name), I.trf("Insert {0}", name));
 
 		return Optional.ofNullable(input).filter(i -> !i.isEmpty());
 	}

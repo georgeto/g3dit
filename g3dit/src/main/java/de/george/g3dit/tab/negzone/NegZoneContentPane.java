@@ -71,7 +71,7 @@ public class NegZoneContentPane extends NavMapObjectContentPane {
 	}
 
 	private Optional<String> addNegZone() {
-		EnterGuidDialog dialog = new EnterGuidDialog(ctx.getParentWindow(), I.tr("NegZone erstellen"), I.tr("Erstellen"),
+		EnterGuidDialog dialog = new EnterGuidDialog(ctx.getParentWindow(), I.tr("Create NegZone"), I.tr("Create"),
 				GuidUtil.randomGUID());
 
 		if (dialog.openAndWasSuccessful()) {
@@ -161,7 +161,7 @@ public class NegZoneContentPane extends NavMapObjectContentPane {
 			this.add(lblStickList, "gaptop 7, wrap");
 			this.add(taSticks.getScrollPane(), "spanx 3, width 100:500:500, pushy, grow, wrap");
 
-			JButton btnCalc = new JButton(I.tr("Errechne NegZone aus Sticks"));
+			JButton btnCalc = new JButton(I.tr("Calculate NegZone from sticks"));
 			this.add(btnCalc, "split 2, spanx 3");
 			btnCalc.addActionListener(l -> handleCalcNegZone());
 
@@ -189,12 +189,12 @@ public class NegZoneContentPane extends NavMapObjectContentPane {
 				sticks = Misc.parseVectorList(taSticks.getText());
 			} catch (IllegalArgumentException e) {
 				TaskDialogs.inform(ctx.getParentWindow(), "",
-						I.tr("Mindestens für einen Stick wurden fehlerhafte Koordinaten eingegeben."));
+						I.tr("Malformed coordinates were provided for at least one stick."));
 				return;
 			}
 
 			if (sticks.size() < 3) {
-				TaskDialogs.inform(ctx.getParentWindow(), "", I.tr("Eine NegZone muss aus mindestens 3 Sticks bestehen."));
+				TaskDialogs.inform(ctx.getParentWindow(), "", I.tr("A NegZone must consist of at least 3 sticks."));
 				return;
 			}
 

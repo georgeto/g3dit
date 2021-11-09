@@ -193,8 +193,7 @@ public class PropertySearchFilterBuilder<T extends G3ClassContainer> implements 
 				}
 			} else {
 				resetPropertyInstance.run();
-				TaskDialogs.error(null, "",
-						I.trf("Es konnte keine Instanz des Typs '{0}' erstellt werden.", leafPropertyDesc.getDataTypeName()));
+				TaskDialogs.error(null, "", I.trf("Failed to create instance of type ''{0}''.", leafPropertyDesc.getDataTypeName()));
 			}
 		});
 

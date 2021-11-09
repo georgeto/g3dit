@@ -142,7 +142,7 @@ public abstract class ExtStandardDialog extends StandardDialog {
 	}
 
 	protected void addDefaultCancelButton(ButtonPanel buttonPanel) {
-		Action action = SwingUtils.createAction(I.tr("Abbrechen"), this::cancel);
+		Action action = SwingUtils.createAction(I.tr("Cancel"), this::cancel);
 		addButton(buttonPanel, action, ButtonPanel.CANCEL_BUTTON);
 	}
 

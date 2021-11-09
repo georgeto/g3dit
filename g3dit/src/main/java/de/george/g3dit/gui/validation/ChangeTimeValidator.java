@@ -41,8 +41,8 @@ public class ChangeTimeValidator extends AbstractValidator<String> {
 					if (ourChangeTime != creatorChangeTime) {
 						problems.append(
 								ourChangeTime < creatorChangeTime
-										? I.trf("ChangeTime-Wert kleiner als in referenzierter Template ({0, number})", creatorChangeTime)
-										: I.trf("ChangeTime-Wert größer als in referenzierter Template ({0, number})", creatorChangeTime),
+										? I.trf("ChangeTime value smaller than in referenced template ({0, number})", creatorChangeTime)
+										: I.trf("ChangeTime value greater than in referenced template ({0, number})", creatorChangeTime),
 								Severity.WARNING);
 					}
 				} catch (NumberFormatException e) {

@@ -148,7 +148,7 @@ public class LowPolyGenerator {
 
 	private void createLowpolyNode(String nodeName, List<eCEntity> entities, List<String> contributingSectors, boolean globalNode) {
 		log("");
-		log(I.trf("Create low poly node {0} with {1} entities.", nodeName, entities.size()));
+		log(I.trf("Create low poly node {0} with {1, number} entities.", nodeName, entities.size()));
 		contributingSectors.forEach(f -> log("  - %s", f));
 
 		File sectorDir = new File(ctx.getFileManager().getPrimaryPath(FileManager.RP_PROJECTS_COMPILED), "World\\_Level\\" + nodeName);

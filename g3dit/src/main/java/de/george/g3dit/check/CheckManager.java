@@ -203,7 +203,7 @@ public class CheckManager {
 		private JTypedTabbedPane<ProblemTableTab> tabbedPane;
 
 		public CheckDialog() {
-			super(ctx.getParentWindow(), I.tr("Checks ausführen"));
+			super(ctx.getParentWindow(), I.tr("Execute checks"));
 			setSize(1000, 700);
 
 			addWindowListener(new WindowAdapter() {
@@ -217,7 +217,7 @@ public class CheckManager {
 		}
 
 		private void toggleChecks() {
-			CheckBoxListSelectDialog<Check> dialog = new CheckBoxListSelectDialog<>(this, I.tr("Checks auswählen"), checks,
+			CheckBoxListSelectDialog<Check> dialog = new CheckBoxListSelectDialog<>(this, I.tr("Select checks"), checks,
 					new BeanListCellRenderer("Title", "Description", 80));
 			dialog.setSelectedEntries(enabledChecks);
 			if (dialog.openAndWasSuccessful()) {
@@ -243,7 +243,7 @@ public class CheckManager {
 			int passes = Math.max(archivePasses, templatePasses);
 
 			executeChecksFuture = ConcurrencyUtil.executeAndInvokeLater(() -> {
-				updateProgressBar(String.format(I.tr("Ermittele zu überprüfende Dateien...")));
+				updateProgressBar(String.format(I.tr("Determine files to be checked...")));
 
 				List<File> worldFiles = archivePasses != 0 ? ctx.getFileManager().listWorldFiles() : null;
 				List<File> templateFiles = templatePasses != 0 ? ctx.getFileManager().listTemplateFiles() : null;
@@ -251,7 +251,7 @@ public class CheckManager {
 				for (int pass = 0; pass < passes; pass++) {
 					if (pass < templatePasses) {
 						// log("Template-Pass " + pass + "...");
-						updateProgressBar(I.trf("Template-Pass {0, number}/{1, number}", pass + 1, templatePasses));
+						updateProgressBar(I.trf("Template pass {0, number}/{1, number}", pass + 1, templatePasses));
 						TemplateFileIterator iter = new TemplateFileIterator(templateFiles);
 						while (iter.hasNext()) {
 							// Check execution got cancelled
@@ -278,7 +278,7 @@ public class CheckManager {
 
 					if (pass < archivePasses) {
 						// log("Archive-Pass " + pass + "...");
-						updateProgressBar(I.trf("Archive-Pass {0, number}/{1, number}", pass + 1, archivePasses));
+						updateProgressBar(I.trf("Archive pass {0, number}/{1, number}", pass + 1, archivePasses));
 						ArchiveFileIterator iter = new ArchiveFileIterator(worldFiles);
 						while (iter.hasNext()) {
 							// Check execution got cancelled
@@ -304,7 +304,7 @@ public class CheckManager {
 					}
 				}
 
-				updateProgressBar(I.tr("Sammle Probleme..."));
+				updateProgressBar(I.tr("Collect issues..."));
 				for (Check check : enabledChecks) {
 					if (Thread.interrupted()) {
 						return;
@@ -328,7 +328,7 @@ public class CheckManager {
 
 				private void onCompletion() {
 					progressBar.setIndeterminate(false);
-					progressBar.setString(I.tr("Ausführung abgeschlossen"));
+					progressBar.setString(I.tr("Execution completed"));
 					egCheck.setEnabled(true);
 					ctx.runGC();
 					executeChecksFuture = null;
@@ -348,12 +348,12 @@ public class CheckManager {
 			progressBar = SwingUtils.createProgressBar();
 			mainPanel.add(progressBar, "grow");
 
-			btnToggleChecks = new JButton(I.tr("Checks auswählen"));
+			btnToggleChecks = new JButton(I.tr("Select checks"));
 			btnToggleChecks.addActionListener(a -> toggleChecks());
 			egCheck.add(btnToggleChecks);
 			mainPanel.add(btnToggleChecks, "alignx right");
 
-			btnExecute = new JButton(I.tr("Checks ausführen"));
+			btnExecute = new JButton(I.tr("Execute checks"));
 			btnExecute.addActionListener(a -> executeChecks());
 			egCheck.add(btnExecute);
 			mainPanel.add(btnExecute, "alignx right, wrap");
@@ -610,7 +610,7 @@ public class CheckManager {
 	}
 
 	private static final ImmutableBiMap<String, String> COLUMN_MAPPING = ImmutableBiMap.of("Name", I.tr("Name"), "Guid", I.tr("Guid"),
-			"Index", I.tr("Index"), "Path", I.tr("Pfad"));
+			"Index", I.tr("Index"), "Path", I.tr("Path"));
 
 	private abstract static class ProblemTableFormat implements TableFormat<Problem> {
 		@Override

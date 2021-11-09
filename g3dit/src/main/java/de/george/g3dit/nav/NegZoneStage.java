@@ -146,7 +146,7 @@ public class NegZoneStage extends NavCalcStage {
 
 	private class UniRefNegZone extends BaseNegZoneChange {
 		public UniRefNegZone(NegZone negZone, String navZone) {
-			super(negZone, Severity.Error, I.trf("NavZone {0} referred by NegZone, does not refer to NegZone.", navZone), null);
+			super(negZone, Severity.Error, I.trf("NavZone {0} referred by NegZone does not refer to NegZone.", navZone), null);
 		}
 
 		@Override
@@ -157,7 +157,7 @@ public class NegZoneStage extends NavCalcStage {
 
 	private class UniRefNavZone extends BaseNegZoneChange {
 		public UniRefNavZone(String refNavZone, NegZone negZone, String realNavZone) {
-			super(negZone, Severity.Error, I.trf("NegZone referred by NavZone {0}, refers to other NavZone {1}.", refNavZone, realNavZone),
+			super(negZone, Severity.Error, I.trf("NegZone referred by NavZone {0} refers to other NavZone {1}.", refNavZone, realNavZone),
 					null);
 		}
 

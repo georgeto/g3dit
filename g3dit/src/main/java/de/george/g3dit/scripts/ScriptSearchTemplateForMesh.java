@@ -19,18 +19,18 @@ public class ScriptSearchTemplateForMesh implements IScript {
 
 	@Override
 	public String getTitle() {
-		return I.tr("Templates zu Mesh suchen");
+		return I.tr("Search templates for mesh");
 	}
 
 	@Override
 	public String getDescription() {
-		return I.tr("Ermittelt Templates die eine angegebene Mesh-MaterialSwitch Kombination(en) verwenden.");
+		return I.tr("Find templates that use a specified mesh plus MaterialSwitch combination(s).");
 	}
 
 	@Override
 	public boolean execute(IScriptEnvironment env) {
 		String meshRaw = TaskDialogs.input(env.getParentWindow(), I.tr("Mesh"),
-				I.tr("Name des Meshes.\nEs kann auch nur ein Teil eines Meshnamens eingegeben werden."), "");
+				I.tr("Name of the mesh.\nIt is also possible to enter only a part of a mesh name."), "");
 		if (Strings.isNullOrEmpty(meshRaw)) {
 			return false;
 		}
@@ -38,8 +38,8 @@ public class ScriptSearchTemplateForMesh implements IScript {
 		String mesh = EntityUtil.cleanAnimatedMeshName(meshRaw.toLowerCase());
 
 		String materialSwitchesRaw = TaskDialogs.input(env.getParentWindow(), I.tr("MaterialSwitches"),
-				I.tr("Durch Leerzeichen separierte Liste von MaterialSwitches bzw. MaterialSwitch Bereichen (z.B. 4-12).\n"
-						+ "Bei leerer Eingabe werden alle MaterialSwitches akzeptiert."),
+				I.tr("List of MaterialSwitches or MaterialSwitch ranges separated by spaces (e.g. 4-12).\n"
+						+ "If the input is empty, all MaterialSwitches are accepted."),
 				"");
 		if (Objects.isNull(materialSwitchesRaw)) {
 			return false;
@@ -65,7 +65,7 @@ public class ScriptSearchTemplateForMesh implements IScript {
 		}
 
 		env.log(I.tr("Mesh") + ": " + meshRaw);
-		env.log(I.tr("MaterialSwitches") + ": " + (materialSwitchesRaw.isEmpty() ? I.tr("Beliebig") : materialSwitchesRaw));
+		env.log(I.tr("MaterialSwitches") + ": " + (materialSwitchesRaw.isEmpty() ? I.tr("Any") : materialSwitchesRaw));
 
 		TemplateFileIterator tpleFilesIterator = env.getFileManager().templateFilesIterator();
 		while (tpleFilesIterator.hasNext()) {

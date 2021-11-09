@@ -68,7 +68,7 @@ public class ItemPanel extends JPanel {
 	}
 
 	private class ItemTableModel extends ListTableModel<InventoryStack> {
-		private static final ImmutableBiMap<String, String> COLUMN_MAPPING = ImmutableBiMap.of("Reference ID", I.tr("Reference ID"),
+		private static final ImmutableBiMap<String, String> COLUMN_MAPPING = ImmutableBiMap.of("Reference Guid", I.tr("Reference Guid"),
 				"Name", I.tr("Name"), "Amount", I.tr("Amount"), "Quality", I.tr("Quality"));
 
 		public ItemTableModel() {
@@ -163,7 +163,7 @@ public class ItemPanel extends JPanel {
 		public void configureColumnWidths(JXTable table, TableColumnExt columnExt) {
 			columnExt.setEditable(true);
 			switch (ItemTableModel.COLUMN_MAPPING.inverse().get(columnExt.getTitle())) {
-				case "Reference ID" -> columnExt.setPreferredWidth(250);
+				case "Reference Guid" -> columnExt.setPreferredWidth(250);
 				case "Name" -> {
 					columnExt.setPreferredWidth(150);
 					UndoableTextField tf = SwingUtils.createUndoTF();

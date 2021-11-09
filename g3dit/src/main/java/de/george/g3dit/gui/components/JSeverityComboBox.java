@@ -16,6 +16,7 @@ public class JSeverityComboBox extends JComboBox<Severity> {
 			@Override
 			public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean selected, boolean focus) {
 				super.getListCellRendererComponent(list, value, index, selected, focus);
+				setText(((Severity) value).getDisplayName());
 				setIcon(IMAGE_ICONS[((Severity) value).ordinal()]);
 				return this;
 			}

@@ -38,11 +38,11 @@ public class TemplateNameSearchDialog extends ExtStandardDialog {
 	private JButton btnLoadTple;
 
 	public TemplateNameSearchDialog(TemplateSearchListener callback, EditorContext ctx) {
-		this(callback, ctx, I.tr("Template laden"), "");
+		this(callback, ctx, I.tr("Load template"), "");
 	}
 
 	public TemplateNameSearchDialog(TemplateSearchListener callback, EditorContext ctx, String defaultTpleName) {
-		this(callback, ctx, I.tr("Template laden"), defaultTpleName);
+		this(callback, ctx, I.tr("Load template"), defaultTpleName);
 	}
 
 	public TemplateNameSearchDialog(TemplateSearchListener callback, EditorContext ctx, String title, String defaultTpleName) {
@@ -61,7 +61,7 @@ public class TemplateNameSearchDialog extends ExtStandardDialog {
 	public JComponent createContentPanel() {
 		JPanel mainPanel = new JPanel(new MigLayout("fillx", "[][][]"));
 
-		JLabel lblNewLabel = new JLabel(I.tr("Template Name"));
+		JLabel lblNewLabel = new JLabel(I.tr("Template name"));
 		mainPanel.add(lblNewLabel, "wrap");
 
 		tfTemplateName = SwingUtils.createUndoTF(defaultTpleName);
@@ -72,7 +72,7 @@ public class TemplateNameSearchDialog extends ExtStandardDialog {
 			new TemplateIntelliHints(tfTemplateName, tpleCache);
 		}
 
-		btnLoadTple = new JButton(I.tr("Suchen"));
+		btnLoadTple = new JButton(I.tr("Search"));
 		mainPanel.add(btnLoadTple, "wrap");
 
 		lblStatus = new JXLabel();
@@ -81,10 +81,10 @@ public class TemplateNameSearchDialog extends ExtStandardDialog {
 
 		btnLoadTple.addActionListener(e -> {
 			if (tfTemplateName.getText().isEmpty()) {
-				lblStatus.setText(I.tr("Bitte Template Namen eingeben!"));
+				lblStatus.setText(I.tr("Please enter template name!"));
 				return;
 			}
-			lblStatus.setText(I.tr("Suche..."));
+			lblStatus.setText(I.tr("Search..."));
 			search();
 		});
 
@@ -95,7 +95,7 @@ public class TemplateNameSearchDialog extends ExtStandardDialog {
 	public ButtonPanel createButtonPanel() {
 		ButtonPanel buttonPanel = newButtonPanel();
 
-		saveAction = SwingUtils.createAction(I.tr("Übernehmen"), this::callListener);
+		saveAction = SwingUtils.createAction(I.tr("Apply"), this::callListener);
 		saveAction.setEnabled(false);
 
 		addButton(buttonPanel, saveAction, ButtonPanel.AFFIRMATIVE_BUTTON);
@@ -117,10 +117,10 @@ public class TemplateNameSearchDialog extends ExtStandardDialog {
 		tpleFile = FileUtil.openTemplateByName(ctx.getFileManager().listTemplateFiles(), tfTemplateName.getText());
 		if (tpleFile != null) {
 			saveAction.setEnabled(true);
-			lblStatus.setText(I.trf("Template '{0}' gefunden.", tfTemplateName.getText()));
+			lblStatus.setText(I.trf("Template ''{0}'' found.", tfTemplateName.getText()));
 		} else {
 			saveAction.setEnabled(false);
-			lblStatus.setText(I.trf("Template '{0}' NICHT gefunden.", tfTemplateName.getText()));
+			lblStatus.setText(I.trf("Template ''{0}'' NOT found.", tfTemplateName.getText()));
 		}
 	}
 
@@ -129,7 +129,7 @@ public class TemplateNameSearchDialog extends ExtStandardDialog {
 			if (callback.templateSearchCallback(tpleFile)) {
 				dispose();
 			} else {
-				lblStatus.setText(I.tr("Template passt nicht."));
+				lblStatus.setText(I.tr("Template does not fit."));
 			}
 		}
 	}

@@ -34,7 +34,7 @@ public class MapTab extends AbstractPropertyTemplateTab {
 	protected void initPropertyPanel(PropertyPanel propertyPanel) {
 		// @foff
 		propertyPanel
-			.addHeadline(I.tr("Eigenschaften"))
+			.addHeadline(I.tr("Properties"))
 			.add(CD.gCMap_PS.Header)
 				.constraints("width 175:225:250").growx()
 				.validate(validation(), EmtpyWarnValidator.INSTANCE)

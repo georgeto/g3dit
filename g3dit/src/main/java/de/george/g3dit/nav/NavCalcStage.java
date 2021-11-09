@@ -170,12 +170,12 @@ public abstract class NavCalcStage {
 
 	protected static final TableColumnDef COLUMN_GUID = TableColumnDef.withName("Guid").displayName(I.tr("Guid"))
 			.sizeExample(GuidUtil.randomGUID()).b();
-	protected static final TableColumnDef COLUMN_MESSAGE = TableColumnDef.withName("Message").displayName(I.tr("Beschreibung"))
+	protected static final TableColumnDef COLUMN_MESSAGE = TableColumnDef.withName("Message").displayName(I.tr("Description"))
 			.sizeExample("Something is wrong, please fix it before it grows.")
 			.<Change, String>cellValueTransformer((change, value) -> new SeverityImageIcon(change.getSeverity(), value))
 			.cellRenderer(new IconTableCellRenderer()).b();
 
-	protected final TableColumnDef COLUMN_FIXED = TableColumnDef.withName("Fixed").displayName(I.tr("Behoben")).sizeExample(false)
+	protected final TableColumnDef COLUMN_FIXED = TableColumnDef.withName("Fixed").displayName(I.tr("Fixed")).sizeExample(false)
 			.editable(true).cellRenderer(new BooleanTableCellRenderer() {
 				@Override
 				public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row,
@@ -199,7 +199,7 @@ public abstract class NavCalcStage {
 				}
 			}).b();
 
-	protected final TableColumnDef COLUMN_FILE = TableColumnDef.withName("File").displayName(I.tr("Datei"))
+	protected final TableColumnDef COLUMN_FILE = TableColumnDef.withName("File").displayName(I.tr("File"))
 			.cellRenderer(new FileTableCellRenderer(() -> getContext().getOptionStore()))
 			.sizeExample(new File("G3_Nordmar_01_Landscape_Dynamic_Objects_02_SHyb.node")).b();
 

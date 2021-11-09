@@ -80,7 +80,7 @@ public class EntityMap extends JFrame {
 
 	public EntityMap(EditorContext ctx) {
 		this.ctx = ctx;
-		setTitle(I.tr("Entity-Map"));
+		setTitle(I.tr("Entity Map"));
 		setIconImage(SwingUtils.getG3Icon());
 		setSize(SwingUtils.getScreenWorkingWidth(), SwingUtils.getScreenWorkingHeight());
 		setResizable(true);
@@ -252,10 +252,10 @@ public class EntityMap extends JFrame {
 		SwingUtils.addKeyStroke(map.getTable(), JComponent.WHEN_IN_FOCUSED_WINDOW, "Remove Selected Entities",
 				KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0), () -> map.removeItems(map.getItemsSelectedInList()));
 
-		JButton btnHelp = new JButton(I.tr("Hilfe"));
+		JButton btnHelp = new JButton(I.tr("Help"));
 		btnHelp.addActionListener(a -> {
 			try {
-				new DisplayHtmlDialog(I.tr("Hilfe zu Entity-Map"),
+				new DisplayHtmlDialog(I.tr("Entity Map Help"),
 						Resources.toString(Resources.getResource(EntityMap.class, "/res/ChestEditorHelp.html"), StandardCharsets.UTF_8),
 						EntityMap.this, 700, 700, false).setVisible(true);
 			} catch (IOException e) {
@@ -263,7 +263,7 @@ public class EntityMap extends JFrame {
 			}
 		});
 
-		cbShowPlayerPosition = new JCheckBox(I.tr("Live-Position des Helden anzeigen"), true);
+		cbShowPlayerPosition = new JCheckBox(I.tr("Show live position of the hero"), true);
 
 		JPanel tablePanel = new JPanel(new MigLayout("fill", "[][]", "[][grow][]"));
 		tablePanel.add(tfSearch, "grow, wrap");
@@ -312,7 +312,7 @@ public class EntityMap extends JFrame {
 	}
 
 	public static class EntityMapItem implements MapItem, Comparable<EntityMapItem> {
-		public static final ImmutableMap<String, String> FIELD_MAPPING = ImmutableMap.of("Title", I.tr("Name"), "File", I.tr("Datei"),
+		public static final ImmutableMap<String, String> FIELD_MAPPING = ImmutableMap.of("Title", I.tr("Name"), "File", I.tr("File"),
 				"Guid", I.tr("Guid"));
 		public static final ImmutableList<String> FIELDS = FIELD_MAPPING.keySet().asList();
 		public static final ImmutableList<String> FIELD_NAMES = FIELD_MAPPING.values().asList();

@@ -88,12 +88,12 @@ public class ImportStaticLightdataDialog extends AbstractTableProgressDialog {
 	private static final TableColumnDef COLUMN_LOG = TableColumnDef.withName("Log").displayName(I.tr("Description")).size(75).b();
 
 	public ImportStaticLightdataDialog(EditorContext ctx) {
-		super(ctx, I.tr("StaticLightdata importieren"));
+		super(ctx, I.tr("Import StaticLightdata"));
 		setSize(1000, 700);
 	}
 
 	private void doImport() {
-		File lightFolder = FileDialogWrapper.chooseDirectory(I.tr("Beleuchtungsdateien auswählen"), ctx.getParentWindow());
+		File lightFolder = FileDialogWrapper.chooseDirectory(I.tr("Select StaticLightdata files"), ctx.getParentWindow());
 		if (lightFolder == null) {
 			return;
 		}
@@ -153,38 +153,38 @@ public class ImportStaticLightdataDialog extends AbstractTableProgressDialog {
 
 	@Override
 	public JComponent createContentPanel() {
-		JButton btnImport = registerAction(I.tr("Änderungen ermitteln"), Icons.getImageIcon(Icons.Action.DIFF), this::doImport, true);
+		JButton btnImport = registerAction(I.tr("Determine changes"), Icons.getImageIcon(Icons.Action.DIFF), this::doImport, true);
 
-		rbOpenFiles = new JRadioButton(I.tr("In geöffneten Dateien"));
+		rbOpenFiles = new JRadioButton(I.tr("In open files"));
 		rbOpenFiles.setFocusable(false);
-		rbAllFiles = new JRadioButton(I.tr("In allen Dateien"), true);
+		rbAllFiles = new JRadioButton(I.tr("In all files"), true);
 		rbAllFiles.setFocusable(false);
 		SwingUtils.createButtonGroup(rbOpenFiles, rbAllFiles);
 
-		JButton btnApplyAll = registerAction(I.tr("Alle übernehmen"), Icons.getImageIcon(Icons.Select.TICK), this::doApplyAll, true);
+		JButton btnApplyAll = registerAction(I.tr("Apply all"), Icons.getImageIcon(Icons.Select.TICK), this::doApplyAll, true);
 		actionApplyAll = btnApplyAll.getAction();
 		actionApplyAll.setEnabled(false);
 
-		JButton btnApplySelected = registerAction(I.tr("Ausgewählte übernehmen"), Icons.getImageIcon(Icons.Select.TICK),
+		JButton btnApplySelected = registerAction(I.tr("Apply selected"), Icons.getImageIcon(Icons.Select.TICK),
 				this::doApplySelected, true);
 		actionApplySelected = btnApplySelected.getAction();
 		actionApplySelected.setEnabled(false);
 
-		btnSaveProtocol = new JButton(I.tr("Protokoll speichern"), Icons.getImageIcon(Icons.IO.SAVE_AS));
+		btnSaveProtocol = new JButton(I.tr("Save protocol"), Icons.getImageIcon(Icons.IO.SAVE_AS));
 		btnSaveProtocol.setEnabled(false);
 		btnSaveProtocol.setFocusable(false);
 		btnSaveProtocol.addActionListener(e -> saveProtocol());
 
-		cbEnableFilter = new JCheckBox(I.tr("Objekte filtern"), true);
+		cbEnableFilter = new JCheckBox(I.tr("Filter objects"), true);
 		cbEnableFilter.setToolTipText(SwingUtils.getMultilineText(
-				I.tr("Entities ohne Mesh werden herausgefiltert, ihre Beleuchtung wird nicht aktualisiert."),
-				I.tr("Dabei werden die folgenden PropertySets als Meshes gewertet:"),
+				I.tr("Entities without mesh are filtered out, their lighting is not updated."),
+				I.tr("The following PropertySets are considered as meshes:"),
 				"<ul><li>eCVisualMeshStatic_PS</li><li>eCVisualMeshDynamic_PS</li><li>eCVisualAnimation_PS</li><li>eCSpeedTree_PS</li></ul>"));
 
-		cbHideFiltered = new JCheckBox(I.tr("Gefilterte Objekte ausblenden"), true);
+		cbHideFiltered = new JCheckBox(I.tr("Hide filtered objects"), true);
 
 		JPanel mainPanel = new JPanel(new MigLayout("fill", "[][][]"));
-		mainPanel.add(new JLabel(I.tr("Suchraum")), "spanx 4");
+		mainPanel.add(new JLabel(I.tr("Search scope")), "spanx 4");
 		mainPanel.add(btnImport, "");
 		mainPanel.add(btnApplyAll, "");
 		mainPanel.add(btnApplySelected, "");
@@ -228,7 +228,7 @@ public class ImportStaticLightdataDialog extends AbstractTableProgressDialog {
 	}
 
 	private void saveProtocol() {
-		File saveFile = FileDialogWrapper.saveFile(I.tr("Protokoll speichern"), I.tr("Protokoll.csv"), "csv", ctx.getParentWindow(),
+		File saveFile = FileDialogWrapper.saveFile(I.tr("Save protocol"), I.tr("Protocol.csv"), "csv", ctx.getParentWindow(),
 				FileDialogWrapper.CSV_FILTER);
 		if (saveFile != null) {
 			try {
@@ -283,8 +283,8 @@ public class ImportStaticLightdataDialog extends AbstractTableProgressDialog {
 
 		protected ImportLightDataWorker(Callable<List<File>> fileProvider, List<File> openFiles, Map<String, Sldat> lightData,
 				boolean applyChanges, boolean enableFilter) {
-			super(fileProvider, openFiles, I.tr("Ermittele zu bearbeitende Dateien..."),
-					I.tr("{0, number}/{1, number} Dateien bearbeitet"), null);
+			super(fileProvider, openFiles, I.tr("Determine files to be processed..."),
+					I.tr("{0, number}/{1, number} files edited"), null);
 			setProgressBar(progressBar);
 			doneMessageSupplier = this::getDoneMessage;
 			this.lightData = lightData;
@@ -336,16 +336,16 @@ public class ImportStaticLightdataDialog extends AbstractTableProgressDialog {
 
 		private String getDoneMessage() {
 			if (applyChanges) {
-				return I.trf("Änderungen übernommen ({0, number} Entities)", results.size());
+				return I.trf("Changes applied ({0, number} entities)", results.size());
 			} else {
-				return I.trf("Änderungen ermittelt ({0, number} Entities)", results.size());
+				return I.trf("Changes detected ({0, number} entities)", results.size());
 			}
 		}
 	}
 
 	private static class ResultTableModel extends ListTableModel<Result> {
 		public ResultTableModel() {
-			super(I.tr("Name"), I.tr("Guid"), I.tr("Datei"), I.tr("Beschreibung"));
+			super(I.tr("Name"), I.tr("Guid"), I.tr("File"), I.tr("Description"));
 		}
 
 		@Override

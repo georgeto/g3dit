@@ -24,12 +24,12 @@ public class ScriptLightmapType implements IScript {
 
 	@Override
 	public String getTitle() {
-		return I.tr("LightmapType auflisten");
+		return I.tr("List LightmapType");
 	}
 
 	@Override
 	public String getDescription() {
-		return I.tr("Auflistung aller Entities die per Lightmap beleuchtet sind.");
+		return I.tr("Listing of all entities that are illuminated by lightmap.");
 	}
 
 	@Override

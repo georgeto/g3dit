@@ -26,7 +26,7 @@ public class CheckDuplicatedTemplateGuids extends AbstractEntityCheck {
 	private SortedSetMultimap<String, FileDescriptor> refGuidMap = TreeMultimap.create();
 
 	public CheckDuplicatedTemplateGuids() {
-		super(I.tr("Uneindeutige Template-Guids ermitteln"), I.tr("Überprüft alle Templates nach mehrfach vorkommenden Guids."), 1, 0);
+		super(I.tr("Find non-unique template guides"), I.tr("Checks all templates for duplicate guids."), 1, 0);
 	}
 
 	@Override
@@ -53,7 +53,7 @@ public class CheckDuplicatedTemplateGuids extends AbstractEntityCheck {
 	}
 
 	protected void reportDuplicatedGuid(ProblemConsumer problemConsumer, String guidType, String guid, Collection<FileDescriptor> files) {
-		String message = I.trf("Mehrfach vorkommende {0}-Guid: {1}", guidType, guid);
+		String message = I.trf("Duplicate {0} guid: {1}", guidType, guid);
 		String details = files.stream().map(f -> a(f.getPath().getName()).withHref(UriUtil.encodeFile(f)).render())
 				.collect(Collectors.joining("<br>"));
 

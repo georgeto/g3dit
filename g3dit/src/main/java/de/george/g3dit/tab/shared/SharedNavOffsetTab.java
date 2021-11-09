@@ -44,10 +44,10 @@ public class SharedNavOffsetTab extends AbstractPropertySharedTab {
 
 		// @foff
 		propertyPanel
-			.addHeadline(I.tr("Eigenschaften"))
+			.addHeadline(I.tr("Properties"))
 			.add(CD.gCNavOffset_PS.OffsetCircle)
-				.tooltip(SwingUtils.getMultilineText(I.tr("Animation kann auf einem Kreis um dieses Objekt ausgeführt werden."),
-						 I.tr("Der Radius des Kreises wird durch den ersten NavOffset definiert.")))
+				.tooltip(SwingUtils.getMultilineText(I.tr("Animation can be performed on a circle around this object."),
+						 I.tr("The radius of the circle is defined by the first NavOffset.")))
 			.addHeadline("NavOffsets")
 			.add(new LambdaPropertyHandler(navOffsetsPanel, navOffsetsPanel::loadValues, navOffsetsPanel::saveValues))
 				.grow().constraints("width 100:300:450, wrap")
@@ -94,7 +94,7 @@ public class SharedNavOffsetTab extends AbstractPropertySharedTab {
 			List<gInt> directions = entity.getProperty(CD.gCNavOffset_PS.AniDirection).getEntries();
 
 			if (poses.size() != directions.size()) {
-				throw new IllegalArgumentException(I.tr("gCNavOffset_PS hat unterschiedlich viele OffsetPoses und AniDirections."));
+				throw new IllegalArgumentException(I.tr("gCNavOffset_PS has different numbers of OffsetPoses and AniDirections."));
 			}
 
 			for (NavOffset offset : StreamEx.zip(poses, directions, (p, d) -> new NavOffset(p, d.getInt()))) {
