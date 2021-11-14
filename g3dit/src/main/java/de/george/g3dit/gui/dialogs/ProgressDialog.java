@@ -13,6 +13,7 @@ import javax.swing.WindowConstants;
 import com.teamunify.i18n.I;
 
 import de.george.g3dit.util.Icons;
+import net.miginfocom.swing.MigLayout;
 
 public class ProgressDialog extends JDialog {
 
@@ -26,25 +27,22 @@ public class ProgressDialog extends JDialog {
 		super(owner);
 		setType(Type.UTILITY);
 		setResizable(false);
-		setSize(300, 115);
+		setSize(300, 120);
 		setTitle(title);
 		setModal(true);
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-		getContentPane().setLayout(null);
-
-		progressBar = new JProgressBar();
-		progressBar.setBounds(10, 30, 274, 20);
-		getContentPane().add(progressBar);
+		getContentPane().setLayout(new MigLayout("fill"));
 
 		lblStatus = new JLabel(status);
-		lblStatus.setBounds(10, 11, 274, 14);
-		getContentPane().add(lblStatus);
+		getContentPane().add(lblStatus, "wmax 270, wrap");
+
+		progressBar = new JProgressBar();
+		getContentPane().add(progressBar, "height 20!, alignx center, growx, wrap");
 
 		JButton btnCancel = new JButton(I.tr("Cancel"), Icons.getImageIcon(Icons.Action.DELETE));
-		btnCancel.setBounds(94, 58, 105, 23);
 		btnCancel.setEnabled(cancelable);
 		btnCancel.setFocusable(false);
-		getContentPane().add(btnCancel);
+		getContentPane().add(btnCancel, "alignx center, wmin 100");
 
 		btnCancel.addActionListener(e -> {
 			if (cancelListener != null) {
