@@ -6,8 +6,6 @@ import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.io.File;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.util.Optional;
 
 import javax.swing.JButton;
@@ -23,11 +21,9 @@ import javax.swing.table.TableModel;
 import org.jdesktop.swingx.table.ColumnFactory;
 import org.jdesktop.swingx.table.TableColumnExt;
 
-import com.ezware.dialog.task.TaskDialogs;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Iterables;
-import com.google.common.io.Resources;
 import com.teamunify.i18n.I;
 
 import ca.odell.glazedlists.GlazedLists;
@@ -254,13 +250,8 @@ public class EntityMap extends JFrame {
 
 		JButton btnHelp = new JButton(I.tr("Help"));
 		btnHelp.addActionListener(a -> {
-			try {
-				new DisplayHtmlDialog(I.tr("Entity Map Help"),
-						Resources.toString(Resources.getResource(EntityMap.class, "/res/ChestEditorHelp.html"), StandardCharsets.UTF_8),
-						EntityMap.this, 700, 700, false).setVisible(true);
-			} catch (IOException e) {
-				TaskDialogs.showException(e);
-			}
+			new DisplayHtmlDialog(I.tr("Entity Map Help"), MapAndTableComponent.HELP_TEXT, EntityMap.this, 700, 700, false)
+					.setVisible(true);
 		});
 
 		cbShowPlayerPosition = new JCheckBox(I.tr("Show live position of the hero"), true);

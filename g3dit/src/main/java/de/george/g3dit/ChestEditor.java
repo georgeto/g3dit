@@ -47,7 +47,6 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Ordering;
 import com.google.common.collect.Sets;
-import com.google.common.io.Resources;
 import com.teamunify.i18n.I;
 
 import ca.odell.glazedlists.GlazedLists;
@@ -85,6 +84,31 @@ import one.util.streamex.MoreCollectors;
 import one.util.streamex.StreamEx;
 
 public class ChestEditor extends JFrame {
+	// @foff
+	public static final String HELP_TEXT = I.tr("""
+			<h2>Chest editor</h2>
+			 <dl>
+				<dt>Set value for all selected</dt>
+				<dd>Set certain property (for example the area) for all rows selected in the table.</dd>
+				<dt>Save/load chests to/from .json</dt>
+				<dd>Save chests with all properties present in the table to .json file, which can be reloaded later to continue editing.</dd>
+				<dt>Save/load chests to/from .csv</dt>
+				<dd>
+					Save chests with all properties present in the table to .csv file, which can be reloaded later to continue editing.
+					<ul>
+						<li>Separator: ,</li>
+						<li>Text delimiter: "</li>
+						<li>Encoding: UTF-8</li>
+					</ul>
+				</dd>
+				<dt>Load chests from .lrentdat</dt>
+				<dd>Determine initial chest inventory from .lrentdat.</dd>
+				<dt>Transfer chests to .lrentdat</dt>
+				<dd>So far, only groups the chests according to their area.</dd>
+			</dl>
+			""");
+	// @fon
+
 	private EditorContext ctx;
 
 	private boolean chestsChanged;
@@ -299,13 +323,8 @@ public class ChestEditor extends JFrame {
 
 		JButton btnHelp = new JButton(I.tr("Help"));
 		btnHelp.addActionListener(a -> {
-			try {
-				new DisplayHtmlDialog(I.tr("Help for chest editor"),
-						Resources.toString(Resources.getResource(ChestEditor.class, "/res/ChestEditorHelp.html"), StandardCharsets.UTF_8),
-						ChestEditor.this, 700, 700, false).setVisible(true);
-			} catch (IOException e) {
-				TaskDialogs.showException(e);
-			}
+			new DisplayHtmlDialog(I.tr("Help for chest editor"), MapAndTableComponent.HELP_TEXT + ChestEditor.HELP_TEXT, ChestEditor.this,
+					700, 700, false).setVisible(true);
 		});
 
 		JPanel tablePanel = new JPanel(new MigLayout("fill", "[][]", "[][grow][]"));

@@ -14,9 +14,10 @@ import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 import javax.swing.KeyStroke;
 
-import com.teamunify.i18n.I;
 import org.jdesktop.swingx.JXTable;
 import org.jdesktop.swingx.table.ColumnFactory;
+
+import com.teamunify.i18n.I;
 
 import ca.odell.glazedlists.BasicEventList;
 import ca.odell.glazedlists.EventList;
@@ -34,6 +35,46 @@ import de.george.g3utils.gui.SwingUtils;
 import de.george.g3utils.structure.bCVector;
 
 public class MapAndTableComponent<T extends MapItem> {
+	// @foff
+	public static final String HELP_TEXT = I.tr("""
+			<h2>Map</h2>
+			<dl>
+				<dt>Zoom</dt>
+				<dd><code>Ctrl + Mouse wheel</code></dd>
+				<dd><code>Ctrl + +</code> (Zoom in)</dd>
+				<dd><code>Ctrl + -</code> (Zoom out)</dd>
+				<dd><code>Ctrl + 0</code> (Reset)</dd>
+				<dd><code>Ctrl + Left mouse button</code> (Rectangular selection)</dd>
+				<dt>Move viewport</dt>
+				<dd>Keep <code>right mouse button</code> pressed</dd>
+				<dt>Individual selection</dt>
+				<dd><code>Left mouse button</code></dd>
+				<dd><code>Alt + Left mouse button</code> (Reset rectangular selection)</dd>
+				<dt>Rectangular selection</dt>
+				<dd>Keep <code>left mouse button</code> pressed and draw rectangle</dd>
+			</dl>
+			<h2>General</h2>
+			<dl>
+				<dt>Teleport player to entity</dt>
+				<dd><code>Ctrl + Left mouse button</code></dd>
+				<dt>Search for entities in the vicinity</dt>
+				<dd><code>Ctrl + Shift + Left mouse button</code></dd>
+				<dt>Teleport player to most recently selected entity</dt>
+				<dd><code>Ctrl + G</code></dd>
+				<dt>Open the most recently selected entity in the editor</dt>
+				<dd><code>Ctrl + E</code></dd>
+				<dt>Teleport player to mouse position</dt>
+				<dd><code>Ctrl + T</code></dd>
+				<dt>Invert selection</dt>
+				<dd><code>Ctrl + I</code></dd>
+				<dt>Remove selection from list</dt>
+				<dd><code>Delete</code></dd>
+				<dt>Show only selected on map</dt>
+				<dd>Show in the table only the entities selected by rectangular selection on the map.</dd>
+			</dl>
+			""");
+	// @fon
+
 	private EventList<T> items;
 
 	private EventList<T> filteredItems;
