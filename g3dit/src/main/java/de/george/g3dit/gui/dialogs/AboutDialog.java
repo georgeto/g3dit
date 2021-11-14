@@ -19,7 +19,7 @@ public class AboutDialog extends ExtStandardDialog {
 		super(owner, I.tr("About g3dit"), true);
 		setType(Type.UTILITY);
 		setResizable(false);
-		setSize(500, 450);
+		setSize(500, 470);
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 	}
 
@@ -52,6 +52,7 @@ public class AboutDialog extends ExtStandardDialog {
 		libPanel.add(new JLinkLabel("WinRun4J", "https://github.com/poidasmith/winrun4j"), "gapleft 7, wrap");
 		libPanel.add(new JLinkLabel("JBreadcrumb", "https://github.com/ghedlund/jbreadcrumb"), "gapleft 7, wrap");
 		libPanel.add(new JLinkLabel("FlatLaf", "https://github.com/JFormDesigner/FlatLaf"), "gapleft 7, wrap");
+		libPanel.add(new JLinkLabel("easy-i18n", "https://github.com/awkay/easy-i18n"), "gapleft 7, wrap");
 
 		iconPanel.add(SwingUtils.createBoldLabel(I.tr("Icons")), "wrap");
 		iconPanel.add(new JLinkLabel("Fugue Icons", "http://p.yusukekamiyamane.com"), "gapleft 7, wrap");
