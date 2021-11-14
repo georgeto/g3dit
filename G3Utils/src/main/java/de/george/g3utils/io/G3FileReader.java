@@ -113,16 +113,23 @@ public abstract class G3FileReader extends G3FileBase implements AutoCloseable {
 	}
 
 	public String readSilent(int off, int length) {
+		return Misc.asHex(readSilentByteArray(off, length));
+	}
+
+	public byte[] readSilentByteArray(int length) {
+		return readSilentByteArray(0, length);
+	}
+
+	public byte[] readSilentByteArray(int off, int length) {
 		try {
 			byte[] bytes = new byte[length];
 			int savePos = buffer.position();
 			buffer.position(savePos + off);
 			buffer.get(bytes);
 			buffer.position(savePos);
-			String temp = Misc.asHex(bytes);
-			return temp;
+			return bytes;
 		} catch (Exception e) {
-			warn(logger, "Fehler bei readSilent(): " + e.getMessage());
+			warn(logger, "Fehler bei readSilentByteArray(): " + e.getMessage());
 			throw e;
 		}
 	}

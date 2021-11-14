@@ -3,10 +3,13 @@ package de.george.g3utils.io;
 import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.Arrays;
 
 import de.george.g3utils.structure.Stringtable;
+import de.george.g3utils.util.Misc;
 
 public abstract class GenomeFile implements Saveable {
+	protected static final byte[] GENOME_MAGIC = Misc.asByte("47454E4F4D464C45");
 
 	protected Stringtable stringtable;
 
@@ -15,11 +18,10 @@ public abstract class GenomeFile implements Saveable {
 	}
 
 	protected final void read(G3FileReaderEx reader) throws IOException {
-		if (reader.getSize() < 8 || !reader.read(8).equals("47454E4F4D464C45")) {
-			throw new IOException("'" + reader.getFileName() + "' ist keine gültige Genome-Datei.");
-		}
+		raiseNotGenomeFile(reader);
 
 		reader.skip(2); // Skip Version
+
 		int deadbeefOffset = reader.readInt();
 
 		reader.readStringtable(deadbeefOffset + 4);
@@ -29,7 +31,10 @@ public abstract class GenomeFile implements Saveable {
 	}
 
 	protected final void write(G3FileWriterEx writer) throws IOException {
-		writer.write("47454E4F4D464C450100FFFFFFFF");
+		writer.write(GENOME_MAGIC).writeUnsignedShort(1);
+
+		// Size placeholder
+		writer.writeInt(0xFFFFFFFF);
 
 		writeInternal(writer);
 
@@ -71,7 +76,14 @@ public abstract class GenomeFile implements Saveable {
 		prepareSave().save(out);
 	}
 
+	protected static void raiseNotGenomeFile(G3FileReaderEx reader) throws IOException {
+		if (!isGenomeFile(reader)) {
+			throw new IOException("'" + reader.getFileName() + "' ist keine gültige Genome-Datei.");
+		}
+		reader.skip(8);
+	}
+
 	public static boolean isGenomeFile(G3FileReader reader) {
-		return reader.getSize() >= 8 && reader.readSilent(8).equals("47454E4F4D464C45");
+		return reader.getSize() >= 8 && Arrays.equals(reader.readSilentByteArray(8), GENOME_MAGIC);
 	}
 }
