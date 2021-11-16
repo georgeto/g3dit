@@ -1,4 +1,5 @@
 plugins {
+	id 'application'
 	id 'com.github.johnrengelman.shadow' version '7.1.0'
 	id 'com.google.protobuf' version '0.8.11'
 }
@@ -76,6 +77,21 @@ jar {
 				'g3dit-Version': project.version
 		)
 	}
+}
+
+application {
+	mainClass = 'de.george.g3dit.Editor'
+	applicationDefaultJvmArgs = ['-XX:+IgnoreUnrecognizedVMOptions', '-XX:+UseG1GC',
+								 '-XX:MinHeapFreeRatio=5', '-XX:MaxHeapFreeRatio=20',
+								 '--add-opens=java.desktop/java.awt=ALL-UNNAMED',
+								 '--add-opens=java.desktop/javax.swing=ALL-UNNAMED',
+								 '--add-opens=java.desktop/com.sun.java.swing.plaf.windows=ALL-UNNAMED',
+								 '--add-opens=java.base/sun.nio.fs=ALL-UNNAMED',
+								 '-Djava.library.path=".;libs"']
+}
+
+tasks.run {
+	workingDir = "$projectDir/out"
 }
 
 task copyBinlib(type: Copy) {
