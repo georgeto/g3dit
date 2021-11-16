@@ -1,17 +1,17 @@
 plugins {
-  id 'com.github.johnrengelman.shadow' version '7.1.0'
-  id 'com.google.protobuf' version '0.8.11'
+	id 'com.github.johnrengelman.shadow' version '7.1.0'
+	id 'com.google.protobuf' version '0.8.11'
 }
 
 repositories {
 	maven {
 		url 'https://dl.bintray.com/jmonkeyengine/org.jmonkeyengine/'
 	}
-	
+
 	maven {
 		url 'https://oss.sonatype.org/content/repositories/snapshots/'
 	}
-	
+
 	flatDir { dirs 'libs' }
 }
 
@@ -22,7 +22,7 @@ dependencies {
 	implementation group: 'com.jidesoft', name: 'jide-oss', version: '3.6.18'
 	implementation group: 'org.swinglabs.swingx', name: 'swingx-all', version: '1.6.5-1'
 	implementation group: 'com.jgoodies', name: 'jgoodies-looks', version: '2.7.0'
-	implementation group: 'com.glazedlists', name: 'glazedlists' , version: '1.11.0'
+	implementation group: 'com.glazedlists', name: 'glazedlists', version: '1.11.0'
 	implementation group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.3'
 	implementation group: 'org.slf4j', name: 'jul-to-slf4j', version: '1.7.30'
 	implementation group: 'org.jmonkeyengine', name: 'jme3-core', version: '3.2.4-stable'
@@ -50,30 +50,30 @@ dependencies {
 }
 
 sourceSets {
-    main {
-        java {
-            // include self written and generated code
-            srcDirs "$buildDir/generated/source/proto/main/java"
-        }
-    }
+	main {
+		java {
+			// include self written and generated code
+			srcDirs "$buildDir/generated/source/proto/main/java"
+		}
+	}
 }
 
-protobuf {	
+protobuf {
 	// Configure the protoc executable
 	protoc {
 		// Download from repositories
 		artifact = 'com.google.protobuf:protoc:2.6.1'
 	}
-	
-	 generatedFilesBaseDir = "$buildDir/generated/source/proto"
+
+	generatedFilesBaseDir = "$buildDir/generated/source/proto"
 }
 
 jar {
 	manifest {
 		attributes(
-			'Class-Path': 'config/',
-			'Main-Class': 'de.george.g3dit.Editor',
-			'g3dit-Version': project.version
+				'Class-Path': 'config/',
+				'Main-Class': 'de.george.g3dit.Editor',
+				'g3dit-Version': project.version
 		)
 	}
 }
@@ -90,10 +90,10 @@ task copyJar(type: Copy) {
 	dependsOn 'copyBinlib'
 	from file("$buildDir/libs/${project.name}-${project.version}-all.jar")
 	into "$projectDir/out/"
-	rename {"${project.name}.jar"}
+	rename { "${project.name}.jar" }
 }
 
-task dist(type: Zip){
+task dist(type: Zip) {
 	dependsOn 'copyJar'
 	from 'out/' + project.name + '.exe'
 	from 'out/' + project.name + 'c.exe'
@@ -109,7 +109,7 @@ task dist(type: Zip){
 	archiveFileName = project.name + '_' + project.version.replace(' ', '_') + ".zip"
 }
 
-task prefixNewMigrations {	
+task prefixNewMigrations {
 	fileTree(dir: 'src/main', includes: ['java/de/george/g3dit/settings/migrations/*.java']).exclude({ isFilePrefixed(it.file) }).each { file ->
 		doLast {
 			def timestamp = new Date().format('yyyyMMddHHmmssSSS', TimeZone.getTimeZone('CET'))
@@ -119,7 +119,7 @@ task prefixNewMigrations {
 			file.renameTo("${file.parentFile.absolutePath}${file.separator}V${timestamp}__${file.name}")
 
 			// Sleep for a moment to avoid prefix conflicts when renaming multiple files
-			sleep(1*1000)
+			sleep(1 * 1000)
 		}
 	}
 }
@@ -127,4 +127,3 @@ task prefixNewMigrations {
 def isFilePrefixed(file) {
 	return (file.name ==~ '^V\\d+__.*\\.java\$')
 }
-

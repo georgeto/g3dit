@@ -1,5 +1,5 @@
 repositories {
-    flatDir {
+	flatDir {
 		dirs 'libs'
 	}
 }
