@@ -1,0 +1,4972 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+""
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: G3Utils\src\main\java\de\george\g3utils\gui\ColorChooserButton.java:30
+msgid "Select color"
+msgstr ""
+
+#: G3Utils\src\main\java\de\george\g3utils\gui\SwingUtils.java:176
+#: g3dit\src\main\java\de\george\g3dit\gui\components\Severity.java:10
+msgid "Error"
+msgstr ""
+
+#: G3Utils\src\main\java\de\george\g3utils\gui\SwingUtils.java:177
+msgid "Warning"
+msgstr ""
+
+#: G3Utils\src\main\java\de\george\g3utils\io\G3FileReader.java:37
+msgid "<source is not a file>"
+msgstr ""
+
+#: G3Utils\src\main\java\de\george\g3utils\validation\EmtpyWarnValidator.java:19
+#, java-format
+msgid "{0} should not be empty."
+msgstr ""
+
+#: G3Utils\src\main\java\de\george\g3utils\validation\GuidValidator.java:31
+#, java-format
+msgid "{0} does not contain a valid Guid."
+msgstr ""
+
+#: G3Utils\src\main\java\de\george\g3utils\validation\IsALongValidator.java:20
+#, java-format
+msgid "''{0}'' in {1} is not a valid integer."
+msgstr ""
+
+#: G3Utils\src\main\java\de\george\g3utils\validation\VectorValidator.java:23
+#, java-format
+msgid "{0} does not contain a valid vector."
+msgstr ""
+
+#: LrentNode\src\main\java\de\george\lrentnode\archive\eCEntity.java:824
+#: LrentNode\src\main\java\de\george\lrentnode\classes\eCVegetation_Mesh.java:70
+msgid "<no name>"
+msgstr ""
+
+#: NavMap\src\main\java\de\george\navmap\data\Zone.java:558
+msgid "Zone needs at least 3 sticks, but has only {0, number}."
+msgstr ""
+
+#: NavMap\src\main\java\de\george\navmap\data\Zone.java:560
+msgid "Zone not valid in 2D, but may be valid in 3D."
+msgstr ""
+
+#: NavMap\src\main\java\de\george\navmap\data\Zone.java:562
+msgid "Orientation of the sticks does not correspond to the CCW property"
+msgstr ""
+
+#: NavMap\src\main\java\de\george\navmap\sections\NavMap.java:322
+msgid "NavMap is faulty, further editing is not possible."
+msgstr ""
+
+#: NavMap\src\main\java\de\george\navmap\sections\NavMap.java:336
+#, java-format
+msgid "NavMap already contains NavZone with the Guid ''{0}''."
+msgstr ""
+
+#: NavMap\src\main\java\de\george\navmap\sections\NavMap.java:349
+msgid ""
+"ZoneA of the NavPath not included in the NavMap.\n"
+"Please insert this NavZone first."
+msgstr ""
+
+#: NavMap\src\main\java\de\george\navmap\sections\NavMap.java:354
+msgid ""
+"ZoneB of the NavPath not included in the NavMap.\n"
+"Please insert this NavZone first."
+msgstr ""
+
+#: NavMap\src\main\java\de\george\navmap\sections\NavMap.java:360
+#, java-format
+msgid "NavMap already contains NavPath with the Guid ''{0}''."
+msgstr ""
+
+#: NavMap\src\main\java\de\george\navmap\sections\NavMap.java:391
+#: NavMap\src\main\java\de\george\navmap\sections\NavMap.java:436
+#, java-format
+msgid "NavMap does not contain a NavZone with the Guid ''{0}''."
+msgstr ""
+
+#: NavMap\src\main\java\de\george\navmap\sections\NavMap.java:407
+#: NavMap\src\main\java\de\george\navmap\sections\NavMap.java:456
+#, java-format
+msgid "NavMap does not contain a NavPath with the Guid ''{0}''."
+msgstr ""
+
+#: NavMap\src\main\java\de\george\navmap\sections\NavMap.java:488
+#, java-format
+msgid "NavMap already contains NegZone with the Guid ''{0}''."
+msgstr ""
+
+#: NavMap\src\main\java\de\george\navmap\sections\NavMap.java:511
+#: NavMap\src\main\java\de\george\navmap\sections\NavMap.java:542
+#, java-format
+msgid "NavMap does not contain a NegZone with the Guid ''{0}''."
+msgstr ""
+
+#: NavMap\src\main\java\de\george\navmap\sections\NavMap.java:560
+#, java-format
+msgid ""
+"The NavZone (''{0}'') in which the NegCircle is located is not included in the NavMap.\n"
+"Please insert this NavZone first."
+msgstr ""
+
+#: NavMap\src\main\java\de\george\navmap\sections\NavMap.java:568
+#, java-format
+msgid "NavMap already contains NegCircle with the Guid ''{0}''."
+msgstr ""
+
+#: NavMap\src\main\java\de\george\navmap\sections\NavMap.java:585
+#: NavMap\src\main\java\de\george\navmap\sections\NavMap.java:606
+#, java-format
+msgid "NavMap does not contain a NegCircle with the Guid ''{0}''."
+msgstr ""
+
+#: NavMap\src\main\java\de\george\navmap\sections\NavMap.java:627
+#, java-format
+msgid "NavMap already contains PrefPath with the virtual Guid ''{0}''."
+msgstr ""
+
+#: NavMap\src\main\java\de\george\navmap\sections\NavMap.java:651
+#: NavMap\src\main\java\de\george\navmap\sections\NavMap.java:682
+#, java-format
+msgid "NavMap does not contain a PrefPath with the virtual Guid ''{0}''."
+msgstr ""
+
+#: NavMap\src\main\java\de\george\navmap\sections\NavMap.java:697
+msgid "NavPath of the Interactable is not included in the NavMap."
+msgstr ""
+
+#: NavMap\src\main\java\de\george\navmap\sections\NavMap.java:700
+msgid "NavZone of the Interactable is not included in the NavMap."
+msgstr ""
+
+#: NavMap\src\main\java\de\george\navmap\sections\NavMap.java:881
+#: NavMap\src\main\java\de\george\navmap\sections\NavMap.java:890
+msgid "NavMap is faulty, saving not possible."
+msgstr ""
+
+#: NavMap\src\main\java\de\george\navmap\sections\Section1.java:209
+msgid "NavZone is located outside the navigation grid. The enlargement of the grid is not supported yet."
+msgstr ""
+
+#: NavMap\src\main\java\de\george\navmap\sections\Section1.java:217
+msgid "NavPath is located outside the navigation grid. The enlargement of the grid is not supported yet."
+msgstr ""
+
+#: NavMap\src\main\java\de\george\navmap\sections\Section2.java:32
+#, java-format
+msgid "Section2 already contains a NegZone with the Guid ''{0}''."
+msgstr ""
+
+#: NavMap\src\main\java\de\george\navmap\sections\Section2.java:53
+msgid "Guid of the NegZone must not change."
+msgstr ""
+
+#: NavMap\src\main\java\de\george\navmap\sections\Section3a.java:62
+#, java-format
+msgid "Section3a already contains a NegCircle with the Guid ''{0}''."
+msgstr ""
+
+#: NavMap\src\main\java\de\george\navmap\sections\Section3a.java:84
+#, java-format
+msgid "Section3a does not contain a NegCircle with the Guid ''{0}''."
+msgstr ""
+
+#: NavMap\src\main\java\de\george\navmap\sections\Section3h.java:94
+#: NavMap\src\main\java\de\george\navmap\sections\Section3h.java:115
+#, java-format
+msgid "Invalid NavPath entry in Section3h: {0}"
+msgstr ""
+
+#: NavMap\src\main\java\de\george\navmap\sections\Section4.java:123
+msgid "Section4 does not have the same number of entries as Section3h!"
+msgstr ""
+
+#: NavMap\src\main\java\de\george\navmap\sections\Section4.java:236
+msgid "Insertion of partner connection to {0, number} failed: A partner connection to Intersection {1, number} already exists."
+msgstr ""
+
+#: NavMap\src\main\java\de\george\navmap\sections\Section4.java:250
+msgid "Insertion of connection to {0, number} failed: A connection to Intersection {1, number} already exists."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\ChestEditor.java:88
+msgid ""
+"<h2>Chest editor</h2>\n"
+" <dl>\n"
+"\t<dt>Set value for all selected</dt>\n"
+"\t<dd>Set certain property (for example the area) for all rows selected in the table.</dd>\n"
+"\t<dt>Save/load chests to/from .json</dt>\n"
+"\t<dd>Save chests with all properties present in the table to .json file, which can be reloaded later to continue editing.</dd>\n"
+"\t<dt>Save/load chests to/from .csv</dt>\n"
+"\t<dd>\n"
+"\t\tSave chests with all properties present in the table to .csv file, which can be reloaded later to continue editing.\n"
+"\t\t<ul>\n"
+"\t\t\t<li>Separator: ,</li>\n"
+"\t\t\t<li>Text delimiter: \"</li>\n"
+"\t\t\t<li>Encoding: UTF-8</li>\n"
+"\t\t</ul>\n"
+"\t</dd>\n"
+"\t<dt>Load chests from .lrentdat</dt>\n"
+"\t<dd>Determine initial chest inventory from .lrentdat.</dd>\n"
+"\t<dt>Transfer chests to .lrentdat</dt>\n"
+"\t<dd>So far, only groups the chests according to their area.</dd>\n"
+"</dl>\n"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\ChestEditor.java:121
+#: g3dit\src\main\java\de\george\g3dit\MainMenu.java:400
+msgid "Chest Editor"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\ChestEditor.java:130
+msgid "Save changes before closing?"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\ChestEditor.java:153
+#: g3dit\src\main\java\de\george\g3dit\ChestEditor.java:182
+msgid "Load chests"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\ChestEditor.java:170
+#: g3dit\src\main\java\de\george\g3dit\ChestEditor.java:241
+msgid "Save chests"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\ChestEditor.java:207
+#: g3dit\src\main\java\de\george\g3dit\ChestEditor.java:253
+#: g3dit\src\main\java\de\george\g3dit\util\Dialogs.java:17
+#: g3dit\src\main\java\de\george\g3dit\util\FileManager.java:273
+#: g3dit\src\main\java\de\george\g3dit\util\FileManager.java:279
+msgid "Yes"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\ChestEditor.java:209
+#: g3dit\src\main\java\de\george\g3dit\ChestEditor.java:253
+#: g3dit\src\main\java\de\george\g3dit\util\Dialogs.java:18
+#: g3dit\src\main\java\de\george\g3dit\util\FileManager.java:273
+#: g3dit\src\main\java\de\george\g3dit\util\FileManager.java:279
+msgid "No"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\ChestEditor.java:210
+#, java-format
+msgid "''{0}'' cannot be converted to a boolean value."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\ChestEditor.java:282
+msgid "Save chests as .json"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\ChestEditor.java:285
+msgid "Load chests from .json"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\ChestEditor.java:288
+msgid "Save chests as .csv"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\ChestEditor.java:291
+msgid "Load chests from .csv"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\ChestEditor.java:294
+msgid "Set value for all selected"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\ChestEditor.java:296
+#: g3dit\src\main\java\de\george\g3dit\ChestEditor.java:560
+msgid "Area"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\ChestEditor.java:296
+#: g3dit\src\main\java\de\george\g3dit\ChestEditor.java:560
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\ImportStaticLightdataDialog.java:88
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\ImportStaticLightdataDialog.java:348
+#: g3dit\src\main\java\de\george\g3dit\nav\NavCalcStage.java:173
+msgid "Description"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\ChestEditor.java:296
+#: g3dit\src\main\java\de\george\g3dit\ChestEditor.java:559
+#: g3dit\src\main\java\de\george\g3dit\EntityMap.java:306
+#: g3dit\src\main\java\de\george\g3dit\LivePositionFrame.java:171
+#: g3dit\src\main\java\de\george\g3dit\check\CheckManager.java:612
+#: g3dit\src\main\java\de\george\g3dit\check\problem\EntityHelper.java:42
+#: g3dit\src\main\java\de\george\g3dit\check\problem\FileHelper.java:44
+#: g3dit\src\main\java\de\george\g3dit\entitytree\EntityTree.java:93
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\CreatePropertyDialog.java:45
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\EntitySearchDialog.java:116
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\FileSearchDialog.java:59
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\ImportStaticLightdataDialog.java:81
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\ImportStaticLightdataDialog.java:348
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\ItemPanel.java:72
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\TemplateSearchDialog.java:88
+#: g3dit\src\main\java\de\george\g3dit\nav\NavCalcStage.java:206
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\AllgemeinTab.java:80
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\AllgemeinTab.java:84
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\NPCSlotPanel.java:60
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\NPCSlotPanel.java:140
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\NavigationTab.java:177
+#: g3dit\src\main\java\de\george\g3dit\tab\effectmap\EffectMapContentPane.java:86
+#: g3dit\src\main\java\de\george\g3dit\tab\template\views\header\AllgemeinTab.java:60
+#: g3dit\src\main\java\de\george\g3dit\tab\template\views\header\AllgemeinTab.java:62
+#: g3dit\src\main\java\de\george\g3dit\tab\template\views\header\MapTab.java:22
+msgid "Name"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\ChestEditor.java:297
+msgid "Select property"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\ChestEditor.java:302
+msgid "Enter value"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\ChestEditor.java:315
+msgid "Load all chests from world data"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\ChestEditor.java:318
+#: g3dit\src\main\java\de\george\g3dit\ChestEditor.java:382
+msgid "Load chests from .lrentdat"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\ChestEditor.java:321
+msgid "Transfer chests to .lrentdat"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\ChestEditor.java:324
+#: g3dit\src\main\java\de\george\g3dit\EntityMap.java:251
+msgid "Help"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\ChestEditor.java:326
+msgid "Help for chest editor"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\ChestEditor.java:402
+msgid "Synchronize chests to .lrentdat"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\ChestEditor.java:546
+msgid "Ruin fields west of Mora Sul, on the eastern edge, very well hidden"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\ChestEditor.java:560
+#: g3dit\src\main\java\de\george\g3dit\EntityMap.java:307
+#: g3dit\src\main\java\de\george\g3dit\LivePositionFrame.java:173
+#: g3dit\src\main\java\de\george\g3dit\check\CheckManager.java:612
+#: g3dit\src\main\java\de\george\g3dit\check\problem\EntityHelper.java:42
+#: g3dit\src\main\java\de\george\g3dit\entitytree\EntityTree.java:96
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\EditGuidWithCommentConfigDialog.java:43
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\EntitySearchDialog.java:118
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\ImportStaticLightdataDialog.java:83
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\ImportStaticLightdataDialog.java:348
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\TemplateSearchDialog.java:90
+#: g3dit\src\main\java\de\george\g3dit\gui\edit\handler\ArrayNamedGuidPropertyHandler.java:39
+#: g3dit\src\main\java\de\george\g3dit\nav\NavCalcStage.java:171
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\NegCircleView.java:83
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\AllgemeinTab.java:87
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\AllgemeinTab.java:92
+msgid "Guid"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\ChestEditor.java:561
+#: g3dit\src\main\java\de\george\g3dit\LivePositionFrame.java:298
+#: g3dit\src\main\java\de\george\g3dit\entitytree\EntityTree.java:99
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\EntitySearchDialog.java:113
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\TemplateSearchDialog.java:85
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\NegCircleView.java:80
+#: g3dit\src\main\java\de\george\g3dit\tab\template\views\header\AllgemeinTab.java:112
+#: g3dit\src\main\java\de\george\g3dit\tab\template\views\header\MapTab.java:24
+msgid "Position"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\ChestEditor.java:561
+msgid "TS1"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\ChestEditor.java:561
+msgid "TS2"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\ChestEditor.java:562
+msgid "TS3"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\ChestEditor.java:562
+msgid "TS4"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\ChestEditor.java:562
+msgid "TS5"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\ChestEditor.java:563
+msgid "Difficulty"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\ChestEditor.java:563
+msgid "Key"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\ChestEditor.java:563
+msgctxt "Chest"
+msgid "Locked"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\ChestEditor.java:564
+msgid "Chest type"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\ChestEditor.java:564
+msgid "Deleted"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\ChestEditor.java:564
+msgid "Moved"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\ChestEditor.java:565
+#: g3dit\src\main\java\de\george\g3dit\EntityMap.java:306
+#: g3dit\src\main\java\de\george\g3dit\MainMenu.java:109
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\ImportStaticLightdataDialog.java:85
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\ImportStaticLightdataDialog.java:348
+#: g3dit\src\main\java\de\george\g3dit\nav\NavCalcStage.java:202
+msgid "File"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\ChestEditor.java:565
+msgid "Fixed content"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\ChestEditor.java:565
+msgid "Old description"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\Editor.java:260
+msgid "No comparison program for binary files configured."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\Editor.java:271
+#, java-format
+msgid "File comparison - [{0} - {1}]"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\Editor.java:281
+msgid "No comparison program for text files configured."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\Editor.java:307
+msgid "Files to be compared have different file extensions."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\Editor.java:312
+msgid "Files to be compared are identical."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\Editor.java:330
+#, java-format
+msgid "Files to be diffed have unsupported file extension ''{0}''."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\Editor.java:459
+msgid "Save changes to NavMap before exiting?"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\EntityMap.java:79
+msgid "Entity Map"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\EntityMap.java:167
+msgid "Search for NavObject"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\EntityMap.java:190
+msgid "Search connected NavObjects"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\EntityMap.java:253
+msgid "Entity Map Help"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\EntityMap.java:257
+msgid "Show live position of the hero"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\LivePositionFrame.java:125
+#: g3dit\src\main\java\de\george\g3dit\MainMenu.java:492
+msgid "Live Entity Position"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\LivePositionFrame.java:130
+msgid "Live position log"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\LivePositionFrame.java:159
+#: g3dit\src\main\java\de\george\g3dit\entitytree\EntityTree.java:117
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\EntitySearchDialog.java:137
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\FileSearchDialog.java:80
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\TemplateSearchDialog.java:109
+msgid "Clear search"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\LivePositionFrame.java:162
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\EntitySearchDialog.java:134
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\FileSearchDialog.java:71
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\TemplateNameSearchDialog.java:75
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\TemplateSearchDialog.java:106
+msgid "Search"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\LivePositionFrame.java:177
+#: g3dit\src\main\java\de\george\g3dit\LivePositionFrame.java:391
+msgid "Hero"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\LivePositionFrame.java:179
+#: g3dit\src\main\java\de\george\g3dit\LivePositionFrame.java:392
+#: g3dit\src\main\java\de\george\g3dit\settings\SettingsDialog.java:84
+msgid "Camera"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\LivePositionFrame.java:182
+msgid "Focused entity"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\LivePositionFrame.java:183
+msgid "Editor entity"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\LivePositionFrame.java:184
+msgid "Displays the entity selected in the in-game editor."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\LivePositionFrame.java:185
+msgid "Especially useful when using 'pick mode' ingame for entity selection."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\LivePositionFrame.java:217
+#: g3dit\src\main\java\de\george\g3dit\LivePositionFrame.java:393
+msgid "Current position"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\LivePositionFrame.java:218
+msgid "-- Please start search --"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\LivePositionFrame.java:225
+msgid "Copy name, guid and position to clipboard"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\LivePositionFrame.java:228
+#, java-format
+msgid ""
+"Name: {0}\n"
+"Guid: {1}\n"
+"{2}"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\LivePositionFrame.java:231
+#: g3dit\src\main\java\de\george\g3dit\tab\shared\PositionPanel.java:61
+msgid "Copy position to clipboard"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\LivePositionFrame.java:236
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\AllgemeinTab.java:113
+#: g3dit\src\main\java\de\george\g3dit\tab\template\views\header\AllgemeinTab.java:102
+msgid "Copy Guid to Clipboard"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\LivePositionFrame.java:241
+#: g3dit\src\main\java\de\george\g3dit\tab\shared\PositionPanel.java:66
+msgid "Copy position to clipboard (rounded for console)"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\LivePositionFrame.java:246
+msgid "Open entity"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\LivePositionFrame.java:251
+msgid "Apply position for entity in world data"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\LivePositionFrame.java:256
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\ArchiveContentPane.java:188
+msgid "Teleports the player to the entity."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\LivePositionFrame.java:261
+msgid "Dump entity"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\LivePositionFrame.java:292
+msgid "Edit position"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\LivePositionFrame.java:293
+msgid "+/-"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\LivePositionFrame.java:295
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\dialogs\PositionDialog.java:46
+msgid "x-pos"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\LivePositionFrame.java:296
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\dialogs\PositionDialog.java:47
+msgid "y-pos"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\LivePositionFrame.java:297
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\dialogs\PositionDialog.java:48
+msgid "z-pos"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\LivePositionFrame.java:313
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\dialogs\PositionDialog.java:57
+msgid "pitch"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\LivePositionFrame.java:314
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\dialogs\PositionDialog.java:58
+msgid "yaw"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\LivePositionFrame.java:315
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\dialogs\PositionDialog.java:59
+msgid "roll"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\LivePositionFrame.java:316
+msgid "Rotation"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\LivePositionFrame.java:331
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\dialogs\PositionDialog.java:68
+msgid "x-scale"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\LivePositionFrame.java:332
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\dialogs\PositionDialog.java:69
+msgid "y-scale"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\LivePositionFrame.java:333
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\dialogs\PositionDialog.java:70
+msgid "z-scale"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\LivePositionFrame.java:334
+msgid "Scale"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\LivePositionFrame.java:349
+msgid "Change"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\LivePositionFrame.java:354
+msgid "Load current"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\LivePositionFrame.java:360
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\VegetationTab.java:91
+#: g3dit\src\main\java\de\george\g3dit\tab\shared\PositionPanel.java:83
+msgid "Use position from clipboard"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\LivePositionFrame.java:365
+msgid "Move to floor level"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\LivePositionFrame.java:370
+msgid "Capture"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\LivePositionFrame.java:371
+#, java-format
+msgid "Activate global hotkey ({0} or {1}) to capture the current position in the Live position log."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\LivePositionFrame.java:386
+msgid "Spawn template (position adjustable via context menu)"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\LivePositionFrame.java:398
+#: g3dit\src\main\java\de\george\g3dit\MainMenu.java:424
+msgid "Show log"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\LivePositionFrame.java:451
+msgid "Guid is invalid"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\LivePositionFrame.java:453
+msgid "Name must not be empty."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\LivePositionFrame.java:516
+msgid "-- Gothic 3 not reachable -- "
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\LivePositionFrame.java:519
+msgid "-- Entity not found --"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\LivePositionFrame.java:535
+#, java-format
+msgid "<html>Name: {0}<br>Guid: {1}<br>{2}</html>"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\LivePositionFrame.java:565
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\EntitySearchDialog.java:174
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\VegetationTab.java:277
+#: g3dit\src\main\java\de\george\g3dit\tab\shared\PositionPanel.java:140
+msgid "Clipboard does not contain position data"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\LivePositionFrame.java:595
+#, java-format
+msgid "Spawn ''{0}''"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\LivePositionFrame.java:597
+#: g3dit\src\main\java\de\george\g3dit\StatusBar.java:44
+msgid "Gothic 3 not reachable"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\LivePositionFrame.java:599
+msgid "Failed for unknown reason."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\LivePositionFrame.java:608
+#, java-format
+msgid "Name: ''{0}''"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\LivePositionFrame.java:609
+#, java-format
+msgid "Guid: ''{0}''"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\LivePositionFrame.java:664
+msgid "Entity not found"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\LivePositionFrame.java:665
+#, java-format
+msgid "The entity ''{0}'' with the Guid ''{1}'' could not be found."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\LivePositionFrame.java:675
+msgid "Search entity"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\LivePositionFrame.java:677
+msgid "Searching for entity..."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\MainMenu.java:116
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\NavigateTemplateDialog.java:94
+msgid "Open"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\MainMenu.java:121
+#: g3dit\src\main\java\de\george\g3dit\MainMenu.java:314
+msgid "Open file"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\MainMenu.java:132
+#: g3dit\src\main\java\de\george\g3dit\settings\EditorOptions.java:163
+msgid "Recent files"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\MainMenu.java:147
+msgid "New"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\MainMenu.java:152
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\FileSearchDialog.java:107
+msgid "Lrentdat"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\MainMenu.java:157
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\FileSearchDialog.java:109
+msgid "Node"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\MainMenu.java:162
+msgid "Secdat"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\MainMenu.java:167
+msgid "Compare"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\MainMenu.java:172
+msgid "Original file"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\MainMenu.java:173
+msgid "Modified file"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\MainMenu.java:184
+#: g3dit\src\main\java\de\george\g3dit\MainMenu.java:513
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\EditGuidWithCommentConfigDialog.java:83
+#: g3dit\src\main\java\de\george\g3dit\settings\SettingsDialog.java:69
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\dialogs\BoundingBoxDialog.java:72
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\dialogs\EditVegetationMeshesDialog.java:122
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\dialogs\PositionDialog.java:95
+msgid "Save"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\MainMenu.java:193
+#: g3dit\src\main\java\de\george\g3dit\MainMenu.java:519
+#: g3dit\src\main\java\de\george\g3dit\tab\EditorAbstractFileTab.java:211
+msgid "Save as"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\MainMenu.java:201
+msgid "Update"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\MainMenu.java:208
+#, java-format
+msgid ""
+"Do you really want to discard all changes to ''{0}''\n"
+"and reload the file?"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\MainMenu.java:220
+msgid "Close"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\MainMenu.java:227
+#: g3dit\src\main\java\de\george\g3dit\MainMenu.java:230
+msgid "Search for file..."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\MainMenu.java:232
+#: g3dit\src\main\java\de\george\g3dit\MainMenu.java:233
+msgid "Open in file manager"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\MainMenu.java:241
+msgid "Copy file name to clipboard"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\MainMenu.java:250
+msgid "Copy file path to clipboard"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\MainMenu.java:259
+msgid "Open in TinyHexer"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\MainMenu.java:269
+msgid "TinyHexer could not be opened."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\MainMenu.java:278
+#: g3dit\src\main\java\de\george\g3dit\entitytree\EntityTree.java:120
+#: g3dit\src\main\java\de\george\g3dit\settings\SettingsDialog.java:30
+msgid "Settings"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\MainMenu.java:286
+msgid "Exit"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\MainMenu.java:297
+msgid "Tools"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\MainMenu.java:304
+msgid "Import entities from file"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\MainMenu.java:321
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\EntitySearchDialog.java:82
+msgid "Entity Search"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\MainMenu.java:327
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\TemplateSearchDialog.java:64
+msgid "Template Search"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\MainMenu.java:333
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\NavigateTemplateDialog.java:45
+msgid "Open template"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\MainMenu.java:346
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\ImportStaticLightdataDialog.java:91
+msgid "Import StaticLightdata"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\MainMenu.java:353
+#: g3dit\src\main\java\de\george\g3dit\MainMenu.java:356
+msgid "Edit Objects without LowPoly"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\MainMenu.java:358
+#: g3dit\src\main\java\de\george\g3dit\MainMenu.java:362
+msgid "Generate LowPoly"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\MainMenu.java:370
+#: g3dit\src\main\java\de\george\g3dit\settings\EditorOptions.java:93
+msgid "Clean up string table"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\MainMenu.java:394
+msgid "World map"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\MainMenu.java:406
+msgid "Show 3D view"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\MainMenu.java:448
+msgid "Log could not be opened."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\MainMenu.java:452
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\FloatCalcDialog.java:26
+msgid "Float <-> Hex"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\MainMenu.java:461
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\GuidFormatsDialog.java:19
+msgid "Guid formats"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\MainMenu.java:471
+#: g3dit\src\main\java\de\george\g3dit\ScriptManager.java:134
+msgid "Execute scripts"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\MainMenu.java:480
+#: g3dit\src\main\java\de\george\g3dit\check\CheckManager.java:206
+#: g3dit\src\main\java\de\george\g3dit\check\CheckManager.java:356
+msgid "Execute checks"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\MainMenu.java:488
+msgid "Remote"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\MainMenu.java:502
+msgid "NavMap"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\MainMenu.java:506
+msgid "Reload"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\MainMenu.java:527
+msgid "Create NavZone cache"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\MainMenu.java:533
+msgid "Edit NegZones"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\MainMenu.java:537
+msgid "Edit NegCircles"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\MainMenu.java:541
+#: g3dit\src\main\java\de\george\g3dit\MainMenu.java:545
+msgid "Edit NegCircles without object"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\MainMenu.java:547
+#: g3dit\src\main\java\de\george\g3dit\MainMenu.java:551
+msgid "Edit objects without NegCircle"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\MainMenu.java:553
+msgid "Edit PrefPaths"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\MainMenu.java:557
+#: g3dit\src\main\java\de\george\g3dit\nav\NavMapSync.java:36
+msgid "Synchronize NavMap"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\MainMenu.java:564
+msgid "Export NegZones"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\MainMenu.java:568
+#: g3dit\src\main\java\de\george\g3dit\MainMenu.java:601
+#: g3dit\src\main\java\de\george\g3dit\MainMenu.java:637
+msgid "Select output directory"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\MainMenu.java:597
+msgid "Export NegCircles"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\MainMenu.java:633
+msgid "Export PrefPaths"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\MainMenu.java:671
+msgid "About"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\ScriptManager.java:175
+#, java-format
+msgid "''{0}'' is executed."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\ScriptManager.java:184
+msgid "Execution failed."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\ScriptManager.java:184
+msgid "Execution successful."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\ScriptManager.java:200
+msgid "Execute script"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\StatusBar.java:31
+msgid "No file opened"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\StatusBar.java:42
+#, java-format
+msgid "Gothic 3 reachable ({0})"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\StatusBar.java:101
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\IlluminationView.java:73
+msgid "Create cache"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\StatusBar.java:103
+msgid "Creating..."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\StatusBar.java:109
+msgid "Loading..."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\StatusBar.java:113
+msgid "{0, number} entries"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\StatusBar.java:114
+#, java-format
+msgid "Created on {0}"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\StatusBar.java:116
+msgid "Does not exist"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\cache\AbstractCache.java:56
+msgid "Cache file is invalid! Please recreate the cache."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\cache\EntityCache.java:180
+msgid "Create EntityCache"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\cache\EntityCache.java:182
+msgid "{0, number} entities found"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\cache\LightCache.java:85
+msgid "Create LightCache"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\cache\LightCache.java:86
+msgid "{0, number} light sources found"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\cache\LightCache.java:120
+msgid "{0, number} light sources found. Collect further data..."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\cache\NavCache.java:162
+msgid "Create NavCache"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\cache\NavCache.java:163
+msgid "{0, number} NavZones and NavPaths found"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\cache\TemplateCache.java:127
+msgid "Create TemplateCache"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\cache\TemplateCache.java:128
+msgid "{0, number} templates found"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\CheckManager.java:220
+#: g3dit\src\main\java\de\george\g3dit\check\CheckManager.java:351
+msgid "Select checks"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\CheckManager.java:246
+msgid "Determine files to be checked..."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\CheckManager.java:254
+msgid "Template pass {0, number}/{1, number}"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\CheckManager.java:281
+msgid "Archive pass {0, number}/{1, number}"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\CheckManager.java:307
+msgid "Collect issues..."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\CheckManager.java:331
+msgid "Execution completed"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\CheckManager.java:613
+#: g3dit\src\main\java\de\george\g3dit\check\problem\EntityHelper.java:42
+msgid "Index"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\CheckManager.java:613
+#: g3dit\src\main\java\de\george\g3dit\check\problem\FileHelper.java:44
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\EntitySearchDialog.java:120
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\FileSearchDialog.java:61
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\TemplateSearchDialog.java:92
+msgid "Path"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\checks\CheckDifferingChangeTimeValues.java:25
+msgid "Find differing ChangeTime values"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\checks\CheckDifferingChangeTimeValues.java:26
+msgid "Checks for all entities if their ChangeTime value differs from that of their template."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\checks\CheckDifferingChangeTimeValues.java:39
+msgid "ChangeTime value smaller than in template"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\checks\CheckDifferingChangeTimeValues.java:40
+msgid "ChangeTime value greater than in template"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\checks\CheckDuplicatedEntityGuids.java:25
+msgid "Checks all entities for duplicate guids."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\checks\CheckDuplicatedEntityGuids.java:25
+msgid "Find non-unique entity guids"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\checks\CheckDuplicatedEntityGuids.java:42
+#, java-format
+msgid "Duplicate entity guid: {0}"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\checks\CheckDuplicatedTemplateGuids.java:29
+msgid "Checks all templates for duplicate guids."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\checks\CheckDuplicatedTemplateGuids.java:29
+msgid "Find non-unique template guides"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\checks\CheckDuplicatedTemplateGuids.java:49
+msgid "Item"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\checks\CheckDuplicatedTemplateGuids.java:52
+msgid "Reference"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\checks\CheckDuplicatedTemplateGuids.java:56
+#, java-format
+msgid "Duplicate {0} guid: {1}"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\checks\CheckFaultyBodyParts.java:44
+msgid "Checks for any body parts that have inconsistencies with their template or NPC."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\checks\CheckFaultyBodyParts.java:44
+msgid "Find faulty body parts"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\checks\CheckFaultyBodyParts.java:79
+#, java-format
+msgid "ResourceFilePath differs from appendix 1: ''{0}'' vs. ''{1}''"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\checks\CheckFaultyBodyParts.java:85
+#, java-format
+msgid "MaterialSwitch differs from appendix 1: {0} vs. {1}"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\checks\CheckFaultyBodyParts.java:89
+#, java-format
+msgid "FacialAnimFilePath differs from appendix 2: ''{0}'' vs. ''{1}''"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\checks\CheckFaultyBodyParts.java:94
+msgid "MaterialSwitch differs from appendix 2: {0, number} vs. {1, number}"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\checks\CheckFaultyBodyParts.java:107
+#, java-format
+msgid "Body part is not a child of its owner ''{0}'' ({1}), but a child of ''{2}'' ({3})"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\checks\CheckFaultyBodyParts.java:115
+msgid "Body part is too far away ({0, number}) from NPC."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\checks\CheckFaultyBodyParts.java:124
+#, java-format
+msgid "Body part slot of the associated NPC does not reference the body part: {0}"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\checks\CheckFaultyBodyParts.java:133
+msgid "Associated NPC does not contain a matching MaterialSwitchSlot."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\checks\CheckFaultyBodyParts.java:136
+msgid "MaterialSwitchSlot of the associated NPC is faulty."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\checks\CheckFaultyBodyParts.java:145
+msgid "Associated NPC does not contain a matching ExtraSlot."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\checks\CheckFaultyBodyParts.java:148
+#, java-format
+msgid "ExtraSlot Guid of the associated NPC does not reference the body part: {0}"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\checks\CheckFaultyBodyParts.java:158
+msgid "Differs from template: "
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\checks\CheckFaultyBodyParts.java:164
+msgid "Error while opening template."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\checks\CheckFaultyBodyParts.java:169
+#, java-format
+msgid "Body part references different template than corresponding slot of associated NPC: {0} vs. {1}"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\checks\CheckFaultyBodyParts.java:173
+#, java-format
+msgid "Owner has no {0} slot."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\checks\CheckFaultyBodyParts.java:178
+#, java-format
+msgid "References an invalid owner: {0}"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\checks\CheckFaultyBodyParts.java:181
+#, java-format
+msgid "Has a non-existent Reference Guid: {0}"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\checks\CheckFaultyBodyParts.java:184
+msgid "Has a no Reference Guid."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\checks\CheckFindMisplacedEntities.java:28
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptFindMisplacedEntities.java:22
+msgid "Find incorrectly placed entities"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\checks\CheckFindMisplacedEntities.java:29
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptFindMisplacedEntities.java:28
+msgid "Finds entities that have no or only a few neighbor entities within a threshold distance. In most cases, this is due to incorrect positioning of the entity."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\checks\CheckFindMisplacedEntities.java:113
+msgid "At position {0} alone in the radius of {1, number}."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\checks\CheckInvalidAnchors.java:56
+msgid "Find invalid anchors"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\checks\CheckInvalidAnchors.java:56
+msgid "Finds inconsistencies in the assignment of interaction points to anchors."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\checks\CheckInvalidAnchors.java:82
+msgid "Anchor is inside .node (UserCount not part of the save game)"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\checks\CheckInvalidAnchors.java:84
+msgid "Interact points"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\checks\CheckInvalidAnchors.java:92
+msgid "Anchor refers to interaction point that has no anchor set."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\checks\CheckInvalidAnchors.java:96
+msgid "Anchor refers to interaction point that has different anchor set."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\checks\CheckInvalidAnchors.java:102
+msgid "Anchor refers to entity, which is not an interaction point."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\checks\CheckInvalidAnchors.java:105
+msgid "Anchor refers to non-existent entity."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\checks\CheckInvalidAnchors.java:120
+msgid "Interaction point has an anchor set, which does not refer to it."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\checks\CheckInvalidAnchors.java:126
+msgid "Interaction point refers to entity that is not an anchor."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\checks\CheckInvalidAnchors.java:129
+msgid "Interaction point refers to non-existent entity."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\checks\CheckInvalidParties.java:48
+msgid "Find invalid groups"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\checks\CheckInvalidParties.java:48
+msgid "Finds inconsistencies in the assignment of PartyMembers to PartyLeaders."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\checks\CheckInvalidParties.java:63
+msgid "Entity is both PartyLeader and PartyMember."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\checks\CheckInvalidParties.java:86
+msgid "PartyLeader refers to PartyMember that has no PartyLeader."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\checks\CheckInvalidParties.java:90
+msgid "PartyLeader refers to PartyMember that has a different PartyLeader."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\checks\CheckInvalidParties.java:96
+msgid "PartyLeader refers to entity that is not a PartyMember."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\checks\CheckInvalidParties.java:99
+msgid "PartyLeader refers to non-existent entity."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\checks\CheckInvalidParties.java:114
+msgid "PartyMember refers to PartyLeader, which does not refer to it."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\checks\CheckInvalidParties.java:120
+msgid "PartyMember refers to entity that is not a PartyLeader."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\checks\CheckInvalidParties.java:123
+msgid "PartyMember refers to non-existent entity."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\checks\CheckInvalidReferences.java:28
+msgid "Checks all templates for invalid guids."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\checks\CheckInvalidReferences.java:28
+msgid "Find invalid references"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\checks\CheckInvalidReferences.java:36
+msgid "Reference Guid does not exist"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\checks\CheckInvalidReferences.java:61
+#, java-format
+msgid "Property {0}.{1} contains non-existent Guid"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\checks\CheckInvalidReferences.java:62
+#, java-format
+msgid ""
+"Property {0}.{1} contains non-existent Guid\n"
+"{2}"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\checks\CheckLighting.java:20
+msgid "Find lighting problems"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\checks\CheckLighting.java:21
+msgid "Finds entities and templates with problematic lighting settings."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\checks\CheckLighting.java:34
+msgid "Dynamically illuminated entity with lightmap"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\checks\CheckLighting.java:35
+msgid ""
+"Combination of eEStaticIlluminated_Dynamic and eEStaticLighingType_Lightmap is useless, because with eEStaticIlluminated_Dynamic no lightmaps are used.\n"
+"Please change to eEStaticLighingType_Instance."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\checks\CheckLightmaps.java:38
+msgid "Find invalid lightmaps"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\checks\CheckLightmaps.java:39
+msgid "Find lightmaps whose guid does not exist or for which the mesh name does not match."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\checks\CheckLightmaps.java:79
+msgid "Mesh of the lightmap differs from the mesh of the associated entity."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\checks\CheckLightmaps.java:80
+#, java-format
+msgid ""
+"Lightmap: {0}\n"
+"Entity: {1}"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\checks\CheckLightmaps.java:85
+#, java-format
+msgid "Guid: {0}"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\checks\CheckLightmaps.java:85
+msgid "There is no entity with the guid of the lightmap."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\checks\CheckLightmaps.java:92
+msgid "Lightmap name does not adhere to the lightmap naming scheme."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\checks\CheckNestedItems.java:17
+msgid "Find items and interaction objects with child entities"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\checks\CheckNestedItems.java:18
+msgid ""
+"Interaction objects should usually not have child entities, as these affect the Y position of the focus name if FocusNameType is set to gEFocusNameType_Entity.\n"
+"\n"
+"Collectable items are removed from the world when picked up, along with their child entities."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\checks\CheckNestedItems.java:33
+msgid "Item has child entities."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\checks\CheckNestedItems.java:35
+msgid "Interaction object has child entities."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\checks\CheckOutsideStaticNode.java:20
+msgid "Entity outside scope of static .node"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\checks\CheckOutsideStaticNode.java:42
+msgid "Lies outside the scope of its static .node"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\entitytree\EntityTree.java:126
+msgid "Show entity number"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\entitytree\EntityTree.java:133
+msgid "Show child entities"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\entitytree\TreePopupExtension.java:43
+#, java-format
+msgid "Make ''{0}'' a child entity of ''{1}''"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\entitytree\TreePopupExtension.java:45
+msgid "Make {0, number} entities child entities of ''{1}''"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\entitytree\TreePopupExtension.java:60
+msgid "Clone '{0}"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\entitytree\TreePopupExtension.java:74
+#, java-format
+msgid "Clone ''{0}'' and child entities"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\entitytree\TreePopupExtension.java:96
+msgid "Mark '{0}"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\entitytree\TreePopupExtension.java:98
+msgid "Mark {0, number} entities"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\entitytree\TreePopupExtension.java:107
+msgid "Delete '{0}"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\entitytree\TreePopupExtension.java:109
+msgid "Delete {0, number} entities"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\entitytree\filter\GuidEntityFilter.java:183
+msgid "<html>Both complete and incomplete Guids can be searched for.<br>The Guid can be prefixed with one of the following.<ul><li><b>No prefix</b>: Guid</li><li><b>#i#</b>: Entity contains InventoryStack with matching Guid</li><li><b>#r#</b>: Entity has Routine with matching Guid</li><li><b>#e#</b>: Members of Enclave</li><li><b>#a#</b>: Entities of AnchorPoints</li><li><b>#p#</b>: PartyMember of PartyLeader</li><li><b>#g#</b>: Entities that refer to this entity in any of their properties</li><li><b>#t#</b>: Entities that refer to this template in any of their properties</li></ul></html>"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\entitytree\filter\NameEntityFilter.java:120
+msgid "<html>The search term can be prefixed with one of the following prefixes.<ul><li><b>No prefix</b>: Name contains search term</li><li><b>#f#</b>: Focus name contains search term</li></ul></html>"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\entitytree\filter\PositionEntityFilter.java:71
+msgid "<html>Coordinates in the form x/y/z//<br>The position can be prefixed with one of the following prefixes.<ul><li><b>No prefix</b>: Distance</li><li><b>#l#</b>: Distance ignoring the Y component</li></ul></html>"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\components\JEntityGuidField.java:51
+msgid "Open entity for this guid [F3]"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\components\JEntityGuidField.java:52
+msgid "Search for entity with this guid [F4]"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\components\JEntityGuidField.java:53
+msgid "Teleport to entity with this guid"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\components\JTemplateGuidField.java:73
+msgid "Open template with this guide [F3]"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\components\JTemplateGuidField.java:74
+msgid "Search for template with this guid [F4]"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\components\JTextAreaExt.java:40
+msgid "Copy"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\components\JTextAreaExt.java:46
+msgid "Cut"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\components\JTextAreaExt.java:51
+msgid "Insert"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\components\JTextAreaExt.java:58
+msgid "Delete content"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\components\ListModificationControl.java:36
+#: g3dit\src\main\java\de\george\g3dit\gui\components\TableModificationControl.java:45
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\ArchiveContentPane.java:157
+#: g3dit\src\main\java\de\george\g3dit\tab\template\TemplateContentPane.java:76
+msgid "Add"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\components\ListModificationControl.java:54
+#: g3dit\src\main\java\de\george\g3dit\gui\components\TableModificationControl.java:62
+#: g3dit\src\main\java\de\george\g3dit\gui\components\search\ModularSearchPanel.java:262
+#: g3dit\src\main\java\de\george\g3dit\gui\components\search\ModularSearchPanel.java:363
+#: g3dit\src\main\java\de\george\g3dit\tab\shared\AbstractElementPanel.java:40
+msgid "Delete"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\components\Severity.java:8
+msgid "Info"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\components\Severity.java:9
+msgid "Warn"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\components\search\EntityPositionSearchFilterBuilder.java:31
+msgid "Ignore Y"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\components\search\ModularSearchPanel.java:253
+msgid "Append filter"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\components\search\ModularSearchPanel.java:254
+#: g3dit\src\main\java\de\george\g3dit\gui\components\search\ModularSearchPanel.java:362
+msgid "Prepend combinator"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\components\search\ModularSearchPanel.java:255
+msgid "Append combinator"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\components\search\ModularSearchPanel.java:257
+msgid "Clone combinator"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\components\search\ModularSearchPanel.java:263
+msgid "Dissolve"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\components\search\ModularSearchPanel.java:267
+msgid "Negate"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\components\search\ModularSearchPanel.java:353
+msgid "Add filter before"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\components\search\ModularSearchPanel.java:355
+msgid "Add filter after"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\components\search\ModularSearchPanel.java:357
+msgid "Clone filter"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\components\search\NameSearchFilterBuilder.java:32
+#: g3dit\src\main\java\de\george\g3dit\gui\components\search\PropertySearchFilterBuilder.java:60
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\FileSearchDialog.java:84
+msgid "Regex"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\components\search\PropertySearchFilterBuilder.java:54
+msgid "== (case insensitive)"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\components\search\PropertySearchFilterBuilder.java:55
+msgid "!= (case insensitive)"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\components\search\PropertySearchFilterBuilder.java:55
+#: g3dit\src\main\java\de\george\g3dit\gui\components\search\PropertySearchFilterBuilder.java:62
+msgid "Contains"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\components\search\PropertySearchFilterBuilder.java:56
+msgid "Contains (case insensitive)"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\components\search\PropertySearchFilterBuilder.java:57
+msgid "Starts With"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\components\search\PropertySearchFilterBuilder.java:58
+msgid "Starts With (case insensitive)"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\components\search\PropertySearchFilterBuilder.java:59
+msgid "Ends With"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\components\search\PropertySearchFilterBuilder.java:60
+msgid "Ends With (case insensitive)"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\components\search\PropertySearchFilterBuilder.java:61
+msgid "Regex (case insensitive)"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\components\search\PropertySearchFilterBuilder.java:196
+#: g3dit\src\main\java\de\george\g3dit\tab\shared\SharedPropertyView.java:251
+#, java-format
+msgid "Failed to create instance of type ''{0}''."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\AboutDialog.java:19
+msgid "About g3dit"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\AboutDialog.java:42
+msgid "Libraries"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\AboutDialog.java:57
+msgid "Icons"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\AbstractTableProgressDialog.java:71
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\EditGuidWithCommentConfigDialog.java:84
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\ExtStandardDialog.java:145
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\ProgressDialog.java:42
+#: g3dit\src\main\java\de\george\g3dit\settings\SettingsDialog.java:123
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\property\G3EnumArrayPropertyEditor.java:93
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\property\JsonStringPropertyEditor.java:98
+#: g3dit\src\main\java\de\george\g3dit\tab\template\EditorTemplateTab.java:245
+#: g3dit\src\main\java\de\george\g3dit\util\Dialogs.java:18
+msgid "Cancel"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\CheckBoxListSelectDialog.java:60
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\CreatePropertyDialog.java:58
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\EditGuidWithCommentConfigDialog.java:61
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\ListSelectDialog.java:54
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\TreeEntitySelectDialog.java:51
+#: g3dit\src\main\java\de\george\g3dit\settings\SettingsDialog.java:109
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\dialogs\CreatePlantDialog.java:186
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\property\G3EnumArrayPropertyEditor.java:88
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\property\JsonStringPropertyEditor.java:90
+msgid "Ok"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\CreatePropertyDialog.java:28
+#, java-format
+msgid "Create property for {0}"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\CreatePropertyDialog.java:48
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\VegetationTab.java:381
+#: g3dit\src\main\java\de\george\g3dit\tab\shared\SharedInventarTab.java:150
+msgid "Type"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\EditGuidWithCommentConfigDialog.java:34
+#: g3dit\src\main\java\de\george\g3dit\nav\NegCircleStage.java:122
+msgid "Already opened for editing."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\EditGuidWithCommentConfigDialog.java:46
+msgid "Comment"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\EditGuidWithCommentConfigDialog.java:61
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\GuidFormatsDialog.java:29
+msgid "Enter Guid"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\EnterGuidDialog.java:45
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\AllgemeinTab.java:108
+#: g3dit\src\main\java\de\george\g3dit\tab\template\views\header\AllgemeinTab.java:76
+#: g3dit\src\main\java\de\george\g3dit\tab\template\views\header\AllgemeinTab.java:97
+msgid "Generate random guid"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\EnterGuidDialog.java:59
+msgid "Guid is invalid."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\EntitySearchDialog.java:144
+msgid "Position from clipboard"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\EntitySearchDialog.java:145
+msgid "Random Guid"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\EntitySearchDialog.java:146
+msgid "Import entity"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\EntitySearchDialog.java:148
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\ArchiveContentPane.java:203
+#: g3dit\src\main\java\de\george\g3dit\tab\navmap\NavMapObjectContentPane.java:81
+msgid "Map"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\EntitySearchDialog.java:175
+msgid "Should the import, using the original position, be continued anyway?"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\EntitySearchDialog.java:203
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\FileSearchDialog.java:170
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\TemplateSearchDialog.java:138
+msgid "Invalid filter settings"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\EntitySearchDialog.java:287
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\TemplateSearchDialog.java:213
+msgid "Determine files to be searched..."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\EntitySearchDialog.java:288
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\FileSearchDialog.java:216
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\TemplateSearchDialog.java:214
+msgid "Search completed"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\EntitySearchDialog.java:288
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\TemplateSearchDialog.java:214
+msgid "{0, number}/{1, number} files searched"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\EntitySearchDialog.java:336
+msgid "Search completed ({0, number} entities found)"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\EntitySearchDialog.java:433
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\EntitySearchDialog.java:442
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\TemplateSearchDialog.java:332
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\TemplateSearchDialog.java:341
+msgid "<Meanwhile closed>"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\EntitySearchDialog.java:440
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\TemplateSearchDialog.java:339
+#, java-format
+msgid "Loaded: {0}"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\FileSearchDialog.java:76
+msgid "Filter"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\FileSearchDialog.java:98
+#, java-format
+msgid "{0} contains invalid regular expression."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\FileSearchDialog.java:111
+#: g3dit\src\main\java\de\george\g3dit\tab\shared\SharedInventarTab.java:156
+msgid "Template"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\FileSearchDialog.java:113
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptSearchTemplateForMesh.java:32
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptSearchTemplateForMesh.java:67
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\NPCSlotPanel.java:64
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\NPCSlotPanel.java:142
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\dialogs\CreatePlantDialog.java:119
+#: g3dit\src\main\java\de\george\g3dit\util\AssetResolver.java:336
+msgid "Mesh"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\FileSearchDialog.java:115
+msgid "Import entities from selected file"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\FileSearchDialog.java:182
+msgid "Invalid regular expression"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\FileSearchDialog.java:215
+msgid "Creating list of all files..."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\FileSearchDialog.java:215
+msgid "{0, number}/{1, number} files scanned"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\FileSearchDialog.java:253
+msgid "Search completed ({0, number} files found)"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\FloatCalcDialog.java:31
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\FloatCalcDialog.java:61
+msgid "Float"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\FloatCalcDialog.java:45
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\FloatCalcDialog.java:75
+msgid "Hex"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\GuidFormatsDialog.java:45
+msgctxt "Guid"
+msgid "Hex"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\GuidFormatsDialog.java:47
+msgctxt "Guid"
+msgid "Gothic 3 Text"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\GuidFormatsDialog.java:49
+msgctxt "Guid"
+msgid "Group"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\GuidFormatsDialog.java:51
+msgctxt "Guid"
+msgid "Plain"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\ImportStaticLightdataDialog.java:96
+msgid "Select StaticLightdata files"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\ImportStaticLightdataDialog.java:156
+msgid "Determine changes"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\ImportStaticLightdataDialog.java:158
+msgid "In open files"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\ImportStaticLightdataDialog.java:160
+msgid "In all files"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\ImportStaticLightdataDialog.java:164
+msgid "Apply all"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\ImportStaticLightdataDialog.java:168
+msgid "Apply selected"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\ImportStaticLightdataDialog.java:173
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\ImportStaticLightdataDialog.java:231
+msgid "Save protocol"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\ImportStaticLightdataDialog.java:178
+msgid "Filter objects"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\ImportStaticLightdataDialog.java:180
+msgid "Entities without mesh are filtered out, their lighting is not updated."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\ImportStaticLightdataDialog.java:181
+msgid "The following PropertySets are considered as meshes:"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\ImportStaticLightdataDialog.java:184
+msgid "Hide filtered objects"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\ImportStaticLightdataDialog.java:187
+msgid "Search scope"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\ImportStaticLightdataDialog.java:231
+msgid "Protocol.csv"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\ImportStaticLightdataDialog.java:286
+#: g3dit\src\main\java\de\george\g3dit\util\AbstractDialogFileWorker.java:21
+msgid "Determine files to be processed..."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\ImportStaticLightdataDialog.java:287
+msgid "{0, number}/{1, number} files edited"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\ImportStaticLightdataDialog.java:339
+msgid "Changes applied ({0, number} entities)"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\ImportStaticLightdataDialog.java:341
+msgid "Changes detected ({0, number} entities)"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\ItemPanel.java:71
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\AllgemeinTab.java:130
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\AllgemeinTab.java:134
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\NPCSlotPanel.java:72
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\NPCSlotPanel.java:146
+#: g3dit\src\main\java\de\george\g3dit\tab\template\views\header\AllgemeinTab.java:86
+#: g3dit\src\main\java\de\george\g3dit\tab\template\views\header\AllgemeinTab.java:88
+msgid "Reference Guid"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\ItemPanel.java:72
+#: g3dit\src\main\java\de\george\g3dit\tab\shared\SharedInventarTab.java:145
+#: g3dit\src\main\java\de\george\g3dit\tab\shared\SharedInventarTab.java:188
+msgid "Amount"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\ItemPanel.java:72
+#: g3dit\src\main\java\de\george\g3dit\tab\shared\SharedInventarTab.java:179
+msgid "Quality"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\NavigateTemplateDialog.java:83
+msgid "Enter template name/guid"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\NavigateTemplateDialog.java:127
+msgid "Helper template entity whose guid is registered in .lrtpldatasc."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\NavigateTemplateDialog.java:128
+msgid "Also referred to as item guid in the template general tab and in Tiny Hexer."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\NavigateTemplateDialog.java:131
+msgid "Template entity refers to other template entity."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\NavigateTemplateDialog.java:132
+msgid "Mainly used in object groups."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\NavigateTemplateDialog.java:136
+msgid "Template entity with property sets that serves as a template for world data entities."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\NavigateTemplateDialog.java:137
+msgid "Also referred to as reference guid in the template general tab and in Tiny Hexer."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\TemplateNameSearchDialog.java:41
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\TemplateNameSearchDialog.java:45
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\NPCSlotPanel.java:90
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\NPCSlotPanel.java:316
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\NPCSlotPanel.java:329
+#: g3dit\src\main\java\de\george\g3dit\tab\shared\SharedCollisionShapeTab.java:208
+#: g3dit\src\main\java\de\george\g3dit\tab\shared\SharedInventarTab.java:174
+msgid "Load template"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\TemplateNameSearchDialog.java:64
+msgid "Template name"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\TemplateNameSearchDialog.java:84
+msgid "Please enter template name!"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\TemplateNameSearchDialog.java:87
+msgid "Search..."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\TemplateNameSearchDialog.java:98
+#: g3dit\src\main\java\de\george\g3dit\settings\SettingsDialog.java:116
+#: g3dit\src\main\java\de\george\g3dit\tab\template\views\header\TreasureSetTab.java:77
+msgid "Apply"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\TemplateNameSearchDialog.java:120
+#, java-format
+msgid "Template ''{0}'' found."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\TemplateNameSearchDialog.java:123
+#, java-format
+msgid "Template ''{0}'' NOT found."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\TemplateNameSearchDialog.java:132
+msgid "Template does not fit."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\TemplateSearchDialog.java:262
+msgid "Search completed ({0, number} templates found)"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\map\MapAndTableComponent.java:39
+msgid ""
+"<h2>Map</h2>\n"
+"<dl>\n"
+"\t<dt>Zoom</dt>\n"
+"\t<dd><code>Ctrl + Mouse wheel</code></dd>\n"
+"\t<dd><code>Ctrl + +</code> (Zoom in)</dd>\n"
+"\t<dd><code>Ctrl + -</code> (Zoom out)</dd>\n"
+"\t<dd><code>Ctrl + 0</code> (Reset)</dd>\n"
+"\t<dd><code>Ctrl + Left mouse button</code> (Rectangular selection)</dd>\n"
+"\t<dt>Move viewport</dt>\n"
+"\t<dd>Keep <code>right mouse button</code> pressed</dd>\n"
+"\t<dt>Individual selection</dt>\n"
+"\t<dd><code>Left mouse button</code></dd>\n"
+"\t<dd><code>Alt + Left mouse button</code> (Reset rectangular selection)</dd>\n"
+"\t<dt>Rectangular selection</dt>\n"
+"\t<dd>Keep <code>left mouse button</code> pressed and draw rectangle</dd>\n"
+"</dl>\n"
+"<h2>General</h2>\n"
+"<dl>\n"
+"\t<dt>Teleport player to entity</dt>\n"
+"\t<dd><code>Ctrl + Left mouse button</code></dd>\n"
+"\t<dt>Search for entities in the vicinity</dt>\n"
+"\t<dd><code>Ctrl + Shift + Left mouse button</code></dd>\n"
+"\t<dt>Teleport player to most recently selected entity</dt>\n"
+"\t<dd><code>Ctrl + G</code></dd>\n"
+"\t<dt>Open the most recently selected entity in the editor</dt>\n"
+"\t<dd><code>Ctrl + E</code></dd>\n"
+"\t<dt>Teleport player to mouse position</dt>\n"
+"\t<dd><code>Ctrl + T</code></dd>\n"
+"\t<dt>Invert selection</dt>\n"
+"\t<dd><code>Ctrl + I</code></dd>\n"
+"\t<dt>Remove selection from list</dt>\n"
+"\t<dd><code>Delete</code></dd>\n"
+"\t<dt>Show only selected on map</dt>\n"
+"\t<dd>Show in the table only the entities selected by rectangular selection on the map.</dd>\n"
+"</dl>\n"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\map\MapAndTableComponent.java:165
+msgid "Show only selected on map"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\theme\ThemeSettingsPanel.java:91
+msgid "Native"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\theme\ThemeSettingsPanel.java:95
+msgid "Core Themes"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\theme\ThemeSettingsPanel.java:101
+msgid "IntelliJ Themes"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\validation\ChangeTimeValidator.java:44
+msgid "ChangeTime value smaller than in referenced template ({0, number})"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\validation\ChangeTimeValidator.java:45
+msgid "ChangeTime value greater than in referenced template ({0, number})"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\validation\EntityExistenceValidator.java:29
+#, java-format
+msgid "{0} contains a guid for which no entity exists."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\validation\PointDistanceValidator.java:29
+msgid "{0} contains two sticks very close to each other: {1, number} and {2, number}"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\validation\PointDistanceValidator.java:34
+#, java-format
+msgid "{0} contains malformed  coordinates."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\validation\TemplateExistenceValidator.java:35
+#, java-format
+msgid "{0} contains a guid for which no template exists."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\jme\EntityViewerMainMenu.java:26
+msgid "Colors"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\jme\JmeAppFrame.java:114
+#: g3dit\src\main\java\de\george\g3dit\settings\SettingsDialog.java:77
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\ArchiveContentPane.java:170
+#: g3dit\src\main\java\de\george\g3dit\tab\template\TemplateContentPane.java:103
+msgid "3D view"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\nav\InteractObjectStage.java:86
+msgid "InteractObject is inside of NegCircle."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\nav\InteractObjectStage.java:88
+msgid "InteractObject is inside of NegZone."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\nav\InteractObjectStage.java:129
+msgid "no NavArea (null)"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\nav\InteractObjectStage.java:131
+msgid "no NavArea (out of)"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\nav\InteractObjectStage.java:187
+#: g3dit\src\main\java\de\george\g3dit\nav\NavPathStage.java:237
+#: g3dit\src\main\java\de\george\g3dit\nav\NavZoneStage.java:93
+msgid "Not in NavMap."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\nav\InteractObjectStage.java:187
+#: g3dit\src\main\java\de\george\g3dit\nav\InteractObjectStage.java:201
+#, java-format
+msgid "Registered to {0}."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\nav\InteractObjectStage.java:200
+msgid "Only in NavMap, no corresponding entity found!"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\nav\InteractObjectStage.java:220
+msgid "Registered NavArea has changed."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\nav\InteractObjectStage.java:221
+#, java-format
+msgid "Registered to {0} instead of {1}."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\nav\InteractObjectStage.java:236
+msgid "Critical InteractObject."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\nav\NavCalcStage.java:158
+msgid "{0, number} / {1, number} issues displayed"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\nav\NavCalcStage.java:178
+msgid "Fixed"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\nav\NavCalcStage.java:210
+#, java-format
+msgid "Back ({0}) <-"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\nav\NavCalcStage.java:218
+#, java-format
+msgid "-> Next ({0})"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\nav\NavCalcStage.java:239
+msgid "Execute Scan"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\nav\NavCalcStage.java:278
+msgid "Fix"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\nav\NavCalcStage.java:278
+msgid "Fix the selected issue(s)."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\nav\NavCalcStage.java:284
+msgid "Open in editor"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\nav\NavCalcStage.java:284
+msgid "Open the affected nav object in the editor."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\nav\NavCalcStage.java:289
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\ArchiveContentPane.java:187
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\VegetationTab.java:175
+#: g3dit\src\main\java\de\george\g3dit\tab\navmap\NavMapObjectContentPane.java:75
+msgid "Goto"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\nav\NavCalcStage.java:289
+msgid "Teleport player to the affected nav object."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\nav\NavCalcStage.java:294
+msgid "Show on map"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\nav\NavCalcStage.java:294
+msgid "Show the affected nav object on the entity map."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\nav\NavPathStage.java:59
+#, java-format
+msgid "ZoneA {0} instead of {1}."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\nav\NavPathStage.java:63
+#, java-format
+msgid "ZoneB {0} instead of {1}."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\nav\NavPathStage.java:68
+#: g3dit\src\main\java\de\george\g3dit\nav\NavPathStage.java:73
+#, java-format
+msgid "ZoneAIntersectionCenter: {0} instead of {1}"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\nav\NavPathStage.java:78
+#, java-format
+msgid "ZoneAIntersectionMargin1: {0} instead of {1}"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\nav\NavPathStage.java:82
+#, java-format
+msgid "ZoneAIntersectionMargin2: {0} instead of {1}"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\nav\NavPathStage.java:89
+#: g3dit\src\main\java\de\george\g3dit\nav\NavPathStage.java:94
+#, java-format
+msgid "ZoneBIntersectionCenter: {0} instead of {1}"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\nav\NavPathStage.java:99
+#, java-format
+msgid "ZoneBIntersectionMargin1: {0} instead of {1}"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\nav\NavPathStage.java:103
+#, java-format
+msgid "ZoneBIntersectionMargin2: {0} instead of {1}"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\nav\NavPathStage.java:182
+msgid "Invalid NavPath with only {0, number} points."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\nav\NavPathStage.java:185
+msgid " and "
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\nav\NavPathStage.java:188
+#, java-format
+msgid "Unable to detect {0}."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\nav\NavPathStage.java:249
+#: g3dit\src\main\java\de\george\g3dit\nav\NavZoneStage.java:112
+msgid "Only in NavMap."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\nav\NavPathStage.java:261
+msgid "Intersections with NavZone have changed."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\nav\NavPathStage.java:274
+msgid "Intersections stored in the NavPath are stale."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\nav\NavZoneStage.java:104
+msgid "Related nav objects"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\nav\NavZoneStage.java:129
+msgid "Shape or position has changed."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\nav\NegCircleStage.java:73
+msgid "Blacklist"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\nav\NegCircleStage.java:73
+msgid "Mark the selected issue(s) as having no NegCircle."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\nav\NegCircleStage.java:99
+msgid "Overlaps with NavPaths:"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\nav\NegCircleStage.java:122
+msgid "Objects without NegCircle"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\nav\NegCircleStage.java:163
+msgid "NegCircle has {0, number} offsets instead of {1, number}."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\nav\NegCircleStage.java:171
+msgid "Offset {0, number} differs: {1} instead of {2} ({3})."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\nav\NegCircleStage.java:180
+msgid "Radius {0, number} differs: {1, number} instead of {2, number}."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\nav\NegCircleStage.java:212
+#, java-format
+msgid "Not detected in NavPath {0}."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\nav\NegCircleStage.java:214
+#, java-format
+msgid "Not detected in NavZone {0}."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\nav\NegCircleStage.java:221
+#, java-format
+msgid "Unexpectedly detected in {0} {1}."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\nav\NegCircleStage.java:251
+#: g3dit\src\main\java\de\george\g3dit\nav\NegCircleStage.java:253
+msgid "Assigned NavAreas:"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\nav\NegCircleStage.java:289
+msgid "Critical NegCircle."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\nav\NegCircleStage.java:300
+msgid "Detected different containing NavAreas."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\nav\NegCircleStage.java:312
+msgid "Entity was moved or modified."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\nav\NegCircleStage.java:324
+msgid "Object without NegCircle."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\nav\NegCircleStage.java:341
+msgid "NegCircle for object without NegCirclePrototype."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\nav\NegCircleStage.java:352
+msgid "NegCircle without object."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\nav\NegZoneStage.java:107
+msgid "Invalid NegZone with only {0, number} sticks."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\nav\NegZoneStage.java:120
+#: g3dit\src\main\java\de\george\g3dit\nav\PrefPathStage.java:119
+msgid "Detected different containing NavZone."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\nav\NegZoneStage.java:121
+#: g3dit\src\main\java\de\george\g3dit\nav\PrefPathStage.java:120
+#, java-format
+msgid "Detected {0} instead of {1}."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\nav\NegZoneStage.java:121
+#: g3dit\src\main\java\de\george\g3dit\nav\NegZoneStage.java:122
+#: g3dit\src\main\java\de\george\g3dit\nav\PrefPathStage.java:120
+#: g3dit\src\main\java\de\george\g3dit\nav\PrefPathStage.java:121
+msgid "no NavZone"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\nav\NegZoneStage.java:138
+#: g3dit\src\main\java\de\george\g3dit\nav\PrefPathStage.java:137
+msgid "Detected no containing NavZone."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\nav\NegZoneStage.java:149
+#, java-format
+msgid "NavZone {0} referred by NegZone does not refer to NegZone."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\nav\NegZoneStage.java:160
+#, java-format
+msgid "NegZone referred by NavZone {0} refers to other NavZone {1}."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\nav\PrefPathStage.java:106
+msgid "Invalid PrefPath with only {0, number} points."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\nav\PrefPathStage.java:148
+msgid "Spans more than one NavZone."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptCheckVegetationPosition.java:21
+msgid "Check position of vegetation objects"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptCheckVegetationPosition.java:26
+msgid "Checks whether all vegetation objects are in the VegetationRoot responsible for their area."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptDeleteNPCs.java:20
+msgid "List of NPC names separated with commas"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptDeleteNPCs.java:20
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptDeleteNPCs.java:21
+msgid "Whitelist"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptDeleteNPCs.java:25
+msgid "Delete NPCs"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptDeleteNPCs.java:30
+msgid "Deletes all NPCs from the world data."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptDeleteNPCs.java:47
+#, java-format
+msgid "A total of {0} NPCs were removed."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptDumpNavAreas.java:24
+msgid "Export NavZones and NavPaths"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptDumpNavAreas.java:29
+msgid "Exports NavZones and NavPaths to a text file."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptDumpNavAreas.java:34
+msgid "Save NavZones and NavPaths in text form"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptDumpNavMap.java:21
+msgid "Converts the NavigationMap into a text file."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptDumpNavMap.java:26
+msgid "Open NavigationMap..."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptDumpNavMap.java:31
+msgid "Save NavigationMap in text form"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptDumpSvmAdmin.java:35
+msgid "Export SVMAdmin.dat"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptDumpSvmAdmin.java:40
+msgid "Converts the SVMAdmin.dat into a text file."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptDumpSvmAdmin.java:45
+msgid "Open SVMAdmin.dat..."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptDumpSvmAdmin.java:53
+msgid "Save SVMAdmin.dat in text form"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptDumpSvmAdmin.java:56
+msgid "Save SVMAdmin.dat as Json"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptDumpSvmAdmin.java:85
+#, java-format
+msgid "Error during export: {0}"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptFindMisplacedEntities.java:71
+msgid "Number of nearest neighbours considered"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptFindMisplacedEntities.java:72
+msgid "Number of neighbor entities that must be within the threshold distance."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptFindMisplacedEntities.java:77
+msgid "Threshold distance"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptFindMisplacedEntities.java:78
+msgid ""
+"All entities that have no or not enough neighbors within the threshold distance,\n"
+"are classified as 'misplaced'."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptFindMisplacedEntities.java:84
+msgid "Solid entities"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptFindMisplacedEntities.java:85
+msgid "Should only solid entities, i.e. those that have a mesh, be considered?"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptFindMisplacedEntities.java:87
+msgid "Number of nearest neighbors considered: {0, number}"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptFindMisplacedEntities.java:88
+msgid "Threshold: {0, number}"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptFindMisplacedEntities.java:106
+msgid "{0, number} entities collected."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptFindMisplacedEntities.java:112
+msgid "{0} ({1}) at position {2} alone in the radius of {3, number}."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptGenerateStatistics.java:24
+msgid "Generate modification statistics"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptGenerateStatistics.java:29
+msgid "Generates statistics on the modifications made."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptGenerateStatistics.java:97
+msgid "NPCs"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptGenerateStatistics.java:98
+msgid "Monster"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptGenerateStatistics.java:99
+msgid "Objects"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptGenerateStatistics.java:100
+msgid "Vegetation objects"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptGenerateStatistics.java:106
+msgid "new"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptGenerateStatistics.java:106
+msgid "removed"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptLightmapType.java:27
+msgid "List LightmapType"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptLightmapType.java:32
+msgid "Listing of all entities that are illuminated by lightmap."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptListEntities.java:27
+msgid "List named entities only"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptListEntities.java:28
+msgid "Export named entities only"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptListEntities.java:32
+msgid "List entities"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptListEntities.java:37
+msgid "Creates a list of all entities."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptListEntities.java:42
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptListPickPocketNPCs.java:36
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptListUsedTreasureSets.java:36
+msgid "Save listing as..."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptListEntities.java:93
+#, java-format
+msgid "Error while writing the file: {0}"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptListMaterialProperties.java:19
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptListMaterialProperties.java:24
+msgid "List material properties"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptListPickPocketNPCs.java:26
+msgid "List NPCs that can be stolen from"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptListPickPocketNPCs.java:31
+msgid "Creates a list of all NPCs that can be stolen from (including chests) and their PickPocket TreasureSets."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptListPickPocketNPCs.java:77
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptListTeachers.java:110
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptListUsedTreasureSets.java:68
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptListVoices.java:72
+#, java-format
+msgid "File could not be saved: {0}"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptListTeachers.java:36
+msgid "List teachers"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptListTeachers.java:41
+msgid "Creates a list of all teachers with the perks and attributes they teach."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptListTeachers.java:46
+msgid "Save teacher listing as..."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptListTeachers.java:95
+msgid "Attributes"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptListTeachers.java:100
+msgid "Skills"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptListUnusedCollisionMesh.java:34
+msgid "List unused or missing collision meshes"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptListUnusedCollisionMesh.java:39
+msgid "Creates a list of all unused or missing collision meshes."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptListUnusedCollisionMesh.java:109
+msgid "Unused collision meshes"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptListUnusedCollisionMesh.java:112
+msgid "Missing collision meshes"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptListUnusedCollisionMesh.java:115
+msgid "Used collision meshes"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptListUnusedMeshes.java:30
+msgid "List unused meshes"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptListUnusedMeshes.java:35
+msgid "Creates a list of all unused meshes."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptListUnusedMeshes.java:91
+msgid "Overview"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptListUnusedMeshes.java:106
+msgid "List"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptListUsedTreasureSets.java:26
+msgid "TreasureSets used per NPC/chest"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptListUsedTreasureSets.java:31
+msgid "Creates a list of all NPCs/chests with all their TreasureSets."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptListVegMeshWindStrength.java:22
+msgid "List WindStrength of vegetation meshes"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptListVegMeshWindStrength.java:27
+msgid "Creates a list of all vegetation meshes whose WindStrength varies."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptListVoices.java:25
+msgid "List NPC voices"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptListVoices.java:30
+msgid "Creates a list that contains each NPC's voice."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptListVoices.java:35
+msgid "Save NPC voices listing as..."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptPurgeUnusedVegMeshes.java:16
+msgid "Delete unused vegetation meshes"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptPurgeUnusedVegMeshes.java:21
+msgid "Deletes all unused vegetation meshes from the world data."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptPurgeUnusedVegMeshes.java:36
+msgid "Removing {0, number} unused meshes in {1}#{2}"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptPurgeUnusedVegMeshes.java:43
+msgid "A total of {0, number} unused meshes were removed."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptRepairCollisionShapes.java:20
+msgid "Check collision shapes"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptRepairCollisionShapes.java:25
+msgid "Checks the collision shapes of weapons"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptRepairCollisionShapes.java:42
+#, java-format
+msgid "{0} has no collision shape."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptRepairCollisionShapes.java:46
+#, java-format
+msgid "{0} has more than one collision shape."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptRepairCollisionShapes.java:53
+#, java-format
+msgid "{0} has no box/capsule shape."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptReplaceCollisionShapes.java:41
+msgid "Replace collision shapes"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptReplaceCollisionShapes.java:46
+msgid "Replaces collision shapes according to a list of replacement rules."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptReplaceCollisionShapes.java:100
+msgid "Load replacement rules"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptReplaceCollisionShapes.java:153
+msgid "A total of {0, number} collision shapes were replaced."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptSearchTemplateForMesh.java:22
+msgid "Search templates for mesh"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptSearchTemplateForMesh.java:27
+msgid "Find templates that use a specified mesh plus MaterialSwitch combination(s)."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptSearchTemplateForMesh.java:33
+msgid ""
+"Name of the mesh.\n"
+"It is also possible to enter only a part of a mesh name."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptSearchTemplateForMesh.java:40
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptSearchTemplateForMesh.java:68
+msgid "MaterialSwitches"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptSearchTemplateForMesh.java:41
+msgid ""
+"List of MaterialSwitches or MaterialSwitch ranges separated by spaces (e.g. 4-12).\n"
+"If the input is empty, all MaterialSwitches are accepted."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptSearchTemplateForMesh.java:68
+msgid "Any"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptShowGuidsOnMap.java:16
+msgid "Display objects for guids on Map"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptShowGuidsOnMap.java:21
+msgid "Displays the corresponding objects (NavZone, NavPath, ...) for guids in the clipboard on the map."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptSkinningInfoInfluenceStatistics.java:20
+msgid "Determine distribution of SkinningInfo influence frequency"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptSkinningInfoInfluenceStatistics.java:25
+msgid "Determine distribution of SkinningInfo influence frequency."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptSkinningInfoInfluenceStatistics.java:38
+#, java-format
+msgid "Error while loading {0}."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptSpotMissingTextures.java:18
+msgid "Detect missing textures"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptSpotMissingTextures.java:23
+msgid "If the base texture of a material does not exist, it is classified as missing."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptSpotMissingTextures.java:39
+#: g3dit\src\main\java\de\george\g3dit\util\AssetResolver.java:375
+msgid "Material"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptSpotMissingTextures.java:40
+msgid "Exception while parsing the material"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptSpotNonExistentRoutineGuids.java:25
+msgid "Detect routines with non-existent guids"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptSpotNonExistentRoutineGuids.java:30
+msgid "Checks the routines of all entities for non-existent guids."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptSpotNonExistentRoutineGuids.java:79
+#, java-format
+msgid "Guids of the start routine ''{0}'' differ from those of the corresponding routine list entry."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptSpotNonExistentRoutineGuids.java:81
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptSpotNonExistentRoutineGuids.java:88
+#, java-format
+msgid "{0} (Start routine)"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptSpotNonExistentRoutineGuids.java:87
+#, java-format
+msgid "Start routine ''{0}'' is not included in the routine list."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptTestReadSaveIntegrity.java:24
+msgid "Test for changes during loading and saving"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptTestReadSaveIntegrity.java:30
+msgid "Checks which files change when they are read in and then saved again. No changes are made on the disk, the check is done in memory."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptTestReadSaveIntegrity.java:49
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptTestReadSaveIntegrity.java:73
+#, java-format
+msgid "Error while comparing: {0}"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptTestReadSaveIntegrity.java:53
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptTestReadSaveIntegrity.java:77
+#, java-format
+msgid "Error while loading: {0}"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptTestReadSaveIntegrity.java:81
+#, java-format
+msgid "{0} .tple checked."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptUpdateContextBox.java:23
+msgid "Update ContextBox"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptUpdateContextBox.java:28
+msgid "Update ContextBox of eCEntityDynamicContexts and eCGeometrySpatialContexts in primary data folder."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptUtils.java:27
+msgid "Select save path"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptUtils.java:49
+#, java-format
+msgid "Relative path of {0} could not be determined, applying changes not possible."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptUtils.java:58
+#, java-format
+msgid "Failed to save {0}: {1}"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\settings\AliasFolderPathOptionHandler.java:36
+msgid "Alias"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\settings\AliasFolderPathOptionHandler.java:45
+#: g3dit\src\main\java\de\george\g3dit\settings\FilePathOptionHandler.java:59
+#: g3dit\src\main\java\de\george\g3dit\settings\FolderPathOptionHandler.java:47
+msgid "..."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\settings\EditorOptions.java:24
+msgid "Alias for primary data directory"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\settings\EditorOptions.java:27
+#: g3dit\src\main\java\de\george\g3dit\settings\EditorOptions.java:29
+#: g3dit\src\main\java\de\george\g3dit\util\FileManager.java:280
+msgid "Primary data directory"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\settings\EditorOptions.java:28
+msgid "Select primary data directory"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\settings\EditorOptions.java:32
+msgid "Alias for secondary data directory"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\settings\EditorOptions.java:35
+#: g3dit\src\main\java\de\george\g3dit\settings\EditorOptions.java:37
+msgid "Secondary data directory"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\settings\EditorOptions.java:36
+msgid "Select secondary data directory"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\settings\EditorOptions.java:40
+#: g3dit\src\main\java\de\george\g3dit\settings\EditorOptions.java:41
+msgid "Hide Projects_compiled"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\settings\EditorOptions.java:44
+#: g3dit\src\main\java\de\george\g3dit\settings\EditorOptions.java:48
+msgid "File manager"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\settings\EditorOptions.java:45
+#: g3dit\src\main\java\de\george\g3dit\settings\EditorOptions.java:62
+#: g3dit\src\main\java\de\george\g3dit\settings\EditorOptions.java:69
+msgid "The following parameters can be specified for the program:"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\settings\EditorOptions.java:46
+msgid "%path : The file or directory to be shown"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\settings\EditorOptions.java:47
+msgid "Select file manager"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\settings\EditorOptions.java:51
+msgid "Tiny Hexer (needed for 'File->Open in TinyHexer')"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\settings\EditorOptions.java:52
+msgid "Select Tiny Hexer"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\settings\EditorOptions.java:53
+msgid "Tiny Hexer"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\settings\EditorOptions.java:56
+msgid "Tiny Hexer Script (if specified the script is executed directly)"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\settings\EditorOptions.java:57
+msgid "Select Tiny Hexer Script"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\settings\EditorOptions.java:57
+#: g3dit\src\main\java\de\george\g3dit\settings\EditorOptions.java:58
+msgid "Tiny Hexer Script"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\settings\EditorOptions.java:61
+#: g3dit\src\main\java\de\george\g3dit\settings\EditorOptions.java:65
+msgid "Program for comparing text files"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\settings\EditorOptions.java:63
+#: g3dit\src\main\java\de\george\g3dit\settings\EditorOptions.java:70
+#, java-printf-format
+msgid "%base : The original file"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\settings\EditorOptions.java:63
+#: g3dit\src\main\java\de\george\g3dit\settings\EditorOptions.java:70
+msgid "%mine : The modified file"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\settings\EditorOptions.java:64
+msgid "Select program for comparing text files"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\settings\EditorOptions.java:68
+#: g3dit\src\main\java\de\george\g3dit\settings\EditorOptions.java:72
+msgid "Program for comparing binary files"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\settings\EditorOptions.java:71
+msgid "Select program for comparing binary files"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\settings\EditorOptions.java:77
+#: g3dit\src\main\java\de\george\g3dit\settings\EditorOptions.java:78
+msgid "UI language"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\settings\EditorOptions.java:81
+#: g3dit\src\main\java\de\george\g3dit\settings\EditorOptions.java:83
+msgid "Stringtable language"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\settings\EditorOptions.java:88
+#: g3dit\src\main\java\de\george\g3dit\settings\EditorOptions.java:89
+msgid "Make backup"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\settings\EditorOptions.java:92
+msgid "Removed unused entries from the stringtable"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\settings\EditorOptions.java:97
+msgid "Optimize memory consumption (loading, saving and closing files may take longer)"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\settings\EditorOptions.java:98
+msgid "Optimize memory consumption"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\settings\EditorOptions.java:101
+msgid "Hash-based change detection when closing files"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\settings\EditorOptions.java:102
+msgid "Avoids unnecessary 'Save changes' dialogs when closing files."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\settings\EditorOptions.java:103
+msgid "On slow systems, however, loading and closing files can take longer."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\settings\EditorOptions.java:104
+msgid "Improved change detection"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\settings\EditorOptions.java:107
+msgid "Show debug information when calculating NavPaths"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\settings\EditorOptions.java:108
+msgid "NavPath debug information"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\settings\EditorOptions.java:113
+#: g3dit\src\main\java\de\george\g3dit\settings\EditorOptions.java:114
+msgid "Background color of the 3D view"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\settings\EditorOptions.java:117
+#: g3dit\src\main\java\de\george\g3dit\settings\EditorOptions.java:118
+msgid "Intensity of ambient lighting"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\settings\EditorOptions.java:121
+#: g3dit\src\main\java\de\george\g3dit\settings\EditorOptions.java:122
+msgid "Intensity of directional lighting"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\settings\EditorOptions.java:125
+#: g3dit\src\main\java\de\george\g3dit\settings\EditorOptions.java:127
+msgid "Horizontal rotation of directional lighting"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\settings\EditorOptions.java:130
+#: g3dit\src\main\java\de\george\g3dit\settings\EditorOptions.java:131
+msgid "Vertical rotation of directional lighting"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\settings\EditorOptions.java:134
+#: g3dit\src\main\java\de\george\g3dit\settings\EditorOptions.java:135
+msgid "Horizontal rotation"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\settings\EditorOptions.java:138
+#: g3dit\src\main\java\de\george\g3dit\settings\EditorOptions.java:139
+msgid "Vertical rotation"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\settings\EditorOptions.java:142
+#: g3dit\src\main\java\de\george\g3dit\settings\EditorOptions.java:143
+msgid "Distance"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\settings\EditorOptions.java:146
+#: g3dit\src\main\java\de\george\g3dit\settings\EditorOptions.java:147
+msgid "Screenshot directory"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\settings\EditorOptions.java:146
+msgid "Select screenshot directory"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\settings\EditorOptions.java:152
+msgid "Window size"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\settings\EditorOptions.java:155
+msgid "Window position"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\settings\EditorOptions.java:158
+msgid "Window status"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\settings\EditorOptions.java:168
+#: g3dit\src\main\java\de\george\g3dit\settings\SettingsDialog.java:91
+msgid "Theme"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\settings\EditorOptions.java:171
+#: g3dit\src\main\java\de\george\g3dit\settings\SettingsDialog.java:95
+msgid "File extensions"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\settings\EditorOptions.java:176
+msgid "Selected checks"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\settings\OptionPanelBase.java:48
+#: g3dit\src\main\java\de\george\g3dit\settings\OptionPanelBase.java:125
+msgid "Reset settings"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\settings\SettingsDialog.java:49
+msgid "Paths"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\settings\SettingsDialog.java:50
+msgid "Gothic 3 data"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\settings\SettingsDialog.java:54
+msgid "External programs"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\settings\SettingsDialog.java:61
+#: g3dit\src\main\java\de\george\g3dit\settings\SettingsDialog.java:62
+msgid "Language"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\settings\SettingsDialog.java:65
+msgid "After changing the UI language, g3dit must be restarted."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\settings\SettingsDialog.java:68
+msgid "Miscellaneous"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\settings\SettingsDialog.java:72
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\NPCTab.java:71
+msgid "Misc"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\settings\SettingsDialog.java:78
+msgid "Colour and lighting"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\settings\SettingsDialog.java:88
+msgid "Screenshots"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\settings\SettingsDialog.java:92
+msgid "Themes"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\settings\SettingsDialog.java:96
+msgid "File extensions associated with g3dit"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\settings\ThemeOptionHandler.java:27
+msgid "After changing the theme it may be necessary to restart g3dit."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\EditorAbstractFileTab.java:47
+#: g3dit\src\main\java\de\george\g3dit\tab\EditorAbstractFileTab.java:55
+msgid "<Not saved>"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\EditorAbstractFileTab.java:182
+msgid "Currently no file is open."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\EditorAbstractFileTab.java:182
+#: g3dit\src\main\java\de\george\g3dit\tab\EditorAbstractFileTab.java:220
+#: g3dit\src\main\java\de\george\g3dit\util\NavMapManager.java:91
+msgid "Saving failed"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\EditorAbstractFileTab.java:220
+msgid "No save location has been selected."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\EditorAbstractFileTab.java:250
+#, java-format
+msgid "Save changes to ''{0}'' before exiting?"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\EditorAbstractFileTab.java:250
+#, java-format
+msgid "Save changes to ''{0}''?"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\EditorAbstractFileTab.java:276
+msgid "Saving file..."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\ArchiveContentPane.java:135
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\ArchiveContentPane.java:139
+#: g3dit\src\main\java\de\george\g3dit\tab\template\TemplateContentPane.java:88
+#: g3dit\src\main\java\de\george\g3dit\tab\template\TemplateContentPane.java:92
+msgid "Remove classes"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\ArchiveContentPane.java:139
+#: g3dit\src\main\java\de\george\g3dit\tab\template\TemplateContentPane.java:92
+msgid "Remove"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\ArchiveContentPane.java:149
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\ArchiveContentPane.java:157
+#: g3dit\src\main\java\de\george\g3dit\tab\template\TemplateContentPane.java:69
+#: g3dit\src\main\java\de\george\g3dit\tab\template\TemplateContentPane.java:75
+msgid "Add classes"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\ArchiveContentPane.java:153
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\NPCSlotPanel.java:336
+msgid "Select entity"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\ArchiveContentPane.java:175
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\ArchiveContentPane.java:182
+#: g3dit\src\main\java\de\george\g3dit\tab\template\TemplateContentPane.java:107
+#: g3dit\src\main\java\de\george\g3dit\tab\template\TemplateContentPane.java:114
+msgid "Asset info"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\ArchiveContentPane.java:176
+msgid "Determines the assets used by the entity and copies them to the clipboard."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\ArchiveContentPane.java:189
+msgid ""
+"If Ctrl is pressed when clicking, not the guid,\n"
+"but the position is used to determine the target."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\ArchiveContentPane.java:204
+msgid "Shows selected entities on map."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\ArchiveContentPane.java:215
+#: g3dit\src\main\java\de\george\g3dit\tab\template\TemplateContentPane.java:126
+msgid "Compare with original data"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\ArchiveContentPane.java:216
+msgid "Compares entity with version from original data."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\ArchiveContentPane.java:224
+msgid "There is no version of the file in the original data or the file itself is in the original data."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\ArchiveContentPane.java:232
+msgid "There is no version of the entity in the original data."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\ArchiveContentPane.java:239
+msgid "Comparison: Entity - Original Entity"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\ArchiveContentPane.java:338
+msgid "Faulty SubEntityDefintion"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\EditorArchiveTab.java:74
+msgid "Edit entity"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\EditorArchiveTab.java:79
+msgid "Property"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\EditorArchiveTab.java:84
+msgid "Calculate lighting"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\EditorArchiveTab.java:89
+msgid "NegCircle"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\EditorArchiveTab.java:280
+msgid "Number of entities: {0, number}"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\EditorArchiveTab.java:328
+msgid "Create .lrent"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\EditorArchiveTab.java:329
+#, java-format
+msgid ""
+"No corresponding .lrent could be found for ''{0}''.\n"
+"Should a .lrent be created?"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\EditorArchiveTab.java:335
+#, java-format
+msgid "Error while creating the DynamicLayer for {0}."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\EditorArchiveTab.java:347
+msgid "Create .lrgeo/.lrgeodat"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\EditorArchiveTab.java:348
+#, java-format
+msgid ""
+"No corresponding .lrgeo/.lrgeodat could be found for ''{0}''.\n"
+"Should a .lrgeo/.lrgeodat be created?"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\EditorArchiveTab.java:356
+#, java-format
+msgid "Error while creating the GeometryLayer for {0}."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\EditorArchiveTab.java:392
+msgid "Loading file..."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\EditorArchiveTab.java:427
+msgid "Error while opening the file."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\EntityTreeExtension.java:53
+msgid "Owner entity not equal to parent entity"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\EntityTreeExtension.java:65
+msgid "ChangeTime value ({0, number}) smaller than in referenced template ({1, number})"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\EntityTreeExtension.java:67
+msgid "ChangeTime value ({0, number}) greater than in referenced template ({1, number})"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\EntityView.java:110
+#: g3dit\src\main\java\de\george\g3dit\tab\template\views\TemplateHeaderView.java:111
+#, java-format
+msgid "Error while saving the tab ''{0}''."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\IlluminationView.java:64
+msgid "Light cache"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\IlluminationView.java:76
+msgid "Illuminate entities"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\IlluminationView.java:82
+msgid "Current illumination"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\IlluminationView.java:86
+msgid "Illuminate"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\IlluminationView.java:90
+msgid "Results(+)"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\IlluminationView.java:93
+msgid "Errors(-)"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\IlluminationView.java:127
+msgid "Status: Present ({0, number})"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\IlluminationView.java:128
+msgid "Light sources: {0, number}"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\IlluminationView.java:130
+msgid "Status: Does not exist!"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\IlluminationView.java:131
+msgid "Light sources: -"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\IlluminationView.java:150
+msgid "Selected: {0, number}"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\IlluminationView.java:181
+#, java-format
+msgid "{0} ({1}) is not illuminated, no eCIlluminated_PS PropertySet."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\IlluminationView.java:191
+#, java-format
+msgid "{0} ({1}) is not illuminated, no static mesh."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\IlluminationView.java:196
+#, java-format
+msgid "{0} ({1}) is illuminated with a lightmap."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\IlluminationView.java:202
+msgid "{0} ({1}) is illuminated with {3, number} light sources."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\IlluminationView.java:205
+#, java-format
+msgid "{0} ({1}) is not illuminated by any light source."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\IlluminationView.java:214
+msgid "Light cache does not exist"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\IlluminationView.java:215
+msgid "Before entities can be illuminated, the light cache must be created."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\IlluminationView.java:223
+#, java-format
+msgid "{0} ({1}) was not illuminated, StaticLightingType not equal to eEStaticLightingType_Instance."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\IlluminationView.java:227
+#, java-format
+msgid "{0} ({1}) was not illuminated, no static mesh."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\IlluminationView.java:231
+#, java-format
+msgid "{0} ({1}) was not illuminated, no eCIlluminated_PS class."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\IlluminationView.java:234
+#, java-format
+msgid "{0} ({1}) had no light source nearby."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\IlluminationView.java:238
+msgid "{0} ({1}) was illuminated with {3, number} light sources."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\IlluminationView.java:252
+msgid "Only illuminable entities"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\NegCircleView.java:62
+msgid "Create & Remove"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\NegCircleView.java:68
+msgid "Create NegCircles"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\NegCircleView.java:72
+msgid "Remove NegCircles"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\NegCircleView.java:76
+msgid "Remove manually (specify guids)"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\NegCircleView.java:130
+#, java-format
+msgid "Selected: {0}"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\NegCircleView.java:158
+msgid "NavCalc could not be created."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\NegCircleView.java:165
+msgid "NegCircle entry already exists."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\NegCircleView.java:170
+msgid "No NegCircle prototype found for this entity."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\NegCircleView.java:178
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\NegCircleView.java:216
+#, java-format
+msgid "Critical Error! Saving the NavMap is NOT recommended: {0}"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\NegCircleView.java:187
+msgid "Created without NavZone!"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\NegCircleView.java:209
+msgid "No NegCircle entry exists."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\NegCircleView.java:219
+msgid "Removed!"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\NegCircleView.java:233
+msgid "Enter the guids of the NegCircles"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\NegCircleView.java:250
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\NegCircleView.java:281
+msgid "NavMap could not be loaded."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\NegCircleView.java:262
+msgid "Prototype available"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\NegCircleView.java:266
+msgid "NegCircle missing"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\NegCircleView.java:270
+msgid "NegCircle exists"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\AbstractNavTab.java:34
+msgid "Relative coordinates"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\AbstractNavTab.java:35
+msgid "Absolute coordinates"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\AbstractNavTab.java:48
+msgid "Sticks (x-pos/y-pos/z-pos//)"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\AllgemeinTab.java:95
+msgid "List all users of this freepoint"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\AllgemeinTab.java:98
+msgid "List all PartyMembers of this NPC"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\AllgemeinTab.java:101
+msgid "List all interaction points of this anchor"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\AllgemeinTab.java:104
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\NPCTab.java:75
+msgid "List all members of this enclave"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\AllgemeinTab.java:117
+msgid "World position"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\AllgemeinTab.java:121
+msgid "Local position"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\AllgemeinTab.java:124
+#: g3dit\src\main\java\de\george\g3dit\tab\template\views\header\AllgemeinTab.java:115
+msgid "BoundingBox"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\AllgemeinTab.java:139
+msgid "Load Reference Guid and ChangeTime from Template"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\AllgemeinTab.java:144
+msgid "Compare with template"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\AllgemeinTab.java:148
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\AllgemeinTab.java:152
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\NPCSlotPanel.java:76
+#: g3dit\src\main\java\de\george\g3dit\tab\template\views\header\AllgemeinTab.java:106
+#: g3dit\src\main\java\de\george\g3dit\tab\template\views\header\AllgemeinTab.java:108
+msgid "ChangeTime"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\AllgemeinTab.java:162
+#: g3dit\src\main\java\de\george\g3dit\tab\template\views\header\AllgemeinTab.java:124
+msgid "General"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\AllgemeinTab.java:277
+msgid "Comparison: Template - Entity"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\NPCSlotPanel.java:68
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\NPCSlotPanel.java:144
+#: g3dit\src\main\java\de\george\g3dit\util\AssetResolver.java:377
+msgid "MaterialSwitch"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\NPCSlotPanel.java:85
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\NPCSlotPanel.java:316
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\NPCSlotPanel.java:329
+msgid "Edit values"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\NPCSlotPanel.java:98
+msgid "Select entity for this slot"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\NPCSlotPanel.java:103
+msgid "Delete slot"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\NPCSlotPanel.java:173
+#, java-format
+msgid "Inner slot type ''{0}'' differs from outer slot type ''{1}''."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\NPCSlotPanel.java:178
+msgid "Slot not present"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\NPCSlotPanel.java:190
+#, java-format
+msgid "Slot entity ''{0}'' ({1}) is not a child of this NPC, but a child of ''{2}'' ({3})"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\NPCSlotPanel.java:205
+#, java-format
+msgid "Slot entity ''{0}'' has no mesh class"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\NPCSlotPanel.java:209
+#, java-format
+msgid "Slot entity with guid ''{0}'' was not found"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\NPCSlotPanel.java:313
+#: g3dit\src\main\java\de\george\g3dit\util\Dialogs.java:17
+msgid "Apply changes"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\NPCSlotPanel.java:313
+msgid "Discard changes"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\NPCSlotPanel.java:342
+msgid "Selected entity is not suitable for this slot type"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\NPCTab.java:40
+msgid "Head"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\NPCTab.java:41
+msgid "Body"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\NPCTab.java:42
+msgid "Hair"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\NPCTab.java:43
+msgid "Beard"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\NPCTab.java:44
+msgid "Helmet"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\NPCTab.java:51
+#: g3dit\src\main\java\de\george\g3dit\tab\shared\SharedNavOffsetTab.java:47
+#: g3dit\src\main\java\de\george\g3dit\tab\template\views\header\ItemTab.java:62
+#: g3dit\src\main\java\de\george\g3dit\tab\template\views\header\MapTab.java:37
+#: g3dit\src\main\java\de\george\g3dit\tab\template\views\header\TreasureSetTab.java:72
+msgid "Properties"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\NPCTab.java:67
+msgid "Guard"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\NPCTab.java:77
+msgid "Body parts"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\NavPathTab.java:64
+msgid "UnlimitedHeight"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\NavPathTab.java:66
+msgid "NavPath can be used by large NPCs, such as trolls and wyverns."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\NavPathTab.java:71
+msgid "ZoneA Guid"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\NavPathTab.java:78
+msgid "ZoneB Guid"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\NavPathTab.java:85
+msgid "ZoneAIntersectionCenter"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\NavPathTab.java:86
+msgid "ZoneBIntersectionCenter"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\NavPathTab.java:94
+msgid "ZoneAIntersectionMargin1"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\NavPathTab.java:95
+msgid "ZoneBIntersectionMargin1"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\NavPathTab.java:103
+msgid "ZoneAIntersectionMargin2"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\NavPathTab.java:104
+msgid "ZoneBIntersectionMargin2"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\NavPathTab.java:112
+msgid "Preserve NavPath coordinates"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\NavPathTab.java:119
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\NavZoneTab.java:41
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\VegetationTab.java:97
+msgid "Radius"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\NavPathTab.java:123
+msgid "Calculate NavPath"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\NavPathTab.java:128
+msgid "Resize NavPath"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\NavPathTab.java:140
+msgid "Loading Intersections from NavMap"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\NavPathTab.java:225
+msgid "The radius data is malformed."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\NavPathTab.java:228
+msgid "The stick data is malformed."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\NavPathTab.java:233
+msgid "The number of sticks and radii do not match."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\NavPathTab.java:238
+msgid "A NavPath must consist of at least 2 sticks."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\NavPathTab.java:291
+msgid "NavPath is not in the NavMap."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\NavPathTab.java:312
+msgid "Entry in the NavMap is faulty."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\NavPathTab.java:337
+msgctxt "Resize NavPath"
+msgid "Resize"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\NavPathTab.java:344
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\NavPathTab.java:348
+msgctxt "Resize NavPath"
+msgid "Locked"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\NavPathTab.java:416
+#, java-format
+msgid "Invalid input: {0}"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\NavZoneTab.java:47
+msgid "RadiusOffset (x/y/z//)"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\NavZoneTab.java:52
+msgid "Sticks are oriented counterclockwise. (is calculated automatically)"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\NavZoneTab.java:58
+msgid "ZoneIsCCW"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\NavZoneTab.java:61
+msgid "Preserve NavZone coordinates"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\NavZoneTab.java:63
+msgid "Calculate NavZone from sticks"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\NavZoneTab.java:101
+#: g3dit\src\main\java\de\george\g3dit\tab\negzone\NegZoneContentPane.java:192
+#: g3dit\src\main\java\de\george\g3dit\tab\prefpath\PrefPathContentPane.java:155
+#: g3dit\src\main\java\de\george\g3dit\tab\prefpath\PrefPathContentPane.java:164
+msgid "Malformed coordinates were provided for at least one stick."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\NavZoneTab.java:105
+msgid "A NavZone must consist of at least 3 sticks."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\NavigationTab.java:73
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\NavigationTab.java:174
+msgid "Routine"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\NavigationTab.java:183
+msgid "List all users of this interaction point"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\NavigationTab.java:187
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\NavigationTab.java:219
+msgid "Working"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\NavigationTab.java:195
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\NavigationTab.java:220
+msgid "Relaxing"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\NavigationTab.java:203
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\NavigationTab.java:221
+msgid "Sleeping"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\NavigationTab.java:233
+msgid "{0, number}. Routine: {1}"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\PartyTab.java:29
+msgid "List all PartyMembers of the PartyLeader"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\VegetationTab.java:87
+msgid "Invert"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\VegetationTab.java:88
+msgid "Show entries outside instead of within the specified radius."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\VegetationTab.java:94
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\dialogs\CreatePlantDialog.java:80
+msgctxt "coordinate"
+msgid "X"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\VegetationTab.java:95
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\dialogs\CreatePlantDialog.java:81
+msgctxt "coordinate"
+msgid "Y"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\VegetationTab.java:96
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\dialogs\CreatePlantDialog.java:82
+msgctxt "coordinate"
+msgid "Z"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\VegetationTab.java:139
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\VegetationTab.java:206
+msgid "Insert new object"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\VegetationTab.java:144
+msgid "New object from clipboard"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\VegetationTab.java:149
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\VegetationTab.java:241
+msgid "Edit object"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\VegetationTab.java:155
+msgid "Delete selected"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\VegetationTab.java:161
+msgid "Colorize"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\VegetationTab.java:168
+msgid "Default color"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\VegetationTab.java:170
+msgid "Default color from selection"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\VegetationTab.java:176
+msgid "Teleports the player to the object."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\VegetationTab.java:184
+msgid "View meshes"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\VegetationTab.java:188
+msgid "Recalculate BoundaryBox"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\VegetationTab.java:190
+msgid "<html>Normally not needed, as the bounding box is automatically recalculated when changes are made.<br>Can be used to repair a file that was edited manually or with a version of g3dit,<br>which did not yet support recalculation of the bounding box (anything before 1.5a).</html>"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\VegetationTab.java:214
+msgid "Should the new object be saved?"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\VegetationTab.java:215
+#, java-format
+msgid ""
+"The position ({0}) of the new object ''{1}''\n"
+"is outside the scope of this file.\n"
+"The object should instead be inserted into the file responsible for the scope."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\VegetationTab.java:249
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\VegetationTab.java:479
+msgid "Should the new position be saved?"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\VegetationTab.java:250
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\VegetationTab.java:480
+#, java-format
+msgid ""
+"The new position ({0}) of object ''{1}''\n"
+"is outside the scope of this file.\n"
+"The object should instead be moved to the file responsible for the area."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\VegetationTab.java:379
+msgid "Position X"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\VegetationTab.java:380
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\dialogs\CreatePlantDialog.java:93
+msgid "Pitch"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\VegetationTab.java:380
+msgid "Position Y"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\VegetationTab.java:380
+msgid "Position Z"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\VegetationTab.java:380
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\dialogs\CreatePlantDialog.java:94
+msgid "Yaw"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\VegetationTab.java:381
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\dialogs\CreatePlantDialog.java:95
+msgid "Roll"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\VegetationTab.java:381
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\dialogs\CreatePlantDialog.java:107
+msgid "Scale Height"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\VegetationTab.java:381
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\dialogs\CreatePlantDialog.java:106
+msgid "Scale Width"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\VegetationTab.java:382
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\dialogs\CreatePlantDialog.java:108
+msgid "Color"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\dialogs\BoundingBoxDialog.java:28
+#: g3dit\src\main\java\de\george\g3dit\tab\shared\BoundingBoxPanel.java:59
+msgid "Change BoundingBox"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\dialogs\BoundingBoxDialog.java:40
+msgid "min-x"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\dialogs\BoundingBoxDialog.java:41
+msgid "min-y"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\dialogs\BoundingBoxDialog.java:42
+msgid "min-z"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\dialogs\BoundingBoxDialog.java:51
+msgid "max-x"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\dialogs\BoundingBoxDialog.java:52
+msgid "max-y"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\dialogs\BoundingBoxDialog.java:53
+msgid "max-z"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\dialogs\EditVegetationMeshesDialog.java:59
+msgid "Edit vegetation meshes"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\dialogs\EditVegetationMeshesDialog.java:81
+msgid "MeshFilePath"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\dialogs\EditVegetationMeshesDialog.java:86
+msgid "MeshID"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\dialogs\EditVegetationMeshesDialog.java:91
+msgid "DiffuseTexture"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\dialogs\EditVegetationMeshesDialog.java:96
+msgid "Number of occurrences"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\dialogs\EditVegetationMeshesDialog.java:101
+msgid "Vertices"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\dialogs\EditVegetationMeshesDialog.java:102
+msgid "Normals"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\dialogs\EditVegetationMeshesDialog.java:103
+msgid "UVs"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\dialogs\EditVegetationMeshesDialog.java:104
+msgid "Indices"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\dialogs\EditVegetationMeshesDialog.java:118
+msgid "WindStrength"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\dialogs\EditVegetationMeshesDialog.java:159
+msgid "Import meshes"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\dialogs\EditVegetationMeshesDialog.java:160
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\dialogs\EditVegetationMeshesDialog.java:171
+msgid "Importing meshes from another VegetationRoot"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\dialogs\EditVegetationMeshesDialog.java:183
+#, java-format
+msgid "''{0}'' does not contain a VegetationRoot."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\dialogs\SlotDialog.java:12
+msgid "Load slot from template"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\dialogs\SlotDialog.java:21
+msgid "Template is not suitable for this slot."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\property\G3EnumArrayPropertyEditor.java:66
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\property\JsonStringPropertyEditor.java:68
+msgid "Edit value"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\property\G3EnumArrayPropertyEditor.java:123
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\property\G3EnumArrayPropertyEditor.java:166
+msgid "Value"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\property\G3EnumArrayPropertyEditor.java:185
+msgid "{0, number}. Value"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\property\G3EnumArrayWrapper.java:34
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\property\G3EnumWrapper.java:32
+#, java-format
+msgctxt "Unknown enum value"
+msgid "Unknown: {0}"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\property\G3Property.java:131
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\property\PropertyDescriptorAdapter.java:89
+msgid "Error while displaying"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\property\G3Property.java:132
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\property\PropertyDescriptorAdapter.java:90
+#, java-format
+msgid "Error while displaying the value of the property ''{0}''."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\property\G3Property.java:172
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\property\PropertyDescriptorAdapter.java:111
+#, java-format
+msgid "Error while parsing the entered value ''{0}'' for property ''{1}''."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\property\PropertyDescriptorAdapter.java:110
+msgid "Error while parsing"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\effectmap\EffectMapContentPane.java:64
+msgid "Effects"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\effectmap\EffectMapContentPane.java:93
+msgid "Commands"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\effectmap\EffectMapContentPane.java:123
+#: g3dit\src\main\java\de\george\g3dit\tab\negcircle\NegCircleContentPane.java:58
+#: g3dit\src\main\java\de\george\g3dit\tab\negzone\NegZoneContentPane.java:74
+msgid "Create"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\effectmap\EffectMapContentPane.java:123
+msgid "Create new EffectCommand"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\effectmap\EffectMapContentPane.java:181
+msgid "Samples"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\effectmap\EffectMapContentPane.java:220
+msgid "Sample"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\effectmap\EffectMapContentPane.java:221
+msgid "Probability"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\effectmap\EffectMapContentPane.java:292
+msgid "Create new effect"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\effectmap\EffectMapContentPane.java:292
+msgid "Please enter the name of the effect"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\effectmap\EffectMapContentPane.java:293
+msgid "Insert effect"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\navmap\EditorNavMapObjectTab.java:18
+#, java-format
+msgid "NavMap -> {0}s"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\navmap\NavMapObjectContentPane.java:75
+msgid "Teleports the player to the selected object."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\navmap\NavMapObjectContentPane.java:81
+msgid "Shows selected objects on map."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\navmap\NavMapObjectContentPane.java:102
+msgid "Guid OR position and radius in format x/y/z// r"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\negcircle\NegCircleContentPane.java:58
+msgid "Create NegCircle"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\negcircle\NegCircleContentPane.java:148
+msgid "Calculate NegCircle from offsets"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\negcircle\NegCircleContentPane.java:180
+msgid "Invalid values were entered for at least one offset or radius."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\negcircle\NegCircleContentPane.java:185
+msgid "A NegCircle must have at least one offset."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\negcircle\NegCircleContentPane.java:190
+msgid "Number of offsets and radii differs."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\negzone\NegZoneContentPane.java:74
+msgid "Create NegZone"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\negzone\NegZoneContentPane.java:164
+msgid "Calculate NegZone from sticks"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\negzone\NegZoneContentPane.java:197
+msgid "A NegZone must consist of at least 3 sticks."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\prefpath\PrefPathContentPane.java:52
+msgid "<No longer in NavMap>"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\prefpath\PrefPathContentPane.java:128
+msgid "Calculate PrefPath from sticks"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\prefpath\PrefPathContentPane.java:169
+msgid "Number of sticks and radii differs."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\prefpath\PrefPathContentPane.java:191
+msgid "Spans two NavZones"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\prefpath\PrefPathContentPane.java:192
+msgid ""
+"The PrefPath spans two or more zones,\n"
+"but a PrefPath can only be assigned to one zone.\n"
+"Please consider to change the PrefPath."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\secdat\EditorSecdatTab.java:135
+msgid "Create .sec"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\secdat\EditorSecdatTab.java:136
+#, java-format
+msgid ""
+"No corresponding .sec could be found for ''{0}''.\n"
+"Should a .sec be created?"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\secdat\SecdatContentPane.java:64
+msgid "Create new entry"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\secdat\SecdatContentPane.java:65
+#, java-format
+msgid "Insert {0}"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\secdat\SecdatContentPane.java:65
+#, java-format
+msgid "Please enter the name of the {0}"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\shared\AbstractElementPanel.java:35
+msgid "Move up"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\shared\AbstractElementPanel.java:45
+msgid "Move down"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\shared\AbstractElementPanel.java:50
+#, java-format
+msgid "Insert {0} before"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\shared\AbstractElementPanel.java:55
+#, java-format
+msgid "Insert {0} behind"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\shared\AbstractElementsPanel.java:36
+#, java-format
+msgid "Add {0}"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\shared\BoundingBoxPanel.java:64
+msgid "Copy BoundingBox to clipboard"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\shared\BoundingBoxPanel.java:69
+msgid "Load BoundingBox from template"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\shared\BoundingBoxPanel.java:74
+msgid "Loading BoundingBox from mesh"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\shared\BoundingBoxPanel.java:82
+#, java-format
+msgid "Min: {0}"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\shared\BoundingBoxPanel.java:83
+#, java-format
+msgid "Max: {0}"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\shared\BoundingBoxPanel.java:101
+msgid "Entity does not have a static mesh."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\shared\BoundingBoxPanel.java:107
+msgid "Mesh could not be found"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\shared\PositionPanel.java:72
+msgid "Change position, preserve keep world position of child entities"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\shared\PositionPanel.java:78
+msgid "Change position"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\shared\PositionPanel.java:109
+#, java-format
+msgid "Change {0}"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\shared\PositionPanel.java:109
+#, java-format
+msgid "Change {0} (child position unchanged)"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\shared\SharedCollisionShapeTab.java:67
+msgid "Collision shapes"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\shared\SharedCollisionShapeTab.java:69
+#: g3dit\src\main\java\de\george\g3dit\tab\shared\SharedCollisionShapeTab.java:100
+msgid "Load from .xnvmsh"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\shared\SharedCollisionShapeTab.java:131
+#: g3dit\src\main\java\de\george\g3dit\tab\shared\SharedCollisionShapeTab.java:184
+msgid "Collision shape"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\shared\SharedCollisionShapeTab.java:319
+msgid "<html>For CollisionMeshes consisting of one NXS mesh 0.<p>For CollisionMeshes consisting of two or more NXS meshes,<br>there must be as many CollisionShapes,<br>with an ascending ResourceIndex starting at 0.</html>"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\shared\SharedCollisionShapeTab.java:333
+msgid "Update the boundary of the collision shape?"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\shared\SharedCollisionShapeTab.java:334
+msgid "Should the Boundary of this collision shape be adopted from the specified collision mesh?"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\shared\SharedCollisionShapeTab.java:344
+msgid "Invalid ResourceIndex"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\shared\SharedCollisionShapeTab.java:345
+msgid ""
+"The specified ResourceIndex {0, number} does not match the collision mesh, which contains {1, number} NXS meshes.\n"
+"Boundary is set to invalid."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\shared\SharedCollisionShapeTab.java:355
+msgid "Collision mesh not found"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\shared\SharedCollisionShapeTab.java:356
+#, java-format
+msgid ""
+"The CollisionMesh ''{0}'' could not be found.\n"
+"Boundary is set to invalid."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\shared\SharedInventarTab.java:52
+msgid "TreasureSets"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\shared\SharedInventarTab.java:61
+msgid "InventoryStacks"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\shared\SharedInventarTab.java:73
+msgid "Inventory"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\shared\SharedInventarTab.java:83
+#: g3dit\src\main\java\de\george\g3dit\tab\shared\SharedInventarTab.java:142
+msgid "Stack"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\shared\SharedInventarTab.java:164
+msgid "<no template found>"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\shared\SharedInventarTab.java:190
+msgid "Template guid"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\shared\SharedNavOffsetTab.java:49
+msgid "Animation can be performed on a circle around this object."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\shared\SharedNavOffsetTab.java:50
+msgid "The radius of the circle is defined by the first NavOffset."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\shared\SharedNavOffsetTab.java:97
+msgid "gCNavOffset_PS has different numbers of OffsetPoses and AniDirections."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\shared\SharedPropertyView.java:83
+msgid "Read Remote PropertySet"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\shared\SharedPropertyView.java:89
+msgid "Write Remote PropertySet"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\shared\SharedPropertyView.java:97
+msgid "Read remote property"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\shared\SharedPropertyView.java:103
+msgid "Write remote property"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\shared\SharedPropertyView.java:109
+msgid "Add property"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\shared\SharedPropertyView.java:114
+msgid "Remove property"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\shared\SharedPropertyView.java:254
+#, java-format
+msgid "PropertySet already has a property named ''{0}''."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\template\EditorTemplateTab.java:69
+msgid "Edit template"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\template\EditorTemplateTab.java:158
+#: g3dit\src\main\java\de\george\g3dit\tab\template\EditorTemplateTab.java:229
+#: g3dit\src\main\java\de\george\g3dit\tab\template\EditorTemplateTab.java:234
+msgid "Template could not be opened"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\template\EditorTemplateTab.java:229
+msgid "Template has no item header."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\template\EditorTemplateTab.java:234
+msgid "Template has no reference header."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\template\EditorTemplateTab.java:242
+msgid "Where is the guru?"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\template\EditorTemplateTab.java:243
+msgid ""
+"Template has different names in item and reference header.\n"
+"Which one should be kept?"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\template\EditorTemplateTab.java:245
+msgid "Cancel loading the template."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\template\EditorTemplateTab.java:277
+msgid "No suitable TemplateContext could be found."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\template\EditorTemplateTab.java:284
+msgid "There is no entry in the corresponding TemplateContext."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\template\EditorTemplateTab.java:290
+msgid ""
+"For the name of the template there is already an entry in the corresponding TemplateContext,\n"
+"but under a different guid."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\template\EditorTemplateTab.java:298
+#, java-format
+msgid ""
+"For the guid of the template already exists an entry in the corresponding TemplateContext,\n"
+"but in combination with the name {0}."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\template\EditorTemplateTab.java:306
+#: g3dit\src\main\java\de\george\g3dit\tab\template\EditorTemplateTab.java:314
+#, java-format
+msgctxt "Invalid template context"
+msgid "Error opening the corresponding TemplateContext {0}"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\template\EditorTemplateTab.java:310
+msgctxt "Invalid template context"
+msgid "as it contains multiple entries with the same guid."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\template\EditorTemplateTab.java:311
+msgctxt "Invalid template context"
+msgid "as it contains at least one invalid guid."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\template\EditorTemplateTab.java:359
+msgctxt "Invalid lrtpldatasc"
+msgid "as it contains multiple entries with the same guid"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\template\EditorTemplateTab.java:360
+msgctxt "Invalid lrtpldatasc"
+msgid "as it contains at least one invalid guid"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\template\EditorTemplateTab.java:361
+msgid ".lrtpldatasc entry"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\template\EditorTemplateTab.java:362
+#, java-format
+msgctxt "Invalid lrtpldatasc"
+msgid ""
+"The .lrtpldatasc ''{1}'' responsible for ''{0}'' could not be opened,\n"
+"{2} ({3}).\n"
+"Should it be opened in the file manager?"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\template\EditorTemplateTab.java:382
+msgid "Create .lrtpldatasc"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\template\EditorTemplateTab.java:383
+#, java-format
+msgid "No suitable .lrtpldatasc could be found for ''{0}''."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\template\EditorTemplateTab.java:384
+msgid "Create new .lrtpldatasc"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\template\EditorTemplateTab.java:384
+#: g3dit\src\main\java\de\george\g3dit\tab\template\EditorTemplateTab.java:391
+msgid "Search for .lrtpldatasc"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\template\EditorTemplateTab.java:385
+msgid "Ignore"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\template\EditorTemplateTab.java:408
+msgid "Create .lrtpldatasc entry"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\template\EditorTemplateTab.java:409
+#, java-format
+msgid "Should an entry be created for {0} in ''{1}''?"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\template\EditorTemplateTab.java:416
+#: g3dit\src\main\java\de\george\g3dit\tab\template\EditorTemplateTab.java:426
+msgid "Update .lrtpldatasc entry"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\template\EditorTemplateTab.java:417
+#, java-format
+msgid ""
+"For {0} there is already an entry in ''{1}'',\n"
+"but under a different guid.\n"
+"\n"
+"Should the entry be updated?"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\template\EditorTemplateTab.java:427
+#, java-format
+msgid ""
+"For the guid of {0} there is already an entry in ''{1}'',\n"
+"but in combination with the name {2}.\n"
+"\n"
+"Should the entry be updated?"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\template\EditorTemplateTab.java:447
+#, java-format
+msgid "''{0}'' could not be saved."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\template\TemplateContentPane.java:108
+msgid "Determines the assets used by the template and copies them to the clipboard."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\template\TemplateContentPane.java:118
+msgid "Check TemplateContext"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\template\TemplateContentPane.java:120
+msgid "Checks if the template is registered in a TemplateContext and offers corrective actions."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\template\TemplateContentPane.java:127
+msgid "Compares template with version from original data."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\template\TemplateContentPane.java:135
+msgid "There is no version of the template in the original data or the template itself is in the original data."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\template\TemplateContentPane.java:143
+msgid "Comparison: Template - Original Template"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\template\views\header\AllgemeinTab.java:66
+msgid "File prefix"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\template\views\header\AllgemeinTab.java:71
+#: g3dit\src\main\java\de\george\g3dit\tab\template\views\header\AllgemeinTab.java:73
+msgid "Item Guid"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\template\views\header\AllgemeinTab.java:81
+msgid "Copy .lrtpldatasc entry to clipboard"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\template\views\header\AllgemeinTab.java:91
+msgid "List all references in entities to this template"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\template\views\header\AllgemeinTab.java:93
+msgid "List all references in templates to this template"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\template\views\header\MapTab.java:26
+msgid "Active"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\template\views\header\MapTab.java:50
+msgid "Markers"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\template\views\header\RecipeTab.java:59
+msgid "Category"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\template\views\header\RecipeTab.java:64
+msgid "Ingredients"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\template\views\header\RecipeTab.java:82
+msgid "Result"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\template\views\header\RecipeTab.java:95
+msgid "Requirements"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\template\views\header\TreasureSetTab.java:78
+msgid "Template name is composed of: <Category>_TS_<TreasureDistribution>_<Name>"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\template\views\header\TreasureSetTab.java:104
+msgid "Clipboard"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\template\views\header\TreasureSetTab.java:105
+msgid "Copy summary of TreasureSet to clipboard"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\template\views\header\TreasureSetTab.java:175
+msgid "The guid of item #{0, number} is invalid."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\util\AbstractDialogFileWorker.java:19
+msgid "Processing completed"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\util\AbstractDialogFileWorker.java:19
+msgid "{0, number}/{1, number} files processed"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\util\AssetResolver.java:99
+msgid "Container has no mesh."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\util\AssetResolver.java:120
+#, java-format
+msgid "Error while opening the mesh: {0}"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\util\AssetResolver.java:122
+msgid "No mesh with this name found."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\util\AssetResolver.java:141
+#, java-format
+msgid "Error while opening the material: {0}"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\util\AssetResolver.java:143
+msgid "No material with this name found."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\util\AssetResolver.java:230
+#: g3dit\src\main\java\de\george\g3dit\util\AssetResolver.java:263
+msgid "No texture with this name found."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\util\AssetResolver.java:447
+msgid "Texture"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\util\AssetResolver.java:449
+msgid "Usage"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\util\AssetResolver.java:451
+msgid "Base name"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\util\AssetResolver.java:452
+msgid "SwitchRepeat"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\util\FileDialogWrapper.java:18
+msgid "All"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\util\FileDialogWrapper.java:21
+msgid "World data"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\util\FileManager.java:268
+#: g3dit\src\main\java\de\george\g3dit\util\FileManager.java:275
+msgid "Do you really want to save the file?"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\util\FileManager.java:269
+#, java-format
+msgid ""
+"''{0}'' is located in the secondary data directory.\n"
+"Normally, no changes should be made to files in this directory.\n"
+"\n"
+"A file already exists in the primary data directory under the same relative path.\n"
+"\n"
+"Should it be saved anyway?"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\util\FileManager.java:276
+#, java-format
+msgid ""
+"''{0}'' is located in the secondary data directory.\n"
+"Normally, no changes should be made to files in this directory.\n"
+"\n"
+"Should it be saved anyway?"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\util\FileManager.java:280
+msgid "Save under the same relative path in the primary data directory."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\util\ImportHelper.java:54
+msgid "Entities from a *.node cannot be imported into a *.lrentdat."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\util\ImportHelper.java:57
+msgid "Entities from a *.lrentdat cannot be imported into a *.node."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\util\ImportHelper.java:61
+msgid "Incompatible file types"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\util\ImportHelper.java:62
+msgid "Should the entities be converted?"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\util\ImportHelper.java:68
+msgid "Import entities"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\util\ImportHelper.java:182
+msgid "Import child entities"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\util\ImportHelper.java:185
+msgid "Generate random guids"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\util\LowPolyGenerator.java:134
+#, java-format
+msgid "Speedtree mesh {0} of entity {1} is not available in LowPoly_MCP! Skipping."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\util\LowPolyGenerator.java:151
+msgid "Create low poly node {0} with {1, number} entities."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\util\LowPolyGenerator.java:181
+#, java-format
+msgid "Failed to create low poly sector {0}: {1}"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\util\LowPolyGenerator.java:195
+#, java-format
+msgid "{0} blacklisted objects."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\util\LowPolyGenerator.java:206
+#, java-format
+msgid "Failed to open low poly mesh {0}."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\util\LowPolyGenerator.java:210
+msgid "Found {0, number} low poly meshes."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\util\LowPolyGenerator.java:257
+#, java-format
+msgid "File {0} referenced by sector {1} does not exist."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\util\LowPolyGenerator.java:269
+#, java-format
+msgid "Failed to open archive {0}: {1}"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\util\LowPolyGenerator.java:293
+#, java-format
+msgid "Failed to open/save secdat {0}."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\util\LowPolyGenerator.java:300
+msgid "Create speedtree low poly lrentdat with {0, number} speedtrees."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\util\LowPolyGenerator.java:318
+msgid "LowPoly generation FAILED!"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\util\LowPolyGenerator.java:318
+msgid "LowPoly generation SUCCESSFUL!"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\util\NavMapManager.java:52
+msgid "NavMap could not be found"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\util\NavMapManager.java:53
+msgid ""
+"The NavMap (NavigationMap.xnav) could not be found.\n"
+"Please check if the data directories are configured correctly."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\util\NavMapManager.java:64
+msgid "Error while loading the NavMap"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\util\NavMapManager.java:65
+msgid "An error occurred while loading the NavMap:"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\util\NavMapManager.java:92
+#, java-format
+msgid "NavMap could not be saved: {0}"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\util\NavMapManager.java:99
+msgid "Save NavMap as"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\util\StringtableHelper.java:32
+msgid ""
+"The file file contains unknown classes, by cleaning up the stringtable\n"
+"could delete string table entries that are still used by those classes.\n"
+"Clean up the string table anyway?"
+msgstr ""
