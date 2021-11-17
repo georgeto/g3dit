@@ -14,6 +14,7 @@ import java.util.function.Supplier;
 
 import javax.swing.SwingUtilities;
 
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.common.collect.Lists;
@@ -25,6 +26,8 @@ import com.google.common.util.concurrent.ListeningExecutorService;
 import com.google.common.util.concurrent.MoreExecutors;
 
 public final class ConcurrencyUtil {
+	private static final Logger logger = LoggerFactory.getLogger(ConcurrencyUtil.class);
+
 	private ConcurrencyUtil() {}
 
 	public static ListenableFuture<Void> executeAndInvokeLater(Runnable task, FutureCallback<Void> callback,
@@ -60,8 +63,7 @@ public final class ConcurrencyUtil {
 
 			@Override
 			public void onFailure(Throwable t) {
-				LoggerFactory.getLogger(this.getClass()).warn("Execution of '{}' failed with callback '{}' failed.", task.getClass(),
-						callback.getClass(), t);
+				logger.warn("Execution of '{}' failed with callback '{}' failed.", task.getClass(), callback.getClass(), t);
 			}
 		}, MoreExecutors.directExecutor());
 		return future;
@@ -144,6 +146,8 @@ public final class ConcurrencyUtil {
 					for (int i = partBegin; i < partBegin + partSize && i < itemCount; i++) {
 						processor.accept(items.get(i));
 					}
+				} catch (Exception e) {
+					logger.warn("Execution of '{}' failed failed.", processor, e);
 				} finally {
 					latch.countDown();
 				}
@@ -171,6 +175,8 @@ public final class ConcurrencyUtil {
 							break;
 						}
 					}
+				} catch (Exception e) {
+					logger.warn("Execution of '{}' failed failed.", processor, e);
 				} finally {
 					latch.countDown();
 				}
@@ -193,6 +199,8 @@ public final class ConcurrencyUtil {
 			MULTI_EXECUTOR.submit(() -> {
 				try {
 					processor.accept(partition);
+				} catch (Exception e) {
+					logger.warn("Execution of '{}' failed failed.", processor, e);
 				} finally {
 					latch.countDown();
 				}
