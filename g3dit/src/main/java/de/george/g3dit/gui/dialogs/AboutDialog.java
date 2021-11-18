@@ -3,9 +3,11 @@ package de.george.g3dit.gui.dialogs;
 import java.awt.Window;
 
 import javax.swing.JComponent;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
+import com.google.common.base.StandardSystemProperty;
 import com.jidesoft.dialog.BannerPanel;
 import com.teamunify.i18n.I;
 
@@ -59,6 +61,9 @@ public class AboutDialog extends ExtStandardDialog {
 		iconPanel.add(new JLinkLabel("Crystal Clear", "http://everaldo.com"), "gapleft 7, wrap");
 		iconPanel.add(new JLinkLabel("Silk Icons", "http://www.famfamfam.com/lab/icons/silk/"), "gapleft 7, wrap");
 
+		String javaInfo = SwingUtils.getMultilineText(String.format("Java: %s", StandardSystemProperty.JAVA_VERSION.value()), String
+				.format("JVM: %s (%s)", StandardSystemProperty.JAVA_VM_NAME.value(), StandardSystemProperty.JAVA_VM_VERSION.value()));
+		mainPanel.add(new JLabel(javaInfo), "spanx, alignx right, aligny bottom");
 		return mainPanel;
 	}
 }
