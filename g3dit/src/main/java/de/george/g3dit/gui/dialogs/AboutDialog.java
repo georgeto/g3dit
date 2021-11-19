@@ -52,6 +52,7 @@ public class AboutDialog extends ExtStandardDialog {
 		libPanel.add(new JLinkLabel("Guava", "https://github.com/google/guava"), "gapleft 7, wrap");
 		libPanel.add(new JLinkLabel("OneInstance", "https://github.com/kayahr/oneinstance"), "gapleft 7, wrap");
 		libPanel.add(new JLinkLabel("WinRun4J", "https://github.com/poidasmith/winrun4j"), "gapleft 7, wrap");
+		libPanel.add(new JLinkLabel("JavaInfo", "https://github.com/Bill-Stewart/JavaInfo"), "gapleft 7, wrap");
 		libPanel.add(new JLinkLabel("JBreadcrumb", "https://github.com/ghedlund/jbreadcrumb"), "gapleft 7, wrap");
 		libPanel.add(new JLinkLabel("FlatLaf", "https://github.com/JFormDesigner/FlatLaf"), "gapleft 7, wrap");
 		libPanel.add(new JLinkLabel("easy-i18n", "https://github.com/awkay/easy-i18n"), "gapleft 7, wrap");
