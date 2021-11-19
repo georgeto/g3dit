@@ -83,6 +83,9 @@ jar {
 				'g3dit-Version': project.version
 		)
 	}
+	processResources {
+		exclude('logback-test.xml')
+	}
 }
 
 application {
