@@ -19,8 +19,8 @@ public class AboutDialog extends ExtStandardDialog {
 		super(owner, I.tr("About g3dit"), true);
 		setType(Type.UTILITY);
 		setResizable(false);
-		setSize(500, 470);
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+		autosize(500, 0);
 	}
 
 	@Override
@@ -32,12 +32,12 @@ public class AboutDialog extends ExtStandardDialog {
 
 	@Override
 	public JComponent createContentPanel() {
-		JPanel mainPanel = new JPanel(new MigLayout("fillx", "[][]"));
+		JPanel mainPanel = new JPanel(new MigLayout("fillx"));
 
 		JPanel libPanel = new JPanel(new MigLayout("fill, insets 0"));
-		JPanel iconPanel = new JPanel(new MigLayout("fill, insets 0", "", "[][][][]push"));
-		mainPanel.add(libPanel, "width 50%, growy");
-		mainPanel.add(iconPanel, "width 50%, growy, wrap");
+		JPanel iconPanel = new JPanel(new MigLayout("fill, insets 0"));
+		mainPanel.add(libPanel, "width 50%, aligny top");
+		mainPanel.add(iconPanel, "width 50%, aligny top, wrap");
 
 		libPanel.add(SwingUtils.createBoldLabel(I.tr("Libraries")), "wrap");
 		libPanel.add(new JLinkLabel("MigLayout", "http://www.miglayout.com/"), "gapleft 7, wrap");

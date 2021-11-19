@@ -2,6 +2,7 @@ package de.george.g3dit.gui.dialogs;
 
 import java.awt.Component;
 import java.awt.Dialog;
+import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.GraphicsConfiguration;
 import java.awt.HeadlessException;
@@ -144,6 +145,11 @@ public abstract class ExtStandardDialog extends StandardDialog {
 	protected void addDefaultCancelButton(ButtonPanel buttonPanel) {
 		Action action = SwingUtils.createAction(I.tr("Cancel"), this::cancel);
 		addButton(buttonPanel, action, ButtonPanel.CANCEL_BUTTON);
+	}
+
+	protected void autosize(int minWidth, int minHeight) {
+		setMinimumSize(new Dimension(minWidth, minHeight));
+		pack();
 	}
 
 	public void open() {
