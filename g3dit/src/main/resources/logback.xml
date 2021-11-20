@@ -6,7 +6,7 @@
 		<file>logs/g3dit-${byDay}.log</file>
 
 		<encoder>
-			<pattern>%date [%thread] %-5level (%file:%line\) %msg%n
+			<pattern>%date [%thread] %-5level %logger{36} (%file:%line\) %msg%n
 			</pattern>
 		</encoder>
 	</appender>

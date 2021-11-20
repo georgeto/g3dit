@@ -103,6 +103,7 @@ import de.george.lrentnode.util.FileUtil;
 import de.george.navmap.sections.NavMap;
 import net.tomahawk.XFileDialog;
 import one.util.streamex.StreamEx;
+import uk.org.lidalia.sysoutslf4j.context.SysOutOverSLF4J;
 
 public class Editor implements EditorContext {
 	private static final Logger logger = LoggerFactory.getLogger(Editor.class);
@@ -241,6 +242,10 @@ public class Editor implements EditorContext {
 		SLF4JBridgeHandler.removeHandlersForRootLogger();
 		SLF4JBridgeHandler.install();
 		java.util.logging.Logger.getLogger("").setLevel(Level.WARNING);
+
+		if (!EditorCli.isInConsoleMode())
+			// Redirect System.out and System.err to slf4j
+			SysOutOverSLF4J.sendSystemOutAndErrToSLF4J(uk.org.lidalia.slf4jext.Level.INFO, uk.org.lidalia.slf4jext.Level.ERROR);
 
 		ch.qos.logback.classic.Logger diffLogger = (ch.qos.logback.classic.Logger) LoggerFactory.getLogger("de.danielbechler.diff");
 		diffLogger.setLevel(ch.qos.logback.classic.Level.INFO);
