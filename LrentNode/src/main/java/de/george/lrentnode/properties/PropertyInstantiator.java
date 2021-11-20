@@ -61,7 +61,7 @@ public class PropertyInstantiator {
 				return (T) new bTPropertyObject(type.substring(0, type.indexOf(",")).replace("bTPropertyObject<class", "").trim());
 			} else {
 				clazz = Unknown.class;
-				logger.info("Unknon Property: {} - {}", name, type);
+				logger.info("Unknown Property: {} - {}", name, type);
 			}
 
 			add(clazz, type);
