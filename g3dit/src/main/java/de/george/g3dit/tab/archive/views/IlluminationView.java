@@ -53,11 +53,8 @@ public class IlluminationView extends JPanel implements ArchiveView {
 		ctx = inEditor;
 
 		LightCache lightCache = Caches.light(ctx);
-		lightCache.load();
-		if (!lightCache.isValid()) {
-			logger.warn("Failed to load the light cache.");
-		}
 		lightCache.addUpdateListener(this, this::updateLightCacheStatus);
+		lightCache.load();
 
 		setLayout(new MigLayout("fill", "[]30[][grow]push[]", "[][][][]10[grow]"));
 
