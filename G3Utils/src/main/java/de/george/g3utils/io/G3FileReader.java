@@ -30,11 +30,11 @@ import de.george.g3utils.util.Converter;
 import de.george.g3utils.util.Misc;
 
 public abstract class G3FileReader extends G3FileBase implements AutoCloseable {
-	static final Logger logger = LoggerFactory.getLogger(G3FileReader.class);
+	private static final Logger logger = LoggerFactory.getLogger(G3FileReader.class);
+	private static final Objenesis objenesis = new ObjenesisStd(true);
 
-	private static Objenesis objenesis = new ObjenesisStd(true);
-
-	protected String fileName = I.tr("<source is not a file>");
+	private static final String NOT_A_FILE = I.tr("<source is not a file>");
+	protected String fileName = NOT_A_FILE;
 
 	public G3FileReader(String hex) {
 		this(Misc.asByte(hex));
