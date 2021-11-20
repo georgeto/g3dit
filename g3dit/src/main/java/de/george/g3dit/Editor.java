@@ -157,6 +157,7 @@ public class Editor implements EditorContext {
 	}
 
 	public Editor(final String[] args) {
+		setupLogging();
 		registerOneInstanceListener(args);
 
 		try {
@@ -196,22 +197,7 @@ public class Editor implements EditorContext {
 		I.setLanguage(uiLanguage.name);
 
 		fileManager = new FileManager(this);
-
 		navMapManager = new NavMapManager(this);
-
-		// Logging auf der Konsole deaktivieren
-		XFileDialog.setTraceLevel(0);
-
-		// java.util.Logging umleiten nach slf4j
-		SLF4JBridgeHandler.removeHandlersForRootLogger();
-		SLF4JBridgeHandler.install();
-		java.util.logging.Logger.getLogger("").setLevel(Level.WARNING);
-
-		ch.qos.logback.classic.Logger diffLogger = (ch.qos.logback.classic.Logger) LoggerFactory.getLogger("de.danielbechler.diff");
-		diffLogger.setLevel(ch.qos.logback.classic.Level.INFO);
-
-		ch.qos.logback.classic.Logger webLogger = (ch.qos.logback.classic.Logger) LoggerFactory.getLogger("cz.vutbr.web");
-		webLogger.setLevel(ch.qos.logback.classic.Level.ERROR);
 
 		JmeSystem.setSystemDelegate(new JmeTransparentDesktopSystem());
 
@@ -245,6 +231,31 @@ public class Editor implements EditorContext {
 		if (!processArguments(null, args, new PrintWriter(System.out))) {
 			System.exit(EditorCli.EXIT_CODE_ERROR);
 		}
+	}
+
+	private void setupLogging() {
+		// Deactivate logging to to console
+		XFileDialog.setTraceLevel(0);
+
+		// Redirect java.util.Logging to slf4j
+		SLF4JBridgeHandler.removeHandlersForRootLogger();
+		SLF4JBridgeHandler.install();
+		java.util.logging.Logger.getLogger("").setLevel(Level.WARNING);
+
+		ch.qos.logback.classic.Logger diffLogger = (ch.qos.logback.classic.Logger) LoggerFactory.getLogger("de.danielbechler.diff");
+		diffLogger.setLevel(ch.qos.logback.classic.Level.INFO);
+
+		ch.qos.logback.classic.Logger webLogger = (ch.qos.logback.classic.Logger) LoggerFactory.getLogger("cz.vutbr.web");
+		webLogger.setLevel(ch.qos.logback.classic.Level.ERROR);
+
+		// Install default uncaught exception handler
+		// Our handler properly logs such uncaught exceptions (e.g. in SwingWorker::done()
+		// callbacks) via slf4j. Previously they were only written to System.err by the fallback in
+		// ThreadGroup::uncaughtException().
+		Thread.setDefaultUncaughtExceptionHandler((t, e) -> {
+			if (!(e instanceof ThreadDeath))
+				logger.warn("Exception in thread '{}'", t.getName(), e);
+		});
 	}
 
 	private boolean processArguments(File workingDir, String[] args, PrintWriter writer) {
