@@ -3,6 +3,7 @@ package de.george.g3utils.gui;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Frame;
 import java.awt.GraphicsEnvironment;
@@ -383,5 +384,17 @@ public class SwingUtils {
 		progressBar.setStringPainted(true);
 		progressBar.setString("");
 		return progressBar;
+	}
+
+	public static void autosize(Window window, int minWidth, int minHeight, int maxWidth, int maxHeight) {
+		window.setMinimumSize(new Dimension(minWidth, minHeight));
+		window.pack();
+		int width = window.getWidth();
+		if (maxWidth > 0)
+			width = Math.min(width, maxWidth);
+		int height = window.getHeight();
+		if (maxHeight > 0)
+			height = Math.min(height, maxHeight);
+		window.setSize(width, height);
 	}
 }

@@ -124,17 +124,17 @@ public class LivePositionFrame extends JFrame {
 		this.ctx = ctx;
 		setTitle(I.tr("Live Entity Position"));
 		setIconImage(SwingUtils.getG3Icon());
-		this.setSize(450, 450);
 		setResizable(true);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		logDialog = new DisplayTextDialog(I.tr("Live position log"), "", this, false);
 		logDialog.setDefaultCloseOperation(HIDE_ON_CLOSE);
 		logDialog.initialize();
 		createContentPanel();
+		SwingUtils.autosize(this, 450, 0, 500, 0);
 	}
 
 	public void createContentPanel() {
-		setLayout(new MigLayout("fillx", "[fill, grow][fill, grow][fill, grow]10[]", "[][][][][][][][][][][][]push"));
+		setLayout(new MigLayout("fillx"));
 
 		Container mainPanel = getContentPane();
 
@@ -164,7 +164,7 @@ public class LivePositionFrame extends JFrame {
 		JButton btnSearch = new JButton(searchAction);
 		btnSearch.setFocusable(false);
 
-		mainPanel.add(tfSearchField, "split 3, width 100%, spanx 4");
+		mainPanel.add(tfSearchField, "split 3, growx, pushx, spanx 4");
 		mainPanel.add(btnSearch, "height 23!");
 		mainPanel.add(btnErase, "width 23!, height 23!, wrap");
 
@@ -348,7 +348,7 @@ public class LivePositionFrame extends JFrame {
 
 		JButton btnApply = new JButton(I.tr("Change"));
 		btnApply.addActionListener(e -> applyPosition());
-		mainPanel.add(btnApply, "gapleft 7");
+		mainPanel.add(btnApply, "spanx 3, split 5, gapleft 7");
 		ifValidSearchResult.add(btnApply);
 
 		JButton btnLoad = new JButton(I.tr("Load current"));
@@ -358,7 +358,7 @@ public class LivePositionFrame extends JFrame {
 
 		JButton btnPastePosition = new JButton(Icons.getImageIcon(Icons.IO.IMPORT));
 		btnPastePosition.setToolTipText(I.tr("Use position from clipboard"));
-		mainPanel.add(btnPastePosition, LayoutUtils.sqrBtn("split 3"));
+		mainPanel.add(btnPastePosition, LayoutUtils.sqrBtn());
 		btnPastePosition.addActionListener(e -> handlePastePosition());
 
 		JButton btnPutToGround = new JButton(Icons.getImageIcon(Icons.Arrow.DOWN));
@@ -396,7 +396,7 @@ public class LivePositionFrame extends JFrame {
 
 		JButton btnShowLog = new JButton(Icons.getImageIcon(Icons.Data.LOG));
 		btnShowLog.setToolTipText(I.tr("Show log"));
-		mainPanel.add(btnShowLog, LayoutUtils.sqrBtn());
+		mainPanel.add(btnShowLog, LayoutUtils.sqrBtn("wrap"));
 		btnShowLog.addActionListener(e -> showLog());
 
 		SwingUtils.addKeyStroke(btnLoad, JComponent.WHEN_IN_FOCUSED_WINDOW, "Refresh",
