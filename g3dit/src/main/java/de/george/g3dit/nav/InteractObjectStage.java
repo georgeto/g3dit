@@ -99,7 +99,7 @@ public class InteractObjectStage extends NavCalcStage {
 						area = new NavArea(NavMap.OUT_OF_NAV_AREA_ID, false);
 					}
 
-					Optional<NavArea> navMapAreaOpt = navMapInteractables.get(entity.getGuid());
+					Optional<NavArea> navMapAreaOpt = navMapInteractables.getOrDefault(entity.getGuid(), Optional.empty());
 					if (!navMapAreaOpt.isPresent()) {
 						addChange(new NotInNavmap(descriptor.get(), entity.getWorldPosition(), area));
 					} else {
