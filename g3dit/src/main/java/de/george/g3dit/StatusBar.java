@@ -111,7 +111,7 @@ public class StatusBar extends JXStatusBar {
 			ctx.getCacheManager().getCache(cache).addUpdateListener(this, n -> {
 				if (n.isValid()) {
 					setCacheStatus(I.trf("{0, number} entries", entryCountSupplier.apply(ctx.getCacheManager().getCache(cache))),
-							I.trf("Created on {0}", n.printCreationTimestamp()), true);
+							I.trf("Created on {0}", n.formatCreationTimestamp()), true);
 				} else {
 					setCacheStatus(I.tr("Does not exist"), null, true);
 				}

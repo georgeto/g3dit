@@ -74,8 +74,8 @@ public abstract class AbstractCache<T extends AbstractCache<T>> implements Seria
 		return creationTimestamp;
 	}
 
-	public String printCreationTimestamp() {
-		return I.dateToString(new Date(getCreationTimestamp()));
+	public String formatCreationTimestamp() {
+		return I.timestampToString(new Date(getCreationTimestamp()), false, false);
 	}
 
 	public String getSavePath() {

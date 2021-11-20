@@ -3456,11 +3456,12 @@ msgstr ""
 msgid "Errors(-)"
 msgstr ""
 
-#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\IlluminationView.java:127
-msgid "Status: Present ({0, number})"
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\IlluminationView.java:130
+#, java-format
+msgid "Status: Present ({0})"
 msgstr ""
 
-#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\IlluminationView.java:128
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\IlluminationView.java:131
 msgid "Light sources: {0, number}"
 msgstr ""
 

@@ -124,7 +124,7 @@ public class IlluminationView extends JPanel implements ArchiveView {
 
 	private void updateLightCacheStatus(LightCache lightCache) {
 		if (lightCache.isValid()) {
-			lblStatusCache.setText(I.trf("Status: Present ({0, number})", lightCache.printCreationTimestamp()));
+			lblStatusCache.setText(I.trf("Status: Present ({0})", lightCache.formatCreationTimestamp()));
 			lblLightCount.setText(I.trf("Light sources: {0, number}", lightCache.getEntries().size()));
 		} else {
 			lblStatusCache.setText(I.tr("Status: Does not exist!"));
