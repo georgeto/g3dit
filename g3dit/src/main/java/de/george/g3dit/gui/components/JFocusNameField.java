@@ -30,10 +30,12 @@ public class JFocusNameField extends JPanel {
 		setLayout(new MigLayout("insets 0", "[]", "[]0[]"));
 
 		tfName = SwingUtils.createUndoTF();
+		SwingUtils.smallTextField(tfName);
 		add(tfName, "width 100%, height 20!, wrap");
 		tfName.getDocument().addDocumentListener(SwingUtils.createDocumentListener(this::updateFocusName));
 
 		tfFocusName = SwingUtils.createUndoTF();
+		SwingUtils.smallTextField(tfFocusName);
 		add(tfFocusName, "width 100%, height 20!");
 		tfFocusName.setEditable(false);
 

@@ -8,6 +8,7 @@ import java.awt.Font;
 import java.awt.Frame;
 import java.awt.GraphicsEnvironment;
 import java.awt.Image;
+import java.awt.Insets;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
@@ -29,6 +30,7 @@ import javax.swing.JComponent;
 import javax.swing.JEditorPane;
 import javax.swing.JLabel;
 import javax.swing.JProgressBar;
+import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.LookAndFeel;
 import javax.swing.SwingUtilities;
@@ -68,6 +70,13 @@ public class SwingUtils {
 
 	public static UndoableTextField createNoBorderUndoTF(String text) {
 		return new NoBorderUndoableTextField(text);
+	}
+
+	public static void smallTextField(JTextField textField) {
+		Insets margin = (Insets) textField.getMargin().clone();
+		margin.top = Math.min(margin.top, 2);
+		margin.bottom = Math.min(margin.bottom, 2);
+		textField.setMargin(margin);
 	}
 
 	public static final int getComponentIndex(Component component) {

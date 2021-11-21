@@ -35,9 +35,12 @@ public abstract class JSearchNamedGuidField extends JSearchGuidField {
 
 	public void setFieldLayout(Layout layout, int distribution) {
 		tfGuidText.setFont(defaultGuidTextFont);
+		SwingUtils.smallTextField(tfGuid);
+		SwingUtils.smallTextField(tfGuidText);
 		removeAll();
 		if (layout == Layout.Vertical) {
 			add(tfGuid, "width 100%, height 20!, wrap");
+			SwingUtils.smallTextField(getOrCreateTextFieldName());
 			add(getOrCreateTextFieldName(), "growx, pushx, height 20!, split 2");
 			SwingUtils.smallFont(tfGuidText);
 			add(tfGuidText, "aligny top, gapleft 2, width 30%, height 20!");
@@ -49,6 +52,7 @@ public abstract class JSearchNamedGuidField extends JSearchGuidField {
 				distribution = 70;
 			}
 			add(tfGuid, "width " + distribution + "%, height 20!, egy fields, id tfGuid");
+			SwingUtils.smallTextField(getOrCreateTextFieldName());
 			add(getOrCreateTextFieldName(), "width " + (100 - distribution) + "%, height 20!, egy fields, y tfGuid.y");
 		}
 	}
