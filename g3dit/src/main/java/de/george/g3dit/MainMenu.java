@@ -23,6 +23,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.ezware.dialog.task.TaskDialogs;
+import com.formdev.flatlaf.extras.FlatInspector;
+import com.formdev.flatlaf.extras.FlatUIDefaultsInspector;
 import com.google.common.eventbus.Subscribe;
 import com.teamunify.i18n.I;
 
@@ -64,6 +66,8 @@ import de.george.g3dit.util.LowPolyGenerator;
 import de.george.g3dit.util.NavMapManager.NavMapLoadedEvent;
 import de.george.g3dit.util.SettingsHelper;
 import de.george.g3dit.util.StringtableHelper;
+import de.george.g3utils.gui.SwingUtils;
+import de.george.g3utils.util.Holder;
 import de.george.g3utils.util.IOUtils;
 import de.george.lrentnode.archive.ArchiveFile;
 import de.george.lrentnode.archive.SecDat;
@@ -84,6 +88,7 @@ public class MainMenu extends JMenuBar {
 	private EnableGroup egHasDataFile;
 
 	private JMenuItem miOpenTinyHexer;
+	private JMenu muDeveloper;
 
 	public MainMenu(EditorContext ctx) {
 		this.ctx = ctx;
@@ -99,6 +104,8 @@ public class MainMenu extends JMenuBar {
 		createMenuRemote();
 
 		createMenuNavMap();
+
+		createMenuDeveloper();
 
 		createMenuAbout();
 
@@ -664,6 +671,56 @@ public class MainMenu extends JMenuBar {
 		});
 	}
 
+	private void createMenuDeveloper() {
+		muDeveloper = new JMenu(I.tr("Developer"));
+		muDeveloper.setMnemonic(KeyEvent.VK_D);
+		muDeveloper.setVisible(false);
+		add(muDeveloper);
+
+		Holder<Boolean> uiInspectorInstalled = new Holder<>(false);
+		JMenuItem miUiInspector = new JMenuItem(I.tr("UI inspector"));
+		miUiInspector.setMnemonic(KeyEvent.VK_U);
+		miUiInspector.setAccelerator(
+				KeyStroke.getKeyStroke(KeyEvent.VK_X, InputEvent.CTRL_DOWN_MASK | InputEvent.SHIFT_DOWN_MASK | InputEvent.ALT_DOWN_MASK));
+		muDeveloper.add(miUiInspector);
+		miUiInspector.addActionListener(e -> {
+			if (!ctx.getOptionStore().get(EditorOptions.Misc.DEVELOPER_MODE))
+				return;
+
+			KeyStroke keyStroke = miUiInspector.getAccelerator();
+			if (!uiInspectorInstalled.held()) {
+				FlatInspector.install(keyStroke.toString());
+				uiInspectorInstalled.hold(true);
+				// Open Inspector
+				SwingUtils.triggerKeyStroke(miUiInspector, keyStroke);
+			} else if (e.getModifiers() != SwingUtils.mapNewKeyModifiers(keyStroke.getModifiers()))
+				// Action was performed by clicking on the menu item
+				SwingUtils.triggerKeyStroke(miUiInspector, keyStroke);
+		});
+
+		Holder<Boolean> uiDefaultsInspectorInstalled = new Holder<>(false);
+		JMenuItem miUiDefaultsInspector = new JMenuItem(I.tr("UI defaults inspector"));
+		miUiDefaultsInspector.setMnemonic(KeyEvent.VK_D);
+		miUiDefaultsInspector.setAccelerator(
+				KeyStroke.getKeyStroke(KeyEvent.VK_D, InputEvent.CTRL_DOWN_MASK | InputEvent.SHIFT_DOWN_MASK | InputEvent.ALT_DOWN_MASK));
+		muDeveloper.add(miUiDefaultsInspector);
+		miUiDefaultsInspector.addActionListener(e -> {
+			if (!ctx.getOptionStore().get(EditorOptions.Misc.DEVELOPER_MODE))
+				return;
+
+			KeyStroke keyStroke = miUiDefaultsInspector.getAccelerator();
+			if (!uiDefaultsInspectorInstalled.held()) {
+				FlatUIDefaultsInspector.install(keyStroke.toString());
+				// From now on the keystroke triggers FlatInspector directly!
+				uiDefaultsInspectorInstalled.hold(true);
+				// Open Inspector
+				SwingUtils.triggerKeyStroke(miUiDefaultsInspector, keyStroke);
+			} else if (e.getModifiers() != SwingUtils.mapNewKeyModifiers(keyStroke.getModifiers()))
+				// Action was performed by clicking on the menu item
+				SwingUtils.triggerKeyStroke(miUiInspector, keyStroke);
+		});
+	}
+
 	private void createMenuAbout() {
 		/*
 		 * Über g3dit
@@ -737,6 +794,8 @@ public class MainMenu extends JMenuBar {
 		fileMenu.setAliasMap(SettingsHelper.getDataFolderAlias(ctx.getOptionStore()));
 		fileMenu.generateMenu();
 		adaptToTab(ctx.getEditor().getSelectedTab());
+
+		muDeveloper.setVisible(ctx.getOptionStore().get(EditorOptions.Misc.DEVELOPER_MODE));
 
 		ctx.eventBus().post(new SettingsUpdatedEvent());
 	}

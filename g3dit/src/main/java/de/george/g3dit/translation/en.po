@@ -1033,7 +1033,19 @@ msgstr ""
 msgid "Export PrefPaths"
 msgstr ""
 
-#: g3dit\src\main\java\de\george\g3dit\MainMenu.java:671
+#: g3dit\src\main\java\de\george\g3dit\MainMenu.java:675
+msgid "Developer"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\MainMenu.java:681
+msgid "UI inspector"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\MainMenu.java:702
+msgid "UI defaults inspector"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\MainMenu.java:728
 msgid "About"
 msgstr ""
 
@@ -3121,48 +3133,60 @@ msgstr ""
 msgid "NavPath debug information"
 msgstr ""
 
-#: g3dit\src\main\java\de\george\g3dit\settings\EditorOptions.java:113
-#: g3dit\src\main\java\de\george\g3dit\settings\EditorOptions.java:114
+#: g3dit\src\main\java\de\george\g3dit\settings\EditorOptions.java:110
+msgid "Enable developer mode"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\settings\EditorOptions.java:110
+msgid "Show debug developer options and menus."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\settings\EditorOptions.java:111
+msgid "Developer mode"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\settings\EditorOptions.java:116
+#: g3dit\src\main\java\de\george\g3dit\settings\EditorOptions.java:117
 msgid "Background color of the 3D view"
 msgstr ""
 
-#: g3dit\src\main\java\de\george\g3dit\settings\EditorOptions.java:117
-#: g3dit\src\main\java\de\george\g3dit\settings\EditorOptions.java:118
+#: g3dit\src\main\java\de\george\g3dit\settings\EditorOptions.java:120
+#: g3dit\src\main\java\de\george\g3dit\settings\EditorOptions.java:121
 msgid "Intensity of ambient lighting"
 msgstr ""
 
-#: g3dit\src\main\java\de\george\g3dit\settings\EditorOptions.java:121
-#: g3dit\src\main\java\de\george\g3dit\settings\EditorOptions.java:122
+#: g3dit\src\main\java\de\george\g3dit\settings\EditorOptions.java:124
+#: g3dit\src\main\java\de\george\g3dit\settings\EditorOptions.java:125
 msgid "Intensity of directional lighting"
 msgstr ""
 
-#: g3dit\src\main\java\de\george\g3dit\settings\EditorOptions.java:125
-#: g3dit\src\main\java\de\george\g3dit\settings\EditorOptions.java:127
-msgid "Horizontal rotation of directional lighting"
-msgstr ""
-
-#: g3dit\src\main\java\de\george\g3dit\settings\EditorOptions.java:130
+#: g3dit\src\main\java\de\george\g3dit\settings\EditorOptions.java:129
 #: g3dit\src\main\java\de\george\g3dit\settings\EditorOptions.java:131
-msgid "Vertical rotation of directional lighting"
+msgid "Horizontal rotation of directional lighting"
 msgstr ""
 
 #: g3dit\src\main\java\de\george\g3dit\settings\EditorOptions.java:134
 #: g3dit\src\main\java\de\george\g3dit\settings\EditorOptions.java:135
-msgid "Horizontal rotation"
+msgid "Vertical rotation of directional lighting"
 msgstr ""
 
 #: g3dit\src\main\java\de\george\g3dit\settings\EditorOptions.java:138
 #: g3dit\src\main\java\de\george\g3dit\settings\EditorOptions.java:139
-msgid "Vertical rotation"
+msgid "Horizontal rotation"
 msgstr ""
 
 #: g3dit\src\main\java\de\george\g3dit\settings\EditorOptions.java:142
 #: g3dit\src\main\java\de\george\g3dit\settings\EditorOptions.java:143
-msgid "Distance"
+msgid "Vertical rotation"
 msgstr ""
 
 #: g3dit\src\main\java\de\george\g3dit\settings\EditorOptions.java:146
 #: g3dit\src\main\java\de\george\g3dit\settings\EditorOptions.java:147
+msgid "Distance"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\settings\EditorOptions.java:150
+#: g3dit\src\main\java\de\george\g3dit\settings\EditorOptions.java:151
 msgid "Screenshot directory"
 msgstr ""
 

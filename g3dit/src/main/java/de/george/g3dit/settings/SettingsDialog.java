@@ -72,7 +72,8 @@ public class SettingsDialog extends ExtStandardDialog {
 				.addHeadline(I.tr("Misc"))
 				.addOption(EditorOptions.Misc.IMPROVE_CHANGE_DETECTION)
 				.addOption(EditorOptions.Misc.OPTIMIZE_MEMORY_USAGE)
-				.addOption(EditorOptions.Misc.NAVPATH_DEBUG));
+				.addOption(EditorOptions.Misc.NAVPATH_DEBUG)
+				.addOption(EditorOptions.Misc.DEVELOPER_MODE));
 
 		tbTabs.addTab(new OptionsTab(I.tr("3D view"))
 				.addHeadline(I.tr("Colour and lighting"))

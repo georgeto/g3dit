@@ -1064,7 +1064,19 @@ msgstr "NegCircles exportieren"
 msgid "Export PrefPaths"
 msgstr "PrefPaths exportieren"
 
-#: g3dit\src\main\java\de\george\g3dit\MainMenu.java:671
+#: g3dit\src\main\java\de\george\g3dit\MainMenu.java:675
+msgid "Developer"
+msgstr "Entwickler"
+
+#: g3dit\src\main\java\de\george\g3dit\MainMenu.java:681
+msgid "UI inspector"
+msgstr "UI-Inspektor"
+
+#: g3dit\src\main\java\de\george\g3dit\MainMenu.java:702
+msgid "UI defaults inspector"
+msgstr "UI-Defaults-Inspektor"
+
+#: g3dit\src\main\java\de\george\g3dit\MainMenu.java:728
 msgid "About"
 msgstr "Über"
 
@@ -3202,8 +3214,20 @@ msgstr "Debuginformationen bei der Berechnung von NavPaths anzeigen"
 msgid "NavPath debug information"
 msgstr "NavPath Debuginformationen"
 
-#: g3dit\src\main\java\de\george\g3dit\settings\EditorOptions.java:113
-#: g3dit\src\main\java\de\george\g3dit\settings\EditorOptions.java:114
+#: g3dit\src\main\java\de\george\g3dit\settings\EditorOptions.java:110
+msgid "Enable developer mode"
+msgstr "Entwicklermodus aktivieren"
+
+#: g3dit\src\main\java\de\george\g3dit\settings\EditorOptions.java:110
+msgid "Show debug developer options and menus."
+msgstr "Entwickleroptionen und -menüs anzeigen."
+
+#: g3dit\src\main\java\de\george\g3dit\settings\EditorOptions.java:111
+msgid "Developer mode"
+msgstr "Entwicklermodus"
+
+#: g3dit\src\main\java\de\george\g3dit\settings\EditorOptions.java:116
+#: g3dit\src\main\java\de\george\g3dit\settings\EditorOptions.java:117
 msgid "Background color of the 3D view"
 msgstr "Hintergrundfarbe der 3D-Ansicht"
 

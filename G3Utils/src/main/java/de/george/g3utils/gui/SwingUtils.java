@@ -9,8 +9,10 @@ import java.awt.Frame;
 import java.awt.GraphicsEnvironment;
 import java.awt.Image;
 import java.awt.Insets;
+import java.awt.Toolkit;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
+import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -405,5 +407,32 @@ public class SwingUtils {
 		if (maxHeight > 0)
 			height = Math.min(height, maxHeight);
 		window.setSize(width, height);
+	}
+
+	public static void triggerKeyStroke(JComponent source, KeyStroke keyStroke) {
+		// Open Inspector
+		Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(new KeyEvent(source, KeyEvent.KEY_RELEASED, System.currentTimeMillis(),
+				keyStroke.getModifiers(), keyStroke.getKeyCode(), keyStroke.getKeyChar()));
+	}
+
+	@SuppressWarnings("deprecation")
+	public static int mapNewKeyModifiers(int modifiers) {
+		int oldModifiers = 0;
+		if ((modifiers & InputEvent.SHIFT_DOWN_MASK) != 0) {
+			oldModifiers |= InputEvent.SHIFT_MASK;
+		}
+		if ((modifiers & InputEvent.ALT_DOWN_MASK) != 0) {
+			oldModifiers |= InputEvent.ALT_MASK;
+		}
+		if ((modifiers & InputEvent.ALT_GRAPH_DOWN_MASK) != 0) {
+			oldModifiers |= InputEvent.ALT_GRAPH_MASK;
+		}
+		if ((modifiers & InputEvent.CTRL_DOWN_MASK) != 0) {
+			oldModifiers |= InputEvent.CTRL_MASK;
+		}
+		if ((modifiers & InputEvent.META_DOWN_MASK) != 0) {
+			oldModifiers |= InputEvent.META_MASK;
+		}
+		return oldModifiers;
 	}
 }

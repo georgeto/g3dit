@@ -106,6 +106,10 @@ public abstract class EditorOptions {
 		public static final Option<Boolean> NAVPATH_DEBUG = new LambdaOption<>(false,
 				(parent) -> new BooleanOptionHandler(parent, I.tr("Show debug information when calculating NavPaths")),
 				"EditorOptions.Misc.NAVPATH_DEBUG", I.tr("NavPath debug information"));
+
+		public static final Option<Boolean> DEVELOPER_MODE = new LambdaOption<>(false, (parent) -> new BooleanOptionHandler(parent,
+				I.tr("Enable developer mode"), I.tr("Show debug developer options and menus.")), "EditorOptions.Misc.DEVELOPER_MODE",
+				I.tr("Developer mode"));
 	}
 
 	public static abstract class D3View {
