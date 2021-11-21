@@ -16,7 +16,7 @@ repositories {
 	flatDir { dirs 'libs' }
 }
 
-project.version = '1.11.0'
+project.version = '1.11.1'
 
 dependencies {
 	implementation project(':G3Utils'), project(':LrentNode'), project(':NavMap')
