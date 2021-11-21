@@ -101,6 +101,7 @@ application {
 								 '--add-opens=java.desktop/javax.swing=ALL-UNNAMED',
 								 '--add-opens=java.desktop/com.sun.java.swing.plaf.windows=ALL-UNNAMED',
 								 '--add-opens=java.base/sun.nio.fs=ALL-UNNAMED',
+								 '--add-opens=java.prefs/java.util.prefs=ALL-UNNAMED',
 								 '-Djava.library.path=".;libs"']
 }
 
