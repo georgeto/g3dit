@@ -130,12 +130,35 @@ public final class ConcurrencyUtil {
 
 	}
 
+	public static class NullAwaitable<T> implements Awaitable, ValueAwaitable<T> {
+		private static final NullAwaitable<?> INSTANCE = new NullAwaitable();
+
+		public static <T> NullAwaitable<T> instance() {
+			return (NullAwaitable<T>) INSTANCE;
+		}
+
+		@Override
+		public void await() {}
+
+		@Override
+		public boolean await(long timeout, TimeUnit unit) {
+			return true;
+		}
+
+		@Override
+		public T get() {
+			return null;
+		}
+	}
+
 	public static final <T> Awaitable processInPartitions(Consumer<T> processor, List<T> items) {
 		return processInPartitions(processor, items, 1);
 	}
 
 	public static final <T> Awaitable processInPartitions(Consumer<T> processor, List<T> items, int partitionFactor) {
 		int itemCount = items.size();
+		if (itemCount <= 0)
+			return NullAwaitable.instance();
 		int partSize = IntMath.divide(itemCount, NUMBER_OF_PROCESSORS * partitionFactor, RoundingMode.CEILING);
 		int partCount = IntMath.divide(itemCount, partSize, RoundingMode.CEILING);
 		CountDownLatch latch = new CountDownLatch(partCount);
@@ -159,6 +182,8 @@ public final class ConcurrencyUtil {
 
 	public static final <T, V> ValueAwaitable<V> processInPartitionsAndGet(Function<T, V> processor, List<T> items, int partitionFactor) {
 		int itemCount = items.size();
+		if (itemCount <= 0)
+			return NullAwaitable.instance();
 		int partSize = IntMath.divide(itemCount, NUMBER_OF_PROCESSORS * partitionFactor, RoundingMode.CEILING);
 		int partCount = IntMath.divide(itemCount, partSize, RoundingMode.CEILING);
 
@@ -191,6 +216,8 @@ public final class ConcurrencyUtil {
 
 	public static final <T> Awaitable processInListPartitions(Consumer<List<T>> processor, List<T> items, int partitionFactor) {
 		int itemCount = items.size();
+		if (itemCount <= 0)
+			return NullAwaitable.instance();
 		int partSize = IntMath.divide(itemCount, NUMBER_OF_PROCESSORS * partitionFactor, RoundingMode.CEILING);
 
 		List<List<T>> partitions = Lists.partition(items, partSize);
