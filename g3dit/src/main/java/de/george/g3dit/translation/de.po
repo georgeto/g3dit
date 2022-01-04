@@ -5062,7 +5062,7 @@ msgstr "Öffnen von LowPoly-Mesh {0} fehlgeschlagen."
 
 #: g3dit\src\main\java\de\george\g3dit\util\LowPolyGenerator.java:210
 msgid "Found {0, number} low poly meshes."
-msgstr "{0, Anzahl} Low-Poly-Meshes gefunden."
+msgstr "{0, number} Low-Poly-Meshes gefunden."
 
 #: g3dit\src\main\java\de\george\g3dit\util\LowPolyGenerator.java:257
 #, java-format
