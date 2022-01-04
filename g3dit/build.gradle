@@ -6,10 +6,6 @@ plugins {
 
 repositories {
 	maven {
-		url 'https://dl.bintray.com/jmonkeyengine/org.jmonkeyengine/'
-	}
-
-	maven {
 		url 'https://oss.sonatype.org/content/repositories/snapshots/'
 	}
 
