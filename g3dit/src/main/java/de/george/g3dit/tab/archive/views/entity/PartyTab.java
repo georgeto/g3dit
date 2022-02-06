@@ -26,6 +26,7 @@ public class PartyTab extends AbstractPropertyEntityTab {
 		propertyPanel
 			.add(CD.gCParty_PS.PartyLeaderEntity)
 				.name("PartyLeader")
+				.validate(validation(), GuidValidator.INSTANCE_ALLOW_EMPTY, new EntityExistenceValidator(validation(), ctx))
 				.<JSearchNamedGuidField>customize(tfPartyLeader -> tfPartyLeader.addMenuItem(I.tr("List all PartyMembers of the PartyLeader"), Icons.getImageIcon(Icons.Misc.GLOBE),
 					(c, text) -> EntitySearchDialog.openEntitySearchGuid(c, MatchMode.PartyLeader, text)))
 			.add(CD.gCParty_PS.PartyMemberType)

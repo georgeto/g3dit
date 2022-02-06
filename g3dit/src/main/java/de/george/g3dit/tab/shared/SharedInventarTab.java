@@ -25,6 +25,7 @@ import de.george.g3dit.gui.edit.PropertyPanel;
 import de.george.g3dit.gui.edit.handler.LambdaPropertyHandler;
 import de.george.g3dit.gui.theme.LayoutUtils;
 import de.george.g3dit.gui.validation.TemplateExistenceValidator;
+import de.george.g3dit.gui.validation.TemplateNameExistenceValidator;
 import de.george.g3dit.util.Icons;
 import de.george.g3utils.gui.SwingUtils;
 import de.george.g3utils.structure.GuidUtil;
@@ -53,6 +54,7 @@ public class SharedInventarTab extends AbstractPropertySharedTab {
 		TemplateCache tpleCache = Caches.template(ctx);
 		for (int i = 1; i <= 5; i++) {
 			propertyPanel.add(PropertyUtil.GetTreasureSetProperty(i))
+					.validate(validation, new TemplateNameExistenceValidator(validation, ctx))
 					.<JTextField>customize(tfTreasureSet -> new TemplateIntelliHints(tfTreasureSet, tpleCache,
 							e -> e.getClasses().contains("gCTreasureSet_PS"), false))
 					.fullWidth().done();
