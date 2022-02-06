@@ -175,3 +175,41 @@ task generateGettextSources() {
 		}
 	}
 }
+
+task cleanupTranslation() {
+	outputs.upToDateWhen { false }
+	doLast {
+		var diffOutput = new ByteArrayOutputStream()
+		exec {
+			executable = "git"
+			standardOutput = diffOutput
+			workingDir = file("$projectDir")
+			args('diff')
+			args('--ignore-matching-lines="^#"')
+			args('--ignore-matching-lines="^\\"PO-Revision-Date"')
+			args('--')
+			args('g3dit/src/main/java/de/george/g3dit/translation/')
+		}
+
+		println "Diff translation"
+		println diffOutput.toString()
+
+		exec {
+			executable = "git"
+			workingDir = file("$projectDir")
+			args('checkout')
+			args('--')
+			args('g3dit/src/main/java/de/george/g3dit/translation/')
+		}
+
+		if (diffOutput.size() > 0) {
+			exec {
+				standardInput = new ByteArrayInputStream(diffOutput.toByteArray())
+				executable = "git"
+				workingDir = file("$projectDir")
+				args('apply')
+				args('-')
+			}
+		}
+	}
+}
