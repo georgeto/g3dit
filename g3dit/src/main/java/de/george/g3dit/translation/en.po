@@ -1377,6 +1377,28 @@ msgstr ""
 msgid "Interaction point refers to non-existent entity."
 msgstr ""
 
+#: g3dit\src\main\java\de\george\g3dit\check\checks\CheckInvalidEntityReferences.java:22
+msgid "Checks all entity references for invalid guids."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\checks\CheckInvalidEntityReferences.java:22
+msgid "Find invalid entity references"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\checks\CheckInvalidEntityReferences.java:41
+#: g3dit\src\main\java\de\george\g3dit\check\checks\CheckInvalidTemplateReferences.java:57
+#, java-format
+msgid "Property {0}.{1} contains non-existent Guid"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\checks\CheckInvalidEntityReferences.java:42
+#: g3dit\src\main\java\de\george\g3dit\check\checks\CheckInvalidTemplateReferences.java:58
+#, java-format
+msgid ""
+"Property {0}.{1} contains non-existent Guid\n"
+"{2}"
+msgstr ""
+
 #: g3dit\src\main\java\de\george\g3dit\check\checks\CheckInvalidParties.java:48
 msgid "Find invalid groups"
 msgstr ""
@@ -1418,27 +1440,15 @@ msgid "PartyMember refers to non-existent entity."
 msgstr ""
 
 #: g3dit\src\main\java\de\george\g3dit\check\checks\CheckInvalidReferences.java:28
-msgid "Checks all templates for invalid guids."
+msgid "Checks all template references for invalid guids."
 msgstr ""
 
 #: g3dit\src\main\java\de\george\g3dit\check\checks\CheckInvalidReferences.java:28
-msgid "Find invalid references"
+msgid "Find invalid template references"
 msgstr ""
 
 #: g3dit\src\main\java\de\george\g3dit\check\checks\CheckInvalidReferences.java:36
 msgid "Reference Guid does not exist"
-msgstr ""
-
-#: g3dit\src\main\java\de\george\g3dit\check\checks\CheckInvalidReferences.java:61
-#, java-format
-msgid "Property {0}.{1} contains non-existent Guid"
-msgstr ""
-
-#: g3dit\src\main\java\de\george\g3dit\check\checks\CheckInvalidReferences.java:62
-#, java-format
-msgid ""
-"Property {0}.{1} contains non-existent Guid\n"
-"{2}"
 msgstr ""
 
 #: g3dit\src\main\java\de\george\g3dit\check\checks\CheckLighting.java:20
@@ -2173,6 +2183,11 @@ msgstr ""
 #: g3dit\src\main\java\de\george\g3dit\gui\validation\TemplateExistenceValidator.java:35
 #, java-format
 msgid "{0} contains a guid for which no template exists."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\validation\TemplateNameExistenceValidator.java:33
+#, java-format
+msgid "{0} contains a name for which no template exists."
 msgstr ""
 
 #: g3dit\src\main\java\de\george\g3dit\jme\EntityViewerMainMenu.java:26

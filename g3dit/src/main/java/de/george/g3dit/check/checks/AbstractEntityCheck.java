@@ -10,9 +10,11 @@ import de.george.g3dit.check.FileDescriptor;
 import de.george.g3dit.check.problem.EntityProblem;
 import de.george.g3dit.check.problem.ProblemConsumer;
 import de.george.g3dit.check.problem.Severity;
+import de.george.g3dit.check.problem.TemplateProblem;
 import de.george.g3utils.util.Holder;
 import de.george.lrentnode.archive.ArchiveFile;
 import de.george.lrentnode.archive.eCEntity;
+import de.george.lrentnode.template.TemplateEntity;
 import de.george.lrentnode.template.TemplateFile;
 
 public abstract class AbstractEntityCheck implements Check {
@@ -87,6 +89,17 @@ public abstract class AbstractEntityCheck implements Check {
 
 	@Override
 	public PassStatus processTemplate(TemplateFile tple, File dataFile, int pass, ProblemConsumer problemConsumer) {
+		TemplateEntity entity = tple.getReferenceHeader();
+		if (entity != null) {
+			FileDescriptor descriptor = new FileDescriptor(dataFile, FileDescriptor.FileType.Template);
+			return processTemplateEntity(tple, dataFile, entity, pass, descriptor,
+					(severity, message, details) -> postTemplateProblem(problemConsumer, descriptor, severity, message, details));
+		}
+		return PassStatus.Next;
+	}
+
+	protected PassStatus processTemplateEntity(TemplateFile tple, File dataFile, eCEntity entity, int pass, FileDescriptor descriptor,
+			StringProblemConsumer problemConsumer) {
 		return PassStatus.Done;
 	}
 
@@ -111,6 +124,14 @@ public abstract class AbstractEntityCheck implements Check {
 		EntityProblem problem = new EntityProblem(message, details);
 		problem.setSeverity(severity);
 		problem.setParent(problemConsumer.getEntityHelper(descriptor));
+		problemConsumer.post(problem);
+	}
+
+	protected void postTemplateProblem(ProblemConsumer problemConsumer, FileDescriptor descriptor, Severity severity, String message,
+			String details) {
+		TemplateProblem problem = new TemplateProblem(message, details);
+		problem.setSeverity(severity);
+		problem.setParent(problemConsumer.getFileHelper(descriptor));
 		problemConsumer.post(problem);
 	}
 
