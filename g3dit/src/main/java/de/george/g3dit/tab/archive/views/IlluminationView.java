@@ -51,14 +51,6 @@ public class IlluminationView extends JPanel implements ArchiveView {
 
 	public IlluminationView(EditorArchiveTab inEditor) {
 		ctx = inEditor;
-
-		LightCache lightCache = Caches.light(ctx);
-		lightCache.addUpdateListener(this, this::updateLightCacheStatus);
-		if (lightCache.isValid())
-			updateLightCacheStatus(lightCache);
-		else
-			lightCache.load();
-
 		setLayout(new MigLayout("fill", "[]30[][grow]push[]", "[][][][]10[grow]"));
 
 		JLabel lblLightCache = SwingUtils.createBoldLabel(I.tr("Light cache"));
@@ -100,10 +92,15 @@ public class IlluminationView extends JPanel implements ArchiveView {
 		this.add(scrollLog, "cell 0 4, span, grow");
 
 		btnCreateCache.addActionListener(e -> handleCreateCache());
-
 		btnDoLighting.addActionListener(e -> handleDoLighting());
-
 		btnShowLighting.addActionListener(e -> handleShowLighting());
+
+		LightCache lightCache = Caches.light(ctx);
+		lightCache.addUpdateListener(this, this::updateLightCacheStatus);
+		if (lightCache.isValid())
+			updateLightCacheStatus(lightCache);
+		else
+			lightCache.load();
 	}
 
 	private void logResult(String message) {
