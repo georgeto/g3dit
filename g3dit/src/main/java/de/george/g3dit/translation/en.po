@@ -1501,6 +1501,45 @@ msgstr ""
 msgid "Lightmap name does not adhere to the lightmap naming scheme."
 msgstr ""
 
+#: g3dit\src\main\java\de\george\g3dit\check\checks\CheckMissingResources.java:36
+msgid "Find missing resources"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\checks\CheckMissingResources.java:37
+msgid "Checks all entities and templates for references to non-existent resources (meshes, material, textures, collision shapes)."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\checks\CheckMissingResources.java:72
+#, java-format
+msgid "Problem with mesh ''{0}''."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\checks\CheckMissingResources.java:76
+msgid "Problem with material ''{0}'' (MaterialSwitch: {1, number})."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\checks\CheckMissingResources.java:81
+#, java-format
+msgid "Problem with texture ''{0}''."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\checks\CheckMissingResources.java:132
+msgid "No collision mesh with this name found."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\checks\CheckMissingResources.java:139
+msgid "Invalid resource index."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\checks\CheckMissingResources.java:143
+#, java-format
+msgid "Error while opening the collision mesh: {0}"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\checks\CheckMissingResources.java:151
+msgid "Problem with collision mesh ''{0}'' (ResourceIndex: {1, number})."
+msgstr ""
+
 #: g3dit\src\main\java\de\george\g3dit\check\checks\CheckNestedItems.java:17
 msgid "Find items and interaction objects with child entities"
 msgstr ""

@@ -9,6 +9,7 @@ import java.io.CharArrayWriter;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.nio.BufferUnderflowException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -116,7 +117,7 @@ public class AssetResolver {
 			} else {
 				throw new NoSuchElementException();
 			}
-		} catch (IOException | IllegalMeshException e) {
+		} catch (IOException | IllegalMeshException | BufferUnderflowException | IllegalArgumentException e) {
 			return new MeshAsset(meshFile, false, I.trf("Error while opening the mesh: {0}", e.getMessage()));
 		} catch (NoSuchElementException e) {
 			return new MeshAsset(meshFile, false, I.tr("No mesh with this name found."));
@@ -137,7 +138,7 @@ public class AssetResolver {
 		try {
 			eCResourceShaderMaterial_PS material = FileUtil.openMaterial(materialLocator.locate(materialFile).get());
 			return parseMaterial(materialFile, material, materialSwitch);
-		} catch (IOException e) {
+		} catch (IOException | BufferUnderflowException | IllegalArgumentException e) {
 			return new MaterialAsset(materialFile, materialSwitch, false, I.trf("Error while opening the material: {0}", e.getMessage()));
 		} catch (NoSuchElementException e) {
 			return new MaterialAsset(materialFile, materialSwitch, false, I.tr("No material with this name found."));
