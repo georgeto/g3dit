@@ -178,6 +178,10 @@ public abstract class G3FileReader extends G3FileBase implements AutoCloseable {
 		return Integer.toUnsignedLong(buffer.getInt());
 	}
 
+	public long readLong() {
+		return buffer.getLong();
+	}
+
 	public float readFloat() {
 		return buffer.getFloat();
 	}

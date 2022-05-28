@@ -101,6 +101,12 @@ public abstract class G3FileWriter extends G3FileBase {
 		return this;
 	}
 
+	public G3FileWriter writeLong(long data) {
+		ensureCapacity(buffer.position() + 8);
+		buffer.putLong(data);
+		return this;
+	}
+
 	public G3FileWriter writeFloat(float data) {
 		ensureCapacity(buffer.position() + 4);
 		buffer.putFloat(data);
