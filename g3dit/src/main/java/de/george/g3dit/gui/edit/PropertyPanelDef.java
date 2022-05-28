@@ -195,7 +195,7 @@ public class PropertyPanelDef {
 		}
 
 		/**
-		 * @param displayName Name under which the property is presented.
+		 * @param name Name under which the property is presented.
 		 */
 		public Builder<T> name(String name) {
 			this.name = name;
@@ -213,7 +213,7 @@ public class PropertyPanelDef {
 		}
 
 		/**
-		 * @param displayName Tooltip shown for the property.
+		 * @param tooltip Tooltip shown for the property.
 		 */
 		public Builder<T> tooltip(String tooltip) {
 			this.tooltip = tooltip;
@@ -225,9 +225,6 @@ public class PropertyPanelDef {
 			return this;
 		}
 
-		/**
-		 * @param displayName Tooltip shown for the property.
-		 */
 		public Builder<T> validate(ValidationGroup validation, Validator<?>... validators) {
 			this.validation = validation;
 			this.validators = validators;
