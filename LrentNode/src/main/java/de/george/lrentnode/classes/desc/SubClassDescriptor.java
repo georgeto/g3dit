@@ -1,6 +1,5 @@
 package de.george.lrentnode.classes.desc;
 
-import java.util.List;
 import java.util.function.Function;
 
 import de.george.lrentnode.classes.G3Class;
@@ -20,7 +19,8 @@ public class SubClassDescriptor {
 
 	@SuppressWarnings({"rawtypes", "unchecked"})
 	public <P extends G3Class, V extends G3Class> SubClassDescriptor(String name, String elementName,
-			Class<? extends ClassDescriptor> subPropertySet, Class<? extends ClassDescriptor> propertySet, Function<P, List<V>> accessor) {
+			Class<? extends ClassDescriptor> subPropertySet, Class<? extends ClassDescriptor> propertySet,
+			Function<P, Iterable<V>> accessor) {
 		this.name = name;
 		this.elementName = elementName;
 		this.subPropertySet = subPropertySet;
@@ -42,8 +42,8 @@ public class SubClassDescriptor {
 	}
 
 	@SuppressWarnings("unchecked")
-	public <P extends G3Class, V extends G3Class> List<V> getList(P propertySet) {
-		return (List<V>) accessor.apply(propertySet);
+	public <P extends G3Class, V extends G3Class> Iterable<V> getList(P propertySet) {
+		return (Iterable<V>) accessor.apply(propertySet);
 	}
 
 	/**

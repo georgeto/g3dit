@@ -205,7 +205,7 @@ public class SharedPropertyView extends JPanel {
 		selectedClassName = value != null ? value.getClassName() : null;
 	}
 
-	private void addSubClasses(String baseName, List<? extends G3Class> classes) {
+	private void addSubClasses(String baseName, Iterable<? extends G3Class> classes) {
 		int count = 0;
 		for (G3Class clazz : classes) {
 			addSubClass(baseName + " " + ++count, clazz);
