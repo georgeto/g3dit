@@ -12,6 +12,7 @@ import com.google.common.base.Strings;
 
 import de.george.g3utils.structure.GuidUtil;
 import de.george.g3utils.structure.bCVector;
+import de.george.g3utils.util.Misc;
 import de.george.g3utils.util.Pair;
 import de.george.g3utils.util.ReflectionUtils;
 import de.george.lrentnode.archive.ArchiveEntity;
@@ -23,6 +24,7 @@ import de.george.lrentnode.archive.node.NodeEntity;
 import de.george.lrentnode.classes.G3Class;
 import de.george.lrentnode.classes.eCVisualAnimation_PS;
 import de.george.lrentnode.classes.desc.CD;
+import de.george.lrentnode.enums.G3Enums;
 import de.george.lrentnode.enums.G3Enums.eEStaticLighingType;
 import de.george.lrentnode.properties.eCEntityProxy;
 import de.george.lrentnode.util.ClassUtil.G3ClassHolder;
@@ -206,6 +208,39 @@ public class EntityUtil {
 		} else {
 			return Optional.empty();
 		}
+	}
+
+	public static Optional<String> getScaledCollisionMesh(eCEntity entity, String colMeshName, int shapeType) {
+		if (shapeType != G3Enums.eECollisionShapeType.eECollisionShapeType_ConvexHull
+				&& shapeType != G3Enums.eECollisionShapeType.eECollisionShapeType_TriMesh)
+			return Optional.empty();
+
+		bCVector scaling = entity.getWorldMatrix().getPureScaling();
+		String scalingFormatted = null;
+		// Convex collision meshes can only be scaled with a uniform factor (artificial
+		// limitation in Gothic 3 collision shape loader).
+		// NOTE: Gothic 3 has the following odd implementation detail depending on whether the
+		// entity is a eCSpatialEntity or not:
+		// - If an entity is not an eCSpatialEntity, its triangle collision meshes are always scaled
+		// with a uniform factor.
+		// - If an entity is an eCSpatialEntity its triangle collision meshes are never scaled with
+		// a uniform factor, although the x, y and z factors might be all identical!
+		if (shapeType == G3Enums.eECollisionShapeType.eECollisionShapeType_ConvexHull || !(entity instanceof NodeEntity)) {
+			if (!Misc.compareFloat(scaling.getX(), 1.0f, 0.0001f)) {
+				// Uniform scaling
+				scalingFormatted = String.format("_SC_%.4f", scaling.getX()).replace(".", "_");
+			}
+		} else {
+			if (!Misc.compareFloat(scaling.getX(), 1.0f, 0.0001f) || !Misc.compareFloat(scaling.getY(), 1.0f, 0.0001f)
+					|| !Misc.compareFloat(scaling.getZ(), 1.0f, 0.0001f))
+				scalingFormatted = String.format("_SCX_%.4f_SCY_%.4f_SCZ_%.4f", scaling.getX(), scaling.getY(), scaling.getZ())
+						.replace(".", "_");
+		}
+
+		if (scalingFormatted == null)
+			return Optional.empty();
+
+		return Optional.of(colMeshName.replace(".xnvmsh", scalingFormatted + ".xnvmsh"));
 	}
 
 	/**

@@ -13,18 +13,16 @@ import com.google.common.base.Predicates;
 import com.teamunify.i18n.I;
 
 import de.george.g3dit.util.FileManager;
-import de.george.g3utils.structure.bCVector;
-import de.george.g3utils.util.Misc;
 import de.george.lrentnode.archive.ArchiveFile;
 import de.george.lrentnode.archive.eCEntity;
 import de.george.lrentnode.classes.eCCollisionShape;
 import de.george.lrentnode.classes.eCCollisionShape.FileShape;
 import de.george.lrentnode.classes.eCCollisionShape_PS;
 import de.george.lrentnode.classes.desc.CD;
-import de.george.lrentnode.enums.G3Enums.eECollisionShapeType;
 import de.george.lrentnode.iterator.ArchiveFileIterator;
 import de.george.lrentnode.iterator.TemplateFileIterator;
 import de.george.lrentnode.template.TemplateFile;
+import de.george.lrentnode.util.EntityUtil;
 import one.util.streamex.StreamEx;
 
 public class ScriptListUnusedCollisionMesh implements IScript {
@@ -61,7 +59,7 @@ public class ScriptListUnusedCollisionMesh implements IScript {
 			}
 
 			for (eCCollisionShape shape : collision.getShapes()) {
-				if (!(shape.getShape() instanceof FileShape fileShape)) {
+				if (!(shape.getShape()instanceof FileShape fileShape)) {
 					continue;
 				}
 
@@ -69,28 +67,7 @@ public class ScriptListUnusedCollisionMesh implements IScript {
 				meshConsumer.accept(mesh);
 
 				int shapeType = shape.property(CD.eCCollisionShape.ShapeType).getEnumValue();
-				if (shapeType == eECollisionShapeType.eECollisionShapeType_ConvexHull
-						|| shapeType == eECollisionShapeType.eECollisionShapeType_TriMesh) {
-					bCVector scaling = entity.getWorldMatrix().getPureScaling();
-					boolean uniform = Misc.compareFloat(scaling.getX(), scaling.getY(), 0.0001f)
-							&& Misc.compareFloat(scaling.getX(), scaling.getZ(), 0.0001f);
-					String scalingFormatted = null;
-					// Convex collision meshes can only be scaled with a uniform factor (artificial
-					// limitation in Gothic 3 collision shape loader).
-					if (shapeType == eECollisionShapeType.eECollisionShapeType_ConvexHull || uniform) {
-						if (!Misc.compareFloat(scaling.getX(), 1.0f, 0.0001f)) {
-							// Uniform scaling
-							scalingFormatted = String.format("_SC_%.4f", scaling.getX()).replace(".", "_");
-						}
-					} else {
-						scalingFormatted = String.format("_SCX_%.4f_SCY_%.4f_SCZ_%.4f", scaling.getX(), scaling.getY(), scaling.getZ())
-								.replace(".", "_");
-					}
-
-					if (scalingFormatted != null) {
-						meshConsumer.accept(mesh.replace(".xnvmsh", scalingFormatted + ".xnvmsh"));
-					}
-				}
+				EntityUtil.getScaledCollisionMesh(entity, mesh, shapeType).ifPresent(meshConsumer::accept);
 			}
 		};
 
