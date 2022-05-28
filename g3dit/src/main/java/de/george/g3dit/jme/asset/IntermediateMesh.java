@@ -3,6 +3,7 @@ package de.george.g3dit.jme.asset;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.george.g3utils.structure.bCBox;
 import de.george.g3utils.structure.bCVector;
 import de.george.g3utils.structure.bCVector2;
 
@@ -12,6 +13,7 @@ public class IntermediateMesh {
 	public List<bCVector> normals;
 	public List<bCVector2> texCoords;
 	public List<Integer> indices;
+	public bCBox boundingBox;
 
 	public IntermediateMesh() {
 		vertices = new ArrayList<>();

@@ -82,6 +82,7 @@ public class MeshUtil {
 				if (sourceMesh.hasStreamArray(eEVertexStreamArrayType_TextureCoordinate)) {
 					mesh.texCoords = sourceMesh.getStreamArrayByType(eEVertexStreamArrayType_TextureCoordinate);
 				}
+				mesh.boundingBox = sourceMesh.getBoundingBox();
 			}
 
 			meshes.add(mesh);
