@@ -17,6 +17,8 @@ public class VectorPropertyHandler extends TitledPropertyHandler<bCVector> {
 	@Override
 	protected void addValueComponent(JPanel content) {
 		tfValue = SwingUtils.createUndoTF();
+		tfValue.setToolTipText(def.getTooltip());
+		tfValue.setEditable(def.isEditable());
 		def.apply(tfValue);
 		content.add(tfValue, "width 100:100:, grow");
 	}

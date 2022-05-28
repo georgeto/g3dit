@@ -29,12 +29,13 @@ public class PropertyPanelDef {
 	private final ValidationGroup validation;
 	private final Validator<?>[] validators;
 	private final Predicate<eCEntity> hideIf;
+	private final boolean editable;
 	private final String constraints;
 	private final Consumer<?> customizer;
 
 	public PropertyPanelDef(PropertyAdapter<?> adapter, PropertyHandler<?> handler, TableColumnDef[] tableColumns, String name,
 			String title, String tooltip, String[] valueList, ValidationGroup validation, Validator<?>[] validators,
-			Predicate<eCEntity> hideIf, String constraints, Consumer<?> customizer) {
+			Predicate<eCEntity> hideIf, boolean editable, String constraints, Consumer<?> customizer) {
 		this.adapter = adapter;
 		this.handler = handler;
 		this.tableColumns = tableColumns;
@@ -45,6 +46,7 @@ public class PropertyPanelDef {
 		this.validation = validation;
 		this.validators = validators;
 		this.hideIf = hideIf;
+		this.editable = editable;
 		this.constraints = constraints;
 		this.customizer = customizer;
 	}
@@ -121,6 +123,10 @@ public class PropertyPanelDef {
 		return hideIf != null && hideIf.test(entity);
 	}
 
+	public boolean isEditable() {
+		return editable;
+	}
+
 	public String getConstraints() {
 		return constraints;
 	}
@@ -153,6 +159,7 @@ public class PropertyPanelDef {
 		private ValidationGroup validation;
 		private Validator<?>[] validators;
 		private Predicate<eCEntity> hideIf;
+		private boolean editable = true;
 		private String constraints = "spanx";
 		private Consumer<?> customizer;
 
@@ -232,6 +239,11 @@ public class PropertyPanelDef {
 			return this;
 		}
 
+		public Builder<T> editable(boolean editable) {
+			this.editable = editable;
+			return this;
+		}
+
 		public Builder<T> constraints(String constraints) {
 			this.constraints = join(this.constraints, Strings.emptyToNull(constraints));
 			return this;
@@ -295,7 +307,7 @@ public class PropertyPanelDef {
 		@Override
 		protected PropertyPanelDef b() {
 			return new PropertyPanelDef(adapter, handler, tableColumns, name, title, tooltip, valueList, validation, validators, hideIf,
-					constraints, customizer);
+					editable, constraints, customizer);
 		}
 
 		private static final String join(String... constraints) {

@@ -16,6 +16,8 @@ public class SelectPropertyHandler extends TitledPropertyHandler<bCString> {
 	@Override
 	protected void addValueComponent(JPanel content) {
 		cbValue = new JComboBoxExt<>(def.getValueList());
+		cbValue.setToolTipText(def.getTooltip());
+		cbValue.setEditable(def.isEditable());
 		def.apply(cbValue);
 		content.add(cbValue, "width 100:100:, grow");
 	}

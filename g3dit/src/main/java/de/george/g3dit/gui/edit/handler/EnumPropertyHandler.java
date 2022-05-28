@@ -19,6 +19,8 @@ public class EnumPropertyHandler<T extends bTPropertyContainer<S>, S extends G3E
 	@Override
 	protected void addValueComponent(JPanel content) {
 		cbValue = new JEnumComboBox<>(enumType, true);
+		cbValue.setToolTipText(def.getTooltip());
+		cbValue.setEditable(def.isEditable());
 		def.apply(cbValue);
 		content.add(cbValue, "width 100:100:, grow");
 	}

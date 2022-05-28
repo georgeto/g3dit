@@ -28,6 +28,7 @@ public class NamedGuidPropertyHandler extends TitledPropertyHandler<G3Serializab
 	protected void addValueComponent(JPanel content) {
 		tfValue = template ? new JTemplateGuidField(ctx) : new JEntityGuidField(ctx);
 		tfValue.setToolTipText(def.getTooltip());
+		tfValue.setEditable(def.isEditable());
 		if (def.hasValidators()) {
 			tfValue.initValidation(def.getValidation(), def.getName(), def.getValidators());
 		}

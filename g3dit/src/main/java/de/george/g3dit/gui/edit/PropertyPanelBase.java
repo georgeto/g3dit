@@ -139,7 +139,7 @@ public class PropertyPanelBase<T extends PropertyPanelBase<T>> implements Proper
 	@SuppressWarnings("unchecked")
 	public void save(eCEntity entity) {
 		properties.forEach(p -> {
-			if (!p.def.isHidden(entity)) {
+			if (!p.def.isHidden(entity) && p.def.isEditable()) {
 				p.handler.save(entity, p.adapter);
 			}
 		});

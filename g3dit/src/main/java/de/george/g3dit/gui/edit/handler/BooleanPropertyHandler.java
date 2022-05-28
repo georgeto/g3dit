@@ -18,6 +18,8 @@ public class BooleanPropertyHandler extends TypedPropertyHandler<gBool> {
 	protected JPanel initContent() {
 		JPanel content = super.initContent();
 		cbBoolean = new JCheckBox(def.getName());
+		cbBoolean.setToolTipText(def.getTooltip());
+		cbBoolean.setEnabled(def.isEditable());
 		def.apply(cbBoolean);
 		content.add(cbBoolean, "");
 		return content;

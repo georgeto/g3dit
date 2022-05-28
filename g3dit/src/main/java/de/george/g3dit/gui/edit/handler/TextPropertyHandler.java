@@ -17,6 +17,8 @@ public class TextPropertyHandler extends TitledPropertyHandler<bCString> {
 	@Override
 	protected void addValueComponent(JPanel content) {
 		tfValue = SwingUtils.createUndoTF();
+		tfValue.setToolTipText(def.getTooltip());
+		tfValue.setEditable(def.isEditable());
 		def.apply(tfValue);
 		content.add(tfValue, "width 100:100:, grow");
 	}
