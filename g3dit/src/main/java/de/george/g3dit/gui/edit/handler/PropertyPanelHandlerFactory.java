@@ -11,6 +11,7 @@ import de.george.lrentnode.properties.bTObjArray_eCEntityProxy;
 import de.george.lrentnode.properties.bTPropertyContainer;
 import de.george.lrentnode.properties.eCEntityProxy;
 import de.george.lrentnode.properties.gBool;
+import de.george.lrentnode.properties.gFloat;
 import de.george.lrentnode.properties.gInt;
 import de.george.lrentnode.properties.gLong;
 
@@ -34,6 +35,8 @@ public class PropertyPanelHandlerFactory {
 			return new IntPropertyHandler(def);
 		} else if (adapter.getDataType() == gLong.class) {
 			return new LongPropertyHandler(def);
+		} else if (adapter.getDataType() == gFloat.class) {
+			return new FloatPropertyHandler(def);
 		} else if (adapter.getDataType() == eCEntityProxy.class || adapter.getDataType() == bCPropertyID.class) {
 			boolean template = adapter.getDataTypeName().equals("eCTemplateEntityProxy");
 			return new NamedGuidPropertyHandler(def, ctx, template);
