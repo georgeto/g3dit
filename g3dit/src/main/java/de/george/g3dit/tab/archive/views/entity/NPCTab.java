@@ -77,7 +77,7 @@ public class NPCTab extends AbstractPropertyEntityTab {
 			.addHeadline(I.tr("Body parts"))
 			.add(new LambdaPropertyHandler(slotTabs, entity -> {
 				for (int i = 0; i < slotTabs.getTabCount(); i++) {
-					((NPCSlotPanel) slotTabs.getComponentAt(i)).loadSlot(entity);
+					((NPCSlotPanel) slotTabs.getComponentAt(i)).loadSlot((eCEntity) entity);
 				}
 			}, entity -> {})).grow().constraints("width 100:300:400, wrap")
 			.done();

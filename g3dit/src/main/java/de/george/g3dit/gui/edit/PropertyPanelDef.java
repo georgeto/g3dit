@@ -16,7 +16,7 @@ import com.google.common.base.Strings;
 import de.george.g3dit.gui.edit.adapter.PropertyAdapter;
 import de.george.g3dit.gui.edit.handler.PropertyHandler;
 import de.george.g3dit.gui.table.TableColumnDef;
-import de.george.lrentnode.archive.eCEntity;
+import de.george.lrentnode.archive.G3ClassContainer;
 
 public class PropertyPanelDef {
 	private final PropertyAdapter<?> adapter;
@@ -28,14 +28,14 @@ public class PropertyPanelDef {
 	private final String[] valueList;
 	private final ValidationGroup validation;
 	private final Validator<?>[] validators;
-	private final Predicate<eCEntity> hideIf;
+	private final Predicate<G3ClassContainer> hideIf;
 	private final boolean editable;
 	private final String constraints;
 	private final Consumer<?> customizer;
 
 	public PropertyPanelDef(PropertyAdapter<?> adapter, PropertyHandler<?> handler, TableColumnDef[] tableColumns, String name,
 			String title, String tooltip, String[] valueList, ValidationGroup validation, Validator<?>[] validators,
-			Predicate<eCEntity> hideIf, boolean editable, String constraints, Consumer<?> customizer) {
+			Predicate<G3ClassContainer> hideIf, boolean editable, String constraints, Consumer<?> customizer) {
 		this.adapter = adapter;
 		this.handler = handler;
 		this.tableColumns = tableColumns;
@@ -119,8 +119,8 @@ public class PropertyPanelDef {
 		}
 	}
 
-	public boolean isHidden(eCEntity entity) {
-		return hideIf != null && hideIf.test(entity);
+	public boolean isHidden(G3ClassContainer container) {
+		return hideIf != null && hideIf.test(container);
 	}
 
 	public boolean isEditable() {
@@ -158,7 +158,7 @@ public class PropertyPanelDef {
 		private String[] valueList;
 		private ValidationGroup validation;
 		private Validator<?>[] validators;
-		private Predicate<eCEntity> hideIf;
+		private Predicate<G3ClassContainer> hideIf;
 		private boolean editable = true;
 		private String constraints = "spanx";
 		private Consumer<?> customizer;
@@ -231,7 +231,7 @@ public class PropertyPanelDef {
 			return this;
 		}
 
-		public Builder<T> hideIf(Predicate<eCEntity> hideIf) {
+		public Builder<T> hideIf(Predicate<G3ClassContainer> hideIf) {
 			this.hideIf = hideIf;
 			return this;
 		}

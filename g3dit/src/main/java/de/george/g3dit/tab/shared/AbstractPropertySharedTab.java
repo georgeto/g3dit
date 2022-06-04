@@ -9,7 +9,6 @@ import org.netbeans.validation.api.ui.ValidationGroup;
 import de.george.g3dit.EditorContext;
 import de.george.g3dit.gui.edit.PropertyPanel;
 import de.george.lrentnode.archive.G3ClassContainer;
-import de.george.lrentnode.archive.eCEntity;
 import net.miginfocom.swing.MigLayout;
 
 public abstract class AbstractPropertySharedTab extends AbstractSharedTab {
@@ -38,12 +37,12 @@ public abstract class AbstractPropertySharedTab extends AbstractSharedTab {
 	protected abstract void initPropertyPanel(PropertyPanel propertyPanel, ValidationGroup validation, JScrollPane scrollPane);
 
 	@Override
-	public void loadValues(G3ClassContainer entity) {
-		propertyPanel.load((eCEntity) entity);
+	public void loadValues(G3ClassContainer container) {
+		propertyPanel.load(container);
 	}
 
 	@Override
-	public void saveValues(G3ClassContainer entity) {
-		propertyPanel.save((eCEntity) entity);
+	public void saveValues(G3ClassContainer container) {
+		propertyPanel.save(container);
 	}
 }

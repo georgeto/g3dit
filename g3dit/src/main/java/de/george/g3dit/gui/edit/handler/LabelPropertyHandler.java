@@ -5,7 +5,7 @@ import javax.swing.JLabel;
 
 import de.george.g3dit.gui.edit.adapter.PropertyAdapter;
 import de.george.g3utils.io.G3Serializable;
-import de.george.lrentnode.archive.eCEntity;
+import de.george.lrentnode.archive.G3ClassContainer;
 
 public class LabelPropertyHandler implements PropertyHandler<G3Serializable> {
 	private final JLabel lText;
@@ -20,9 +20,9 @@ public class LabelPropertyHandler implements PropertyHandler<G3Serializable> {
 	}
 
 	@Override
-	public void load(eCEntity entity, PropertyAdapter<G3Serializable> property) {}
+	public void load(G3ClassContainer container, PropertyAdapter<G3Serializable> property) {}
 
 	@Override
-	public void save(eCEntity entity, PropertyAdapter<G3Serializable> property) {}
+	public void save(G3ClassContainer container, PropertyAdapter<G3Serializable> property) {}
 
 }

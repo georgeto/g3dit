@@ -21,7 +21,7 @@ import de.george.g3dit.gui.edit.handler.PropertyHandler;
 import de.george.g3dit.gui.edit.handler.PropertyPanelHandlerFactory;
 import de.george.g3utils.gui.SwingUtils;
 import de.george.g3utils.io.G3Serializable;
-import de.george.lrentnode.archive.eCEntity;
+import de.george.lrentnode.archive.G3ClassContainer;
 import de.george.lrentnode.classes.G3Class;
 import de.george.lrentnode.classes.desc.ClassDescriptor;
 import de.george.lrentnode.classes.desc.PropertyDescriptor;
@@ -77,7 +77,7 @@ public class PropertyPanelBase<T extends PropertyPanelBase<T>> implements Proper
 	}
 
 	@Override
-	public Builder<T> add(PropertyDescriptor<?> descriptor, Function<eCEntity, G3Class> propertySetExtractor) {
+	public Builder<T> add(PropertyDescriptor<?> descriptor, Function<G3ClassContainer, G3Class> propertySetExtractor) {
 		return PropertyPanelDef.with(this).adapter(new DescriptorPropertyAdapter(descriptor, propertySetExtractor))
 				.name(descriptor.getName()).constraints(newline());
 	}
@@ -126,21 +126,21 @@ public class PropertyPanelBase<T extends PropertyPanelBase<T>> implements Proper
 	}
 
 	@SuppressWarnings("unchecked")
-	public void load(eCEntity entity) {
+	public void load(G3ClassContainer container) {
 		properties.forEach(p -> {
-			boolean visible = !p.def.isHidden(entity);
+			boolean visible = !p.def.isHidden(container);
 			p.handler.getContent().setVisible(visible);
 			if (visible) {
-				p.handler.load(entity, p.adapter);
+				p.handler.load(container, p.adapter);
 			}
 		});
 	}
 
 	@SuppressWarnings("unchecked")
-	public void save(eCEntity entity) {
+	public void save(G3ClassContainer container) {
 		properties.forEach(p -> {
-			if (!p.def.isHidden(entity) && p.def.isEditable()) {
-				p.handler.save(entity, p.adapter);
+			if (!p.def.isHidden(container) && p.def.isEditable()) {
+				p.handler.save(container, p.adapter);
 			}
 		});
 	}

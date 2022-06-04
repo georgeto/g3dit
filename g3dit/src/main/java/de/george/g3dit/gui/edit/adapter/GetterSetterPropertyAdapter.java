@@ -5,7 +5,7 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 import de.george.g3utils.io.G3Serializable;
-import de.george.lrentnode.archive.eCEntity;
+import de.george.lrentnode.archive.G3ClassContainer;
 import de.george.lrentnode.classes.G3Class;
 import de.george.lrentnode.classes.desc.ClassDescriptor;
 
@@ -28,14 +28,14 @@ public class GetterSetterPropertyAdapter<C extends G3Class, V extends G3Serializ
 	}
 
 	@Override
-	public V getValue(eCEntity entity) {
+	public V getValue(G3ClassContainer container) {
 		// If property not present in property set, fall back to default value.
-		return entity.<C>getClassOptional(propertySet).map(this.getter).orElseGet(defaultSupplier);
+		return container.<C>getClassOptional(propertySet).map(this.getter).orElseGet(defaultSupplier);
 	}
 
 	@Override
-	public void setValue(eCEntity entity, V newValue) {
-		setter.accept(entity.getClass(propertySet), newValue);
+	public void setValue(G3ClassContainer container, V newValue) {
+		setter.accept(container.getClass(propertySet), newValue);
 	}
 
 	@Override

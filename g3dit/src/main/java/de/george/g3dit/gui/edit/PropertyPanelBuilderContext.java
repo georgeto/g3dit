@@ -6,7 +6,7 @@ import java.util.function.Supplier;
 
 import de.george.g3dit.gui.edit.handler.PropertyHandler;
 import de.george.g3utils.io.G3Serializable;
-import de.george.lrentnode.archive.eCEntity;
+import de.george.lrentnode.archive.G3ClassContainer;
 import de.george.lrentnode.classes.G3Class;
 import de.george.lrentnode.classes.desc.ClassDescriptor;
 import de.george.lrentnode.classes.desc.PropertyDescriptor;
@@ -41,7 +41,7 @@ public abstract class PropertyPanelBuilderContext<B extends PropertyPanelBuilder
 	}
 
 	@Override
-	public B add(PropertyDescriptor<?> descriptor, Function<eCEntity, G3Class> propertySetExtractor) {
+	public B add(PropertyDescriptor<?> descriptor, Function<G3ClassContainer, G3Class> propertySetExtractor) {
 		return (B) done().add(descriptor, propertySetExtractor);
 	}
 
