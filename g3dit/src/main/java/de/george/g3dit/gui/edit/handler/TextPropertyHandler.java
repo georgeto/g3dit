@@ -26,6 +26,7 @@ public class TextPropertyHandler extends TitledPropertyHandler<bCString> {
 	@Override
 	protected void load(bCString value) {
 		tfValue.setText(value.getString());
+		tfValue.setCaretPosition(0);
 	}
 
 	@Override
