@@ -16,6 +16,7 @@ import de.george.g3utils.io.G3FileWriter;
 import de.george.g3utils.io.G3FileWriterEx;
 import de.george.g3utils.io.G3Serializable;
 import de.george.g3utils.util.Misc;
+import de.george.lrentnode.archive.G3ClassContainer;
 import de.george.lrentnode.classes.ClassTypes;
 import de.george.lrentnode.classes.DefaultClass;
 import de.george.lrentnode.classes.G3Class;
@@ -281,4 +282,9 @@ public class ClassUtil {
 		return readSubClass(new G3FileReaderVirtual(Constants.DEFAULT_PROPERTY_SETS.get(propertySetName)));
 	}
 
+	public static G3ClassContainer wrapPropertySet(G3Class propertySet) {
+		G3ClassContainer container = new G3ClassContainer();
+		container.addClass(propertySet, -1);
+		return container;
+	}
 }
