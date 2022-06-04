@@ -13,6 +13,7 @@ import de.george.g3utils.io.G3FileReader;
 import de.george.g3utils.io.G3FileWriter;
 import de.george.g3utils.io.G3Serializable;
 import de.george.g3utils.structure.bCBox;
+import de.george.g3utils.structure.bCDateTime;
 import de.george.g3utils.structure.bCVector;
 import de.george.g3utils.structure.bCVector2;
 import de.george.lrentnode.classes.desc.CD;
@@ -22,12 +23,12 @@ public class eCVegetation_Mesh extends G3Class {
 	private static final Logger logger = LoggerFactory.getLogger(eCVegetation_Mesh.class);
 
 	private eSVegetationMeshID meshID; // (>> 16 TypeID)
-	private String timestamp;
-	private String diffuseTexture;
-	private bCBox bounds;
-	private List<bCVector> positions, normals;
-	private List<bCVector2> uvs;
-	private List<Integer> indices;
+	public bCDateTime timestamp;
+	public String diffuseTexture;
+	public bCBox bounds;
+	public List<bCVector> positions, normals;
+	public List<bCVector2> uvs;
+	public List<Integer> indices;
 
 	// Namen cachen
 	private transient String name = null;
@@ -40,28 +41,9 @@ public class eCVegetation_Mesh extends G3Class {
 		return meshID;
 	}
 
-	public String getDiffuseTexture() {
-		return diffuseTexture;
-	}
-
-	public bCBox getBounds() {
-		return bounds;
-	}
-
-	public List<bCVector> getPositions() {
-		return positions;
-	}
-
-	public List<bCVector> getNormals() {
-		return normals;
-	}
-
-	public List<bCVector2> getUVs() {
-		return uvs;
-	}
-
-	public List<Integer> getIndices() {
-		return indices;
+	public void setMeshFilePath(String mesh) {
+		property(CD.eCVegetation_Mesh.MeshFilePath).setString(mesh);
+		name = null;
 	}
 
 	public String getName() {
@@ -80,7 +62,7 @@ public class eCVegetation_Mesh extends G3Class {
 	@Override
 	protected void readPostClassVersion(G3FileReader reader) {
 		meshID = reader.read(eSVegetationMeshID.class);
-		timestamp = reader.read(8);
+		timestamp = reader.read(bCDateTime.class);
 		diffuseTexture = reader.readEntry();
 		bounds = reader.readBox();
 

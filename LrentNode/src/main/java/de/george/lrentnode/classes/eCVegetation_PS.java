@@ -438,7 +438,7 @@ public class eCVegetation_PS extends G3Class {
 				transform.modifyScaling(new bCVector(plant.scaleWidth, plant.scaleHeight, plant.scaleWidth));
 
 				eCVegetation_Mesh vegMesh = getMeshClass(plant.meshID);
-				bCBox newBounds = vegMesh.getBounds().clone();
+				bCBox newBounds = vegMesh.bounds.clone();
 				newBounds.transform(transform);
 
 				bounds.merge(newBounds);

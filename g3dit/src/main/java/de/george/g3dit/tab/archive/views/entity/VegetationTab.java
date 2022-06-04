@@ -312,7 +312,8 @@ public class VegetationTab extends AbstractEntityTab {
 	}
 
 	private void editMeshes() {
-		EditVegetationMeshesDialog dialog = new EditVegetationMeshesDialog(ctx.getParentWindow(), ctx, vegetationPS);
+		EditVegetationMeshesDialog dialog = new EditVegetationMeshesDialog(ctx.getParentWindow(), ctx, vegetationPS,
+				() -> boundsNeedUpdate = true);
 
 		if (dialog.openAndWasSuccessful()) {
 			ctx.fileChanged();

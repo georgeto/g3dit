@@ -4190,54 +4190,57 @@ msgstr ""
 msgid "Edit vegetation meshes"
 msgstr ""
 
-#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\dialogs\EditVegetationMeshesDialog.java:81
-msgid "MeshFilePath"
-msgstr ""
-
-#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\dialogs\EditVegetationMeshesDialog.java:86
-msgid "MeshID"
-msgstr ""
-
-#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\dialogs\EditVegetationMeshesDialog.java:91
-msgid "DiffuseTexture"
-msgstr ""
-
-#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\dialogs\EditVegetationMeshesDialog.java:96
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\dialogs\EditVegetationMeshesDialog.java:87
 msgid "Number of occurrences"
 msgstr ""
 
-#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\dialogs\EditVegetationMeshesDialog.java:101
-msgid "Vertices"
-msgstr ""
-
 #: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\dialogs\EditVegetationMeshesDialog.java:102
-msgid "Normals"
+msgid "Update from .xcmsh"
 msgstr ""
 
-#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\dialogs\EditVegetationMeshesDialog.java:103
-msgid "UVs"
-msgstr ""
-
-#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\dialogs\EditVegetationMeshesDialog.java:104
-msgid "Indices"
-msgstr ""
-
-#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\dialogs\EditVegetationMeshesDialog.java:118
-msgid "WindStrength"
-msgstr ""
-
-#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\dialogs\EditVegetationMeshesDialog.java:159
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\dialogs\EditVegetationMeshesDialog.java:133
 msgid "Import meshes"
 msgstr ""
 
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\dialogs\EditVegetationMeshesDialog.java:119
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\dialogs\EditVegetationMeshesDialog.java:148
 #: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\dialogs\EditVegetationMeshesDialog.java:160
-#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\dialogs\EditVegetationMeshesDialog.java:171
-msgid "Importing meshes from another VegetationRoot"
+msgid "Import meshes from another VegetationRoot"
 msgstr ""
 
-#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\dialogs\EditVegetationMeshesDialog.java:183
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\dialogs\EditVegetationMeshesDialog.java:120
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\dialogs\EditVegetationMeshesDialog.java:180
+msgid "Import mesh from .xcmsh"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\dialogs\EditVegetationMeshesDialog.java:170
 #, java-format
 msgid "''{0}'' does not contain a VegetationRoot."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\dialogs\EditVegetationMeshesDialog.java:188
+#, java-format
+msgid "''{0}'' does not contain a submesh."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\dialogs\EditVegetationMeshesDialog.java:215
+#, java-format
+msgid "''{0}'' contains more than one submesh."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\dialogs\EditVegetationMeshesDialog.java:223
+#, java-format
+msgid "Material ''{0}'' could not be found, unable to resolve texture."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\dialogs\EditVegetationMeshesDialog.java:230
+#, java-format
+msgid "Material ''{0}'' does not contain a diffuse texture."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\dialogs\EditVegetationMeshesDialog.java:234
+#, java-format
+msgid "Material ''{0}'' contains more than one diffuse texture."
 msgstr ""
 
 #: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\dialogs\SlotDialog.java:12
