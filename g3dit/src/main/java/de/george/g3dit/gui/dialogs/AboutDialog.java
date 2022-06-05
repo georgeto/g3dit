@@ -42,13 +42,13 @@ public class AboutDialog extends ExtStandardDialog {
 		mainPanel.add(iconPanel, "width 50%, aligny top, wrap");
 
 		libPanel.add(SwingUtils.createBoldLabel(I.tr("Libraries")), "wrap");
-		libPanel.add(new JLinkLabel("MigLayout", "http://www.miglayout.com/"), "gapleft 7, wrap");
+		libPanel.add(new JLinkLabel("MigLayout", "https://www.miglayout.com/"), "gapleft 7, wrap");
 		libPanel.add(new JLinkLabel("Simple Validation 1.5", "https://kenai.com/projects/simplevalidation"), "gapleft 7, wrap");
-		libPanel.add(new JLinkLabel("XFileDialog", "http://code.google.com/p/xfiledialog/"), "gapleft 7, wrap");
-		libPanel.add(new JLinkLabel("JIDE Common Layer", "http://www.jidesoft.com/products/oss.htm"), "gapleft 7, wrap");
+		libPanel.add(new JLinkLabel("XFileDialog", "https://github.com/georgeto/XFileDialog"), "gapleft 7, wrap");
+		libPanel.add(new JLinkLabel("JIDE Common Layer", "https://www.jidesoft.com/products/oss.htm"), "gapleft 7, wrap");
 		libPanel.add(new JLinkLabel("SwingX", "https://swingx.java.net/"), "gapleft 7, wrap");
-		libPanel.add(new JLinkLabel("JGoodies Looks", "http://www.jgoodies.com/freeware/libraries/looks/"), "gapleft 7, wrap");
-		libPanel.add(new JLinkLabel("JTS Topology Suite", "http://www.vividsolutions.com/jts/JTSHome.htm"), "gapleft 7, wrap");
+		libPanel.add(new JLinkLabel("JGoodies Looks", "https://www.jgoodies.com/freeware/libraries/looks/"), "gapleft 7, wrap");
+		libPanel.add(new JLinkLabel("JTS Topology Suite", "https://github.com/locationtech/jts"), "gapleft 7, wrap");
 		libPanel.add(new JLinkLabel("Guava", "https://github.com/google/guava"), "gapleft 7, wrap");
 		libPanel.add(new JLinkLabel("OneInstance", "https://github.com/kayahr/oneinstance"), "gapleft 7, wrap");
 		libPanel.add(new JLinkLabel("WinRun4J", "https://github.com/poidasmith/winrun4j"), "gapleft 7, wrap");
@@ -58,8 +58,8 @@ public class AboutDialog extends ExtStandardDialog {
 		libPanel.add(new JLinkLabel("easy-i18n", "https://github.com/awkay/easy-i18n"), "gapleft 7, wrap");
 
 		iconPanel.add(SwingUtils.createBoldLabel(I.tr("Icons")), "wrap");
-		iconPanel.add(new JLinkLabel("Fugue Icons", "http://p.yusukekamiyamane.com"), "gapleft 7, wrap");
-		iconPanel.add(new JLinkLabel("Crystal Clear", "http://everaldo.com"), "gapleft 7, wrap");
+		iconPanel.add(new JLinkLabel("Fugue Icons", "https://p.yusukekamiyamane.com"), "gapleft 7, wrap");
+		iconPanel.add(new JLinkLabel("Crystal Clear", "https://everaldo.com"), "gapleft 7, wrap");
 		iconPanel.add(new JLinkLabel("Silk Icons", "http://www.famfamfam.com/lab/icons/silk/"), "gapleft 7, wrap");
 		iconPanel.add(new JLinkLabel("Silk Flags", "http://www.famfamfam.com/lab/icons/flags/"), "gapleft 7, wrap");
 		iconPanel.add(new JLinkLabel("Country Flags in SVG", "https://github.com/lipis/flag-icons"), "gapleft 7, wrap");
