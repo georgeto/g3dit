@@ -26,7 +26,7 @@ public class ListModificationControl<T> extends JPanel {
 
 	public ListModificationControl(FileChangeMonitor changeMonitor, JEventList<T> list, EventList<T> source, Supplier<Optional<T>> onAdd,
 			Predicate<T> onDelete) {
-		this(changeMonitor, list, source, onAdd, null, null);
+		this(changeMonitor, list, source, onAdd, onDelete, null);
 	}
 
 	public ListModificationControl(FileChangeMonitor changeMonitor, JEventList<T> list, EventList<T> source, Supplier<Optional<T>> onAdd,
