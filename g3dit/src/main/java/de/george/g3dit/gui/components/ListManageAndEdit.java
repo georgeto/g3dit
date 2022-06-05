@@ -74,7 +74,6 @@ public class ListManageAndEdit<E> {
 		managingPanel = new ManagingPanel();
 		splitPane.setLeftComponent(managingPanel);
 
-		// Zone Editing
 		splitPane.setRightComponent(editingComponent);
 
 		return this;
@@ -84,19 +83,18 @@ public class ListManageAndEdit<E> {
 		private JEventList<E> itemsList;
 
 		public ManagingPanel() {
-			setLayout(new MigLayout("fill", "[grow, fill]", "[][]12px push[grow, fill]10px push[]"));
+			setLayout(new MigLayout("fill", "[grow, fill]"));
 
-			JLabel lblTitle = SwingUtils.createBoldLabel(title);
-			lblTitle.setVisible(title != null);
-			add(lblTitle, "hidemode 2, wrap");
-
-			JTextField tfFilter = SwingUtils.createUndoTF();
-			tfFilter.setToolTipText(searchTooltip);
-			tfFilter.setVisible(supplyMatcherEditor != null);
-			add(tfFilter, "hidemode 2, wrap");
+			if (title != null) {
+				JLabel lblTitle = SwingUtils.createBoldLabel(title);
+				add(lblTitle, "wrap");
+			}
 
 			EventList<E> filteredItems = items;
 			if (supplyMatcherEditor != null) {
+				JTextField tfFilter = SwingUtils.createUndoTF();
+				tfFilter.setToolTipText(searchTooltip);
+				add(tfFilter, "sgx items, wrap");
 				filteredItems = new FilterList<>(items, supplyMatcherEditor.apply(tfFilter));
 			}
 
@@ -145,9 +143,9 @@ public class ListManageAndEdit<E> {
 				}
 			});
 
-			add(new JScrollPane(itemsList), "gapleft 7, sgx items, wrap");
+			add(new JScrollPane(itemsList), "sgx items, pushy, growy, wrap, gapbottom 5px");
 			add(new ListModificationControl<>(changeMonitor, itemsList, filteredItems, supplyNewItem, onDelete, onMultiDelete),
-					"gapleft 7, sgx items, wrap");
+					"sgx items, wrap");
 
 			if (itemsList.getModel().getSize() > 0) {
 				itemsList.setSelectedIndex(0);
