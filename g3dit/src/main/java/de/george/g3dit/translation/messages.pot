@@ -1049,6 +1049,15 @@ msgstr ""
 msgid "About"
 msgstr ""
 
+#: g3dit\src\main\java\de\george\g3dit\MainMenu.java:763
+msgid "Restart required"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\MainMenu.java:764
+#: g3dit\src\main\java\de\george\g3dit\settings\SettingsDialog.java:65
+msgid "After changing the UI language, g3dit must be restarted."
+msgstr ""
+
 #: g3dit\src\main\java\de\george\g3dit\ScriptManager.java:175
 #, java-format
 msgid "''{0}'' is executed."
@@ -3294,10 +3303,6 @@ msgstr ""
 #: g3dit\src\main\java\de\george\g3dit\settings\SettingsDialog.java:61
 #: g3dit\src\main\java\de\george\g3dit\settings\SettingsDialog.java:62
 msgid "Language"
-msgstr ""
-
-#: g3dit\src\main\java\de\george\g3dit\settings\SettingsDialog.java:65
-msgid "After changing the UI language, g3dit must be restarted."
 msgstr ""
 
 #: g3dit\src\main\java\de\george\g3dit\settings\SettingsDialog.java:68

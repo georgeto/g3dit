@@ -12,6 +12,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
+import javax.swing.Box;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -32,6 +33,7 @@ import ch.qos.logback.classic.LoggerContext;
 import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.core.Appender;
 import ch.qos.logback.core.FileAppender;
+import de.george.g3dit.Editor.UiLanguage;
 import de.george.g3dit.cache.NavCache;
 import de.george.g3dit.cache.TemplateCache.TemplateCacheEntry;
 import de.george.g3dit.check.CheckManager;
@@ -108,6 +110,8 @@ public class MainMenu extends JMenuBar {
 		createMenuDeveloper();
 
 		createMenuAbout();
+
+		createMenuLanguage();
 
 		settingsUpdated();
 	}
@@ -746,6 +750,24 @@ public class MainMenu extends JMenuBar {
 			public void menuCanceled(MenuEvent e) {}
 		});
 		add(miAbout);
+	}
+
+	private void createMenuLanguage() {
+		add(Box.createHorizontalGlue());
+
+		JMenu muMenuLanguage = new JMenu();
+		muMenuLanguage.setIcon(Icons.getImageIcon(Icons.Flags.LANG));
+		add(muMenuLanguage);
+		for (UiLanguage language : UiLanguage.values()) {
+			JMenuItem miLanguage = new JMenuItem(language.displayName, Icons.getImageIcon(Icons.Flags.forLanguage(language.name)));
+			miLanguage.addActionListener(e -> {
+				ctx.getOptionStore().put(EditorOptions.Language.UI_LANGUAGE, language);
+				I.setLanguage(language.name);
+				TaskDialogs.inform(ctx.getParentWindow(), I.tr("Restart required"),
+						I.tr("After changing the UI language, g3dit must be restarted."));
+			});
+			muMenuLanguage.add(miLanguage);
+		}
 	}
 
 	private Optional<EditorArchiveTab> getSelectedArchiveTab() {

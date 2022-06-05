@@ -1080,6 +1080,15 @@ msgstr "UI-Defaults-Inspektor"
 msgid "About"
 msgstr "Über"
 
+#: g3dit\src\main\java\de\george\g3dit\MainMenu.java:763
+msgid "Restart required"
+msgstr "Neustart erforderlich"
+
+#: g3dit\src\main\java\de\george\g3dit\MainMenu.java:764
+#: g3dit\src\main\java\de\george\g3dit\settings\SettingsDialog.java:65
+msgid "After changing the UI language, g3dit must be restarted."
+msgstr "Nach der Änderung der UI-Sprache muss g3dit neu gestartet werden."
+
 #: g3dit\src\main\java\de\george\g3dit\ScriptManager.java:175
 #, java-format
 msgid "''{0}'' is executed."
@@ -3376,10 +3385,6 @@ msgstr "Externe Programme"
 #: g3dit\src\main\java\de\george\g3dit\settings\SettingsDialog.java:62
 msgid "Language"
 msgstr "Sprache"
-
-#: g3dit\src\main\java\de\george\g3dit\settings\SettingsDialog.java:65
-msgid "After changing the UI language, g3dit must be restarted."
-msgstr "Nach der Änderung der UI-Sprache muss g3dit neu gestartet werden."
 
 #: g3dit\src\main\java\de\george\g3dit\settings\SettingsDialog.java:68
 msgid "Miscellaneous"

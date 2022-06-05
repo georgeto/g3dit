@@ -119,6 +119,14 @@ public class Icons {
 		public static final String CHAIN_MINUS = "/icons/chain-minus.png";
 	}
 
+	public static class Flags {
+		public static final String LANG = "/icons/flag.png";
+
+		public static String forLanguage(String name) {
+			return "/icons/flag-" + name + ".png";
+		}
+	}
+
 	public static ImageIcon getDisabledImageIcon(String name) {
 		if (name != null) {
 			return IconsFactory.getDisabledImageIcon(Icons.class, name);

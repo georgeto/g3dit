@@ -61,6 +61,8 @@ public class AboutDialog extends ExtStandardDialog {
 		iconPanel.add(new JLinkLabel("Fugue Icons", "http://p.yusukekamiyamane.com"), "gapleft 7, wrap");
 		iconPanel.add(new JLinkLabel("Crystal Clear", "http://everaldo.com"), "gapleft 7, wrap");
 		iconPanel.add(new JLinkLabel("Silk Icons", "http://www.famfamfam.com/lab/icons/silk/"), "gapleft 7, wrap");
+		iconPanel.add(new JLinkLabel("Silk Flags", "http://www.famfamfam.com/lab/icons/flags/"), "gapleft 7, wrap");
+		iconPanel.add(new JLinkLabel("Country Flags in SVG", "https://github.com/lipis/flag-icons"), "gapleft 7, wrap");
 
 		String javaInfo = SwingUtils.getMultilineText(String.format("Java: %s", StandardSystemProperty.JAVA_VERSION.value()), String
 				.format("JVM: %s (%s)", StandardSystemProperty.JAVA_VM_NAME.value(), StandardSystemProperty.JAVA_VM_VERSION.value()));
