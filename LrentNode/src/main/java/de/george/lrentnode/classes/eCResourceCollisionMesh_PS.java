@@ -50,8 +50,8 @@ public final class eCResourceCollisionMesh_PS extends eCResourceBase_PS {
 			reader.skip(4 * meshFlagCount);
 		}
 
-		// UnscaledResourceModTime timestamp, which comes sometimes with Version 0x40
-		if (reader.getPos() < deadcodePosition) {
+		if (classVersion >= 0x41) {
+			// UnscaledResourceModTime timestamp
 			reader.skip(8);
 		}
 	}
