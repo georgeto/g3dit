@@ -233,7 +233,8 @@ public class SharedCollisionShapeTab extends AbstractSharedTab {
 			Shape shape = eCCollisionShape.getDefaultShape(shapeType);
 
 			if (shape == null) {
-				cbShapeType.setSelectedValue(lastShapeType);
+				if (shapeType != lastShapeType)
+					cbShapeType.setSelectedValue(lastShapeType);
 				return;
 			}
 
