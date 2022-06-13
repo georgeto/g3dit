@@ -2,7 +2,6 @@ package de.george.g3dit.scripts;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Arrays;
@@ -44,12 +43,14 @@ public class ScriptTestReadSaveIntegrity implements IScript {
 					if (!Arrays.equals(inBytes, out.toByteArray())) {
 						env.log(file.getAbsolutePath());
 					}
-				} catch (IOException e) {
+				} catch (Exception e) {
 					logger.warn("Error while comparing archive file.", e);
+					env.log(file.getAbsolutePath());
 					env.log(I.trf("Error while comparing: {0}", e.getMessage()));
 				}
-			} catch (IOException e) {
+			} catch (Exception e) {
 				logger.warn("Error while loading archive file.", e);
+				env.log(file.getAbsolutePath());
 				env.log(I.trf("Error while loading: {0}", e.getMessage()));
 			}
 			totalArchiveFiles++;
@@ -68,11 +69,13 @@ public class ScriptTestReadSaveIntegrity implements IScript {
 					if (!Arrays.equals(inBytes, out.toByteArray())) {
 						env.log(file.getAbsolutePath());
 					}
-				} catch (IOException e) {
+				} catch (Exception e) {
+					env.log(file.getAbsolutePath());
 					logger.warn("Error while comparing template file.", e);
 					env.log(I.trf("Error while comparing: {0}", e.getMessage()));
 				}
-			} catch (IOException e) {
+			} catch (Exception e) {
+				env.log(file.getAbsolutePath());
 				logger.warn("Error while loading template file.", e);
 				env.log(I.trf("Error while loading: {0}", e.getMessage()));
 			}
