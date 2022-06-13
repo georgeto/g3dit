@@ -134,14 +134,6 @@ public abstract class G3FileReader extends G3FileBase implements AutoCloseable {
 		}
 	}
 
-	public String readWord() {
-		return read(2);
-	}
-
-	public String readDWord() {
-		return read(4);
-	}
-
 	public String readGUID() {
 		return read(20);
 	}
