@@ -414,7 +414,7 @@ public class ImportStaticLightdataDialog extends AbstractTableProgressDialog {
 		}
 
 		public Sldat(G3FileReader reader) throws Exception {
-			entityName = reader.read(reader.readShort());
+			entityName = reader.readString(reader.readShort());
 			entityGuid = new Guid(reader.readString(reader.readShort()).replace("{", "").replace("}", ""));
 			lights = new StaticLights(reader);
 		}
