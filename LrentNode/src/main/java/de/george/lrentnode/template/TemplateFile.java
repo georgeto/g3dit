@@ -2,6 +2,7 @@ package de.george.lrentnode.template;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -11,11 +12,14 @@ import com.google.common.collect.ImmutableList;
 import de.george.g3utils.io.G3FileReaderEx;
 import de.george.g3utils.io.G3FileWriterEx;
 import de.george.g3utils.structure.Stringtable;
+import de.george.g3utils.util.Misc;
 import de.george.lrentnode.archive.AbstractEntityFile;
 import de.george.lrentnode.archive.EntityTreeTraverser;
 import de.george.lrentnode.archive.eCEntity;
 
 public class TemplateFile extends AbstractEntityFile<TemplateEntity> {
+	private static final byte[] IDENTIFIER = Misc.asByte("47454E4F4D455450");
+
 	public TemplateFile(G3FileReaderEx reader) throws IOException {
 		if (!isGenomeFile(reader)) {
 			readInternalExt(reader, true);
@@ -30,7 +34,7 @@ public class TemplateFile extends AbstractEntityFile<TemplateEntity> {
 	}
 
 	private void readInternalExt(G3FileReaderEx reader, boolean stringtableInPlace) throws IOException {
-		if (reader.getRemainingSize() < 8 || !reader.read(8).equals("47454E4F4D455450")) {
+		if (reader.getRemainingSize() < IDENTIFIER.length || !Arrays.equals(reader.readByteArray(IDENTIFIER.length), IDENTIFIER)) {
 			throw new IOException("'" + reader.getFileName() + "' is not a valid .tple file.");
 		}
 
@@ -82,7 +86,7 @@ public class TemplateFile extends AbstractEntityFile<TemplateEntity> {
 
 	@Override
 	protected void writeInternal(G3FileWriterEx writer) {
-		writer.write("47454E4F4D4554503E000100");
+		writer.write(IDENTIFIER).writeUnsignedShort(0x3e).writeUnsignedShort(1);
 		writer.writeBool(true);
 		// TODO: Müsste man eigentlich am Ende schreiben, da erst dann die wahre Größe der
 		// Stringtable

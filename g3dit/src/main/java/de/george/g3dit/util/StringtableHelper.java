@@ -23,7 +23,7 @@ public class StringtableHelper {
 	public static void clearStringtableSafe(Collection<? extends G3ClassContainer> classContainers, Stringtable stringtable,
 			boolean displayWarning, Window parent) {
 		Set<String> unknownClasses = classContainers.stream().flatMap(c -> c.getClasses().stream()).filter(c -> c instanceof DefaultClass)
-				.filter(c -> ((DefaultClass) c).getRaw() != null && ((DefaultClass) c).getRaw().length() > 4).map(G3Class::getClassName)
+				.filter(c -> ((DefaultClass) c).getRaw() != null && ((DefaultClass) c).getRaw().length > 2).map(G3Class::getClassName)
 				.collect(Collectors.toSet());
 
 		if (!unknownClasses.isEmpty()) {

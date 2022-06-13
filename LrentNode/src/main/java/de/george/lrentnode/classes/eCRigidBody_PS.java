@@ -5,7 +5,7 @@ import de.george.g3utils.io.G3FileWriter;
 
 public class eCRigidBody_PS extends G3Class {
 
-	private String rawData;
+	private byte[] rawData;
 
 	public eCRigidBody_PS(String className, G3FileReader reader) {
 		super(className, reader);
@@ -13,7 +13,7 @@ public class eCRigidBody_PS extends G3Class {
 
 	@Override
 	protected void readPostClassVersion(G3FileReader reader) {
-		rawData = reader.read(84);
+		rawData = reader.readByteArray(84);
 	}
 
 	@Override

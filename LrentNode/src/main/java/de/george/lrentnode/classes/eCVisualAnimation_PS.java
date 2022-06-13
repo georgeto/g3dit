@@ -33,11 +33,11 @@ public class eCVisualAnimation_PS extends eCEntityPropertySet {
 		bodyParts = new ArrayList<>(slotCount);
 		for (int i = 0; i < slotCount; i++) {
 			bodyParts.add(new MaterialSwitchSlot(reader));
-			if (!reader.read(1).equals("01")) {
+			if (reader.readUnsignedByte() != 1) {
 				reader.warn(logger, "(1) eCVisualAnimation_PS unexpected filed structure.");
 			}
 		}
-		if (!reader.read(1).equals("01")) {
+		if (reader.readUnsignedByte() != 1) {
 			reader.warn(logger, "(2) eCVisualAnimation_PS unexpected file structure.");
 		}
 		int stCount = reader.readInt();

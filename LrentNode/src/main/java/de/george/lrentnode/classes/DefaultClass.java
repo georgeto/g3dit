@@ -9,7 +9,7 @@ import de.george.g3utils.io.G3FileWriter;
 public class DefaultClass extends G3Class {
 	private static final Logger logger = LoggerFactory.getLogger(DefaultClass.class);
 
-	private String raw;
+	private byte[] raw;
 
 	public DefaultClass(String className, G3FileReader reader) {
 		super(className, reader);
@@ -29,7 +29,7 @@ public class DefaultClass extends G3Class {
 			// Leider gibt es im CSP viele fehlerhafte InventorySlot Klassen, dass ist ein
 			// Workaround
 			if (!className.equals("gCInventorySlot")) {
-				raw = reader.read(deadcodePosition - reader.getPos());
+				raw = reader.readByteArray(deadcodePosition - reader.getPos());
 			}
 		}
 	}
@@ -41,7 +41,7 @@ public class DefaultClass extends G3Class {
 		}
 	}
 
-	public String getRaw() {
+	public byte[] getRaw() {
 		return raw;
 	}
 

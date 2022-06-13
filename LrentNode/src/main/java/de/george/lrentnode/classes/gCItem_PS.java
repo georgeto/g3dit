@@ -1,5 +1,6 @@
 package de.george.lrentnode.classes;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -8,12 +9,13 @@ import org.slf4j.LoggerFactory;
 import de.george.g3utils.io.G3FileReader;
 import de.george.g3utils.io.G3FileWriter;
 import de.george.g3utils.io.G3Serializable;
+import de.george.g3utils.util.Misc;
 
 public class gCItem_PS extends G3Class {
 	private static final Logger logger = LoggerFactory.getLogger(gCItem_PS.class);
 
 	// Konstant, wird in gCItem_PS::Write immer auf diesen Wert gesetzt.
-	private static final String ITEM_STATS = "010000000100000000010000000001000000000100000000";
+	private static final byte[] ITEM_STATS = Misc.asByte("010000000100000000010000000001000000000100000000");
 
 	private int slot, scriptExecuted;
 	// In Templates egal (?!), in den Weltdaten auf 1, wenn Ausrüstung von NPC, und ansonsten 0.
@@ -26,7 +28,7 @@ public class gCItem_PS extends G3Class {
 
 	@Override
 	protected void readPostClassVersion(G3FileReader reader) {
-		if (!reader.read(24).equals(ITEM_STATS)) {
+		if (!Arrays.equals(reader.readByteArray(ITEM_STATS.length), ITEM_STATS)) {
 			reader.warn(logger, "(1) gCItem_PS unexpected file structure.");
 		}
 		slot = reader.readInt();

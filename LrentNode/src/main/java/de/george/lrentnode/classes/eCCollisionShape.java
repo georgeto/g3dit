@@ -357,7 +357,7 @@ public class eCCollisionShape extends G3Class {
 
 	public static class UnknownShape implements Shape {
 
-		private String raw;
+		private byte[] raw;
 
 		@Override
 		public void read(G3FileReader reader) {
@@ -366,7 +366,7 @@ public class eCCollisionShape extends G3Class {
 
 		@Override
 		public void read(G3FileReader reader, int size) {
-			raw = reader.read(size);
+			raw = reader.readByteArray(size);
 		}
 
 		@Override

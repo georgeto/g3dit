@@ -13,6 +13,7 @@ import de.george.g3utils.io.G3FileWriterEx;
 import de.george.g3utils.util.IndexGenerator;
 
 public abstract class ArchiveFile extends AbstractEntityFile<eCEntity> {
+	protected static final int VERSION = 83;
 
 	public enum ArchiveType {
 		Lrentdat,

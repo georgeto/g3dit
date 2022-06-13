@@ -5,7 +5,7 @@ import de.george.g3utils.io.G3FileWriter;
 import de.george.g3utils.io.G3Serializable;
 
 public class Unknown implements G3Serializable {
-	private String raw;
+	private byte[] raw;
 
 	@Override
 	public void read(G3FileReader reader) {
@@ -14,7 +14,7 @@ public class Unknown implements G3Serializable {
 
 	@Override
 	public void read(G3FileReader reader, int size) {
-		raw = reader.read(size);
+		raw = reader.readByteArray(size);
 	}
 
 	@Override

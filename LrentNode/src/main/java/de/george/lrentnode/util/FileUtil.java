@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -59,7 +60,8 @@ public class FileUtil {
 			throw new IOException("'" + reader.getFileName() + "' is not a valid .lrentdat/.node file.");
 		}
 
-		return reader.readSilent(14, 8).equals("47454E4F4D45444C") ? new LrentdatFile(reader, verifyEntityGraph, skipPropertySets)
+		return Arrays.equals(reader.readSilentByteArray(14, LrentdatFile.IDENTIFIER.length), LrentdatFile.IDENTIFIER)
+				? new LrentdatFile(reader, verifyEntityGraph, skipPropertySets)
 				: new NodeFile(reader, verifyEntityGraph, skipPropertySets);
 	}
 

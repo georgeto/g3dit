@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -48,6 +49,8 @@ import one.util.streamex.StreamEx;
 
 public class NavMap extends GenomeFile {
 	private static final Logger logger = LoggerFactory.getLogger(NavMap.class);
+
+	private static final byte[] IDENTIFIER = Misc.asByte("4745332D4E41562D4D4150");
 
 	public static final String OUT_OF_NAV_AREA_ID = "A3D9D3161307D749B56613FEB478580100000000";
 
@@ -107,7 +110,7 @@ public class NavMap extends GenomeFile {
 
 	@Override
 	protected void readInternal(G3FileReaderEx reader) throws IOException {
-		if (!reader.read(11).equals("4745332D4E41562D4D4150")) {
+		if (!Arrays.equals(reader.readByteArray(IDENTIFIER.length), IDENTIFIER)) {
 			throw new IOException("'" + reader.getFileName() + "' is not a valid NavigationMap.");
 		}
 
@@ -130,7 +133,7 @@ public class NavMap extends GenomeFile {
 
 	@Override
 	protected void writeInternal(G3FileWriterEx writer) {
-		writer.write("4745332D4E41562D4D4150").writeUnsignedInt(3).writeUnsignedInt(0);
+		writer.write(IDENTIFIER).writeUnsignedInt(3).writeUnsignedInt(0);
 
 		writer.write(sec1);
 		writer.write(sec2);

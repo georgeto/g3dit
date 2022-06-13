@@ -1,6 +1,7 @@
 package de.george.lrentnode.archive.lrentdat;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import de.george.g3utils.io.G3FileReaderEx;
 import de.george.g3utils.io.G3FileWriterEx;
 import de.george.g3utils.structure.bCBox;
+import de.george.g3utils.util.Misc;
 import de.george.lrentnode.archive.ArchiveEntity;
 import de.george.lrentnode.archive.ArchiveFile;
 import de.george.lrentnode.archive.eCEntity;
@@ -17,6 +19,8 @@ import de.george.lrentnode.util.ClassUtil;
 
 public class LrentdatFile extends ArchiveFile {
 	private static final Logger logger = LoggerFactory.getLogger(LrentdatFile.class);
+
+	public static final byte[] IDENTIFIER = Misc.asByte("47454E4F4D45444C");
 
 	private eCEntityDynamicContext context;
 
@@ -32,11 +36,11 @@ public class LrentdatFile extends ArchiveFile {
 
 	@Override
 	protected void readInternal(G3FileReaderEx reader) throws IOException {
-		if (!reader.read(8).equals("47454E4F4D45444C")) {
+		if (!Arrays.equals(reader.readByteArray(IDENTIFIER.length), IDENTIFIER)) {
 			throw new IOException("'" + reader.getFileName() + "' is not a valid .lrentdat file.");
 		}
 
-		if (reader.readShort() != 83) {
+		if (reader.readUnsignedShort() != VERSION) {
 			reader.warn(logger, "Unsupported Lrentdat version.");
 		}
 
@@ -54,7 +58,7 @@ public class LrentdatFile extends ArchiveFile {
 
 	@Override
 	public void writeInternal(G3FileWriterEx writer) {
-		writer.write("47454E4F4D45444C5300");
+		writer.write(IDENTIFIER).writeUnsignedShort(VERSION);
 		updateContentBox();
 		ClassUtil.writeSubClass(writer, context);
 
