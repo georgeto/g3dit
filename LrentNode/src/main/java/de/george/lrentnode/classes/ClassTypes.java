@@ -77,5 +77,6 @@ public class ClassTypes {
 		add(gCEffectCommandPlaySound.class, "gCEffectCommandPlaySound");
 		add(gCEffectCommand.class, "gCEffectCommandEarthquake", "gCEffectCommandKillEntity", "gCEffectCommandMusicTrigger",
 				"gCEffectCommandPlayVoice", "gCEffectCommandSpawnEntity", "gCEffectCommandTriggerEntity");
+		add(gCProjectile_PS.class, "gCProjectile_PS");
 	}
 }
