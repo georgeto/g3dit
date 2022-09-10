@@ -81,5 +81,6 @@ public class ClassTypes {
 		add(eCPhysicsScene_PS.class, "eCPhysicsScene_PS");
 		add(gCCameraAI_PS.class, "gCCameraAI_PS");
 		add(gCSectorPersistence_PS.class, "gCSectorPersistence_PS");
+		add(gCCharacterSensor_PS.class, "gCCharacterSensor_PS");
 	}
 }
