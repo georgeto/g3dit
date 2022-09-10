@@ -455,6 +455,14 @@ public abstract class G3FileReader extends G3FileBase implements AutoCloseable {
 		return result;
 	}
 
+	public boolean[] readBoolArray() {
+		boolean[] result = new boolean[readInt()];
+		for (int i = 0; i < result.length; i++) {
+			result[i] = readBool();
+		}
+		return result;
+	}
+
 	public <T extends G3Serializable> void readPrefixedArray(Class<T> type, Consumer<T> consumer) {
 		skipListPrefix();
 		readArray(type, consumer, readInt());
@@ -473,6 +481,11 @@ public abstract class G3FileReader extends G3FileBase implements AutoCloseable {
 	public <T> T[] readPrefixedArray(Function<G3FileReader, ?> extractor, Class<T> castTo) {
 		skipListPrefix();
 		return readArray(extractor, castTo, readInt());
+	}
+
+	public boolean[] readPrefixedBoolArray() {
+		skipListPrefix();
+		return readBoolArray();
 	}
 
 	public <V extends G3Serializable> Map<String, V> readStringMap(Class<V> value) {

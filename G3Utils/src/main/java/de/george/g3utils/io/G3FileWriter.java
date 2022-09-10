@@ -247,12 +247,24 @@ public abstract class G3FileWriter extends G3FileBase {
 		return this;
 	}
 
+	public G3FileWriter writeBoolArray(boolean[] objects) {
+		writeInt(objects.length);
+		for (boolean object : objects) {
+			writeBool(object);
+		}
+		return this;
+	}
+
 	public <T extends G3Serializable> G3FileWriter writePrefixedArray(T[] objects) {
 		return writeListPrefix().writeArray(objects);
 	}
 
 	public <T> G3FileWriter writePrefixedArray(T[] objects, BiConsumer<G3FileWriter, T> writer) {
 		return writeListPrefix().writeArray(objects, writer);
+	}
+
+	public G3FileWriter writePrefixedBoolArray(boolean[] objects) {
+		return writeListPrefix().writeBoolArray(objects);
 	}
 
 	public abstract G3FileWriter writeEntry(String entry);
