@@ -2713,7 +2713,15 @@ msgstr ""
 msgid "Export named entities only"
 msgstr ""
 
-#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptListEntities.java:32
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptListEntities.java:35
+msgid "Resolve assets used by entities (slow)"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptListEntities.java:36
+msgid "Resolve assets used by entities"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptListEntities.java:40
 msgid "List entities"
 msgstr ""
 

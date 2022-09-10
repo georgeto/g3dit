@@ -2790,7 +2790,15 @@ msgstr "Nur benannte Entities auflisten"
 msgid "Export named entities only"
 msgstr "Nur benannte Entities exportieren"
 
-#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptListEntities.java:32
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptListEntities.java:35
+msgid "Resolve assets used by entities (slow)"
+msgstr "Löse von Entities verwendete Assests auf (langsam)"
+
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptListEntities.java:36
+msgid "Resolve assets used by entities"
+msgstr "Löse von Entities verwendete Assests auf"
+
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptListEntities.java:40
 msgid "List entities"
 msgstr "Entities auflisten"
 
