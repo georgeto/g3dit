@@ -79,5 +79,6 @@ public class ClassTypes {
 				"gCEffectCommandPlayVoice", "gCEffectCommandSpawnEntity", "gCEffectCommandTriggerEntity");
 		add(gCProjectile_PS.class, "gCProjectile_PS");
 		add(eCPhysicsScene_PS.class, "eCPhysicsScene_PS");
+		add(gCCameraAI_PS.class, "gCCameraAI_PS");
 	}
 }
