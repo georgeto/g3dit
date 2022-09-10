@@ -47,7 +47,7 @@ public class FieldAccessor implements PropertyAwareAccessor {
 		try {
 			field.setAccessible(true);
 			return field.get(target);
-		} catch (IllegalAccessException e) {
+		} catch (IllegalAccessException | RuntimeException e) {
 			throw new PropertyReadException(getPropertyName(), getType(), e);
 		} finally {
 			field.setAccessible(false);
@@ -59,7 +59,7 @@ public class FieldAccessor implements PropertyAwareAccessor {
 		try {
 			field.setAccessible(true);
 			field.set(target, value);
-		} catch (IllegalAccessException e) {
+		} catch (IllegalAccessException | RuntimeException e) {
 			throw new PropertyWriteException(getPropertyName(), getType(), value, e);
 		} finally {
 			field.setAccessible(false);

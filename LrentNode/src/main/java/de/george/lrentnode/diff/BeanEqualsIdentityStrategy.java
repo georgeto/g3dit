@@ -15,7 +15,9 @@ public class BeanEqualsIdentityStrategy implements IdentityStrategy {
 		}
 
 		try {
-			if (base.getClass().getDeclaredMethod("equals", base.getClass()) != null) {
+			if (base.getClass().getDeclaredMethod("equals", Object.class) != null) {
+				return base.equals(working);
+			} else if (base.getClass().getDeclaredMethod("equals", base.getClass()) != null) {
 				return base.equals(working);
 			}
 		} catch (NoSuchMethodException | SecurityException e) {

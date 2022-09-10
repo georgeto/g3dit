@@ -121,6 +121,7 @@ public class EntityDiffer {
 				return false;
 			}
 		});
+		builder.differs().register((differDispatcher, nodeQueryService) -> new ArrayDiffer());
 		builder.collectionMatchingStrategyResolver(type -> {
 			Class<?> bestType = null;
 			for (Class<?> strategyType : matchingStrategies.keySet()) {
