@@ -53,7 +53,7 @@ public class ClassTypes {
 		add(gCItem_PS.class, "gCItem_PS");
 		add(eCEntityDynamicContext.class, "eCEntityDynamicContext");
 		add(eCGeometrySpatialContext.class, "eCGeometrySpatialContext");
-		add(eCEntityPropertySet.class, "eCSpeedTree_PS");
+		add(eCEntityPropertySet.class, "eCSpeedTree_PS", "eCSpeedTreeWind_PS");
 		add(eCVegetation_PS.class, "eCVegetation_PS");
 		add(eCVegetation_Mesh.class, "eCVegetation_Mesh");
 		add(gCMap_PS.class, "gCMap_PS");
