@@ -78,5 +78,6 @@ public class ClassTypes {
 		add(gCEffectCommand.class, "gCEffectCommandEarthquake", "gCEffectCommandKillEntity", "gCEffectCommandMusicTrigger",
 				"gCEffectCommandPlayVoice", "gCEffectCommandSpawnEntity", "gCEffectCommandTriggerEntity");
 		add(gCProjectile_PS.class, "gCProjectile_PS");
+		add(eCPhysicsScene_PS.class, "eCPhysicsScene_PS");
 	}
 }
