@@ -267,9 +267,9 @@ public class Editor implements EditorContext {
 		return new EditorCli(this, workingDir, writer).processCommandLine(args, false);
 	}
 
-	private void diffEntity(String base, String mine, eCEntity baseRoot, eCEntity mineRoot) throws IOException {
+	private <T> void diffWithEntityDiffer(String baseFile, String mineFile, T base, T mine) throws IOException {
 		// TODO: Also diff DynamicEntityContext
-		DiffNode diff = new EntityDiffer(true).diff(mineRoot, baseRoot);
+		DiffNode diff = new EntityDiffer(true).diff(mine, base);
 		if (!diff.hasChanges()) {
 			String binaryCompare = getOptionStore().get(EditorOptions.Path.BINARY_COMPARE);
 			if (binaryCompare.isEmpty()) {
@@ -277,14 +277,14 @@ public class Editor implements EditorContext {
 				return;
 			}
 
-			Runtime.getRuntime().exec(binaryCompare.replace("%base", base).replace("%mine", mine));
+			Runtime.getRuntime().exec(binaryCompare.replace("%base", baseFile).replace("%mine", mineFile));
 		}
 
-		ToMapPrintingVisitor mapPrintingVisitor = new ToMapPrintingVisitor(mineRoot, baseRoot);
+		ToMapPrintingVisitor mapPrintingVisitor = new ToMapPrintingVisitor(mine, base);
 		diff.visit(mapPrintingVisitor);
 		SwingUtilities.invokeLater(() -> {
 			DisplayTextDialog dialog = new DisplayTextDialog(
-					I.trf("File comparison - [{0} - {1}]", new File(base).getName(), new File(mine).getName()),
+					I.trf("File comparison - [{0} - {1}]", new File(baseFile).getName(), new File(mineFile).getName()),
 					mapPrintingVisitor.getMessagesAsString(), frame, false);
 			// dialog.setLocationRelativeTo(editor.getOwner());
 			dialog.setVisible(true);
@@ -329,20 +329,19 @@ public class Editor implements EditorContext {
 				return;
 			}
 
-			eCEntity baseRoot;
-			eCEntity mineRoot;
 			switch (baseExt) {
 				case "node", "lrentdat" -> {
-					baseRoot = FileUtil.openArchive(baseFile, true).getGraph();
-					mineRoot = FileUtil.openArchive(mineFile, true).getGraph();
-					diffEntity(base, mine, baseRoot, mineRoot);
+					eCEntity baseRoot = FileUtil.openArchive(baseFile, true).getGraph();
+					eCEntity mineRoot = FileUtil.openArchive(mineFile, true).getGraph();
+					diffWithEntityDiffer(base, mine, baseRoot, mineRoot);
 				}
 				case "tple" -> {
-					baseRoot = FileUtil.openTemplate(baseFile).getGraph();
-					mineRoot = FileUtil.openTemplate(mineFile).getGraph();
-					diffEntity(base, mine, baseRoot, mineRoot);
+					eCEntity baseRoot = FileUtil.openTemplate(baseFile).getGraph();
+					eCEntity mineRoot = FileUtil.openTemplate(mineFile).getGraph();
+					diffWithEntityDiffer(base, mine, baseRoot, mineRoot);
 				}
 				case "xnav" -> diffNavigationMap(base, mine);
+				case "efm" -> diffWithEntityDiffer(base, mine, FileUtil.openEffectMap(baseFile), FileUtil.openEffectMap(mineFile));
 				default -> TaskDialogs.error(frame, "", I.trf("Files to be diffed have unsupported file extension ''{0}''.", baseExt));
 
 			}

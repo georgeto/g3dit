@@ -32,6 +32,7 @@ import de.george.lrentnode.classes.eCVegetation_PS.eCVegetation_GridNode;
 import de.george.lrentnode.classes.eCVisualAnimation_PS;
 import de.george.lrentnode.diff.introspection.FieldAccessor;
 import de.george.lrentnode.diff.introspection.FieldIntrospector;
+import de.george.lrentnode.effect.gCEffectCommandSequence;
 import de.george.lrentnode.properties.ClassProperty;
 import de.george.lrentnode.properties.bCPropertyID;
 import de.george.lrentnode.properties.bCString;
@@ -77,6 +78,7 @@ public class EntityDiffer {
 		addFieldMatchingStrategy(eCVisualAnimation_PS.ExtraSlot.class, "name");
 		addMethodMatchingStrategy(eCEntity.class, "getGuid");
 		addMethodMatchingStrategy(eCVegetation_GridNode.class, "getIndex");
+		addMethodMatchingStrategy(gCEffectCommandSequence.class, "getName");
 		matchingStrategies.put(G3Serializable.class, new BeanEqualsIdentityStrategy());
 	}
 
@@ -136,7 +138,7 @@ public class EntityDiffer {
 		differ = builder.build();
 	}
 
-	public DiffNode diff(eCEntity working, eCEntity base) {
+	public <T> DiffNode diff(T working, T base) {
 		return differ.compare(working, base);
 	}
 

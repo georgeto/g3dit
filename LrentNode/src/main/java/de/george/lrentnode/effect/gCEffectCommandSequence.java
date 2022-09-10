@@ -52,4 +52,9 @@ public class gCEffectCommandSequence implements G3Serializable {
 	public void setCommands(List<gCEffectCommand> commands) {
 		this.commands = commands;
 	}
+
+	@Override
+	public String toString() {
+		return name;
+	}
 }
