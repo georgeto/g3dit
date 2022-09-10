@@ -21,7 +21,7 @@ import net.miginfocom.swing.MigLayout;
 
 public class FileExtensionOptionHandler extends AbstractOptionHandler<Void> {
 	private static final Logger logger = LoggerFactory.getLogger(FileExtensionOptionHandler.class);
-	private static final String[] EXTENSIONS = new String[] {"lrentdat", "node", "secdat", "tple", "xcmsh", "xact", "xlmsh"};
+	private static final String[] EXTENSIONS = new String[] {"lrentdat", "node", "secdat", "tple", "xcmsh", "xact", "xlmsh", "efm"};
 
 	private CheckBoxList cblExt;
 
