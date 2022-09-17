@@ -9,6 +9,7 @@ import com.google.common.collect.ImmutableListMultimap;
 import de.george.lrentnode.classes.eCCollisionShape_PS;
 import de.george.lrentnode.classes.eCVegetation_PS;
 import de.george.lrentnode.classes.gCInventory_PS;
+import de.george.lrentnode.classes.gCPlayerMemory_PS;
 
 public class SubClassDescriptorRegistery {
 	// Initialization-on-demand holder idiom
@@ -37,8 +38,11 @@ public class SubClassDescriptorRegistery {
 				.put(CD.gCInventory_PS.class,
 						new SubClassDescriptor("Slots", "Slot", CD.gCInventorySlot.class, CD.gCInventory_PS.class,
 								gCInventory_PS::getSlots))
-				.put(CD.eCVegetation_PS.class, new SubClassDescriptor("Meshes", "Mesh", CD.eCVegetation_Mesh.class,
-						CD.eCVegetation_PS.class, eCVegetation_PS::getMeshClasses))
+				.put(CD.eCVegetation_PS.class,
+						new SubClassDescriptor("Meshes", "Mesh", CD.eCVegetation_Mesh.class, CD.eCVegetation_PS.class,
+								eCVegetation_PS::getMeshClasses))
+				.put(CD.gCPlayerMemory_PS.class, new SubClassDescriptor("Attributes", "Attribute", CD.gCAttribute.class,
+						CD.gCPlayerMemory_PS.class, propertySet -> ((gCPlayerMemory_PS) propertySet).attributes.values()))
 				.build();
 	}
 

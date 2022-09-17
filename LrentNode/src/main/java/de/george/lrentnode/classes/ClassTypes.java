@@ -82,5 +82,6 @@ public class ClassTypes {
 		add(gCCameraAI_PS.class, "gCCameraAI_PS");
 		add(gCSectorPersistence_PS.class, "gCSectorPersistence_PS");
 		add(gCCharacterSensor_PS.class, "gCCharacterSensor_PS");
+		add(gCPlayerMemory_PS.class, "gCPlayerMemory_PS");
 	}
 }
