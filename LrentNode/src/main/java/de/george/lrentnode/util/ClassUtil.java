@@ -1,13 +1,10 @@
 package de.george.lrentnode.util;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.google.common.collect.Iterables;
 
 import de.george.g3utils.io.G3FileReader;
 import de.george.g3utils.io.G3FileReaderEx;
@@ -20,8 +17,6 @@ import de.george.lrentnode.archive.G3ClassContainer;
 import de.george.lrentnode.classes.ClassTypes;
 import de.george.lrentnode.classes.DefaultClass;
 import de.george.lrentnode.classes.G3Class;
-import de.george.lrentnode.classes.eCCollisionShape_PS;
-import de.george.lrentnode.classes.gCInventory_PS;
 import de.george.lrentnode.classes.desc.CD;
 import de.george.lrentnode.classes.desc.ClassDescriptor;
 import de.george.lrentnode.classes.desc.PropertyDescriptor;
@@ -184,19 +179,6 @@ public class ClassUtil {
 	public static void write(List<ClassProperty<?>> properties, G3FileWriter writer) {
 		for (ClassProperty<?> prop : properties) {
 			prop.write(writer);
-		}
-	}
-
-	public static Iterable<? extends G3Class> getNestedPropertySets(G3Class propertySet) {
-		switch (propertySet.getClassName()) {
-			case "gCInventory_PS":
-				gCInventory_PS inventory = (gCInventory_PS) propertySet;
-				return Iterables.concat(inventory.slots, inventory.stacks);
-			case "eCCollisionShape_PS":
-				eCCollisionShape_PS colShape = (eCCollisionShape_PS) propertySet;
-				return colShape.getShapes();
-			default:
-				return Collections.emptyList();
 		}
 	}
 

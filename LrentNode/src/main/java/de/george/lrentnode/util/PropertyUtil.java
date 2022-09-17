@@ -12,6 +12,8 @@ import de.george.lrentnode.archive.eCEntity;
 import de.george.lrentnode.classes.G3Class;
 import de.george.lrentnode.classes.desc.CD;
 import de.george.lrentnode.classes.desc.PropertyDescriptor;
+import de.george.lrentnode.classes.desc.SubClassDescriptor;
+import de.george.lrentnode.classes.desc.SubClassDescriptorRegistery;
 import de.george.lrentnode.properties.ClassProperty;
 import de.george.lrentnode.properties.bCString;
 import de.george.lrentnode.properties.bTObjArray_eCEntityProxy;
@@ -92,11 +94,10 @@ public abstract class PropertyUtil {
 			if (!processPropertySet(propertySet, visitor)) {
 				return;
 			}
-			for (G3Class nestedPropertySet : ClassUtil.getNestedPropertySets(propertySet)) {
-				if (!processPropertySet(nestedPropertySet, visitor)) {
-					return;
-				}
-			}
+			for (SubClassDescriptor desc : SubClassDescriptorRegistery.getInstance().lookupSubClasses(propertySet.getClassName()))
+				for (G3Class nestedPropertySet : desc.getList(propertySet))
+					if (!processPropertySet(nestedPropertySet, visitor))
+						return;
 		}
 	}
 
