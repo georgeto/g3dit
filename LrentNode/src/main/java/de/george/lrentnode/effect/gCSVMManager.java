@@ -90,8 +90,8 @@ public class gCSVMManager extends GenomeFile {
 			throw new IOException("Version != 1 of SVMManager is not supported.");
 		}
 
-		voiceList = reader.readStringMap(SVoice.class);
-		blockList = reader.readStringMap(SBlock.class);
+		voiceList = reader.readStringMapPrefixed(SVoice.class);
+		blockList = reader.readStringMapPrefixed(SBlock.class);
 	}
 
 	@Override

@@ -9,6 +9,7 @@ import java.nio.ByteOrder;
 import java.nio.channels.Channels;
 import java.nio.channels.WritableByteChannel;
 import java.util.Collection;
+import java.util.Map;
 import java.util.function.BiConsumer;
 
 import org.slf4j.Logger;
@@ -265,6 +266,23 @@ public abstract class G3FileWriter extends G3FileBase {
 
 	public G3FileWriter writePrefixedBoolArray(boolean[] objects) {
 		return writeListPrefix().writeBoolArray(objects);
+	}
+
+	public <V extends G3Serializable> G3FileWriter writeStringMap(Map<String, V> map) {
+		return writeMap(map, G3FileWriter::writeEntry, G3FileWriter::write);
+	}
+
+	public <K extends G3Serializable, V extends G3Serializable> G3FileWriter writeMap(Map<K, V> map) {
+		return writeMap(map, G3FileWriter::write, G3FileWriter::write);
+	}
+
+	public <K, V> G3FileWriter writeMap(Map<K, V> map, BiConsumer<G3FileWriter, K> key, BiConsumer<G3FileWriter, V> value) {
+		writeInt(map.size());
+		map.forEach((k, v) -> {
+			key.accept(this, k);
+			value.accept(this, v);
+		});
+		return this;
 	}
 
 	public abstract G3FileWriter writeEntry(String entry);

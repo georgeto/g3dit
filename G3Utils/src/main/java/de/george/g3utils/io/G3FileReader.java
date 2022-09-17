@@ -10,7 +10,7 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.channels.FileChannel;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
@@ -501,12 +501,31 @@ public abstract class G3FileReader extends G3FileBase implements AutoCloseable {
 	}
 
 	public <K, V> Map<K, V> readMap(Function<G3FileReader, K> key, Function<G3FileReader, V> value) {
-		readUnsignedByte(); // Always one
 		int count = readInt();
-		Map<K, V> result = new HashMap<>();
+		Map<K, V> result = new LinkedHashMap<>();
 		for (int i = 0; i < count; i++) {
 			result.put(key.apply(this), value.apply(this));
 		}
 		return result;
+	}
+
+	public <V extends G3Serializable> Map<String, V> readStringMapPrefixed(Class<V> value) {
+		skipListPrefix();
+		return readStringMap(value);
+	}
+
+	public <K extends G3Serializable, V extends G3Serializable> Map<K, V> readMapPrefixed(Class<K> key, Class<V> value) {
+		skipListPrefix();
+		return readMap(key, value);
+	}
+
+	public <K, V extends G3Serializable> Map<K, V> readMapPrefixed(Function<G3FileReader, K> key, Class<V> value) {
+		skipListPrefix();
+		return readMap(key, value);
+	}
+
+	public <K, V> Map<K, V> readMapPrefixed(Function<G3FileReader, K> key, Function<G3FileReader, V> value) {
+		skipListPrefix();
+		return readMap(key, value);
 	}
 }
