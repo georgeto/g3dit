@@ -84,5 +84,6 @@ public class ClassTypes {
 		add(gCCharacterSensor_PS.class, "gCCharacterSensor_PS");
 		add(gCPlayerMemory_PS.class, "gCPlayerMemory_PS");
 		add(gCCharacterControl_PS.class, "gCCharacterControl_PS");
+		add(gCQuestManager_PS.class, "gCQuestManager_PS");
 	}
 }
