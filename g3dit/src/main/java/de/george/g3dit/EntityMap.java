@@ -260,6 +260,7 @@ public class EntityMap extends JFrame {
 		tablePanel.add(tfSearch, "grow, wrap");
 		tablePanel.add(new JScrollPane(map.getTable()), "spanx, grow, wrap");
 		tablePanel.add(map.getCbOnlySelected());
+		tablePanel.add(map.getCbShowMarkers());
 		tablePanel.add(cbShowPlayerPosition);
 		tablePanel.add(btnHelp, "align right, wrap");
 

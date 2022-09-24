@@ -12,6 +12,7 @@ import de.george.g3utils.structure.bCVector2;
 import hu.kazocsaba.imageviewer.Overlay;
 
 public class MapMarkerOverlay<T extends MapItem> extends Overlay {
+	private boolean visible = true;
 	private int size = 5;
 	private MapModel<T> data;
 	private Function<T, Color> colorProvider;
@@ -30,8 +31,16 @@ public class MapMarkerOverlay<T extends MapItem> extends Overlay {
 		repaint();
 	}
 
+	public void setVisible(boolean visible) {
+		this.visible = visible;
+		repaint();
+	}
+
 	@Override
 	public void paint(Graphics2D g, BufferedImage image, AffineTransform transform) {
+		if (!visible)
+			return;
+
 		Point2D p2d = new Point2D.Double();
 		int currentSize = Math.max(size, (int) Math.ceil(transform.getScaleX() / Math.sqrt(2)));
 

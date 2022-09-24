@@ -2269,6 +2269,10 @@ msgstr ""
 msgid "Show only selected on map"
 msgstr "Nur auf Karte Ausgewählte anzeigen"
 
+#: g3dit\src\main\java\de\george\g3dit\gui\map\MapAndTableComponent.java:169
+msgid "Show entity markers"
+msgstr "Entity-Marker anzeigen"
+
 #: g3dit\src\main\java\de\george\g3dit\gui\theme\ThemeSettingsPanel.java:91
 msgid "Native"
 msgstr "Nativ"

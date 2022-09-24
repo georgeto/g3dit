@@ -84,6 +84,7 @@ public class MapAndTableComponent<T extends MapItem> {
 	private JXTable table;
 	private JXTableSupport<T> tableSupport;
 	private JCheckBox cbOnlySelected;
+	private JCheckBox cbShowMarkers;
 	private SortedList<T> itemsInListSorted;
 
 	private Runnable callbackChange;
@@ -164,6 +165,9 @@ public class MapAndTableComponent<T extends MapItem> {
 
 		cbOnlySelected = new JCheckBox(I.tr("Show only selected on map"));
 		onlySelectedMatcher.init();
+
+		cbShowMarkers = new JCheckBox(I.tr("Show entity markers"), true);
+		cbShowMarkers.addItemListener(l -> markerOverlay.setVisible(cbShowMarkers.isSelected()));
 	}
 
 	private void setSelectedItems(List<T> selectedItems) {
@@ -263,6 +267,10 @@ public class MapAndTableComponent<T extends MapItem> {
 
 	public JCheckBox getCbOnlySelected() {
 		return cbOnlySelected;
+	}
+
+	public JCheckBox getCbShowMarkers() {
+		return cbShowMarkers;
 	}
 
 	public void setValueAt(Object value, T item, int propertyIndex) {
