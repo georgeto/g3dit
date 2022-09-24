@@ -137,7 +137,7 @@ public class NavPathTab extends AbstractNavTab {
 		});
 		btnResizePopup.addActionListener(a -> resizePopup.showForEntity(ctx.getCurrentEntity(), btnResizePopup));
 
-		JButton btnLoadFromNavMap = new JButton(I.tr("Loading Intersections from NavMap"));
+		JButton btnLoadFromNavMap = new JButton(I.tr("Load Intersections from NavMap"));
 		add(btnLoadFromNavMap, "spanx 3");
 		btnLoadFromNavMap.addActionListener(a -> loadFromNavMap());
 	}

@@ -3923,7 +3923,7 @@ msgid "Resize NavPath"
 msgstr ""
 
 #: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\NavPathTab.java:140
-msgid "Loading Intersections from NavMap"
+msgid "Load Intersections from NavMap"
 msgstr ""
 
 #: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\NavPathTab.java:225
