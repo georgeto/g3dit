@@ -294,18 +294,7 @@ public class NavPathTab extends AbstractNavTab {
 
 		Optional<NavPath> optNavPath = navMap.getNavPath(entity.getGuid());
 		if (optNavPath.isPresent()) {
-			NavPath navPath = optNavPath.get();
-			G3Class clazz = entity.getClass(CD.gCNavPath_PS.class);
-			clazz.setPropertyData(CD.gCNavPath_PS.ZoneAIntersectionMargin1, navPath.zoneAIntersection.zoneIntersectionMargin1);
-			clazz.setPropertyData(CD.gCNavPath_PS.ZoneAIntersectionMargin2, navPath.zoneAIntersection.zoneIntersectionMargin2);
-			clazz.setPropertyData(CD.gCNavPath_PS.ZoneAIntersectionCenter, navPath.zoneAIntersection.zoneIntersectionCenter);
-			clazz.setPropertyData(CD.gCNavPath_PS.ZoneBIntersectionMargin1, navPath.zoneBIntersection.zoneIntersectionMargin1);
-			clazz.setPropertyData(CD.gCNavPath_PS.ZoneBIntersectionMargin2, navPath.zoneBIntersection.zoneIntersectionMargin2);
-			clazz.setPropertyData(CD.gCNavPath_PS.ZoneBIntersectionCenter, navPath.zoneBIntersection.zoneIntersectionCenter);
-
-			clazz.property(CD.gCNavPath_PS.ZoneAEntityID).setGuid(navPath.zoneAGuid);
-			clazz.property(CD.gCNavPath_PS.ZoneBEntityID).setGuid(navPath.zoneBGuid);
-
+			optNavPath.get().toArchiveEntity(entity);
 			ctx.fileChanged();
 			ctx.refreshView();
 		} else {

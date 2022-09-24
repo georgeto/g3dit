@@ -276,8 +276,12 @@ public class NavPathStage extends NavCalcStage {
 		}
 
 		@Override
-		protected boolean fixable() {
-			return false;
+		public void fix() {
+			ctx.getEditor().modifyEntity(navPath.guid, entity -> {
+				navPath.toArchiveEntity(entity);
+				markFixed();
+				return true;
+			});
 		}
 	}
 }

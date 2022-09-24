@@ -139,6 +139,19 @@ public class NavPath {
 		return navPath;
 	}
 
+	public void toArchiveEntity(eCEntity entity) {
+		G3Class pathClass = entity.getClass(CD.gCNavPath_PS.class);
+		pathClass.setPropertyData(CD.gCNavPath_PS.ZoneAIntersectionMargin1, zoneAIntersection.zoneIntersectionMargin1);
+		pathClass.setPropertyData(CD.gCNavPath_PS.ZoneAIntersectionMargin2, zoneAIntersection.zoneIntersectionMargin2);
+		pathClass.setPropertyData(CD.gCNavPath_PS.ZoneAIntersectionCenter, zoneAIntersection.zoneIntersectionCenter);
+		pathClass.setPropertyData(CD.gCNavPath_PS.ZoneBIntersectionMargin1, zoneBIntersection.zoneIntersectionMargin1);
+		pathClass.setPropertyData(CD.gCNavPath_PS.ZoneBIntersectionMargin2, zoneBIntersection.zoneIntersectionMargin2);
+		pathClass.setPropertyData(CD.gCNavPath_PS.ZoneBIntersectionCenter, zoneBIntersection.zoneIntersectionCenter);
+
+		pathClass.property(CD.gCNavPath_PS.ZoneAEntityID).setGuid(zoneAGuid);
+		pathClass.property(CD.gCNavPath_PS.ZoneBEntityID).setGuid(zoneBGuid);
+	}
+
 	@Override
 	public NavPath clone() {
 		NavPath clone = new NavPath(guid, points.stream().map(bCVector::clone).collect(Collectors.toList()), new ArrayList<>(radius),
