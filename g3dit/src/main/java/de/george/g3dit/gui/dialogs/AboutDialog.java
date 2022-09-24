@@ -28,7 +28,7 @@ public class AboutDialog extends ExtStandardDialog {
 	@Override
 	public JComponent createBannerPanel() {
 		BannerPanel bannerPanel = new BannerPanel("g3dit " + Editor.EDITOR_VERSION,
-				"(c) 2014-2021 George\n\nCommunity Story Project - g3csp.de", SwingUtils.loadIcon("/res/g3gold.png"));
+				"(c) 2014-2022 George\n\nCommunity Story Project - g3csp.de", SwingUtils.loadIcon("/res/g3gold.png"));
 		return bannerPanel;
 	}
 
