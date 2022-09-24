@@ -6,7 +6,8 @@ import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.Optional;
-import java.util.function.Consumer;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 import javax.swing.Icon;
 import javax.swing.JPanel;
@@ -253,11 +254,29 @@ public class EditorArchiveTab extends EditorAbstractFileTab {
 		return false;
 	}
 
-	public void modifyEntityMatrix(eCEntity entity, Consumer<eCEntity> change) {
-		change.accept(entity);
+	public boolean modifyEntity(eCEntity entity, Function<eCEntity, Boolean> modify) {
+		if (entity == getCurrentEntity())
+			contentPane.saveView();
+
+		if (!modify.apply(entity))
+			return false;
+
+		if (entity == getCurrentEntity())
+			contentPane.loadView();
 		updateCaches(entity);
 		fileChanged();
-		refreshView();
+		return true;
+	}
+
+	public boolean modifyEntity(EntityDescriptor desc, Function<eCEntity, Boolean> modify) {
+		return currentFile.getEntityByGuid(desc.getGuid()).map(entity -> modifyEntity(entity, modify)).orElse(false);
+	}
+
+	public <T> void modifyEntity(eCEntity entity, BiConsumer<eCEntity, T> modify, T value) {
+		modifyEntity(entity, e -> {
+			modify.accept(e, value);
+			return true;
+		});
 	}
 
 	public void updateCaches(eCEntity entity) {

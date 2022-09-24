@@ -656,7 +656,7 @@ public class LivePositionFrame extends JFrame {
 			eCEntity entity = archiveTab.getCurrentFile().getEntityByGuid(entityGuid).orElse(null);
 
 			if (applyPosition) {
-				archiveTab.modifyEntityMatrix(entity, e -> e.setToWorldMatrix(entityPosition));
+				archiveTab.modifyEntity(entity, eCEntity::setToWorldMatrix, entityPosition);
 			}
 
 			archiveTab.getEntityTree().selectEntity(entity);

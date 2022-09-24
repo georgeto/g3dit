@@ -228,18 +228,18 @@ public class AllgemeinTab extends AbstractEntityTab {
 	}
 
 	private void changeWorldPosition(bCMatrix worldMatrix) {
-		ctx.modifyEntityMatrix(ctx.getCurrentEntity(), e -> e.setToWorldMatrix(worldMatrix));
+		ctx.modifyEntity(ctx.getCurrentEntity(), eCEntity::setToWorldMatrix, worldMatrix);
 	}
 
 	private void changeWorldPositionKeepChilds(bCMatrix worldMatrix) {
 		eCEntity entity = ctx.getCurrentEntity();
 		Map<eCEntity, bCMatrix> childPositions = entity.getChilds().stream().collect(Collectors.toMap(c -> c, eCEntity::getWorldMatrix));
-		ctx.modifyEntityMatrix(entity, e -> e.setToWorldMatrix(worldMatrix));
+		ctx.modifyEntity(entity, eCEntity::setToWorldMatrix, worldMatrix);
 		childPositions.forEach(eCEntity::setToWorldMatrix);
 	}
 
 	private void changeLocalPosition(bCMatrix localMatrix) {
-		ctx.modifyEntityMatrix(ctx.getCurrentEntity(), e -> e.setLocalMatrix(localMatrix));
+		ctx.modifyEntity(ctx.getCurrentEntity(), eCEntity::setLocalMatrix, localMatrix);
 
 	}
 

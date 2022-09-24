@@ -17,6 +17,7 @@ import java.util.Locale;
 import java.util.Locale.Category;
 import java.util.Optional;
 import java.util.concurrent.Executors;
+import java.util.function.Function;
 import java.util.logging.Level;
 
 import javax.swing.JFrame;
@@ -537,6 +538,16 @@ public class Editor implements EditorContext {
 		});
 	}
 
+	public StreamEx<EditorTab> getTabsByFile(File file) {
+		return StreamEx.of(tabs).filter(tab -> {
+			if (!(tab instanceof EditorAbstractFileTab fileTab)) {
+				return false;
+			}
+
+			return fileTab.getDataFile().filter(file::equals).isPresent();
+		});
+	}
+
 	private void openTab(EditorTab tab, Side side) {
 		tabs.add(tab);
 		tbTabs.addTab(tab, side);
@@ -640,16 +651,11 @@ public class Editor implements EditorContext {
 	}
 
 	public boolean openOrSelectFile(File file) {
-		for (EditorTab tab : getTabs()) {
-			if (!(tab instanceof EditorAbstractFileTab fileTab)) {
-				continue;
-			}
-			if (fileTab.getDataFile().filter(file::equals).isPresent()) {
-				selectTab(fileTab);
-				return true;
-			}
+		Optional<EditorTab> fileTab = getTabsByFile(file).findFirst();
+		if (fileTab.isPresent()) {
+			selectTab(fileTab.get());
+			return true;
 		}
-
 		return openFile(file);
 	}
 
@@ -727,6 +733,19 @@ public class Editor implements EditorContext {
 		}
 	}
 
+	public boolean modifyEntity(EntityDescriptor entityDescriptor, Function<eCEntity, Boolean> modify) {
+		if (!openOrSelectFile(entityDescriptor.getFile().getPath())) {
+			return false;
+		}
+
+		boolean changed = false;
+		for (EditorTab tab : getTabsByFile(entityDescriptor.getFile().getPath()).filterBy(EditorTab::type, EditorTabType.Archive)) {
+			EditorArchiveTab archiveTab = (EditorArchiveTab) tab;
+			changed |= archiveTab.modifyEntity(entityDescriptor, modify);
+		}
+		return changed;
+	}
+
 	public static Optional<EntityDescriptor> getEntityDescriptor(String guid, File file) {
 		Optional<ArchiveFile> archive = FileUtil.openArchiveSafe(file, false, true);
 		return archive.flatMap(a -> a.getEntityByGuid(guid))
@@ -748,9 +767,8 @@ public class Editor implements EditorContext {
 		return getEntityDescriptor(guid).map(this::openEntity).orElse(false);
 	}
 
-	public boolean modifyEntity(EntityDescriptor entityDescriptor, boolean hidden) {
-		// Modify open file or search file
-		return false;
+	public boolean modifyEntity(String guid, Function<eCEntity, Boolean> modify) {
+		return getEntityDescriptor(guid).map(desc -> modifyEntity(desc, modify)).orElse(false);
 	}
 
 	public boolean openTemplate(String guid) {

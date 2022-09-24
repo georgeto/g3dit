@@ -135,7 +135,7 @@ public class NavZoneTab extends AbstractNavTab {
 
 		// Position of NavZone has been changed.
 		if (!worldMatrix.equals(entity.getWorldMatrix())) {
-			ctx.modifyEntityMatrix(entity, e -> e.setToWorldMatrix(worldMatrix));
+			ctx.modifyEntity(entity, eCEntity::setToWorldMatrix, worldMatrix);
 		}
 
 		// TODO: Gothic 3 initialisiert die LocalNodeBoundary mit min = max = Null-Vektor - WARUM?
