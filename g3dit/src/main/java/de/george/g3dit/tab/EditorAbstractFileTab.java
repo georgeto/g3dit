@@ -31,6 +31,8 @@ import net.tomahawk.ExtensionsFilter;
 public abstract class EditorAbstractFileTab extends EditorTab implements FileChangeMonitor {
 	private static final long NO_CHECKSUM = Long.MAX_VALUE;
 
+	private static Dialogs.Answer ANSWER_ALL = null;
+
 	private File dataFile;
 	private boolean fileChanged;
 	private long checksum = NO_CHECKSUM;
@@ -228,11 +230,14 @@ public abstract class EditorAbstractFileTab extends EditorTab implements FileCha
 	 * @param message Nachricht die angezeigt wird
 	 * @return false, wenn Abbrechenoption gewählt wurde bzw. die Datei nicht verändert wurde
 	 */
-	private boolean askSaveChanges(String message) {
+	private boolean askSaveChanges(String message, boolean all) {
 		Optional<Boolean> checksum = validateChecksum();
 		boolean changed = checksum.isPresent() ? !checksum.get() : isFileChanged();
 		if (changed) {
-			switch (Dialogs.askSaveChanges(ctx.getParentWindow(), I.format(message, getTitle()))) {
+			Dialogs.Answer answer = ANSWER_ALL;
+			if (!all || answer == null)
+				answer = Dialogs.askSaveChanges(ctx.getParentWindow(), I.format(message, getTitle()), all);
+			switch (answer) {
 				case Yes:
 					showSaveFileAsDialog();
 					return true;
@@ -240,6 +245,13 @@ public abstract class EditorAbstractFileTab extends EditorTab implements FileCha
 					return true;
 				case Cancel:
 					return false;
+				case AllNo:
+					ANSWER_ALL = Dialogs.Answer.AllNo;
+					return true;
+				case AllYes:
+					ANSWER_ALL = Dialogs.Answer.AllYes;
+					saveFile();
+					return true;
 			}
 		}
 		return true;
@@ -248,7 +260,7 @@ public abstract class EditorAbstractFileTab extends EditorTab implements FileCha
 	@Override
 	public boolean onClose(boolean appExit) {
 		String message = appExit ? I.tr("Save changes to ''{0}'' before exiting?") : I.tr("Save changes to ''{0}''?");
-		return askSaveChanges(message);
+		return askSaveChanges(message, appExit);
 	}
 
 	@Override

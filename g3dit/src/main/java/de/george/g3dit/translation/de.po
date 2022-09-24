@@ -5035,6 +5035,14 @@ msgstr "Basisname"
 msgid "SwitchRepeat"
 msgstr "SwitchRepeat"
 
+#: g3dit\src\main\java\de\george\g3dit\util\Dialogs.java:26
+msgid "All No"
+msgstr "Alle Nein"
+
+#: g3dit\src\main\java\de\george\g3dit\util\Dialogs.java:27
+msgid "All Yes"
+msgstr "Alle Ja"
+
 #: g3dit\src\main\java\de\george\g3dit\util\FileDialogWrapper.java:18
 msgid "All"
 msgstr "Alle"
