@@ -141,6 +141,7 @@ public class NavCache extends AbstractCache<NavCache> {
 			// TODO: Can still produce "ghost" entries (NavZones/Paths only present in file from
 			// secondary data folder, so deleted in primary file).
 		}
+		notifyCacheUpdated();
 	}
 
 	public void update(NavZone zone) {
@@ -200,8 +201,6 @@ public class NavCache extends AbstractCache<NavCache> {
 			} catch (Exception ex) {
 				progDlg.dispose();
 				TaskDialogs.showException(ex);
-			} finally {
-				notifyCacheUpdated();
 			}
 		}
 	}
