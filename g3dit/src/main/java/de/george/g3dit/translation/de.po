@@ -1634,7 +1634,8 @@ msgid "Make {0, number} entities child entities of ''{1}''"
 msgstr "{0, number} Entities zu SubEntites von ''{1}'' machen"
 
 #: g3dit\src\main\java\de\george\g3dit\entitytree\TreePopupExtension.java:60
-msgid "Clone '{0}"
+#, java-format
+msgid "Clone ''{0}''"
 msgstr "''{0}'' klonen"
 
 #: g3dit\src\main\java\de\george\g3dit\entitytree\TreePopupExtension.java:74
@@ -1643,7 +1644,8 @@ msgid "Clone ''{0}'' and child entities"
 msgstr "''{0}'' und Child-Entities klonen"
 
 #: g3dit\src\main\java\de\george\g3dit\entitytree\TreePopupExtension.java:96
-msgid "Mark '{0}"
+#, java-format
+msgid "Mark ''{0}''"
 msgstr "''{0}'' markieren"
 
 #: g3dit\src\main\java\de\george\g3dit\entitytree\TreePopupExtension.java:98
@@ -1651,7 +1653,8 @@ msgid "Mark {0, number} entities"
 msgstr "{0, number} Entities markieren"
 
 #: g3dit\src\main\java\de\george\g3dit\entitytree\TreePopupExtension.java:107
-msgid "Delete '{0}"
+#, java-format
+msgid "Delete ''{0}''"
 msgstr "''{0}'' löschen"
 
 #: g3dit\src\main\java\de\george\g3dit\entitytree\TreePopupExtension.java:109

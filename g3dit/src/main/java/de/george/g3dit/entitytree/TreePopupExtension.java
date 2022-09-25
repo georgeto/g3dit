@@ -57,7 +57,7 @@ public class TreePopupExtension implements ITreePopupExtension {
 		}
 
 		// Entity klonen
-		JMenuItem miClone = new JMenuItem(I.trf("Clone '{0}", clickedEntity), Icons.getImageIcon(Icons.Action.CLONE));
+		JMenuItem miClone = new JMenuItem(I.trf("Clone ''{0}''", clickedEntity), Icons.getImageIcon(Icons.Action.CLONE));
 		miClone.addActionListener(e -> {
 			if (NPCUtil.isNPC(clickedEntity)) {
 				eCEntity cloneNPC = NPCUtil.cloneNPC(clickedEntity);
@@ -93,7 +93,7 @@ public class TreePopupExtension implements ITreePopupExtension {
 		}
 
 		if (show) {
-			String markTitle = I.trf("Mark '{0}", clickedEntity);
+			String markTitle = I.trf("Mark ''{0}''", clickedEntity);
 			if (elCount > 1) {
 				markTitle = I.trf("Mark {0, number} entities", elCount);
 			}
@@ -104,7 +104,7 @@ public class TreePopupExtension implements ITreePopupExtension {
 
 		// Entity löschen
 		if (elCount > 1 || clickedEntity != archiveFile.getGraph()) {
-			String title = I.trf("Delete '{0}", clickedEntity);
+			String title = I.trf("Delete ''{0}''", clickedEntity);
 			if (elCount > 1) {
 				title = I.trf("Delete {0, number} entities", elCount);
 			}
