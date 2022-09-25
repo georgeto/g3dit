@@ -188,12 +188,12 @@ public class PropertySearchFilterBuilder<T extends G3ClassContainer> implements 
 			if (value.isPresent()) {
 				// Newly selected property has a different value type than the previous
 				if (property == null || !valueTypeName.equals(property.getType())) {
-					property = new ClassProperty<>(leafPropertyDesc.getName(), leafPropertyDesc.getDataTypeName(), value.get());
+					property = new ClassProperty<>(leafPropertyDesc.getName(), valueTypeName, value.get());
 					field.setProperties(new Property[] {new G3Property(property)});
 				}
 			} else {
 				resetPropertyInstance.run();
-				TaskDialogs.error(null, "", I.trf("Failed to create instance of type ''{0}''.", leafPropertyDesc.getDataTypeName()));
+				TaskDialogs.error(null, "", I.trf("Failed to create instance of type ''{0}''.", valueTypeName));
 			}
 		});
 
