@@ -24,7 +24,7 @@ public class HtmlCreator {
 	}
 
 	public static String renderEntityShort(EntityDescriptor entity) {
-		return TagCreator.a(entity.getDisplayName()).withHref(UriUtil.encodeEntity(entity)).render();
+		return renderLink(entity.getDisplayName(), UriUtil.encodeEntity(entity));
 	}
 
 	public static final String LINE_SEPERATOR = "<br>";

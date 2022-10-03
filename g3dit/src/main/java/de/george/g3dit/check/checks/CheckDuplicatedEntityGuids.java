@@ -1,7 +1,5 @@
 package de.george.g3dit.check.checks;
 
-import static j2html.TagCreator.a;
-
 import java.io.File;
 import java.util.Collection;
 import java.util.function.Supplier;
@@ -14,6 +12,7 @@ import com.teamunify.i18n.I;
 import de.george.g3dit.check.EntityDescriptor;
 import de.george.g3dit.check.problem.ProblemConsumer;
 import de.george.g3dit.check.problem.Severity;
+import de.george.g3dit.util.HtmlCreator;
 import de.george.g3dit.util.UriUtil;
 import de.george.lrentnode.archive.ArchiveFile;
 import de.george.lrentnode.archive.eCEntity;
@@ -42,8 +41,8 @@ public class CheckDuplicatedEntityGuids extends AbstractEntityCheck {
 		String message = I.trf("Duplicate entity guid: {0}", guid);
 		String details = entities.stream().map(e -> {
 			String entityIdentifier = String.format("%s (%s #%d)", e.getDisplayName(), e.getFile().getPath().getName(), e.getIndex());
-			return a(entityIdentifier).withHref(UriUtil.encodeEntity(e)).render();
-		}).collect(Collectors.joining("<br>"));
+			return HtmlCreator.renderLink(entityIdentifier, UriUtil.encodeEntity(e));
+		}).collect(Collectors.joining(HtmlCreator.LINE_SEPERATOR));
 
 		for (EntityDescriptor entity : entities) {
 			postEntityProblem(problemConsumer, entity, Severity.Fatal, message, details);

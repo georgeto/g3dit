@@ -11,6 +11,7 @@ import de.george.g3dit.check.problem.EntityProblem;
 import de.george.g3dit.check.problem.ProblemConsumer;
 import de.george.g3dit.check.problem.Severity;
 import de.george.g3dit.check.problem.TemplateProblem;
+import de.george.g3dit.util.HtmlCreator;
 import de.george.g3utils.util.Holder;
 import de.george.lrentnode.archive.ArchiveFile;
 import de.george.lrentnode.archive.eCEntity;
@@ -164,7 +165,7 @@ public abstract class AbstractEntityCheck implements Check {
 
 		default void postIfDetailsNotEmpy(Severity severity, String message, List<String> details) {
 			if (details != null && !details.isEmpty()) {
-				post(severity, message, String.join("<br>", details));
+				post(severity, message, HtmlCreator.renderList(details));
 			}
 		}
 	}

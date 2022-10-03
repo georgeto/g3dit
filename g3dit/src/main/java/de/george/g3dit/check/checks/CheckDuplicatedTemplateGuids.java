@@ -1,11 +1,8 @@
 package de.george.g3dit.check.checks;
 
-import static j2html.TagCreator.a;
-
 import java.io.File;
 import java.util.Collection;
 import java.util.function.Supplier;
-import java.util.stream.Collectors;
 
 import com.google.common.collect.SortedSetMultimap;
 import com.google.common.collect.TreeMultimap;
@@ -16,10 +13,12 @@ import de.george.g3dit.check.FileDescriptor;
 import de.george.g3dit.check.FileDescriptor.FileType;
 import de.george.g3dit.check.problem.ProblemConsumer;
 import de.george.g3dit.check.problem.TemplateProblem;
+import de.george.g3dit.util.HtmlCreator;
 import de.george.g3dit.util.UriUtil;
 import de.george.lrentnode.archive.ArchiveFile;
 import de.george.lrentnode.archive.eCEntity;
 import de.george.lrentnode.template.TemplateFile;
+import one.util.streamex.StreamEx;
 
 public class CheckDuplicatedTemplateGuids extends AbstractEntityCheck {
 	private SortedSetMultimap<String, FileDescriptor> itemGuidMap = TreeMultimap.create();
@@ -54,8 +53,8 @@ public class CheckDuplicatedTemplateGuids extends AbstractEntityCheck {
 
 	protected void reportDuplicatedGuid(ProblemConsumer problemConsumer, String guidType, String guid, Collection<FileDescriptor> files) {
 		String message = I.trf("Duplicate {0} guid: {1}", guidType, guid);
-		String details = files.stream().map(f -> a(f.getPath().getName()).withHref(UriUtil.encodeFile(f)).render())
-				.collect(Collectors.joining("<br>"));
+		String details = HtmlCreator
+				.renderList(StreamEx.of(files).map(f -> HtmlCreator.renderLink(f.getPath().getName(), UriUtil.encodeFile(f))));
 
 		for (FileDescriptor file : files) {
 			TemplateProblem problem = new TemplateProblem(message, details);
