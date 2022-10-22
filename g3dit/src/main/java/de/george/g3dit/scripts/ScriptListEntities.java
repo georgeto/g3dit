@@ -76,16 +76,6 @@ public class ScriptListEntities implements IScript {
 						continue;
 					}
 
-					int materialSwitch;
-					String mesh;
-					Pair<String, Integer> meshAndMaterialSwitch = EntityUtil.getMeshAndMaterialSwitch(entity).orElse(null);
-					if (meshAndMaterialSwitch != null) {
-						materialSwitch = meshAndMaterialSwitch.el1();
-						mesh = EntityUtil.cleanAnimatedMeshName(meshAndMaterialSwitch.el0());
-						meshLookup.put(mesh, materialSwitch, 1);
-					} else
-						continue;
-
 					generator.writeStartObject();
 					generator.writeStringField("Name", entity.toString());
 					generator.writeStringField("Guid", entity.getGuid());
@@ -93,8 +83,15 @@ public class ScriptListEntities implements IScript {
 					generator.writeStringField("Rotation", entity.getWorldRotation().toString());
 					generator.writeStringField("Scaling", entity.getWorldMatrix().getPureScaling().toString());
 
-					generator.writeStringField("Mesh", mesh);
-					generator.writeNumberField("MaterialSwitch", materialSwitch);
+					Pair<String, Integer> meshAndMaterialSwitch = EntityUtil.getMeshAndMaterialSwitch(entity).orElse(null);
+					if (meshAndMaterialSwitch != null) {
+						int materialSwitch = meshAndMaterialSwitch.el1();
+						String mesh = EntityUtil.cleanAnimatedMeshName(meshAndMaterialSwitch.el0());
+						meshLookup.put(mesh, materialSwitch, 1);
+
+						generator.writeStringField("Mesh", mesh);
+						generator.writeNumberField("MaterialSwitch", materialSwitch);
+					}
 
 					if (entity.hasClass(CD.gCNavigation_PS.class)) {
 						generator.writeArrayFieldStart("Routines");
