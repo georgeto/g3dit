@@ -21,6 +21,11 @@ public class StringListConfigFile extends ReloadableConfigFile<ImmutableList<Str
 	}
 
 	@Override
+	protected void write(ImmutableList<String> content, File configFile) throws IOException {
+		IOUtils.writeTextFile(content, configFile, StandardCharsets.UTF_8);
+	}
+
+	@Override
 	protected ImmutableList<String> getDefaultValue() {
 		return ImmutableList.of();
 	}
