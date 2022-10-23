@@ -409,9 +409,9 @@ public class CheckManager {
 						tableColumnFactory = new TemplateProblemTableColumnFactory();
 					}
 					case Misc -> {
-						treeFormat = new EntityProblemTreeFormat();
-						tableFormat = new EntityProblemTableFormat();
-						tableColumnFactory = new EntityProblemTableColumnFactory();
+						treeFormat = new TemplateProblemTreeFormat();
+						tableFormat = new TemplateProblemTableFormat();
+						tableColumnFactory = new TemplateProblemTableColumnFactory();
 					}
 					case Navigation -> {
 						treeFormat = new EntityProblemTreeFormat();
@@ -738,7 +738,7 @@ public class CheckManager {
 		public Comparator<? super Problem> getComparator(int depth) {
 			return switch (depth) {
 				case 0 -> ProblemTreeFormat::compareFileHelper;
-				case 2 -> (p1, p2) -> compareProblem(p1, p2, ProblemTreeFormat::compareFileHelper);
+				case 1 -> (p1, p2) -> compareProblem(p1, p2, ProblemTreeFormat::compareFileHelper);
 				default -> null;
 			};
 		}
