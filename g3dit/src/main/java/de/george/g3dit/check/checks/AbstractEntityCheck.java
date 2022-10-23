@@ -85,8 +85,10 @@ public abstract class AbstractEntityCheck implements Check {
 		return PassStatus.Next;
 	}
 
-	protected abstract EntityPassStatus processEntity(ArchiveFile archiveFile, File dataFile, eCEntity entity, int entityPosition,
-			int pass, Supplier<EntityDescriptor> descriptor, StringProblemConsumer problemConsumer);
+	protected EntityPassStatus processEntity(ArchiveFile archiveFile, File dataFile, eCEntity entity, int entityPosition, int pass,
+			Supplier<EntityDescriptor> descriptor, StringProblemConsumer problemConsumer) {
+		return EntityPassStatus.PassDone;
+	}
 
 	@Override
 	public PassStatus processTemplate(TemplateFile tple, File dataFile, int pass, ProblemConsumer problemConsumer) {
