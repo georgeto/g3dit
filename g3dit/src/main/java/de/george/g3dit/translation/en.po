@@ -1576,6 +1576,57 @@ msgstr ""
 msgid "Lies outside the scope of its static .node"
 msgstr ""
 
+#: g3dit\src\main\java\de\george\g3dit\check\checks\CheckSectors.java:43
+msgid "Check for inconsistencies within sectors and world files."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\checks\CheckSectors.java:43
+msgid "Find sector problems"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\checks\CheckSectors.java:53
+msgid "Unable to find G3_World_01.wrldatasc."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\checks\CheckSectors.java:62
+msgid "Error while loading G3_World_01.wrldatasc."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\checks\CheckSectors.java:69
+#, java-format
+msgid "Multiple world data files with the same name {0}."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\checks\CheckSectors.java:81
+#, java-format
+msgid "Sector {0} is not registered in G3_World_01.wrldatasc."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\checks\CheckSectors.java:87
+#, java-format
+msgid "Sector {0} refers to non-existing world file {1}."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\checks\CheckSectors.java:91
+#, java-format
+msgid "Error while loading sector {0}."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\checks\CheckSectors.java:97
+#, java-format
+msgid "Multiple sectors with the same name {0}."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\checks\CheckSectors.java:107
+#, java-format
+msgid "Multiple sectors refer to world file {0}."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\checks\CheckSectors.java:113
+#, java-format
+msgid "World file {0} is not registered in any sector."
+msgstr ""
+
 #: g3dit\src\main\java\de\george\g3dit\entitytree\EntityTree.java:126
 msgid "Show entity number"
 msgstr ""

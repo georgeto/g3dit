@@ -5,6 +5,7 @@ import static j2html.TagCreator.text;
 import java.awt.Color;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import de.george.g3dit.check.EntityDescriptor;
 import j2html.TagCreator;
@@ -29,12 +30,20 @@ public class HtmlCreator {
 
 	public static final String LINE_SEPERATOR = "<br>";
 
+	public static String renderList(StreamEx<String> lines) {
+		return lines.joining(LINE_SEPERATOR);
+	}
+
+	public static String renderList(Stream<String> lines) {
+		return renderList(StreamEx.of(lines));
+	}
+
 	public static String renderList(Iterable<String> lines) {
-		return StreamEx.of(lines.iterator()).joining(LINE_SEPERATOR);
+		return renderList(StreamEx.of(lines.iterator()));
 	}
 
 	public static String renderList(String... lines) {
-		return StreamEx.of(lines).joining(LINE_SEPERATOR);
+		return renderList(StreamEx.of(lines));
 	}
 
 	public static Collector<CharSequence, ?, String> collectList() {
