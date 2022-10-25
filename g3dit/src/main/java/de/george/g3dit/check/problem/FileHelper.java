@@ -10,6 +10,7 @@ import com.teamunify.i18n.I;
 
 import de.george.g3dit.EditorContext;
 import de.george.g3dit.check.FileDescriptor;
+import de.george.g3dit.gui.components.Severity;
 
 public class FileHelper implements Problem {
 	private final FileDescriptor descriptor;

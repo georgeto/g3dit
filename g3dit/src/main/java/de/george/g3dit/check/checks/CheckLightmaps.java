@@ -17,7 +17,7 @@ import de.george.g3dit.check.FileDescriptor;
 import de.george.g3dit.check.FileDescriptor.FileType;
 import de.george.g3dit.check.problem.GenericFileProblem;
 import de.george.g3dit.check.problem.ProblemConsumer;
-import de.george.g3dit.check.problem.Severity;
+import de.george.g3dit.gui.components.Severity;
 import de.george.g3dit.util.FileManager;
 import de.george.g3utils.structure.GuidUtil;
 import de.george.lrentnode.archive.ArchiveFile;
@@ -75,20 +75,20 @@ public class CheckLightmaps extends AbstractEntityCheck {
 					return;
 				}
 
-				reportLightmapError(problemConsumer, lightmap, Severity.Fatal,
+				reportLightmapError(problemConsumer, lightmap, Severity.Error,
 						I.tr("Mesh of the lightmap differs from the mesh of the associated entity."),
 						I.trf("Lightmap: {0}\nEntity: {1}", mesh, cleanEntityMesh));
 			} else {
 				// Only report for lightmaps in primary data folder
 				if (primary) {
-					reportLightmapError(problemConsumer, lightmap, Severity.Warning,
+					reportLightmapError(problemConsumer, lightmap, Severity.Warn,
 							I.tr("There is no entity with the guid of the lightmap."), I.trf("Guid: {0}", guid));
 				}
 			}
 		} else {
 			// Only report for lightmaps in primary data folder
 			if (primary) {
-				reportLightmapError(problemConsumer, lightmap, Severity.Warning,
+				reportLightmapError(problemConsumer, lightmap, Severity.Warn,
 						I.tr("Lightmap name does not adhere to the lightmap naming scheme."), null);
 			}
 		}

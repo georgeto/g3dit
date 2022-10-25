@@ -21,7 +21,7 @@ import de.george.g3dit.check.FileDescriptor;
 import de.george.g3dit.check.FileDescriptor.FileType;
 import de.george.g3dit.check.problem.GenericFileProblem;
 import de.george.g3dit.check.problem.ProblemConsumer;
-import de.george.g3dit.check.problem.Severity;
+import de.george.g3dit.gui.components.Severity;
 import de.george.g3dit.util.FileManager;
 import de.george.g3dit.util.HtmlCreator;
 import de.george.g3utils.util.Converter;
@@ -46,7 +46,7 @@ public class CheckSectors extends AbstractEntityCheck {
 
 		Optional<File> wrldatasc = ctx.getFileManager().searchFile(FileManager.RP_PROJECTS_COMPILED, "G3_World_01.wrldatasc");
 		if (!wrldatasc.isPresent())
-			report(Severity.Fatal, I.tr("Unable to find G3_World_01.wrldatasc."),
+			report(Severity.Error, I.tr("Unable to find G3_World_01.wrldatasc."),
 					new File(ctx.getFileManager().getPrimaryPath("G3_World_01.wrldatasc")));
 
 		Map<String, Boolean> registeredSectors;
@@ -55,14 +55,14 @@ public class CheckSectors extends AbstractEntityCheck {
 					.map(e -> e.split("=")).filter(e -> e.length == 2).collect(Collectors.toMap(e -> e[0], e -> Boolean.valueOf(e[1])));
 		} catch (IOException e) {
 			registeredSectors = Collections.emptyMap();
-			report(Severity.Fatal, I.tr("Error while loading G3_World_01.wrldatasc."), e.getMessage(), wrldatasc.get());
+			report(Severity.Error, I.tr("Error while loading G3_World_01.wrldatasc."), e.getMessage(), wrldatasc.get());
 		}
 
 		var worldFiles = ctx.getFileManager().listWorldFiles().stream()
 				.collect(Multimaps.toMultimap(File::getName, Function.identity(), HashMultimap::create));
 		for (var entry : worldFiles.asMap().entrySet()) {
 			if (entry.getValue().size() >= 2) {
-				report(Severity.Fatal, I.trf("Multiple world data files with the same name {0}.", entry.getKey()),
+				report(Severity.Error, I.trf("Multiple world data files with the same name {0}.", entry.getKey()),
 						renderFileList(entry.getValue()), entry.getValue());
 			}
 		}
@@ -75,24 +75,24 @@ public class CheckSectors extends AbstractEntityCheck {
 				knownSectors.put(sectorName, sector);
 				// Find inactive sectors (not mentioned in .wrldatasc)
 				if (registeredSectors.remove(IOUtils.stripExtension(sectorName)) == null)
-					report(Severity.Warning, I.trf("Sector {0} is not registered in G3_World_01.wrldatasc.", sectorName), sector);
+					report(Severity.Warn, I.trf("Sector {0} is not registered in G3_World_01.wrldatasc.", sectorName), sector);
 
 				// Find sectors referring to non-exisiting files.
 				SecDat secDat = FileUtil.openSecdat(sector);
 				for (String worldFile : StreamEx.of(secDat.getNodeFiles().stream().map(node -> node + ".node"))
 						.append(secDat.getLrentdatFiles().stream().map(lrentdat -> lrentdat + ".lrentdat"))) {
 					if (!worldFiles.containsKey(worldFile))
-						report(Severity.Fatal, I.trf("Sector {0} refers to non-existing world file {1}.", sectorName, worldFile), sector);
+						report(Severity.Error, I.trf("Sector {0} refers to non-existing world file {1}.", sectorName, worldFile), sector);
 					knownWorldFiles.put(worldFile, sector);
 				}
 			} catch (IOException e) {
-				report(Severity.Fatal, I.trf("Error while loading sector {0}.", sectorName), e.getMessage(), sector);
+				report(Severity.Error, I.trf("Error while loading sector {0}.", sectorName), e.getMessage(), sector);
 			}
 		}
 
 		for (var entry : knownSectors.asMap().entrySet()) {
 			if (entry.getValue().size() >= 2) {
-				report(Severity.Fatal, I.trf("Multiple sectors with the same name {0}.", entry.getKey()), renderFileList(entry.getValue()),
+				report(Severity.Error, I.trf("Multiple sectors with the same name {0}.", entry.getKey()), renderFileList(entry.getValue()),
 						entry.getValue());
 			}
 		}
@@ -102,14 +102,14 @@ public class CheckSectors extends AbstractEntityCheck {
 				var referredFiles = worldFiles.get(entry.getKey());
 				if (referredFiles.isEmpty())
 					referredFiles = ImmutableSet.of(new File(entry.getKey()));
-				report(Severity.Fatal, I.trf("Multiple sectors refer to world file {0}.", entry.getKey()),
+				report(Severity.Error, I.trf("Multiple sectors refer to world file {0}.", entry.getKey()),
 						renderFileList(entry.getValue()), referredFiles);
 			}
 		}
 
 		// Find files not belonging to any sector.
 		for (String unusedWorldFile : Sets.difference(worldFiles.keySet(), knownWorldFiles.keySet()))
-			report(Severity.Warning, I.trf("World file {0} is not registered in any sector.", unusedWorldFile),
+			report(Severity.Warn, I.trf("World file {0} is not registered in any sector.", unusedWorldFile),
 					worldFiles.get(unusedWorldFile));
 	}
 

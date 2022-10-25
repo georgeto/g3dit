@@ -12,7 +12,7 @@ import com.teamunify.i18n.I;
 
 import de.george.g3dit.check.EntityDescriptor;
 import de.george.g3dit.check.problem.ProblemConsumer;
-import de.george.g3dit.check.problem.Severity;
+import de.george.g3dit.gui.components.Severity;
 import de.george.g3dit.util.HtmlCreator;
 import de.george.lrentnode.archive.ArchiveFile;
 import de.george.lrentnode.archive.eCEntity;
@@ -82,20 +82,20 @@ public class CheckInvalidParties extends AbstractEntityCheck {
 				PartyMember member = members.get(memberGuid);
 				if (member != null) {
 					if (member.leader == null) {
-						postEntityProblem(problemConsumer, leader.descriptor, Severity.Fatal,
+						postEntityProblem(problemConsumer, leader.descriptor, Severity.Error,
 								I.tr("PartyLeader refers to PartyMember that has no PartyLeader."),
 								HtmlCreator.renderEntity(member.descriptor));
 					} else if (!leader.descriptor.getGuid().equals(member.leader)) {
-						postEntityProblem(problemConsumer, leader.descriptor, Severity.Fatal,
+						postEntityProblem(problemConsumer, leader.descriptor, Severity.Error,
 								I.tr("PartyLeader refers to PartyMember that has a different PartyLeader."),
 								HtmlCreator.renderEntity(member.descriptor));
 					}
 				} else {
 					if (guids.contains(memberGuid)) {
-						postEntityProblem(problemConsumer, leader.descriptor, Severity.Fatal,
+						postEntityProblem(problemConsumer, leader.descriptor, Severity.Error,
 								I.tr("PartyLeader refers to entity that is not a PartyMember."), memberGuid);
 					} else {
-						postEntityProblem(problemConsumer, leader.descriptor, Severity.Fatal,
+						postEntityProblem(problemConsumer, leader.descriptor, Severity.Error,
 								I.tr("PartyLeader refers to non-existent entity."), memberGuid);
 					}
 				}
@@ -110,16 +110,16 @@ public class CheckInvalidParties extends AbstractEntityCheck {
 			PartyLeader leader = leaders.get(member.leader);
 			if (leader != null) {
 				if (!leader.members.contains(member.descriptor.getGuid())) {
-					postEntityProblem(problemConsumer, member.descriptor, Severity.Fatal,
+					postEntityProblem(problemConsumer, member.descriptor, Severity.Error,
 							I.tr("PartyMember refers to PartyLeader, which does not refer to it."),
 							HtmlCreator.renderEntity(leader.descriptor));
 				}
 			} else {
 				if (guids.contains(member.leader)) {
-					postEntityProblem(problemConsumer, member.descriptor, Severity.Fatal,
+					postEntityProblem(problemConsumer, member.descriptor, Severity.Error,
 							I.tr("PartyMember refers to entity that is not a PartyLeader."), member.leader);
 				} else {
-					postEntityProblem(problemConsumer, member.descriptor, Severity.Fatal,
+					postEntityProblem(problemConsumer, member.descriptor, Severity.Error,
 							I.tr("PartyMember refers to non-existent entity."), member.leader);
 				}
 			}

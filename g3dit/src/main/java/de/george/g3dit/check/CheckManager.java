@@ -28,7 +28,6 @@ import java.util.function.BiFunction;
 import java.util.stream.Collectors;
 
 import javax.swing.Icon;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
@@ -74,9 +73,10 @@ import de.george.g3dit.check.problem.EntityHelper;
 import de.george.g3dit.check.problem.FileHelper;
 import de.george.g3dit.check.problem.Problem;
 import de.george.g3dit.check.problem.ProblemConsumer;
-import de.george.g3dit.check.problem.Severity;
 import de.george.g3dit.gui.components.EnableGroup;
 import de.george.g3dit.gui.components.HtmlEditorPane;
+import de.george.g3dit.gui.components.Severity;
+import de.george.g3dit.gui.components.SeverityImageIcon;
 import de.george.g3dit.gui.components.tab.ITypedTab;
 import de.george.g3dit.gui.components.tab.JTypedTabbedPane;
 import de.george.g3dit.gui.dialogs.CheckBoxListSelectDialog;
@@ -86,7 +86,6 @@ import de.george.g3dit.gui.table.TableUtil;
 import de.george.g3dit.settings.EditorOptions;
 import de.george.g3dit.util.ClasspathScanUtil;
 import de.george.g3dit.util.ConcurrencyUtil;
-import de.george.g3dit.util.Icons;
 import de.george.g3dit.util.SettingsHelper;
 import de.george.g3dit.util.UriUtil;
 import de.george.g3utils.gui.SwingUtils;
@@ -465,10 +464,10 @@ public class CheckManager {
 			@Override
 			public Color getTitleColor() {
 				Severity severest = filteredList.stream().map(Problem::getSeverity).max(Severity::compareTo).orElse(Severity.Info);
-				if (severest == Severity.Warning) {
+				if (severest == Severity.Warn) {
 					return Color.ORANGE.darker();
 				}
-				if (severest == Severity.Fatal) {
+				if (severest == Severity.Error) {
 					return Color.RED;
 				}
 				return null;
@@ -625,22 +624,12 @@ public class CheckManager {
 		public Object getColumnValue(Problem problem, int column) {
 			switch (column) {
 				case 0 -> {
-					String icon = null;
-					if (problem.getSeverity() != null) {
-						icon = switch (problem.getSeverity()) {
-							case Info -> Icons.Signal.INFO;
-							case Warning -> Icons.Signal.WARN;
-							case Fatal -> Icons.Signal.ERROR;
-						};
-					}
-
 					// Strip all html tags
 					String message = problem.getMessage().replaceAll("<[^>]+>", "");
-					if (icon != null) {
-						return new ImageIcon(Icons.getImageIcon(icon).getImage(), message);
-					} else {
+					if (problem.getSeverity() != null)
+						return new SeverityImageIcon(problem.getSeverity(), message);
+					else
 						return message;
-					}
 				}
 				default -> throw new IllegalArgumentException();
 			}

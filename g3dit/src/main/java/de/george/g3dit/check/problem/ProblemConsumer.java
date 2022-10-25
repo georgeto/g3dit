@@ -2,6 +2,7 @@ package de.george.g3dit.check.problem;
 
 import de.george.g3dit.check.EntityDescriptor;
 import de.george.g3dit.check.FileDescriptor;
+import de.george.g3dit.gui.components.Severity;
 
 public interface ProblemConsumer {
 	void post(Problem problem);
@@ -16,12 +17,12 @@ public interface ProblemConsumer {
 	}
 
 	default void warning(AbstractBaseProblem problem) {
-		problem.setSeverity(Severity.Warning);
+		problem.setSeverity(Severity.Warn);
 		post(problem);
 	}
 
 	default void fatal(AbstractBaseProblem problem) {
-		problem.setSeverity(Severity.Fatal);
+		problem.setSeverity(Severity.Error);
 		post(problem);
 	}
 }

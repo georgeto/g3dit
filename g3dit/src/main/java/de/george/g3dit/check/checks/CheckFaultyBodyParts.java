@@ -20,7 +20,7 @@ import de.george.g3dit.check.EntityDescriptor;
 import de.george.g3dit.check.FileDescriptor;
 import de.george.g3dit.check.FileDescriptor.FileType;
 import de.george.g3dit.check.problem.ProblemConsumer;
-import de.george.g3dit.check.problem.Severity;
+import de.george.g3dit.gui.components.Severity;
 import de.george.g3dit.util.UriUtil;
 import de.george.lrentnode.archive.ArchiveFile;
 import de.george.lrentnode.archive.eCEntity;
@@ -132,7 +132,7 @@ public class CheckFaultyBodyParts extends AbstractEntityCheck {
 										if (!slotNPC.isPresent()) {
 											problemConsumer.fatal(I.tr("Associated NPC does not contain a matching MaterialSwitchSlot."));
 										} else {
-											problemConsumer.postIfDetailsNotEmpy(Severity.Fatal,
+											problemConsumer.postIfDetailsNotEmpy(Severity.Error,
 													I.tr("MaterialSwitchSlot of the associated NPC is faulty."),
 													compareMaterialSwitchSlot(visEntity.fxaSlot, slotNPC.get(), "(Item vs. NPC)"));
 										}
@@ -154,7 +154,7 @@ public class CheckFaultyBodyParts extends AbstractEntityCheck {
 									if (creator.equals(slotTple)) {
 										try {
 											TemplateEntity tple = FileUtil.openTemplate(tpleFile).getReferenceHeader();
-											problemConsumer.postIfDetailsNotEmpy(Severity.Fatal,
+											problemConsumer.postIfDetailsNotEmpy(Severity.Error,
 													join(text(I.tr("Differs from template: ")),
 															a(tple.getName()).withHref(
 																	UriUtil.encodeFile(new FileDescriptor(tpleFile, FileType.Template))))

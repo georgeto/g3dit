@@ -8,6 +8,7 @@ import com.teamunify.i18n.I;
 
 import de.george.g3dit.EditorContext;
 import de.george.g3dit.check.EntityDescriptor;
+import de.george.g3dit.gui.components.Severity;
 
 public class EntityHelper implements Problem {
 	private final EntityDescriptor descriptor;

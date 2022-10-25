@@ -8,7 +8,7 @@ import com.teamunify.i18n.I;
 
 import de.george.g3dit.check.EntityDescriptor;
 import de.george.g3dit.check.problem.ProblemConsumer;
-import de.george.g3dit.check.problem.Severity;
+import de.george.g3dit.gui.components.Severity;
 import de.george.g3utils.structure.bCBox;
 import de.george.g3utils.structure.bCVector;
 import de.george.lrentnode.archive.ArchiveFile;
