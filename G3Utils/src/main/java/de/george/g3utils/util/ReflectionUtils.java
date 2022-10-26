@@ -1,5 +1,9 @@
 package de.george.g3utils.util;
 
+import java.lang.invoke.CallSite;
+import java.lang.invoke.LambdaMetafactory;
+import java.lang.invoke.MethodHandles;
+import java.lang.invoke.MethodType;
 import java.lang.reflect.AccessibleObject;
 import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Constructor;
@@ -92,6 +96,26 @@ public abstract class ReflectionUtils {
 			method.setAccessible(true);
 			return method;
 		} catch (ReflectiveOperationException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	public static <T> T toFunctionalInterface(Class<T> functionalInterface, Method method) {
+		MethodHandles.Lookup caller = MethodHandles.lookup();
+
+		var interfaceMethods = ReflectionUtils.getMethods(functionalInterface, m -> Modifier.isAbstract(m.getModifiers()));
+		if (interfaceMethods.size() != 1)
+			throw new IllegalArgumentException(
+					"Expected exactly one abstract method in functional interface, found " + interfaceMethods.size());
+		var interfaceMethod = interfaceMethods.iterator().next();
+
+		MethodType interfaceMethodType = MethodType.methodType(interfaceMethod.getReturnType(), interfaceMethod.getParameterTypes());
+		MethodType methodType = MethodType.methodType(method.getReturnType(), method.getDeclaringClass(), method.getParameterTypes());
+		try {
+			CallSite site = LambdaMetafactory.metafactory(caller, interfaceMethod.getName(), MethodType.methodType(functionalInterface),
+					interfaceMethodType, caller.unreflect(method), methodType);
+			return (T) site.getTarget().invoke();
+		} catch (Throwable e) {
 			throw new RuntimeException(e);
 		}
 	}
