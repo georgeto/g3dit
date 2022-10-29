@@ -357,11 +357,18 @@ public class SwingUtils {
 	}
 
 	public static JButton keyStrokeButton(String text, String tooltip, Icon icon, int keyCode, int modifiers, Runnable callback) {
-		Action action = SwingUtils.createAction(text, icon, callback);
+		return keyStrokeButton(SwingUtils.createAction(text, icon, callback), tooltip, keyCode, modifiers);
+	}
+
+	public static JButton keyStrokeButton(Action action, int keyCode, int modifiers) {
+		return keyStrokeButton(action, null, keyCode, modifiers);
+	}
+
+	public static JButton keyStrokeButton(Action action, String tooltip, int keyCode, int modifiers) {
 		JButton btn = new JButton(action);
 		btn.setToolTipText(tooltip);
 		btn.setFocusable(false);
-		SwingUtils.addWindowKeyStroke(btn, text, keyCode, modifiers, action);
+		SwingUtils.addWindowKeyStroke(btn, (String) action.getValue(Action.NAME), keyCode, modifiers, action);
 		return btn;
 	}
 
