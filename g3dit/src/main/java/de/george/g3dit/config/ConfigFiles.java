@@ -22,4 +22,8 @@ public interface ConfigFiles {
 	public static GuidWithCommentConfigFile objectsWithoutLowPoly(EditorContext ctx) {
 		return ctx.getFileManager().getConfigFile("ObjectsWithoutLowPoly.json", GuidWithCommentConfigFile.class);
 	}
+
+	public static StringWithCommentConfigFile checkIgnoredFiles(EditorContext ctx) {
+		return ctx.getFileManager().getConfigFile("CheckIgnoredFiles.json", StringWithCommentConfigFile.class);
+	}
 }

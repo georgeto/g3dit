@@ -31,6 +31,8 @@ public class Icons {
 		public static final String SELECT = "/icons/select.png";
 		public static final String TICK = "/icons/tick.png";
 		public static final String CANCEL = "/icons/cancel.png";
+		public static final String CANCEL_EDIT = "/icons/cancel-edit.png";
+		public static final String CHECK_BOX = "/icons/check-box.png";
 	}
 
 	public static class IO {
@@ -117,6 +119,8 @@ public class Icons {
 		public static final String WAND_MAGIC = "/icons/wand-magic.png";
 		public static final String CLIPBOARD = "/icons/clipboard-paste.png";
 		public static final String CHAIN_MINUS = "/icons/chain-minus.png";
+		public static final String MAGNIFIER = "/icons/magnifier.png";
+		public static final String MAGNIFIER_WARN = "/icons/magnifier-warn.png";
 	}
 
 	public static class Flags {

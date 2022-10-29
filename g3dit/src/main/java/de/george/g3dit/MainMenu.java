@@ -488,7 +488,7 @@ public class MainMenu extends JMenuBar {
 		final CheckManager checkManager = new CheckManager(ctx);
 		checkManager.addDefaultChecks();
 
-		JMenuItem miExecuteChecks = new JMenuItem(I.tr("Execute checks"), Icons.getImageIcon(Icons.Misc.SCRIPT));
+		JMenuItem miExecuteChecks = new JMenuItem(I.tr("Execute checks"), Icons.getImageIcon(Icons.Misc.MAGNIFIER_WARN));
 		miExecuteChecks.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, InputEvent.CTRL_DOWN_MASK | InputEvent.SHIFT_DOWN_MASK));
 		miExecuteChecks.setMnemonic(KeyEvent.VK_C);
 		muTools.add(miExecuteChecks);

@@ -1171,12 +1171,63 @@ msgstr ""
 msgid "Collect issues..."
 msgstr ""
 
-#: g3dit\src\main\java\de\george\g3dit\check\CheckManager.java:331
+#: g3dit\src\main\java\de\george\g3dit\check\CheckManager.java:387
+msgid "Execution cancelled"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\CheckManager.java:387
 msgid "Execution completed"
 msgstr ""
 
-#: g3dit\src\main\java\de\george\g3dit\check\CheckManager.java:613
-#: g3dit\src\main\java\de\george\g3dit\check\problem\EntityHelper.java:42
+#: g3dit\src\main\java\de\george\g3dit\check\CheckManager.java:382
+#: g3dit\src\main\java\de\george\g3dit\nav\NavCalcStage.java:158
+msgid "{0, number} / {1, number} issues displayed"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\CheckManager.java:422
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\AbstractTableProgressDialog.java:71
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\EditUniqueWithCommentConfigDialog.java:75
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\ExtStandardDialog.java:146
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\ProgressDialog.java:42
+#: g3dit\src\main\java\de\george\g3dit\settings\SettingsDialog.java:124
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\property\G3EnumArrayPropertyEditor.java:93
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\property\JsonStringPropertyEditor.java:98
+#: g3dit\src\main\java\de\george\g3dit\tab\template\EditorTemplateTab.java:245
+#: g3dit\src\main\java\de\george\g3dit\util\Dialogs.java:24
+msgid "Cancel"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\CheckManager.java:473
+msgid "Filter results by ignore list."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\CheckManager.java:469
+#: g3dit\src\main\java\de\george\g3dit\check\CheckManager.java:471
+msgid "Edit ignore list"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\CheckManager.java:535
+msgid "Add the selected file(s) to the ignore list."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\CheckManager.java:535
+#: g3dit\src\main\java\de\george\g3dit\nav\NegCircleStage.java:73
+msgid "Blacklist"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\CheckManager.java:619
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\EditGuidWithCommentConfigDialog.java:34
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\EditStringWithCommentConfigDialog.java:34
+#: g3dit\src\main\java\de\george\g3dit\nav\NegCircleStage.java:122
+msgid "Already opened for editing."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\CheckManager.java:619
+msgid "Ignore list"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\CheckManager.java:721
+#: g3dit\src\main\java\de\george\g3dit\check\problem\EntityHelper.java:43
 msgid "Index"
 msgstr ""
 
@@ -1845,24 +1896,12 @@ msgstr ""
 msgid "Icons"
 msgstr ""
 
-#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\AbstractTableProgressDialog.java:71
-#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\EditGuidWithCommentConfigDialog.java:84
-#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\ExtStandardDialog.java:145
-#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\ProgressDialog.java:42
-#: g3dit\src\main\java\de\george\g3dit\settings\SettingsDialog.java:123
-#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\property\G3EnumArrayPropertyEditor.java:93
-#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\property\JsonStringPropertyEditor.java:98
-#: g3dit\src\main\java\de\george\g3dit\tab\template\EditorTemplateTab.java:245
-#: g3dit\src\main\java\de\george\g3dit\util\Dialogs.java:18
-msgid "Cancel"
-msgstr ""
-
 #: g3dit\src\main\java\de\george\g3dit\gui\dialogs\CheckBoxListSelectDialog.java:60
 #: g3dit\src\main\java\de\george\g3dit\gui\dialogs\CreatePropertyDialog.java:58
-#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\EditGuidWithCommentConfigDialog.java:61
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\EditGuidWithCommentConfigDialog.java:27
 #: g3dit\src\main\java\de\george\g3dit\gui\dialogs\ListSelectDialog.java:54
 #: g3dit\src\main\java\de\george\g3dit\gui\dialogs\TreeEntitySelectDialog.java:51
-#: g3dit\src\main\java\de\george\g3dit\settings\SettingsDialog.java:109
+#: g3dit\src\main\java\de\george\g3dit\settings\SettingsDialog.java:110
 #: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\dialogs\CreatePlantDialog.java:186
 #: g3dit\src\main\java\de\george\g3dit\tab\archive\views\property\G3EnumArrayPropertyEditor.java:88
 #: g3dit\src\main\java\de\george\g3dit\tab\archive\views\property\JsonStringPropertyEditor.java:90
@@ -1880,18 +1919,23 @@ msgstr ""
 msgid "Type"
 msgstr ""
 
-#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\EditGuidWithCommentConfigDialog.java:34
-#: g3dit\src\main\java\de\george\g3dit\nav\NegCircleStage.java:122
-msgid "Already opened for editing."
-msgstr ""
-
-#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\EditGuidWithCommentConfigDialog.java:46
-msgid "Comment"
-msgstr ""
-
-#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\EditGuidWithCommentConfigDialog.java:61
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\EditGuidWithCommentConfigDialog.java:27
 #: g3dit\src\main\java\de\george\g3dit\gui\dialogs\GuidFormatsDialog.java:29
 msgid "Enter Guid"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\EditStringWithCommentConfigDialog.java:43
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\property\G3EnumArrayPropertyEditor.java:123
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\property\G3EnumArrayPropertyEditor.java:166
+msgid "Value"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\EditStringWithCommentConfigDialog.java:61
+msgid "Enter file name"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\EditUniqueWithCommentConfigDialog.java:42
+msgid "Comment"
 msgstr ""
 
 #: g3dit\src\main\java\de\george\g3dit\gui\dialogs\EnterGuidDialog.java:45
@@ -2352,10 +2396,6 @@ msgstr ""
 msgid "Critical InteractObject."
 msgstr ""
 
-#: g3dit\src\main\java\de\george\g3dit\nav\NavCalcStage.java:158
-msgid "{0, number} / {1, number} issues displayed"
-msgstr ""
-
 #: g3dit\src\main\java\de\george\g3dit\nav\NavCalcStage.java:178
 msgid "Fixed"
 msgstr ""
@@ -2483,10 +2523,6 @@ msgstr ""
 
 #: g3dit\src\main\java\de\george\g3dit\nav\NavZoneStage.java:129
 msgid "Shape or position has changed."
-msgstr ""
-
-#: g3dit\src\main\java\de\george\g3dit\nav\NegCircleStage.java:73
-msgid "Blacklist"
 msgstr ""
 
 #: g3dit\src\main\java\de\george\g3dit\nav\NegCircleStage.java:73
@@ -4320,11 +4356,6 @@ msgstr ""
 #: g3dit\src\main\java\de\george\g3dit\tab\archive\views\property\G3EnumArrayPropertyEditor.java:66
 #: g3dit\src\main\java\de\george\g3dit\tab\archive\views\property\JsonStringPropertyEditor.java:68
 msgid "Edit value"
-msgstr ""
-
-#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\property\G3EnumArrayPropertyEditor.java:123
-#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\property\G3EnumArrayPropertyEditor.java:166
-msgid "Value"
 msgstr ""
 
 #: g3dit\src\main\java\de\george\g3dit\tab\archive\views\property\G3EnumArrayPropertyEditor.java:185

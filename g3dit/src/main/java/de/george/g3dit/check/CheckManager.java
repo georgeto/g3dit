@@ -6,6 +6,7 @@ import static j2html.TagCreator.rawHtml;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -27,9 +28,12 @@ import java.util.TreeSet;
 import java.util.function.BiFunction;
 import java.util.stream.Collectors;
 
+import javax.swing.Action;
 import javax.swing.Icon;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComponent;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
@@ -42,14 +46,19 @@ import javax.swing.event.HyperlinkEvent.EventType;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableModel;
 
+import de.george.g3dit.util.Icons;
 import org.jdesktop.swingx.JXTable;
 import org.jdesktop.swingx.table.ColumnFactory;
 import org.jdesktop.swingx.table.TableColumnExt;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.ezware.dialog.task.TaskDialogs;
 import com.google.common.collect.ImmutableBiMap;
+import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
+import com.google.common.eventbus.Subscribe;
 import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.teamunify.i18n.I;
@@ -62,6 +71,7 @@ import ca.odell.glazedlists.TreeList;
 import ca.odell.glazedlists.TreeList.Format;
 import ca.odell.glazedlists.TreeList.Node;
 import ca.odell.glazedlists.gui.TableFormat;
+import ca.odell.glazedlists.matchers.AbstractMatcherEditor;
 import ca.odell.glazedlists.swing.AdvancedTableModel;
 import ca.odell.glazedlists.swing.GlazedListsSwing;
 import ca.odell.glazedlists.swing.TextComponentMatcherEditor;
@@ -73,13 +83,19 @@ import de.george.g3dit.check.problem.EntityHelper;
 import de.george.g3dit.check.problem.FileHelper;
 import de.george.g3dit.check.problem.Problem;
 import de.george.g3dit.check.problem.ProblemConsumer;
+import de.george.g3dit.config.ConfigFiles;
+import de.george.g3dit.config.StringWithCommentConfigFile;
 import de.george.g3dit.gui.components.EnableGroup;
 import de.george.g3dit.gui.components.HtmlEditorPane;
+import de.george.g3dit.gui.components.JSeverityComboBox;
 import de.george.g3dit.gui.components.Severity;
 import de.george.g3dit.gui.components.SeverityImageIcon;
+import de.george.g3dit.gui.components.SeverityMatcherEditor;
 import de.george.g3dit.gui.components.tab.ITypedTab;
 import de.george.g3dit.gui.components.tab.JTypedTabbedPane;
+import de.george.g3dit.gui.components.tab.TabSelectedEvent;
 import de.george.g3dit.gui.dialogs.CheckBoxListSelectDialog;
+import de.george.g3dit.gui.dialogs.EditStringWithCommentConfigDialog;
 import de.george.g3dit.gui.dialogs.ExtStandardDialog;
 import de.george.g3dit.gui.renderer.BeanListCellRenderer;
 import de.george.g3dit.gui.table.TableUtil;
@@ -87,6 +103,7 @@ import de.george.g3dit.settings.EditorOptions;
 import de.george.g3dit.util.ClasspathScanUtil;
 import de.george.g3dit.util.ConcurrencyUtil;
 import de.george.g3dit.util.SettingsHelper;
+import de.george.g3dit.util.StringWithComment;
 import de.george.g3dit.util.UriUtil;
 import de.george.g3utils.gui.SwingUtils;
 import de.george.g3utils.gui.UndoableTextField;
@@ -103,12 +120,14 @@ public class CheckManager {
 	private Set<Check> checks;
 	private Set<Check> enabledChecks;
 	private EditorContext ctx;
+	private StringWithCommentConfigFile ignoredFiles;
 	private CheckDialog checkDialog;
 
 	public CheckManager(EditorContext ctx) {
 		checks = new TreeSet<>(CheckManager::compareCheck);
 		enabledChecks = new TreeSet<>(CheckManager::compareCheck);
 		this.ctx = ctx;
+		ignoredFiles = ConfigFiles.checkIgnoredFiles(ctx);
 	}
 
 	private static int compareCheck(Check c1, Check c2) {
@@ -177,22 +196,60 @@ public class CheckManager {
 		checkDialog.setVisible(true);
 	}
 
-	private String getFileHelperPath(Problem problem) {
-		if (problem instanceof FileHelper) {
-			File filePath = ((FileHelper) problem).getDescriptor().getPath().getParentFile();
-			return SettingsHelper.applyAlias(ctx.getOptionStore(), filePath.getAbsolutePath());
+	private static Optional<FileHelper> findFileHelper(Problem problem) {
+		while (problem != null) {
+			if (problem instanceof FileHelper fileHelper)
+				return Optional.of(fileHelper);
+			problem = problem.getParent();
 		}
-		return null;
+		return Optional.empty();
+	}
+
+	private static Optional<File> getFileHelperFile(Problem problem) {
+		if (problem instanceof FileHelper fileHelper) {
+			File filePath = fileHelper.getDescriptor().getPath();
+			return Optional.of(filePath);
+		}
+		return Optional.empty();
+	}
+
+	private String getFileHelperPath(Problem problem) {
+		return getFileHelperFile(problem).map(File::getParentFile)
+				.map(f -> SettingsHelper.applyAlias(ctx.getOptionStore(), f.getAbsolutePath())).orElse(null);
+	}
+
+	private class IgnoredFilesMatchedEditor extends AbstractMatcherEditor<Problem> {
+		private ImmutableSet<String> ignoredFileNames;
+		private boolean enabled = true;
+
+		public IgnoredFilesMatchedEditor() {
+			ignoredFiles.addContentChangedListener(CheckManager.this, c -> ignoredFilesChanged());
+		}
+
+		public void setEnabled(boolean enabled) {
+			if (this.enabled != enabled) {
+				this.enabled = enabled;
+				ignoredFilesChanged();
+			}
+		}
+
+		private void ignoredFilesChanged() {
+			if (enabled) {
+				ignoredFileNames = ignoredFiles.getValues();
+				fireChanged(problem -> !findFileHelper(problem).flatMap(CheckManager::getFileHelperFile).map(File::getName)
+						.map(ignoredFileNames::contains).orElse(false));
+			} else {
+				fireMatchAll();
+			}
+		}
 	}
 
 	private class CheckDialog extends ExtStandardDialog {
 		private JProgressBar progressBar;
-		private JButton btnToggleChecks;
-		private JButton btnExecute;
 		private EnableGroup egCheck;
-
+		private JLabel laFilteredCount;
 		private EventList<Problem> problems;
-		private EventList<Problem> filteredProblems;
+		private FilterList<Problem> problemsWithoutIgnored, filteredProblems;
 
 		private Map<EntityDescriptor, EntityHelper> entityHelpers = new HashMap<>();
 		private Map<FileDescriptor, FileHelper> fileHelpers = new HashMap<>();
@@ -200,6 +257,7 @@ public class CheckManager {
 		private CheckProblemConsumer problemConsumer = new CheckProblemConsumer();
 		private ListenableFuture<Void> executeChecksFuture;
 		private JTypedTabbedPane<ProblemTableTab> tabbedPane;
+		private IgnoredFilesMatchedEditor ignoredFilesMatchedEditor;
 
 		public CheckDialog() {
 			super(ctx.getParentWindow(), I.tr("Execute checks"));
@@ -208,9 +266,7 @@ public class CheckManager {
 			addWindowListener(new WindowAdapter() {
 				@Override
 				public void windowClosing(WindowEvent e) {
-					if (executeChecksFuture != null) {
-						executeChecksFuture.cancel(true);
-					}
+					cancelChecks();
 				}
 			});
 		}
@@ -224,8 +280,14 @@ public class CheckManager {
 			}
 		}
 
+		private void cancelChecks() {
+			if (executeChecksFuture != null && !executeChecksFuture.isCancelled()) {
+				executeChecksFuture.cancel(true);
+			}
+		}
+
 		private void executeChecks() {
-			if (checks.isEmpty()) {
+			if (executeChecksFuture != null || checks.isEmpty()) {
 				return;
 			}
 
@@ -249,7 +311,6 @@ public class CheckManager {
 
 				for (int pass = 0; pass < passes; pass++) {
 					if (pass < templatePasses) {
-						// log("Template-Pass " + pass + "...");
 						updateProgressBar(I.trf("Template pass {0, number}/{1, number}", pass + 1, templatePasses));
 						TemplateFileIterator iter = new TemplateFileIterator(templateFiles);
 						while (iter.hasNext()) {
@@ -272,11 +333,9 @@ public class CheckManager {
 								break;
 							}
 						}
-						// log("Template-Pass " + pass + " beendet");
 					}
 
 					if (pass < archivePasses) {
-						// log("Archive-Pass " + pass + "...");
 						updateProgressBar(I.trf("Archive pass {0, number}/{1, number}", pass + 1, archivePasses));
 						ArchiveFileIterator iter = new ArchiveFileIterator(worldFiles);
 						while (iter.hasNext()) {
@@ -299,7 +358,6 @@ public class CheckManager {
 								break;
 							}
 						}
-						// log("Archive-Pass " + pass + " beendet");
 					}
 				}
 
@@ -310,8 +368,6 @@ public class CheckManager {
 					}
 					check.reportProblems(problemConsumer);
 				}
-
-				// TODO: Also execute when check execution gets cancelled
 				enabledChecks.forEach(Check::reset);
 			}, new FutureCallback<Void>() {
 				@Override
@@ -321,13 +377,14 @@ public class CheckManager {
 
 				@Override
 				public void onFailure(Throwable t) {
-					logger.warn("Failure during check execution.", t);
+					if (!executeChecksFuture.isCancelled())
+						logger.warn("Failure during check execution.", t);
 					onCompletion();
 				}
 
 				private void onCompletion() {
 					progressBar.setIndeterminate(false);
-					progressBar.setString(I.tr("Execution completed"));
+					progressBar.setString(executeChecksFuture.isCancelled() ? I.tr("Execution cancelled") : I.tr("Execution completed"));
 					egCheck.setEnabled(true);
 					ctx.runGC();
 					executeChecksFuture = null;
@@ -336,7 +393,15 @@ public class CheckManager {
 		}
 
 		private void updateProgressBar(String message) {
-			SwingUtilities.invokeLater(() -> progressBar.setString(message));
+			SwingUtilities.invokeLater(() -> {
+				if (executeChecksFuture != null)
+					progressBar.setString(message);
+			});
+		}
+
+		private void updateFilteredCount() {
+			laFilteredCount
+					.setText(I.trf("{0, number} / {1, number} issues displayed", filteredProblems.size(), problemsWithoutIgnored.size()));
 		}
 
 		@Override
@@ -345,28 +410,54 @@ public class CheckManager {
 			egCheck = new EnableGroup();
 
 			progressBar = SwingUtils.createProgressBar();
-			mainPanel.add(progressBar, "grow");
+			mainPanel.add(progressBar, "spanx 10, split 3, grow");
 
-			btnToggleChecks = new JButton(I.tr("Select checks"));
-			btnToggleChecks.addActionListener(a -> toggleChecks());
+			JButton btnToggleChecks = SwingUtils.keyStrokeButton(I.tr("Select checks"), Icons.getImageIcon(Icons.Select.CHECK_BOX),
+					KeyEvent.VK_G, InputEvent.CTRL_DOWN_MASK, this::toggleChecks);
 			egCheck.add(btnToggleChecks);
-			mainPanel.add(btnToggleChecks, "alignx right");
+			mainPanel.add(btnToggleChecks, "alignx right, sizegroup sgBtnTopRow");
 
-			btnExecute = new JButton(I.tr("Execute checks"));
-			btnExecute.addActionListener(a -> executeChecks());
-			egCheck.add(btnExecute);
-			mainPanel.add(btnExecute, "alignx right, wrap");
+			Action executeAction = SwingUtils.createAction(I.tr("Execute checks"), Icons.getImageIcon(Icons.Misc.MAGNIFIER),
+					this::executeChecks);
+			Action cancelAction = SwingUtils.createAction(I.tr("Cancel"), Icons.getImageIcon(Icons.Select.CANCEL), this::cancelChecks);
+			setDefaultAction(executeAction);
+			setDefaultCancelAction(cancelAction);
+
+			JButton btnExecute = SwingUtils.keyStrokeButton(executeAction, KeyEvent.VK_E, InputEvent.CTRL_DOWN_MASK);
+			egCheck.addCallback(enabled -> btnExecute.setAction(enabled ? executeAction : cancelAction));
+			mainPanel.add(btnExecute, "alignx right, sizegroup sgBtnTopRow, wrap");
 
 			UndoableTextField tfSearch = SwingUtils.createUndoTF();
-			mainPanel.add(tfSearch, "spanx, growx, wrap");
-			TextComponentMatcherEditor<Problem> filteredProblemsMatcherEditor = new TextComponentMatcherEditor<>(tfSearch,
-					GlazedLists.textFilterator("Message", "Details"));
+			JSeverityComboBox cbSeverity = new JSeverityComboBox();
+			cbSeverity.setSelectedIndex(1);
+			laFilteredCount = new JLabel();
+			mainPanel.add(tfSearch, "gaptop 7, split 3, width 350!");
+			mainPanel.add(cbSeverity, "gaptop 9");
+			mainPanel.add(laFilteredCount, "wmax 200, gapleft 10");
+
+			JPanel actionButtonPanel = new JPanel(new MigLayout("insets 0, fillx"));
+			mainPanel.add(actionButtonPanel, "wrap");
 
 			problems = new BasicEventList<>();
-			filteredProblems = new FilterList<>(problems, filteredProblemsMatcherEditor);
+			ignoredFilesMatchedEditor = new IgnoredFilesMatchedEditor();
+			problemsWithoutIgnored = new FilterList<>(problems, ignoredFilesMatchedEditor);
+			filteredProblems = new FilterList<>(problemsWithoutIgnored,
+					new TextComponentMatcherEditor<>(tfSearch, GlazedLists.textFilterator("Message", "Details")));
+			filteredProblems = new FilterList<>(filteredProblems, new SeverityMatcherEditor<>(cbSeverity, Problem::getSeverity));
+
+			// Update filter count if number of found or listed issues changes.
+			problemsWithoutIgnored.addListEventListener(e -> updateFilteredCount());
+			filteredProblems.addListEventListener(e -> updateFilteredCount());
 
 			tabbedPane = new JTypedTabbedPane<>();
 			tabbedPane.setTabPlacement(SwingConstants.BOTTOM);
+			tabbedPane.eventBus().register(new Object() {
+				@Subscribe
+				public void onTabSelected(TabSelectedEvent<ProblemTableTab> event) {
+					actionButtonPanel.removeAll();
+					event.getTab().ifPresent(tab -> tab.actionButtons.stream().forEach(actionButtonPanel::add));
+				}
+			});
 
 			for (Category category : Category.values()) {
 				if (category == Category.Helper) {
@@ -376,7 +467,24 @@ public class CheckManager {
 				tabbedPane.addTab(new ProblemTableTab(category));
 			}
 
-			mainPanel.add(tabbedPane.getComponent(), "gaptop 7, push, span, grow, wrap");
+			mainPanel.add(tabbedPane.getComponent(), "id tabs, push, span, grow, wrap");
+
+			JCheckBox cbEnableIgnoreList = new JCheckBox("", true);
+			cbEnableIgnoreList.setToolTipText(I.tr("Filter results by ignore list."));
+			cbEnableIgnoreList.addItemListener(e -> ignoredFilesMatchedEditor.setEnabled(cbEnableIgnoreList.isSelected()));
+
+			JButton btnEditIgnoreList = SwingUtils.keyStrokeButton(null, I.tr("Edit ignore list"),
+					Icons.getImageIcon(Icons.Select.CANCEL_EDIT), KeyEvent.VK_G, InputEvent.CTRL_DOWN_MASK,
+					() -> new EditStringWithCommentConfigDialog(ctx.getParentWindow(), I.tr("Edit ignore list"), ignoredFiles).open());
+
+			JPanel ignorePanel = new JPanel(new MigLayout("insets 0, fill"));
+			ignorePanel.add(cbEnableIgnoreList);
+			ignorePanel.add(btnEditIgnoreList);
+			mainPanel.add(ignorePanel, "id ignorelist, pos (tabs.x2 - ignorelist.w) (tabs.y2 - ignorelist.h)");
+			// Make sure ignore panel is on top of the tabbed pane, otherwise it cannot be
+			// interacted with.
+			mainPanel.setComponentZOrder(ignorePanel, 0);
+
 			return mainPanel;
 		}
 
@@ -386,7 +494,9 @@ public class CheckManager {
 			private JPanel tabContent;
 			private TreeList<Problem> treeList;
 			private AdvancedTableModel<Problem> problemTableModel;
+			private JXTable problemTable;
 			private HtmlEditorPane epDetails;
+			private List<JButton> actionButtons = new ArrayList<>();
 
 			public ProblemTableTab(Category category) {
 				this.category = category;
@@ -423,7 +533,7 @@ public class CheckManager {
 				treeList = new TreeList<>(filteredList, treeFormat, TreeList.nodesStartExpanded());
 
 				problemTableModel = GlazedListsSwing.eventTableModel(treeList, tableFormat);
-				JXTable problemTable = new JXTable();
+				problemTable = new JXTable();
 				problemTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 				problemTable.setAutoCreateRowSorter(false);
 				problemTable.setRowSorter(null);
@@ -434,11 +544,10 @@ public class CheckManager {
 				problemTable.setModel(problemTableModel);
 				problemTable.addMouseListener(TableUtil.createDoubleClickListener(this::onNavigate));
 				SwingUtils.addKeyStroke(problemTable, JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT, "Navigate",
-						KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0), () -> TableUtil.withSelectedRow(problemTable, this::onNavigate));
+						KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0), () -> onNavigate(TableUtil.getSelectedRow(problemTable)));
 				SwingUtils.addKeyStroke(problemTable, JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT, "Delete",
-						KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0), () -> onDelete(TableUtil.getSelectedRows(problemTable)));
-				problemTable.getSelectionModel()
-						.addListSelectionListener(e -> TableUtil.withSelectedRowOrInvalid(problemTable, this::onSelect));
+						KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0), this::onDelete);
+				problemTable.getSelectionModel().addListSelectionListener(e -> onSelect());
 
 				// make the 3rd table column a hierarchical column to create a TreeTable
 				TreeTableSupport treeTableSupport = TreeTableSupport.install(problemTable, treeList, 0);
@@ -454,6 +563,16 @@ public class CheckManager {
 				epDetails = HtmlEditorPane.withCssTemplateFile("/css/issue-box.css");
 				epDetails.editorPane.addHyperlinkListener(this::onHyperlink);
 				tabContent.add(epDetails.scrollPane, "height 20%");
+
+				createActionButtons();
+			}
+
+			private void createActionButtons() {
+				JButton btnBlacklist = SwingUtils.keyStrokeButton(I.tr("Blacklist"), I.tr("Add the selected file(s) to the ignore list."),
+						Icons.getImageIcon(Icons.Select.CANCEL), KeyEvent.VK_B, InputEvent.CTRL_DOWN_MASK, this::onBlacklist);
+				TableUtil.enableOnGreaterEqual(problemTable, btnBlacklist, 1,
+						() -> getSelectedProblems().mapPartial(CheckManager::getFileHelperFile).findAny().isPresent());
+				actionButtons.add(btnBlacklist);
 			}
 
 			@Override
@@ -483,17 +602,30 @@ public class CheckManager {
 				return tabContent;
 			}
 
-			private void onNavigate(Integer index) {
-				Problem problem = problemTableModel.getElementAt(index);
-				if (problem.canNavigate()) {
-					problem.navigate(ctx);
-				}
+			protected Optional<Problem> getProblem(int index) {
+				return Optional.of(index).filter(i -> i >= 0).map(problemTableModel::getElementAt);
 			}
 
-			private void onDelete(StreamEx<Integer> indices) {
+			protected Optional<Problem> getSelectedProblem() {
+				return getProblem(TableUtil.getSelectedRow(problemTable));
+			}
+
+			protected StreamEx<Problem> getSelectedProblems() {
+				return TableUtil.getSelectedRows(problemTable).map(problemTableModel::getElementAt);
+			}
+
+			private void onNavigate(int index) {
+				getProblem(index).ifPresent(problem -> {
+					if (problem.canNavigate()) {
+						problem.navigate(ctx);
+					}
+				});
+			}
+
+			private void onDelete() {
 				Set<Problem> problemsToDelete = new HashSet<>();
 				Queue<Node<Problem>> openNodes = new LinkedList<>();
-				indices.map(treeList::getTreeNode).forEach(openNodes::add);
+				TableUtil.getSelectedRows(problemTable).map(treeList::getTreeNode).forEach(openNodes::add);
 				while (!openNodes.isEmpty()) {
 					Node<Problem> node = openNodes.poll();
 					if (!node.isLeaf()) {
@@ -508,19 +640,27 @@ public class CheckManager {
 				}
 			}
 
-			private void onSelect(Integer index) {
-				if (index == -1) {
-					epDetails.setHtml();
-					return;
-				}
+			private void onBlacklist() {
+				var filesToBlacklist = getSelectedProblems().mapPartial(CheckManager::getFileHelperFile).map(File::getName)
+						.map(name -> new StringWithComment(name, ""));
 
-				Problem problem = problemTableModel.getElementAt(index);
-				if (problem instanceof FileHelper || problem instanceof EntityHelper) {
-					epDetails.setHtml(rawHtml(problem.getDetails()));
+				if (ignoredFiles.acquireEditLock()) {
+					ignoredFiles.updateContent(ImmutableSet.copyOf(Iterables.concat(ignoredFiles.getContent(), filesToBlacklist)));
+					ignoredFiles.releaseEditLock();
 				} else {
-					epDetails.setHtml(b(rawHtml(problem.getMessage())), p(),
-							rawHtml(problem.getDetails() != null ? problem.getDetails() : ""));
+					TaskDialogs.error(ctx.getParentWindow(), I.tr("Ignore list"), I.tr("Already opened for editing."));
 				}
+			}
+
+			private void onSelect() {
+				getSelectedProblem().ifPresent(problem -> {
+					if (problem instanceof FileHelper || problem instanceof EntityHelper) {
+						epDetails.setHtml(rawHtml(problem.getDetails()));
+					} else {
+						epDetails.setHtml(b(rawHtml(problem.getMessage())), p(),
+								rawHtml(problem.getDetails() != null ? problem.getDetails() : ""));
+					}
+				});
 			}
 
 			private void onHyperlink(HyperlinkEvent e) {
@@ -608,6 +748,7 @@ public class CheckManager {
 		}
 	}
 
+	// TODO: Make certain columns monospace...
 	private static final ImmutableBiMap<String, String> COLUMN_MAPPING = ImmutableBiMap.of("Name", I.tr("Name"), "Guid", I.tr("Guid"),
 			"Index", I.tr("Index"), "Path", I.tr("Path"));
 
@@ -636,7 +777,7 @@ public class CheckManager {
 		}
 	}
 
-	private static class EntityProblemTreeFormat extends ProblemTreeFormat {
+	private class EntityProblemTreeFormat extends ProblemTreeFormat {
 		@Override
 		public Comparator<? super Problem> getComparator(int depth) {
 			return switch (depth) {

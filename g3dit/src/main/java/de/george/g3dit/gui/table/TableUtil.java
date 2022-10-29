@@ -197,6 +197,7 @@ public abstract class TableUtil {
 				if (columnDef.hasComparator()) {
 					columnExt.setComparator(columnDef.getComparator());
 				}
+
 			}
 		}
 

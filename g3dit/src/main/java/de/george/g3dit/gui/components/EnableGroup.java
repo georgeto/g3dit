@@ -1,8 +1,11 @@
 package de.george.g3dit.gui.components;
 
 import java.awt.Component;
+import java.awt.event.ActionEvent;
 import java.util.LinkedHashSet;
+import java.util.function.Consumer;
 
+import javax.swing.AbstractAction;
 import javax.swing.Action;
 
 public class EnableGroup {
@@ -51,6 +54,18 @@ public class EnableGroup {
 			}
 		}
 		return this;
+	}
+
+	public EnableGroup addCallback(Consumer<Boolean> callback) {
+		return add(new AbstractAction() {
+			@Override
+			public void actionPerformed(ActionEvent e) {}
+
+			@Override
+			public void setEnabled(boolean newValue) {
+				callback.accept(newValue);
+			}
+		});
 	}
 
 	public EnableGroup add(EnableGroup group) {

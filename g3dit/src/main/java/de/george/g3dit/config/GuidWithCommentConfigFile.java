@@ -1,12 +1,10 @@
 package de.george.g3dit.config;
 
-import java.util.Set;
-import java.util.stream.Collectors;
-
-import com.google.common.collect.ImmutableSet;
-
 import de.george.g3dit.EditorContext;
 import de.george.g3dit.util.GuidWithComment;
+
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class GuidWithCommentConfigFile extends JsonSetConfigFile<GuidWithComment> {
 	public GuidWithCommentConfigFile(EditorContext ctx, String path) {
@@ -14,12 +12,8 @@ public class GuidWithCommentConfigFile extends JsonSetConfigFile<GuidWithComment
 	}
 
 	@Override
-	protected Class<GuidWithComment> type() {
+	public Class<GuidWithComment> type() {
 		return GuidWithComment.class;
-	}
-
-	public ImmutableSet<GuidWithComment> getClonedContent() {
-		return getContent().stream().map(GuidWithComment::clone).collect(ImmutableSet.toImmutableSet());
 	}
 
 	public Set<String> getGuids() {
