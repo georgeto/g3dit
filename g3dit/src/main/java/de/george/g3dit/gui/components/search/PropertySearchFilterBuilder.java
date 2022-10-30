@@ -247,7 +247,8 @@ public class PropertySearchFilterBuilder<T extends G3ClassContainer> implements 
 
 	@Override
 	public boolean loadFilter(SearchFilter<T> filter) {
-		if (filter instanceof PropertySearchFilter<T> typedFilter) {
+		if (filter instanceof PropertySearchFilter) {
+			PropertySearchFilter<T> typedFilter = (PropertySearchFilter<T>) filter;
 			PropertyDescriptor<?> propertyDesc = typedFilter.getPropertyDesc();
 			if (propertyDesc != null) {
 				cbPropertySet.setSelectedItem(propertyDesc.getPropertySet());
