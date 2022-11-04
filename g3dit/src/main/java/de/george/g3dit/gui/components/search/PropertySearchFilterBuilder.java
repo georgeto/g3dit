@@ -197,7 +197,7 @@ public class PropertySearchFilterBuilder<T extends G3ClassContainer> implements 
 			}
 		});
 
-		comp = new JPanel(new MigLayout("ins 0, fillx, hidemode 2"));
+		comp = new JPanel(new MigLayout("ins 0, fillx, hidemode 3"));
 		comp.add(cbPropertySet);
 		comp.add(cbProperty);
 		comp.add(cbSubProperty);
