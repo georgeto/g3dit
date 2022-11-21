@@ -74,8 +74,8 @@ allprojects {
 	}
 
 	dependencies {
-		annotationProcessor 'com.github.bsideup.jabel:jabel-javac-plugin:0.4.2'
-		compileOnly 'com.github.bsideup.jabel:jabel-javac-plugin:0.4.2'
+		annotationProcessor 'com.github.bsideup.jabel:jabel-javac-plugin:1.0.0'
+		compileOnly 'com.github.bsideup.jabel:jabel-javac-plugin:1.0.0'
 	}
 }
 

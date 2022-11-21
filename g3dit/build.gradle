@@ -16,12 +16,12 @@ project.version = '1.12.3'
 
 dependencies {
 	implementation project(':G3Utils'), project(':LrentNode'), project(':NavMap')
-	implementation group: 'com.jidesoft', name: 'jide-oss', version: '3.6.18'
+	implementation group: 'com.formdev', name: 'jide-oss', version: '3.7.12'
 	implementation group: 'org.swinglabs.swingx', name: 'swingx-all', version: '1.6.5-1'
 	implementation group: 'com.jgoodies', name: 'jgoodies-looks', version: '2.7.0'
 	implementation group: 'com.glazedlists', name: 'glazedlists', version: '1.11.0'
 	implementation group: 'ch.qos.logback', name: 'logback-classic', version: '1.3.4'
-	implementation group: 'org.slf4j', name: 'jul-to-slf4j', version: '2.0.1'
+	implementation group: 'org.slf4j', name: 'jul-to-slf4j', version: '2.0.3'
 	implementation group: 'uk.org.lidalia', name: 'sysout-over-slf4j-context', version: '2.0.0-SNAPSHOT'
 	implementation group: 'uk.org.lidalia', name: 'sysout-over-slf4j-system', version: '2.0.0-SNAPSHOT'
 	// Transitive dependencies of sysout-over-slf4j
@@ -38,8 +38,8 @@ dependencies {
 	// Transitive dependencies of jkeymaster
 	implementation group: 'net.java.dev.jna', name: 'jna', version: '5.12.1'
 	implementation group: 'net.java.dev.jna', name: 'jna-platform', version: '5.12.1'
-	implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.13.4'
-	implementation group: 'com.fasterxml.jackson.module', name: 'jackson-module-parameter-names', version: '2.13.4'
+	implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.14.0'
+	implementation group: 'com.fasterxml.jackson.module', name: 'jackson-module-parameter-names', version: '2.14.0'
 	implementation group: 'com.j2html', name: 'j2html', version: '1.6.0'
 	implementation group: 'hu.kazocsaba', name: 'image-viewer', version: '1.2.5-g3dit'
 	implementation group: 'org.apache.commons', name: 'commons-csv', version: '1.9.0'
@@ -48,11 +48,11 @@ dependencies {
 	implementation group: 'commons-io', name: 'commons-io', version: '2.11.0' // Used by net.sf.cssbox.swingbox
 	implementation group: 'ca.phon.ui', name: 'jbreadcrumb', version: '4'
 	implementation group: 'net.sourceforge.argparse4j', name: 'argparse4j', version: '0.9.0'
-	implementation group: 'com.formdev', name: 'flatlaf', version: '2.4'
-	implementation group: 'com.formdev', name: 'flatlaf-intellij-themes', version: '2.4'
-	implementation group: 'com.formdev', name: 'flatlaf-extras', version: '2.4'
-	implementation group: 'com.formdev', name: 'flatlaf-swingx', version: '2.4'
-	implementation group: 'com.formdev', name: 'flatlaf-jide-oss', version: '2.4'
+	implementation group: 'com.formdev', name: 'flatlaf', version: '2.6'
+	implementation group: 'com.formdev', name: 'flatlaf-intellij-themes', version: '2.6'
+	implementation group: 'com.formdev', name: 'flatlaf-extras', version: '2.6'
+	implementation group: 'com.formdev', name: 'flatlaf-swingx', version: '2.6'
+	implementation group: 'com.formdev', name: 'flatlaf-jide-oss', version: '2.6'
 	implementation files('libs/l2fprod-common-shared-10.0.jar', 'libs/l2fprod-common-sheet-10.0.jar')
 	testImplementation group: 'junit', name: 'junit', version: '4.13.2'
 }
