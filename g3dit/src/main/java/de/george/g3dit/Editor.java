@@ -162,16 +162,15 @@ public class Editor implements EditorContext {
 		setupLogging();
 		registerOneInstanceListener(args);
 
-		try {
-			init(args);
-		} catch (Exception e) {
-			logger.error("Unexpected error during program execution.", e);
-			logger.error("Quitting g3dit.");
-			System.exit(EditorCli.EXIT_CODE_ERROR);
-			logger.error("Unexpected error during program execution.", e);
-			logger.error("Quitting g3dit.");
-			System.exit(1);
-		}
+		SwingUtilities.invokeLater(() -> {
+			try {
+				init(args);
+			} catch (Exception e) {
+				logger.error("Unexpected error during program execution.", e);
+				logger.error("Quitting g3dit.");
+				System.exit(EditorCli.EXIT_CODE_ERROR);
+			}
+		});
 	}
 
 	private void init(final String[] args) {
