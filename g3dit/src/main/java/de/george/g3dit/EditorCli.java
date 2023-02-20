@@ -138,7 +138,7 @@ public class EditorCli {
 			}
 
 			// Allow opening of files without specifying the open subcommand for backwards
-			// compatiblity.
+			// compatibility.
 			if (allValidFiles(args)) {
 				args = ObjectArrays.concat("open", args);
 			}
