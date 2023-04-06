@@ -1273,7 +1273,7 @@ msgid "Checks all templates for duplicate guids."
 msgstr ""
 
 #: g3dit\src\main\java\de\george\g3dit\check\checks\CheckDuplicatedTemplateGuids.java:29
-msgid "Find non-unique template guides"
+msgid "Find non-unique template guids"
 msgstr ""
 
 #: g3dit\src\main\java\de\george\g3dit\check\checks\CheckDuplicatedTemplateGuids.java:49
@@ -1748,7 +1748,7 @@ msgid "Teleport to entity with this guid"
 msgstr ""
 
 #: g3dit\src\main\java\de\george\g3dit\gui\components\JTemplateGuidField.java:73
-msgid "Open template with this guide [F3]"
+msgid "Open template with this guid [F3]"
 msgstr ""
 
 #: g3dit\src\main\java\de\george\g3dit\gui\components\JTemplateGuidField.java:74

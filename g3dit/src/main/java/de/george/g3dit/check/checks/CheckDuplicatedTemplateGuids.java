@@ -25,7 +25,7 @@ public class CheckDuplicatedTemplateGuids extends AbstractEntityCheck {
 	private SortedSetMultimap<String, FileDescriptor> refGuidMap = TreeMultimap.create();
 
 	public CheckDuplicatedTemplateGuids() {
-		super(I.tr("Find non-unique template guides"), I.tr("Checks all templates for duplicate guids."), 1, 0);
+		super(I.tr("Find non-unique template guids"), I.tr("Checks all templates for duplicate guids."), 1, 0);
 	}
 
 	@Override

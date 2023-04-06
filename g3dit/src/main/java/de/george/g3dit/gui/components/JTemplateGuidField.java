@@ -70,7 +70,7 @@ public class JTemplateGuidField extends JSearchNamedGuidField {
 
 	@Override
 	protected void addDefaultMenuItem() {
-		addMenuItem(I.tr("Open template with this guide [F3]"), Icons.getImageIcon(Icons.Arrow.CURVE), this::openTemplate);
+		addMenuItem(I.tr("Open template with this guid [F3]"), Icons.getImageIcon(Icons.Arrow.CURVE), this::openTemplate);
 		addMenuItem(I.tr("Search for template with this guid [F4]"), Icons.getImageIcon(Icons.Action.FIND), this::searchTemplate);
 	}
 

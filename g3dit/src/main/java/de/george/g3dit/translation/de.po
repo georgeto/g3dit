@@ -1304,7 +1304,7 @@ msgid "Checks all templates for duplicate guids."
 msgstr "Überprüft alle Templates nach mehrfach vorkommenden Guids."
 
 #: g3dit\src\main\java\de\george\g3dit\check\checks\CheckDuplicatedTemplateGuids.java:29
-msgid "Find non-unique template guides"
+msgid "Find non-unique template guids"
 msgstr "Uneindeutige Template-Guids ermitteln"
 
 #: g3dit\src\main\java\de\george\g3dit\check\checks\CheckDuplicatedTemplateGuids.java:49
@@ -1788,7 +1788,7 @@ msgid "Teleport to entity with this guid"
 msgstr "Zu Entity mit dieser Guid teleportieren"
 
 #: g3dit\src\main\java\de\george\g3dit\gui\components\JTemplateGuidField.java:73
-msgid "Open template with this guide [F3]"
+msgid "Open template with this guid [F3]"
 msgstr "Template zu dieser Guid öffnen [F3]"
 
 #: g3dit\src\main\java\de\george\g3dit\gui\components\JTemplateGuidField.java:74
