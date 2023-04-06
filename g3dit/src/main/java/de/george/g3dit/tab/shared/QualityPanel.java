@@ -31,7 +31,7 @@ public class QualityPanel extends JPanel {
 		for (int i = 0; i < 8; i++) {
 			JCheckBox cbTemp = new JCheckBox(QUALITIES[i]);
 			cbQuality.add(cbTemp);
-			add(cbTemp, "width 20%" + ((i + 1) % 4 == 0 ? ", wrap" : ""));
+			add(cbTemp, "sg quality" + ((i + 1) % 4 == 0 ? ", wrap" : ""));
 		}
 	}
 

@@ -132,7 +132,7 @@ public class ItemTab extends AbstractTemplateTab {
 		JLabel lblQuality = SwingUtils.createBoldLabel("Quality");
 		add(lblQuality, "gaptop 10, spanx, wrap");
 		pnQuality = new QualityPanel(CD.gCItem_PS.Quality);
-		add(pnQuality, "gapleft 7, width 250:300:350, spanx 4, wrap");
+		add(pnQuality, "gapleft 7, width 250:370:370, spanx 4, wrap");
 		hgQuality = new HidingGroup();
 		hgQuality.add(lblQuality);
 		hgQuality.add(pnQuality);
