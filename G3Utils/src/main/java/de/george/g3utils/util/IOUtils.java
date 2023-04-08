@@ -20,7 +20,6 @@ import java.nio.charset.Charset;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
@@ -188,7 +187,7 @@ public class IOUtils {
 		return lines;
 	}
 
-	public static void writeTextFile(Collection<String> lines, File file, Charset charset) throws IOException {
+	public static void writeTextFile(Iterable<String> lines, File file, Charset charset) throws IOException {
 		try (FileOutputStream out = new FileOutputStream(file)) {
 			writeTextFile(lines, out, charset);
 		}
@@ -200,7 +199,7 @@ public class IOUtils {
 		}
 	}
 
-	public static void writeTextFile(Collection<String> lines, OutputStream out, Charset charset) throws IOException {
+	public static void writeTextFile(Iterable<String> lines, OutputStream out, Charset charset) throws IOException {
 		try (PrintWriter writer = new PrintWriter(new OutputStreamWriter(out, charset))) {
 			for (String line : lines) {
 				writer.println(line);
