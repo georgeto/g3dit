@@ -239,8 +239,7 @@ public class TemplateEntity extends eCEntity {
 			for (G3Class propertySet : getClasses()) {
 				G3Class entityPropertySet = entity.getClass(propertySet.getClassName());
 				// State of PropertySet is changing, and is therefore not represented by Template.
-				// Patching can be
-				// implemented in OnCustomPatch function.
+				// Patching can be implemented in OnCustomPatch function.
 				if (!justCreated /* && !propertySet.isReferencedByTemplate() */) {
 					if (entityPropertySet != null) {
 						// entityPropertySet.onCustomPatch();
