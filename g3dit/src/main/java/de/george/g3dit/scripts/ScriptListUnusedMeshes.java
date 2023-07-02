@@ -1,8 +1,7 @@
 package de.george.g3dit.scripts;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
@@ -11,6 +10,7 @@ import java.util.stream.Collectors;
 import com.google.common.collect.Sets;
 import com.teamunify.i18n.I;
 
+import de.george.g3utils.util.FilesEx;
 import de.george.lrentnode.archive.ArchiveFile;
 import de.george.lrentnode.archive.G3ClassContainer;
 import de.george.lrentnode.archive.eCEntity;
@@ -37,19 +37,18 @@ public class ScriptListUnusedMeshes implements IScript {
 
 	@Override
 	public boolean execute(IScriptEnvironment env) {
-		Map<String, File> meshes = env.getFileManager().listStaticMeshes().stream()
-				.collect(Collectors.toMap(f -> f.getName().toLowerCase(), f -> f));
+		Map<String, Path> meshes = env.getFileManager().listStaticMeshes().stream()
+				.collect(Collectors.toMap(FilesEx::getFileNameLowerCase, f -> f));
 
-		meshes.putAll(
-				env.getFileManager().listAnimatedMeshes().stream().collect(Collectors.toMap(f -> f.getName().toLowerCase(), f -> f)));
+		meshes.putAll(env.getFileManager().listAnimatedMeshes().stream().collect(Collectors.toMap(FilesEx::getFileNameLowerCase, f -> f)));
 
-		List<File> lodMeshes = env.getFileManager().listLodMeshes();
+		List<Path> lodMeshes = env.getFileManager().listLodMeshes();
 
-		meshes.putAll(lodMeshes.stream().collect(Collectors.toMap(f -> f.getName().toLowerCase(), f -> f)));
+		meshes.putAll(lodMeshes.stream().collect(Collectors.toMap(FilesEx::getFileNameLowerCase, f -> f)));
 
-		for (File lodMeshFile : lodMeshes) {
+		for (Path lodMeshFile : lodMeshes) {
 			try {
-				eCResourceMeshLoD_PS lodMesh = FileUtil.openLodMesh(new FileInputStream(lodMeshFile));
+				eCResourceMeshLoD_PS lodMesh = FileUtil.openLodMesh(lodMeshFile);
 				lodMesh.getMeshes().forEach(m -> meshes.remove(m.toLowerCase()));
 			} catch (IOException e1) {
 				e1.printStackTrace();
@@ -91,8 +90,8 @@ public class ScriptListUnusedMeshes implements IScript {
 		env.log("----------\n" + I.tr("Overview") + "\n----------");
 
 		String path = null;
-		for (File e : Sets.newTreeSet(meshes.values())) {
-			String tempPath = e.getAbsolutePath().replaceFirst(".*\\\\_compiled", "_compiled");
+		for (Path e : Sets.newTreeSet(meshes.values())) {
+			String tempPath = FilesEx.getAbsolutePath(e).replaceFirst(".*\\\\_compiled", "_compiled");
 			tempPath = tempPath.substring(0, tempPath.lastIndexOf("\\"));
 
 			if (path == null || !path.equals(tempPath)) {
@@ -100,11 +99,11 @@ public class ScriptListUnusedMeshes implements IScript {
 				env.log("\n" + path);
 			}
 
-			env.log("\t" + e.getName());
+			env.log("\t" + e.getFileName());
 		}
 
 		env.log("\n\n----------\n" + I.tr("List") + "\n----------");
-		Sets.newTreeSet(meshes.values()).forEach(e -> env.log(e.getAbsolutePath()));
+		Sets.newTreeSet(meshes.values()).forEach(e -> env.log(FilesEx.getAbsolutePath(e)));
 
 		return true;
 	}

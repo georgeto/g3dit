@@ -1,13 +1,15 @@
 package de.george.g3dit.scripts;
 
-import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Optional;
 
 import com.teamunify.i18n.I;
 
 import de.george.g3dit.util.FileManager;
 import de.george.g3utils.structure.bCBox;
+import de.george.g3utils.util.FilesEx;
 import de.george.g3utils.util.IOUtils;
 import de.george.lrentnode.archive.ArchiveFile;
 import de.george.lrentnode.archive.ArchiveFile.ArchiveType;
@@ -42,16 +44,16 @@ public class ScriptUpdateContextBox implements IScript {
 				}
 			} else {
 				try {
-					File geometryLayerDat = new File(IOUtils.changeExtension(worldFilesIterator.nextFile().getAbsolutePath(), "lrgeodat"));
+					Path geometryLayerDat = FilesEx.changeExtension(worldFilesIterator.nextFile(), "lrgeodat");
 					bCBox newContextBox = aFile.getGraph() != null ? aFile.getGraph().getWorldTreeBoundary() : new bCBox();
 
 					eCGeometrySpatialContext lrgeodat;
-					if (geometryLayerDat.exists()) {
+					if (Files.exists(geometryLayerDat)) {
 						lrgeodat = FileUtil.openLrgeodat(geometryLayerDat);
 					} else {
-						Optional<File> origGeometryLayerDat = env.getEditorContext().getFileManager()
+						Optional<Path> origGeometryLayerDat = env.getEditorContext().getFileManager()
 								.moveFromPrimaryToSecondary(geometryLayerDat);
-						if (origGeometryLayerDat.map(File::exists).orElse(false)) {
+						if (origGeometryLayerDat.map(Files::exists).orElse(false)) {
 							lrgeodat = FileUtil.openLrgeodat(origGeometryLayerDat.get());
 						} else {
 							lrgeodat = FileUtil.createLrgeodat();

@@ -11,6 +11,7 @@ import com.teamunify.i18n.I;
 import de.george.g3dit.EditorContext;
 import de.george.g3dit.check.FileDescriptor;
 import de.george.g3dit.gui.components.Severity;
+import de.george.g3utils.util.FilesEx;
 
 public class FileHelper implements Problem {
 	private final FileDescriptor descriptor;
@@ -37,12 +38,13 @@ public class FileHelper implements Problem {
 
 	@Override
 	public String getMessage() {
-		return descriptor.getPath().getName();
+		return FilesEx.getFileName(descriptor.getPath());
 	}
 
 	@Override
 	public String getDetails() {
-		return dl(dt(I.tr("Name")), dd(descriptor.getPath().getName()), dt(I.tr("Path")), dd(pathResolver.apply(this))).render();
+		return dl(dt(I.tr("Name")), dd(FilesEx.getFileName(descriptor.getPath())), dt(I.tr("Path")), dd(pathResolver.apply(this)))
+				.render();
 	}
 
 	@Override

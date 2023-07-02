@@ -1,9 +1,9 @@
 package de.george.g3dit.tab.archive.views.entity.dialogs;
 
 import java.awt.Window;
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -39,6 +39,7 @@ import de.george.g3dit.util.FileDialogWrapper;
 import de.george.g3dit.util.Icons;
 import de.george.g3utils.gui.SwingUtils;
 import de.george.g3utils.structure.bCDateTime;
+import de.george.g3utils.util.FilesEx;
 import de.george.g3utils.util.Notifier;
 import de.george.lrentnode.archive.ArchiveFile;
 import de.george.lrentnode.archive.eCEntity;
@@ -160,7 +161,7 @@ public class EditVegetationMeshesDialog extends ExtStandardDialog {
 	}
 
 	private Optional<eCVegetation_Mesh> importMeshesFromVegetationRoot() {
-		File file = FileDialogWrapper.openFile(I.tr("Import meshes from another VegetationRoot"), EditVegetationMeshesDialog.this,
+		Path file = FileDialogWrapper.openFile(I.tr("Import meshes from another VegetationRoot"), EditVegetationMeshesDialog.this,
 				FileDialogWrapper.ARCHIVE_FILTER);
 		if (file == null)
 			return Optional.empty();
@@ -182,7 +183,7 @@ public class EditVegetationMeshesDialog extends ExtStandardDialog {
 				}
 			} else {
 				TaskDialogs.inform(EditVegetationMeshesDialog.this, "",
-						I.trf("''{0}'' does not contain a VegetationRoot.", file.getName()));
+						I.trf("''{0}'' does not contain a VegetationRoot.", file.getFileName()));
 			}
 		} catch (Exception ex) {
 			TaskDialogs.showException(ex);
@@ -192,7 +193,7 @@ public class EditVegetationMeshesDialog extends ExtStandardDialog {
 	}
 
 	private boolean updateMeshFromXcmsh(eCVegetation_Mesh vegMesh) {
-		File file = FileDialogWrapper.openFile(I.tr("Import mesh from .xcmsh"), EditVegetationMeshesDialog.this,
+		Path file = FileDialogWrapper.openFile(I.tr("Import mesh from .xcmsh"), EditVegetationMeshesDialog.this,
 				FileDialogWrapper.createFilter("Mesh", "xcmsh"));
 		if (file == null)
 			return false;
@@ -200,10 +201,11 @@ public class EditVegetationMeshesDialog extends ExtStandardDialog {
 		try {
 			List<IntermediateMesh> meshes = MeshUtil.toIntermediateMesh(FileUtil.openMesh(file));
 			if (meshes.isEmpty()) {
-				TaskDialogs.inform(EditVegetationMeshesDialog.this, "", I.trf("''{0}'' does not contain a submesh.", file.getName()));
+				TaskDialogs.inform(EditVegetationMeshesDialog.this, "", I.trf("''{0}'' does not contain a submesh.", file.getFileName()));
 				return false;
 			} else if (meshes.size() >= 2) {
-				TaskDialogs.inform(EditVegetationMeshesDialog.this, "", I.trf("''{0}'' contains more than one submesh.", file.getName()));
+				TaskDialogs.inform(EditVegetationMeshesDialog.this, "",
+						I.trf("''{0}'' contains more than one submesh.", file.getFileName()));
 				return false;
 			}
 
@@ -226,9 +228,9 @@ public class EditVegetationMeshesDialog extends ExtStandardDialog {
 				return false;
 			}
 
-			vegMesh.setMeshFilePath(file.getName());
+			vegMesh.setMeshFilePath(FilesEx.getFileName(file));
 			vegMesh.property(CD.eCVegetation_Mesh.MinSpacing).setFloat(mesh.boundingBox.getExtent().to2D().length());
-			vegMesh.timestamp = bCDateTime.fromInstant(Files.getLastModifiedTime(file.toPath()).toInstant());
+			vegMesh.timestamp = bCDateTime.fromInstant(Files.getLastModifiedTime(file).toInstant());
 			vegMesh.diffuseTexture = textures.get(0).getBaseName();
 			vegMesh.bounds = mesh.boundingBox;
 			vegMesh.positions = mesh.vertices;

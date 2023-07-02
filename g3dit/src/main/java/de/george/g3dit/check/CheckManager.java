@@ -10,9 +10,9 @@ import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.io.File;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Modifier;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
@@ -46,7 +46,6 @@ import javax.swing.event.HyperlinkEvent.EventType;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableModel;
 
-import de.george.g3dit.util.Icons;
 import org.jdesktop.swingx.JXTable;
 import org.jdesktop.swingx.table.ColumnFactory;
 import org.jdesktop.swingx.table.TableColumnExt;
@@ -102,11 +101,13 @@ import de.george.g3dit.gui.table.TableUtil;
 import de.george.g3dit.settings.EditorOptions;
 import de.george.g3dit.util.ClasspathScanUtil;
 import de.george.g3dit.util.ConcurrencyUtil;
+import de.george.g3dit.util.Icons;
 import de.george.g3dit.util.SettingsHelper;
 import de.george.g3dit.util.StringWithComment;
 import de.george.g3dit.util.UriUtil;
 import de.george.g3utils.gui.SwingUtils;
 import de.george.g3utils.gui.UndoableTextField;
+import de.george.g3utils.util.FilesEx;
 import de.george.lrentnode.archive.ArchiveFile;
 import de.george.lrentnode.iterator.ArchiveFileIterator;
 import de.george.lrentnode.iterator.TemplateFileIterator;
@@ -205,17 +206,17 @@ public class CheckManager {
 		return Optional.empty();
 	}
 
-	private static Optional<File> getFileHelperFile(Problem problem) {
+	private static Optional<Path> getFileHelperFile(Problem problem) {
 		if (problem instanceof FileHelper fileHelper) {
-			File filePath = fileHelper.getDescriptor().getPath();
+			Path filePath = fileHelper.getDescriptor().getPath();
 			return Optional.of(filePath);
 		}
 		return Optional.empty();
 	}
 
 	private String getFileHelperPath(Problem problem) {
-		return getFileHelperFile(problem).map(File::getParentFile)
-				.map(f -> SettingsHelper.applyAlias(ctx.getOptionStore(), f.getAbsolutePath())).orElse(null);
+		return getFileHelperFile(problem).map(Path::getParent)
+				.map(f -> SettingsHelper.applyAlias(ctx.getOptionStore(), FilesEx.getAbsolutePath(f))).orElse(null);
 	}
 
 	private class IgnoredFilesMatchedEditor extends AbstractMatcherEditor<Problem> {
@@ -236,7 +237,7 @@ public class CheckManager {
 		private void ignoredFilesChanged() {
 			if (enabled) {
 				ignoredFileNames = ignoredFiles.getValues();
-				fireChanged(problem -> !findFileHelper(problem).flatMap(CheckManager::getFileHelperFile).map(File::getName)
+				fireChanged(problem -> !findFileHelper(problem).flatMap(CheckManager::getFileHelperFile).map(FilesEx::getFileName)
 						.map(ignoredFileNames::contains).orElse(false));
 			} else {
 				fireMatchAll();
@@ -306,8 +307,8 @@ public class CheckManager {
 			executeChecksFuture = ConcurrencyUtil.executeAndInvokeLater(() -> {
 				updateProgressBar(String.format(I.tr("Determine files to be checked...")));
 
-				List<File> worldFiles = archivePasses != 0 ? ctx.getFileManager().listWorldFiles() : null;
-				List<File> templateFiles = templatePasses != 0 ? ctx.getFileManager().listTemplateFiles() : null;
+				List<Path> worldFiles = archivePasses != 0 ? ctx.getFileManager().listWorldFiles() : null;
+				List<Path> templateFiles = templatePasses != 0 ? ctx.getFileManager().listTemplateFiles() : null;
 
 				for (int pass = 0; pass < passes; pass++) {
 					if (pass < templatePasses) {
@@ -320,7 +321,7 @@ public class CheckManager {
 							}
 
 							TemplateFile tple = iter.next();
-							File tpleFile = iter.nextFile();
+							Path tpleFile = iter.nextFile();
 							boolean allDone = true;
 							for (Check check : enabledChecks) {
 								if (pass < check.getTemplatePasses()) {
@@ -345,7 +346,7 @@ public class CheckManager {
 							}
 
 							ArchiveFile archive = iter.next();
-							File archiveFile = iter.nextFile();
+							Path archiveFile = iter.nextFile();
 							boolean allDone = true;
 							for (Check check : enabledChecks) {
 								if (pass < check.getArchivePasses()) {
@@ -641,7 +642,7 @@ public class CheckManager {
 			}
 
 			private void onBlacklist() {
-				var filesToBlacklist = getSelectedProblems().mapPartial(CheckManager::getFileHelperFile).map(File::getName)
+				var filesToBlacklist = getSelectedProblems().mapPartial(CheckManager::getFileHelperFile).map(FilesEx::getFileName)
 						.map(name -> new StringWithComment(name, ""));
 
 				if (ignoredFiles.acquireEditLock()) {

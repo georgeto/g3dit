@@ -1,6 +1,6 @@
 package de.george.g3dit.gui.dialogs;
 
-import java.io.File;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -40,6 +40,7 @@ import de.george.g3dit.util.Icons;
 import de.george.g3dit.util.ImportHelper;
 import de.george.g3utils.gui.SwingUtils;
 import de.george.g3utils.gui.UndoableTextField;
+import de.george.g3utils.util.FilesEx;
 import de.george.g3utils.util.IOUtils;
 import net.miginfocom.swing.MigLayout;
 
@@ -164,7 +165,7 @@ public class FileSearchDialog extends AbstractTableProgressDialog {
 	}
 
 	public void doWork() {
-		Predicate<File> filter;
+		Predicate<Path> filter;
 		String text = tfSearchField.getText();
 		if (text.isEmpty() || !cbLrentdat.isSelected() && !cbNode.isSelected() && !cbTple.isSelected() && !cbMesh.isSelected()) {
 			progressBar.setString(I.tr("Invalid filter settings"));
@@ -173,11 +174,11 @@ public class FileSearchDialog extends AbstractTableProgressDialog {
 
 		if (!cbRegex.isSelected()) {
 			String matchText = text.toLowerCase();
-			filter = f -> f.getName().toLowerCase().contains(matchText);
+			filter = f -> FilesEx.getFileNameLowerCase(f).contains(matchText);
 		} else {
 			try {
 				Pattern pattern = Pattern.compile(text);
-				filter = f -> pattern.matcher(ctx.getFileManager().getRelativePath(f).orElseGet(f::getName)).find();
+				filter = f -> pattern.matcher(ctx.getFileManager().getRelativePath(f).orElseGet(() -> FilesEx.getFileName(f))).find();
 			} catch (PatternSyntaxException e) {
 				progressBar.setString(I.tr("Invalid regular expression"));
 				return;
@@ -187,7 +188,7 @@ public class FileSearchDialog extends AbstractTableProgressDialog {
 		results.clear();
 
 		FileManager fileManager = ctx.getFileManager();
-		List<Callable<List<File>>> fileProviders = new ArrayList<>();
+		List<Callable<List<Path>>> fileProviders = new ArrayList<>();
 		if (cbLrentdat.isSelected() && cbNode.isSelected()) {
 			fileProviders.add(fileManager.worldFilesCallable());
 		} else if (cbLrentdat.isSelected()) {
@@ -209,9 +210,9 @@ public class FileSearchDialog extends AbstractTableProgressDialog {
 	}
 
 	protected class SearchFileWorker extends AbstractFileWorker<Void, Result> {
-		private Predicate<File> filter;
+		private Predicate<Path> filter;
 
-		protected SearchFileWorker(Callable<List<File>> fileProvider, Predicate<File> filter) {
+		protected SearchFileWorker(Callable<List<Path>> fileProvider, Predicate<Path> filter) {
 			super(fileProvider, I.tr("Creating list of all files..."), I.tr("{0, number}/{1, number} files scanned"),
 					I.tr("Search completed"));
 			this.filter = filter;
@@ -230,9 +231,9 @@ public class FileSearchDialog extends AbstractTableProgressDialog {
 
 		@Override
 		protected Void doInBackground() throws Exception {
-			List<File> files = getFiles();
+			List<Path> files = getFiles();
 			publish();
-			for (File file : files) {
+			for (Path file : files) {
 				if (isCancelled()) {
 					return null;
 				}
@@ -255,17 +256,17 @@ public class FileSearchDialog extends AbstractTableProgressDialog {
 	}
 
 	public class Result {
-		private File file;
+		private Path file;
 
-		public Result(File file) {
+		public Result(Path file) {
 			this.file = file;
 		}
 
 		public String getName() {
-			return file.getName();
+			return FilesEx.getFileName(file);
 		}
 
-		public File getPath() {
+		public Path getPath() {
 			return file;
 		}
 

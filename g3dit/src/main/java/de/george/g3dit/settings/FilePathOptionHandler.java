@@ -1,7 +1,7 @@
 package de.george.g3dit.settings;
 
 import java.awt.Window;
-import java.io.File;
+import java.nio.file.Path;
 import java.util.Optional;
 
 import javax.swing.JButton;
@@ -12,6 +12,7 @@ import com.teamunify.i18n.I;
 
 import de.george.g3dit.util.FileDialogWrapper;
 import de.george.g3utils.gui.SwingUtils;
+import de.george.g3utils.util.FilesEx;
 import net.miginfocom.swing.MigLayout;
 import net.tomahawk.ExtensionsFilter;
 
@@ -58,9 +59,9 @@ public class FilePathOptionHandler extends TitledOptionHandler<String> {
 
 		JButton btnPath = new JButton(I.tr("..."));
 		btnPath.addActionListener(e -> {
-			File file = FileDialogWrapper.openFile(openFileDialogTitle, getParent(), filter);
+			Path file = FileDialogWrapper.openFile(openFileDialogTitle, getParent(), filter);
 			if (file != null) {
-				tfPath.setText(file.getAbsolutePath());
+				tfPath.setText(FilesEx.getAbsolutePath(file));
 			}
 		});
 		content.add(btnPath, "");

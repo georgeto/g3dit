@@ -1,7 +1,9 @@
 package de.george.g3dit;
 
-import java.io.File;
 import java.io.PrintWriter;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -13,7 +15,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.common.collect.ObjectArrays;
-import com.google.common.io.Files;
 
 import de.george.g3dit.cache.Caches;
 import de.george.g3dit.cache.EntityCache;
@@ -26,6 +27,7 @@ import de.george.g3dit.settings.EditorOptions;
 import de.george.g3dit.util.AssetResolver;
 import de.george.g3dit.util.AssetResolver.AbstractAsset;
 import de.george.g3utils.structure.GuidUtil;
+import de.george.g3utils.util.FilesEx;
 import de.george.g3utils.util.Holder;
 import de.george.lrentnode.archive.eCEntity;
 import de.george.lrentnode.template.TemplateFile;
@@ -113,11 +115,11 @@ public class EditorCli {
 	}
 
 	private Editor editor;
-	private File workingDir;
+	private Path workingDir;
 	private Namespace parseResult;
 	private PrintWriter writer;
 
-	public EditorCli(Editor editor, File workingDir, PrintWriter writer) {
+	public EditorCli(Editor editor, Path workingDir, PrintWriter writer) {
 		this.editor = editor;
 		this.workingDir = workingDir;
 		this.writer = writer;
@@ -168,8 +170,8 @@ public class EditorCli {
 
 	private boolean handleOpen() {
 		for (String filePath : parseResult.<String>getList("file")) {
-			File file = parseFileArg(filePath);
-			if (file.exists() && file.isFile()) {
+			Path file = parseFileArg(filePath);
+			if (Files.isRegularFile(file)) {
 				editor.openFile(file);
 			}
 		}
@@ -177,8 +179,8 @@ public class EditorCli {
 	}
 
 	private boolean handleDiff() {
-		File baseFile = parseFileArg(parseResult.getString("base"));
-		File mineFile = parseFileArg(parseResult.getString("mine"));
+		Path baseFile = parseFileArg(parseResult.getString("base"));
+		Path mineFile = parseFileArg(parseResult.getString("mine"));
 		editor.diffFiles(baseFile, mineFile);
 		return true;
 	}
@@ -248,13 +250,13 @@ public class EditorCli {
 		}
 	}
 
-	public boolean loadTemplate(File tpleFile, Consumer<eCEntity> returnEntity) {
+	public boolean loadTemplate(Path tpleFile, Consumer<eCEntity> returnEntity) {
 		Optional<TemplateFile> tple = FileUtil.openTemplateSafe(tpleFile);
 		if (tple.isPresent()) {
 			returnEntity.accept(tple.get().getReferenceHeader());
 			return true;
 		} else {
-			writer.printf("Unable to load template %s.", tpleFile.getName()).println();
+			writer.printf("Unable to load template %s.", tpleFile.getFileName()).println();
 			return false;
 		}
 	}
@@ -262,7 +264,7 @@ public class EditorCli {
 	private boolean getSource(Consumer<String> returnMesh, Consumer<String> returnMaterial, Consumer<eCEntity> returnEntity) {
 		if (hasArg("source")) {
 			String sourceName = parseResult.getString("source");
-			String sourceNameExt = Files.getFileExtension(sourceName);
+			String sourceNameExt = FilesEx.getFileExtension(sourceName);
 			switch (sourceNameExt.toLowerCase()) {
 				case "xcmsh", "xact" -> {
 					returnMesh.accept(sourceName);
@@ -275,7 +277,7 @@ public class EditorCli {
 				case "tple" -> {
 					// .tple -> fileName
 					Optional<TemplateCacheEntry> tpleCacheEntry = Caches.template(editor).getAllEntities()
-							.filter(t -> t.getFile().getName().equalsIgnoreCase(sourceName)).findFirst();
+							.filter(t -> FilesEx.getFileName(t.getFile()).equalsIgnoreCase(sourceName)).findFirst();
 					return loadTemplate(tpleCacheEntry, "file name ", sourceName, returnEntity);
 				}
 				case "" -> {
@@ -306,7 +308,7 @@ public class EditorCli {
 						returnEntity.accept(entity.get());
 						return true;
 					} else {
-						writer.printf("Unable to load entity from file %s.", entityFile.get().getPath().getName()).println();
+						writer.printf("Unable to load entity from file %s.", entityFile.get().getPath().getFileName()).println();
 						return false;
 					}
 				} else {
@@ -315,20 +317,20 @@ public class EditorCli {
 				}
 			}
 		} else {
-			File sourceFile = parseFileArg(parseResult.getString("source_file"));
-			if (!sourceFile.exists()) {
-				writer.printf("File '%s' does not exist.", sourceFile.getAbsolutePath()).println();
+			Path sourceFile = parseFileArg(parseResult.getString("source_file"));
+			if (!Files.exists(sourceFile)) {
+				writer.printf("File '%s' does not exist.", sourceFile.toAbsolutePath()).println();
 				return false;
 			}
 
-			String sourceFileExt = Files.getFileExtension(sourceFile.getName());
+			String sourceFileExt = FilesEx.getFileExtension(sourceFile);
 			switch (sourceFileExt.toLowerCase()) {
 				case "xcmsh", "xact" -> {
-					returnMesh.accept(sourceFile.getAbsolutePath());
+					returnMesh.accept(FilesEx.getAbsolutePath(sourceFile));
 					return true;
 				}
 				case "xshmat" -> {
-					returnMaterial.accept(sourceFile.getAbsolutePath());
+					returnMaterial.accept(FilesEx.getAbsolutePath(sourceFile));
 					return true;
 				}
 				case "tple" -> {
@@ -351,8 +353,8 @@ public class EditorCli {
 	}
 
 	private boolean handleRender() {
-		File outFile = parseFileArg(parseResult.getString("out"));
-		String format = Files.getFileExtension(outFile.getName());
+		Path outFile = parseFileArg(parseResult.getString("out"));
+		String format = FilesEx.getFileExtension(outFile);
 		if (!format.equals("png") && !format.equals("jpg")) {
 			format = "png";
 		}
@@ -421,7 +423,8 @@ public class EditorCli {
 			} else {
 				Optional<EntityCacheEntry> entity = Caches.entity(editor).getEntry(guid);
 				if (entity.isPresent()) {
-					writer.printf("Entity: %s in file %s", entity.get().getName(), entity.get().getFile().getPath().getName()).println();
+					writer.printf("Entity: %s in file %s", entity.get().getName(), entity.get().getFile().getPath().getFileName())
+							.println();
 					return true;
 				} else {
 					return false;
@@ -454,18 +457,18 @@ public class EditorCli {
 
 	private boolean allValidFiles(String[] args) {
 		for (String filePath : args) {
-			File file = parseFileArg(filePath);
-			if (!file.exists() || !file.isFile()) {
+			Path file = parseFileArg(filePath);
+			if (!Files.isRegularFile(file)) {
 				return false;
 			}
 		}
 		return args.length > 0;
 	}
 
-	private File parseFileArg(String filePath) {
-		File file = new File(filePath);
+	private Path parseFileArg(String filePath) {
+		Path file = Paths.get(filePath);
 		if (workingDir != null && !file.isAbsolute()) {
-			file = new File(workingDir, filePath);
+			file = workingDir.resolve(filePath);
 		}
 		return file;
 	}

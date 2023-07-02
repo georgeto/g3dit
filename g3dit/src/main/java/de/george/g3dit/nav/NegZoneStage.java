@@ -1,6 +1,6 @@
 package de.george.g3dit.nav;
 
-import java.io.File;
+import java.nio.file.Path;
 import java.util.Objects;
 import java.util.function.Consumer;
 
@@ -81,7 +81,7 @@ public class NegZoneStage extends NavCalcStage {
 		}
 
 		@Override
-		public File getFile() {
+		public Path getFile() {
 			return ctx.getNavMapManager().getNavMapFile();
 		}
 

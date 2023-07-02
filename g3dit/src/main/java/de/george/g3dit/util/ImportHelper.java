@@ -1,7 +1,7 @@
 package de.george.g3dit.util;
 
 import java.awt.Window;
-import java.io.File;
+import java.nio.file.Path;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -34,7 +34,7 @@ import net.miginfocom.swing.MigLayout;
 public class ImportHelper {
 	private static final Logger logger = LoggerFactory.getLogger(ImportHelper.class);
 
-	public static final boolean importFromFile(File file, ArchiveFile currentFile, EditorContext ctx) {
+	public static final boolean importFromFile(Path file, ArchiveFile currentFile, EditorContext ctx) {
 		try {
 			return importFromArchiveFile(FileUtil.openArchive(file, false), currentFile, ctx);
 		} catch (Exception e) {

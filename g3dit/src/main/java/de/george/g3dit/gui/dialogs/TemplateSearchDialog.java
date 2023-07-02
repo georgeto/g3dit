@@ -1,7 +1,7 @@
 package de.george.g3dit.gui.dialogs;
 
-import java.io.File;
 import java.lang.ref.WeakReference;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -45,6 +45,7 @@ import de.george.g3dit.util.AbstractFileWorker;
 import de.george.g3dit.util.ConcurrencyUtil;
 import de.george.g3dit.util.ConcurrencyUtil.Awaitable;
 import de.george.g3dit.util.Icons;
+import de.george.g3utils.util.FilesEx;
 import de.george.lrentnode.archive.eCEntity;
 import de.george.lrentnode.iterator.TemplateFileIterator;
 import de.george.lrentnode.template.TemplateEntity;
@@ -142,7 +143,7 @@ public class TemplateSearchDialog extends AbstractTableProgressDialog {
 		results.clear();
 
 		// Geöffnete Dateien
-		List<File> openFiles = new ArrayList<>();
+		List<Path> openFiles = new ArrayList<>();
 		for (EditorTemplateTab tab : ctx.getEditor().<EditorTemplateTab>getTabs(EditorTabType.Template)) {
 			TemplateFile currentFile = tab.getCurrentTemplate();
 			FileDescriptor fileDescriptor = tab.getFileDescriptor();
@@ -209,9 +210,9 @@ public class TemplateSearchDialog extends AbstractTableProgressDialog {
 	private class SearchEntityWorker extends AbstractFileWorker<Void, Result> {
 		private SearchFilter<eCEntity> filter;
 
-		protected SearchEntityWorker(Callable<List<File>> fileProvider, List<File> openFiles, SearchFilter<eCEntity> filter) {
-			super(fileProvider, openFiles, I.tr("Determine files to be searched..."),
-					I.tr("{0, number}/{1, number} files searched"), I.tr("Search completed"));
+		protected SearchEntityWorker(Callable<List<Path>> fileProvider, List<Path> openFiles, SearchFilter<eCEntity> filter) {
+			super(fileProvider, openFiles, I.tr("Determine files to be searched..."), I.tr("{0, number}/{1, number} files searched"),
+					I.tr("Search completed"));
 			this.filter = filter;
 			setProgressBar(progressBar);
 			doneMessageSupplier = this::getDoneMessage;
@@ -296,13 +297,13 @@ public class TemplateSearchDialog extends AbstractTableProgressDialog {
 			super(descriptor);
 		}
 
-		public File getFile() {
+		public Path getFile() {
 			return descriptor.getFile().getPath();
 		}
 
 		@Override
 		public String getPath() {
-			return getFile().getName();
+			return FilesEx.getFileName(getFile());
 		}
 
 		@Override
@@ -349,7 +350,7 @@ public class TemplateSearchDialog extends AbstractTableProgressDialog {
 			}
 		}
 
-		public FileResult toFileResult(File file) {
+		public FileResult toFileResult(Path file) {
 			return new FileResult(descriptor.withFile(new FileDescriptor(file, FileType.Template)));
 		}
 	}

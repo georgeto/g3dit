@@ -1,6 +1,6 @@
 package de.george.g3dit.util;
 
-import java.io.File;
+import java.nio.file.Path;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.CancellationException;
@@ -19,8 +19,8 @@ import com.teamunify.i18n.I;
 public abstract class AbstractFileWorker<T, V> extends SwingWorker<T, V> {
 	private static final Logger logger = LoggerFactory.getLogger(AbstractFileWorker.class);
 
-	private Callable<List<File>> fileProvider;
-	private List<File> openFiles;
+	private Callable<List<Path>> fileProvider;
+	private List<Path> openFiles;
 	protected int fileCount = -1;
 	protected AtomicInteger filesDone = new AtomicInteger(0);
 	protected boolean progressBarSwitched = false;
@@ -31,11 +31,11 @@ public abstract class AbstractFileWorker<T, V> extends SwingWorker<T, V> {
 	protected Supplier<String> doneMessageSupplier;
 	private Runnable doneCallback;
 
-	public AbstractFileWorker(Callable<List<File>> fileProvider, String startMessage, String progessMessage, String doneMessage) {
+	public AbstractFileWorker(Callable<List<Path>> fileProvider, String startMessage, String progessMessage, String doneMessage) {
 		this(fileProvider, null, startMessage, progessMessage, doneMessage);
 	}
 
-	public AbstractFileWorker(Callable<List<File>> fileProvider, List<File> openFiles, String startMessage, String progessMessage,
+	public AbstractFileWorker(Callable<List<Path>> fileProvider, List<Path> openFiles, String startMessage, String progessMessage,
 			String doneMessage) {
 		this.fileProvider = fileProvider;
 		this.openFiles = openFiles;
@@ -51,8 +51,8 @@ public abstract class AbstractFileWorker<T, V> extends SwingWorker<T, V> {
 		progressBar.setIndeterminate(true);
 	}
 
-	protected List<File> getFiles() throws Exception {
-		List<File> files = fileProvider.call();
+	protected List<Path> getFiles() throws Exception {
+		List<Path> files = fileProvider.call();
 		if (openFiles != null) {
 			files.removeAll(openFiles);
 		}

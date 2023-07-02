@@ -1,9 +1,9 @@
 package de.george.g3dit.settings;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -15,6 +15,7 @@ import com.esotericsoftware.kryo.KryoException;
 import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
 
+import de.george.g3utils.util.FilesEx;
 import de.george.g3utils.util.IOUtils;
 
 public class KryoFileOptionStore extends AbstractConcurrentOptionStore {
@@ -23,12 +24,12 @@ public class KryoFileOptionStore extends AbstractConcurrentOptionStore {
 	private String fileName;
 
 	@SuppressWarnings("unchecked")
-	public KryoFileOptionStore(File file) {
-		fileName = file.getAbsolutePath();
-		if (file.exists()) {
+	public KryoFileOptionStore(Path file) {
+		fileName = FilesEx.getAbsolutePath(file);
+		if (Files.exists(file)) {
 			try {
 				Kryo kryo = IOUtils.getKryo();
-				try (Input input = new Input(new FileInputStream(file))) {
+				try (Input input = new Input(Files.newInputStream(file))) {
 					while (!input.eof()) {
 						Object size = kryo.readClassAndObject(input);
 						// Support reading the legacy format (serialize the ConcurrentHashMap)
@@ -63,7 +64,7 @@ public class KryoFileOptionStore extends AbstractConcurrentOptionStore {
 		synchronized (fileName) {
 			try {
 				Kryo kryo = IOUtils.getKryo();
-				try (Output output = new Output(new FileOutputStream(new File(fileName)))) {
+				try (Output output = new Output(Files.newOutputStream(Paths.get(fileName)))) {
 					for (Map.Entry<String, Object> option : options.entrySet()) {
 						Output optionOutput = new Output(256, -1);
 						kryo.writeClassAndObject(optionOutput, option.getKey());

@@ -4,8 +4,9 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Insets;
 import java.awt.event.KeyEvent;
-import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Consumer;
@@ -126,9 +127,9 @@ public class EditorTemplateTab extends EditorAbstractFileTab {
 
 	/**
 	 * @param inTemplate geladene Secdat
-	 * @param file File Objekt der Datei
+	 * @param file Path Objekt der Datei
 	 */
-	public void setCurrentFile(TemplateFile inTemplate, File file) {
+	public void setCurrentFile(TemplateFile inTemplate, Path file) {
 		currentTemplate = null;
 		setFileChanged(false);
 
@@ -145,7 +146,7 @@ public class EditorTemplateTab extends EditorAbstractFileTab {
 	}
 
 	@Override
-	public boolean openFile(File file) {
+	public boolean openFile(Path file) {
 		try (G3FileReaderEx reader = new G3FileReaderEx(file)) {
 			TemplateFile template = FileUtil.openTemplate(file);
 			if (checkIntegrity(template)) {
@@ -173,7 +174,7 @@ public class EditorTemplateTab extends EditorAbstractFileTab {
 	}
 
 	@Override
-	public boolean saveFile(Optional<File> file) {
+	public boolean saveFile(Optional<Path> file) {
 		boolean result = super.saveFile(file);
 		if (result && file.isPresent()) {
 			checkTemplateContext();
@@ -235,8 +236,8 @@ public class EditorTemplateTab extends EditorAbstractFileTab {
 			return false;
 		}
 
-		String itemName = tple.getItemHeader().getName();
-		String refName = tple.getReferenceHeader().getName();
+		String itemName = tple.getItemHeader().getFileName();
+		String refName = tple.getReferenceHeader().getFileName();
 
 		if (!itemName.equals(refName)) {
 			int result = TaskDialogs.choice(ctx.getParentWindow(), I.tr("Where is the guru?"),
@@ -265,13 +266,12 @@ public class EditorTemplateTab extends EditorAbstractFileTab {
 	private void displayTemplateContextStatus() {
 		Guid tpleGuid = new Guid(getCurrentTemplate().getItemHeader().getGuid());
 		String tpleName = getCurrentTemplate().getFileName();
-		File primaryFileTpleContext = new File(getDataFile().get().getParentFile(),
-				getCurrentTemplate().getTemplateContext() + ".lrtpldatasc");
-		Optional<File> secondaryFileTpleContext = ctx.getFileManager().moveFromPrimaryToSecondary(primaryFileTpleContext);
+		Path primaryFileTpleContext = getDataFile().get().resolveSibling(getCurrentTemplate().getTemplateContext() + ".lrtpldatasc");
+		Optional<Path> secondaryFileTpleContext = ctx.getFileManager().moveFromPrimaryToSecondary(primaryFileTpleContext);
 		ConcurrencyUtil.executeAndInvokeLaterOnSuccess(() -> {
-			File fileTpleContext = primaryFileTpleContext;
-			if (!fileTpleContext.exists()) {
-				if (secondaryFileTpleContext.isPresent() && secondaryFileTpleContext.get().exists()) {
+			Path fileTpleContext = primaryFileTpleContext;
+			if (!Files.exists(fileTpleContext)) {
+				if (secondaryFileTpleContext.isPresent() && Files.exists(secondaryFileTpleContext.get())) {
 					fileTpleContext = secondaryFileTpleContext.get();
 				} else {
 					return Pair.of(false, I.tr("No suitable TemplateContext could be found."));
@@ -303,7 +303,7 @@ public class EditorTemplateTab extends EditorAbstractFileTab {
 				return Pair.of(true, null);
 			} catch (IOException e) {
 				String message = SwingUtils.getMultilineText(I.trcf("Invalid template context",
-						"Error opening the corresponding TemplateContext {0}", fileTpleContext.getName()) + ":", e.getMessage());
+						"Error opening the corresponding TemplateContext {0}", fileTpleContext.getFileName()) + ":", e.getMessage());
 				return Pair.of(false, message);
 			} catch (DuplicateEntryException | InvalidEntryException e) {
 				String reason = e instanceof DuplicateEntryException
@@ -311,7 +311,7 @@ public class EditorTemplateTab extends EditorAbstractFileTab {
 						: I.trc("Invalid template context", "as it contains at least one invalid guid.");
 
 				String message = SwingUtils.getMultilineText(I.trcf("Invalid template context",
-						"Error opening the corresponding TemplateContext {0}", fileTpleContext.getName()) + ",", reason);
+						"Error opening the corresponding TemplateContext {0}", fileTpleContext.getFileName()) + ",", reason);
 				return Pair.of(false, message);
 			}
 		}, new Consumer<Pair<Boolean, String>>() {
@@ -340,40 +340,40 @@ public class EditorTemplateTab extends EditorAbstractFileTab {
 
 	private void checkAndRepairTemplateContext() {
 		TemplateFile template = getCurrentTemplate();
-		File fileTpleContext = new File(getDataFile().get().getParentFile(), template.getTemplateContext() + ".lrtpldatasc");
+		Path fileTpleContext = getDataFile().get().resolveSibling(template.getTemplateContext() + ".lrtpldatasc");
 
 		Guid tpleGuid = new Guid(template.getItemHeader().getGuid());
 		String tpleName = template.getFileName();
 
 		Lrtpldatasc tpleContext = null;
 		boolean contextCreated = false;
-		if (fileTpleContext.exists()) {
+		if (Files.exists(fileTpleContext)) {
 			try {
 				tpleContext = new Lrtpldatasc(fileTpleContext);
 			} catch (IOException e) {
-				logger.warn("Error while opening TemplateContext {}: ", fileTpleContext.getName(), e);
+				logger.warn("Error while opening TemplateContext {}: ", fileTpleContext.getFileName(), e);
 				return;
 			} catch (DuplicateEntryException | InvalidEntryException e) {
-				logger.warn("Error while opening TemplateContext {}: {}", fileTpleContext.getName(), e.getMessage());
+				logger.warn("Error while opening TemplateContext {}: {}", fileTpleContext.getFileName(), e.getMessage());
 				String reason = e instanceof DuplicateEntryException
 						? I.trc("Invalid lrtpldatasc", "as it contains multiple entries with the same guid")
 						: I.trc("Invalid lrtpldatasc", "as it contains at least one invalid guid");
 				if (TaskDialogs.isConfirmed(ctx.getParentWindow(), I.tr(".lrtpldatasc entry"), I.trcf("Invalid lrtpldatasc",
 						"The .lrtpldatasc ''{1}'' responsible for ''{0}'' could not be opened,\n{2} ({3}).\nShould it be opened in the file manager?",
-						template.getEntityName(), fileTpleContext.getName(), reason, e.getMessage()))) {
+						template.getEntityName(), fileTpleContext.getFileName(), reason, e.getMessage()))) {
 					ctx.getFileManager().explorePath(fileTpleContext);
 				}
 				return;
 			}
 		}
 
-		if (!fileTpleContext.exists()) {
-			Optional<File> fileAltTpleContext = ctx.getFileManager().moveFromPrimaryToSecondary(fileTpleContext);
-			if (fileAltTpleContext.isPresent() && fileAltTpleContext.get().exists()) {
+		if (!Files.exists(fileTpleContext)) {
+			Optional<Path> fileAltTpleContext = ctx.getFileManager().moveFromPrimaryToSecondary(fileTpleContext);
+			if (fileAltTpleContext.isPresent() && Files.exists(fileAltTpleContext.get())) {
 				try {
 					tpleContext = new Lrtpldatasc(fileAltTpleContext.get());
 				} catch (IOException | DuplicateEntryException e) {
-					logger.warn("Error while opening TemplateContext {}: {}", fileAltTpleContext.get().getName(), e.getMessage());
+					logger.warn("Error while opening TemplateContext {}: {}", fileAltTpleContext.get().getFileName(), e.getMessage());
 				}
 			}
 		}
@@ -388,14 +388,14 @@ public class EditorTemplateTab extends EditorAbstractFileTab {
 				tpleContext = new Lrtpldatasc();
 				contextCreated = true;
 			} else if (result == 1) {
-				File file = FileDialogWrapper.openFile(I.tr("Search for .lrtpldatasc"), ctx.getParentWindow(),
+				Path file = FileDialogWrapper.openFile(I.tr("Search for .lrtpldatasc"), ctx.getParentWindow(),
 						FileDialogWrapper.createFilter(".lrtpldatasc", "lrtpldatasc"));
 				if (file != null) {
 					try {
 						tpleContext = new Lrtpldatasc(file);
 						contextCreated = true;
 					} catch (IOException e) {
-						logger.warn("Error while opening TemplateContext {}.", file.getName(), e);
+						logger.warn("Error while opening TemplateContext {}.", file.getFileName(), e);
 						return;
 					}
 				}
@@ -406,7 +406,7 @@ public class EditorTemplateTab extends EditorAbstractFileTab {
 			boolean contextChanged = false;
 			if (!tpleContext.contains(tpleGuid) && !tpleContext.contains(tpleName)) {
 				boolean confirmed = TaskDialogs.ask(ctx.getParentWindow(), I.tr("Create .lrtpldatasc entry"),
-						I.trf("Should an entry be created for {0} in ''{1}''?", template.getEntityName(), fileTpleContext.getName()));
+						I.trf("Should an entry be created for {0} in ''{1}''?", template.getEntityName(), fileTpleContext.getFileName()));
 
 				if (confirmed) {
 					tpleContext.add(tpleGuid, tpleName);
@@ -415,7 +415,7 @@ public class EditorTemplateTab extends EditorAbstractFileTab {
 			} else if (!tpleContext.contains(tpleGuid) && tpleContext.contains(tpleName)) {
 				boolean confirmed = TaskDialogs.ask(ctx.getParentWindow(), I.tr("Update .lrtpldatasc entry"),
 						I.trf("For {0} there is already an entry in ''{1}'',\nbut under a different guid.\n\nShould the entry be updated?",
-								template.getEntityName(), fileTpleContext.getName()));
+								template.getEntityName(), fileTpleContext.getFileName()));
 
 				if (confirmed) {
 					tpleContext.remove(tpleName);
@@ -425,7 +425,7 @@ public class EditorTemplateTab extends EditorAbstractFileTab {
 			} else if (tpleContext.contains(tpleGuid) && !tpleContext.contains(tpleName)) {
 				boolean confirmed = TaskDialogs.ask(ctx.getParentWindow(), I.tr("Update .lrtpldatasc entry"), I.trf(
 						"For the guid of {0} there is already an entry in ''{1}'',\nbut in combination with the name {2}.\n\nShould the entry be updated?",
-						template.getEntityName(), fileTpleContext.getName(), tpleContext.get(tpleGuid).getTemplateName()));
+						template.getEntityName(), fileTpleContext.getFileName(), tpleContext.get(tpleGuid).getTemplateName()));
 
 				if (confirmed) {
 					tpleContext.remove(tpleGuid);
@@ -443,8 +443,8 @@ public class EditorTemplateTab extends EditorAbstractFileTab {
 					}
 				}
 			} catch (IOException e) {
-				logger.warn("Error while saving TemplateContext {}.", fileTpleContext.getName(), e);
-				TaskDialogs.error(ctx.getParentWindow(), "", I.trf("''{0}'' could not be saved.", fileTpleContext.getName()));
+				logger.warn("Error while saving TemplateContext {}.", fileTpleContext.getFileName(), e);
+				TaskDialogs.error(ctx.getParentWindow(), "", I.trf("''{0}'' could not be saved.", fileTpleContext.getFileName()));
 			}
 		}
 	}

@@ -1,9 +1,8 @@
 package de.george.g3dit.scripts;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.nio.file.Path;
 import java.util.Arrays;
 
 import org.slf4j.Logger;
@@ -11,6 +10,7 @@ import org.slf4j.LoggerFactory;
 
 import com.teamunify.i18n.I;
 
+import de.george.g3utils.util.FilesEx;
 import de.george.lrentnode.archive.ArchiveFile;
 import de.george.lrentnode.template.TemplateFile;
 import de.george.lrentnode.util.FileUtil;
@@ -32,25 +32,25 @@ public class ScriptTestReadSaveIntegrity implements IScript {
 	@Override
 	public boolean execute(IScriptEnvironment env) {
 		int totalArchiveFiles = 0;
-		for (File file : env.getFileManager().listWorldFiles()) {
+		for (Path file : env.getFileManager().listWorldFiles()) {
 			try {
 				ArchiveFile aFile = FileUtil.openArchive(file, false);
 				ByteArrayOutputStream out = new ByteArrayOutputStream();
 				try {
 					aFile.save(out);
 
-					byte[] inBytes = Files.readAllBytes(Paths.get(file.toURI()));
+					byte[] inBytes = Files.readAllBytes(file);
 					if (!Arrays.equals(inBytes, out.toByteArray())) {
-						env.log(file.getAbsolutePath());
+						env.log(FilesEx.getAbsolutePath(file));
 					}
 				} catch (Exception e) {
 					logger.warn("Error while comparing archive file.", e);
-					env.log(file.getAbsolutePath());
+					env.log(FilesEx.getAbsolutePath(file));
 					env.log(I.trf("Error while comparing: {0}", e.getMessage()));
 				}
 			} catch (Exception e) {
 				logger.warn("Error while loading archive file.", e);
-				env.log(file.getAbsolutePath());
+				env.log(FilesEx.getAbsolutePath(file));
 				env.log(I.trf("Error while loading: {0}", e.getMessage()));
 			}
 			totalArchiveFiles++;
@@ -58,24 +58,24 @@ public class ScriptTestReadSaveIntegrity implements IScript {
 		env.log(totalArchiveFiles + " .node/.lrentdat überprüft.");
 
 		int totalTemplateFiles = 0;
-		for (File file : env.getFileManager().listTemplateFiles()) {
+		for (Path file : env.getFileManager().listTemplateFiles()) {
 			try {
 				TemplateFile aFile = FileUtil.openTemplate(file);
 				try {
 					ByteArrayOutputStream out = new ByteArrayOutputStream();
 					aFile.save(out);
 
-					byte[] inBytes = Files.readAllBytes(Paths.get(file.toURI()));
+					byte[] inBytes = Files.readAllBytes(file);
 					if (!Arrays.equals(inBytes, out.toByteArray())) {
-						env.log(file.getAbsolutePath());
+						env.log(FilesEx.getAbsolutePath(file));
 					}
 				} catch (Exception e) {
-					env.log(file.getAbsolutePath());
+					env.log(FilesEx.getAbsolutePath(file));
 					logger.warn("Error while comparing template file.", e);
 					env.log(I.trf("Error while comparing: {0}", e.getMessage()));
 				}
 			} catch (Exception e) {
-				env.log(file.getAbsolutePath());
+				env.log(FilesEx.getAbsolutePath(file));
 				logger.warn("Error while loading template file.", e);
 				env.log(I.trf("Error while loading: {0}", e.getMessage()));
 			}

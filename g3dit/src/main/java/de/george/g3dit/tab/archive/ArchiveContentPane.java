@@ -2,8 +2,9 @@ package de.george.g3dit.tab.archive;
 
 import java.awt.BorderLayout;
 import java.awt.event.InputEvent;
-import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -218,8 +219,8 @@ public class ArchiveContentPane extends JPanel {
 		toolBar.add(btnDiff);
 		btnDiff.addActionListener(a -> {
 			try {
-				Optional<File> originalFile = ctx.getFileManager().moveFromPrimaryToSecondary(ctx.getDataFile().get());
-				if (!originalFile.isPresent() || !originalFile.get().isFile()) {
+				Optional<Path> originalFile = ctx.getFileManager().moveFromPrimaryToSecondary(ctx.getDataFile().get());
+				if (!originalFile.isPresent() || !Files.isRegularFile(originalFile.get())) {
 					TaskDialogs.error(ctx.getParentWindow(), "", I
 							.tr(I.tr("There is no version of the file in the original data or the file itself is in the original data.")));
 					return;

@@ -1,7 +1,7 @@
 package de.george.g3dit.scripts;
 
-import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
 
 import com.fasterxml.jackson.core.JsonEncoding;
 import com.fasterxml.jackson.core.JsonFactory;
@@ -47,7 +47,7 @@ public class ScriptListEntities implements IScript {
 
 	@Override
 	public boolean execute(IScriptEnvironment env) {
-		File saveFile = FileDialogWrapper.saveFile(I.tr("Save listing as..."), env.getParentWindow(), FileDialogWrapper.JSON_FILTER);
+		Path saveFile = FileDialogWrapper.saveFile(I.tr("Save listing as..."), env.getParentWindow(), FileDialogWrapper.JSON_FILTER);
 		if (saveFile == null) {
 			return false;
 		}
@@ -56,7 +56,7 @@ public class ScriptListEntities implements IScript {
 
 		try {
 			JsonFactory factory = new JsonFactory();
-			JsonGenerator generator = factory.createGenerator(saveFile, JsonEncoding.UTF8);
+			JsonGenerator generator = factory.createGenerator(saveFile.toFile(), JsonEncoding.UTF8);
 			generator.useDefaultPrettyPrinter();
 
 			boolean onlyNamed = env.getOption(ONLY_NAMED);

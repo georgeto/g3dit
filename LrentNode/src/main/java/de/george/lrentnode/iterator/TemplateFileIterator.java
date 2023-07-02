@@ -1,24 +1,27 @@
 package de.george.lrentnode.iterator;
 
-import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Iterator;
 import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import de.george.g3utils.util.FilesEx;
+import de.george.g3utils.util.IOUtils;
 import de.george.lrentnode.template.TemplateFile;
 import de.george.lrentnode.util.FileUtil;
 
 public class TemplateFileIterator implements Iterator<TemplateFile> {
 	private static final Logger logger = LoggerFactory.getLogger(TemplateFileIterator.class);
 
-	private List<File> files;
+	private List<Path> files;
 	private int position;
 	private TemplateFile nextTple;
-	private File nextFile;
+	private Path nextFile;
 
-	public TemplateFileIterator(List<File> files) {
+	public TemplateFileIterator(List<Path> files) {
 		this.files = files;
 		position = 0;
 	}
@@ -26,13 +29,13 @@ public class TemplateFileIterator implements Iterator<TemplateFile> {
 	@Override
 	public boolean hasNext() {
 		while (position < files.size()) {
-			File file = files.get(position++);
-			if (file.isFile() && file.getName().endsWith(".tple") && !file.getName().startsWith("_deleted_")) {
+			Path file = files.get(position++);
+			if (Files.isRegularFile(file) && IOUtils.isValidTemplateFile(FilesEx.getFileName(file))) {
 				TemplateFile tple = null;
 				try {
 					tple = FileUtil.openTemplate(file);
 				} catch (Exception e) {
-					logger.warn("Error while opening template({}): {}", file.getAbsolutePath(), e.getMessage());
+					logger.warn("Error while opening template({}): {}", file.toAbsolutePath(), e.getMessage());
 				}
 				if (tple != null) {
 					nextTple = tple;
@@ -51,7 +54,7 @@ public class TemplateFileIterator implements Iterator<TemplateFile> {
 		return nextTple;
 	}
 
-	public File nextFile() {
+	public Path nextFile() {
 		return nextFile;
 	}
 

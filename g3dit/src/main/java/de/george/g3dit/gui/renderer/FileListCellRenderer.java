@@ -1,7 +1,7 @@
 package de.george.g3dit.gui.renderer;
 
 import java.awt.Component;
-import java.io.File;
+import java.nio.file.Path;
 import java.util.Optional;
 import java.util.function.Supplier;
 
@@ -11,6 +11,7 @@ import javax.swing.JList;
 
 import de.george.g3dit.settings.OptionStore;
 import de.george.g3dit.util.SettingsHelper;
+import de.george.g3utils.util.FilesEx;
 
 public class FileListCellRenderer extends DefaultListCellRenderer {
 	private final Supplier<OptionStore> optionStore;
@@ -23,10 +24,10 @@ public class FileListCellRenderer extends DefaultListCellRenderer {
 	public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
 		JLabel label = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
 
-		File file = (File) value;
+		Path file = (Path) value;
 		if (file != null) {
-			String fileName = file.getName();
-			String filePath = file.getAbsolutePath();
+			String fileName = FilesEx.getFileName(file);
+			String filePath = FilesEx.getAbsolutePath(file);
 			Optional<String> alias = SettingsHelper.getAlias(optionStore.get(), filePath);
 			if (alias.isPresent()) {
 				fileName = alias.get() + " " + fileName;

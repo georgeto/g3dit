@@ -1,7 +1,8 @@
 package de.george.g3dit.scripts;
 
-import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Optional;
 import java.util.function.BiFunction;
 
@@ -22,9 +23,9 @@ import one.util.streamex.StreamEx;
 public class ScriptUtils {
 	private static final Logger logger = LoggerFactory.getLogger(ScriptUtils.class);
 
-	public static final boolean processAndSaveWorldFiles(IScriptEnvironment env, BiFunction<ArchiveFile, File, Integer> processor,
+	public static final boolean processAndSaveWorldFiles(IScriptEnvironment env, BiFunction<ArchiveFile, Path, Integer> processor,
 			String formatString) {
-		File saveDir = FileDialogWrapper.chooseDirectory(I.tr("Select save path"), env.getParentWindow());
+		Path saveDir = FileDialogWrapper.chooseDirectory(I.tr("Select save path"), env.getParentWindow());
 		if (saveDir == null) {
 			return false;
 		}
@@ -33,7 +34,7 @@ public class ScriptUtils {
 		ArchiveFileIterator worldFilesIterator = env.getFileManager().worldFilesIterator();
 		while (worldFilesIterator.hasNext()) {
 			ArchiveFile archive = worldFilesIterator.next();
-			File file = worldFilesIterator.nextFile();
+			Path file = worldFilesIterator.nextFile();
 			int changed = processor.apply(archive, file);
 
 			// Es wurden Meshes gelöscht
@@ -46,17 +47,15 @@ public class ScriptUtils {
 				FileManager fileManager = env.getFileManager();
 				Optional<String> relativePath = fileManager.getRelativePath(file);
 				if (!relativePath.isPresent()) {
-					env.log(I.trf("Relative path of {0} could not be determined, applying changes not possible.",
-							file.getAbsolutePath()));
+					env.log(I.trf("Relative path of {0} could not be determined, applying changes not possible.", file.toAbsolutePath()));
 					continue;
 				}
 				try {
-					File out = new File(saveDir, relativePath.get());
-					out.getParentFile().mkdirs();
-					archive.save(out);
+					Files.createDirectories(saveDir);
+					archive.save(saveDir.resolve(relativePath.get()));
 				} catch (IOException e) {
-					env.log(I.trf("Failed to save {0}: {1}", file.getAbsolutePath(), e.getMessage()));
-					logger.warn("Error while saving file {}.", file.getAbsolutePath(), e);
+					env.log(I.trf("Failed to save {0}: {1}", file.toAbsolutePath(), e.getMessage()));
+					logger.warn("Error while saving file {}.", file.toAbsolutePath(), e);
 				}
 			}
 		}

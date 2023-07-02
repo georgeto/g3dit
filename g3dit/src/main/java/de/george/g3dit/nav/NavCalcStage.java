@@ -7,7 +7,8 @@ import static j2html.TagCreator.rawHtml;
 import java.awt.Component;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
-import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -118,9 +119,6 @@ public abstract class NavCalcStage {
 
 	/**
 	 * This method is thread-safe.
-	 *
-	 * @param change
-	 * @return
 	 */
 	protected Change addChange(Change change) {
 		Lock writeLock = changes.getReadWriteLock().writeLock();
@@ -135,8 +133,6 @@ public abstract class NavCalcStage {
 
 	/**
 	 * This method is thread-safe.
-	 *
-	 * @param change
 	 */
 	protected int getChangeCount() {
 		Lock readLock = changes.getReadWriteLock().readLock();
@@ -201,7 +197,7 @@ public abstract class NavCalcStage {
 
 	protected final TableColumnDef COLUMN_FILE = TableColumnDef.withName("File").displayName(I.tr("File"))
 			.cellRenderer(new FileTableCellRenderer(() -> getContext().getOptionStore()))
-			.sizeExample(new File("G3_Nordmar_01_Landscape_Dynamic_Objects_02_SHyb.node")).b();
+			.sizeExample(Paths.get("G3_Nordmar_01_Landscape_Dynamic_Objects_02_SHyb.node")).b();
 
 	protected static final TableColumnDef COLUMN_NAME = TableColumnDef.withName("Name").displayName(I.tr("Name"))
 			.sizeExample("G3_Object_Interact_Animated_Chest_01").b();
@@ -246,11 +242,11 @@ public abstract class NavCalcStage {
 
 		FilterList<Change> filteredChanges = new FilterList<>(changes, new SeverityMatcherEditor<>(cbSeverity, Change::getSeverity));
 
-		CompositeList<File> availablesFiles = new CompositeList<>(filteredChanges.getPublisher(), filteredChanges.getReadWriteLock());
+		CompositeList<Path> availablesFiles = new CompositeList<>(filteredChanges.getPublisher(), filteredChanges.getReadWriteLock());
 		availablesFiles.addMemberList(
-				GlazedLists.eventListOf(availablesFiles.getPublisher(), availablesFiles.getReadWriteLock(), new File[] {null}));
+				GlazedLists.eventListOf(availablesFiles.getPublisher(), availablesFiles.getReadWriteLock(), new Path[] {null}));
 		availablesFiles.addMemberList(UniqueList.create(GlazedLists.transformByFunction(filteredChanges, Change::getFile)));
-		JComboBox<File> cbFiles = new JComboBox<>(GlazedListsSwing.eventComboBoxModelWithThreadProxyList(availablesFiles));
+		JComboBox<Path> cbFiles = new JComboBox<>(GlazedListsSwing.eventComboBoxModelWithThreadProxyList(availablesFiles));
 		cbFiles.setRenderer(new FileListCellRenderer(() -> getContext().getOptionStore()));
 
 		mainPanel.add(cbFiles, "gaptop 7, split 3, width 350!");

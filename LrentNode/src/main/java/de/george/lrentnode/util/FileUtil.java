@@ -1,10 +1,10 @@
 package de.george.lrentnode.util;
 
 import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -18,6 +18,7 @@ import de.george.g3utils.io.G3FileWriterVirtual;
 import de.george.g3utils.io.GenomeFile;
 import de.george.g3utils.structure.GuidUtil;
 import de.george.g3utils.structure.bCBox;
+import de.george.g3utils.util.FilesEx;
 import de.george.g3utils.util.IOUtils;
 import de.george.g3utils.util.Misc;
 import de.george.lrentnode.archive.ArchiveFile;
@@ -40,11 +41,11 @@ import de.george.lrentnode.template.TemplateFile;
 public class FileUtil {
 	private static final Logger logger = LoggerFactory.getLogger(FileUtil.class);
 
-	public static ArchiveFile openArchive(File file, boolean verifyEntityGraph) throws IOException {
+	public static ArchiveFile openArchive(Path file, boolean verifyEntityGraph) throws IOException {
 		return openArchive(file, verifyEntityGraph, false);
 	}
 
-	public static ArchiveFile openArchive(File file, boolean verifyEntityGraph, boolean skipPropertySets) throws IOException {
+	public static ArchiveFile openArchive(Path file, boolean verifyEntityGraph, boolean skipPropertySets) throws IOException {
 		try (G3FileReaderEx reader = new G3FileReaderEx(file)) {
 			return openArchive(reader, verifyEntityGraph, skipPropertySets);
 		}
@@ -65,16 +66,16 @@ public class FileUtil {
 				: new NodeFile(reader, verifyEntityGraph, skipPropertySets);
 	}
 
-	public static Optional<ArchiveFile> openArchiveSafe(File file, boolean verifyEntityGraph, boolean skipPropertySets) {
+	public static Optional<ArchiveFile> openArchiveSafe(Path file, boolean verifyEntityGraph, boolean skipPropertySets) {
 		try {
 			return Optional.of(openArchive(file, verifyEntityGraph, skipPropertySets));
 		} catch (Exception e) {
-			logger.warn("Unable to open archive file {}.", file.getAbsolutePath(), e);
+			logger.warn("Unable to open archive file {}.", file.toAbsolutePath(), e);
 			return Optional.empty();
 		}
 	}
 
-	public static SecDat openSecdat(File file) throws IOException {
+	public static SecDat openSecdat(Path file) throws IOException {
 		try (G3FileReaderEx reader = new G3FileReaderEx(file)) {
 			return openSecdat(reader);
 		}
@@ -85,10 +86,10 @@ public class FileUtil {
 	}
 
 	public static TemplateFile openTemplate(String file) throws IOException {
-		return openTemplate(new File(file));
+		return openTemplate(Paths.get(file));
 	}
 
-	public static TemplateFile openTemplate(File file) throws IOException {
+	public static TemplateFile openTemplate(Path file) throws IOException {
 		try (G3FileReaderEx reader = new G3FileReaderEx(file)) {
 			return openTemplate(reader);
 		}
@@ -98,11 +99,11 @@ public class FileUtil {
 		return new TemplateFile(reader);
 	}
 
-	public static Optional<TemplateFile> openTemplateSafe(File file) {
+	public static Optional<TemplateFile> openTemplateSafe(Path file) {
 		try {
 			return Optional.of(openTemplate(file));
 		} catch (Exception e) {
-			logger.warn("Unable to open template {}.", file.getAbsolutePath(), e);
+			logger.warn("Unable to open template {}.", file.toAbsolutePath(), e);
 			return Optional.empty();
 		}
 	}
@@ -130,18 +131,18 @@ public class FileUtil {
 		return file;
 	}
 
-	public static TemplateFile openTemplateByName(List<File> tples, String templateName) {
-		for (File file : tples) {
+	public static TemplateFile openTemplateByName(List<Path> tples, String templateName) {
+		for (Path file : tples) {
 			try {
-				if (file.getName().contains(templateName) && !file.getName().startsWith("_deleted")
-						&& !file.getName().startsWith("Testzeug_")) {
+				String fileName = FilesEx.getFileName(file);
+				if (fileName.contains(templateName) && IOUtils.isValidTemplateFile(fileName)) {
 					TemplateFile tple = openTemplate(file);
 					if (tple.getHeaderCount() > 0 && tple.getItemHeader().getName().equals(templateName)) {
 						return tple;
 					}
 				}
 			} catch (Exception e) {
-				logger.info("Error while opening template {}.", file.getAbsolutePath(), e);
+				logger.info("Error while opening template {}.", file.toAbsolutePath(), e);
 			}
 		}
 		return null;
@@ -156,7 +157,7 @@ public class FileUtil {
 	 * @param file Speicherort
 	 * @throws IOException
 	 */
-	public static void createLrent(File file) throws IOException {
+	public static void createLrent(Path file) throws IOException {
 		createFile(file, HEX_LRENT, "lrent");
 	}
 
@@ -169,7 +170,7 @@ public class FileUtil {
 	 * @param file Speicherort
 	 * @throws IOException
 	 */
-	public static void createSec(File file) throws IOException {
+	public static void createSec(Path file) throws IOException {
 		createFile(file, HEX_SEC, "sec");
 	}
 
@@ -182,7 +183,7 @@ public class FileUtil {
 	 * @param file Speicherort
 	 * @throws IOException
 	 */
-	public static void createLrgeo(File file) throws IOException {
+	public static void createLrgeo(Path file) throws IOException {
 		createFile(file, HEX_LRGEO, "lrgeo");
 	}
 
@@ -202,23 +203,21 @@ public class FileUtil {
 	 * @param contentBox WorldTreeBoundary der zugehörigen node
 	 * @throws IOException
 	 */
-	public static void createLrgeodat(File file, bCBox contentBox) throws IOException {
+	public static void createLrgeodat(Path file, bCBox contentBox) throws IOException {
 		eCGeometrySpatialContext lrgeodat = FileUtil.createLrgeodat();
 		lrgeodat.setPropertyData(CD.eCContextBase.ContextBox, contentBox);
-		FileUtil.saveLrgeodat(lrgeodat, IOUtils.changeExtension(file, "lrgeodat"));
+		FileUtil.saveLrgeodat(lrgeodat, FilesEx.changeExtension(file, "lrgeodat"));
 	}
 
-	public static eCGeometrySpatialContext openLrgeodat(File file) throws IOException {
-		try (InputStream is = new FileInputStream(file)) {
-			return openLrgeodat(is);
-		}
+	public static eCGeometrySpatialContext openLrgeodat(Path file) throws IOException {
+		return openOneClassGenomeFile(file);
 	}
 
 	public static eCGeometrySpatialContext openLrgeodat(InputStream is) throws IOException {
 		return openOneClassGenomeFile(is);
 	}
 
-	public static void saveLrgeodat(eCGeometrySpatialContext context, File file) throws IOException {
+	public static void saveLrgeodat(eCGeometrySpatialContext context, Path file) throws IOException {
 		saveOneClassGenomeFile(context, file);
 	}
 
@@ -231,7 +230,7 @@ public class FileUtil {
 	 * @param file Speicherort
 	 * @throws IOException
 	 */
-	public static void createLrtpl(File file) throws IOException {
+	public static void createLrtpl(Path file) throws IOException {
 		createFile(file, HEX_LRTPL, "lrtpl");
 	}
 
@@ -244,15 +243,15 @@ public class FileUtil {
 	 * @param file Speicherort
 	 * @throws IOException
 	 */
-	public static void createLrtpldat(File file) throws IOException {
+	public static void createLrtpldat(Path file) throws IOException {
 		createFile(file, HEX_LRTPLDAT, "lrtpldat");
 	}
 
-	private static void createFile(File file, byte[] data, String extension) throws IOException {
-		new G3FileWriterVirtual(data).save(IOUtils.changeExtension(file, extension));
+	private static void createFile(Path file, byte[] data, String extension) throws IOException {
+		new G3FileWriterVirtual(data).save(FilesEx.changeExtension(file, extension));
 	}
 
-	public static eCResourceMeshComplex_PS openMesh(File file) throws IOException {
+	public static eCResourceMeshComplex_PS openMesh(Path file) throws IOException {
 		return openOneClassGenomeFile(file);
 	}
 
@@ -260,7 +259,7 @@ public class FileUtil {
 		return openOneClassGenomeFile(is);
 	}
 
-	public static eCResourceShaderMaterial_PS openMaterial(File file) throws IOException {
+	public static eCResourceShaderMaterial_PS openMaterial(Path file) throws IOException {
 		return openOneClassGenomeFile(file);
 	}
 
@@ -268,7 +267,7 @@ public class FileUtil {
 		return openOneClassGenomeFile(is);
 	}
 
-	public static eCResourceMeshLoD_PS openLodMesh(File file) throws IOException {
+	public static eCResourceMeshLoD_PS openLodMesh(Path file) throws IOException {
 		return openOneClassGenomeFile(file);
 	}
 
@@ -276,7 +275,7 @@ public class FileUtil {
 		return openOneClassGenomeFile(is);
 	}
 
-	public static eCResourceCollisionMesh_PS openCollisionMesh(File file) throws IOException {
+	public static eCResourceCollisionMesh_PS openCollisionMesh(Path file) throws IOException {
 		return openOneClassGenomeFile(file);
 	}
 
@@ -295,7 +294,7 @@ public class FileUtil {
 		}
 	}
 
-	private static <T extends G3Class> T openOneClassGenomeFile(File file) throws IOException {
+	private static <T extends G3Class> T openOneClassGenomeFile(Path file) throws IOException {
 		return openOneClassGenomeFile(new G3FileReaderEx(file));
 	}
 
@@ -303,11 +302,11 @@ public class FileUtil {
 		return openOneClassGenomeFile(new G3FileReaderEx(is));
 	}
 
-	private static <T extends G3Class> void saveOneClassGenomeFile(T data, File file) throws IOException {
+	private static <T extends G3Class> void saveOneClassGenomeFile(T data, Path file) throws IOException {
 		new OneClassGenomeFile(data).save(file);
 	}
 
-	public static eCResourceAnimationActor_PS openAnimationActor(File file) throws IOException {
+	public static eCResourceAnimationActor_PS openAnimationActor(Path file) throws IOException {
 		return new eCResourceAnimationActor_PS(new G3FileReaderEx(file));
 	}
 
@@ -315,7 +314,7 @@ public class FileUtil {
 		return new eCResourceAnimationActor_PS(new G3FileReaderEx(is));
 	}
 
-	public static eCResourceAnimationMotion_PS openAnimationMotion(File file) throws IOException {
+	public static eCResourceAnimationMotion_PS openAnimationMotion(Path file) throws IOException {
 		return new eCResourceAnimationMotion_PS(new G3FileReaderEx(file));
 	}
 
@@ -323,7 +322,7 @@ public class FileUtil {
 		return new eCResourceAnimationMotion_PS(new G3FileReaderEx(is));
 	}
 
-	public static gCEffectMap openEffectMap(File file) throws IOException {
+	public static gCEffectMap openEffectMap(Path file) throws IOException {
 		return new gCEffectMap(new G3FileReaderEx(file));
 	}
 

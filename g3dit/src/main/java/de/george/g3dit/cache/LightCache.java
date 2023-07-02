@@ -1,8 +1,8 @@
 package de.george.g3dit.cache;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
+import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -10,11 +10,11 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.Callable;
 
-import com.google.common.base.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.ezware.dialog.task.TaskDialogs;
+import com.google.common.base.Strings;
 import com.teamunify.i18n.I;
 
 import de.george.g3dit.EditorContext;
@@ -57,7 +57,7 @@ public class LightCache extends AbstractCache<LightCache> {
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public void load(final File inFile) {
+	public void load(final Path inFile) {
 		LoadObjectWorker worker = new LoadObjectWorker(inFile) {
 			@Override
 			protected void done() {
@@ -75,20 +75,20 @@ public class LightCache extends AbstractCache<LightCache> {
 	}
 
 	@Override
-	public void save(File file) throws IOException {
+	public void save(Path file) throws IOException {
 		saveIntern(file, lights);
 	}
 
 	private class CreateLightCacheWorker extends AbstractDialogFileWorker<Set<LightSource>> {
 
-		public CreateLightCacheWorker(Callable<List<File>> fileProvider) {
+		public CreateLightCacheWorker(Callable<List<Path>> fileProvider) {
 			super(fileProvider, null, I.tr("Create LightCache"), ctx.getParentWindow());
 			statusFormat = I.tr("{0, number} light sources found");
 		}
 
 		@Override
 		protected Set<LightSource> doInBackground() throws Exception {
-			List<File> files = getFiles();
+			List<Path> files = getFiles();
 
 			Map<bCVector, LightSource> lightsMap = new HashMap<>();
 			// Load LightSources

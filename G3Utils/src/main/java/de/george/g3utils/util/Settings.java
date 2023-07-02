@@ -1,9 +1,10 @@
 package de.george.g3utils.util;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Properties;
 
 public class Settings {
@@ -12,14 +13,14 @@ public class Settings {
 	private String fileName;
 
 	public Settings(String fileName) {
-		this(new File(fileName));
+		this(Paths.get(fileName));
 	}
 
-	public Settings(File file) {
-		fileName = file.getAbsolutePath();
+	public Settings(Path file) {
+		fileName = FilesEx.getAbsolutePath(file);
 		props = new Properties();
 		try {
-			props.load(new FileInputStream(file));
+			props.load(Files.newInputStream(file));
 		} catch (IOException e) {
 			// Nichts, vielleicht existiert noch keine Config datei
 		}

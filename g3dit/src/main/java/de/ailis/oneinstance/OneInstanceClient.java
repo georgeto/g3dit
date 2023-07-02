@@ -4,11 +4,12 @@
 
 package de.ailis.oneinstance;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Writer;
 import java.net.Socket;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
@@ -61,7 +62,7 @@ final class OneInstanceClient implements Runnable {
 				io.write(Server.APP_ID, appId);
 
 				// Read the data from the client
-				File workingDir = new File(io.read(Client.WORKING_DIR));
+				Path workingDir = Paths.get(io.read(Client.WORKING_DIR));
 				String[] args = io.read(Client.ARGS);
 
 				AtomicBoolean outputClosed = new AtomicBoolean(false);

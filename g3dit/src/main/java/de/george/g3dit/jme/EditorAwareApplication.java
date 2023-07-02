@@ -1,6 +1,6 @@
 package de.george.g3dit.jme;
 
-import java.io.File;
+import java.nio.file.Path;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -110,11 +110,11 @@ public abstract class EditorAwareApplication extends SimpleApplication {
 		screenShotState.setFilePath(screenshotFolder);
 	}
 
-	public void makeScreenshot(File outFile) {
+	public void makeScreenshot(Path outFile) {
 		makeScreenshot(outFile, "png", null);
 	}
 
-	public void makeScreenshot(File outFile, String format, CompletableFuture<Boolean> complete) {
+	public void makeScreenshot(Path outFile, String format, CompletableFuture<Boolean> complete) {
 		screenShotState.takeScreenshot(outFile, format, complete);
 	}
 

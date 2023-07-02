@@ -1,8 +1,9 @@
 package de.george.g3dit.tab.template;
 
 import java.awt.BorderLayout;
-import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -72,8 +73,8 @@ public class TemplateContentPane extends JPanel {
 			Optional<TemplateFile> selectedTple = ctx.getFileManager().selectAndOpenTemplate();
 			if (selectedTple.isPresent()) {
 				eCEntity classContainer = selectedTple.get().getReferenceHeader();
-				SelectClassDialog classSelect = new SelectClassDialog(ctx.getParentWindow(), I.tr("Add classes"),
-						I.tr("Add"), classContainer);
+				SelectClassDialog classSelect = new SelectClassDialog(ctx.getParentWindow(), I.tr("Add classes"), I.tr("Add"),
+						classContainer);
 				if (classSelect.openAndWasSuccessful()) {
 					TemplateFile tple = ctx.getCurrentTemplate();
 					for (G3Class clazz : classSelect.getResultClasses()) {
@@ -116,8 +117,8 @@ public class TemplateContentPane extends JPanel {
 		toolBar.addSeparator();
 
 		JButton btnProcessTemplateContext = new JButton(I.tr("Check TemplateContext"), Icons.getImageIcon(Icons.Select.TICK));
-		btnProcessTemplateContext.setToolTipText(
-				I.tr("Checks if the template is registered in a TemplateContext and offers corrective actions."));
+		btnProcessTemplateContext
+				.setToolTipText(I.tr("Checks if the template is registered in a TemplateContext and offers corrective actions."));
 		btnProcessTemplateContext.setFocusable(false);
 		toolBar.add(btnProcessTemplateContext);
 		btnProcessTemplateContext.addActionListener(a -> ctx.checkTemplateContext());
@@ -129,8 +130,8 @@ public class TemplateContentPane extends JPanel {
 		toolBar.add(btnDiff);
 		btnDiff.addActionListener(a -> {
 			try {
-				Optional<File> originalFile = ctx.getFileManager().moveFromPrimaryToSecondary(ctx.getDataFile().get());
-				if (!originalFile.isPresent() || !originalFile.get().isFile()) {
+				Optional<Path> originalFile = ctx.getFileManager().moveFromPrimaryToSecondary(ctx.getDataFile().get());
+				if (!originalFile.isPresent() || !Files.isRegularFile(originalFile.get())) {
 					TaskDialogs.error(ctx.getParentWindow(), "", I.tr(
 							"There is no version of the template in the original data or the template itself is in the original data."));
 					return;

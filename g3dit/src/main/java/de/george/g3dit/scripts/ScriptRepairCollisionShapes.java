@@ -39,18 +39,18 @@ public class ScriptRepairCollisionShapes implements IScript {
 				case gEUseType.gEUseType_1H, gEUseType.gEUseType_2H, gEUseType.gEUseType_Axe, gEUseType.gEUseType_Staff, gEUseType.gEUseType_Halberd -> {
 					eCCollisionShape_PS colShapePS = tple.getClass(CD.eCCollisionShape_PS.class);
 					if (colShapePS == null || colShapePS.getShapes().size() == 0) {
-						env.log(I.trf("{0} has no collision shape.", tpleFilesIterator.nextFile().getAbsolutePath()));
+						env.log(I.trf("{0} has no collision shape.", tpleFilesIterator.nextFile().toAbsolutePath()));
 						continue;
 					}
 					if (colShapePS.getShapes().size() != 1) {
-						env.log(I.trf("{0} has more than one collision shape.", tpleFilesIterator.nextFile().getAbsolutePath()));
+						env.log(I.trf("{0} has more than one collision shape.", tpleFilesIterator.nextFile().toAbsolutePath()));
 						continue;
 					}
 					Shape shape = colShapePS.getShapes().get(0).getShape();
 					if (shape instanceof BoxShape || shape instanceof CapsuleShape) {
 						// Nothing
 					} else {
-						env.log(I.trf("{0} has no box/capsule shape.", tpleFilesIterator.nextFile().getAbsolutePath()));
+						env.log(I.trf("{0} has no box/capsule shape.", tpleFilesIterator.nextFile().toAbsolutePath()));
 					}
 				}
 				default -> {

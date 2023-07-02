@@ -1,6 +1,6 @@
 package de.george.g3dit.nav;
 
-import java.io.File;
+import java.nio.file.Path;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
@@ -155,7 +155,7 @@ public class InteractObjectStage extends NavCalcStage {
 		}
 
 		@Override
-		public File getFile() {
+		public Path getFile() {
 			return entity.getFile().getPath();
 		}
 
@@ -202,7 +202,7 @@ public class InteractObjectStage extends NavCalcStage {
 		}
 
 		@Override
-		public File getFile() {
+		public Path getFile() {
 			return ctx.getNavMapManager().getNavMapFile();
 		}
 

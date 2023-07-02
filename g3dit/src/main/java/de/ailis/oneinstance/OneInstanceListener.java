@@ -4,8 +4,8 @@
 
 package de.ailis.oneinstance;
 
-import java.io.File;
 import java.io.PrintWriter;
+import java.nio.file.Path;
 import java.util.function.Consumer;
 
 /**
@@ -31,5 +31,5 @@ public interface OneInstanceListener {
 	 * @param exitCode
 	 * @return True if new application instance is allowed to start, false if not.
 	 */
-	InstanceAction newInstanceCreated(File workingDir, String[] args, PrintWriter writer, Consumer<Integer> exitCode);
+	InstanceAction newInstanceCreated(Path workingDir, String[] args, PrintWriter writer, Consumer<Integer> exitCode);
 }

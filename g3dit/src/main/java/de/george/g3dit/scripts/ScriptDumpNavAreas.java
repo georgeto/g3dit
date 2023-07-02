@@ -1,12 +1,12 @@
 package de.george.g3dit.scripts;
 
-import java.io.File;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.google.common.io.Files;
 import com.teamunify.i18n.I;
 
 import de.george.g3dit.util.FileDialogWrapper;
@@ -31,8 +31,8 @@ public class ScriptDumpNavAreas implements IScript {
 
 	@Override
 	public boolean execute(IScriptEnvironment env) {
-		File saveFile = FileDialogWrapper.saveFile(I.tr("Save NavZones and NavPaths in text form"), "NavAreas.txt",
-				env.getParentWindow(), FileDialogWrapper.TXT_FILTER);
+		Path saveFile = FileDialogWrapper.saveFile(I.tr("Save NavZones and NavPaths in text form"), "NavAreas.txt", env.getParentWindow(),
+				FileDialogWrapper.TXT_FILTER);
 		if (saveFile == null) {
 			return false;
 		}
@@ -51,7 +51,7 @@ public class ScriptDumpNavAreas implements IScript {
 			}
 		}
 
-		try (PrintWriter writer = new PrintWriter(Files.newWriter(saveFile, StandardCharsets.UTF_8))) {
+		try (PrintWriter writer = new PrintWriter(Files.newBufferedWriter(saveFile, StandardCharsets.UTF_8))) {
 			writer.println("NavZone Anzahl: " + navZones.size());
 			for (int i = 0; i < navZones.size(); i++) {
 				writer.println("NavZone " + i);

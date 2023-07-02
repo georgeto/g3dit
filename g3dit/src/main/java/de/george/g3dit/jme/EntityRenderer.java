@@ -1,6 +1,6 @@
 package de.george.g3dit.jme;
 
-import java.io.File;
+import java.nio.file.Path;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -80,11 +80,11 @@ public class EntityRenderer extends BaseEntityViewer {
 	 *
 	 * @param outFile Path to save the rendered image to.
 	 * @param format Image format of the rendered image, {@code png} or {@code jpg}.
-	 * @param sceneComposer Composes the scene to be rendered.
+	 * @param sceneComposers Compose the scene to be rendered.
 	 * @return Whether screenshot creation was successful.
 	 */
 	@SafeVarargs
-	public final synchronized boolean renderScene(File outFile, String format, Consumer<EntityRenderer>... sceneComposers) {
+	public final synchronized boolean renderScene(Path outFile, String format, Consumer<EntityRenderer>... sceneComposers) {
 		assureAppRunning();
 		for (Consumer<EntityRenderer> sceneComposer : sceneComposers) {
 			sceneComposer.accept(this);

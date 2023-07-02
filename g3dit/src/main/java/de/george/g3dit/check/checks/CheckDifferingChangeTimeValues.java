@@ -1,6 +1,6 @@
 package de.george.g3dit.check.checks;
 
-import java.io.File;
+import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Supplier;
@@ -27,7 +27,7 @@ public class CheckDifferingChangeTimeValues extends AbstractEntityCheck {
 	}
 
 	@Override
-	protected EntityPassStatus processEntity(ArchiveFile archiveFile, File dataFile, eCEntity entity, int entityPosition, int pass,
+	protected EntityPassStatus processEntity(ArchiveFile archiveFile, Path dataFile, eCEntity entity, int entityPosition, int pass,
 			Supplier<EntityDescriptor> descriptor, StringProblemConsumer problemConsumer) {
 
 		if (entity.getCreator() != null && changeTimeMap.containsKey(entity.getCreator())) {
@@ -46,7 +46,7 @@ public class CheckDifferingChangeTimeValues extends AbstractEntityCheck {
 	}
 
 	@Override
-	public PassStatus processTemplate(TemplateFile tple, File dataFile, int pass, ProblemConsumer problemConsumer) {
+	public PassStatus processTemplate(TemplateFile tple, Path dataFile, int pass, ProblemConsumer problemConsumer) {
 		changeTimeMap.put(tple.getReferenceHeader().getGuid(), tple.getReferenceHeader().getDataChangedTimeStamp());
 		descriptors.put(tple.getReferenceHeader().getGuid(), new FileDescriptor(dataFile, FileType.Template));
 

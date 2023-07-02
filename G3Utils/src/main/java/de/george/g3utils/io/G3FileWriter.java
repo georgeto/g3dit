@@ -1,13 +1,15 @@
 package de.george.g3utils.io;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.channels.Channels;
+import java.nio.channels.SeekableByteChannel;
 import java.nio.channels.WritableByteChannel;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 import java.util.Collection;
 import java.util.Map;
 import java.util.function.BiConsumer;
@@ -330,10 +332,11 @@ public abstract class G3FileWriter extends G3FileBase {
 		return buffer.position();
 	}
 
-	public void save(File file) throws IOException {
-		try (FileOutputStream out = new FileOutputStream(file)) {
+	public void save(Path path) throws IOException {
+		try (SeekableByteChannel out = Files.newByteChannel(path, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING,
+				StandardOpenOption.WRITE)) {
 			buffer.flip();
-			out.getChannel().write(buffer);
+			out.write(buffer);
 		}
 	}
 

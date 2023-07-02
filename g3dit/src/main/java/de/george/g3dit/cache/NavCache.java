@@ -1,7 +1,7 @@
 package de.george.g3dit.cache;
 
-import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -75,7 +75,7 @@ public class NavCache extends AbstractCache<NavCache> {
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public void load(final File inFile) {
+	public void load(final Path inFile) {
 		LoadObjectWorker worker = new LoadObjectWorker(inFile) {
 			@Override
 			protected void done() {
@@ -94,7 +94,7 @@ public class NavCache extends AbstractCache<NavCache> {
 	}
 
 	@Override
-	public void save(File file) throws IOException {
+	public void save(Path file) throws IOException {
 		saveIntern(file, zones, paths);
 		markChanged(false);
 	}
@@ -111,13 +111,13 @@ public class NavCache extends AbstractCache<NavCache> {
 
 	@Override
 	public void create() throws Exception {
-		List<File> openFiles = new ArrayList<>();
+		List<Path> openFiles = new ArrayList<>();
 		Map<String, NavZone> myZonesP = new HashMap<>();
 		Map<String, NavPath> myPathsP = new HashMap<>();
 		Map<String, NavZone> myZonesS = new HashMap<>();
 		Map<String, NavPath> myPathsS = new HashMap<>();
 		for (EditorArchiveTab tab : ctx.getEditor().<EditorArchiveTab>getTabsInDataFolders(EditorTabType.Archive)) {
-			File file = tab.getDataFile().get();
+			Path file = tab.getDataFile().get();
 			boolean inPrimary = ctx.getFileManager().isInPrimaryDataFolder(file);
 			processFile(tab.getCurrentFile(), inPrimary ? myZonesP : myZonesS, inPrimary ? myPathsP : myPathsS);
 			openFiles.add(file);
@@ -133,7 +133,7 @@ public class NavCache extends AbstractCache<NavCache> {
 			myZonesS.putAll(myZonesP);
 			myPathsS.putAll(myPathsP);
 
-			// Edge case: File from secondary data folder opened in editor, would otherwise
+			// Edge case: Path from secondary data folder opened in editor, would otherwise
 			// "override" the corresponding unopened file in the prirmary data folder
 			myZonesS.forEach(zones::putIfAbsent);
 			myPathsS.forEach(paths::putIfAbsent);
@@ -159,14 +159,14 @@ public class NavCache extends AbstractCache<NavCache> {
 	}
 
 	private class CreateNavCacheWorker extends AbstractDialogFileWorker<Pair<Map<String, NavZone>, Map<String, NavPath>>> {
-		public CreateNavCacheWorker(Callable<List<File>> fileProvider, List<File> openFiles) {
+		public CreateNavCacheWorker(Callable<List<Path>> fileProvider, List<Path> openFiles) {
 			super(fileProvider, openFiles, I.tr("Create NavCache"), ctx.getParentWindow());
 			statusFormat = I.tr("{0, number} NavZones and NavPaths found");
 		}
 
 		@Override
 		protected Pair<Map<String, NavZone>, Map<String, NavPath>> doInBackground() throws Exception {
-			List<File> files = getFiles();
+			List<Path> files = getFiles();
 
 			Map<String, NavZone> myZones = new ConcurrentHashMap<>();
 			Map<String, NavPath> myPaths = new ConcurrentHashMap<>();

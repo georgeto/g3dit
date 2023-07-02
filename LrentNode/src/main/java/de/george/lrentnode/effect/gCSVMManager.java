@@ -1,8 +1,8 @@
 package de.george.lrentnode.effect;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
 
@@ -74,7 +74,7 @@ public class gCSVMManager extends GenomeFile {
 	public Map<String, SVoice> voiceList;
 	public Map<String, SBlock> blockList;
 
-	public gCSVMManager(File file) throws IOException {
+	public gCSVMManager(Path file) throws IOException {
 		try (G3FileReaderEx reader = new G3FileReaderEx(file)) {
 			read(reader);
 		}

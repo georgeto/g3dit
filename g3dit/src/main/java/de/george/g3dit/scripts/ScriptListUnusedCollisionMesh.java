@@ -1,6 +1,6 @@
 package de.george.g3dit.scripts;
 
-import java.io.File;
+import java.nio.file.Path;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -13,6 +13,7 @@ import com.google.common.base.Predicates;
 import com.teamunify.i18n.I;
 
 import de.george.g3dit.util.FileManager;
+import de.george.g3utils.util.FilesEx;
 import de.george.lrentnode.archive.ArchiveFile;
 import de.george.lrentnode.archive.eCEntity;
 import de.george.lrentnode.classes.eCCollisionShape;
@@ -39,7 +40,7 @@ public class ScriptListUnusedCollisionMesh implements IScript {
 
 	@Override
 	public boolean execute(IScriptEnvironment env) {
-		Map<String, File> meshes = listCollisionMeshes(env, FileManager.RP_COMPILED_PHYSIC);
+		Map<String, Path> meshes = listCollisionMeshes(env, FileManager.RP_COMPILED_PHYSIC);
 		meshes.putAll(listCollisionMeshes(env, FileManager.RP_COMPILED_MESH));
 
 		Set<String> unseenMeshes = new HashSet<>(meshes.keySet());
@@ -59,7 +60,7 @@ public class ScriptListUnusedCollisionMesh implements IScript {
 			}
 
 			for (eCCollisionShape shape : collision.getShapes()) {
-				if (!(shape.getShape()instanceof FileShape fileShape)) {
+				if (!(shape.getShape() instanceof FileShape fileShape)) {
 					continue;
 				}
 
@@ -84,19 +85,19 @@ public class ScriptListUnusedCollisionMesh implements IScript {
 		}
 
 		env.log("=== " + I.tr("Unused collision meshes") + " ===");
-		StreamEx.of(unseenMeshes).map(meshes::get).map(File::getName).sorted().forEach(env::log);
+		StreamEx.of(unseenMeshes).map(meshes::get).map(FilesEx::getFileName).sorted().forEach(env::log);
 
 		env.log("\n\n=== " + I.tr("Missing collision meshes") + " ===");
 		missingMeshes.forEach(env::log);
 
 		env.log("\n\n=== " + I.tr("Used collision meshes") + " ===");
-		StreamEx.ofValues(meshes, Predicates.not(unseenMeshes::contains)).map(File::getName).sorted().forEach(env::log);
+		StreamEx.ofValues(meshes, Predicates.not(unseenMeshes::contains)).map(FilesEx::getFileName).sorted().forEach(env::log);
 
 		return true;
 	}
 
-	public Map<String, File> listCollisionMeshes(IScriptEnvironment env, String relativePath) {
+	public Map<String, Path> listCollisionMeshes(IScriptEnvironment env, String relativePath) {
 		return env.getFileManager().listFiles(relativePath, (file) -> file.getName().endsWith(".xnvmsh")).stream()
-				.collect(Collectors.toMap(f -> f.getName().toLowerCase(), Function.identity()));
+				.collect(Collectors.toMap(FilesEx::getFileNameLowerCase, Function.identity()));
 	}
 }

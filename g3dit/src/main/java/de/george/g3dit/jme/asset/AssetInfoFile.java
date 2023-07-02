@@ -1,9 +1,9 @@
 package de.george.g3dit.jme.asset;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 import com.jme3.asset.AssetInfo;
 import com.jme3.asset.AssetKey;
@@ -11,9 +11,9 @@ import com.jme3.asset.AssetLoadException;
 import com.jme3.asset.AssetManager;
 
 class AssetInfoFile extends AssetInfo {
-	private File file;
+	private Path file;
 
-	public AssetInfoFile(AssetManager manager, AssetKey<?> key, File file) {
+	public AssetInfoFile(AssetManager manager, AssetKey<?> key, Path file) {
 		super(manager, key);
 		this.file = file;
 	}
@@ -21,8 +21,8 @@ class AssetInfoFile extends AssetInfo {
 	@Override
 	public InputStream openStream() {
 		try {
-			return new FileInputStream(file);
-		} catch (FileNotFoundException ex) {
+			return Files.newInputStream(file);
+		} catch (IOException ex) {
 			// NOTE: Can still happen even if file.exists() is true, e.g.
 			// permissions issue and similar
 			throw new AssetLoadException("Failed to open file: " + file, ex);

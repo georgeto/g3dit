@@ -1,7 +1,7 @@
 package de.george.g3dit.config;
 
-import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
@@ -22,14 +22,14 @@ public abstract class JsonSetConfigFile<T> extends ReloadableConfigFile<Immutabl
 	}
 
 	@Override
-	protected ImmutableSet<T> read(File configFile) throws IOException {
-		return ImmutableSet.copyOf(JsonUtil.fieldAutodetectMapper().<List<T>>readValue(configFile,
+	protected ImmutableSet<T> read(Path configFile) throws IOException {
+		return ImmutableSet.copyOf(JsonUtil.fieldAutodetectMapper().<List<T>>readValue(configFile.toFile(),
 				TypeFactory.defaultInstance().constructCollectionLikeType(ArrayList.class, type())));
 	}
 
 	@Override
-	protected void write(ImmutableSet<T> content, File configFile) throws IOException {
-		JsonUtil.fieldAutodetectMapper().writeValue(configFile, content);
+	protected void write(ImmutableSet<T> content, Path configFile) throws IOException {
+		JsonUtil.fieldAutodetectMapper().writeValue(configFile.toFile(), content);
 	}
 
 	@Override

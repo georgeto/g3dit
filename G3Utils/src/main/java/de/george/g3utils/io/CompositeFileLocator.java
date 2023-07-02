@@ -1,7 +1,7 @@
 package de.george.g3utils.io;
 
-import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.LinkedList;
@@ -35,9 +35,9 @@ public class CompositeFileLocator implements FileLocator {
 	}
 
 	@Override
-	public Optional<File> locate(String name) {
+	public Optional<Path> locate(String name) {
 		for (FileLocator locator : locators) {
-			Optional<File> file = locator.locate(name);
+			Optional<Path> file = locator.locate(name);
 			if (file.isPresent()) {
 				return file;
 			}

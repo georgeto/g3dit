@@ -1,6 +1,6 @@
 package de.george.g3dit.jme;
 
-import java.io.File;
+import java.nio.file.Path;
 
 import com.jme3.system.JmeContext;
 
@@ -42,7 +42,7 @@ public class EntityViewer extends BaseEntityViewer {
 		}
 	}
 
-	public void makeScreenshot(File outFile) {
+	public void makeScreenshot(Path outFile) {
 		appTask(() -> app.makeScreenshot(outFile));
 	}
 }

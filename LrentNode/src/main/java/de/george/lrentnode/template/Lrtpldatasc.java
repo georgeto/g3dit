@@ -1,8 +1,8 @@
 package de.george.lrentnode.template;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.nio.file.Path;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,11 +18,11 @@ public class Lrtpldatasc implements Saveable {
 
 	public Lrtpldatasc() {}
 
-	public Lrtpldatasc(File file) throws IOException, DuplicateEntryException {
+	public Lrtpldatasc(Path file) throws IOException, DuplicateEntryException {
 		read(file);
 	}
 
-	private void read(File file) throws IOException, DuplicateEntryException {
+	private void read(Path file) throws IOException, DuplicateEntryException {
 		List<String> secTemplateList = IOUtils.readTextFile(file, Converter.WINDOWS_1252);
 		secTemplateList.stream().map(e -> e.split("=")).filter(e -> e.length == 2)
 				.forEach(e -> add(new Guid(e[0].replaceFirst("\\{", "").replaceFirst("\\}", "")), e[1]));
@@ -35,7 +35,7 @@ public class Lrtpldatasc implements Saveable {
 	}
 
 	@Override
-	public void save(File file) throws IOException {
+	public void save(Path file) throws IOException {
 		IOUtils.writeTextFile(prepareSave(), file, Converter.WINDOWS_1252);
 	}
 

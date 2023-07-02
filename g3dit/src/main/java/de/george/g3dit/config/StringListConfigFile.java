@@ -1,8 +1,8 @@
 package de.george.g3dit.config;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Path;
 
 import com.google.common.collect.ImmutableList;
 
@@ -16,12 +16,12 @@ public class StringListConfigFile extends ReloadableConfigFile<ImmutableList<Str
 	}
 
 	@Override
-	protected ImmutableList<String> read(File configFile) throws IOException {
+	protected ImmutableList<String> read(Path configFile) throws IOException {
 		return ImmutableList.copyOf(IOUtils.readTextFile(configFile, StandardCharsets.UTF_8));
 	}
 
 	@Override
-	protected void write(ImmutableList<String> content, File configFile) throws IOException {
+	protected void write(ImmutableList<String> content, Path configFile) throws IOException {
 		IOUtils.writeTextFile(content, configFile, StandardCharsets.UTF_8);
 	}
 

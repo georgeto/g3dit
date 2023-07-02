@@ -1,6 +1,6 @@
 package de.george.g3dit.check.checks;
 
-import java.io.File;
+import java.nio.file.Path;
 import java.util.function.Supplier;
 
 import com.google.common.collect.Lists;
@@ -90,7 +90,7 @@ public class CheckFindMisplacedEntities extends AbstractEntityCheck {
 	}
 
 	@Override
-	protected EntityPassStatus processEntity(ArchiveFile archiveFile, File dataFile, eCEntity entity, int entityPosition, int pass,
+	protected EntityPassStatus processEntity(ArchiveFile archiveFile, Path dataFile, eCEntity entity, int entityPosition, int pass,
 			Supplier<EntityDescriptor> descriptor, StringProblemConsumer problemConsumer) {
 		if (!entity.getName().equals("RootEntity") && entity.getWorldNodeBoundary().isValid()
 				&& entity.getWorldNodeBoundary().getExtent().length() < 100000

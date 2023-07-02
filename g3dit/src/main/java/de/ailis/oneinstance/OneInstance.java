@@ -4,16 +4,17 @@
 
 package de.ailis.oneinstance;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.io.PrintWriter;
-import java.io.RandomAccessFile;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.nio.channels.FileChannel;
 import java.nio.channels.FileLock;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.Random;
 import java.util.function.Consumer;
 import java.util.prefs.BackingStoreException;
@@ -102,8 +103,8 @@ public final class OneInstance {
 	 * @param className The name of the main class.
 	 * @return The lock file.
 	 */
-	private File getLockFile(final String className) {
-		return new File(System.getProperty("java.io.tmpdir"), "oneinstance-" + className + ".lock");
+	private Path getLockFile(final String className) {
+		return Paths.get(System.getProperty("java.io.tmpdir"), "oneinstance-" + className + ".lock");
 	}
 
 	/**
@@ -112,10 +113,10 @@ public final class OneInstance {
 	 * @param lockFile The lock file.
 	 * @return The lock or null if no locking could be performed.
 	 */
-	private FileLock lock(final File lockFile) {
+	private FileLock lock(final Path lockFile) {
 		try {
 			@SuppressWarnings("resource")
-			FileChannel channel = new RandomAccessFile(lockFile, "rw").getChannel();
+			FileChannel channel = FileChannel.open(lockFile, StandardOpenOption.CREATE, StandardOpenOption.READ, StandardOpenOption.WRITE);
 			return channel.lock();
 		} catch (IOException e) {
 			LOG.warn("Unable to lock the lock file.", e);
@@ -163,7 +164,7 @@ public final class OneInstance {
 
 		try {
 			// Acquire a lock
-			File lockFile = getLockFile(appId);
+			Path lockFile = getLockFile(appId);
 			FileLock lock = lock(lockFile);
 
 			try {
@@ -192,7 +193,7 @@ public final class OneInstance {
 				runServer(mainClass);
 
 				// Mark the lock file to be deleted when this instance exits.
-				lockFile.deleteOnExit();
+				lockFile.toFile().deleteOnExit();
 
 				// Allow this first instance to run.
 				return true;
@@ -334,7 +335,7 @@ public final class OneInstance {
 	private boolean runClient(Socket socket, String[] args, PrintStream outputStream, Consumer<Integer> exitCode) throws IOException {
 		// Send serialized command-line argument list to the server.
 		OneInstanceProtocol io = new OneInstanceProtocol(socket);
-		io.write(Client.WORKING_DIR, new File(".").getCanonicalFile().getAbsolutePath());
+		io.write(Client.WORKING_DIR, Paths.get(".").toRealPath().toString());
 		io.write(Client.ARGS, args);
 
 		// Read response from server
@@ -399,7 +400,7 @@ public final class OneInstance {
 	 * @param args The command line arguments of the new instance.
 	 * @return True if the new instance is allowed to start, false if it must exit.
 	 */
-	InstanceAction fireNewInstance(final File workingDir, final String[] args, PrintWriter writer, Consumer<Integer> exitCode) {
+	InstanceAction fireNewInstance(final Path workingDir, final String[] args, PrintWriter writer, Consumer<Integer> exitCode) {
 		if (listener == null) {
 			return InstanceAction.Exit;
 		}

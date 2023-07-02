@@ -1,9 +1,9 @@
 package de.george.g3dit.settings;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -30,12 +30,12 @@ public class JsonFileOptionStore extends AbstractConcurrentOptionStore {
 			.registerModule(new ParameterNamesModule())
 			.enable(SerializationFeature.INDENT_OUTPUT, SerializationFeature.ORDER_MAP_ENTRIES_BY_KEYS)
 			.setDefaultTyping(new NonPrimitiveTypeResolverBuilder());
-	private File file;
+	private Path file;
 
-	public JsonFileOptionStore(File file) {
+	public JsonFileOptionStore(Path file) {
 		this.file = file;
-		if (file.exists())
-			try (JsonParser parser = mapper.createParser(file)) {
+		if (Files.exists(file))
+			try (JsonParser parser = mapper.createParser(file.toFile())) {
 				ObjectNode rootNode = parser.readValueAsTree();
 				for (var option : StreamEx.of(rootNode.fields())) {
 					try {
@@ -59,7 +59,7 @@ public class JsonFileOptionStore extends AbstractConcurrentOptionStore {
 			}
 	}
 
-	public JsonFileOptionStore(File file, Map<String, Object> options) {
+	public JsonFileOptionStore(Path file, Map<String, Object> options) {
 		this.file = file;
 		this.options.putAll(options);
 	}
@@ -80,7 +80,7 @@ public class JsonFileOptionStore extends AbstractConcurrentOptionStore {
 				gen.flush();
 
 				// Serialization was successful, now write the config file to disk.
-				Files.write(file.toPath(), buffer.toByteArray());
+				Files.write(file, buffer.toByteArray());
 				return true;
 			} catch (IOException e) {
 				logger.warn("Error while saving configuration file.", e);

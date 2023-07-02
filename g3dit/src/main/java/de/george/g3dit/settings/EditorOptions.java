@@ -37,8 +37,8 @@ public abstract class EditorOptions {
 				"EditorOptions.Path.SECONDARY_DATA_FOLDER", I.tr("Secondary data directory"));
 
 		public static final Option<Boolean> HIDE_PROJECTS_COMPILED = new LambdaOption<>(false,
-				(parent) -> new BooleanOptionHandler(parent, I.tr("Hide Projects_compiled")),
-				"EditorOptions.Path.HIDE_PROJECTS_COMPILED", I.tr("Hide Projects_compiled"));
+				(parent) -> new BooleanOptionHandler(parent, I.tr("Hide Projects_compiled")), "EditorOptions.Path.HIDE_PROJECTS_COMPILED",
+				I.tr("Hide Projects_compiled"));
 
 		public static final Option<String> FILE_MANAGER = new LambdaOption<>("",
 				(parent) -> new FilePathOptionHandler(parent, I.tr("File manager"),
@@ -85,8 +85,7 @@ public abstract class EditorOptions {
 
 	public static abstract class Misc {
 		public static final Option<Boolean> MAKE_BACKUP = new LambdaOption<>(false,
-				(parent) -> new BooleanOptionHandler(parent, I.tr("Make backup")), "EditorOptions.Misc.MAKE_BACKUP",
-				I.tr("Make backup"));
+				(parent) -> new BooleanOptionHandler(parent, I.tr("Make backup")), "EditorOptions.Misc.MAKE_BACKUP", I.tr("Make backup"));
 
 		public static final Option<Boolean> CLEAN_STRINGTABLE = new LambdaOption<>(false,
 				(parent) -> new BooleanOptionHandler(parent, I.tr("Removed unused entries from the stringtable")),
@@ -125,9 +124,8 @@ public abstract class EditorOptions {
 				(parent) -> new FloatSliderOptionHandler(parent, I.tr("Intensity of directional lighting"), 0, 200, 100, true),
 				"EditorOptions.D3View.DIRECTIONAL_LIGHT_INTENSITY", I.tr("Intensity of directional lighting"));
 
-		public static final Option<Float> DIRECTIONAL_LIGHT_AZIMUTH = new LambdaOption<>(
-				70.0f, (parent) -> new FloatSliderOptionHandler(parent, I.tr("Horizontal rotation of directional lighting"), 0, 360,
-						1, true),
+		public static final Option<Float> DIRECTIONAL_LIGHT_AZIMUTH = new LambdaOption<>(70.0f,
+				(parent) -> new FloatSliderOptionHandler(parent, I.tr("Horizontal rotation of directional lighting"), 0, 360, 1, true),
 				"EditorOptions.D3View.DIRECTIONAL_LIGHT_AZIMUTH", I.tr("Horizontal rotation of directional lighting"));
 
 		public static final Option<Float> DIRECTIONAL_LIGHT_INCLINATION = new LambdaOption<>(35.0f,

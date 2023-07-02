@@ -1,7 +1,8 @@
 package de.george.g3dit.util;
 
-import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -24,6 +25,7 @@ import de.george.g3utils.structure.bCBox;
 import de.george.g3utils.structure.bCMatrix;
 import de.george.g3utils.structure.bCQuaternion;
 import de.george.g3utils.util.Converter;
+import de.george.g3utils.util.FilesEx;
 import de.george.g3utils.util.IOUtils;
 import de.george.lrentnode.archive.ArchiveFile;
 import de.george.lrentnode.archive.SecDat;
@@ -83,8 +85,8 @@ public class LowPolyGenerator {
 		}
 	}
 
-	private static boolean isLowPolyFile(File file) {
-		return isLowPolyFile(file.getName());
+	private static boolean isLowPolyFile(Path file) {
+		return isLowPolyFile(FilesEx.getFileName(file));
 	}
 
 	private static boolean isLowPolyFile(String fileName) {
@@ -151,10 +153,10 @@ public class LowPolyGenerator {
 		log(I.trf("Create low poly node {0} with {1, number} entities.", nodeName, entities.size()));
 		contributingSectors.forEach(f -> log("  - %s", f));
 
-		File sectorDir = new File(ctx.getFileManager().getPrimaryPath(FileManager.RP_PROJECTS_COMPILED), "World\\_Level\\" + nodeName);
-		sectorDir.mkdirs();
-
+		Path sectorDir = ctx.getFileManager().getPrimaryPath(FileManager.RP_PROJECTS_COMPILED).resolve("World\\_Level\\" + nodeName);
 		try {
+			Files.createDirectories(sectorDir);
+
 			// node
 			ArchiveFile lowpolyNode = FileUtil.createEmptyNode();
 			lowpolyNode.getGraph().setGuid(GuidUtil.deriveGUID(nodeName));
@@ -162,12 +164,12 @@ public class LowPolyGenerator {
 			entities.forEach(lowpolyNode.getGraph()::attachChild);
 			lowpolyNode.getGraph().updateParentDependencies();
 			String lowpolyNodeName = nodeName + (globalNode ? "_Spat" : "");
-			File lowpolyNodeFile = new File(sectorDir, lowpolyNodeName + ".node");
+			Path lowpolyNodeFile = sectorDir.resolve(lowpolyNodeName + ".node");
 			lowpolyNode.save(lowpolyNodeFile);
 
 			// lrgeodat
-			File lowpolyLrgeodatFile = new File(sectorDir, lowpolyNodeName + ".lrgeodat");
-			Optional<File> existingLowpolyLrgeodatFile = ctx.getFileManager().searchFile(lowpolyLrgeodatFile);
+			Path lowpolyLrgeodatFile = sectorDir.resolve(lowpolyNodeName + ".lrgeodat");
+			Optional<Path> existingLowpolyLrgeodatFile = ctx.getFileManager().searchFile(lowpolyLrgeodatFile);
 			eCGeometrySpatialContext lrgeodat = existingLowpolyLrgeodatFile.isPresent()
 					? FileUtil.openLrgeodat(existingLowpolyLrgeodatFile.get())
 					: FileUtil.createLrgeodat();
@@ -185,7 +187,7 @@ public class LowPolyGenerator {
 
 	private boolean process() {
 		Map<String, String> lowPolySectorMapping;
-		Map<String, File> worldFiles;
+		Map<String, Path> worldFiles;
 		try {
 			// Map specified sectors to separate low poly node files
 			lowPolySectorMapping = ConfigFiles.lowPolySectors(ctx).getContent().stream()
@@ -200,10 +202,10 @@ public class LowPolyGenerator {
 					.map(lowpoly -> {
 						try {
 							eCResourceMeshComplex_PS lowpolyMesh = FileUtil.openMesh(lowpoly);
-							return new LowpolyMesh(lowpoly.getName(), lowpolyMesh.getBoundingBox());
+							return new LowpolyMesh(FilesEx.getFileName(lowpoly), lowpolyMesh.getBoundingBox());
 						} catch (IOException e) {
 							log("");
-							log(I.trf("Failed to open low poly mesh {0}.", lowpoly.getName()));
+							log(I.trf("Failed to open low poly mesh {0}.", lowpoly.getFileName()));
 							return null;
 						}
 					}).filter(Objects::nonNull).collect(ImmutableMap.toImmutableMap(m -> m.name.toLowerCase(), Function.identity()));
@@ -211,15 +213,15 @@ public class LowPolyGenerator {
 
 			// Search all non low poly lrendat and node files
 			worldFiles = ctx.getFileManager().listWorldFiles().stream().filter(f -> !isLowPolyFile(f))
-					.collect(ImmutableMap.toImmutableMap(f -> f.getName().toLowerCase(), Function.identity()));
+					.collect(ImmutableMap.toImmutableMap(FilesEx::getFileNameLowerCase, Function.identity()));
 		} catch (IllegalArgumentException e) {
 			log(e.getMessage());
 			return false;
 		}
 
 		// Load speedtree low poly file
-		File lowPolyMcpFile = new File(ctx.getFileManager().getPrimaryPath(FileManager.RP_PROJECTS_COMPILED),
-				"World\\_Level\\G3_World_Lowpoly_01_Levelmesh_01\\G3_World_Lowpoly_01_Levelmesh_01.lrentdat");
+		Path lowPolyMcpFile = ctx.getFileManager().getPrimaryPath(FileManager.RP_PROJECTS_COMPILED)
+				.resolve("World\\_Level\\G3_World_Lowpoly_01_Levelmesh_01\\G3_World_Lowpoly_01_Levelmesh_01.lrentdat");
 		ArchiveFile lowPolyMcpArchive;
 		try {
 			lowPolyMcpArchive = FileUtil.openArchive(ctx.getFileManager().searchFile(lowPolyMcpFile).get(), false);
@@ -235,7 +237,7 @@ public class LowPolyGenerator {
 
 		List<eCEntity> globalLowPolyNodeEntities = new ArrayList<>();
 		List<String> globalLowPolyNodeSectors = new ArrayList<>();
-		for (File secdatFile : ctx.getFileManager().listFiles(FileManager.RP_PROJECTS_COMPILED, IOUtils.secdatFileFilter)) {
+		for (Path secdatFile : ctx.getFileManager().listFiles(FileManager.RP_PROJECTS_COMPILED, IOUtils.secdatFileFilter)) {
 			if (isLowPolyFile(secdatFile)) {
 				continue;
 			}
@@ -251,10 +253,10 @@ public class LowPolyGenerator {
 						continue;
 					}
 
-					File worldFile = worldFiles.get(worldFileName.toLowerCase());
+					Path worldFile = worldFiles.get(worldFileName.toLowerCase());
 					if (worldFile == null) {
 						log("");
-						log(I.trf("File {0} referenced by sector {1} does not exist.", worldFileName, secdatFile.getName()));
+						log(I.trf("File {0} referenced by sector {1} does not exist.", worldFileName, secdatFile.getFileName()));
 						continue;
 					}
 
@@ -266,12 +268,12 @@ public class LowPolyGenerator {
 						checkEntitiesForSpeedTree(archiveFile.getEntities().stream(), lowPolyMcpVeg);
 					} catch (Exception e) {
 						log("");
-						log(I.trf("Failed to open archive {0}: {1}", worldFile.getName(), e.getMessage()));
+						log(I.trf("Failed to open archive {0}: {1}", worldFile.getFileName(), e.getMessage()));
 					}
 				}
 
 				if (!lowPolyEntities.isEmpty()) {
-					String sectorName = IOUtils.stripExtension(secdatFile.getName());
+					String sectorName = FilesEx.stripExtension(FilesEx.getFileName(secdatFile));
 					if (lowPolySectorMapping.containsKey(sectorName.toLowerCase())) {
 						// Assign entities and sector to correspondig low poly node
 						String lowpolyNodeName = lowPolySectorMapping.get(sectorName.toLowerCase());
@@ -290,7 +292,7 @@ public class LowPolyGenerator {
 				}
 			} catch (IOException e) {
 				log("");
-				log(I.trf("Failed to open/save secdat {0}.", secdatFile.getName()));
+				log(I.trf("Failed to open/save secdat {0}.", secdatFile.getFileName()));
 			}
 		}
 

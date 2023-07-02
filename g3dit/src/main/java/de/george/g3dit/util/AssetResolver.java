@@ -28,7 +28,7 @@ import de.george.g3dit.jme.asset.MeshUtil.IllegalMeshException;
 import de.george.g3utils.io.AbsoluteFileLocator;
 import de.george.g3utils.io.CompositeFileLocator;
 import de.george.g3utils.io.FileLocator;
-import de.george.g3utils.util.IOUtils;
+import de.george.g3utils.util.FilesEx;
 import de.george.g3utils.util.IndentPrintWriter;
 import de.george.g3utils.util.Pair;
 import de.george.g3utils.util.ReflectionUtils;
@@ -199,7 +199,7 @@ public class AssetResolver {
 
 	private TextureAsset parseColorSampler(eCColorSrcSampler data) {
 		String strippedTextureName = data.property(CD.eCColorSrcSampler.ImageFilePath).getString();
-		strippedTextureName = IOUtils.stripExtension(strippedTextureName);
+		strippedTextureName = FilesEx.stripExtension(strippedTextureName);
 
 		// strip paths
 		strippedTextureName = strippedTextureName.replaceAll(".*/", "");
@@ -227,8 +227,7 @@ public class AssetResolver {
 			} while (true);
 
 			if (textureCount == 0) {
-				return new TextureAsset(switched, textureName, switchRepeat, textureName, false,
-						I.tr("No texture with this name found."));
+				return new TextureAsset(switched, textureName, switchRepeat, textureName, false, I.tr("No texture with this name found."));
 			}
 
 			int textureIndex = 0;
@@ -260,8 +259,7 @@ public class AssetResolver {
 		}
 
 		if (!textureLocator.locate(textureName).isPresent()) {
-			return new TextureAsset(switched, textureName, switchRepeat, textureName, false,
-					I.tr("No texture with this name found."));
+			return new TextureAsset(switched, textureName, switchRepeat, textureName, false, I.tr("No texture with this name found."));
 		}
 
 		return new TextureAsset(switched, textureName, switchRepeat, textureName, true, null);

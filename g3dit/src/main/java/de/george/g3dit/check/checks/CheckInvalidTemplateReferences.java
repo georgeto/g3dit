@@ -1,6 +1,6 @@
 package de.george.g3dit.check.checks;
 
-import java.io.File;
+import java.nio.file.Path;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Supplier;
@@ -25,7 +25,7 @@ public class CheckInvalidTemplateReferences extends AbstractEntityCheck {
 	}
 
 	@Override
-	protected EntityPassStatus processEntity(ArchiveFile archiveFile, File dataFile, eCEntity entity, int entityPosition, int pass,
+	protected EntityPassStatus processEntity(ArchiveFile archiveFile, Path dataFile, eCEntity entity, int entityPosition, int pass,
 			Supplier<EntityDescriptor> descriptor, StringProblemConsumer problemConsumer) {
 
 		if (entity.getCreator() != null && !refGuids.contains(entity.getCreator())) {
@@ -39,7 +39,7 @@ public class CheckInvalidTemplateReferences extends AbstractEntityCheck {
 	}
 
 	@Override
-	public PassStatus processTemplateEntity(TemplateFile tple, File dataFile, eCEntity entity, int pass, FileDescriptor descriptor,
+	public PassStatus processTemplateEntity(TemplateFile tple, Path dataFile, eCEntity entity, int pass, FileDescriptor descriptor,
 			StringProblemConsumer problemConsumer) {
 		if (pass == 0) {
 			refGuids.add(tple.getReferenceHeader().getGuid());

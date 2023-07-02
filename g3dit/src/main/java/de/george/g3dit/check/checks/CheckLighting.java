@@ -1,6 +1,6 @@
 package de.george.g3dit.check.checks;
 
-import java.io.File;
+import java.nio.file.Path;
 import java.util.function.Supplier;
 
 import com.teamunify.i18n.I;
@@ -17,13 +17,12 @@ public class CheckLighting extends AbstractEntityCheck {
 	private final EditorContext ctx;
 
 	public CheckLighting(EditorContext ctx) {
-		super(I.tr("Find lighting problems"),
-				I.tr("Finds entities and templates with problematic lighting settings."), 0, 1);
+		super(I.tr("Find lighting problems"), I.tr("Finds entities and templates with problematic lighting settings."), 0, 1);
 		this.ctx = ctx;
 	}
 
 	@Override
-	protected EntityPassStatus processEntity(ArchiveFile archiveFile, File dataFile, eCEntity entity, int entityPosition, int pass,
+	protected EntityPassStatus processEntity(ArchiveFile archiveFile, Path dataFile, eCEntity entity, int entityPosition, int pass,
 			Supplier<EntityDescriptor> descriptor, StringProblemConsumer problemConsumer) {
 		if (entity.hasClass(CD.eCIlluminated_PS.class)) {
 			boolean staticIlluminated = entity.getProperty(CD.eCIlluminated_PS.StaticIlluminated)

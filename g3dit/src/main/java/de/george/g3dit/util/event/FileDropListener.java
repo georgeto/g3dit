@@ -7,8 +7,8 @@ import java.awt.dnd.DropTargetDragEvent;
 import java.awt.dnd.DropTargetDropEvent;
 import java.awt.dnd.DropTargetEvent;
 import java.awt.dnd.DropTargetListener;
-import java.io.File;
 import java.io.FileFilter;
+import java.nio.file.Path;
 import java.util.List;
 
 import com.google.common.eventbus.EventBus;
@@ -39,10 +39,10 @@ public class FileDropListener extends EventBusProvider implements DropTargetList
 			for (DataFlavor flavor : tr.getTransferDataFlavors()) {
 				if (flavor.isFlavorJavaFileListType()) {
 					@SuppressWarnings("unchecked")
-					List<File> files = (List<File>) tr.getTransferData(flavor);
-					for (File file : files) {
+					List<Path> files = (List<Path>) tr.getTransferData(flavor);
+					for (Path file : files) {
 						for (FileFilter filter : filters) {
-							if (filter.accept(file)) {
+							if (filter.accept(file.toFile())) {
 								dtde.acceptDrag(DnDConstants.ACTION_COPY_OR_MOVE);
 								return;
 							}
@@ -68,10 +68,10 @@ public class FileDropListener extends EventBusProvider implements DropTargetList
 			dtde.acceptDrop(DnDConstants.ACTION_COPY_OR_MOVE);
 			for (DataFlavor flavor : tr.getTransferDataFlavors()) {
 				if (flavor.isFlavorJavaFileListType()) {
-					List<File> files = (List<File>) tr.getTransferData(flavor);
-					for (File file : files) {
+					List<Path> files = (List<Path>) tr.getTransferData(flavor);
+					for (Path file : files) {
 						for (FileFilter filter : filters) {
-							if (filter.accept(file)) {
+							if (filter.accept(file.toFile())) {
 								eventBus().post(new FileDropEvent(file));
 								break;
 							}
@@ -98,13 +98,13 @@ public class FileDropListener extends EventBusProvider implements DropTargetList
 	}
 
 	public static class FileDropEvent {
-		private File file;
+		private Path file;
 
-		public FileDropEvent(File file) {
+		public FileDropEvent(Path file) {
 			this.file = file;
 		}
 
-		public File getFile() {
+		public Path getFile() {
 			return file;
 		}
 	}

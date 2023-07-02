@@ -1,15 +1,17 @@
 package de.george.g3dit.util;
 
 import java.awt.Component;
-import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import com.google.common.collect.ImmutableList;
-import com.google.common.io.Files;
 import com.teamunify.i18n.I;
 
+import de.george.g3utils.util.FilesEx;
 import de.george.g3utils.util.Misc;
 import net.tomahawk.ExtensionsFilter;
 import net.tomahawk.XFileDialog;
@@ -41,13 +43,13 @@ public class FileDialogWrapper {
 		FileDialogWrapper.places = ImmutableList.copyOf(places);
 	}
 
-	public static File openFile(String title, Component parent, ExtensionsFilter... filters) {
+	public static Path openFile(String title, Component parent, ExtensionsFilter... filters) {
 		XFileDialog fileDialog = createFileDialog(parent, title, filters);
 		String path = fileDialog.getFile();
 		return parseFile(fileDialog.getDirectory(), path, true);
 	}
 
-	public static List<File> openFiles(String title, Component parent, ExtensionsFilter... filters) {
+	public static List<Path> openFiles(String title, Component parent, ExtensionsFilter... filters) {
 		XFileDialog fileDialog = createFileDialog(parent, title, filters);
 		String[] paths = fileDialog.getFiles();
 
@@ -55,9 +57,9 @@ public class FileDialogWrapper {
 			return Collections.emptyList();
 		}
 
-		List<File> files = new ArrayList<>();
+		List<Path> files = new ArrayList<>();
 		for (String path : paths) {
-			File file = parseFile(fileDialog.getDirectory(), path, true);
+			Path file = parseFile(fileDialog.getDirectory(), path, true);
 			if (file != null) {
 				files.add(file);
 			}
@@ -65,22 +67,22 @@ public class FileDialogWrapper {
 		return files;
 	}
 
-	public static File chooseDirectory(String title, Component parent) {
+	public static Path chooseDirectory(String title, Component parent) {
 		XFileDialog fileDialog = new XFileDialog(parent);
 		fileDialog.setTitle(title);
 		places.forEach(fileDialog::addPlace);
 		return parseFile(fileDialog.getFolder(), "", true);
 	}
 
-	public static File saveFile(String title, Component parent, ExtensionsFilter... filters) {
+	public static Path saveFile(String title, Component parent, ExtensionsFilter... filters) {
 		return saveFile(title, null, null, parent, filters);
 	}
 
-	public static File saveFile(String title, String defaultFilename, Component parent, ExtensionsFilter... filters) {
-		return saveFile(title, defaultFilename, Files.getFileExtension(defaultFilename), parent, filters);
+	public static Path saveFile(String title, String defaultFilename, Component parent, ExtensionsFilter... filters) {
+		return saveFile(title, defaultFilename, FilesEx.getFileExtension(defaultFilename), parent, filters);
 	}
 
-	public static File saveFile(String title, String defaultFilename, String defaultExtension, Component parent,
+	public static Path saveFile(String title, String defaultFilename, String defaultExtension, Component parent,
 			ExtensionsFilter... filters) {
 		XFileDialog fileDialog = createFileDialog(parent, title, filters);
 		if (defaultFilename != null) {
@@ -111,12 +113,12 @@ public class FileDialogWrapper {
 	 * @param exist Muss die Datei existieren (true) oder ist es egal (false)
 	 * @return Datei oder <code>null</code> wenn keine Datei ermittelt werden konnte
 	 */
-	private static File parseFile(String path, String filename, boolean exist) {
+	private static Path parseFile(String path, String filename, boolean exist) {
 		if (path == null || filename == null) {
 			return null;
 		}
-		File file = new File(path, filename);
-		if (exist && !file.exists()) {
+		Path file = Paths.get(path, filename);
+		if (exist && !Files.exists(file)) {
 			return null;
 		}
 		return file;

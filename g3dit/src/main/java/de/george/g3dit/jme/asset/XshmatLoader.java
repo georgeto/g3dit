@@ -20,7 +20,7 @@ import com.jme3.material.RenderState.BlendMode;
 import com.jme3.texture.Texture;
 import com.jme3.texture.Texture.WrapMode;
 
-import de.george.g3utils.util.IOUtils;
+import de.george.g3utils.util.FilesEx;
 import de.george.lrentnode.classes.eCColorSrcBase;
 import de.george.lrentnode.classes.eCColorSrcCombiner;
 import de.george.lrentnode.classes.eCColorSrcSampler;
@@ -175,7 +175,7 @@ public class XshmatLoader implements AssetLoader {
 
 	private Optional<Texture> parseColorSampler(eCColorSrcSampler data) {
 		String textureName = data.property(CD.eCColorSrcSampler.ImageFilePath).getString();
-		textureName = IOUtils.stripExtension(textureName);
+		textureName = FilesEx.stripExtension(textureName);
 
 		// strip paths
 		textureName = textureName.replaceAll(".*/", "");

@@ -2017,23 +2017,23 @@ msgstr "Soll der Import, unter Verwendung der originalen Position, trotzdem fort
 msgid "Invalid filter settings"
 msgstr "Ungültige Filtereinstellungen"
 
-#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\EntitySearchDialog.java:287
-#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\TemplateSearchDialog.java:213
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\EntitySearchDialog.java:288
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\TemplateSearchDialog.java:214
 msgid "Determine files to be searched..."
 msgstr "Ermittele zu durchsuchende Dateien..."
-
-#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\EntitySearchDialog.java:288
-#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\FileSearchDialog.java:216
-#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\TemplateSearchDialog.java:214
-msgid "Search completed"
-msgstr "Suche abgeschlossen"
 
 #: g3dit\src\main\java\de\george\g3dit\gui\dialogs\EntitySearchDialog.java:288
 #: g3dit\src\main\java\de\george\g3dit\gui\dialogs\TemplateSearchDialog.java:214
 msgid "{0, number}/{1, number} files searched"
 msgstr "{0, number}/{1, number} Dateien durchsucht"
 
-#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\EntitySearchDialog.java:336
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\EntitySearchDialog.java:289
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\FileSearchDialog.java:217
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\TemplateSearchDialog.java:215
+msgid "Search completed"
+msgstr "Suche abgeschlossen"
+
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\EntitySearchDialog.java:337
 msgid "Search completed ({0, number} entities found)"
 msgstr "Suche abgeschlossen ({0, number} Entities gefunden)"
 

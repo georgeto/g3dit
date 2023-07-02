@@ -6,10 +6,10 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -67,6 +67,7 @@ import de.george.g3dit.util.json.JsonUtil;
 import de.george.g3utils.gui.SwingUtils;
 import de.george.g3utils.gui.UndoableTextField;
 import de.george.g3utils.structure.bCVector;
+import de.george.g3utils.util.FilesEx;
 import de.george.lrentnode.archive.ArchiveFile;
 import de.george.lrentnode.archive.ArchiveFile.ArchiveType;
 import de.george.lrentnode.archive.eCEntity;
@@ -150,9 +151,9 @@ public class ChestEditor extends JFrame {
 
 	private void loadFromJson() {
 		try {
-			File file = FileDialogWrapper.openFile(I.tr("Load chests"), this, FileDialogWrapper.JSON_FILTER);
+			Path file = FileDialogWrapper.openFile(I.tr("Load chests"), this, FileDialogWrapper.JSON_FILTER);
 			if (file != null) {
-				List<Chest> loaded = JsonUtil.noAutodetectMapper().readValue(file,
+				List<Chest> loaded = JsonUtil.noAutodetectMapper().readValue(file.toFile(),
 						TypeFactory.defaultInstance().constructCollectionLikeType(ArrayList.class, Chest.class));
 				setChests(loaded);
 			}
@@ -167,9 +168,9 @@ public class ChestEditor extends JFrame {
 		}
 
 		try {
-			File file = FileDialogWrapper.saveFile(I.tr("Save chests"), this, FileDialogWrapper.JSON_FILTER);
+			Path file = FileDialogWrapper.saveFile(I.tr("Save chests"), this, FileDialogWrapper.JSON_FILTER);
 			if (file != null) {
-				JsonUtil.noAutodetectMapper().writeValue(file, map.getItems());
+				JsonUtil.noAutodetectMapper().writeValue(file.toFile(), map.getItems());
 				chestsChanged = false;
 			}
 		} catch (IOException e) {
@@ -179,13 +180,13 @@ public class ChestEditor extends JFrame {
 
 	private void loadFromCsv() {
 		try {
-			File file = FileDialogWrapper.openFile(I.tr("Load chests"), this, FileDialogWrapper.CSV_FILTER);
+			Path file = FileDialogWrapper.openFile(I.tr("Load chests"), this, FileDialogWrapper.CSV_FILTER);
 			if (file == null) {
 				return;
 			}
 
 			List<Chest> chests = new ArrayList<>();
-			try (BufferedReader reader = Files.newBufferedReader(file.toPath(), StandardCharsets.UTF_8)) {
+			try (BufferedReader reader = Files.newBufferedReader(file, StandardCharsets.UTF_8)) {
 				CSVParser parser = CSVFormat.DEFAULT.withFirstRecordAsHeader().withNullString("").parse(reader);
 				for (CSVRecord record : parser) {
 					Chest chest = new Chest();
@@ -238,12 +239,12 @@ public class ChestEditor extends JFrame {
 		}
 
 		try {
-			File file = FileDialogWrapper.saveFile(I.tr("Save chests"), this, FileDialogWrapper.CSV_FILTER);
+			Path file = FileDialogWrapper.saveFile(I.tr("Save chests"), this, FileDialogWrapper.CSV_FILTER);
 			if (file == null) {
 				return;
 			}
 
-			try (BufferedWriter writer = Files.newBufferedWriter(file.toPath(), StandardCharsets.UTF_8);
+			try (BufferedWriter writer = Files.newBufferedWriter(file, StandardCharsets.UTF_8);
 					CSVPrinter printer = CSVFormat.DEFAULT.withHeader(Iterables.toArray(Chest.FIELD_NAMES, String.class)).print(writer)) {
 
 				for (Chest chest : map.getItems()) {
@@ -371,7 +372,7 @@ public class ChestEditor extends JFrame {
 			ArchiveFile archive = worldFilesIterator.next();
 			for (eCEntity entity : archive) {
 				if (EntityUtil.getUseType(entity) == gEUseType.gEUseType_Chest) {
-					loaded.add(chestFromEntity(entity, worldFilesIterator.nextFile().getName()));
+					loaded.add(chestFromEntity(entity, FilesEx.getFileName(worldFilesIterator.nextFile())));
 				}
 			}
 		}
@@ -379,7 +380,7 @@ public class ChestEditor extends JFrame {
 	}
 
 	private void loadFromLrentdat() {
-		File file = FileDialogWrapper.openFile(I.tr("Load chests from .lrentdat"), this, FileDialogWrapper.LRENTDAT_FILTER);
+		Path file = FileDialogWrapper.openFile(I.tr("Load chests from .lrentdat"), this, FileDialogWrapper.LRENTDAT_FILTER);
 		if (file == null) {
 			return;
 		}
@@ -389,7 +390,7 @@ public class ChestEditor extends JFrame {
 			List<Chest> loaded = new ArrayList<>();
 			for (eCEntity entity : archive) {
 				if (EntityUtil.getUseType(entity) == gEUseType.gEUseType_Chest) {
-					loaded.add(chestFromEntity(entity, file.getName()));
+					loaded.add(chestFromEntity(entity, FilesEx.getFileName(file)));
 				}
 			}
 			setChests(loaded);
@@ -399,7 +400,7 @@ public class ChestEditor extends JFrame {
 	}
 
 	private void syncToLrentdat() {
-		File file = FileDialogWrapper.openFile(I.tr("Synchronize chests to .lrentdat"), this, FileDialogWrapper.LRENTDAT_FILTER);
+		Path file = FileDialogWrapper.openFile(I.tr("Synchronize chests to .lrentdat"), this, FileDialogWrapper.LRENTDAT_FILTER);
 		if (file == null) {
 			return;
 		}
@@ -542,8 +543,8 @@ public class ChestEditor extends JFrame {
 				switch (Chest.FIELDS.get(fieldIndex)) {
 					case "Name" -> columnExt.setPrototypeValue("Unique_Chest");
 					case "Region" -> columnExt.setPrototypeValue("Myrtana_Outdoor");
-					case "Description" -> columnExt
-							.setPrototypeValue(I.tr("Ruin fields west of Mora Sul, on the eastern edge, very well hidden"));
+					case "Description" ->
+						columnExt.setPrototypeValue(I.tr("Ruin fields west of Mora Sul, on the eastern edge, very well hidden"));
 				}
 			}
 

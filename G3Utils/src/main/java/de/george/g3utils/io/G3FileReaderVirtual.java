@@ -1,10 +1,10 @@
 package de.george.g3utils.io;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
+import java.nio.file.Path;
 
 public class G3FileReaderVirtual extends G3FileReader {
 	public G3FileReaderVirtual(byte[] bytes) {
@@ -15,7 +15,7 @@ public class G3FileReaderVirtual extends G3FileReader {
 		super(buffer);
 	}
 
-	public G3FileReaderVirtual(File file) throws IOException {
+	public G3FileReaderVirtual(Path file) throws IOException {
 		super(file);
 	}
 

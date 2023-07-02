@@ -1,6 +1,6 @@
 package de.george.g3dit.check.checks;
 
-import java.io.File;
+import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -45,12 +45,11 @@ public class CheckInvalidParties extends AbstractEntityCheck {
 	private Set<String> guids = new HashSet<>();
 
 	public CheckInvalidParties() {
-		super(I.tr("Find invalid groups"), I.tr("Finds inconsistencies in the assignment of PartyMembers to PartyLeaders."), 0,
-				1);
+		super(I.tr("Find invalid groups"), I.tr("Finds inconsistencies in the assignment of PartyMembers to PartyLeaders."), 0, 1);
 	}
 
 	@Override
-	protected EntityPassStatus processEntity(ArchiveFile archiveFile, File dataFile, eCEntity entity, int entityPosition, int pass,
+	protected EntityPassStatus processEntity(ArchiveFile archiveFile, Path dataFile, eCEntity entity, int entityPosition, int pass,
 			Supplier<EntityDescriptor> descriptor, StringProblemConsumer problemConsumer) {
 
 		guids.add(entity.getGuid());

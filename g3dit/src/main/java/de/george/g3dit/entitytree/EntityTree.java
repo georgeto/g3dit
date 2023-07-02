@@ -344,7 +344,6 @@ public class EntityTree extends JPanel {
 	 * @param rootNode Parent TreeNode
 	 * @param file Zugehöriges ArchiveFile
 	 * @param entity eCEntity die dieser Knoten repräsentieren soll
-	 * @param selectedEntity Zuletzt markierte Entity
 	 * @return TreeNode der zuletzt markierten Entity, falls gefunden
 	 */
 	public void buildTree(EntityTreeNode rootNode, ArchiveFile file, eCEntity entity) {

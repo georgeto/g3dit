@@ -1,9 +1,8 @@
 package de.george.g3dit.tab.shared;
 
 import java.awt.Container;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.Optional;
 
 import javax.swing.JButton;
@@ -33,6 +32,7 @@ import de.george.g3utils.structure.bCMatrix3;
 import de.george.g3utils.structure.bCOrientedBox;
 import de.george.g3utils.structure.bCSphere;
 import de.george.g3utils.structure.bCVector;
+import de.george.g3utils.util.FilesEx;
 import de.george.g3utils.validation.ValidationGroupWrapper;
 import de.george.lrentnode.archive.G3ClassContainer;
 import de.george.lrentnode.classes.eCCollisionShape;
@@ -97,18 +97,18 @@ public class SharedCollisionShapeTab extends AbstractSharedTab {
 	}
 
 	private void loadFromXnvmsh() {
-		File fileColMesh = FileDialogWrapper.openFile(I.tr("Load from .xnvmsh"), ctx.getParentWindow(),
+		Path fileColMesh = FileDialogWrapper.openFile(I.tr("Load from .xnvmsh"), ctx.getParentWindow(),
 				FileDialogWrapper.COLLISION_MESH_FILTER);
 		if (fileColMesh == null) {
 			return;
 		}
 
 		try {
-			eCResourceCollisionMesh_PS colMesh = FileUtil.openCollisionMesh(new FileInputStream(fileColMesh));
+			eCResourceCollisionMesh_PS colMesh = FileUtil.openCollisionMesh(fileColMesh);
 
 			stacksPanel.clear();
 			for (int i = 0; i < colMesh.getNxsBoundaries().size(); i++) {
-				FileShape fileShape = new FileShape(fileColMesh.getName(), i);
+				FileShape fileShape = new FileShape(FilesEx.getFileName(fileColMesh), i);
 				fileShape.setMeshBoundary(colMesh.getNxsBoundaries().get(i));
 
 				eCCollisionShape colShape = new eCCollisionShape(false);
@@ -121,7 +121,7 @@ public class SharedCollisionShapeTab extends AbstractSharedTab {
 				stacksPanel.insertElementRelative(colShapePanel, null, InsertPosition.After);
 			}
 		} catch (IOException e) {
-			logger.warn("Error while reading the collision mesh '{}'.", fileColMesh.getName(), e);
+			logger.warn("Error while reading the collision mesh '{}'.", fileColMesh.getFileName(), e);
 			TaskDialogs.showException(e);
 		}
 	}
@@ -254,7 +254,8 @@ public class SharedCollisionShapeTab extends AbstractSharedTab {
 
 			Shape shape = colShape.getShape();
 			shapePanel = switch (cbShapeType.getSelectedValue()) {
-				case eECollisionShapeType.eECollisionShapeType_TriMesh, eECollisionShapeType.eECollisionShapeType_ConvexHull -> new FileShapePanel();
+				case eECollisionShapeType.eECollisionShapeType_TriMesh, eECollisionShapeType.eECollisionShapeType_ConvexHull ->
+					new FileShapePanel();
 				case eECollisionShapeType.eECollisionShapeType_Box -> new BoxShapePanel();
 				case eECollisionShapeType.eECollisionShapeType_Capsule -> new CapsuleShapePanel();
 				case eECollisionShapeType.eECollisionShapeType_Sphere -> new SphereShapePanel();
@@ -334,10 +335,10 @@ public class SharedCollisionShapeTab extends AbstractSharedTab {
 			boolean update = TaskDialogs.ask(ctx.getParentWindow(), I.tr("Update the boundary of the collision shape?"),
 					I.tr("Should the Boundary of this collision shape be adopted from the specified collision mesh?"));
 			if (update) {
-				Optional<File> colFile = ctx.getFileManager().searchFile(FileManager.RP_COMPILED_PHYSIC, fileShape.getShapeFile());
+				Optional<Path> colFile = ctx.getFileManager().searchFile(FileManager.RP_COMPILED_PHYSIC, fileShape.getShapeFile());
 				if (colFile.isPresent()) {
 					try {
-						eCResourceCollisionMesh_PS colMesh = FileUtil.openCollisionMesh(new FileInputStream(colFile.get()));
+						eCResourceCollisionMesh_PS colMesh = FileUtil.openCollisionMesh(colFile.get());
 
 						if (fileShape.getResourceIndex() < colMesh.getNxsBoundaries().size()) {
 							fileShape.setMeshBoundary(colMesh.getNxsBoundaries().get(fileShape.getResourceIndex()));

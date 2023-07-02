@@ -3,8 +3,9 @@ package de.george.g3dit.tab.archive;
 import java.awt.Component;
 import java.awt.Insets;
 import java.awt.event.KeyEvent;
-import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Optional;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
@@ -40,7 +41,7 @@ import de.george.g3utils.gui.SwingUtils;
 import de.george.g3utils.io.G3FileReaderEx;
 import de.george.g3utils.io.Saveable;
 import de.george.g3utils.structure.bCBox;
-import de.george.g3utils.util.IOUtils;
+import de.george.g3utils.util.FilesEx;
 import de.george.lrentnode.archive.ArchiveFile;
 import de.george.lrentnode.archive.ArchiveFile.ArchiveType;
 import de.george.lrentnode.archive.eCEntity;
@@ -144,9 +145,9 @@ public class EditorArchiveTab extends EditorAbstractFileTab {
 
 	/**
 	 * @param aFile geladene lrentdat/node Datei, darf nicht null sein.
-	 * @param file File Objekt der Datei
+	 * @param file Path Objekt der Datei
 	 */
-	public void setCurrentFile(ArchiveFile aFile, File file) {
+	public void setCurrentFile(ArchiveFile aFile, Path file) {
 		currentFile = null;
 		currentEntity = null;
 		setFileChanged(false);
@@ -164,7 +165,7 @@ public class EditorArchiveTab extends EditorAbstractFileTab {
 	}
 
 	@Override
-	public boolean openFile(File file) {
+	public boolean openFile(Path file) {
 		if (file != null) {
 			OpenFileWorker worker = new OpenFileWorker(file);
 			worker.execute();
@@ -193,7 +194,7 @@ public class EditorArchiveTab extends EditorAbstractFileTab {
 	}
 
 	@Override
-	public boolean saveFile(Optional<File> file) {
+	public boolean saveFile(Optional<Path> file) {
 		boolean result = super.saveFile(file);
 		if (result && file.isPresent()) {
 			processLayer();
@@ -339,50 +340,51 @@ public class EditorArchiveTab extends EditorAbstractFileTab {
 
 	private void processLayer() {
 		ArchiveFile archiveFile = getCurrentFile();
-		File dataFile = getDataFile().get();
+		Path dataFile = getDataFile().get();
 		if (archiveFile.getArchiveType() == ArchiveType.Lrentdat) {
-			File dynamicLayer = new File(IOUtils.changeExtension(dataFile.getAbsolutePath(), "lrent"));
-			if (!dynamicLayer.exists()
-					&& !ctx.getFileManager().moveFromPrimaryToSecondary(dynamicLayer).filter(File::exists).isPresent()) {
+			Path dynamicLayer = FilesEx.changeExtension(dataFile, "lrent");
+			if (!Files.exists(dynamicLayer)
+					&& !ctx.getFileManager().moveFromPrimaryToSecondary(dynamicLayer).filter(Files::exists).isPresent()) {
 				boolean result = TaskDialogs.ask(ctx.getParentWindow(), I.tr("Create .lrent"),
-						I.trf("No corresponding .lrent could be found for ''{0}''.\nShould a .lrent be created?", dataFile.getName()));
+						I.trf("No corresponding .lrent could be found for ''{0}''.\nShould a .lrent be created?", dataFile.getFileName()));
 				if (result) {
 					try {
 						FileUtil.createLrent(dynamicLayer);
 					} catch (IOException e) {
 						TaskDialogs.error(ctx.getParentWindow(),
-								I.trf("Error while creating the DynamicLayer for {0}.", dataFile.getName()), e.getMessage());
+								I.trf("Error while creating the DynamicLayer for {0}.", dataFile.getFileName()), e.getMessage());
 					}
 				}
 			}
 
 		} else if (archiveFile.getArchiveType() == ArchiveType.Node) {
-			File geometryLayer = new File(IOUtils.changeExtension(dataFile.getAbsolutePath(), "lrgeo"));
-			File geometryLayerDat = new File(IOUtils.changeExtension(dataFile.getAbsolutePath(), "lrgeodat"));
+			Path geometryLayer = FilesEx.changeExtension(dataFile, "lrgeo");
+			Path geometryLayerDat = FilesEx.changeExtension(dataFile, "lrgeodat");
 			bCBox newContextBox = currentFile.getGraph() != null ? currentFile.getGraph().getWorldTreeBoundary() : new bCBox();
-			if (!geometryLayer.exists() && !ctx.getFileManager().moveFromPrimaryToSecondary(geometryLayer).filter(File::exists).isPresent()
-					|| !geometryLayerDat.exists()
-							&& !ctx.getFileManager().moveFromPrimaryToSecondary(geometryLayerDat).filter(File::exists).isPresent()) {
+			if (!Files.exists(geometryLayer)
+					&& !ctx.getFileManager().moveFromPrimaryToSecondary(geometryLayer).filter(Files::exists).isPresent()
+					|| !Files.exists(geometryLayerDat)
+							&& !ctx.getFileManager().moveFromPrimaryToSecondary(geometryLayerDat).filter(Files::exists).isPresent()) {
 				boolean result = TaskDialogs.ask(ctx.getParentWindow(), I.tr("Create .lrgeo/.lrgeodat"),
 						I.trf("No corresponding .lrgeo/.lrgeodat could be found for ''{0}''.\nShould a .lrgeo/.lrgeodat be created?",
-								dataFile.getName()));
+								dataFile.getFileName()));
 				if (result) {
 					try {
 						FileUtil.createLrgeo(geometryLayer);
 						FileUtil.createLrgeodat(geometryLayerDat, newContextBox);
 					} catch (IOException e) {
 						TaskDialogs.error(ctx.getParentWindow(),
-								I.trf("Error while creating the GeometryLayer for {0}.", dataFile.getName()), e.getMessage());
+								I.trf("Error while creating the GeometryLayer for {0}.", dataFile.getFileName()), e.getMessage());
 					}
 				}
 			} else {
 				try {
 					eCGeometrySpatialContext lrgeodat;
-					if (geometryLayerDat.exists()) {
+					if (Files.exists(geometryLayerDat)) {
 						lrgeodat = FileUtil.openLrgeodat(geometryLayerDat);
 					} else {
-						Optional<File> origGeometryLayerDat = ctx.getFileManager().moveFromPrimaryToSecondary(geometryLayerDat);
-						if (origGeometryLayerDat.map(File::exists).orElse(false)) {
+						Optional<Path> origGeometryLayerDat = ctx.getFileManager().moveFromPrimaryToSecondary(geometryLayerDat);
+						if (origGeometryLayerDat.map(Files::exists).orElse(false)) {
 							lrgeodat = FileUtil.openLrgeodat(origGeometryLayerDat.get());
 						} else {
 							lrgeodat = FileUtil.createLrgeodat();
@@ -395,7 +397,7 @@ public class EditorArchiveTab extends EditorAbstractFileTab {
 						FileUtil.saveLrgeodat(lrgeodat, geometryLayerDat);
 					}
 				} catch (IOException e) {
-					logger.warn("Error while updating the eCGeometrySpatialContexts of {}: ", dataFile.getName(), e);
+					logger.warn("Error while updating the eCGeometrySpatialContexts of {}: ", dataFile.getFileName(), e);
 				}
 			}
 		}
@@ -404,11 +406,11 @@ public class EditorArchiveTab extends EditorAbstractFileTab {
 	private class OpenFileWorker extends SwingWorker<ArchiveFile, Integer> {
 
 		private ProgressDialog progDlg;
-		private File file;
+		private Path file;
 		private boolean fileLoaded = false;
 
-		public OpenFileWorker(File file) {
-			progDlg = new ProgressDialog(ctx.getParentWindow(), I.tr("Loading file..."), file.getName(), false);
+		public OpenFileWorker(Path file) {
+			progDlg = new ProgressDialog(ctx.getParentWindow(), I.tr("Loading file..."), FilesEx.getFileName(file), false);
 			progDlg.setLocationRelativeTo(ctx.getParentWindow());
 			progDlg.getProgressBar().setIndeterminate(true);
 			this.file = file;
@@ -427,7 +429,7 @@ public class EditorArchiveTab extends EditorAbstractFileTab {
 			long time = System.currentTimeMillis();
 			try (G3FileReaderEx reader = new G3FileReaderEx(file)) {
 				ArchiveFile aFile = FileUtil.openArchive(reader, true);
-				logger.info("{} Load Time: {} s", file.getName(), (System.currentTimeMillis() - time) / 1000F);
+				logger.info("{} Load Time: {} s", file.getFileName(), (System.currentTimeMillis() - time) / 1000F);
 				updateChecksum(reader.getBuffer());
 				return aFile;
 			}
@@ -442,7 +444,7 @@ public class EditorArchiveTab extends EditorAbstractFileTab {
 				progDlg.dispose();
 			} catch (Exception ex) {
 				progDlg.dispose();
-				logger.warn("Failed to load the file {}.", file.getName(), ex);
+				logger.warn("Failed to load the file {}.", file.getFileName(), ex);
 				TaskDialogs.error(ctx.getParentWindow(), I.tr("Error while opening the file."), ex.getMessage());
 			}
 		}

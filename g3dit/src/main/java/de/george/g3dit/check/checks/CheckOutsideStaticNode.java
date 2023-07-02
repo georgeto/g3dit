@@ -1,6 +1,6 @@
 package de.george.g3dit.check.checks;
 
-import java.io.File;
+import java.nio.file.Path;
 import java.util.function.Supplier;
 
 import com.teamunify.i18n.I;
@@ -8,6 +8,7 @@ import com.teamunify.i18n.I;
 import de.george.g3dit.check.EntityDescriptor;
 import de.george.g3utils.structure.bCBox;
 import de.george.g3utils.structure.bCVector;
+import de.george.g3utils.util.FilesEx;
 import de.george.lrentnode.archive.ArchiveFile;
 import de.george.lrentnode.archive.eCEntity;
 import de.george.lrentnode.classes.desc.CD;
@@ -26,8 +27,8 @@ public class CheckOutsideStaticNode extends AbstractEntityCheck {
 	}
 
 	@Override
-	protected boolean onProcessArchive(ArchiveFile archiveFile, File dataFile, int pass) {
-		staticNodeBoundary = EntityUtil.getStaticNodeCoordinates(dataFile.getName())
+	protected boolean onProcessArchive(ArchiveFile archiveFile, Path dataFile, int pass) {
+		staticNodeBoundary = EntityUtil.getStaticNodeCoordinates(FilesEx.getFileName(dataFile))
 				.map(p -> new bCBox(new bCVector(p.getX() - 5000, -Float.MAX_VALUE, p.getZ() - 5000),
 						new bCVector(p.getX() + 5000, Float.MAX_VALUE, p.getZ() + 5000)))
 				.orElse(null);
@@ -35,7 +36,7 @@ public class CheckOutsideStaticNode extends AbstractEntityCheck {
 	}
 
 	@Override
-	protected EntityPassStatus processEntity(ArchiveFile archiveFile, File dataFile, eCEntity entity, int entityPosition, int pass,
+	protected EntityPassStatus processEntity(ArchiveFile archiveFile, Path dataFile, eCEntity entity, int entityPosition, int pass,
 			Supplier<EntityDescriptor> descriptor, StringProblemConsumer problemConsumer) {
 		if (entity.getWorldNodeBoundary().isValid() && !entity.hasClass(CD.eCVegetation_PS.class)
 				&& !entity.getName().contains("_Landscape_") && !entity.getWorldNodeBoundary().intersects(staticNodeBoundary)) {

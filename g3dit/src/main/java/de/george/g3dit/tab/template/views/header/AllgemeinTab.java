@@ -2,7 +2,6 @@ package de.george.g3dit.tab.template.views.header;
 
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
-import java.io.File;
 
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -166,7 +165,7 @@ public class AllgemeinTab extends AbstractTemplateTab {
 
 	private void handleUpdateDataFile() {
 		if (ctx.getDataFile().isPresent()) {
-			ctx.setDataFile(new File(ctx.getDataFile().get().getParentFile(), tfFilePrefix.getText() + "_" + tfName.getText() + ".tple"));
+			ctx.setDataFile(ctx.getDataFile().get().resolveSibling(tfFilePrefix.getText() + "_" + tfName.getText() + ".tple"));
 		}
 	}
 

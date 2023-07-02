@@ -1,8 +1,7 @@
 package de.george.g3dit.tab;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.nio.ByteBuffer;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -26,6 +25,7 @@ import de.george.g3dit.util.SettingsHelper;
 import de.george.g3utils.io.Crc32OutputStream;
 import de.george.g3utils.io.Saveable;
 import de.george.g3utils.io.TeeOutputStream;
+import de.george.g3utils.util.FilesEx;
 import net.tomahawk.ExtensionsFilter;
 
 public abstract class EditorAbstractFileTab extends EditorTab implements FileChangeMonitor {
@@ -33,7 +33,7 @@ public abstract class EditorAbstractFileTab extends EditorTab implements FileCha
 
 	private static Dialogs.Answer ANSWER_ALL = null;
 
-	private File dataFile;
+	private Path dataFile;
 	private boolean fileChanged;
 	private long checksum = NO_CHECKSUM;
 
@@ -44,7 +44,7 @@ public abstract class EditorAbstractFileTab extends EditorTab implements FileCha
 	@Override
 	public String getTitle() {
 		if (getDataFile().isPresent()) {
-			return getDataFile().get().getName();
+			return FilesEx.getFileName(getDataFile().get());
 		}
 		return I.tr("<Not saved>");
 	}
@@ -52,7 +52,7 @@ public abstract class EditorAbstractFileTab extends EditorTab implements FileCha
 	@Override
 	public String getTabTitle() {
 		if (getDataFile().isPresent()) {
-			return (isFileChanged() ? "*" : "") + getDataFile().get().getName();
+			return (isFileChanged() ? "*" : "") + FilesEx.getFileName(getDataFile().get());
 		}
 		return I.tr("<Not saved>");
 	}
@@ -61,18 +61,18 @@ public abstract class EditorAbstractFileTab extends EditorTab implements FileCha
 	public String getEditorTitle() {
 		if (getDataFile().isPresent()) {
 			String filePath = SettingsHelper.applyAliasMap(SettingsHelper.getDataFolderAlias(ctx.getOptionStore()),
-					getDataFile().get().getAbsolutePath());
+					FilesEx.getAbsolutePath(getDataFile().get()));
 			return (isFileChanged() ? "*" : "") + filePath + " - " + Editor.EDITOR_TITLE;
 		} else {
 			return (isFileChanged() ? "*" : "") + Editor.EDITOR_TITLE;
 		}
 	}
 
-	public Optional<File> getDataFile() {
+	public Optional<Path> getDataFile() {
 		return Optional.ofNullable(dataFile);
 	}
 
-	public void setDataFile(File dataFile) {
+	public void setDataFile(Path dataFile) {
 		this.dataFile = dataFile;
 		eventBus().post(new StateChangedEvent(this));
 	}
@@ -134,7 +134,7 @@ public abstract class EditorAbstractFileTab extends EditorTab implements FileCha
 	 * @param file
 	 * @return false, wenn beim Öffnen ein Fehler aufgetreten ist
 	 */
-	public abstract boolean openFile(File file);
+	public abstract boolean openFile(Path file);
 
 	/**
 	 * Wendet alle Änderungen an und liefert das Saveable Objekt zurück
@@ -158,7 +158,7 @@ public abstract class EditorAbstractFileTab extends EditorTab implements FileCha
 	 * @param file Pfad des Speicherortes
 	 * @return true, wenn Speichern erfolgreich
 	 */
-	public boolean saveFile(Optional<File> file) {
+	public boolean saveFile(Optional<Path> file) {
 		if (!file.isPresent()) {
 			return showSaveFileAsDialog();
 		}
@@ -197,26 +197,26 @@ public abstract class EditorAbstractFileTab extends EditorTab implements FileCha
 	 * @return true, wenn Speichern erfolgreich
 	 */
 	private boolean showSaveFileAsDialog() {
-		Optional<File> dataFile = getDataFile();
+		Optional<Path> dataFile = getDataFile();
 		// Datei die im sekunden Data-Verzeichnis liegt automatisch ins primäre verschieben, wenn
 		// Elternverzeichnis dort existiert
 		if (dataFile.isPresent()) {
 			if (ctx.getFileManager().isInSecondaryDataFolder(dataFile.get())) {
-				Optional<File> movedDataFile = ctx.getFileManager().moveFromSecondaryToPrimary(dataFile.get());
-				if (movedDataFile.isPresent() && movedDataFile.get().getParentFile().exists()) {
+				Optional<Path> movedDataFile = ctx.getFileManager().moveFromSecondaryToPrimary(dataFile.get());
+				if (movedDataFile.isPresent() && Files.exists(movedDataFile.get().getParent())) {
 					dataFile = movedDataFile;
 				}
 			}
 		}
 
-		String absolutePath = dataFile.map(File::getAbsolutePath).orElse(null);
-		File file = FileDialogWrapper.saveFile(I.tr("Save as"), absolutePath, getDefaultFileExtension(), ctx.getParentWindow(),
+		Path absolutePath = dataFile.map(Path::toAbsolutePath).orElse(null);
+		Path file = FileDialogWrapper.saveFile(I.tr("Save as"), absolutePath.toString(), getDefaultFileExtension(), ctx.getParentWindow(),
 				getFileFilter());
 		if (file != null) {
 			if (!this.saveFile(Optional.ofNullable(file))) {
 				return false;
 			}
-			ctx.getEditor().getMainMenu().addRecentFile(file.getAbsolutePath());
+			ctx.getEditor().getMainMenu().addRecentFile(FilesEx.getAbsolutePath(file));
 			return true;
 		} else {
 			TaskDialogs.inform(ctx.getParentWindow(), I.tr("Saving failed"), I.tr("No save location has been selected."));
@@ -276,21 +276,19 @@ public abstract class EditorAbstractFileTab extends EditorTab implements FileCha
 	private class SaveFileWorker extends SwingWorker<Void, Void> {
 
 		private ProgressDialog progDlg;
-		private File file;
 		private Saveable fileToSave;
 		private boolean fileSaved = false;
 
-		private Path sourcePath;
-		private Path destPath;
+		private Path file;
+		private Path bakFile;
 		private boolean makeBackup;
 
-		public SaveFileWorker(File file, Saveable fileToSave) {
-			progDlg = new ProgressDialog(ctx.getParentWindow(), I.tr("Saving file..."), file.getName(), false);
+		public SaveFileWorker(Path file, Saveable fileToSave) {
+			progDlg = new ProgressDialog(ctx.getParentWindow(), I.tr("Saving file..."), FilesEx.getFileName(file), false);
 			progDlg.setLocationRelativeTo(ctx.getParentWindow());
 			progDlg.getProgressBar().setIndeterminate(true);
 			this.file = file;
-			sourcePath = file.toPath();
-			destPath = new File(file.getParent(), file.getName() + ".bak").toPath();
+			bakFile = file.resolveSibling(FilesEx.getFileName(file) + ".bak");
 			makeBackup = ctx.getOptionStore().get(EditorOptions.Misc.MAKE_BACKUP);
 			this.fileToSave = fileToSave;
 		}
@@ -305,11 +303,11 @@ public abstract class EditorAbstractFileTab extends EditorTab implements FileCha
 
 		@Override
 		protected Void doInBackground() throws Exception {
-			if (makeBackup && Files.exists(sourcePath) && !Files.isDirectory(sourcePath)) {
-				Files.move(sourcePath, destPath, StandardCopyOption.REPLACE_EXISTING);
+			if (makeBackup && Files.exists(file) && !Files.isDirectory(file)) {
+				Files.move(file, bakFile, StandardCopyOption.REPLACE_EXISTING);
 			}
-			file.getParentFile().mkdirs();
-			try (FileOutputStream out = new FileOutputStream(file)) {
+			Files.createDirectories(file.getParent());
+			try (OutputStream out = Files.newOutputStream(file)) {
 				if (ctx.getOptionStore().get(EditorOptions.Misc.IMPROVE_CHANGE_DETECTION)) {
 					Crc32OutputStream crc32 = new Crc32OutputStream();
 					fileToSave.save(new TeeOutputStream(out, crc32));
@@ -330,7 +328,7 @@ public abstract class EditorAbstractFileTab extends EditorTab implements FileCha
 				progDlg.dispose();
 			} catch (Exception e) {
 				try {
-					Files.move(destPath, sourcePath, StandardCopyOption.REPLACE_EXISTING);
+					Files.move(bakFile, file, StandardCopyOption.REPLACE_EXISTING);
 				} catch (IOException e1) {
 					// Ignore...
 				}

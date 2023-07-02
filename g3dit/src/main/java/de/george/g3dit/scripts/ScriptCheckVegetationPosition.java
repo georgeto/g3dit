@@ -5,6 +5,7 @@ import java.util.regex.Pattern;
 
 import com.teamunify.i18n.I;
 
+import de.george.g3utils.util.FilesEx;
 import de.george.lrentnode.archive.ArchiveFile;
 import de.george.lrentnode.archive.eCEntity;
 import de.george.lrentnode.classes.eCVegetation_PS;
@@ -36,7 +37,7 @@ public class ScriptCheckVegetationPosition implements IScript {
 					eCVegetation_PS veg = entity.getClass(CD.eCVegetation_PS.class);
 					eCVegetation_Grid grid = veg.getGrid();
 
-					String name = worldFilesIterator.nextFile().getName();
+					String name = FilesEx.getFileName(worldFilesIterator.nextFile());
 					Matcher matcher = Pattern.compile("G3_World_01_x(-?\\d+)y0z(-?\\d+)_CStat").matcher(name);
 					if (matcher.find() && matcher.groupCount() == 2) {
 						int x = Integer.valueOf(matcher.group(1));

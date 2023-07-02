@@ -1,8 +1,8 @@
 package de.george.g3dit.tab.effectmap;
 
 import java.awt.Component;
-import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
 
 import javax.swing.Icon;
 
@@ -44,10 +44,10 @@ public class EditorEffectMapTab extends EditorAbstractFileTab {
 	}
 
 	/**
-	 * @param inSecdat geladene Secdat
-	 * @param file File Objekt der Datei
+	 * @param effectMap geladene Secdat
+	 * @param file Path Objekt der Datei
 	 */
-	public void setCurrentFile(gCEffectMap effectMap, File file) {
+	public void setCurrentFile(gCEffectMap effectMap, Path file) {
 		currentFile = null;
 		setFileChanged(false);
 
@@ -64,7 +64,7 @@ public class EditorEffectMapTab extends EditorAbstractFileTab {
 	}
 
 	@Override
-	public boolean openFile(File file) {
+	public boolean openFile(Path file) {
 		try {
 			try (G3FileReaderEx reader = new G3FileReaderEx(file)) {
 				gCEffectMap effectMap = new gCEffectMap(reader);

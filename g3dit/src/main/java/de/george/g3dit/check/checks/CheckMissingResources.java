@@ -1,7 +1,7 @@
 package de.george.g3dit.check.checks;
 
-import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.Optional;
 import java.util.function.Supplier;
 
@@ -38,14 +38,14 @@ public class CheckMissingResources extends AbstractEntityCheck {
 	}
 
 	@Override
-	protected EntityPassStatus processEntity(ArchiveFile archiveFile, File dataFile, eCEntity entity, int entityPosition, int pass,
+	protected EntityPassStatus processEntity(ArchiveFile archiveFile, Path dataFile, eCEntity entity, int entityPosition, int pass,
 			Supplier<EntityDescriptor> descriptor, StringProblemConsumer problemConsumer) {
 		processEntity(entity, problemConsumer);
 		return EntityPassStatus.Next;
 	}
 
 	@Override
-	public PassStatus processTemplateEntity(TemplateFile tple, File dataFile, eCEntity entity, int pass, FileDescriptor descriptor,
+	public PassStatus processTemplateEntity(TemplateFile tple, Path dataFile, eCEntity entity, int pass, FileDescriptor descriptor,
 			StringProblemConsumer problemConsumer) {
 		processEntity(entity, problemConsumer);
 		return PassStatus.Next;
@@ -104,7 +104,7 @@ public class CheckMissingResources extends AbstractEntityCheck {
 	}
 
 	private boolean processCollisionMeshFile(FileShape fileShape, String colMeshName, StringProblemConsumer problemConsumer) {
-		Optional<File> colMeshFile = colMeshLocator.locate(colMeshName);
+		Optional<Path> colMeshFile = colMeshLocator.locate(colMeshName);
 		if (!colMeshFile.isPresent()) {
 			reportCollisionMesh(fileShape, colMeshName, I.tr("No collision mesh with this name found."), problemConsumer);
 			return false;

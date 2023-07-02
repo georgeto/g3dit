@@ -1,6 +1,6 @@
 package de.george.g3dit.scripts;
 
-import java.io.File;
+import java.nio.file.Path;
 import java.util.List;
 
 import com.google.common.collect.Multiset;
@@ -28,14 +28,14 @@ public class ScriptSkinningInfoInfluenceStatistics implements IScript {
 	@Override
 	public boolean execute(IScriptEnvironment env) {
 		Multiset<Integer> result = TreeMultiset.create();
-		for (File file : env.getFileManager().listAnimatedMeshes()) {
+		for (Path file : env.getFileManager().listAnimatedMeshes()) {
 			try {
 				eCResourceAnimationActor_PS resAnimActor = FileUtil.openAnimationActor(file);
 				StreamEx.of(resAnimActor.actor).append(resAnimActor.lods.stream())
 						.flatMap(a -> a.<SkinningInfoChunk>getChunksByType(LMA_CHUNK.LMA_CHUNK_SKINNINGINFO).stream())
 						.flatMap(c -> c.influences.stream()).map(List::size).forEach(result::add);
 			} catch (Exception e) {
-				env.log(I.trf("Error while loading {0}.", file.getName()));
+				env.log(I.trf("Error while loading {0}.", file.getFileName()));
 			}
 		}
 		result.elementSet().forEach(k -> env.log(k + ": " + result.count(k)));

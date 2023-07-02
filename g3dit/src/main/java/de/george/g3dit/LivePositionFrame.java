@@ -4,7 +4,7 @@ import java.awt.Container;
 import java.awt.Window;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
-import java.io.File;
+import java.nio.file.Path;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.Callable;
@@ -634,7 +634,7 @@ public class LivePositionFrame extends JFrame {
 			FindEntityWorker entityWorker = new FindEntityWorker(entityGuid, ctx.getFileManager().worldFilesCallable(), this);
 			entityWorker.executeAndShowDialog();
 			if (!entityWorker.isCancelled()) {
-				Optional<File> file = entityWorker.getContainingFile();
+				Optional<Path> file = entityWorker.getContainingFile();
 				if (file.isPresent()) {
 					SwingUtils.bringToFront(ctx.getParentWindow());
 					if (!ctx.getEditor().openFile(file.get())) {
@@ -667,18 +667,18 @@ public class LivePositionFrame extends JFrame {
 
 	}
 
-	private static class FindEntityWorker extends AbstractDialogFileWorker<Optional<File>> {
+	private static class FindEntityWorker extends AbstractDialogFileWorker<Optional<Path>> {
 		private String entityGuid;
-		private Optional<File> result;
+		private Optional<Path> result;
 
-		public FindEntityWorker(String entityGuid, Callable<List<File>> fileProvider, Window parent) {
+		public FindEntityWorker(String entityGuid, Callable<List<Path>> fileProvider, Window parent) {
 			super(fileProvider, null, I.tr("Search entity"), parent);
 			this.entityGuid = entityGuid;
 			statusFormat = I.tr("Searching for entity...");
 		}
 
 		@Override
-		protected Optional<File> doInBackground() throws Exception {
+		protected Optional<Path> doInBackground() throws Exception {
 			int filesDone = 0;
 			ArchiveFileIterator iter = new ArchiveFileIterator(getFiles());
 			while (iter.hasNext() && !isCancelled()) {
@@ -711,7 +711,7 @@ public class LivePositionFrame extends JFrame {
 			}
 		}
 
-		public Optional<File> getContainingFile() {
+		public Optional<Path> getContainingFile() {
 			return result;
 		}
 	}

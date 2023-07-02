@@ -1,6 +1,7 @@
 package de.george.lrentnode.iterator;
 
-import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Iterator;
 import java.util.List;
 
@@ -13,18 +14,18 @@ import de.george.lrentnode.util.FileUtil;
 public class ArchiveFileIterator implements Iterator<ArchiveFile> {
 	private static final Logger logger = LoggerFactory.getLogger(ArchiveFileIterator.class);
 
-	private List<File> files;
+	private List<Path> files;
 	private int position;
 	private ArchiveFile nextFile;
-	private File nextDataFile;
+	private Path nextDataFile;
 
 	private boolean skipPropertySets;
 
-	public ArchiveFileIterator(List<File> files) {
+	public ArchiveFileIterator(List<Path> files) {
 		this(files, false);
 	}
 
-	public ArchiveFileIterator(List<File> files, boolean skipPropertySets) {
+	public ArchiveFileIterator(List<Path> files, boolean skipPropertySets) {
 		this.files = files;
 		this.skipPropertySets = skipPropertySets;
 		position = 0;
@@ -33,13 +34,13 @@ public class ArchiveFileIterator implements Iterator<ArchiveFile> {
 	@Override
 	public boolean hasNext() {
 		while (position < files.size()) {
-			File file = files.get(position++);
-			if (file.isFile()) {
+			Path file = files.get(position++);
+			if (Files.isRegularFile(file)) {
 				ArchiveFile aFile = null;
 				try {
 					aFile = FileUtil.openArchive(file, false, skipPropertySets);
 				} catch (Exception e) {
-					logger.warn("Error while opening archive({}): {}", file.getAbsolutePath(), e.getMessage());
+					logger.warn("Error while opening archive({}): {}", file.toAbsolutePath(), e.getMessage());
 				}
 				if (aFile != null) {
 					nextFile = aFile;
@@ -58,7 +59,7 @@ public class ArchiveFileIterator implements Iterator<ArchiveFile> {
 		return nextFile;
 	}
 
-	public File nextFile() {
+	public Path nextFile() {
 		return nextDataFile;
 	}
 

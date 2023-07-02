@@ -10,6 +10,9 @@ import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -33,7 +36,6 @@ import org.slf4j.bridge.SLF4JBridgeHandler;
 import com.ezware.dialog.task.TaskDialogs;
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
-import com.google.common.io.Files;
 import com.google.common.util.concurrent.ListeningExecutorService;
 import com.google.common.util.concurrent.MoreExecutors;
 import com.jgoodies.looks.Options;
@@ -94,6 +96,7 @@ import de.george.g3dit.util.event.FileDropListener;
 import de.george.g3dit.util.event.VisibilityManager;
 import de.george.g3utils.gui.SwingUtils;
 import de.george.g3utils.io.G3FileReaderEx;
+import de.george.g3utils.util.FilesEx;
 import de.george.g3utils.util.Holder;
 import de.george.g3utils.util.IOUtils;
 import de.george.lrentnode.archive.ArchiveFile;
@@ -185,9 +188,13 @@ public class Editor implements EditorContext {
 		executorService = MoreExecutors.listeningDecorator(Executors.newCachedThreadPool());
 
 		// Einstellungen
-		File configDir = new File(EDITOR_CONFIG_FOLDER);
-		if (!configDir.exists()) {
-			configDir.mkdir();
+		Path configDir = Paths.get(EDITOR_CONFIG_FOLDER);
+		if (!Files.exists(configDir)) {
+			try {
+				Files.createDirectories(configDir);
+			} catch (IOException e) {
+				logger.warn("Failed to create config dir '{}'", configDir, e);
+			}
 		}
 		loadOptionStore();
 
@@ -269,7 +276,7 @@ public class Editor implements EditorContext {
 		});
 	}
 
-	private boolean processArguments(File workingDir, String[] args, PrintWriter writer) {
+	private boolean processArguments(Path workingDir, String[] args, PrintWriter writer) {
 		return new EditorCli(this, workingDir, writer).processCommandLine(args, false);
 	}
 
@@ -290,7 +297,7 @@ public class Editor implements EditorContext {
 		diff.visit(mapPrintingVisitor);
 		SwingUtilities.invokeLater(() -> {
 			DisplayTextDialog dialog = new DisplayTextDialog(
-					I.trf("File comparison - [{0} - {1}]", new File(baseFile).getName(), new File(mineFile).getName()),
+					I.trf("File comparison - [{0} - {1}]", Paths.get(baseFile).getFileName(), Paths.get(mineFile).getFileName()),
 					mapPrintingVisitor.getMessagesAsString(), frame, false);
 			// dialog.setLocationRelativeTo(editor.getOwner());
 			dialog.setVisible(true);
@@ -305,36 +312,37 @@ public class Editor implements EditorContext {
 		}
 
 		// NavigationMap
-		try (G3FileReaderEx baseFile = new G3FileReaderEx(new File(base)); G3FileReaderEx mineFile = new G3FileReaderEx(new File(mine))) {
+		try (G3FileReaderEx baseFile = new G3FileReaderEx(Paths.get(base));
+				G3FileReaderEx mineFile = new G3FileReaderEx(Paths.get(mine))) {
 			NavMap baseMap = new NavMap(baseFile);
-			File baseDump = File.createTempFile(baseFile.getFileName(), null);
-			baseDump.deleteOnExit();
+			Path baseDump = Files.createTempFile(baseFile.getFileName(), null);
+			baseDump.toFile().deleteOnExit();
 			baseMap.saveText(baseDump);
 			NavMap mineMap = new NavMap(mineFile);
-			File mineDump = File.createTempFile(mineFile.getFileName(), null);
-			mineDump.deleteOnExit();
+			Path mineDump = Files.createTempFile(mineFile.getFileName(), null);
+			mineDump.toFile().deleteOnExit();
 			mineMap.saveText(mineDump);
-			Runtime.getRuntime()
-					.exec(textCompare.replace("%base", baseDump.getAbsolutePath()).replace("%mine", mineDump.getAbsolutePath()));
+			Runtime.getRuntime().exec(
+					textCompare.replace("%base", FilesEx.getAbsolutePath(baseDump)).replace("%mine", FilesEx.getAbsolutePath(mineDump)));
 		}
 	}
 
-	public void diffFiles(File baseFile, File mineFile) {
+	public void diffFiles(Path baseFile, Path mineFile) {
 		try {
-			String base = baseFile.getAbsolutePath();
-			String mine = mineFile.getAbsolutePath();
-			String baseExt = Files.getFileExtension(base).toLowerCase();
-			String mineExt = Files.getFileExtension(mine).toLowerCase();
+			String baseExt = FilesEx.getFileExtension(baseFile).toLowerCase();
+			String mineExt = FilesEx.getFileExtension(mineFile).toLowerCase();
 			if (!baseExt.equals(mineExt)) {
 				TaskDialogs.error(frame, "", I.tr("Files to be compared have different file extensions."));
 				return;
 			}
 
-			if (FileUtils.contentEquals(baseFile, mineFile)) {
+			if (FileUtils.contentEquals(baseFile.toFile(), mineFile.toFile())) {
 				TaskDialogs.inform(frame, "", I.tr("Files to be compared are identical."));
 				return;
 			}
 
+			String base = FilesEx.getAbsolutePath(baseFile);
+			String mine = FilesEx.getAbsolutePath(mineFile);
 			switch (baseExt) {
 				case "node", "lrentdat" -> {
 					eCEntity baseRoot = FileUtil.openArchive(baseFile, true).getGraph();
@@ -391,13 +399,16 @@ public class Editor implements EditorContext {
 
 	private void loadOptionStore() {
 		String basePath = EDITOR_CONFIG_FOLDER + File.separator + EDITOR_TITLE;
-		File jsonStoreFile = new File(basePath + ".json");
-		File kryoStoreFile = new File(basePath + ".options");
-		if (jsonStoreFile.exists()) {
+		Path jsonStoreFile = Paths.get(basePath + ".json");
+		Path kryoStoreFile = Paths.get(basePath + ".options");
+		if (Files.exists(jsonStoreFile)) {
 			optionStore = new JsonFileOptionStore(jsonStoreFile);
-			if (kryoStoreFile.exists())
-				kryoStoreFile.delete();
-		} else if (!kryoStoreFile.exists()) {
+			try {
+				if (Files.exists(kryoStoreFile))
+					Files.delete(kryoStoreFile);
+			} catch (IOException e) {
+			}
+		} else if (!Files.exists(kryoStoreFile)) {
 			optionStore = new JsonFileOptionStore(jsonStoreFile);
 		} else {
 			KryoFileOptionStore kryoOptionStore = new KryoFileOptionStore(kryoStoreFile);
@@ -543,7 +554,7 @@ public class Editor implements EditorContext {
 		});
 	}
 
-	public StreamEx<EditorTab> getTabsByFile(File file) {
+	public StreamEx<EditorTab> getTabsByFile(Path file) {
 		return StreamEx.of(tabs).filter(tab -> {
 			if (!(tab instanceof EditorAbstractFileTab fileTab)) {
 				return false;
@@ -615,15 +626,13 @@ public class Editor implements EditorContext {
 		}
 	}
 
-	public boolean openFile(File file) {
+	public boolean openFile(Path file) {
 		return openFile(file, Side.LEFT);
 	}
 
-	public boolean openFile(File file, Side side) {
+	public boolean openFile(Path file, Side side) {
 		EditorAbstractFileTab tab = null;
-		String fileExt = Files.getFileExtension(file.getName()).toLowerCase();
-
-		switch (fileExt) {
+		switch (FilesEx.getFileExtension(file).toLowerCase()) {
 			case "lrentdat":
 			case "node":
 				tab = new EditorArchiveTab(this);
@@ -640,7 +649,7 @@ public class Editor implements EditorContext {
 			case "xcmsh":
 			case "xact":
 			case "xlmsh":
-				EntityViewer.getInstance(this).showMesh(file.getAbsolutePath(), 0);
+				EntityViewer.getInstance(this).showMesh(FilesEx.getAbsolutePath(file), 0);
 				return true;
 			default:
 				return false;
@@ -648,14 +657,14 @@ public class Editor implements EditorContext {
 
 		if (tab.openFile(file)) {
 			openTab(tab, side);
-			mainMenu.addRecentFile(file.getAbsolutePath());
+			mainMenu.addRecentFile(FilesEx.getAbsolutePath(file));
 			runGC();
 			return true;
 		}
 		return false;
 	}
 
-	public boolean openOrSelectFile(File file) {
+	public boolean openOrSelectFile(Path file) {
 		Optional<EditorTab> fileTab = getTabsByFile(file).findFirst();
 		if (fileTab.isPresent()) {
 			selectTab(fileTab.get());
@@ -751,7 +760,7 @@ public class Editor implements EditorContext {
 		return changed;
 	}
 
-	public static Optional<EntityDescriptor> getEntityDescriptor(String guid, File file) {
+	public static Optional<EntityDescriptor> getEntityDescriptor(String guid, Path file) {
 		Optional<ArchiveFile> archive = FileUtil.openArchiveSafe(file, false, true);
 		return archive.flatMap(a -> a.getEntityByGuid(guid))
 				.map(entity -> new EntityDescriptor(entity, new FileDescriptor(file, archive.get().getArchiveType())));
@@ -777,7 +786,7 @@ public class Editor implements EditorContext {
 	}
 
 	public boolean openTemplate(String guid) {
-		Optional<File> templateFile = Caches.template(this).getEntryByGuid(guid).map(TemplateCacheEntry::getFile);
+		Optional<Path> templateFile = Caches.template(this).getEntryByGuid(guid).map(TemplateCacheEntry::getFile);
 		return templateFile.map(this::openOrSelectFile).orElse(false);
 	}
 

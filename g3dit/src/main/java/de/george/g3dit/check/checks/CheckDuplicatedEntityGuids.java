@@ -1,6 +1,6 @@
 package de.george.g3dit.check.checks;
 
-import java.io.File;
+import java.nio.file.Path;
 import java.util.Collection;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
@@ -25,7 +25,7 @@ public class CheckDuplicatedEntityGuids extends AbstractEntityCheck {
 	}
 
 	@Override
-	protected EntityPassStatus processEntity(ArchiveFile archiveFile, File dataFile, eCEntity entity, int entityPosition, int pass,
+	protected EntityPassStatus processEntity(ArchiveFile archiveFile, Path dataFile, eCEntity entity, int entityPosition, int pass,
 			Supplier<EntityDescriptor> descriptor, StringProblemConsumer problemConsumer) {
 		entityGuidMap.put(entity.getGuid(), descriptor.get());
 		return EntityPassStatus.Next;
@@ -40,7 +40,7 @@ public class CheckDuplicatedEntityGuids extends AbstractEntityCheck {
 	protected void reportDuplicatedGuid(ProblemConsumer problemConsumer, String guid, Collection<EntityDescriptor> entities) {
 		String message = I.trf("Duplicate entity guid: {0}", guid);
 		String details = entities.stream().map(e -> {
-			String entityIdentifier = String.format("%s (%s #%d)", e.getDisplayName(), e.getFile().getPath().getName(), e.getIndex());
+			String entityIdentifier = String.format("%s (%s #%d)", e.getDisplayName(), e.getFile().getPath().getFileName(), e.getIndex());
 			return HtmlCreator.renderLink(entityIdentifier, UriUtil.encodeEntity(e));
 		}).collect(Collectors.joining(HtmlCreator.LINE_SEPERATOR));
 

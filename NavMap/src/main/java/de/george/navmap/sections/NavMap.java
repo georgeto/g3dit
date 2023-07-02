@@ -1,9 +1,9 @@
 package de.george.navmap.sections;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -152,7 +152,7 @@ public class NavMap extends GenomeFile {
 
 	private static final String SEPEREATOR = "\n\n==========================================\n";
 
-	public void saveText(File file) throws IOException {
+	public void saveText(Path file) throws IOException {
 		StringBuilder builder = new StringBuilder();
 		sec1.writeText(builder);
 		sec2.writeText(builder.append(SEPEREATOR));
@@ -879,7 +879,7 @@ public class NavMap extends GenomeFile {
 	}
 
 	@Override
-	public void save(File file) throws IOException {
+	public void save(Path file) throws IOException {
 		if (isInvalid()) {
 			throw new IOException(I.tr("NavMap is faulty, saving not possible."));
 		}

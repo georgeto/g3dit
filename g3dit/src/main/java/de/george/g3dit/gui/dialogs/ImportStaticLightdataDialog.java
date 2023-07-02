@@ -1,8 +1,10 @@
 package de.george.g3dit.gui.dialogs;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -93,13 +95,13 @@ public class ImportStaticLightdataDialog extends AbstractTableProgressDialog {
 	}
 
 	private void doImport() {
-		File lightFolder = FileDialogWrapper.chooseDirectory(I.tr("Select StaticLightdata files"), ctx.getParentWindow());
+		Path lightFolder = FileDialogWrapper.chooseDirectory(I.tr("Select StaticLightdata files"), ctx.getParentWindow());
 		if (lightFolder == null) {
 			return;
 		}
 
 		Map<String, Sldat> lightData = new HashMap<>();
-		for (File file : IOUtils.listFiles(lightFolder.getAbsolutePath(), f -> f.getName().endsWith(".sldat"))) {
+		for (Path file : IOUtils.listFiles(lightFolder, f -> f.getName().endsWith(".sldat"))) {
 			try (G3FileReader reader = new G3FileReaderVirtual(file)) {
 				Sldat sldat = new Sldat(reader);
 				lightData.put(sldat.getEntityGuid().getGuid(), sldat);
@@ -132,9 +134,9 @@ public class ImportStaticLightdataDialog extends AbstractTableProgressDialog {
 		results.clear();
 
 		// Geöffnete Dateien
-		List<File> openFiles = new ArrayList<>();
+		List<Path> openFiles = new ArrayList<>();
 		for (EditorArchiveTab tab : ctx.getEditor().<EditorArchiveTab>getTabs(EditorTabType.Archive)) {
-			File file = tab.getDataFile().orElseGet(() -> new File("-"));
+			Path file = tab.getDataFile().orElseGet(() -> Paths.get("-"));
 			if (processFile(tab.getCurrentFile(), file, lightData, applyChanges, cbEnableFilter.isSelected(), results::add)) {
 				tab.fileChanged();
 			}
@@ -165,8 +167,8 @@ public class ImportStaticLightdataDialog extends AbstractTableProgressDialog {
 		actionApplyAll = btnApplyAll.getAction();
 		actionApplyAll.setEnabled(false);
 
-		JButton btnApplySelected = registerAction(I.tr("Apply selected"), Icons.getImageIcon(Icons.Select.TICK),
-				this::doApplySelected, true);
+		JButton btnApplySelected = registerAction(I.tr("Apply selected"), Icons.getImageIcon(Icons.Select.TICK), this::doApplySelected,
+				true);
 		actionApplySelected = btnApplySelected.getAction();
 		actionApplySelected.setEnabled(false);
 
@@ -228,7 +230,7 @@ public class ImportStaticLightdataDialog extends AbstractTableProgressDialog {
 	}
 
 	private void saveProtocol() {
-		File saveFile = FileDialogWrapper.saveFile(I.tr("Save protocol"), I.tr("Protocol.csv"), "csv", ctx.getParentWindow(),
+		Path saveFile = FileDialogWrapper.saveFile(I.tr("Save protocol"), I.tr("Protocol.csv"), "csv", ctx.getParentWindow(),
 				FileDialogWrapper.CSV_FILTER);
 		if (saveFile != null) {
 			try {
@@ -246,7 +248,7 @@ public class ImportStaticLightdataDialog extends AbstractTableProgressDialog {
 
 	}
 
-	private boolean processFile(ArchiveFile archiveFile, File file, Map<String, Sldat> lightData, boolean applyChanges,
+	private boolean processFile(ArchiveFile archiveFile, Path file, Map<String, Sldat> lightData, boolean applyChanges,
 			boolean enableFilter, Consumer<Result> publish) {
 		boolean hasChanged = false;
 		int index = 0;
@@ -281,10 +283,9 @@ public class ImportStaticLightdataDialog extends AbstractTableProgressDialog {
 		private boolean applyChanges;
 		private boolean enableFilter;
 
-		protected ImportLightDataWorker(Callable<List<File>> fileProvider, List<File> openFiles, Map<String, Sldat> lightData,
+		protected ImportLightDataWorker(Callable<List<Path>> fileProvider, List<Path> openFiles, Map<String, Sldat> lightData,
 				boolean applyChanges, boolean enableFilter) {
-			super(fileProvider, openFiles, I.tr("Determine files to be processed..."),
-					I.tr("{0, number}/{1, number} files edited"), null);
+			super(fileProvider, openFiles, I.tr("Determine files to be processed..."), I.tr("{0, number}/{1, number} files edited"), null);
 			setProgressBar(progressBar);
 			doneMessageSupplier = this::getDoneMessage;
 			this.lightData = lightData;
@@ -311,13 +312,13 @@ public class ImportStaticLightdataDialog extends AbstractTableProgressDialog {
 						(Consumer<Result>) this::publish);
 
 				if (applyChanges && hasChanged) {
-					File outFile = iterator.nextFile();
+					Path outFile = iterator.nextFile();
 					if (ctx.getFileManager().isInSecondaryDataFolder(outFile)) {
 						outFile = ctx.getFileManager().moveFromSecondaryToPrimary(outFile).orElse(null);
 					}
 
 					if (outFile != null) {
-						outFile.getParentFile().mkdirs();
+						Files.createDirectories(outFile.getParent());
 						currentFile.save(outFile);
 					}
 				}
@@ -385,7 +386,7 @@ public class ImportStaticLightdataDialog extends AbstractTableProgressDialog {
 			return entity.getGuid();
 		}
 
-		public File getFile() {
+		public Path getFile() {
 			return entity.getFile().getPath();
 		}
 

@@ -5,7 +5,6 @@ import java.util.Map;
 
 import com.teamunify.i18n.I;
 
-import de.george.g3dit.settings.EditorOptions;
 import de.george.g3dit.util.FileManager;
 import de.george.g3utils.util.IOUtils;
 import de.george.lrentnode.archive.ArchiveFile;
@@ -31,9 +30,8 @@ public class ScriptGenerateStatistics implements IScript {
 
 	@Override
 	public boolean execute(IScriptEnvironment env) {
-		ArchiveFileIterator secWorldFilesIterator = new ArchiveFileIterator(IOUtils.listFiles(
-				env.getEditorContext().getOptionStore().get(EditorOptions.Path.SECONDARY_DATA_FOLDER) + FileManager.RP_PROJECTS_COMPILED,
-				IOUtils.archiveFileFilter));
+		ArchiveFileIterator secWorldFilesIterator = new ArchiveFileIterator(
+				IOUtils.listFiles(env.getFileManager().getSecondaryPath(FileManager.RP_PROJECTS_COMPILED), IOUtils.archiveFileFilter));
 
 		Map<String, String> originalNPCs = new HashMap<>();
 		Map<String, String> originalMonsters = new HashMap<>();

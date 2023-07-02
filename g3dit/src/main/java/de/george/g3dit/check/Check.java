@@ -1,6 +1,6 @@
 package de.george.g3dit.check;
 
-import java.io.File;
+import java.nio.file.Path;
 
 import de.george.g3dit.check.problem.ProblemConsumer;
 import de.george.lrentnode.archive.ArchiveFile;
@@ -28,7 +28,7 @@ public interface Check {
 	 * @param problemConsumer
 	 * @return
 	 */
-	PassStatus processTemplate(TemplateFile tple, File dataFile, int pass, ProblemConsumer problemConsumer);
+	PassStatus processTemplate(TemplateFile tple, Path dataFile, int pass, ProblemConsumer problemConsumer);
 
 	/**
 	 * Archive pass gets executed after template pass
@@ -39,7 +39,7 @@ public interface Check {
 	 * @param problemConsumer
 	 * @return
 	 */
-	PassStatus processArchive(ArchiveFile archiveFile, File dataFile, int pass, ProblemConsumer problemConsumer);
+	PassStatus processArchive(ArchiveFile archiveFile, Path dataFile, int pass, ProblemConsumer problemConsumer);
 
 	void reportProblems(ProblemConsumer problemConsumer);
 

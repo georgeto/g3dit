@@ -1,9 +1,9 @@
 package de.george.g3dit.cache;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -71,13 +71,13 @@ public class StringtableCache extends AbstractCache<StringtableCache> {
 	@Override
 	public void create() throws Exception {
 		ConcurrencyUtil.executeAndInvokeLater(() -> {
-			Optional<File> file = ctx.getFileManager().searchFile(FileManager.RP_STRINGS, "stringtable.ini");
+			Optional<Path> file = ctx.getFileManager().searchFile(FileManager.RP_STRINGS, "stringtable.ini");
 			if (!file.isPresent()) {
 				logger.warn("Unable to locate stringtable.");
 				return null;
 			}
 
-			try (Stream<String> stream = Files.lines(file.get().toPath(), StandardCharsets.UTF_16)) {
+			try (Stream<String> stream = Files.lines(file.get(), StandardCharsets.UTF_16)) {
 				Holder<String> rawLanguages = new Holder<>();
 				Holder<String> rawCurrentLanguage = new Holder<>();
 				List<String> rawFocusNames = new ArrayList<>();
@@ -145,7 +145,7 @@ public class StringtableCache extends AbstractCache<StringtableCache> {
 	}
 
 	@Override
-	public void load(File file) {
+	public void load(Path file) {
 		try {
 			create();
 		} catch (Exception e) {
@@ -154,7 +154,7 @@ public class StringtableCache extends AbstractCache<StringtableCache> {
 	}
 
 	@Override
-	public void save(File file) throws IOException {}
+	public void save(Path file) throws IOException {}
 
 	@Subscribe
 	public void onSettingsUpdated(SettingsUpdatedEvent event) {

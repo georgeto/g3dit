@@ -1,6 +1,6 @@
 package de.george.g3dit.check.checks;
 
-import java.io.File;
+import java.nio.file.Path;
 import java.util.Collection;
 import java.util.function.Supplier;
 
@@ -15,6 +15,7 @@ import de.george.g3dit.check.problem.ProblemConsumer;
 import de.george.g3dit.check.problem.TemplateProblem;
 import de.george.g3dit.util.HtmlCreator;
 import de.george.g3dit.util.UriUtil;
+import de.george.g3utils.util.FilesEx;
 import de.george.lrentnode.archive.ArchiveFile;
 import de.george.lrentnode.archive.eCEntity;
 import de.george.lrentnode.template.TemplateFile;
@@ -29,13 +30,13 @@ public class CheckDuplicatedTemplateGuids extends AbstractEntityCheck {
 	}
 
 	@Override
-	protected EntityPassStatus processEntity(ArchiveFile archiveFile, File dataFile, eCEntity entity, int entityPosition, int pass,
+	protected EntityPassStatus processEntity(ArchiveFile archiveFile, Path dataFile, eCEntity entity, int entityPosition, int pass,
 			Supplier<EntityDescriptor> descriptor, StringProblemConsumer problemConsumer) {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public PassStatus processTemplate(TemplateFile tple, File dataFile, int pass, ProblemConsumer problemConsumer) {
+	public PassStatus processTemplate(TemplateFile tple, Path dataFile, int pass, ProblemConsumer problemConsumer) {
 		FileDescriptor descriptor = new FileDescriptor(dataFile, FileType.Template);
 		itemGuidMap.put(tple.getItemHeader().getGuid(), descriptor);
 		refGuidMap.put(tple.getReferenceHeader().getGuid(), descriptor);
@@ -54,7 +55,7 @@ public class CheckDuplicatedTemplateGuids extends AbstractEntityCheck {
 	protected void reportDuplicatedGuid(ProblemConsumer problemConsumer, String guidType, String guid, Collection<FileDescriptor> files) {
 		String message = I.trf("Duplicate {0} guid: {1}", guidType, guid);
 		String details = HtmlCreator
-				.renderList(StreamEx.of(files).map(f -> HtmlCreator.renderLink(f.getPath().getName(), UriUtil.encodeFile(f))));
+				.renderList(StreamEx.of(files).map(f -> HtmlCreator.renderLink(FilesEx.getFileName(f.getPath()), UriUtil.encodeFile(f))));
 
 		for (FileDescriptor file : files) {
 			TemplateProblem problem = new TemplateProblem(message, details);

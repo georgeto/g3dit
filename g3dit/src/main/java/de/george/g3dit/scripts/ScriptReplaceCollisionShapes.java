@@ -1,10 +1,10 @@
 package de.george.g3dit.scripts;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -68,7 +68,7 @@ public class ScriptReplaceCollisionShapes implements IScript {
 			}
 			switch (this.newShapeType) {
 				case eECollisionShapeType.eECollisionShapeType_TriMesh, eECollisionShapeType.eECollisionShapeType_ConvexHull -> {
-					Optional<File> colFile = fileManager.searchFile(FileManager.RP_COMPILED_PHYSIC, newColShape);
+					Optional<Path> colFile = fileManager.searchFile(FileManager.RP_COMPILED_PHYSIC, newColShape);
 					if (colFile.isPresent()) {
 						eCResourceCollisionMesh_PS colMesh = FileUtil.openCollisionMesh(colFile.get());
 						if (colMesh.getNxsBoundaries().size() > 1) {
@@ -97,13 +97,13 @@ public class ScriptReplaceCollisionShapes implements IScript {
 
 	@Override
 	public boolean execute(IScriptEnvironment env) {
-		File ruleFile = FileDialogWrapper.openFile(I.tr("Load replacement rules"), env.getParentWindow(), FileDialogWrapper.CSV_FILTER);
+		Path ruleFile = FileDialogWrapper.openFile(I.tr("Load replacement rules"), env.getParentWindow(), FileDialogWrapper.CSV_FILTER);
 		if (ruleFile == null) {
 			return false;
 		}
 
 		Map<String, ReplaceRule> rules = new HashMap<>();
-		try (BufferedReader reader = Files.newBufferedReader(ruleFile.toPath(), StandardCharsets.UTF_8)) {
+		try (BufferedReader reader = Files.newBufferedReader(ruleFile, StandardCharsets.UTF_8)) {
 			CSVParser parser = CSVFormat.DEFAULT.withFirstRecordAsHeader().withTrim().parse(reader);
 			for (CSVRecord record : parser) {
 				ReplaceRule rule = new ReplaceRule(record.get("Mesh"), record.get("current Collision"), record.get("new ShapeType"),

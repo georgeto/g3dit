@@ -1,7 +1,7 @@
 package de.george.g3dit.cache;
 
-import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +12,7 @@ import com.google.common.util.concurrent.FutureCallback;
 import de.george.g3dit.EditorContext;
 import de.george.g3dit.util.ConcurrencyUtil;
 import de.george.g3dit.util.FileManager;
+import de.george.g3utils.util.FilesEx;
 import de.george.g3utils.util.Pair;
 import de.george.lrentnode.util.EntityUtil;
 
@@ -45,7 +46,7 @@ public class LowPolyMeshCache extends AbstractCache<LowPolyMeshCache> {
 		ConcurrencyUtil.executeAndInvokeLater(() -> {
 			ImmutableSet<String> lowPolyMeshes = ctx.getFileManager()
 					.listFiles(FileManager.RP_COMPILED_MESH, f -> f.getName().toLowerCase().endsWith("_lowpoly.xcmsh")).stream()
-					.map(File::getName).collect(ImmutableSet.toImmutableSet());
+					.map(FilesEx::getFileName).collect(ImmutableSet.toImmutableSet());
 
 			ImmutableSet<String> lowPolyMeshesLowerCase = lowPolyMeshes.stream().map(String::toLowerCase)
 					.collect(ImmutableSet.toImmutableSet());
@@ -68,7 +69,7 @@ public class LowPolyMeshCache extends AbstractCache<LowPolyMeshCache> {
 	}
 
 	@Override
-	public void load(File file) {
+	public void load(Path file) {
 		try {
 			create();
 		} catch (Exception e) {
@@ -77,5 +78,5 @@ public class LowPolyMeshCache extends AbstractCache<LowPolyMeshCache> {
 	}
 
 	@Override
-	public void save(File file) throws IOException {}
+	public void save(Path file) throws IOException {}
 }

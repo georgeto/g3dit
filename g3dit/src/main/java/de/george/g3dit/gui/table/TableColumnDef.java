@@ -133,7 +133,7 @@ public class TableColumnDef {
 
 		/**
 		 * @param preferredSize Preferred size of the column. Mutually exclusive with
-		 *            {@link #sizeExample(String)}.
+		 *            {@link #sizeExample(Object)}.
 		 */
 		public Builder size(int preferredSize) {
 			this.preferredSize = preferredSize;
@@ -152,7 +152,7 @@ public class TableColumnDef {
 		}
 
 		/**
-		 * {@link Builder#sizeExample(String)} with {@code displayName} as argument.
+		 * {@link Builder#sizeExample(Object)} with {@code displayName} as argument.
 		 */
 		public Builder sizeFromName() {
 			return sizeExample(displayName != null ? displayName : fieldName);

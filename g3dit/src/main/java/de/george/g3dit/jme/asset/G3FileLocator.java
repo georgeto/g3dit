@@ -1,14 +1,15 @@
 package de.george.g3dit.jme.asset;
 
-import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
 import com.google.common.base.Splitter;
-import com.google.common.io.Files;
 import com.jme3.asset.AssetInfo;
 import com.jme3.asset.AssetKey;
 import com.jme3.asset.AssetLoadException;
@@ -16,6 +17,7 @@ import com.jme3.asset.AssetLocator;
 import com.jme3.asset.AssetManager;
 import com.jme3.asset.AssetNotFoundException;
 
+import de.george.g3utils.util.FilesEx;
 import de.george.g3utils.util.IOUtils;
 import one.util.streamex.StreamEx;
 
@@ -25,10 +27,10 @@ import one.util.streamex.StreamEx;
  */
 public class G3FileLocator implements AssetLocator {
 
-	private File root;
+	private Path root;
 	private String lastRootPath;
 	private List<String> extensions;
-	private Map<String, String> fileTable = new HashMap<>();
+	private Map<String, Path> fileTable = new HashMap<>();
 
 	@Override
 	public void setRootPath(String rootPath) {
@@ -46,22 +48,22 @@ public class G3FileLocator implements AssetLocator {
 		extensions = StreamEx.of(Splitter.on(";").splitToList(splitted.get(0))).map(String::toLowerCase).toList();
 
 		try {
-			root = new File(splitted.get(1)).getCanonicalFile();
-			if (!root.exists()) {
-				throw new IllegalArgumentException("Given root path \"" + root + "\" does not exist");
+			Path newRoot = Paths.get(splitted.get(1));
+			if (!Files.exists(newRoot)) {
+				throw new IllegalArgumentException("Given root path \"" + newRoot + "\" does not exist");
 			}
 
-			if (!root.isDirectory()) {
-				throw new IllegalArgumentException("Given root path \"" + root + "\" is not a directory");
+			if (!Files.isDirectory(newRoot)) {
+				throw new IllegalArgumentException("Given root path \"" + newRoot + "\" is not a directory");
 			}
 
+			root = newRoot.toRealPath();
 			lastRootPath = rootPath;
 
 			fileTable.clear();
-			List<File> files = IOUtils.listFiles(root.getAbsolutePath(),
-					(f) -> extensions.contains(Files.getFileExtension(f.getName()).toLowerCase()));
-			for (File file : files) {
-				fileTable.put(file.getName().toLowerCase(), file.getCanonicalPath());
+			List<Path> files = IOUtils.listFiles(root, (f) -> extensions.contains(FilesEx.getFileExtension(f).toLowerCase()));
+			for (Path file : files) {
+				fileTable.put(FilesEx.getFileNameLowerCase(file), file);
 			}
 
 		} catch (IOException ex) {
@@ -73,30 +75,27 @@ public class G3FileLocator implements AssetLocator {
 	public AssetInfo locate(AssetManager manager, @SuppressWarnings("rawtypes") AssetKey key) {
 		String name = key.getName();
 
-		if (!extensions.contains(Files.getFileExtension(name).toLowerCase())) {
+		if (!extensions.contains(FilesEx.getFileExtension(name).toLowerCase())) {
 			return null;
 		}
 
-		File file = new File(root, name);
-		if (!file.exists()) {
-			String filePath = fileTable.get(name.toLowerCase());
-			if (filePath != null) {
-				file = new File(filePath);
-			}
+		Path file = root.resolve(name);
+		if (!Files.exists(file)) {
+			file = fileTable.get(name.toLowerCase());
 		}
 
-		if (!file.exists()) {
-			file = IOUtils.findFirstFile(root.getAbsolutePath(), (ftf) -> ftf.getName().equalsIgnoreCase(name)).orElse(null);
+		if (file == null || !Files.exists(file)) {
+			file = IOUtils.findFirstFile(root, (ftf) -> ftf.getName().equalsIgnoreCase(name)).orElse(null);
 			if (file == null) {
 				return null;
 			}
 		}
 
-		if (file.exists() && file.isFile()) {
+		if (Files.isRegularFile(file)) {
 			try {
 				// Now, check asset name requirements
-				String canonical = file.getCanonicalPath();
-				String absolute = file.getAbsolutePath();
+				String canonical = file.toRealPath().toString();
+				String absolute = FilesEx.getAbsolutePath(file);
 				if (!canonical.endsWith(absolute)) {
 					throw new AssetNotFoundException(
 							"Asset name doesn't match requirements.\n" + "\"" + canonical + "\" doesn't match \"" + absolute + "\"");

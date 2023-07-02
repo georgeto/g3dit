@@ -10,10 +10,12 @@ import com.teamunify.i18n.I;
 
 import ca.odell.glazedlists.impl.sort.ComparableComparator;
 import de.george.g3utils.structure.bCVector;
+import de.george.g3utils.util.FilesEx;
 import de.george.lrentnode.archive.ArchiveFile;
 import de.george.lrentnode.archive.eCEntity;
 import de.george.lrentnode.classes.G3Class;
 import de.george.lrentnode.classes.desc.CD;
+import de.george.lrentnode.classes.desc.CD.eCVisualMeshBase_PS;
 import de.george.lrentnode.enums.G3Enums;
 import de.george.lrentnode.enums.G3Enums.eELightmapType;
 import de.george.lrentnode.enums.G3Enums.eEStaticLighingType;
@@ -45,9 +47,9 @@ public class ScriptLightmapType implements IScript {
 					if (mesh.property(CD.eCVisualMeshBase_PS.StaticLightingType)
 							.getEnumValue() == eEStaticLighingType.eEStaticLighingType_Lightmap) {
 						entities.put(mesh.property(CD.eCVisualMeshBase_PS.ResourceFileName).getString(),
-								new EntityEntry(mesh.property(CD.eCVisualMeshBase_PS.LightmapType).getEnumValue(),
-										mesh.property(CD.eCVisualMeshBase_PS.ResourceFileName).getString(), entity.getGuid(),
-										entity.getWorldPosition(), worldFilesIterator.nextFile().getName()));
+								new EntityEntry(mesh.property(eCVisualMeshBase_PS.LightmapType).getEnumValue(),
+										mesh.property(eCVisualMeshBase_PS.ResourceFileName).getString(), entity.getGuid(),
+										entity.getWorldPosition(), FilesEx.getFileName(worldFilesIterator.nextFile())));
 						// enviroment.log(G3Enums.asString(eELightmapType.class,
 						// mesh.property(CD.eCVisualMeshBase_PS.LightmapType).enumValue) + " | " +
 						// entity.toString() + " | "

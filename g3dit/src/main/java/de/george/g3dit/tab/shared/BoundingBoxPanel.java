@@ -1,8 +1,8 @@
 package de.george.g3dit.tab.shared;
 
 import java.awt.Color;
-import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
@@ -102,7 +102,7 @@ public class BoundingBoxPanel extends JPanel {
 			return;
 		}
 
-		Optional<File> meshFile = ctx.getFileManager().searchFile(FileManager.RP_COMPILED_MESH, meshName);
+		Optional<Path> meshFile = ctx.getFileManager().searchFile(FileManager.RP_COMPILED_MESH, meshName);
 		if (!meshFile.isPresent()) {
 			TaskDialogs.error(ctx.getParentWindow(), "", I.tr("Mesh could not be found") + ": " + meshName);
 			return;

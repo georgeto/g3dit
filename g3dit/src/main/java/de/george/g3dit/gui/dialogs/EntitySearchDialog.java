@@ -1,7 +1,7 @@
 package de.george.g3dit.gui.dialogs;
 
-import java.io.File;
 import java.lang.ref.WeakReference;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -54,6 +54,7 @@ import de.george.g3dit.util.Icons;
 import de.george.g3dit.util.ImportHelper;
 import de.george.g3utils.structure.bCMatrix;
 import de.george.g3utils.structure.bCVector;
+import de.george.g3utils.util.FilesEx;
 import de.george.g3utils.util.IOUtils;
 import de.george.g3utils.util.Misc;
 import de.george.lrentnode.archive.ArchiveEntity;
@@ -207,7 +208,7 @@ public class EntitySearchDialog extends AbstractTableProgressDialog {
 		results.clear();
 
 		// Geöffnete Dateien
-		List<File> openFiles = new ArrayList<>();
+		List<Path> openFiles = new ArrayList<>();
 		for (EditorArchiveTab tab : ctx.getEditor().<EditorArchiveTab>getTabs(EditorTabType.Archive)) {
 			ArchiveFile currentFile = tab.getCurrentFile();
 			FileDescriptor fileDescriptor = tab.getFileDescriptor();
@@ -283,9 +284,9 @@ public class EntitySearchDialog extends AbstractTableProgressDialog {
 	private class SearchEntityWorker extends AbstractFileWorker<Void, Result> {
 		private SearchFilter<eCEntity> filter;
 
-		protected SearchEntityWorker(Callable<List<File>> fileProvider, List<File> openFiles, SearchFilter<eCEntity> filter) {
-			super(fileProvider, openFiles, I.tr("Determine files to be searched..."),
-					I.tr("{0, number}/{1, number} files searched"), I.tr("Search completed"));
+		protected SearchEntityWorker(Callable<List<Path>> fileProvider, List<Path> openFiles, SearchFilter<eCEntity> filter) {
+			super(fileProvider, openFiles, I.tr("Determine files to be searched..."), I.tr("{0, number}/{1, number} files searched"),
+					I.tr("Search completed"));
 			this.filter = filter;
 			setProgressBar(progressBar);
 			doneMessageSupplier = this::getDoneMessage;
@@ -378,13 +379,13 @@ public class EntitySearchDialog extends AbstractTableProgressDialog {
 			super(descriptor, worldPosition);
 		}
 
-		public File getFile() {
+		public Path getFile() {
 			return descriptor.getFile().getPath();
 		}
 
 		@Override
 		public String getPath() {
-			return getFile().getName();
+			return FilesEx.getFileName(getFile());
 		}
 
 		@Override
@@ -458,7 +459,7 @@ public class EntitySearchDialog extends AbstractTableProgressDialog {
 					.orElse(null);
 		}
 
-		public FileResult toFileResult(File file) {
+		public FileResult toFileResult(Path file) {
 			FileDescriptor fileDescriptor = new FileDescriptor(file, Optional.ofNullable(weakTab.get())
 					.map(EditorArchiveTab::getCurrentFile).map(ArchiveFile::getArchiveType).orElse(ArchiveType.Lrentdat));
 			return new FileResult(descriptor.withFile(fileDescriptor), worldPosition);

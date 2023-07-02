@@ -1,8 +1,8 @@
 package de.george.g3utils.io;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.nio.file.Path;
 import java.util.Arrays;
 
 import de.george.g3utils.structure.Stringtable;
@@ -67,7 +67,7 @@ public abstract class GenomeFile implements Saveable {
 	}
 
 	@Override
-	public void save(File file) throws IOException {
+	public void save(Path file) throws IOException {
 		prepareSave().save(file);
 	}
 

@@ -15,6 +15,8 @@ import com.formdev.flatlaf.IntelliJTheme;
 import com.formdev.flatlaf.extras.FlatAnimatedLafChange;
 import com.formdev.flatlaf.util.SystemInfo;
 
+import de.george.g3utils.util.FilesEx;
+
 public class ThemeManager {
 	private static final Logger logger = LoggerFactory.getLogger(ThemeManager.class);
 
@@ -64,10 +66,10 @@ public class ThemeManager {
 				FlatAnimatedLafChange.showSnapshot();
 
 			try {
-				if (theme.themeFile().getName().endsWith(".properties")) {
-					FlatLaf.setup(new FlatPropertiesLaf(theme.name(), theme.themeFile()));
+				if (FilesEx.hasFileExtension(theme.themeFile(), "properties")) {
+					FlatLaf.setup(new FlatPropertiesLaf(theme.name(), theme.themeFile().toFile()));
 				} else
-					FlatLaf.setup(IntelliJTheme.createLaf(new FileInputStream(theme.themeFile())));
+					FlatLaf.setup(IntelliJTheme.createLaf(new FileInputStream(theme.themeFile().toFile())));
 			} catch (Exception ex) {
 				logger.error("Failed to load '{}'.", theme.lafClassName(), ex);
 				TaskDialogs.showException(ex);

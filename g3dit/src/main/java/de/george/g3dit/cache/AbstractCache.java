@@ -1,8 +1,9 @@
 package de.george.g3dit.cache;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Date;
 import java.util.function.Consumer;
 
@@ -24,12 +25,12 @@ public abstract class AbstractCache<T extends AbstractCache<T>> implements Seria
 	public abstract void create() throws Exception;
 
 	public void load() {
-		load(new File(getSavePath()));
+		load(getSavePath());
 	}
 
-	public abstract void load(File file);
+	public abstract void load(Path file);
 
-	public abstract void save(File file) throws IOException;
+	public abstract void save(Path file) throws IOException;
 
 	public final void addUpdateListener(Object holder, Consumer<T> listener) {
 		listeners.addListener(holder, listener);
@@ -57,7 +58,7 @@ public abstract class AbstractCache<T extends AbstractCache<T>> implements Seria
 		}
 	}
 
-	protected void saveIntern(File file, Object... objects) throws IOException {
+	protected void saveIntern(Path file, Object... objects) throws IOException {
 		Object[] objectArray = new Object[1 + objects.length];
 		objectArray[0] = getCreationTimestamp();
 		for (int i = 1; i <= objects.length; i++) {
@@ -78,8 +79,8 @@ public abstract class AbstractCache<T extends AbstractCache<T>> implements Seria
 		return I.timestampToString(new Date(getCreationTimestamp()), false, false);
 	}
 
-	public String getSavePath() {
-		return CacheManager.CACHE_FOLDER + File.separator + this.getClass().getSimpleName() + ".cache";
+	public Path getSavePath() {
+		return Paths.get(CacheManager.CACHE_FOLDER, this.getClass().getSimpleName() + ".cache");
 	}
 
 	protected void markChanged(boolean changed) {

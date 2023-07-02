@@ -2,7 +2,7 @@ package de.george.g3dit.nav;
 
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
-import java.io.File;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -263,7 +263,7 @@ public class NegCircleStage extends NavCalcStage {
 		}
 
 		@Override
-		public File getFile() {
+		public Path getFile() {
 			return Caches.entity(ctx).getFile(getGuid()).map(FileDescriptor::getPath).orElse(null);
 		}
 

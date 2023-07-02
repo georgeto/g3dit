@@ -1,6 +1,7 @@
 package de.george.g3dit.check;
 
-import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Objects;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -16,21 +17,21 @@ public class FileDescriptor implements Comparable<FileDescriptor> {
 		Other
 	}
 
-	private final File path;
+	private final Path path;
 	private final FileType type;
 
 	@JsonCreator
-	public FileDescriptor(@JsonProperty("path") File path, @JsonProperty("type") FileType type) {
+	public FileDescriptor(@JsonProperty("path") Path path, @JsonProperty("type") FileType type) {
 		this.path = Objects.requireNonNull(path);
 		this.type = Objects.requireNonNull(type);
 	}
 
-	public FileDescriptor(File path, ArchiveType type) {
+	public FileDescriptor(Path path, ArchiveType type) {
 		this(path, type == ArchiveType.Node ? FileType.Node : FileType.Lrentdat);
 	}
 
 	@JsonProperty
-	public File getPath() {
+	public Path getPath() {
 		return path;
 	}
 
@@ -59,10 +60,10 @@ public class FileDescriptor implements Comparable<FileDescriptor> {
 	}
 
 	public static FileDescriptor none(FileType type) {
-		return new FileDescriptor(new File("<None>"), type);
+		return new FileDescriptor(Paths.get("<None>"), type);
 	}
 
 	public static FileDescriptor none(ArchiveType type) {
-		return new FileDescriptor(new File("<None>"), type);
+		return new FileDescriptor(Paths.get("<None>"), type);
 	}
 }

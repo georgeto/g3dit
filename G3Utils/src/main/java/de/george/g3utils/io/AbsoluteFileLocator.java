@@ -1,7 +1,9 @@
 package de.george.g3utils.io;
 
-import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Optional;
 
 public class AbsoluteFileLocator implements FileLocator {
@@ -17,7 +19,7 @@ public class AbsoluteFileLocator implements FileLocator {
 	public void setRootPath(String rootPath) throws IOException {}
 
 	@Override
-	public Optional<File> locate(String name) {
-		return Optional.of(new File(name)).filter(File::isAbsolute).filter(File::isFile);
+	public Optional<Path> locate(String name) {
+		return Optional.of(Paths.get(name)).filter(Path::isAbsolute).filter(Files::isRegularFile);
 	}
 }

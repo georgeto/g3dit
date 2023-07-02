@@ -1,9 +1,9 @@
 package de.george.g3utils.io;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.channels.FileChannel;
+import java.nio.file.Path;
 
 import de.george.g3utils.structure.Stringtable;
 
@@ -18,7 +18,7 @@ public class G3FileReaderEx extends G3FileReader {
 		super(bytes);
 	}
 
-	public G3FileReaderEx(File file) throws IOException {
+	public G3FileReaderEx(Path file) throws IOException {
 		super(file);
 	}
 

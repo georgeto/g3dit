@@ -1,7 +1,6 @@
 package de.george.g3dit.scripts;
 
-import java.io.File;
-import java.io.FileInputStream;
+import java.nio.file.Path;
 
 import com.teamunify.i18n.I;
 
@@ -26,17 +25,17 @@ public class ScriptListMaterialProperties implements IScript {
 
 	@Override
 	public boolean execute(IScriptEnvironment env) {
-		for (File file : env.getFileManager().listMaterials()) {
-			try (FileInputStream is = new FileInputStream(file)) {
-				eCResourceShaderMaterial_PS material = FileUtil.openMaterial(is);
+		for (Path file : env.getFileManager().listMaterials()) {
+			try {
+				eCResourceShaderMaterial_PS material = FileUtil.openMaterial(file);
 				eCShaderBase shader = material.getShader();
 				int blendMode = shader.property(CD.eCShaderBase.BlendMode).getEnumValue();
 				int maskReference = shader.property(CD.eCShaderBase.MaskReference).getChar() & 0xFF;
 				String useDethBias = shader.hasProperty(CD.eCShaderBase.UseDepthBias)
 						? String.valueOf(shader.property(CD.eCShaderBase.UseDepthBias).isBool())
 						: "-";
-				env.log(file.getName() + ": " + G3Enums.asString(eEShaderMaterialBlendMode.class, blendMode) + ", " + maskReference + ", "
-						+ useDethBias);
+				env.log(file.getFileName() + ": " + G3Enums.asString(eEShaderMaterialBlendMode.class, blendMode) + ", " + maskReference
+						+ ", " + useDethBias);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

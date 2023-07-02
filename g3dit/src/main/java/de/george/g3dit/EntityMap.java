@@ -5,7 +5,7 @@ import java.awt.Dimension;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
-import java.io.File;
+import java.nio.file.Paths;
 import java.util.Optional;
 
 import javax.swing.JButton;
@@ -47,6 +47,7 @@ import de.george.g3utils.gui.UndoableTextField;
 import de.george.g3utils.structure.bCBox;
 import de.george.g3utils.structure.bCVector;
 import de.george.g3utils.structure.bCVector2;
+import de.george.g3utils.util.FilesEx;
 import de.george.lrentnode.archive.eCEntity;
 import de.george.navmap.data.NavPath;
 import de.george.navmap.data.NavZone;
@@ -97,7 +98,7 @@ public class EntityMap extends JFrame {
 		setVisible(true);
 	}
 
-	private static final FileDescriptor XNAV_FILE_DESC = new FileDescriptor(new File("NavigationMap.xnav"), FileType.Other);
+	private static final FileDescriptor XNAV_FILE_DESC = new FileDescriptor(Paths.get("NavigationMap.xnav"), FileType.Other);
 
 	private String getNameFromCache(String baseName, String guid) {
 		String name = Caches.entity(ctx).getDisplayName(guid);
@@ -336,7 +337,7 @@ public class EntityMap extends JFrame {
 		}
 
 		public String getFile() {
-			return descriptor.getFile().getPath().getName();
+			return FilesEx.getFileName(descriptor.getFile().getPath());
 		}
 
 		@Override

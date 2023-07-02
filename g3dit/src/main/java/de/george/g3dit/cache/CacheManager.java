@@ -1,7 +1,9 @@
 package de.george.g3dit.cache;
 
-import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,9 +21,13 @@ public class CacheManager {
 
 	public CacheManager(EditorContext ctx) {
 		this.ctx = ctx;
-		File cacheDir = new File(CACHE_FOLDER);
-		if (!cacheDir.exists()) {
-			cacheDir.mkdir();
+		Path cacheDir = Paths.get(CACHE_FOLDER);
+		if (!Files.exists(cacheDir)) {
+			try {
+				Files.createDirectories(cacheDir);
+			} catch (IOException e) {
+				logger.warn("Failed to create cache dir: {}", cacheDir, e);
+			}
 		}
 	}
 
@@ -42,7 +48,7 @@ public class CacheManager {
 			T cache = getCache(tClass);
 			cache.create();
 			if (cache.isValid()) {
-				cache.save(new File(cache.getSavePath()));
+				cache.save(cache.getSavePath());
 			}
 			ctx.runGC();
 		} catch (Exception e) {
@@ -54,7 +60,7 @@ public class CacheManager {
 		for (AbstractCache<?> cache : caches.values()) {
 			try {
 				if (cache.isChanged()) {
-					cache.save(new File(cache.getSavePath()));
+					cache.save(cache.getSavePath());
 				}
 			} catch (IOException e) {
 				logger.warn("Failed to save cache {}.", cache.getClass().getSimpleName(), e);

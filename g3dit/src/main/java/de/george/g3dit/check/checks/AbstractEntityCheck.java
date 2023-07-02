@@ -1,6 +1,6 @@
 package de.george.g3dit.check.checks;
 
-import java.io.File;
+import java.nio.file.Path;
 import java.util.List;
 import java.util.function.Supplier;
 
@@ -41,7 +41,7 @@ public abstract class AbstractEntityCheck implements Check {
 		return description;
 	}
 
-	protected boolean onProcessArchive(ArchiveFile archiveFile, File dataFile, int pass) {
+	protected boolean onProcessArchive(ArchiveFile archiveFile, Path dataFile, int pass) {
 		return true;
 	}
 
@@ -52,7 +52,7 @@ public abstract class AbstractEntityCheck implements Check {
 	}
 
 	@Override
-	public PassStatus processArchive(ArchiveFile archiveFile, File dataFile, int pass, ProblemConsumer problemConsumer) {
+	public PassStatus processArchive(ArchiveFile archiveFile, Path dataFile, int pass, ProblemConsumer problemConsumer) {
 		if (!onProcessArchive(archiveFile, dataFile, pass)) {
 			return PassStatus.Next;
 		}
@@ -85,13 +85,13 @@ public abstract class AbstractEntityCheck implements Check {
 		return PassStatus.Next;
 	}
 
-	protected EntityPassStatus processEntity(ArchiveFile archiveFile, File dataFile, eCEntity entity, int entityPosition, int pass,
+	protected EntityPassStatus processEntity(ArchiveFile archiveFile, Path dataFile, eCEntity entity, int entityPosition, int pass,
 			Supplier<EntityDescriptor> descriptor, StringProblemConsumer problemConsumer) {
 		return EntityPassStatus.PassDone;
 	}
 
 	@Override
-	public PassStatus processTemplate(TemplateFile tple, File dataFile, int pass, ProblemConsumer problemConsumer) {
+	public PassStatus processTemplate(TemplateFile tple, Path dataFile, int pass, ProblemConsumer problemConsumer) {
 		TemplateEntity entity = tple.getReferenceHeader();
 		if (entity != null) {
 			FileDescriptor descriptor = new FileDescriptor(dataFile, FileDescriptor.FileType.Template);
@@ -101,7 +101,7 @@ public abstract class AbstractEntityCheck implements Check {
 		return PassStatus.Next;
 	}
 
-	protected PassStatus processTemplateEntity(TemplateFile tple, File dataFile, eCEntity entity, int pass, FileDescriptor descriptor,
+	protected PassStatus processTemplateEntity(TemplateFile tple, Path dataFile, eCEntity entity, int pass, FileDescriptor descriptor,
 			StringProblemConsumer problemConsumer) {
 		return PassStatus.Done;
 	}

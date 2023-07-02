@@ -46,7 +46,8 @@ public class ScriptSpotNonExistentRoutineGuids implements IScript {
 					int species = entity.getClass(CD.gCNPC_PS.class).property(CD.gCNPC_PS.Species).getEnumValue();
 					if (species == gESpecies.gESpecies_Human || species == gESpecies.gESpecies_Orc) {
 						G3Class nav = entity.getClass(CD.gCNavigation_PS.class);
-						String entityIdentifier = worldFilesIterator.nextFile().getName() + "#" + entity + " (" + entity.getGuid() + ")";
+						String entityIdentifier = worldFilesIterator.nextFile().getFileName() + "#" + entity + " (" + entity.getGuid()
+								+ ")";
 						entityRoutineMap.put(entityIdentifier, nav);
 					}
 				}

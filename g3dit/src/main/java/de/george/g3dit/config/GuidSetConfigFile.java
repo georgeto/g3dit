@@ -1,8 +1,8 @@
 package de.george.g3dit.config;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Path;
 import java.util.Objects;
 
 import com.google.common.collect.ImmutableSet;
@@ -17,7 +17,7 @@ public class GuidSetConfigFile extends ReloadableConfigFile<ImmutableSet<String>
 	}
 
 	@Override
-	protected ImmutableSet<String> read(File configFile) throws IOException {
+	protected ImmutableSet<String> read(Path configFile) throws IOException {
 		return IOUtils.readTextFile(configFile, StandardCharsets.UTF_8).stream().map(GuidUtil::parseGuid).filter(Objects::nonNull)
 				.collect(ImmutableSet.toImmutableSet());
 	}

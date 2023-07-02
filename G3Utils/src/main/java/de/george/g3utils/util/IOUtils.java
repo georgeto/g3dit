@@ -7,8 +7,6 @@ import java.awt.datatransfer.StringSelection;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileFilter;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -17,6 +15,7 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.URL;
 import java.nio.charset.Charset;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -51,11 +50,14 @@ public class IOUtils {
 			&& !file.getName().startsWith("{");
 	public static final FileFilter lrentdatFileFilter = (file) -> file.getName().endsWith(".lrentdat") && !file.getName().startsWith("{");
 	public static final FileFilter nodeFileFilter = (file) -> file.getName().endsWith(".node") && !file.getName().startsWith("{");
-	public static final FileFilter tpleFileFilter = (
-			file) -> (file.getName().endsWith(".tple") && !file.getName().startsWith("_deleted_"));
+	public static final FileFilter tpleFileFilter = (file) -> isValidTemplateFile(file.getName());
 	public static final FileFilter secdatFileFilter = (file) -> file.getName().endsWith(".secdat");
 	public static final FileFilter meshFilter = (file) -> file.getName().endsWith(".xcmsh") || file.getName().endsWith(".xact")
 			|| file.getName().endsWith(".xlmsh");
+
+	public static boolean isValidTemplateFile(String fileName) {
+		return fileName.endsWith(".tple") && !fileName.startsWith("_deleted_") && !fileName.startsWith("Testzeug_");
+	}
 
 	/**
 	 * Recursively lists all files under the given {@code rootDirectory} that match the
@@ -65,17 +67,17 @@ public class IOUtils {
 	 * @param fileFilter
 	 * @return
 	 */
-	public static List<File> listFiles(String rootDirectory, FileFilter fileFilter) {
-		ArrayList<File> files = new ArrayList<>();
+	public static List<Path> listFiles(Path rootDirectory, FileFilter fileFilter) {
+		ArrayList<Path> files = new ArrayList<>();
 
 		try (FastFileTreeWalker walker = new FastFileTreeWalker()) {
-			FastFileTreeWalker.PathWithAttrs entry = walker.walk(Paths.get(rootDirectory));
+			FastFileTreeWalker.PathWithAttrs entry = walker.walk(rootDirectory);
 			while (entry != null) {
 				// Only return files, not directories.
 				if (entry.attributes().isRegularFile()) {
-					File file = entry.file().toFile();
+					Path file = entry.file();
 					// Only return the files that match the fileFilter.
-					if (fileFilter.accept(file)) {
+					if (fileFilter.accept(file.toFile())) {
 						files.add(file);
 					}
 				}
@@ -96,19 +98,18 @@ public class IOUtils {
 	 * @param fileFilter
 	 * @return Matching files, sorted by their relative path.
 	 */
-	public static List<File> listFilesPrioritized(Iterable<String> rootDirectories, FileFilter fileFilter) {
-		TreeMap<String, File> files = new TreeMap<>();
+	public static List<Path> listFilesPrioritized(Iterable<Path> rootDirectories, FileFilter fileFilter) {
+		TreeMap<String, Path> files = new TreeMap<>();
 
-		for (String rootDirectory : rootDirectories) {
+		for (Path rootDir : rootDirectories) {
 			try (FastFileTreeWalker walker = new FastFileTreeWalker()) {
-				Path rootDir = Paths.get(rootDirectory);
 				FastFileTreeWalker.PathWithAttrs entry = walker.walk(rootDir);
 				while (entry != null) {
 					// Only return files, not directories.
 					if (entry.attributes().isRegularFile()) {
-						File file = entry.file().toFile();
+						Path file = entry.file();
 						// Only return the files that match the fileFilter.
-						if (fileFilter.accept(file)) {
+						if (fileFilter.accept(file.toFile())) {
 							String relativePath = rootDir.relativize(entry.file()).toString();
 							files.putIfAbsent(relativePath, file);
 						}
@@ -122,15 +123,15 @@ public class IOUtils {
 		return new ArrayList<>(files.values());
 	}
 
-	public static Optional<File> findFirstFile(String rootDirectory, FileFilter fileFilter) {
+	public static Optional<Path> findFirstFile(Path rootDirectory, FileFilter fileFilter) {
 		try (FastFileTreeWalker walker = new FastFileTreeWalker()) {
-			FastFileTreeWalker.PathWithAttrs entry = walker.walk(Paths.get(rootDirectory));
+			FastFileTreeWalker.PathWithAttrs entry = walker.walk(rootDirectory);
 			while (entry != null) {
 				// Only return files, not directories.
 				if (entry.attributes().isRegularFile()) {
-					File file = entry.file().toFile();
+					Path file = entry.file();
 					// Only return the files that match the fileFilter.
-					if (fileFilter.accept(file)) {
+					if (fileFilter.accept(file.toFile())) {
 						return Optional.of(file);
 					}
 				}
@@ -141,9 +142,9 @@ public class IOUtils {
 		return Optional.empty();
 	}
 
-	public static Optional<File> findFirstFile(Iterable<String> rootDirectories, FileFilter fileFilter) {
-		for (String rootDirectory : rootDirectories) {
-			Optional<File> file = findFirstFile(rootDirectory, fileFilter);
+	public static Optional<Path> findFirstFile(Iterable<Path> rootDirectories, FileFilter fileFilter) {
+		for (Path rootDirectory : rootDirectories) {
+			Optional<Path> file = findFirstFile(rootDirectory, fileFilter);
 			if (file.isPresent()) {
 				return file;
 			}
@@ -151,7 +152,7 @@ public class IOUtils {
 		return Optional.empty();
 	}
 
-	public static Callable<List<File>> joinFileCallables(List<Callable<List<File>>> callables) {
+	public static Callable<List<Path>> joinFileCallables(List<Callable<List<Path>>> callables) {
 		if (callables.isEmpty()) {
 			return Collections::emptyList;
 		}
@@ -170,10 +171,8 @@ public class IOUtils {
 		}).collect(Collectors.toList());
 	}
 
-	public static List<String> readTextFile(File file, Charset charset) throws IOException {
-		try (FileInputStream in = new FileInputStream(file)) {
-			return IOUtils.readTextFile(in, charset);
-		}
+	public static List<String> readTextFile(Path file, Charset charset) throws IOException {
+		return Files.readAllLines(file, charset);
 	}
 
 	public static List<String> readTextFile(InputStream in, Charset charset) throws IOException {
@@ -187,14 +186,12 @@ public class IOUtils {
 		return lines;
 	}
 
-	public static void writeTextFile(Iterable<String> lines, File file, Charset charset) throws IOException {
-		try (FileOutputStream out = new FileOutputStream(file)) {
-			writeTextFile(lines, out, charset);
-		}
+	public static void writeTextFile(Iterable<String> lines, Path file, Charset charset) throws IOException {
+		Files.write(file, lines, charset);
 	}
 
-	public static void writeTextFile(StringBuilder builder, File file, Charset charset) throws IOException {
-		try (FileOutputStream out = new FileOutputStream(file)) {
+	public static void writeTextFile(StringBuilder builder, Path file, Charset charset) throws IOException {
+		try (OutputStream out = Files.newOutputStream(file)) {
 			writeTextFile(builder, out, charset);
 		}
 	}
@@ -232,66 +229,40 @@ public class IOUtils {
 		Kryo kryo = new Kryo();
 		// Beschreibung siehe: https://github.com/EsotericSoftware/kryo#object-creation
 		kryo.setInstantiatorStrategy(new Kryo.DefaultInstantiatorStrategy(new StdInstantiatorStrategy()));
-		kryo.register(File.class, new Serializer<File>() {
+		kryo.addDefaultSerializer(Path.class, new Serializer<Path>() {
 			@Override
-			public void write(Kryo kryo, Output output, File object) {
-				output.writeString(object.getPath());
+			public void write(Kryo kryo, Output output, Path object) {
+				output.writeString(object.toString());
 			}
 
 			@Override
-			public File read(Kryo kryo, Input input, Class<File> type) {
-				return new File(input.readString());
+			public Path read(Kryo kryo, Input input, Class<Path> type) {
+				return Paths.get(input.readString());
 			}
 		});
 		ImmutableSetSerializer.registerSerializers(kryo);
 		return kryo;
 	}
 
-	public static Object loadObjectFromFile(File inFile) throws IOException, KryoException {
-		try (Input output = new Input(new FileInputStream(inFile))) {
+	public static Object loadObjectFromFile(Path inFile) throws IOException, KryoException {
+		try (Input output = new Input(Files.newInputStream(inFile))) {
 			return getKryo().readClassAndObject(output);
 		}
 
 	}
 
-	public static void saveObjectsToFile(File outFile, Object... obj) throws IOException {
+	public static void saveObjectsToFile(Path outFile, Object... obj) throws IOException {
 		saveObjectToFile(obj, outFile);
 	}
 
-	public static void saveObjectToFile(Object obj, File outFile) throws IOException {
-		try (Output output = new Output(new FileOutputStream(outFile))) {
+	public static void saveObjectToFile(Object obj, Path outFile) throws IOException {
+		try (Output output = new Output(Files.newOutputStream(outFile))) {
 			getKryo().writeClassAndObject(output, obj);
 		}
 	}
 
-	public static String stripExtension(String str) {
-
-		// Handle null case specially.
-		if (str == null) {
-			return null;
-		}
-
-		// Get position of last '.'.
-		int pos = str.lastIndexOf(".");
-
-		// If there wasn't any '.' just return the string as is.
-		if (pos == -1) {
-			return str;
-		}
-
-		// Otherwise return the string, up to the dot.
-		return str.substring(0, pos);
-	}
-
-	public static String changeExtension(String str, String newExt) {
-		return stripExtension(str) + "." + newExt;
-	}
-
-	public static File changeExtension(File file, String extension) {
-		return new File(file.getParentFile(), IOUtils.changeExtension(file.getName(), extension));
-	}
-
 	public static String ensureTrailingSlash(String path) {
+		// TODO: Get rid of this?!
 		return path + (path.endsWith(File.separator) ? "" : File.separator);
 	}
 

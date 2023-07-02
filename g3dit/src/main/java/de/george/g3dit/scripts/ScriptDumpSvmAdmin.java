@@ -1,8 +1,8 @@
 package de.george.g3dit.scripts;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -20,6 +20,7 @@ import de.george.g3dit.settings.Option;
 import de.george.g3dit.settings.OptionPanel;
 import de.george.g3dit.util.FileDialogWrapper;
 import de.george.g3dit.util.json.JsonUtil;
+import de.george.g3utils.util.FilesEx;
 import de.george.g3utils.util.IOUtils;
 import de.george.lrentnode.effect.gCSVMManager;
 import one.util.streamex.StreamEx;
@@ -42,19 +43,19 @@ public class ScriptDumpSvmAdmin implements IScript {
 
 	@Override
 	public boolean execute(IScriptEnvironment env) {
-		File loadFile = FileDialogWrapper.openFile(I.tr("Open SVMAdmin.dat..."), env.getParentWindow());
+		Path loadFile = FileDialogWrapper.openFile(I.tr("Open SVMAdmin.dat..."), env.getParentWindow());
 		if (loadFile == null) {
 			return false;
 		}
 
-		File saveFile;
+		Path saveFile;
 		boolean asJson = env.getOption(AS_JSON).booleanValue();
 		if (!asJson) {
 			saveFile = FileDialogWrapper.saveFile(I.tr("Save SVMAdmin.dat in text form"),
-					IOUtils.changeExtension(loadFile.getName(), "txt"), env.getParentWindow(), FileDialogWrapper.TXT_FILTER);
+					FilesEx.changeExtension(FilesEx.getFileName(loadFile), "txt"), env.getParentWindow(), FileDialogWrapper.TXT_FILTER);
 		} else {
 			saveFile = FileDialogWrapper.saveFile(I.tr("Save SVMAdmin.dat as Json"),
-					IOUtils.changeExtension(loadFile.getName(), "json"), env.getParentWindow(), FileDialogWrapper.JSON_FILTER);
+					FilesEx.changeExtension(FilesEx.getFileName(loadFile), "json"), env.getParentWindow(), FileDialogWrapper.JSON_FILTER);
 		}
 
 		if (saveFile == null) {
@@ -78,7 +79,7 @@ public class ScriptDumpSvmAdmin implements IScript {
 				IOUtils.writeTextFile(lines, saveFile, StandardCharsets.UTF_8);
 			} else {
 				JsonUtil.fieldAutodetectMapper().disable(SerializationFeature.FAIL_ON_EMPTY_BEANS).writerWithDefaultPrettyPrinter()
-						.writeValue(saveFile, manager);
+						.writeValue(saveFile.toFile(), manager);
 			}
 		} catch (IOException e) {
 			logger.warn("Error during export.", e);

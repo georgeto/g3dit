@@ -1,9 +1,9 @@
 package de.george.g3utils.io;
 
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Arrays;
 
 import de.george.g3utils.util.Misc;
@@ -11,8 +11,8 @@ import gr.zdimensions.jsquish.Squish;
 import gr.zdimensions.jsquish.Squish.CompressionType;
 
 public class XimgIO {
-	public static BufferedImage decompressXimg(File file, boolean ignoreTransparency) throws Exception {
-		byte[] ximgfile = Files.readAllBytes(file.toPath());
+	public static BufferedImage decompressXimg(Path file, boolean ignoreTransparency) throws Exception {
+		byte[] ximgfile = Files.readAllBytes(file);
 		if (ximgfile.length < 87) {
 			throw new IOException("Not an ximg file.");
 		}
@@ -82,7 +82,7 @@ public class XimgIO {
 					pos += 4;
 				}
 			}
-			ImageIO.write(im, "PNG", new File("..." + i + ".png"));
+			ImageIO.write(im, "PNG", Paths.get("..." + i + ".png"));
 			tmpW /= 2;
 			tmpH /= 2;
 		}

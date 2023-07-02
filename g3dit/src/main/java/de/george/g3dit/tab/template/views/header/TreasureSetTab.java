@@ -6,8 +6,8 @@ import static de.george.lrentnode.enums.G3Enums.gETreasureDistribution.gETreasur
 import static de.george.lrentnode.enums.G3Enums.gETreasureDistribution.gETreasureDistribution_Trade_Refresh;
 
 import java.awt.event.ActionEvent;
-import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -283,8 +283,8 @@ public class TreasureSetTab extends AbstractTemplateTab {
 		}
 
 		@Override
-		protected ImmutableMap<String, String[]> read(File configFile) throws IOException {
-			return ImmutableMap.copyOf(JsonUtil.noAutodetectMapper().<Map<String, String[]>>readValue(configFile,
+		protected ImmutableMap<String, String[]> read(Path configFile) throws IOException {
+			return ImmutableMap.copyOf(JsonUtil.noAutodetectMapper().<Map<String, String[]>>readValue(configFile.toFile(),
 					TypeFactory.defaultInstance().constructMapType(HashMap.class, String.class, String[].class)));
 		}
 

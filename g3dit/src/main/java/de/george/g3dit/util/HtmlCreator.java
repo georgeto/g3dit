@@ -20,7 +20,7 @@ public class HtmlCreator {
 
 	public static String renderEntity(EntityDescriptor entity) {
 		String entityIdentifier = String.format("%s (%s, %s #%d)", entity.getDisplayName(), entity.getGuid(),
-				entity.getFile().getPath().getName(), entity.getIndex());
+				entity.getFile().getPath().getFileName(), entity.getIndex());
 		return TagCreator.a(entityIdentifier).withHref(UriUtil.encodeEntity(entity)).render();
 	}
 

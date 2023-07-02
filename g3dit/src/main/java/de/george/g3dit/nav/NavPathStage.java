@@ -1,6 +1,6 @@
 package de.george.g3dit.nav;
 
-import java.io.File;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -200,7 +200,7 @@ public class NavPathStage extends NavCalcStage {
 		}
 
 		@Override
-		public File getFile() {
+		public Path getFile() {
 			return Caches.entity(ctx).getFile(getGuid()).map(FileDescriptor::getPath).orElse(null);
 		}
 

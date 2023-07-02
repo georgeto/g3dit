@@ -1,7 +1,8 @@
 package de.george.g3dit.check.checks;
 
-import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
@@ -25,6 +26,7 @@ import de.george.g3dit.gui.components.Severity;
 import de.george.g3dit.util.FileManager;
 import de.george.g3dit.util.HtmlCreator;
 import de.george.g3utils.util.Converter;
+import de.george.g3utils.util.FilesEx;
 import de.george.g3utils.util.IOUtils;
 import de.george.lrentnode.archive.SecDat;
 import de.george.lrentnode.util.FileUtil;
@@ -44,10 +46,10 @@ public class CheckSectors extends AbstractEntityCheck {
 	public void reportProblems(ProblemConsumer problemConsumer) {
 		this.problemConsumer = problemConsumer;
 
-		Optional<File> wrldatasc = ctx.getFileManager().searchFile(FileManager.RP_PROJECTS_COMPILED, "G3_World_01.wrldatasc");
+		Optional<Path> wrldatasc = ctx.getFileManager().searchFile(FileManager.RP_PROJECTS_COMPILED, "G3_World_01.wrldatasc");
 		if (!wrldatasc.isPresent())
 			report(Severity.Error, I.tr("Unable to find G3_World_01.wrldatasc."),
-					new File(ctx.getFileManager().getPrimaryPath("G3_World_01.wrldatasc")));
+					ctx.getFileManager().getPrimaryPath("G3_World_01.wrldatasc"));
 
 		Map<String, Boolean> registeredSectors;
 		try {
@@ -59,7 +61,7 @@ public class CheckSectors extends AbstractEntityCheck {
 		}
 
 		var worldFiles = ctx.getFileManager().listWorldFiles().stream()
-				.collect(Multimaps.toMultimap(File::getName, Function.identity(), HashMultimap::create));
+				.collect(Multimaps.toMultimap(FilesEx::getFileName, Function.identity(), HashMultimap::create));
 		for (var entry : worldFiles.asMap().entrySet()) {
 			if (entry.getValue().size() >= 2) {
 				report(Severity.Error, I.trf("Multiple world data files with the same name {0}.", entry.getKey()),
@@ -67,14 +69,14 @@ public class CheckSectors extends AbstractEntityCheck {
 			}
 		}
 
-		Multimap<String, File> knownSectors = HashMultimap.create();
-		Multimap<String, File> knownWorldFiles = HashMultimap.create();
-		for (File sector : ctx.getFileManager().listFiles(FileManager.RP_PROJECTS_COMPILED, IOUtils.secdatFileFilter)) {
-			String sectorName = sector.getName();
+		Multimap<String, Path> knownSectors = HashMultimap.create();
+		Multimap<String, Path> knownWorldFiles = HashMultimap.create();
+		for (Path sector : ctx.getFileManager().listFiles(FileManager.RP_PROJECTS_COMPILED, IOUtils.secdatFileFilter)) {
+			String sectorName = FilesEx.getFileName(sector);
 			try {
 				knownSectors.put(sectorName, sector);
 				// Find inactive sectors (not mentioned in .wrldatasc)
-				if (registeredSectors.remove(IOUtils.stripExtension(sectorName)) == null)
+				if (registeredSectors.remove(FilesEx.stripExtension(sectorName)) == null)
 					report(Severity.Warn, I.trf("Sector {0} is not registered in G3_World_01.wrldatasc.", sectorName), sector);
 
 				// Find sectors referring to non-exisiting files.
@@ -101,7 +103,7 @@ public class CheckSectors extends AbstractEntityCheck {
 			if (entry.getValue().size() >= 2) {
 				var referredFiles = worldFiles.get(entry.getKey());
 				if (referredFiles.isEmpty())
-					referredFiles = ImmutableSet.of(new File(entry.getKey()));
+					referredFiles = ImmutableSet.of(Paths.get(entry.getKey()));
 				report(Severity.Error, I.trf("Multiple sectors refer to world file {0}.", entry.getKey()),
 						renderFileList(entry.getValue()), referredFiles);
 			}
@@ -113,12 +115,12 @@ public class CheckSectors extends AbstractEntityCheck {
 					worldFiles.get(unusedWorldFile));
 	}
 
-	private String renderFileList(Collection<File> files) {
+	private String renderFileList(Collection<Path> files) {
 		return HtmlCreator.renderList(files.stream().map(f -> ctx.getFileManager().getRelativePath(f).get()));
 	}
 
-	private void report(Severity severity, String message, String details, Iterable<File> files) {
-		for (File file : files) {
+	private void report(Severity severity, String message, String details, Iterable<Path> files) {
+		for (Path file : files) {
 			var problem = new GenericFileProblem(message, details);
 			problem.setSeverity(severity);
 			problem.setParent(problemConsumer.getFileHelper(toFileDescriptor(file)));
@@ -126,23 +128,23 @@ public class CheckSectors extends AbstractEntityCheck {
 		}
 	}
 
-	private void report(Severity severity, String message, String details, File file) {
+	private void report(Severity severity, String message, String details, Path file) {
 		report(severity, message, details, StreamEx.of(file));
 	}
 
-	private void report(Severity severity, String message, Iterable<File> files) {
+	private void report(Severity severity, String message, Iterable<Path> files) {
 		report(severity, message, null, files);
 	}
 
-	private void report(Severity severity, String message, File file) {
+	private void report(Severity severity, String message, Path file) {
 		report(severity, message, null, file);
 	}
 
-	private static FileDescriptor toFileDescriptor(File file) {
+	private static FileDescriptor toFileDescriptor(Path file) {
 		FileType type = FileType.Other;
-		if (file.getName().endsWith(".node"))
+		if (FilesEx.hasFileExtension(file, "node"))
 			type = FileType.Node;
-		else if (file.getName().endsWith(".lrentdat"))
+		else if (FilesEx.hasFileExtension(file, "lrentdat"))
 			type = FileType.Lrentdat;
 		return new FileDescriptor(file, type);
 	}

@@ -1,8 +1,8 @@
 package de.george.g3dit.cache;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -102,7 +102,7 @@ public class EntityCache extends AbstractCache<EntityCache> {
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public void load(final File inFile) {
+	public void load(final Path inFile) {
 		LoadObjectWorker worker = new LoadObjectWorker(inFile) {
 			@Override
 			protected void done() {
@@ -121,16 +121,16 @@ public class EntityCache extends AbstractCache<EntityCache> {
 	}
 
 	@Override
-	public void save(File file) throws IOException {
+	public void save(Path file) throws IOException {
 		saveIntern(file, entries);
 	}
 
 	@Override
 	public void create() throws Exception {
-		List<File> openFiles = new ArrayList<>();
+		List<Path> openFiles = new ArrayList<>();
 		ConcurrentMap<String, EntityCacheEntry> openEntries = new ConcurrentHashMap<>();
 		for (EditorArchiveTab tab : ctx.getEditor().<EditorArchiveTab>getTabsInDataFolders(EditorTabType.Archive)) {
-			File file = tab.getDataFile().get();
+			Path file = tab.getDataFile().get();
 			processFile(tab.getCurrentFile(), tab.getDataFile().get(), openEntries);
 			openFiles.add(file);
 		}
@@ -139,7 +139,7 @@ public class EntityCache extends AbstractCache<EntityCache> {
 		worker.executeAndShowDialog();
 	}
 
-	private void processFile(ArchiveFile archive, File file, Map<String, EntityCacheEntry> entries) {
+	private void processFile(ArchiveFile archive, Path file, Map<String, EntityCacheEntry> entries) {
 		archive.getEntities().forEach(e -> entries.merge(e.getGuid(),
 				new EntityCacheEntry(e.toString(), new FileDescriptor(file, archive.getArchiveType())), this::mergeEntry));
 	}
@@ -175,8 +175,8 @@ public class EntityCache extends AbstractCache<EntityCache> {
 	private class CreateEntityCacheWorker extends AbstractDialogFileWorker<Pair<Map<String, EntityCacheEntry>, Map<String, String>>> {
 		private ConcurrentMap<String, EntityCacheEntry> workerEntries;
 
-		public CreateEntityCacheWorker(ConcurrentMap<String, EntityCacheEntry> openEntries, Callable<List<File>> fileProvider,
-				List<File> openFiles) {
+		public CreateEntityCacheWorker(ConcurrentMap<String, EntityCacheEntry> openEntries, Callable<List<Path>> fileProvider,
+				List<Path> openFiles) {
 			super(fileProvider, openFiles, I.tr("Create EntityCache"), ctx.getParentWindow());
 			workerEntries = openEntries;
 			statusFormat = I.tr("{0, number} entities found");

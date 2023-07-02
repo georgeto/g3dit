@@ -33,7 +33,7 @@ public class ScriptPurgeUnusedVegMeshes implements IScript {
 					unusedMeshes.forEach(veg::removeMeshClass);
 
 					if (!unusedMeshes.isEmpty()) {
-						env.log(I.trf("Removing {0, number} unused meshes in {1}#{2}", unusedMeshes.size(), file.getName(),
+						env.log(I.trf("Removing {0, number} unused meshes in {1}#{2}", unusedMeshes.size(), file.getFileName(),
 								entity.getGuid()));
 						removed += unusedMeshes.size();
 					}

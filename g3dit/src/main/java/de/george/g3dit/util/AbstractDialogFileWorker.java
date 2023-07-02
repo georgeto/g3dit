@@ -1,7 +1,7 @@
 package de.george.g3dit.util;
 
 import java.awt.Window;
-import java.io.File;
+import java.nio.file.Path;
 import java.util.List;
 import java.util.concurrent.Callable;
 
@@ -15,7 +15,7 @@ public abstract class AbstractDialogFileWorker<T> extends AbstractFileWorker<T, 
 	protected ProgressDialog progDlg;
 	protected String statusFormat;
 
-	protected AbstractDialogFileWorker(Callable<List<File>> fileProvider, List<File> openFiles, String dialogTitle, Window parent) {
+	protected AbstractDialogFileWorker(Callable<List<Path>> fileProvider, List<Path> openFiles, String dialogTitle, Window parent) {
 		super(fileProvider, openFiles, "", I.tr("{0, number}/{1, number} files processed"), I.tr("Processing completed"));
 
 		progDlg = new ProgressDialog(parent, dialogTitle, I.tr("Determine files to be processed..."), true);

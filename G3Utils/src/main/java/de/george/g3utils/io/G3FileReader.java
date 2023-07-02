@@ -1,14 +1,14 @@
 package de.george.g3utils.io;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.RandomAccessFile;
 import java.lang.reflect.Array;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.channels.FileChannel;
+import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -27,6 +27,7 @@ import com.teamunify.i18n.I;
 import de.george.g3utils.structure.bCBox;
 import de.george.g3utils.structure.bCVector;
 import de.george.g3utils.util.Converter;
+import de.george.g3utils.util.FilesEx;
 import de.george.g3utils.util.Misc;
 
 public abstract class G3FileReader extends G3FileBase implements AutoCloseable {
@@ -50,10 +51,10 @@ public abstract class G3FileReader extends G3FileBase implements AutoCloseable {
 		buffer.order(ByteOrder.LITTLE_ENDIAN);
 	}
 
-	public G3FileReader(File file) throws IOException {
-		fileName = file.getName();
-		try (RandomAccessFile rfile = new RandomAccessFile(file, "r")) {
-			fromChannel(rfile.getChannel());
+	public G3FileReader(Path file) throws IOException {
+		fileName = FilesEx.getFileName(file);
+		try (FileChannel channel = FileChannel.open(file, StandardOpenOption.READ)) {
+			fromChannel(channel);
 		}
 	}
 

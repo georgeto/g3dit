@@ -1,6 +1,6 @@
 package de.george.g3dit.check.checks;
 
-import java.io.File;
+import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -20,6 +20,7 @@ import de.george.g3dit.check.problem.ProblemConsumer;
 import de.george.g3dit.gui.components.Severity;
 import de.george.g3dit.util.FileManager;
 import de.george.g3utils.structure.GuidUtil;
+import de.george.g3utils.util.FilesEx;
 import de.george.lrentnode.archive.ArchiveFile;
 import de.george.lrentnode.archive.eCEntity;
 import de.george.lrentnode.classes.G3Class;
@@ -35,13 +36,13 @@ public class CheckLightmaps extends AbstractEntityCheck {
 	private Set<String> primaryGuids = new HashSet<>();
 
 	public CheckLightmaps(EditorContext ctx) {
-		super(I.tr("Find invalid lightmaps"),
-				I.tr("Find lightmaps whose guid does not exist or for which the mesh name does not match."), 0, 1);
+		super(I.tr("Find invalid lightmaps"), I.tr("Find lightmaps whose guid does not exist or for which the mesh name does not match."),
+				0, 1);
 		this.ctx = ctx;
 	}
 
 	@Override
-	protected EntityPassStatus processEntity(ArchiveFile archiveFile, File dataFile, eCEntity entity, int entityPosition, int pass,
+	protected EntityPassStatus processEntity(ArchiveFile archiveFile, Path dataFile, eCEntity entity, int entityPosition, int pass,
 			Supplier<EntityDescriptor> descriptor, StringProblemConsumer problemConsumer) {
 		G3Class meshClass = EntityUtil.getStaticMeshClass(entity);
 		if (meshClass != null) {
@@ -50,8 +51,8 @@ public class CheckLightmaps extends AbstractEntityCheck {
 		return EntityPassStatus.Next;
 	}
 
-	private void checkLightmap(File lightmap, ProblemConsumer problemConsumer, boolean primary) {
-		Matcher matcher = PATTERN_LIGHTMAP_NAME.matcher(lightmap.getName());
+	private void checkLightmap(Path lightmap, ProblemConsumer problemConsumer, boolean primary) {
+		Matcher matcher = PATTERN_LIGHTMAP_NAME.matcher(FilesEx.getFileName(lightmap));
 		if (matcher.matches()) {
 			String mesh = matcher.group("mesh");
 			String guid = GuidUtil.parseGuid(matcher.group("guid"));
@@ -96,16 +97,16 @@ public class CheckLightmaps extends AbstractEntityCheck {
 
 	@Override
 	public void reportProblems(ProblemConsumer problemConsumer) {
-		for (File lightmap : ctx.getFileManager().listPrimaryFiles(FileManager.RP_LIGHTMAPS, f -> f.getName().endsWith(".xlmp"))) {
+		for (Path lightmap : ctx.getFileManager().listPrimaryFiles(FileManager.RP_LIGHTMAPS, f -> f.getName().endsWith(".xlmp"))) {
 			checkLightmap(lightmap, problemConsumer, true);
 		}
 
-		for (File lightmap : ctx.getFileManager().listSecondaryFiles(FileManager.RP_LIGHTMAPS, f -> f.getName().endsWith(".xlmp"))) {
+		for (Path lightmap : ctx.getFileManager().listSecondaryFiles(FileManager.RP_LIGHTMAPS, f -> f.getName().endsWith(".xlmp"))) {
 			checkLightmap(lightmap, problemConsumer, false);
 		}
 	}
 
-	protected void reportLightmapError(ProblemConsumer problemConsumer, File file, Severity severity, String message, String details) {
+	protected void reportLightmapError(ProblemConsumer problemConsumer, Path file, Severity severity, String message, String details) {
 		GenericFileProblem problem = new GenericFileProblem(message, details);
 		problem.setParent(problemConsumer.getFileHelper(new FileDescriptor(file, FileType.Other)));
 		problem.setSeverity(severity);

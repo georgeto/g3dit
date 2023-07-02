@@ -1,8 +1,8 @@
 package de.george.g3dit.config;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Optional;
 import java.util.function.Consumer;
 
@@ -38,7 +38,7 @@ public abstract class ReloadableConfigFile<T> {
 	}
 
 	public synchronized void updateContent(T newContent) {
-		Optional<File> configFile = ctx.getFileManager().getLocalConfigFile(path);
+		Optional<Path> configFile = ctx.getFileManager().getLocalConfigFile(path);
 		if (configFile.isPresent()) {
 			try {
 				write(newContent, configFile.get());
@@ -60,16 +60,16 @@ public abstract class ReloadableConfigFile<T> {
 
 	private synchronized void reloadContent() {
 		try {
-			Optional<File> localConfigFile = ctx.getFileManager().getLocalConfigFile(path);
+			Optional<Path> localConfigFile = ctx.getFileManager().getLocalConfigFile(path);
 			// No primary data folder set
 			if (!localConfigFile.isPresent()) {
 				content = read(ctx.getFileManager().getDefaultConfigFile(path));
 			} else {
-				if (!localConfigFile.get().exists()) {
-					File defaultConfigFile = ctx.getFileManager().getDefaultConfigFile(path);
+				if (!Files.exists(localConfigFile.get())) {
+					Path defaultConfigFile = ctx.getFileManager().getDefaultConfigFile(path);
 					try {
-						localConfigFile.get().getParentFile().mkdirs();
-						Files.copy(defaultConfigFile.toPath(), localConfigFile.get().toPath());
+						Files.createDirectories(localConfigFile.get().getParent());
+						Files.copy(defaultConfigFile, localConfigFile.get());
 					} catch (IOException e) {
 						logger.warn("Failed to create local config file.", e);
 						content = read(defaultConfigFile);
@@ -84,9 +84,9 @@ public abstract class ReloadableConfigFile<T> {
 		contentChangedListeners.notify(content);
 	}
 
-	protected abstract T read(File configFile) throws IOException;
+	protected abstract T read(Path configFile) throws IOException;
 
-	protected void write(T content, File configFile) throws IOException {
+	protected void write(T content, Path configFile) throws IOException {
 		throw new UnsupportedOperationException();
 	}
 

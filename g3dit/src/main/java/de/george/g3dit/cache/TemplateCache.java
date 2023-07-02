@@ -1,8 +1,8 @@
 package de.george.g3dit.cache;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -100,7 +100,7 @@ public class TemplateCache extends AbstractCache<TemplateCache> {
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public void load(final File inFile) {
+	public void load(final Path inFile) {
 		LoadObjectWorker worker = new LoadObjectWorker(inFile) {
 			@Override
 			protected void done() {
@@ -118,19 +118,19 @@ public class TemplateCache extends AbstractCache<TemplateCache> {
 	}
 
 	@Override
-	public void save(File file) throws IOException {
+	public void save(Path file) throws IOException {
 		saveIntern(file, templates);
 	}
 
 	private class CreateTemplateCacheWorker extends AbstractDialogFileWorker<List<TemplateCacheEntry>> {
-		public CreateTemplateCacheWorker(Callable<List<File>> fileProvider) {
+		public CreateTemplateCacheWorker(Callable<List<Path>> fileProvider) {
 			super(fileProvider, null, I.tr("Create TemplateCache"), ctx.getParentWindow());
 			statusFormat = I.tr("{0, number} templates found");
 		}
 
 		@Override
 		protected List<TemplateCacheEntry> doInBackground() throws Exception {
-			List<File> files = getFiles();
+			List<Path> files = getFiles();
 
 			Collector<String, ?, ImmutableSet<String>> toImmutableSet = ImmutableSet.toImmutableSet();
 
@@ -175,10 +175,10 @@ public class TemplateCache extends AbstractCache<TemplateCache> {
 		private final boolean helperParent;
 		private final String refTemplate;
 		private final long changeTime;
-		private final File file;
+		private final Path file;
 		private final Set<String> classes;
 
-		public TemplateCacheEntry(String name, String guid, boolean helperParent, String refTemplate, long changeTime, File file,
+		public TemplateCacheEntry(String name, String guid, boolean helperParent, String refTemplate, long changeTime, Path file,
 				Set<String> classes) {
 			this.name = name;
 			this.guid = guid;
@@ -209,7 +209,7 @@ public class TemplateCache extends AbstractCache<TemplateCache> {
 			return changeTime;
 		}
 
-		public File getFile() {
+		public Path getFile() {
 			return file;
 		}
 

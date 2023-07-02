@@ -1,19 +1,22 @@
 package de.george.g3utils.io;
 
-import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
+import de.george.g3utils.util.FilesEx;
 import de.george.g3utils.util.IOUtils;
 
 public class RecursiveFileLocator implements FileLocator {
-	private File root;
+	private Path root;
 	private String lastRootPath;
-	private Map<String, String> fileTable = new HashMap<>();
+	private Map<String, Path> fileTable = new HashMap<>();
 
 	private boolean refreshOnCacheMiss;
 
@@ -39,21 +42,22 @@ public class RecursiveFileLocator implements FileLocator {
 			return;
 		}
 
-		root = new File(rootPath).getCanonicalFile();
-		if (!root.exists()) {
-			throw new IllegalArgumentException("Given root path \"" + root + "\" does not exist");
+		Path newRoot = Paths.get(rootPath);
+		if (!Files.exists(newRoot)) {
+			throw new IllegalArgumentException("Given root path \"" + newRoot + "\" does not exist");
 		}
 
-		if (!root.isDirectory()) {
-			throw new IllegalArgumentException("Given root path \"" + root + "\" is not a directory");
+		if (!Files.isDirectory(newRoot)) {
+			throw new IllegalArgumentException("Given root path \"" + newRoot + "\" is not a directory");
 		}
 
+		root = newRoot.toRealPath();
 		lastRootPath = rootPath;
 
 		fileTable.clear();
-		List<File> files = IOUtils.listFiles(rootPath, (f) -> true);
-		for (File file : files) {
-			fileTable.put(file.getName().toLowerCase(), file.getCanonicalPath());
+		List<Path> files = IOUtils.listFiles(root, (f) -> true);
+		for (Path file : files) {
+			fileTable.put(FilesEx.getFileNameLowerCase(file), file);
 		}
 	}
 
@@ -63,20 +67,17 @@ public class RecursiveFileLocator implements FileLocator {
 	 * @see de.george.g3utils.io.FileLocator#locate(java.lang.String)
 	 */
 	@Override
-	public Optional<File> locate(String name) {
-		File file = new File(root, name);
-		if (!file.exists()) {
-			String filePath = fileTable.get(name.toLowerCase());
-			if (filePath != null) {
-				file = new File(filePath);
-			}
+	public Optional<Path> locate(String name) {
+		Path file = root.resolve(name);
+		if (!Files.exists(file)) {
+			file = fileTable.get(name.toLowerCase());
 		}
 
-		if (refreshOnCacheMiss && !file.exists()) {
-			return IOUtils.findFirstFile(root.getAbsolutePath(), (ftf) -> ftf.getName().equalsIgnoreCase(name));
+		if (refreshOnCacheMiss && !Files.exists(file)) {
+			return IOUtils.findFirstFile(root, (ftf) -> ftf.getName().equalsIgnoreCase(name));
 		}
 
-		if (file.exists() && file.isFile()) {
+		if (Files.isRegularFile(file)) {
 			return Optional.of(file);
 		} else {
 			return Optional.empty();

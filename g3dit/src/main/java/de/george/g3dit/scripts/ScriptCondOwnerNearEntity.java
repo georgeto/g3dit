@@ -1,10 +1,10 @@
 package de.george.g3dit.scripts;
 
 import java.awt.Desktop;
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.HashSet;
 import java.util.Properties;
 import java.util.Set;
@@ -39,14 +39,14 @@ public class ScriptCondOwnerNearEntity implements IScript {
 			}
 		}
 
-		for (File file : env.getFileManager().listFiles("Infos/G3_World_01/", f -> f.getName().endsWith(".info"))) {
+		for (Path file : env.getFileManager().listFiles("Infos/G3_World_01/", f -> f.getName().endsWith(".info"))) {
 			Properties properties = new Properties();
 			try {
-				properties.load(new FileReader(file));
+				properties.load(Files.newBufferedReader(file));
 				String ownerNearEntity = properties.getProperty("CondOwnerNearEntity");
 				if (ownerNearEntity != null && !ownerNearEntity.isEmpty() && npcs.contains(ownerNearEntity)) {
-					env.log(file.getName() + ": " + ownerNearEntity);
-					Desktop.getDesktop().open(file);
+					env.log(file.getFileName() + ": " + ownerNearEntity);
+					Desktop.getDesktop().open(file.toFile());
 				}
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();

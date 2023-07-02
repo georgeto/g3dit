@@ -1,8 +1,9 @@
 package de.george.g3dit.util;
 
-import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -35,6 +36,7 @@ import de.george.g3utils.gui.SwingUtils;
 import de.george.g3utils.io.CompositeFileLocator;
 import de.george.g3utils.io.FileLocator;
 import de.george.g3utils.io.RecursiveFileLocator;
+import de.george.g3utils.util.FilesEx;
 import de.george.g3utils.util.IOUtils;
 import de.george.lrentnode.iterator.ArchiveFileIterator;
 import de.george.lrentnode.iterator.TemplateFileIterator;
@@ -70,11 +72,11 @@ public class FileManager {
 		return ctx.getOptionStore().get(EditorOptions.Path.PRIMARY_DATA_FOLDER);
 	}
 
-	public String getPrimaryPath(String relativePath) {
-		return getPrimaryDataFolder() + relativePath;
+	public Path getPrimaryPath(String relativePath) {
+		return Paths.get(getPrimaryDataFolder(), relativePath);
 	}
 
-	public List<File> listPrimaryFiles(String relativePath, FileFilter fileFilter) {
+	public List<Path> listPrimaryFiles(String relativePath, FileFilter fileFilter) {
 		return IOUtils.listFiles(getPrimaryPath(relativePath), fileFilter);
 	}
 
@@ -82,35 +84,35 @@ public class FileManager {
 		return ctx.getOptionStore().get(EditorOptions.Path.SECONDARY_DATA_FOLDER);
 	}
 
-	public String getSecondaryPath(String relativePath) {
-		return getSecondaryDataFolder() + relativePath;
+	public Path getSecondaryPath(String relativePath) {
+		return Paths.get(getSecondaryDataFolder(), relativePath);
 	}
 
-	public List<File> listSecondaryFiles(String relativePath, FileFilter fileFilter) {
+	public List<Path> listSecondaryFiles(String relativePath, FileFilter fileFilter) {
 		return IOUtils.listFiles(getSecondaryPath(relativePath), fileFilter);
 	}
 
-	private ImmutableList<String> getPaths(String relativePath) {
+	private ImmutableList<Path> getPaths(String relativePath) {
 		return ImmutableList.of(getPrimaryPath(relativePath), getSecondaryPath(relativePath));
 	}
 
-	public List<File> listFiles(String relativePath, FileFilter fileFilter) {
+	public List<Path> listFiles(String relativePath, FileFilter fileFilter) {
 		return IOUtils.listFilesPrioritized(getPaths(relativePath), fileFilter);
 	}
 
-	public Optional<File> searchFile(String relativePath, String fileName) {
+	public Optional<Path> searchFile(String relativePath, String fileName) {
 		return IOUtils.findFirstFile(getPaths(relativePath), file -> file.getName().equalsIgnoreCase(fileName));
 	}
 
-	public Optional<File> searchFile(String relativePath) {
-		return getPaths(relativePath).stream().map(File::new).filter(File::isFile).findFirst();
+	public Optional<Path> searchFile(String relativePath) {
+		return getPaths(relativePath).stream().filter(Files::isRegularFile).findFirst();
 	}
 
-	public Optional<File> searchFile(File file) {
+	public Optional<Path> searchFile(Path file) {
 		return getRelativePath(file).flatMap(this::searchFile);
 	}
 
-	public List<File> listWorldFiles() {
+	public List<Path> listWorldFiles() {
 		return listFiles(RP_PROJECTS_COMPILED, IOUtils.archiveFileFilter);
 	}
 
@@ -118,52 +120,54 @@ public class FileManager {
 		return new ArchiveFileIterator(listWorldFiles());
 	}
 
-	public Callable<List<File>> worldFilesCallable() {
+	public Callable<List<Path>> worldFilesCallable() {
 		return this::listWorldFiles;
 	}
 
-	public List<File> listTemplateFiles() {
-		return listFiles(RP_TEMPLATES,
-				f -> IOUtils.tpleFileFilter.accept(f) && !f.getName().startsWith("_deleted") && !f.getName().startsWith("Testzeug_"));
+	public List<Path> listTemplateFiles() {
+		return listFiles(RP_TEMPLATES, f -> IOUtils.isValidTemplateFile(f.getName()));
 	}
 
 	public TemplateFileIterator templateFilesIterator() {
 		return new TemplateFileIterator(listTemplateFiles());
 	}
 
-	public Callable<List<File>> templateFilesCallable() {
+	public Callable<List<Path>> templateFilesCallable() {
 		return this::listTemplateFiles;
 	}
 
-	public boolean isInPrimaryDataFolder(File file) {
-		String primaryDataFolder = getPrimaryDataFolder().toLowerCase();
-		return !primaryDataFolder.isEmpty() && file != null && file.getAbsolutePath().toLowerCase().startsWith(primaryDataFolder);
+	public boolean isInPrimaryDataFolder(Path file) {
+		String primaryDataFolder = getPrimaryDataFolder();
+		return !primaryDataFolder.isEmpty() && file != null && FilesEx.getAbsolutePath(file).toLowerCase().startsWith(primaryDataFolder);
 	}
 
-	public boolean isInSecondaryDataFolder(File file) {
+	public boolean isInSecondaryDataFolder(Path file) {
 		String secondaryDataFolder = getSecondaryDataFolder().toLowerCase();
-		return !secondaryDataFolder.isEmpty() && file != null && file.getAbsolutePath().toLowerCase().startsWith(secondaryDataFolder);
+		return !secondaryDataFolder.isEmpty() && file != null
+				&& FilesEx.getAbsolutePath(file).toLowerCase().startsWith(secondaryDataFolder);
 	}
 
-	public Optional<File> moveFromPrimaryToSecondary(File file) {
+	// TODO: Use Path.relativize...
+
+	public Optional<Path> moveFromPrimaryToSecondary(Path file) {
 		String primaryDataFolder = getPrimaryDataFolder();
 		String secondaryDataFolder = getSecondaryDataFolder();
 		if (!secondaryDataFolder.isEmpty() && isInPrimaryDataFolder(file)) {
-			return Optional.of(new File(secondaryDataFolder + file.getAbsolutePath().substring(primaryDataFolder.length())));
+			return Optional.of(Paths.get(secondaryDataFolder, FilesEx.getAbsolutePath(file).substring(primaryDataFolder.length())));
 		}
 		return Optional.empty();
 	}
 
-	public Optional<File> moveFromSecondaryToPrimary(File file) {
+	public Optional<Path> moveFromSecondaryToPrimary(Path file) {
 		String primaryDataFolder = getPrimaryDataFolder().toLowerCase();
 		String secondaryDataFolder = getSecondaryDataFolder().toLowerCase();
 		if (!primaryDataFolder.isEmpty() && isInSecondaryDataFolder(file)) {
-			return Optional.of(new File(primaryDataFolder + file.getAbsolutePath().substring(secondaryDataFolder.length())));
+			return Optional.of(Paths.get(primaryDataFolder + FilesEx.getAbsolutePath(file).substring(secondaryDataFolder.length())));
 		}
 		return Optional.empty();
 	}
 
-	public Optional<String> getRelativePath(File file) {
+	public Optional<String> getRelativePath(Path file) {
 		Option<String> dataFolder = null;
 		if (isInPrimaryDataFolder(file)) {
 			dataFolder = EditorOptions.Path.PRIMARY_DATA_FOLDER;
@@ -171,7 +175,7 @@ public class FileManager {
 			dataFolder = EditorOptions.Path.SECONDARY_DATA_FOLDER;
 		}
 
-		return dataFolder != null ? Optional.of(file.getAbsolutePath().substring(ctx.getOptionStore().get(dataFolder).length()))
+		return dataFolder != null ? Optional.of(FilesEx.getAbsolutePath(file).substring(ctx.getOptionStore().get(dataFolder).length()))
 				: Optional.empty();
 	}
 
@@ -192,9 +196,9 @@ public class FileManager {
 		LinkedHashSet<String> locations = new LinkedHashSet<>();
 
 		BiConsumer<String, Iterable<String>> locationAdder = (loc, ext) -> {
-			File file = new File(loc);
-			if (file.isDirectory()) {
-				locations.add(Joiner.on(';').join(ext) + "#" + file.getAbsolutePath());
+			Path file = Paths.get(loc);
+			if (Files.isDirectory(file)) {
+				locations.add(Joiner.on(';').join(ext) + "#" + file.toAbsolutePath());
 			}
 		};
 
@@ -214,7 +218,7 @@ public class FileManager {
 		for (String dataFolder : getDataFolders()) {
 			try {
 				String rootPath = dataFolder + relativePath;
-				if (new File(rootPath).exists()) {
+				if (Files.exists(Paths.get(rootPath))) {
 					locator.addLocator(new RecursiveFileLocator(rootPath, refreshOnCacheMiss));
 				}
 			} catch (IOException e) {
@@ -230,17 +234,17 @@ public class FileManager {
 	 * @param relativePath
 	 * @return {@code Optional.empty()} if no primary data folder is set.
 	 */
-	public Optional<File> getLocalConfigFile(String relativePath) {
+	public Optional<Path> getLocalConfigFile(String relativePath) {
 		String dataFolder = getPrimaryDataFolder();
 		if (dataFolder.isEmpty()) {
 			return Optional.empty();
 		}
 
-		return Optional.of(Paths.get(dataFolder, RP_LOCAL_CONFIG, relativePath).toFile());
+		return Optional.of(Paths.get(dataFolder, RP_LOCAL_CONFIG, relativePath));
 	}
 
-	public File getDefaultConfigFile(String relativePath) {
-		return Paths.get(Editor.EDITOR_CONFIG_FOLDER, "default", relativePath).toFile();
+	public Path getDefaultConfigFile(String relativePath) {
+		return Paths.get(Editor.EDITOR_CONFIG_FOLDER, "default", relativePath);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -260,22 +264,22 @@ public class FileManager {
 	 * @throws IllegalStateException if this method is called from any Thread other than the Swing
 	 *             Event Dispatch Thread
 	 */
-	public Optional<File> confirmSaveInSecondary(File file) {
+	public Optional<Path> confirmSaveInSecondary(Path file) {
 		SwingUtils.checkAccessThread();
 		if (isInSecondaryDataFolder(file)) {
 			int result;
-			if (moveFromSecondaryToPrimary(file).map(File::exists).orElse(false)) {
+			if (moveFromSecondaryToPrimary(file).map(Files::exists).orElse(false)) {
 				result = TaskDialogs.choice(ctx.getParentWindow(), I.tr("Do you really want to save the file?"),
 						I.trf("''{0}'' is located in the secondary data directory.\n"
 								+ "Normally, no changes should be made to files in this directory.\n\n"
 								+ "A file already exists in the primary data directory under the same relative path.\n\n"
-								+ "Should it be saved anyway?", file.getName()),
+								+ "Should it be saved anyway?", file.getFileName()),
 						1, new CommandLink(I.tr("Yes"), ""), new CommandLink(I.tr("No"), ""));
 			} else {
 				result = TaskDialogs.choice(ctx.getParentWindow(), I.tr("Do you really want to save the file?"),
 						I.trf("''{0}'' is located in the secondary data directory.\n"
 								+ "Normally, no changes should be made to files in this directory.\n\n" + "Should it be saved anyway?",
-								file.getName()),
+								file.getFileName()),
 						1, new CommandLink(I.tr("Yes"), ""), new CommandLink(I.tr("No"), ""), new CommandLink(
 								I.tr("Primary data directory"), I.tr("Save under the same relative path in the primary data directory.")));
 			}
@@ -291,14 +295,14 @@ public class FileManager {
 		}
 	}
 
-	public boolean explorePath(File path) {
+	public boolean explorePath(Path path) {
 		try {
 			String fileManager = ctx.getOptionStore().get(EditorOptions.Path.FILE_MANAGER);
 			if (!fileManager.isEmpty()) {
-				Runtime.getRuntime().exec(fileManager.replace("%path", path.getAbsolutePath()));
+				Runtime.getRuntime().exec(fileManager.replace("%path", FilesEx.getAbsolutePath(path)));
 			} else {
 				// Fallback to explorer
-				new ProcessBuilder("explorer.exe", "/select,", path.getAbsolutePath()).start();
+				new ProcessBuilder("explorer.exe", "/select,", FilesEx.getAbsolutePath(path)).start();
 			}
 			return true;
 		} catch (Exception e) {
@@ -322,23 +326,23 @@ public class FileManager {
 		}
 	}
 
-	public List<File> listMeshes() {
+	public List<Path> listMeshes() {
 		return listFiles(FileManager.RP_COMPILED_MESH, IOUtils.meshFilter);
 	}
 
-	public List<File> listStaticMeshes() {
+	public List<Path> listStaticMeshes() {
 		return listFiles(FileManager.RP_COMPILED_MESH, (file) -> file.getName().endsWith(".xcmsh"));
 	}
 
-	public List<File> listLodMeshes() {
+	public List<Path> listLodMeshes() {
 		return listFiles(FileManager.RP_COMPILED_MESH, (file) -> file.getName().endsWith(".xlmsh"));
 	}
 
-	public List<File> listAnimatedMeshes() {
+	public List<Path> listAnimatedMeshes() {
 		return listFiles(FileManager.RP_COMPILED_ANIMATION, (file) -> file.getName().endsWith(".xact"));
 	}
 
-	public List<File> listMaterials() {
+	public List<Path> listMaterials() {
 		return listFiles(FileManager.RP_COMPILED_MATERIAL, (file) -> file.getName().endsWith(".xshmat"));
 	}
 }

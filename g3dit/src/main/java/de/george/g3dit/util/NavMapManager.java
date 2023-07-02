@@ -1,7 +1,9 @@
 package de.george.g3dit.util;
 
-import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,7 +23,7 @@ import de.george.navmap.util.NavCalc;
 public class NavMapManager extends EventBusProvider {
 	private static final Logger logger = LoggerFactory.getLogger(NavMapManager.class);
 
-	private File navMapFile;
+	private Path navMapFile;
 	private NavMap navMap;
 
 	private EditorContext ctx;
@@ -39,13 +41,13 @@ public class NavMapManager extends EventBusProvider {
 	}
 
 	public boolean loadNavMap(boolean displayErrorDialog) {
-		navMapFile = new File(
+		navMapFile = Paths.get(
 				ctx.getOptionStore().get(EditorOptions.Path.PRIMARY_DATA_FOLDER) + "Projects_compiled/G3_World_01/NavigationMap.xnav");
-		if (!navMapFile.exists()) {
-			navMapFile = new File(ctx.getOptionStore().get(EditorOptions.Path.SECONDARY_DATA_FOLDER)
+		if (!Files.exists(navMapFile)) {
+			navMapFile = Paths.get(ctx.getOptionStore().get(EditorOptions.Path.SECONDARY_DATA_FOLDER)
 					+ "Projects_compiled/G3_World_01/NavigationMap.xnav");
 		}
-		if (!navMapFile.exists()) {
+		if (!Files.exists(navMapFile)) {
 			navMap = null;
 			eventBus().post(new NavMapLoadedEvent(false));
 			if (displayErrorDialog) {
@@ -78,7 +80,7 @@ public class NavMapManager extends EventBusProvider {
 		}
 	}
 
-	public boolean saveMap(File file) {
+	public boolean saveMap(Path file) {
 		try {
 			file = ctx.getFileManager().confirmSaveInSecondary(file).orElse(null);
 			if (file == null) {
@@ -88,15 +90,14 @@ public class NavMapManager extends EventBusProvider {
 			navMapFile = file;
 			navMap.save(file);
 		} catch (IOException e) {
-			TaskDialogs.error(ctx.getParentWindow(), I.tr("Saving failed"),
-					I.trf("NavMap could not be saved: {0}", e.getMessage()));
+			TaskDialogs.error(ctx.getParentWindow(), I.tr("Saving failed"), I.trf("NavMap could not be saved: {0}", e.getMessage()));
 			return false;
 		}
 		return true;
 	}
 
 	public boolean saveNavMapAs() {
-		File navMapSave = FileDialogWrapper.saveFile(I.tr("Save NavMap as"), "NavigationMap.xnav", ctx.getParentWindow(),
+		Path navMapSave = FileDialogWrapper.saveFile(I.tr("Save NavMap as"), "NavigationMap.xnav", ctx.getParentWindow(),
 				FileDialogWrapper.XNAV_FILTER);
 		if (navMapSave != null) {
 			if (!this.saveMap(navMapSave)) {
@@ -112,7 +113,7 @@ public class NavMapManager extends EventBusProvider {
 		return navMap != null && navMap.isChanged();
 	}
 
-	public File getNavMapFile() {
+	public Path getNavMapFile() {
 		return navMapFile;
 	}
 

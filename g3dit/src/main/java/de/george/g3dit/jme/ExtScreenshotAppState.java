@@ -27,10 +27,12 @@
 package de.george.g3dit.jme;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.ByteBuffer;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.logging.Level;
@@ -68,7 +70,7 @@ public class ExtScreenshotAppState extends AbstractAppState implements ActionLis
 	private int width, height;
 	private AppProfiler prof;
 
-	private File outFile;
+	private Path outFile;
 	private String outFormat;
 
 	private CompletableFuture<Boolean> complete;
@@ -144,7 +146,7 @@ public class ExtScreenshotAppState extends AbstractAppState implements ActionLis
 	 * an emptry string to use the application folder. Use NULL to use the system default storage
 	 * folder.
 	 *
-	 * @param filePath File path to use to store the screenshot. Include the seperator at the end of
+	 * @param filePath Path path to use to store the screenshot. Include the seperator at the end of
 	 *            the path.
 	 */
 	public void setFilePath(String filePath) {
@@ -154,7 +156,7 @@ public class ExtScreenshotAppState extends AbstractAppState implements ActionLis
 	/**
 	 * Set the file name of the screenshot.
 	 *
-	 * @param fileName File name to save the screenshot as.
+	 * @param fileName Path name to save the screenshot as.
 	 */
 	public void setFileName(String fileName) {
 		shotName = fileName;
@@ -206,7 +208,7 @@ public class ExtScreenshotAppState extends AbstractAppState implements ActionLis
 		capture = true;
 	}
 
-	public void takeScreenshot(File outFile, String outFormat, CompletableFuture<Boolean> complete) {
+	public void takeScreenshot(Path outFile, String outFormat, CompletableFuture<Boolean> complete) {
 		this.outFile = outFile;
 		this.outFormat = outFormat;
 		this.complete = complete;
@@ -253,7 +255,7 @@ public class ExtScreenshotAppState extends AbstractAppState implements ActionLis
 			renderer.readFrameBuffer(out, outBuf);
 			renderer.setViewPort(viewX, viewY, viewWidth, viewHeight);
 
-			File file;
+			Path file;
 			String format;
 			if (outFile != null) {
 				file = outFile;
@@ -270,14 +272,14 @@ public class ExtScreenshotAppState extends AbstractAppState implements ActionLis
 				}
 
 				if (filePath == null) {
-					file = new File(JmeSystem.getStorageFolder() + File.separator + filename + ".png").getAbsoluteFile();
+					file = Paths.get(JmeSystem.getStorageFolder() + File.separator + filename + ".png");
 				} else {
-					file = new File(filePath + filename + ".png").getAbsoluteFile();
+					file = Paths.get(filePath + filename + ".png");
 				}
 				format = "png";
 			}
 
-			logger.log(Level.FINE, "Saving ScreenShot to: {0}", file.getAbsolutePath());
+			logger.log(Level.FINE, "Saving ScreenShot to: {0}", file.toAbsolutePath());
 
 			boolean success = false;
 			try {
@@ -303,8 +305,8 @@ public class ExtScreenshotAppState extends AbstractAppState implements ActionLis
 	/**
 	 * Called by postFrame() once the screen has been captured to outBuf.
 	 */
-	protected void writeImageFile(File file, String format) throws IOException {
-		try (OutputStream outStream = new FileOutputStream(file)) {
+	protected void writeImageFile(Path file, String format) throws IOException {
+		try (OutputStream outStream = Files.newOutputStream(file)) {
 			JmeSystem.writeImageFile(outStream, format, outBuf, width, height);
 		}
 	}

@@ -1,8 +1,8 @@
 package de.george.g3dit.scripts;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,7 +32,7 @@ public class ScriptListVoices implements IScript {
 
 	@Override
 	public boolean execute(IScriptEnvironment env) {
-		File saveFile = FileDialogWrapper.saveFile(I.tr("Save NPC voices listing as..."), env.getParentWindow(),
+		Path saveFile = FileDialogWrapper.saveFile(I.tr("Save NPC voices listing as..."), env.getParentWindow(),
 				FileDialogWrapper.CSV_FILTER);
 		if (saveFile == null) {
 			return false;

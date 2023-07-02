@@ -4,7 +4,7 @@ import static j2html.TagCreator.a;
 import static j2html.TagCreator.join;
 import static j2html.TagCreator.text;
 
-import java.io.File;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -45,7 +45,7 @@ public class CheckFaultyBodyParts extends AbstractEntityCheck {
 				1);
 	}
 
-	private Map<String, File> tpleGuidMap;
+	private Map<String, Path> tpleGuidMap;
 
 	@Override
 	public void reset() {
@@ -53,13 +53,13 @@ public class CheckFaultyBodyParts extends AbstractEntityCheck {
 	}
 
 	@Override
-	public PassStatus processTemplate(TemplateFile tple, File dataFile, int pass, ProblemConsumer problemConsumer) {
+	public PassStatus processTemplate(TemplateFile tple, Path dataFile, int pass, ProblemConsumer problemConsumer) {
 		tpleGuidMap.put(tple.getReferenceHeader().getGuid(), dataFile);
 		return PassStatus.Next;
 	}
 
 	@Override
-	protected EntityPassStatus processEntity(ArchiveFile archiveFile, File dataFile, eCEntity entity, int entityPosition, int pass,
+	protected EntityPassStatus processEntity(ArchiveFile archiveFile, Path dataFile, eCEntity entity, int entityPosition, int pass,
 			Supplier<EntityDescriptor> descriptor, StringProblemConsumer problemConsumer) {
 		if (entity.hasClass(CD.gCInteraction_PS.class)) {
 			G3Class inter = entity.getClass(CD.gCInteraction_PS.class);
@@ -98,7 +98,7 @@ public class CheckFaultyBodyParts extends AbstractEntityCheck {
 
 				String creator = ((LrentdatEntity) entity).getCreator();
 				if (creator != null) {
-					File tpleFile = tpleGuidMap.get(creator);
+					Path tpleFile = tpleGuidMap.get(creator);
 					if (tpleFile != null) {
 						Optional<eCEntity> owner = archiveFile.getEntityByGuid(inter.property(CD.gCInteraction_PS.Owner).getGuid());
 						if (owner.isPresent()) {

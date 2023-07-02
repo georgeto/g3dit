@@ -1,6 +1,6 @@
 package de.george.g3dit.nav;
 
-import java.io.File;
+import java.nio.file.Path;
 import java.util.function.Consumer;
 
 import javax.swing.JComponent;
@@ -67,7 +67,7 @@ public class NavZoneStage extends NavCalcStage {
 		}
 
 		@Override
-		public File getFile() {
+		public Path getFile() {
 			return Caches.entity(ctx).getFile(getGuid()).map(FileDescriptor::getPath).orElse(null);
 		}
 
@@ -113,7 +113,7 @@ public class NavZoneStage extends NavCalcStage {
 		}
 
 		@Override
-		public File getFile() {
+		public Path getFile() {
 			return ctx.getNavMapManager().getNavMapFile();
 		}
 

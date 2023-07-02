@@ -1,6 +1,6 @@
 package de.george.g3dit.nav;
 
-import java.io.File;
+import java.nio.file.Path;
 import java.util.List;
 
 import de.george.g3dit.gui.components.Severity;
@@ -8,7 +8,7 @@ import de.george.g3dit.gui.components.Severity;
 public interface Change {
 	String getGuid();
 
-	File getFile();
+	Path getFile();
 
 	Severity getSeverity();
 

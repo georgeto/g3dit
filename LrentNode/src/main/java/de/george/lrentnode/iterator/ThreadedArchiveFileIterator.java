@@ -1,6 +1,6 @@
 package de.george.lrentnode.iterator;
 
-import java.io.File;
+import java.nio.file.Path;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -9,7 +9,7 @@ public class ThreadedArchiveFileIterator extends ArchiveFileIterator {
 
 	private ExecutorService executor;
 
-	public ThreadedArchiveFileIterator(List<File> files) {
+	public ThreadedArchiveFileIterator(List<Path> files) {
 		super(files);
 		executor = Executors.newFixedThreadPool(1);// Runtime.getRuntime().availableProcessors());
 	}

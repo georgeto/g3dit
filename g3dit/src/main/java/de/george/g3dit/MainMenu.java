@@ -6,7 +6,9 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowEvent;
-import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -69,6 +71,7 @@ import de.george.g3dit.util.NavMapManager.NavMapLoadedEvent;
 import de.george.g3dit.util.SettingsHelper;
 import de.george.g3dit.util.StringtableHelper;
 import de.george.g3utils.gui.SwingUtils;
+import de.george.g3utils.util.FilesEx;
 import de.george.g3utils.util.Holder;
 import de.george.g3utils.util.IOUtils;
 import de.george.lrentnode.archive.ArchiveFile;
@@ -129,10 +132,10 @@ public class MainMenu extends JMenuBar {
 		miOpen.setMnemonic(KeyEvent.VK_F);
 		muData.add(miOpen);
 		miOpen.addActionListener(e -> {
-			List<File> files = FileDialogWrapper.openFiles(I.tr("Open file"), ctx.getParentWindow(), FileDialogWrapper.COMBINED_FILTER,
+			List<Path> files = FileDialogWrapper.openFiles(I.tr("Open file"), ctx.getParentWindow(), FileDialogWrapper.COMBINED_FILTER,
 					FileDialogWrapper.ARCHIVE_FILTER, FileDialogWrapper.TEMPLATE_FILTER, FileDialogWrapper.SECDAT_FILTER,
 					FileDialogWrapper.EFFECT_MAP_FILTER, FileDialogWrapper.MESH_FILTER, FileDialogWrapper.NO_FILTER);
-			for (File file : files) {
+			for (Path file : files) {
 				ctx.getEditor().openFile(file);
 			}
 		});
@@ -143,7 +146,7 @@ public class MainMenu extends JMenuBar {
 		fileMenu = new RecentFileMenu(I.tr("Recent files"), 10) {
 			@Override
 			public void onSelectFile(String filePath) {
-				File file = new File(filePath);
+				Path file = Paths.get(filePath);
 				ctx.getEditor().openFile(file);
 			}
 		};
@@ -180,8 +183,8 @@ public class MainMenu extends JMenuBar {
 		miCompare.setIcon(Icons.getImageIcon(Icons.Action.DIFF));
 		muData.add(miCompare);
 		miCompare.addActionListener(l -> {
-			File base = FileDialogWrapper.openFile(I.tr("Original file"), ctx.getParentWindow());
-			File mine = FileDialogWrapper.openFile(I.tr("Modified file"), ctx.getParentWindow());
+			Path base = FileDialogWrapper.openFile(I.tr("Original file"), ctx.getParentWindow());
+			Path mine = FileDialogWrapper.openFile(I.tr("Modified file"), ctx.getParentWindow());
 			if (base != null && mine != null) {
 				ctx.getEditor().diffFiles(base, mine);
 			}
@@ -217,7 +220,7 @@ public class MainMenu extends JMenuBar {
 			if (tab.isFileChanged()) {
 				if (!TaskDialogs.isConfirmed(ctx.getParentWindow(), "",
 						I.trf("Do you really want to discard all changes to ''{0}''\nand reload the file?",
-								tab.getDataFile().get().getName()))) {
+								tab.getDataFile().get().getFileName()))) {
 					return;
 				}
 			}
@@ -253,8 +256,8 @@ public class MainMenu extends JMenuBar {
 		miCopyFileName.setMnemonic(KeyEvent.VK_X);
 		muData.add(miCopyFileName);
 		miCopyFileName.addActionListener(e -> {
-			File file = ((EditorAbstractFileTab) ctx.getEditor().getSelectedTab().get()).getDataFile().get();
-			IOUtils.copyToClipboard(file.getName());
+			Path file = ((EditorAbstractFileTab) ctx.getEditor().getSelectedTab().get()).getDataFile().get();
+			IOUtils.copyToClipboard(FilesEx.getFileName(file));
 		});
 		egHasDataFile.add(miCopyFileName);
 
@@ -262,8 +265,8 @@ public class MainMenu extends JMenuBar {
 		miCopyFilePath.setMnemonic(KeyEvent.VK_X);
 		muData.add(miCopyFilePath);
 		miCopyFilePath.addActionListener(e -> {
-			File file = ((EditorAbstractFileTab) ctx.getEditor().getSelectedTab().get()).getDataFile().get();
-			IOUtils.copyToClipboard(file.getAbsolutePath());
+			Path file = ((EditorAbstractFileTab) ctx.getEditor().getSelectedTab().get()).getDataFile().get();
+			IOUtils.copyToClipboard(FilesEx.getAbsolutePath(file));
 		});
 		egHasDataFile.add(miCopyFilePath);
 
@@ -273,7 +276,8 @@ public class MainMenu extends JMenuBar {
 		miOpenTinyHexer.addActionListener(e -> {
 			try {
 				String executable = ctx.getOptionStore().get(EditorOptions.Path.TINY_HEXER);
-				String path = ((EditorAbstractFileTab) ctx.getEditor().getSelectedTab().get()).getDataFile().get().getAbsolutePath();
+				String path = FilesEx
+						.getAbsolutePath(((EditorAbstractFileTab) ctx.getEditor().getSelectedTab().get()).getDataFile().get());
 				String script = ctx.getOptionStore().get(EditorOptions.Path.TINY_HEXER_SCRIPT);
 				new ProcessBuilder(executable, path, "/s", script).start();
 			} catch (Exception e1) {
@@ -322,7 +326,7 @@ public class MainMenu extends JMenuBar {
 				return;
 			}
 
-			File file = FileDialogWrapper.openFile(I.tr("Open file"), ctx.getParentWindow(), FileDialogWrapper.ARCHIVE_FILTER,
+			Path file = FileDialogWrapper.openFile(I.tr("Open file"), ctx.getParentWindow(), FileDialogWrapper.ARCHIVE_FILTER,
 					FileDialogWrapper.NO_FILTER);
 			if (file != null && ImportHelper.importFromFile(file, archiveTab.get().getCurrentFile(), ctx)) {
 				archiveTab.get().refreshTree(false);
@@ -450,9 +454,9 @@ public class MainMenu extends JMenuBar {
 				}
 
 				if (path != null) {
-					File logFile = new File(path);
-					if (logFile.exists() && logFile.isFile()) {
-						Desktop.getDesktop().open(logFile);
+					Path logFile = Paths.get(path);
+					if (Files.isRegularFile(logFile)) {
+						Desktop.getDesktop().open(logFile.toFile());
 					}
 				}
 			} catch (Exception ex) {
@@ -576,7 +580,7 @@ public class MainMenu extends JMenuBar {
 		miExNegZones.setMnemonic(KeyEvent.VK_Z);
 		muNavMap.add(miExNegZones);
 		miExNegZones.addActionListener(e -> {
-			File outDir = FileDialogWrapper.chooseDirectory(I.tr("Select output directory"), ctx.getParentWindow());
+			Path outDir = FileDialogWrapper.chooseDirectory(I.tr("Select output directory"), ctx.getParentWindow());
 			if (outDir == null) {
 				return;
 			}
@@ -588,18 +592,18 @@ public class MainMenu extends JMenuBar {
 
 			ArchiveFile aFile = NodeExporter.exportNegZones(navMap.getNegZones());
 			try {
-				outDir = new File(outDir, "Nav_NegZones");
-				outDir.mkdirs();
+				outDir = outDir.resolve("Nav_NegZones");
+				Files.createDirectories(outDir);
 
-				aFile.save(new File(outDir, "Nav_NegZones_01_SHyb.node"));
+				aFile.save(outDir.resolve("Nav_NegZones_01_SHyb.node"));
 
 				SecDat secDat = new SecDat();
 				secDat.addNodeFile("Nav_NegZones_01_SHyb");
-				secDat.save(new File(outDir, "Nav_NegZones.secdat"));
-				FileUtil.createSec(new File(outDir, "Nav_NegZones"));
+				secDat.save(outDir.resolve("Nav_NegZones.secdat"));
+				FileUtil.createSec(outDir.resolve("Nav_NegZones"));
 
-				FileUtil.createLrgeo(new File(outDir, "Nav_NegZones_01_SHyb"));
-				FileUtil.createLrgeodat(new File(outDir, "Nav_NegZones_01_SHyb"), aFile.getGraph().getWorldTreeBoundary());
+				FileUtil.createLrgeo(outDir.resolve("Nav_NegZones_01_SHyb"));
+				FileUtil.createLrgeodat(outDir.resolve("Nav_NegZones_01_SHyb"), aFile.getGraph().getWorldTreeBoundary());
 			} catch (Exception e1) {
 				TaskDialogs.showException(e1);
 			}
@@ -609,7 +613,7 @@ public class MainMenu extends JMenuBar {
 		miExNegCircles.setMnemonic(KeyEvent.VK_C);
 		muNavMap.add(miExNegCircles);
 		miExNegCircles.addActionListener(e -> {
-			File outDir = FileDialogWrapper.chooseDirectory(I.tr("Select output directory"), ctx.getParentWindow());
+			Path outDir = FileDialogWrapper.chooseDirectory(I.tr("Select output directory"), ctx.getParentWindow());
 			if (outDir == null) {
 				return;
 			}
@@ -624,18 +628,18 @@ public class MainMenu extends JMenuBar {
 			SecDat secDat = new SecDat();
 
 			try {
-				outDir = new File(outDir, "Nav_NegCircles");
-				outDir.mkdirs();
+				outDir = outDir.resolve("Nav_NegCircles");
+				Files.createDirectories(outDir);
 				for (int i = 0; i < files.size(); i++) {
 					ArchiveFile aFile = files.get(i);
-					aFile.save(new File(outDir, "Nav_NegCircles_0" + i + "_SHyb.node"));
+					aFile.save(outDir.resolve("Nav_NegCircles_0" + i + "_SHyb.node"));
 					secDat.addNodeFile("Nav_NegCircles_0" + i + "_SHyb");
 
-					FileUtil.createLrgeo(new File(outDir, "Nav_NegCircles_0" + i + "_SHyb"));
-					FileUtil.createLrgeodat(new File(outDir, "Nav_NegCircles_0" + i + "_SHyb"), aFile.getGraph().getWorldTreeBoundary());
+					FileUtil.createLrgeo(outDir.resolve("Nav_NegCircles_0" + i + "_SHyb"));
+					FileUtil.createLrgeodat(outDir.resolve("Nav_NegCircles_0" + i + "_SHyb"), aFile.getGraph().getWorldTreeBoundary());
 				}
-				secDat.save(new File(outDir, "Nav_NegCircles.secdat"));
-				FileUtil.createSec(new File(outDir, "Nav_NegCircles"));
+				secDat.save(outDir.resolve("Nav_NegCircles.secdat"));
+				FileUtil.createSec(outDir.resolve("Nav_NegCircles"));
 			} catch (Exception e1) {
 				TaskDialogs.showException(e1);
 			}
@@ -645,7 +649,7 @@ public class MainMenu extends JMenuBar {
 		miExPrefPaths.setMnemonic(KeyEvent.VK_P);
 		muNavMap.add(miExPrefPaths);
 		miExPrefPaths.addActionListener(e -> {
-			File outDir = FileDialogWrapper.chooseDirectory(I.tr("Select output directory"), ctx.getParentWindow());
+			Path outDir = FileDialogWrapper.chooseDirectory(I.tr("Select output directory"), ctx.getParentWindow());
 			if (outDir == null) {
 				return;
 			}
@@ -656,19 +660,19 @@ public class MainMenu extends JMenuBar {
 			}
 
 			try {
-				outDir = new File(outDir, "Nav_PrefPaths");
-				outDir.mkdirs();
+				outDir = outDir.resolve("Nav_PrefPaths");
+				Files.createDirectories(outDir);
 
 				ArchiveFile aFile = NodeExporter.exportPrefPaths(navMap.getPrefPaths());
-				aFile.save(new File(outDir, "Nav_PrefPaths_01_SHyb.node"));
+				aFile.save(outDir.resolve("Nav_PrefPaths_01_SHyb.node"));
 
 				SecDat secDat = new SecDat();
 				secDat.addNodeFile("Nav_PrefPaths_01_SHyb");
-				secDat.save(new File(outDir, "Nav_PrefPaths.secdat"));
-				FileUtil.createSec(new File(outDir, "Nav_PrefPaths"));
+				secDat.save(outDir.resolve("Nav_PrefPaths.secdat"));
+				FileUtil.createSec(outDir.resolve("Nav_PrefPaths"));
 
-				FileUtil.createLrgeo(new File(outDir, "Nav_PrefPaths_01_SHyb"));
-				FileUtil.createLrgeodat(new File(outDir, "Nav_PrefPaths_01_SHyb"), aFile.getGraph().getWorldTreeBoundary());
+				FileUtil.createLrgeo(outDir.resolve("Nav_PrefPaths_01_SHyb"));
+				FileUtil.createLrgeodat(outDir.resolve("Nav_PrefPaths_01_SHyb"), aFile.getGraph().getWorldTreeBoundary());
 			} catch (Exception e1) {
 				TaskDialogs.showException(e1);
 			}

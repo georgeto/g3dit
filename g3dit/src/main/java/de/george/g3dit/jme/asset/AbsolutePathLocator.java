@@ -1,6 +1,8 @@
 package de.george.g3dit.jme.asset;
 
-import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import com.jme3.asset.AssetInfo;
 import com.jme3.asset.AssetKey;
@@ -16,8 +18,8 @@ public class AbsolutePathLocator implements AssetLocator {
 
 	@Override
 	public AssetInfo locate(AssetManager manager, @SuppressWarnings("rawtypes") AssetKey key) {
-		File file = new File(key.getName());
-		if (file.isAbsolute() && file.isFile()) {
+		Path file = Paths.get(key.getName());
+		if (file.isAbsolute() && Files.isRegularFile(file)) {
 			return new AssetInfoFile(manager, key, file);
 		} else {
 			return null;

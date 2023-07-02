@@ -2,7 +2,6 @@ package de.george.g3dit.tab.archive.views.entity;
 
 import java.awt.Color;
 import java.awt.event.KeyEvent;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -42,6 +41,7 @@ import de.george.g3utils.gui.SwingUtils;
 import de.george.g3utils.structure.bCEulerAngles;
 import de.george.g3utils.structure.bCQuaternion;
 import de.george.g3utils.structure.bCVector;
+import de.george.g3utils.util.FilesEx;
 import de.george.g3utils.util.IOUtils;
 import de.george.g3utils.util.Misc;
 import de.george.lrentnode.archive.eCEntity;
@@ -334,7 +334,7 @@ public class VegetationTab extends AbstractEntityTab {
 	}
 
 	private boolean isInsideStaticNode(bCVector position) {
-		return !EntityUtil.isOutsideOfStaticNodesArea(position, ctx.getDataFile().map(File::getName).orElse(null));
+		return !EntityUtil.isOutsideOfStaticNodesArea(position, ctx.getDataFile().map(FilesEx::getFileName).orElse(null));
 	}
 
 	protected void filterPlants() {

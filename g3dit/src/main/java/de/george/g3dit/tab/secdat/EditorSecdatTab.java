@@ -1,8 +1,9 @@
 package de.george.g3dit.tab.secdat;
 
 import java.awt.Component;
-import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Optional;
 
 import javax.swing.Icon;
@@ -19,7 +20,7 @@ import de.george.g3dit.util.FileDialogWrapper;
 import de.george.g3dit.util.Icons;
 import de.george.g3utils.io.G3FileReaderEx;
 import de.george.g3utils.io.Saveable;
-import de.george.g3utils.util.IOUtils;
+import de.george.g3utils.util.FilesEx;
 import de.george.lrentnode.archive.SecDat;
 import de.george.lrentnode.util.FileUtil;
 import net.tomahawk.ExtensionsFilter;
@@ -54,9 +55,9 @@ public class EditorSecdatTab extends EditorAbstractFileTab {
 
 	/**
 	 * @param inSecdat geladene Secdat
-	 * @param file File Objekt der Datei
+	 * @param file Path Objekt der Datei
 	 */
-	public void setCurrentFile(SecDat inSecdat, File file) {
+	public void setCurrentFile(SecDat inSecdat, Path file) {
 		currentFile = null;
 		setFileChanged(false);
 
@@ -73,7 +74,7 @@ public class EditorSecdatTab extends EditorAbstractFileTab {
 	}
 
 	@Override
-	public boolean openFile(File file) {
+	public boolean openFile(Path file) {
 		try (G3FileReaderEx reader = new G3FileReaderEx(file)) {
 			SecDat secdat = FileUtil.openSecdat(reader);
 			setCurrentFile(secdat, file);
@@ -93,7 +94,7 @@ public class EditorSecdatTab extends EditorAbstractFileTab {
 	}
 
 	@Override
-	public boolean saveFile(Optional<File> file) {
+	public boolean saveFile(Optional<Path> file) {
 		boolean result = super.saveFile(file);
 		if (result && file.isPresent()) {
 			processSector();
@@ -129,16 +130,16 @@ public class EditorSecdatTab extends EditorAbstractFileTab {
 	}
 
 	public void processSector() {
-		File dataFile = getDataFile().get();
-		File sector = new File(IOUtils.changeExtension(dataFile.getAbsolutePath(), "sec"));
-		if (!sector.exists() && !ctx.getFileManager().moveFromPrimaryToSecondary(sector).filter(File::exists).isPresent()) {
+		Path dataFile = getDataFile().get();
+		Path sector = FilesEx.changeExtension(dataFile, "sec");
+		if (!Files.exists(sector) && !ctx.getFileManager().moveFromPrimaryToSecondary(sector).filter(Files::exists).isPresent()) {
 			boolean result = TaskDialogs.ask(ctx.getParentWindow(), I.tr("Create .sec"),
-					I.trf("No corresponding .sec could be found for ''{0}''.\nShould a .sec be created?", dataFile.getName()));
+					I.trf("No corresponding .sec could be found for ''{0}''.\nShould a .sec be created?", dataFile.getFileName()));
 			if (result) {
 				try {
 					FileUtil.createSec(sector);
 				} catch (IOException e) {
-					logger.warn("Error while creating sector for {}.", dataFile.getName(), e);
+					logger.warn("Error while creating sector for {}.", dataFile.getFileName(), e);
 				}
 			}
 		}

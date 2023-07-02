@@ -1,21 +1,22 @@
 package de.george.g3dit.cache;
 
-import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 import javax.swing.SwingWorker;
 
 import de.george.g3utils.util.IOUtils;
 
 public class LoadObjectWorker extends SwingWorker<Object, Void> {
-	protected File file;
+	protected Path file;
 
-	public LoadObjectWorker(File file) {
+	public LoadObjectWorker(Path file) {
 		this.file = file;
 	}
 
 	@Override
 	protected Object doInBackground() throws Exception {
-		if (file.exists()) {
+		if (Files.exists(file)) {
 			return IOUtils.loadObjectFromFile(file);
 		}
 		return null;
