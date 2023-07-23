@@ -605,7 +605,7 @@ public class Editor implements EditorContext {
 		// Data folder aliases could have changed.
 		refreshTitle();
 		// Add data folders to file dialog places
-		FileDialogWrapper.setPlaces(getFileManager().getDataFolders());
+		FileDialogWrapper.setPlaces(StreamEx.of(getFileManager().getDataFolders()).map(FilesEx::getAbsolutePath));
 		// Apply theme
 		applyTheme(false);
 	}

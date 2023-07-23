@@ -7,6 +7,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -22,6 +23,7 @@ import org.slf4j.LoggerFactory;
 import com.ezware.dialog.task.CommandLink;
 import com.ezware.dialog.task.TaskDialogs;
 import com.google.common.base.Joiner;
+import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableList;
 import com.teamunify.i18n.I;
 
@@ -31,7 +33,6 @@ import de.george.g3dit.cache.TemplateCache.TemplateCacheEntry;
 import de.george.g3dit.config.ReloadableConfigFile;
 import de.george.g3dit.gui.dialogs.NavigateTemplateDialog;
 import de.george.g3dit.settings.EditorOptions;
-import de.george.g3dit.settings.Option;
 import de.george.g3utils.gui.SwingUtils;
 import de.george.g3utils.io.CompositeFileLocator;
 import de.george.g3utils.io.FileLocator;
@@ -68,32 +69,35 @@ public class FileManager {
 		this.ctx = ctx;
 	}
 
-	public String getPrimaryDataFolder() {
-		return ctx.getOptionStore().get(EditorOptions.Path.PRIMARY_DATA_FOLDER);
+	public Optional<Path> getPrimaryDataFolder() {
+		return Optional.of(ctx.getOptionStore().get(EditorOptions.Path.PRIMARY_DATA_FOLDER)).map(Strings::emptyToNull).map(Paths::get);
 	}
 
-	public Path getPrimaryPath(String relativePath) {
-		return Paths.get(getPrimaryDataFolder(), relativePath);
+	public Optional<Path> getPrimaryPath(String relativePath) {
+		return getPrimaryDataFolder().map(f -> f.resolve(relativePath));
 	}
 
 	public List<Path> listPrimaryFiles(String relativePath, FileFilter fileFilter) {
-		return IOUtils.listFiles(getPrimaryPath(relativePath), fileFilter);
+		return getPrimaryPath(relativePath).map(p -> IOUtils.listFiles(p, fileFilter)).orElseGet(Collections::emptyList);
 	}
 
-	public String getSecondaryDataFolder() {
-		return ctx.getOptionStore().get(EditorOptions.Path.SECONDARY_DATA_FOLDER);
+	public Optional<Path> getSecondaryDataFolder() {
+		return Optional.of(ctx.getOptionStore().get(EditorOptions.Path.SECONDARY_DATA_FOLDER)).map(Strings::emptyToNull).map(Paths::get);
 	}
 
-	public Path getSecondaryPath(String relativePath) {
-		return Paths.get(getSecondaryDataFolder(), relativePath);
+	public Optional<Path> getSecondaryPath(String relativePath) {
+		return getSecondaryDataFolder().map(f -> f.resolve(relativePath));
 	}
 
 	public List<Path> listSecondaryFiles(String relativePath, FileFilter fileFilter) {
-		return IOUtils.listFiles(getSecondaryPath(relativePath), fileFilter);
+		return getSecondaryPath(relativePath).map(p -> IOUtils.listFiles(p, fileFilter)).orElseGet(Collections::emptyList);
 	}
 
 	private ImmutableList<Path> getPaths(String relativePath) {
-		return ImmutableList.of(getPrimaryPath(relativePath), getSecondaryPath(relativePath));
+		var builder = ImmutableList.<Path>builder();
+		getPrimaryPath(relativePath).ifPresent(builder::add);
+		getSecondaryPath(relativePath).ifPresent(builder::add);
+		return builder.build();
 	}
 
 	public List<Path> listFiles(String relativePath, FileFilter fileFilter) {
@@ -137,76 +141,58 @@ public class FileManager {
 	}
 
 	public boolean isInPrimaryDataFolder(Path file) {
-		String primaryDataFolder = getPrimaryDataFolder();
-		return !primaryDataFolder.isEmpty() && file != null && FilesEx.getAbsolutePath(file).toLowerCase().startsWith(primaryDataFolder);
+		return file != null && getPrimaryDataFolder().map(file::startsWith).orElse(false);
 	}
 
 	public boolean isInSecondaryDataFolder(Path file) {
-		String secondaryDataFolder = getSecondaryDataFolder().toLowerCase();
-		return !secondaryDataFolder.isEmpty() && file != null
-				&& FilesEx.getAbsolutePath(file).toLowerCase().startsWith(secondaryDataFolder);
+		return file != null && getSecondaryDataFolder().map(file::startsWith).orElse(false);
 	}
 
-	// TODO: Use Path.relativize...
-
 	public Optional<Path> moveFromPrimaryToSecondary(Path file) {
-		String primaryDataFolder = getPrimaryDataFolder();
-		String secondaryDataFolder = getSecondaryDataFolder();
-		if (!secondaryDataFolder.isEmpty() && isInPrimaryDataFolder(file)) {
-			return Optional.of(Paths.get(secondaryDataFolder, FilesEx.getAbsolutePath(file).substring(primaryDataFolder.length())));
-		}
-		return Optional.empty();
+		if (isInPrimaryDataFolder(file))
+			return getSecondaryDataFolder().map(folder -> folder.resolve(getPrimaryDataFolder().get().relativize(file)));
+		else
+			return Optional.empty();
 	}
 
 	public Optional<Path> moveFromSecondaryToPrimary(Path file) {
-		String primaryDataFolder = getPrimaryDataFolder().toLowerCase();
-		String secondaryDataFolder = getSecondaryDataFolder().toLowerCase();
-		if (!primaryDataFolder.isEmpty() && isInSecondaryDataFolder(file)) {
-			return Optional.of(Paths.get(primaryDataFolder + FilesEx.getAbsolutePath(file).substring(secondaryDataFolder.length())));
-		}
-		return Optional.empty();
+		if (isInSecondaryDataFolder(file))
+			return getPrimaryDataFolder().map(folder -> folder.resolve(getSecondaryDataFolder().get().relativize(file)));
+		else
+			return Optional.empty();
 	}
 
 	public Optional<String> getRelativePath(Path file) {
-		Option<String> dataFolder = null;
+		Optional<Path> dataFolder = Optional.empty();
 		if (isInPrimaryDataFolder(file)) {
-			dataFolder = EditorOptions.Path.PRIMARY_DATA_FOLDER;
+			dataFolder = getPrimaryDataFolder();
 		} else if (isInSecondaryDataFolder(file)) {
-			dataFolder = EditorOptions.Path.SECONDARY_DATA_FOLDER;
+			dataFolder = getSecondaryDataFolder();
 		}
-
-		return dataFolder != null ? Optional.of(FilesEx.getAbsolutePath(file).substring(ctx.getOptionStore().get(dataFolder).length()))
-				: Optional.empty();
+		return dataFolder.map(folder -> folder.relativize(file)).map(Path::toString);
 	}
 
-	public List<String> getDataFolders() {
-		ArrayList<String> dataFolders = new ArrayList<>();
-		String dataFolder1 = getPrimaryDataFolder();
-		if (!dataFolder1.isEmpty()) {
-			dataFolders.add(dataFolder1);
-		}
-		String dataFolder2 = getSecondaryDataFolder();
-		if (!dataFolder2.isEmpty()) {
-			dataFolders.add(dataFolder2);
-		}
+	public List<Path> getDataFolders() {
+		ArrayList<Path> dataFolders = new ArrayList<>();
+		getPrimaryDataFolder().ifPresent(dataFolders::add);
+		getSecondaryDataFolder().ifPresent(dataFolders::add);
 		return dataFolders;
 	}
 
 	public List<String> getAssetLocations() {
 		LinkedHashSet<String> locations = new LinkedHashSet<>();
 
-		BiConsumer<String, Iterable<String>> locationAdder = (loc, ext) -> {
-			Path file = Paths.get(loc);
-			if (Files.isDirectory(file)) {
-				locations.add(Joiner.on(';').join(ext) + "#" + file.toAbsolutePath());
+		BiConsumer<Path, Iterable<String>> locationAdder = (loc, ext) -> {
+			if (Files.isDirectory(loc)) {
+				locations.add(Joiner.on(';').join(ext) + "#" + loc.toAbsolutePath());
 			}
 		};
 
-		for (String dataFolder : getDataFolders()) {
-			locationAdder.accept(dataFolder + RP_COMPILED_MESH, Arrays.asList("xcmsh", "xlmsh"));
-			locationAdder.accept(dataFolder + RP_COMPILED_MATERIAL, Arrays.asList("xshmat"));
-			locationAdder.accept(dataFolder + RP_COMPILED_IMAGE, Arrays.asList("ximg"));
-			locationAdder.accept(dataFolder + RP_COMPILED_ANIMATION, Arrays.asList("xact"));
+		for (Path dataFolder : getDataFolders()) {
+			locationAdder.accept(dataFolder.resolve(RP_COMPILED_MESH), Arrays.asList("xcmsh", "xlmsh"));
+			locationAdder.accept(dataFolder.resolve(RP_COMPILED_MATERIAL), Arrays.asList("xshmat"));
+			locationAdder.accept(dataFolder.resolve(RP_COMPILED_IMAGE), Arrays.asList("ximg"));
+			locationAdder.accept(dataFolder.resolve(RP_COMPILED_ANIMATION), Arrays.asList("xact"));
 		}
 
 		return new LinkedList<>(locations);
@@ -215,10 +201,10 @@ public class FileManager {
 	public FileLocator getFileLocator(String relativePath, boolean refreshOnCacheMiss) {
 		CompositeFileLocator locator = new CompositeFileLocator();
 
-		for (String dataFolder : getDataFolders()) {
+		for (Path dataFolder : getDataFolders()) {
 			try {
-				String rootPath = dataFolder + relativePath;
-				if (Files.exists(Paths.get(rootPath))) {
+				Path rootPath = dataFolder.resolve(relativePath);
+				if (Files.exists(rootPath)) {
 					locator.addLocator(new RecursiveFileLocator(rootPath, refreshOnCacheMiss));
 				}
 			} catch (IOException e) {
@@ -235,12 +221,7 @@ public class FileManager {
 	 * @return {@code Optional.empty()} if no primary data folder is set.
 	 */
 	public Optional<Path> getLocalConfigFile(String relativePath) {
-		String dataFolder = getPrimaryDataFolder();
-		if (dataFolder.isEmpty()) {
-			return Optional.empty();
-		}
-
-		return Optional.of(Paths.get(dataFolder, RP_LOCAL_CONFIG, relativePath));
+		return getPrimaryDataFolder().map(folder -> folder.resolve(RP_LOCAL_CONFIG).resolve(relativePath));
 	}
 
 	public Path getDefaultConfigFile(String relativePath) {

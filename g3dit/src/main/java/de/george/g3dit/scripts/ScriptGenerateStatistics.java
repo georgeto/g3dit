@@ -30,8 +30,8 @@ public class ScriptGenerateStatistics implements IScript {
 
 	@Override
 	public boolean execute(IScriptEnvironment env) {
-		ArchiveFileIterator secWorldFilesIterator = new ArchiveFileIterator(
-				IOUtils.listFiles(env.getFileManager().getSecondaryPath(FileManager.RP_PROJECTS_COMPILED), IOUtils.archiveFileFilter));
+		ArchiveFileIterator secWorldFilesIterator = new ArchiveFileIterator(IOUtils
+				.listFiles(env.getFileManager().getSecondaryPath(FileManager.RP_PROJECTS_COMPILED).get(), IOUtils.archiveFileFilter));
 
 		Map<String, String> originalNPCs = new HashMap<>();
 		Map<String, String> originalMonsters = new HashMap<>();

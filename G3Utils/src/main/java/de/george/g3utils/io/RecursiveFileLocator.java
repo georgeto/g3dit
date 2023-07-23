@@ -3,7 +3,6 @@ package de.george.g3utils.io;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,7 +14,7 @@ import de.george.g3utils.util.IOUtils;
 
 public class RecursiveFileLocator implements FileLocator {
 	private Path root;
-	private String lastRootPath;
+	private Path lastRootPath;
 	private Map<String, Path> fileTable = new HashMap<>();
 
 	private boolean refreshOnCacheMiss;
@@ -24,7 +23,7 @@ public class RecursiveFileLocator implements FileLocator {
 		this.refreshOnCacheMiss = refreshOnCacheMiss;
 	}
 
-	public RecursiveFileLocator(String rootPath, boolean refreshOnCacheMiss) throws IOException {
+	public RecursiveFileLocator(Path rootPath, boolean refreshOnCacheMiss) throws IOException {
 		setRootPath(rootPath);
 		this.refreshOnCacheMiss = refreshOnCacheMiss;
 	}
@@ -35,23 +34,22 @@ public class RecursiveFileLocator implements FileLocator {
 	 * @see de.george.g3utils.io.FileLocator#setRootPath(java.lang.String)
 	 */
 	@Override
-	public void setRootPath(String rootPath) throws IOException {
+	public void setRootPath(Path rootPath) throws IOException {
 		Objects.requireNonNull(rootPath);
 
 		if (lastRootPath != null && lastRootPath.equals(rootPath)) {
 			return;
 		}
 
-		Path newRoot = Paths.get(rootPath);
-		if (!Files.exists(newRoot)) {
-			throw new IllegalArgumentException("Given root path \"" + newRoot + "\" does not exist");
+		if (!Files.exists(rootPath)) {
+			throw new IllegalArgumentException("Given root path \"" + rootPath + "\" does not exist");
 		}
 
-		if (!Files.isDirectory(newRoot)) {
-			throw new IllegalArgumentException("Given root path \"" + newRoot + "\" is not a directory");
+		if (!Files.isDirectory(rootPath)) {
+			throw new IllegalArgumentException("Given root path \"" + rootPath + "\" is not a directory");
 		}
 
-		root = newRoot.toRealPath();
+		root = rootPath.toRealPath();
 		lastRootPath = rootPath;
 
 		fileTable.clear();
@@ -69,19 +67,15 @@ public class RecursiveFileLocator implements FileLocator {
 	@Override
 	public Optional<Path> locate(String name) {
 		Path file = root.resolve(name);
-		if (!Files.exists(file)) {
+		if (file == null || !Files.exists(file)) {
 			file = fileTable.get(name.toLowerCase());
 		}
 
-		if (refreshOnCacheMiss && !Files.exists(file)) {
+		if (refreshOnCacheMiss && (file == null || !Files.exists(file))) {
 			return IOUtils.findFirstFile(root, (ftf) -> ftf.getName().equalsIgnoreCase(name));
 		}
 
-		if (Files.isRegularFile(file)) {
-			return Optional.of(file);
-		} else {
-			return Optional.empty();
-		}
+		return Optional.ofNullable(file).filter(Files::isRegularFile);
 	}
 
 }

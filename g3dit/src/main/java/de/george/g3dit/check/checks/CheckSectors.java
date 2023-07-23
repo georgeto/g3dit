@@ -49,7 +49,7 @@ public class CheckSectors extends AbstractEntityCheck {
 		Optional<Path> wrldatasc = ctx.getFileManager().searchFile(FileManager.RP_PROJECTS_COMPILED, "G3_World_01.wrldatasc");
 		if (!wrldatasc.isPresent())
 			report(Severity.Error, I.tr("Unable to find G3_World_01.wrldatasc."),
-					ctx.getFileManager().getPrimaryPath("G3_World_01.wrldatasc"));
+					ctx.getFileManager().getPrimaryPath("G3_World_01.wrldatasc").get());
 
 		Map<String, Boolean> registeredSectors;
 		try {

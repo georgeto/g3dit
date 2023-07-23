@@ -1,9 +1,8 @@
 package de.george.g3dit.util;
 
 import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,7 +13,6 @@ import com.teamunify.i18n.I;
 import de.george.g3dit.EditorContext;
 import de.george.g3dit.cache.Caches;
 import de.george.g3dit.cache.NavCache;
-import de.george.g3dit.settings.EditorOptions;
 import de.george.g3dit.util.event.EventBusProvider;
 import de.george.g3utils.io.G3FileReaderEx;
 import de.george.navmap.sections.NavMap;
@@ -41,13 +39,8 @@ public class NavMapManager extends EventBusProvider {
 	}
 
 	public boolean loadNavMap(boolean displayErrorDialog) {
-		navMapFile = Paths.get(
-				ctx.getOptionStore().get(EditorOptions.Path.PRIMARY_DATA_FOLDER) + "Projects_compiled/G3_World_01/NavigationMap.xnav");
-		if (!Files.exists(navMapFile)) {
-			navMapFile = Paths.get(ctx.getOptionStore().get(EditorOptions.Path.SECONDARY_DATA_FOLDER)
-					+ "Projects_compiled/G3_World_01/NavigationMap.xnav");
-		}
-		if (!Files.exists(navMapFile)) {
+		Optional<Path> navMapFile = ctx.getFileManager().searchFile(FileManager.RP_PROJECTS_COMPILED + "NavigationMap.xnav");
+		if (!navMapFile.isPresent()) {
 			navMap = null;
 			eventBus().post(new NavMapLoadedEvent(false));
 			if (displayErrorDialog) {
@@ -56,7 +49,7 @@ public class NavMapManager extends EventBusProvider {
 			}
 			return false;
 		}
-		try (G3FileReaderEx reader = new G3FileReaderEx(navMapFile)) {
+		try (G3FileReaderEx reader = new G3FileReaderEx(navMapFile.get())) {
 			navMap = new NavMap(reader);
 		} catch (Exception e) {
 			navMap = null;

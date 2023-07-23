@@ -209,8 +209,8 @@ public abstract class EditorAbstractFileTab extends EditorTab implements FileCha
 			}
 		}
 
-		Path absolutePath = dataFile.map(Path::toAbsolutePath).orElse(null);
-		Path file = FileDialogWrapper.saveFile(I.tr("Save as"), absolutePath.toString(), getDefaultFileExtension(), ctx.getParentWindow(),
+		String absolutePath = dataFile.map(FilesEx::getAbsolutePath).orElse(null);
+		Path file = FileDialogWrapper.saveFile(I.tr("Save as"), absolutePath, getDefaultFileExtension(), ctx.getParentWindow(),
 				getFileFilter());
 		if (file != null) {
 			if (!this.saveFile(Optional.ofNullable(file))) {

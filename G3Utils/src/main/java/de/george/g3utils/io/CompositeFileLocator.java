@@ -28,7 +28,7 @@ public class CompositeFileLocator implements FileLocator {
 	}
 
 	@Override
-	public void setRootPath(String rootPath) throws IOException {
+	public void setRootPath(Path rootPath) throws IOException {
 		for (FileLocator locator : locators) {
 			locator.setRootPath(rootPath);
 		}

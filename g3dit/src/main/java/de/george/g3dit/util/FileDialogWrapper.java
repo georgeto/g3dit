@@ -39,7 +39,7 @@ public class FileDialogWrapper {
 
 	private static ImmutableList<String> places = ImmutableList.of();
 
-	public static void setPlaces(List<String> places) {
+	public static void setPlaces(Iterable<String> places) {
 		FileDialogWrapper.places = ImmutableList.copyOf(places);
 	}
 

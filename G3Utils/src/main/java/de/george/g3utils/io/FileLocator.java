@@ -6,7 +6,7 @@ import java.util.Optional;
 
 public interface FileLocator {
 
-	void setRootPath(String rootPath) throws IOException;
+	void setRootPath(Path rootPath) throws IOException;
 
 	Optional<Path> locate(String name);
 

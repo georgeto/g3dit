@@ -6,6 +6,7 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
@@ -153,8 +154,9 @@ public class LowPolyGenerator {
 		log(I.trf("Create low poly node {0} with {1, number} entities.", nodeName, entities.size()));
 		contributingSectors.forEach(f -> log("  - %s", f));
 
-		Path sectorDir = ctx.getFileManager().getPrimaryPath(FileManager.RP_PROJECTS_COMPILED).resolve("World\\_Level\\" + nodeName);
 		try {
+			Path sectorDir = ctx.getFileManager().getPrimaryPath(FileManager.RP_PROJECTS_COMPILED).get()
+					.resolve("World\\_Level\\" + nodeName);
 			Files.createDirectories(sectorDir);
 
 			// node
@@ -179,7 +181,7 @@ public class LowPolyGenerator {
 			if (!globalNode) {
 				FileUtil.createLrgeo(lowpolyNodeFile);
 			}
-		} catch (IOException e) {
+		} catch (IOException | NoSuchElementException e) {
 			log(I.trf("Failed to create low poly sector {0}: {1}", nodeName, e.getMessage()));
 			return;
 		}
@@ -220,12 +222,13 @@ public class LowPolyGenerator {
 		}
 
 		// Load speedtree low poly file
-		Path lowPolyMcpFile = ctx.getFileManager().getPrimaryPath(FileManager.RP_PROJECTS_COMPILED)
-				.resolve("World\\_Level\\G3_World_Lowpoly_01_Levelmesh_01\\G3_World_Lowpoly_01_Levelmesh_01.lrentdat");
+		Path lowPolyMcpFile;
 		ArchiveFile lowPolyMcpArchive;
 		try {
+			lowPolyMcpFile = ctx.getFileManager().getPrimaryPath(FileManager.RP_PROJECTS_COMPILED).get()
+					.resolve("World\\_Level\\G3_World_Lowpoly_01_Levelmesh_01\\G3_World_Lowpoly_01_Levelmesh_01.lrentdat");
 			lowPolyMcpArchive = FileUtil.openArchive(ctx.getFileManager().searchFile(lowPolyMcpFile).get(), false);
-		} catch (IOException e) {
+		} catch (IOException | NoSuchElementException e) {
 			log(e.getMessage());
 			return false;
 		}

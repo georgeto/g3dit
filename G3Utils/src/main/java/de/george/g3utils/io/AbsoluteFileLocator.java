@@ -16,7 +16,7 @@ public class AbsoluteFileLocator implements FileLocator {
 	private AbsoluteFileLocator() {}
 
 	@Override
-	public void setRootPath(String rootPath) throws IOException {}
+	public void setRootPath(Path rootPath) throws IOException {}
 
 	@Override
 	public Optional<Path> locate(String name) {
