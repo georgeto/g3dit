@@ -13,7 +13,6 @@ import com.teamunify.i18n.I;
 import de.george.g3dit.util.FileDialogWrapper;
 import de.george.g3utils.gui.SwingUtils;
 import de.george.g3utils.util.FilesEx;
-import de.george.g3utils.util.IOUtils;
 import net.miginfocom.swing.MigLayout;
 
 public class FolderPathOptionHandler extends TitledOptionHandler<String> {
@@ -36,7 +35,7 @@ public class FolderPathOptionHandler extends TitledOptionHandler<String> {
 		if (path.isEmpty()) {
 			return Optional.empty();
 		} else {
-			return Optional.of(IOUtils.ensureTrailingSlash(path));
+			return Optional.of(path);
 		}
 	}
 

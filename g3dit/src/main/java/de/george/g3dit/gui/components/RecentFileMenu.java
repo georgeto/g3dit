@@ -1,10 +1,9 @@
 package de.george.g3dit.gui.components;
 
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
 
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
@@ -13,8 +12,7 @@ import javax.swing.MenuSelectionManager;
 
 import com.google.common.collect.Lists;
 
-import de.george.g3dit.util.SettingsHelper;
-import de.george.g3dit.util.StringLengthComparator;
+import de.george.g3dit.util.PathAliases;
 import de.george.g3utils.gui.SwingUtils;
 
 public abstract class RecentFileMenu extends JMenu {
@@ -22,7 +20,7 @@ public abstract class RecentFileMenu extends JMenu {
 
 	private int itemCount; // how many items in the menu
 	private List<String> recentFiles;
-	private Map<String, String> pathAlias;
+	private PathAliases pathAlias;
 
 	/**
 	 * Create a new instance of RecentFileMenu.
@@ -38,7 +36,7 @@ public abstract class RecentFileMenu extends JMenu {
 		itemCount = count;
 		// initialize default entries
 		recentFiles = new ArrayList<>(count);
-		pathAlias = new TreeMap<>(new StringLengthComparator());
+		pathAlias = PathAliases.empty();
 		setEnabled(false);
 	}
 
@@ -108,7 +106,7 @@ public abstract class RecentFileMenu extends JMenu {
 
 			}
 
-			String menuName = SettingsHelper.applyAliasMap(pathAlias, filePath);
+			String menuName = pathAlias.apply(Paths.get(filePath));
 
 			menuItem.setText(menuName);
 
@@ -121,7 +119,7 @@ public abstract class RecentFileMenu extends JMenu {
 		}
 	}
 
-	public void setAliasMap(Map<String, String> aliasMap) {
+	public void setAliasMap(PathAliases aliasMap) {
 		pathAlias = aliasMap;
 	}
 

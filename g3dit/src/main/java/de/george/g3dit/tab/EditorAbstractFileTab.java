@@ -21,7 +21,7 @@ import de.george.g3dit.settings.EditorOptions;
 import de.george.g3dit.util.Dialogs;
 import de.george.g3dit.util.FileChangeMonitor;
 import de.george.g3dit.util.FileDialogWrapper;
-import de.george.g3dit.util.SettingsHelper;
+import de.george.g3dit.util.PathAliases;
 import de.george.g3utils.io.Crc32OutputStream;
 import de.george.g3utils.io.Saveable;
 import de.george.g3utils.io.TeeOutputStream;
@@ -60,8 +60,7 @@ public abstract class EditorAbstractFileTab extends EditorTab implements FileCha
 	@Override
 	public String getEditorTitle() {
 		if (getDataFile().isPresent()) {
-			String filePath = SettingsHelper.applyAliasMap(SettingsHelper.getDataFolderAlias(ctx.getOptionStore()),
-					FilesEx.getAbsolutePath(getDataFile().get()));
+			String filePath = PathAliases.from(ctx.getOptionStore()).apply(getDataFile().get());
 			return (isFileChanged() ? "*" : "") + filePath + " - " + Editor.EDITOR_TITLE;
 		} else {
 			return (isFileChanged() ? "*" : "") + Editor.EDITOR_TITLE;

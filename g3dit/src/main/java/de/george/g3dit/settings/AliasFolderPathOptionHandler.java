@@ -13,7 +13,6 @@ import com.teamunify.i18n.I;
 import de.george.g3dit.util.FileDialogWrapper;
 import de.george.g3utils.gui.SwingUtils;
 import de.george.g3utils.util.FilesEx;
-import de.george.g3utils.util.IOUtils;
 import net.miginfocom.swing.MigLayout;
 
 public class AliasFolderPathOptionHandler extends AbstractOptionHandler<String> {
@@ -66,7 +65,7 @@ public class AliasFolderPathOptionHandler extends AbstractOptionHandler<String> 
 		if (path.isEmpty()) {
 			optionStore.remove(option);
 		} else {
-			optionStore.put(option, IOUtils.ensureTrailingSlash(path));
+			optionStore.put(option, path);
 		}
 
 		optionStore.put(aliasOption, tfPathAlias.getText());

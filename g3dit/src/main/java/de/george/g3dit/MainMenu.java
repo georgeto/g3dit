@@ -68,7 +68,7 @@ import de.george.g3dit.util.Icons;
 import de.george.g3dit.util.ImportHelper;
 import de.george.g3dit.util.LowPolyGenerator;
 import de.george.g3dit.util.NavMapManager.NavMapLoadedEvent;
-import de.george.g3dit.util.SettingsHelper;
+import de.george.g3dit.util.PathAliases;
 import de.george.g3dit.util.StringtableHelper;
 import de.george.g3utils.gui.SwingUtils;
 import de.george.g3utils.util.FilesEx;
@@ -817,7 +817,7 @@ public class MainMenu extends JMenuBar {
 	}
 
 	private void settingsUpdated() {
-		fileMenu.setAliasMap(SettingsHelper.getDataFolderAlias(ctx.getOptionStore()));
+		fileMenu.setAliasMap(PathAliases.from(ctx.getOptionStore()));
 		fileMenu.generateMenu();
 		adaptToTab(ctx.getEditor().getSelectedTab());
 

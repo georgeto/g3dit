@@ -10,7 +10,7 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 
 import de.george.g3dit.settings.OptionStore;
-import de.george.g3dit.util.SettingsHelper;
+import de.george.g3dit.util.PathAliases;
 import de.george.g3utils.util.FilesEx;
 
 public class FileListCellRenderer extends DefaultListCellRenderer {
@@ -26,13 +26,12 @@ public class FileListCellRenderer extends DefaultListCellRenderer {
 
 		Path file = (Path) value;
 		if (file != null) {
+			var aliases = PathAliases.from(optionStore.get());
 			String fileName = FilesEx.getFileName(file);
-			String filePath = FilesEx.getAbsolutePath(file);
-			Optional<String> alias = SettingsHelper.getAlias(optionStore.get(), filePath);
-			if (alias.isPresent()) {
+			String filePath = aliases.apply(file);
+			Optional<String> alias = aliases.getAlias(file);
+			if (alias.isPresent())
 				fileName = alias.get() + " " + fileName;
-				filePath = SettingsHelper.applyAlias(optionStore.get(), filePath);
-			}
 
 			label.setText(fileName);
 			label.setToolTipText(filePath);

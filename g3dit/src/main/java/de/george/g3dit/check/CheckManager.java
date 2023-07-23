@@ -102,7 +102,7 @@ import de.george.g3dit.settings.EditorOptions;
 import de.george.g3dit.util.ClasspathScanUtil;
 import de.george.g3dit.util.ConcurrencyUtil;
 import de.george.g3dit.util.Icons;
-import de.george.g3dit.util.SettingsHelper;
+import de.george.g3dit.util.PathAliases;
 import de.george.g3dit.util.StringWithComment;
 import de.george.g3dit.util.UriUtil;
 import de.george.g3utils.gui.SwingUtils;
@@ -215,8 +215,7 @@ public class CheckManager {
 	}
 
 	private String getFileHelperPath(Problem problem) {
-		return getFileHelperFile(problem).map(Path::getParent)
-				.map(f -> SettingsHelper.applyAlias(ctx.getOptionStore(), FilesEx.getAbsolutePath(f))).orElse(null);
+		return getFileHelperFile(problem).map(Path::getParent).map(f -> PathAliases.from(ctx.getOptionStore()).apply(f)).orElse(null);
 	}
 
 	private class IgnoredFilesMatchedEditor extends AbstractMatcherEditor<Problem> {
