@@ -373,6 +373,7 @@ public class EditorArchiveTab extends EditorAbstractFileTab {
 						FileUtil.createLrgeo(geometryLayer);
 						FileUtil.createLrgeodat(geometryLayerDat, newContextBox);
 					} catch (IOException e) {
+						logger.warn("Error while creating the GeometryLayer for {}: ", dataFile.getFileName(), e);
 						TaskDialogs.error(ctx.getParentWindow(),
 								I.trf("Error while creating the GeometryLayer for {0}.", dataFile.getFileName()), e.getMessage());
 					}
