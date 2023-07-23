@@ -6,7 +6,6 @@ import java.awt.Window;
 import java.awt.dnd.DropTarget;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -398,9 +397,9 @@ public class Editor implements EditorContext {
 	}
 
 	private void loadOptionStore() {
-		String basePath = EDITOR_CONFIG_FOLDER + File.separator + EDITOR_TITLE;
-		Path jsonStoreFile = Paths.get(basePath + ".json");
-		Path kryoStoreFile = Paths.get(basePath + ".options");
+		Path basePath = Paths.get(EDITOR_CONFIG_FOLDER);
+		Path jsonStoreFile = basePath.resolve(EDITOR_TITLE + ".json");
+		Path kryoStoreFile = basePath.resolve(EDITOR_TITLE + ".options");
 		if (Files.exists(jsonStoreFile)) {
 			optionStore = new JsonFileOptionStore(jsonStoreFile);
 			try {

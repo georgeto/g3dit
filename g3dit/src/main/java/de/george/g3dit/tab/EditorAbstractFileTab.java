@@ -213,7 +213,7 @@ public abstract class EditorAbstractFileTab extends EditorTab implements FileCha
 		Path file = FileDialogWrapper.saveFile(I.tr("Save as"), absolutePath, getDefaultFileExtension(), ctx.getParentWindow(),
 				getFileFilter());
 		if (file != null) {
-			if (!this.saveFile(Optional.ofNullable(file))) {
+			if (!this.saveFile(Optional.of(file))) {
 				return false;
 			}
 			ctx.getEditor().getMainMenu().addRecentFile(FilesEx.getAbsolutePath(file));

@@ -106,7 +106,7 @@ public abstract class EditorAwareApplication extends SimpleApplication {
 		directionalLight.setColor(color);
 	}
 
-	public void setScreenhotFilePath(String screenshotFolder) {
+	public void setScreenhotFilePath(Path screenshotFolder) {
 		screenShotState.setFilePath(screenshotFolder);
 	}
 

@@ -24,6 +24,8 @@ public class SettingsHelper {
 		if (!alias.isEmpty() && !path.isEmpty()) {
 			aliasMap.put(path, alias);
 			if (optionStore.get(EditorOptions.Path.HIDE_PROJECTS_COMPILED)) {
+				// FileSystems.getDefault().getSeparator()
+				// TODO: Should support all separators here, so maybe use Path instead?
 				aliasMap.put(path.concat("Projects_compiled").concat(File.separator).concat("G3_World_01").concat(File.separator), alias);
 			}
 		}

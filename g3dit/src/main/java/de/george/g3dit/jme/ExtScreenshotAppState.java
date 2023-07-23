@@ -26,13 +26,11 @@
 
 package de.george.g3dit.jme;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.ByteBuffer;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.logging.Level;
@@ -59,7 +57,7 @@ import com.jme3.util.BufferUtils;
 public class ExtScreenshotAppState extends AbstractAppState implements ActionListener, SceneProcessor {
 	private static final Logger logger = Logger.getLogger(ExtScreenshotAppState.class.getName());
 
-	private String filePath = null;
+	private Path filePath = null;
 	private boolean capture;
 	private boolean numbered = true;
 	private Renderer renderer;
@@ -91,7 +89,7 @@ public class ExtScreenshotAppState extends AbstractAppState implements ActionLis
 	 * @param filePath The screenshot file path to use. Include the seperator at the end of the
 	 *            path.
 	 */
-	public ExtScreenshotAppState(String filePath) {
+	public ExtScreenshotAppState(Path filePath) {
 		this.filePath = filePath;
 	}
 
@@ -104,7 +102,7 @@ public class ExtScreenshotAppState extends AbstractAppState implements ActionLis
 	 *            path.
 	 * @param fileName The name of the file to save the screeshot as.
 	 */
-	public ExtScreenshotAppState(String filePath, String fileName) {
+	public ExtScreenshotAppState(Path filePath, String fileName) {
 		this.filePath = filePath;
 		shotName = fileName;
 	}
@@ -119,7 +117,7 @@ public class ExtScreenshotAppState extends AbstractAppState implements ActionLis
 	 * @param shotIndex The base index for screen shots. The first screen shot will have shotIndex +
 	 *            1 appended, the next shotIndex + 2, and so on.
 	 */
-	public ExtScreenshotAppState(String filePath, long shotIndex) {
+	public ExtScreenshotAppState(Path filePath, long shotIndex) {
 		this.filePath = filePath;
 		this.shotIndex = shotIndex;
 	}
@@ -135,7 +133,7 @@ public class ExtScreenshotAppState extends AbstractAppState implements ActionLis
 	 * @param shotIndex The base index for screen shots. The first screen shot will have shotIndex +
 	 *            1 appended, the next shotIndex + 2, and so on.
 	 */
-	public ExtScreenshotAppState(String filePath, String fileName, long shotIndex) {
+	public ExtScreenshotAppState(Path filePath, String fileName, long shotIndex) {
 		this.filePath = filePath;
 		shotName = fileName;
 		this.shotIndex = shotIndex;
@@ -149,7 +147,7 @@ public class ExtScreenshotAppState extends AbstractAppState implements ActionLis
 	 * @param filePath Path path to use to store the screenshot. Include the seperator at the end of
 	 *            the path.
 	 */
-	public void setFilePath(String filePath) {
+	public void setFilePath(Path filePath) {
 		this.filePath = filePath;
 	}
 
@@ -271,11 +269,8 @@ public class ExtScreenshotAppState extends AbstractAppState implements ActionLis
 					filename = shotName;
 				}
 
-				if (filePath == null) {
-					file = Paths.get(JmeSystem.getStorageFolder() + File.separator + filename + ".png");
-				} else {
-					file = Paths.get(filePath + filename + ".png");
-				}
+				Path screenshotDir = filePath != null ? filePath : JmeSystem.getStorageFolder().toPath();
+				file = screenshotDir.resolve(filename + ".png");
 				format = "png";
 			}
 
