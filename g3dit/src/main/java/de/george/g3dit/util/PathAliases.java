@@ -1,7 +1,6 @@
 package de.george.g3dit.util;
 
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Comparator;
 import java.util.Map;
 import java.util.Optional;
@@ -31,13 +30,13 @@ public class PathAliases {
 		return aliases;
 	}
 
-	private void addAlias(OptionStore optionStore, Option<String> pathSetting, Option<String> aliasSetting) {
+	private void addAlias(OptionStore optionStore, Option<Path> pathSetting, Option<String> aliasSetting) {
 		String alias = optionStore.get(aliasSetting);
-		String path = optionStore.get(pathSetting);
-		if (!alias.isEmpty() && !path.isEmpty()) {
-			aliasMap.put(Paths.get(path), alias);
+		Path path = optionStore.get(pathSetting);
+		if (!alias.isEmpty() && !FilesEx.isEmpty(path)) {
+			aliasMap.put(path, alias);
 			if (optionStore.get(EditorOptions.Path.HIDE_PROJECTS_COMPILED)) {
-				aliasMap.put(Paths.get(path, "Projects_compiled", "G3_World_01"), alias);
+				aliasMap.put(path.resolve("Projects_compiled").resolve("G3_World_01"), alias);
 			}
 		}
 	}

@@ -1,10 +1,23 @@
 package de.george.g3utils.util;
 
 import java.nio.file.Path;
+import java.util.Optional;
 
 public final class FilesEx {
 
 	private FilesEx() {}
+
+	public static boolean isEmpty(Path path) {
+		return !path.isAbsolute() && path.getNameCount() == 1 && path.getName(0).toString().isEmpty();
+	}
+
+	public static boolean isNotEmpty(Path path) {
+		return !isEmpty(path);
+	}
+
+	public static Optional<Path> notEmpty(Path path) {
+		return Optional.of(path).filter(FilesEx::isNotEmpty);
+	}
 
 	public static String getFileName(Path file) {
 		return file.getFileName().toString();

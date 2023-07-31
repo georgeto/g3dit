@@ -2,6 +2,7 @@ package de.george.g3dit.settings;
 
 import java.awt.Window;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -15,7 +16,7 @@ import de.george.g3utils.gui.SwingUtils;
 import de.george.g3utils.util.FilesEx;
 import net.miginfocom.swing.MigLayout;
 
-public class AliasFolderPathOptionHandler extends AbstractOptionHandler<String> {
+public class AliasFolderPathOptionHandler extends AbstractOptionHandler<Path> {
 	private Option<String> aliasOption;
 	private JTextField tfPath, tfPathAlias;
 	private String title;
@@ -54,18 +55,18 @@ public class AliasFolderPathOptionHandler extends AbstractOptionHandler<String> 
 	}
 
 	@Override
-	public void load(OptionStore optionStore, Option<String> option) {
-		tfPath.setText(optionStore.get(option));
+	public void load(OptionStore optionStore, Option<Path> option) {
+		tfPath.setText(optionStore.get(option).toString());
 		tfPathAlias.setText(optionStore.get(aliasOption));
 	}
 
 	@Override
-	public void save(OptionStore optionStore, Option<String> option) {
+	public void save(OptionStore optionStore, Option<Path> option) {
 		String path = tfPath.getText();
 		if (path.isEmpty()) {
 			optionStore.remove(option);
 		} else {
-			optionStore.put(option, path);
+			optionStore.put(option, Paths.get(path));
 		}
 
 		optionStore.put(aliasOption, tfPathAlias.getText());

@@ -3,6 +3,7 @@ package de.george.g3dit.settings;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Point;
+import java.nio.file.Paths;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
@@ -23,15 +24,15 @@ public abstract class EditorOptions {
 		public static final Option<String> PRIMARY_DATA_FOLDER_ALIAS = new NoHandlerOption<>("",
 				"EditorOptions.Path.PRIMARY_DATA_FOLDER_ALIAS", I.tr("Alias for primary data directory"));
 
-		public static final Option<String> PRIMARY_DATA_FOLDER = new LambdaOption<>("",
-				(parent) -> new AliasFolderPathOptionHandler(parent, PRIMARY_DATA_FOLDER_ALIAS, I.tr("Primary data directory"),
-						I.tr("Select primary data directory")),
+		public static final Option<java.nio.file.Path> PRIMARY_DATA_FOLDER = new LambdaOption<>(
+				Paths.get(""), (parent) -> new AliasFolderPathOptionHandler(parent, PRIMARY_DATA_FOLDER_ALIAS,
+						I.tr("Primary data directory"), I.tr("Select primary data directory")),
 				"EditorOptions.Path.PRIMARY_DATA_FOLDER", I.tr("Primary data directory"));
 
 		public static final Option<String> SECONDARY_DATA_FOLDER_ALIAS = new NoHandlerOption<>("",
 				"EditorOptions.Path.SECONDARY_DATA_FOLDER_ALIAS", I.tr("Alias for secondary data directory"));
 
-		public static final Option<String> SECONDARY_DATA_FOLDER = new LambdaOption<>("",
+		public static final Option<java.nio.file.Path> SECONDARY_DATA_FOLDER = new LambdaOption<>(Paths.get(""),
 				(parent) -> new AliasFolderPathOptionHandler(parent, SECONDARY_DATA_FOLDER_ALIAS, I.tr("Secondary data directory"),
 						I.tr("Select secondary data directory")),
 				"EditorOptions.Path.SECONDARY_DATA_FOLDER", I.tr("Secondary data directory"));
@@ -144,7 +145,7 @@ public abstract class EditorOptions {
 				(parent) -> new FloatSliderOptionHandler(parent, I.tr("Distance"), 10, 800, 10, true), "EditorOptions.D3View.DISTANCE",
 				I.tr("Distance"));
 
-		public static final Option<String> SCREENSHOT_FOLDER = new LambdaOption<>("",
+		public static final Option<java.nio.file.Path> SCREENSHOT_FOLDER = new LambdaOption<>(Paths.get(""),
 				(parent) -> new FolderPathOptionHandler(parent, I.tr("Screenshot directory"), I.tr("Select screenshot directory")),
 				"EditorOptions.D3View.SCREENSHOT_FOLDER", I.tr("Screenshot directory"));
 	}

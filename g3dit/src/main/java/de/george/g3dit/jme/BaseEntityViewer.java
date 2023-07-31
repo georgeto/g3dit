@@ -1,6 +1,6 @@
 package de.george.g3dit.jme;
 
-import java.nio.file.Paths;
+import java.nio.file.Path;
 import java.util.concurrent.ExecutionException;
 import java.util.function.Consumer;
 
@@ -53,13 +53,13 @@ public abstract class BaseEntityViewer {
 		float horizontalRotation = editorContext.getOptionStore().get(EditorOptions.D3View.HORIZONTAL_ROTATION);
 		float verticalRotation = editorContext.getOptionStore().get(EditorOptions.D3View.VERTICAL_ROTATION);
 		float distance = editorContext.getOptionStore().get(EditorOptions.D3View.DISTANCE);
-		String screenshotFolder = editorContext.getOptionStore().get(EditorOptions.D3View.SCREENSHOT_FOLDER);
+		Path screenshotFolder = editorContext.getOptionStore().get(EditorOptions.D3View.SCREENSHOT_FOLDER);
 		appTask(() -> {
 			app.getViewPort().setBackgroundColor(backgroundColor);
 			app.setAmbientLightColor(new ColorRGBA(ambientLightIntensity, ambientLightIntensity, ambientLightIntensity, 1.0f));
 			app.setLightDirection(directionalLightInclination, directionalLightAzimuth);
 			app.setLightColor(new ColorRGBA(directionalLightIntensity, directionalLightIntensity, directionalLightIntensity, 1.0f));
-			app.setScreenhotFilePath(Paths.get(screenshotFolder));
+			app.setScreenhotFilePath(screenshotFolder);
 			app.setHorizontalRotation(horizontalRotation * FastMath.DEG_TO_RAD);
 			app.setVerticalRotation(verticalRotation * FastMath.DEG_TO_RAD);
 			app.setRelativeDistance(distance);

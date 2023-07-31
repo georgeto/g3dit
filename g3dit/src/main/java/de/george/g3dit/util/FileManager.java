@@ -23,7 +23,6 @@ import org.slf4j.LoggerFactory;
 import com.ezware.dialog.task.CommandLink;
 import com.ezware.dialog.task.TaskDialogs;
 import com.google.common.base.Joiner;
-import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableList;
 import com.teamunify.i18n.I;
 
@@ -70,7 +69,7 @@ public class FileManager {
 	}
 
 	public Optional<Path> getPrimaryDataFolder() {
-		return Optional.of(ctx.getOptionStore().get(EditorOptions.Path.PRIMARY_DATA_FOLDER)).map(Strings::emptyToNull).map(Paths::get);
+		return FilesEx.notEmpty(ctx.getOptionStore().get(EditorOptions.Path.PRIMARY_DATA_FOLDER));
 	}
 
 	public Optional<Path> getPrimaryPath(String relativePath) {
@@ -82,7 +81,7 @@ public class FileManager {
 	}
 
 	public Optional<Path> getSecondaryDataFolder() {
-		return Optional.of(ctx.getOptionStore().get(EditorOptions.Path.SECONDARY_DATA_FOLDER)).map(Strings::emptyToNull).map(Paths::get);
+		return FilesEx.notEmpty(ctx.getOptionStore().get(EditorOptions.Path.SECONDARY_DATA_FOLDER));
 	}
 
 	public Optional<Path> getSecondaryPath(String relativePath) {

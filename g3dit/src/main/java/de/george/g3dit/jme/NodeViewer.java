@@ -1,6 +1,6 @@
 package de.george.g3dit.jme;
 
-import java.nio.file.Paths;
+import java.nio.file.Path;
 
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.FastMath;
@@ -66,13 +66,13 @@ public class NodeViewer {
 		float directionalLightAzimuth = editorContext.getOptionStore().get(EditorOptions.D3View.DIRECTIONAL_LIGHT_AZIMUTH)
 				* FastMath.DEG_TO_RAD;
 
-		String screenshotFolder = editorContext.getOptionStore().get(EditorOptions.D3View.SCREENSHOT_FOLDER);
+		Path screenshotFolder = editorContext.getOptionStore().get(EditorOptions.D3View.SCREENSHOT_FOLDER);
 		appTask(() -> {
 			app.getViewPort().setBackgroundColor(backgroundColor);
 			app.setAmbientLightColor(new ColorRGBA(ambientLightIntensity, ambientLightIntensity, ambientLightIntensity, 1.0f));
 			app.setLightDirection(directionalLightInclination, directionalLightAzimuth);
 			app.setLightColor(new ColorRGBA(directionalLightIntensity, directionalLightIntensity, directionalLightIntensity, 1.0f));
-			app.setScreenhotFilePath(Paths.get(screenshotFolder));
+			app.setScreenhotFilePath(screenshotFolder);
 		});
 	}
 

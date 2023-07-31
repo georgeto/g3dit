@@ -5,7 +5,6 @@ import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.StringSelection;
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
 import java.io.InputStream;
@@ -259,11 +258,6 @@ public class IOUtils {
 		try (Output output = new Output(Files.newOutputStream(outFile))) {
 			getKryo().writeClassAndObject(output, obj);
 		}
-	}
-
-	public static String ensureTrailingSlash(String path) {
-		// TODO: Get rid of this?!
-		return path + (path.endsWith(File.separator) ? "" : File.separator);
 	}
 
 	public static String getManifestAttribute(Class<?> clazz, String name) {

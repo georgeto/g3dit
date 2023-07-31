@@ -2,6 +2,7 @@ package de.george.g3dit.settings;
 
 import java.awt.Window;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Optional;
 
 import javax.swing.JButton;
@@ -15,7 +16,7 @@ import de.george.g3utils.gui.SwingUtils;
 import de.george.g3utils.util.FilesEx;
 import net.miginfocom.swing.MigLayout;
 
-public class FolderPathOptionHandler extends TitledOptionHandler<String> {
+public class FolderPathOptionHandler extends TitledOptionHandler<Path> {
 	private JTextField tfPath;
 	private String chooseFolderDialogTitle;
 
@@ -25,17 +26,17 @@ public class FolderPathOptionHandler extends TitledOptionHandler<String> {
 	}
 
 	@Override
-	protected void load(String value) {
-		tfPath.setText(value);
+	protected void load(Path value) {
+		tfPath.setText(value.toString());
 	}
 
 	@Override
-	protected Optional<String> save() {
+	protected Optional<Path> save() {
 		String path = tfPath.getText();
 		if (path.isEmpty()) {
 			return Optional.empty();
 		} else {
-			return Optional.of(path);
+			return Optional.of(Paths.get(path));
 		}
 	}
 
