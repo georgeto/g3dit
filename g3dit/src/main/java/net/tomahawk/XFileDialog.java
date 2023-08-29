@@ -395,8 +395,6 @@ public class XFileDialog {
 
 			nativeEnabled = true;
 		} catch (UnsatisfiedLinkError e) {
-			e.printStackTrace();
-
 			if (System.getProperty("os.arch").indexOf("64") >= 0) {
 				trace("JNI>>: The xfiledialog64.dll (AMD64) can not be loaded.");
 			} else {
