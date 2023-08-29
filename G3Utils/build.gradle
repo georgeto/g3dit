@@ -13,7 +13,6 @@ dependencies {
 	api group: 'com.bric', name: 'color-picker'
 	api group: 'com.google.guava', name: 'guava', version: '31.1-jre'
 	api group: 'org.slf4j', name: 'slf4j-api', version: '2.0.3'
-	api group: 'org.slf4j', name: 'slf4j-simple', version: '2.0.3'
 	api group: 'com.github.sarxos', name: 'windows-registry-util', version: '0.4-CUSTOM'
 	api group: 'com.esotericsoftware', name: 'kryo', version: '3.0.3'
 	api group: 'de.javakaffee', name: 'kryo-serializers', version: '0.42'
