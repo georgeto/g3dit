@@ -159,8 +159,14 @@ public class Editor implements EditorContext {
 	}
 
 	public Editor(final String[] args) {
-		setupLogging();
-		registerOneInstanceListener(args);
+		try {
+			setupLogging();
+			registerOneInstanceListener(args);
+		} catch (Throwable e) {
+			logger.error("Unexpected error during program setup.", e);
+			logger.error("Quitting g3dit.");
+			System.exit(EditorCli.EXIT_CODE_ERROR);
+		}
 
 		SwingUtilities.invokeLater(() -> {
 			try {
