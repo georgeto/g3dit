@@ -27,7 +27,6 @@ import javax.swing.LookAndFeel;
 import javax.swing.SwingUtilities;
 import javax.swing.ToolTipManager;
 
-import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.bridge.SLF4JBridgeHandler;
@@ -335,7 +334,7 @@ public class Editor implements EditorContext {
 				return;
 			}
 
-			if (FileUtils.contentEquals(baseFile.toFile(), mineFile.toFile())) {
+			if (FilesEx.sameContent(baseFile, mineFile)) {
 				TaskDialogs.inform(frame, "", I.tr("Files to be compared are identical."));
 				return;
 			}

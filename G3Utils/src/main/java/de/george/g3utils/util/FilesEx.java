@@ -1,9 +1,16 @@
 package de.george.g3utils.util;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Arrays;
 import java.util.Optional;
 
+import com.google.common.io.ByteStreams;
+
 public final class FilesEx {
+	private static final int BUFFER_SIZE = 8192;
 
 	private FilesEx() {}
 
@@ -69,5 +76,28 @@ public final class FilesEx {
 
 	public static boolean hasFileExtension(Path file, String extension) {
 		return extension.equals(getFileExtension(file));
+	}
+
+	public static boolean sameContent(Path file1, Path file2) throws IOException {
+		if (Files.isSameFile(file1, file2))
+			return true;
+
+		if (Files.size(file1) != Files.size(file2))
+			return false;
+
+		try (InputStream in1 = Files.newInputStream(file1); InputStream in2 = Files.newInputStream(file2);) {
+			byte[] buffer1 = new byte[BUFFER_SIZE];
+			byte[] buffer2 = new byte[BUFFER_SIZE];
+			while (true) {
+				int nRead1 = ByteStreams.read(in1, buffer1, 0, BUFFER_SIZE);
+				int nRead2 = ByteStreams.read(in2, buffer2, 0, BUFFER_SIZE);
+				if (nRead1 != nRead2 || !Arrays.equals(buffer1, buffer2))
+					return false;
+
+				if (nRead1 < BUFFER_SIZE)
+					// Reached end of file without finding mismatch.
+					return true;
+			}
+		}
 	}
 }
