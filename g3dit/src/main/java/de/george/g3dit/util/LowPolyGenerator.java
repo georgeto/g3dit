@@ -200,8 +200,8 @@ public class LowPolyGenerator {
 
 			// Search all available low poly meshes
 			lowpolyMeshes = ctx.getFileManager()
-					.listFiles(FileManager.RP_COMPILED_MESH, f -> f.getName().toLowerCase().endsWith("_lowpoly.xcmsh")).parallelStream()
-					.map(lowpoly -> {
+					.listFiles(FileManager.RP_COMPILED_MESH, f -> FilesEx.getFileNameLowerCase(f).endsWith("_lowpoly.xcmsh"))
+					.parallelStream().map(lowpoly -> {
 						try {
 							eCResourceMeshComplex_PS lowpolyMesh = FileUtil.openMesh(lowpoly);
 							return new LowpolyMesh(FilesEx.getFileName(lowpoly), lowpolyMesh.getBoundingBox());

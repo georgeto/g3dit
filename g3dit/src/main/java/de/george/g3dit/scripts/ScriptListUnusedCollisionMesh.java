@@ -14,6 +14,7 @@ import com.teamunify.i18n.I;
 
 import de.george.g3dit.util.FileManager;
 import de.george.g3utils.util.FilesEx;
+import de.george.g3utils.util.PathFilter;
 import de.george.lrentnode.archive.ArchiveFile;
 import de.george.lrentnode.archive.eCEntity;
 import de.george.lrentnode.classes.eCCollisionShape;
@@ -97,7 +98,7 @@ public class ScriptListUnusedCollisionMesh implements IScript {
 	}
 
 	public Map<String, Path> listCollisionMeshes(IScriptEnvironment env, String relativePath) {
-		return env.getFileManager().listFiles(relativePath, (file) -> file.getName().endsWith(".xnvmsh")).stream()
+		return env.getFileManager().listFiles(relativePath, PathFilter.withExt("xnvmsh")).stream()
 				.collect(Collectors.toMap(FilesEx::getFileNameLowerCase, Function.identity()));
 	}
 }

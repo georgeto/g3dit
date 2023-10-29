@@ -72,7 +72,7 @@ public class RecursiveFileLocator implements FileLocator {
 		}
 
 		if (refreshOnCacheMiss && (file == null || !Files.exists(file))) {
-			return IOUtils.findFirstFile(root, (ftf) -> ftf.getName().equalsIgnoreCase(name));
+			return IOUtils.findFirstFile(root, (ftf) -> FilesEx.getFileName(ftf).equalsIgnoreCase(name));
 		}
 
 		return Optional.ofNullable(file).filter(Files::isRegularFile);

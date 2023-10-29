@@ -7,16 +7,17 @@ import java.awt.dnd.DropTargetDragEvent;
 import java.awt.dnd.DropTargetDropEvent;
 import java.awt.dnd.DropTargetEvent;
 import java.awt.dnd.DropTargetListener;
-import java.io.FileFilter;
 import java.nio.file.Path;
 import java.util.List;
 
 import com.google.common.eventbus.EventBus;
 
-public class FileDropListener extends EventBusProvider implements DropTargetListener {
-	private FileFilter[] filters;
+import de.george.g3utils.util.PathFilter;
 
-	public FileDropListener(FileFilter... filters) {
+public class FileDropListener extends EventBusProvider implements DropTargetListener {
+	private PathFilter[] filters;
+
+	public FileDropListener(PathFilter... filters) {
 		this.filters = filters;
 	}
 
@@ -41,8 +42,8 @@ public class FileDropListener extends EventBusProvider implements DropTargetList
 					@SuppressWarnings("unchecked")
 					List<Path> files = (List<Path>) tr.getTransferData(flavor);
 					for (Path file : files) {
-						for (FileFilter filter : filters) {
-							if (filter.accept(file.toFile())) {
+						for (PathFilter filter : filters) {
+							if (filter.accept(file)) {
 								dtde.acceptDrag(DnDConstants.ACTION_COPY_OR_MOVE);
 								return;
 							}
@@ -70,8 +71,8 @@ public class FileDropListener extends EventBusProvider implements DropTargetList
 				if (flavor.isFlavorJavaFileListType()) {
 					List<Path> files = (List<Path>) tr.getTransferData(flavor);
 					for (Path file : files) {
-						for (FileFilter filter : filters) {
-							if (filter.accept(file.toFile())) {
+						for (PathFilter filter : filters) {
+							if (filter.accept(file)) {
 								eventBus().post(new FileDropEvent(file));
 								break;
 							}

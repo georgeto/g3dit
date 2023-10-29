@@ -1,9 +1,14 @@
 package net.tomahawk;
 
 import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.List;
 
-public class ExtensionsFilter extends javax.swing.filechooser.FileFilter {
+import de.george.g3utils.util.FilesEx;
+import de.george.g3utils.util.PathFilter;
+
+public class ExtensionsFilter extends javax.swing.filechooser.FileFilter implements PathFilter {
 	static final char SPACE = ' ';
 	static final char ASTERISK = '*';
 	static final char SEMICOLON = ';';
@@ -30,22 +35,7 @@ public class ExtensionsFilter extends javax.swing.filechooser.FileFilter {
 	// key: the accept method
 	@Override
 	public boolean accept(File f) {
-		if (f.isDirectory()) {
-			return true;
-		}
-		if (extensions == null) {
-			return true;
-		}
-		if (extensions.isEmpty()) {
-			return true;
-		}
-		String filename = f.getName().toLowerCase();
-		for (String ext : extensions) {
-			if (filename.endsWith(POINT + ext)) {
-				return true;
-			}
-		}
-		return false;
+		return accept(f.toPath());
 	}
 
 	// description
@@ -73,4 +63,23 @@ public class ExtensionsFilter extends javax.swing.filechooser.FileFilter {
 		return filterString;
 	}
 
+	@Override
+	public boolean accept(Path path) {
+		if (Files.isDirectory(path)) {
+			return true;
+		}
+		if (extensions == null) {
+			return true;
+		}
+		if (extensions.isEmpty()) {
+			return true;
+		}
+		String filename = FilesEx.getFileNameLowerCase(path);
+		for (String ext : extensions) {
+			if (filename.endsWith(POINT + ext)) {
+				return true;
+			}
+		}
+		return false;
+	}
 }

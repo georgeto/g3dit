@@ -6,7 +6,6 @@ import java.awt.Window;
 import java.awt.dnd.DropTarget;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.io.FileFilter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.file.Files;
@@ -97,6 +96,7 @@ import de.george.g3utils.io.G3FileReaderEx;
 import de.george.g3utils.util.FilesEx;
 import de.george.g3utils.util.Holder;
 import de.george.g3utils.util.IOUtils;
+import de.george.g3utils.util.PathFilter;
 import de.george.lrentnode.archive.ArchiveFile;
 import de.george.lrentnode.archive.SecDat;
 import de.george.lrentnode.archive.eCEntity;
@@ -231,7 +231,7 @@ public class Editor implements EditorContext {
 		loadCaches();
 
 		// Globales Drag'n'Drop
-		FileFilter dropFilter = f -> f.isFile() && FileDialogWrapper.COMBINED_FILTER.accept(f);
+		PathFilter dropFilter = f -> Files.isRegularFile(f) && FileDialogWrapper.COMBINED_FILTER.accept(f);
 		FileDropListener dropListener = new FileDropListener(dropFilter);
 		dropListener.eventBus().register(new EditorFileDropSubscriber(Side.LEFT));
 		new DropTarget(frame, dropListener);

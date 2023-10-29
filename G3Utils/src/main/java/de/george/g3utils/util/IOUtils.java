@@ -5,7 +5,6 @@ import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.StringSelection;
 import java.io.BufferedReader;
-import java.io.FileFilter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -45,14 +44,17 @@ import de.javakaffee.kryoserializers.guava.ImmutableSetSerializer;
 public class IOUtils {
 	private static final Logger logger = LoggerFactory.getLogger(IOUtils.class);
 
-	public static final FileFilter archiveFileFilter = (file) -> (file.getName().endsWith(".node") || file.getName().endsWith(".lrentdat"))
-			&& !file.getName().startsWith("{");
-	public static final FileFilter lrentdatFileFilter = (file) -> file.getName().endsWith(".lrentdat") && !file.getName().startsWith("{");
-	public static final FileFilter nodeFileFilter = (file) -> file.getName().endsWith(".node") && !file.getName().startsWith("{");
-	public static final FileFilter tpleFileFilter = (file) -> isValidTemplateFile(file.getName());
-	public static final FileFilter secdatFileFilter = (file) -> file.getName().endsWith(".secdat");
-	public static final FileFilter meshFilter = (file) -> file.getName().endsWith(".xcmsh") || file.getName().endsWith(".xact")
-			|| file.getName().endsWith(".xlmsh");
+	public static final PathFilter archiveFileFilter = (
+			file) -> (FilesEx.hasFileExtension(file, "node") || FilesEx.hasFileExtension(file, "lrentdat"))
+					&& !FilesEx.getFileName(file).startsWith("{");
+	public static final PathFilter lrentdatFileFilter = (file) -> FilesEx.hasFileExtension(file, "lrentdat")
+			&& !FilesEx.getFileName(file).startsWith("{");
+	public static final PathFilter nodeFileFilter = (file) -> FilesEx.hasFileExtension(file, "node")
+			&& !FilesEx.getFileName(file).startsWith("{");
+	public static final PathFilter tpleFileFilter = (file) -> isValidTemplateFile(FilesEx.getFileName(file));
+	public static final PathFilter secdatFileFilter = (file) -> FilesEx.hasFileExtension(file, "secdat");
+	public static final PathFilter meshFilter = (file) -> FilesEx.hasFileExtension(file, "xcmsh") || FilesEx.hasFileExtension(file, "xact")
+			|| FilesEx.hasFileExtension(file, "xlmsh");
 
 	public static boolean isValidTemplateFile(String fileName) {
 		return fileName.endsWith(".tple") && !fileName.startsWith("_deleted_") && !fileName.startsWith("Testzeug_");
@@ -60,13 +62,13 @@ public class IOUtils {
 
 	/**
 	 * Recursively lists all files under the given {@code rootDirectory} that match the
-	 * {@code fileFilter}.
+	 * {@code PathFilter}.
 	 *
 	 * @param rootDirectory
 	 * @param fileFilter
 	 * @return
 	 */
-	public static List<Path> listFiles(Path rootDirectory, FileFilter fileFilter) {
+	public static List<Path> listFiles(Path rootDirectory, PathFilter fileFilter) {
 		ArrayList<Path> files = new ArrayList<>();
 
 		try (FastFileTreeWalker walker = new FastFileTreeWalker()) {
@@ -76,7 +78,7 @@ public class IOUtils {
 				if (entry.attributes().isRegularFile()) {
 					Path file = entry.file();
 					// Only return the files that match the fileFilter.
-					if (fileFilter.accept(file.toFile())) {
+					if (fileFilter.accept(file)) {
 						files.add(file);
 					}
 				}
@@ -97,7 +99,7 @@ public class IOUtils {
 	 * @param fileFilter
 	 * @return Matching files, sorted by their relative path.
 	 */
-	public static List<Path> listFilesPrioritized(Iterable<Path> rootDirectories, FileFilter fileFilter) {
+	public static List<Path> listFilesPrioritized(Iterable<Path> rootDirectories, PathFilter fileFilter) {
 		TreeMap<String, Path> files = new TreeMap<>();
 
 		for (Path rootDir : rootDirectories) {
@@ -108,7 +110,7 @@ public class IOUtils {
 					if (entry.attributes().isRegularFile()) {
 						Path file = entry.file();
 						// Only return the files that match the fileFilter.
-						if (fileFilter.accept(file.toFile())) {
+						if (fileFilter.accept(file)) {
 							String relativePath = rootDir.relativize(entry.file()).toString();
 							files.putIfAbsent(relativePath, file);
 						}
@@ -122,7 +124,7 @@ public class IOUtils {
 		return new ArrayList<>(files.values());
 	}
 
-	public static Optional<Path> findFirstFile(Path rootDirectory, FileFilter fileFilter) {
+	public static Optional<Path> findFirstFile(Path rootDirectory, PathFilter fileFilter) {
 		try (FastFileTreeWalker walker = new FastFileTreeWalker()) {
 			FastFileTreeWalker.PathWithAttrs entry = walker.walk(rootDirectory);
 			while (entry != null) {
@@ -130,7 +132,7 @@ public class IOUtils {
 				if (entry.attributes().isRegularFile()) {
 					Path file = entry.file();
 					// Only return the files that match the fileFilter.
-					if (fileFilter.accept(file.toFile())) {
+					if (fileFilter.accept(file)) {
 						return Optional.of(file);
 					}
 				}
@@ -141,7 +143,7 @@ public class IOUtils {
 		return Optional.empty();
 	}
 
-	public static Optional<Path> findFirstFile(Iterable<Path> rootDirectories, FileFilter fileFilter) {
+	public static Optional<Path> findFirstFile(Iterable<Path> rootDirectories, PathFilter fileFilter) {
 		for (Path rootDirectory : rootDirectories) {
 			Optional<Path> file = findFirstFile(rootDirectory, fileFilter);
 			if (file.isPresent()) {

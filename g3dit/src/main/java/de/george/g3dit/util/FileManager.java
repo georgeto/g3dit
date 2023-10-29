@@ -1,6 +1,5 @@
 package de.george.g3dit.util;
 
-import java.io.FileFilter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -38,6 +37,7 @@ import de.george.g3utils.io.FileLocator;
 import de.george.g3utils.io.RecursiveFileLocator;
 import de.george.g3utils.util.FilesEx;
 import de.george.g3utils.util.IOUtils;
+import de.george.g3utils.util.PathFilter;
 import de.george.lrentnode.iterator.ArchiveFileIterator;
 import de.george.lrentnode.iterator.TemplateFileIterator;
 import de.george.lrentnode.template.TemplateFile;
@@ -76,7 +76,7 @@ public class FileManager {
 		return getPrimaryDataFolder().map(f -> f.resolve(relativePath));
 	}
 
-	public List<Path> listPrimaryFiles(String relativePath, FileFilter fileFilter) {
+	public List<Path> listPrimaryFiles(String relativePath, PathFilter fileFilter) {
 		return getPrimaryPath(relativePath).map(p -> IOUtils.listFiles(p, fileFilter)).orElseGet(Collections::emptyList);
 	}
 
@@ -88,7 +88,7 @@ public class FileManager {
 		return getSecondaryDataFolder().map(f -> f.resolve(relativePath));
 	}
 
-	public List<Path> listSecondaryFiles(String relativePath, FileFilter fileFilter) {
+	public List<Path> listSecondaryFiles(String relativePath, PathFilter fileFilter) {
 		return getSecondaryPath(relativePath).map(p -> IOUtils.listFiles(p, fileFilter)).orElseGet(Collections::emptyList);
 	}
 
@@ -99,12 +99,12 @@ public class FileManager {
 		return builder.build();
 	}
 
-	public List<Path> listFiles(String relativePath, FileFilter fileFilter) {
+	public List<Path> listFiles(String relativePath, PathFilter fileFilter) {
 		return IOUtils.listFilesPrioritized(getPaths(relativePath), fileFilter);
 	}
 
 	public Optional<Path> searchFile(String relativePath, String fileName) {
-		return IOUtils.findFirstFile(getPaths(relativePath), file -> file.getName().equalsIgnoreCase(fileName));
+		return IOUtils.findFirstFile(getPaths(relativePath), file -> FilesEx.getFileName(file).equalsIgnoreCase(fileName));
 	}
 
 	public Optional<Path> searchFile(String relativePath) {
@@ -128,7 +128,7 @@ public class FileManager {
 	}
 
 	public List<Path> listTemplateFiles() {
-		return listFiles(RP_TEMPLATES, f -> IOUtils.isValidTemplateFile(f.getName()));
+		return listFiles(RP_TEMPLATES, f -> IOUtils.isValidTemplateFile(FilesEx.getFileName(f)));
 	}
 
 	public TemplateFileIterator templateFilesIterator() {
@@ -311,18 +311,18 @@ public class FileManager {
 	}
 
 	public List<Path> listStaticMeshes() {
-		return listFiles(FileManager.RP_COMPILED_MESH, (file) -> file.getName().endsWith(".xcmsh"));
+		return listFiles(FileManager.RP_COMPILED_MESH, PathFilter.withExt("xcmsh"));
 	}
 
 	public List<Path> listLodMeshes() {
-		return listFiles(FileManager.RP_COMPILED_MESH, (file) -> file.getName().endsWith(".xlmsh"));
+		return listFiles(FileManager.RP_COMPILED_MESH, PathFilter.withExt("xlmsh"));
 	}
 
 	public List<Path> listAnimatedMeshes() {
-		return listFiles(FileManager.RP_COMPILED_ANIMATION, (file) -> file.getName().endsWith(".xact"));
+		return listFiles(FileManager.RP_COMPILED_ANIMATION, PathFilter.withExt("xact"));
 	}
 
 	public List<Path> listMaterials() {
-		return listFiles(FileManager.RP_COMPILED_MATERIAL, (file) -> file.getName().endsWith(".xshmat"));
+		return listFiles(FileManager.RP_COMPILED_MATERIAL, PathFilter.withExt("xshmat"));
 	}
 }

@@ -9,6 +9,7 @@ import java.util.HashSet;
 import java.util.Properties;
 import java.util.Set;
 
+import de.george.g3utils.util.PathFilter;
 import de.george.lrentnode.archive.ArchiveFile;
 import de.george.lrentnode.archive.eCEntity;
 import de.george.lrentnode.classes.desc.CD;
@@ -39,7 +40,7 @@ public class ScriptCondOwnerNearEntity implements IScript {
 			}
 		}
 
-		for (Path file : env.getFileManager().listFiles("Infos/G3_World_01/", f -> f.getName().endsWith(".info"))) {
+		for (Path file : env.getFileManager().listFiles("Infos/G3_World_01/", PathFilter.withExt("info"))) {
 			Properties properties = new Properties();
 			try {
 				properties.load(Files.newBufferedReader(file));

@@ -85,7 +85,7 @@ public class G3FileLocator implements AssetLocator {
 		}
 
 		if (file == null || !Files.exists(file)) {
-			file = IOUtils.findFirstFile(root, (ftf) -> ftf.getName().equalsIgnoreCase(name)).orElse(null);
+			file = IOUtils.findFirstFile(root, (ftf) -> FilesEx.getFileName(ftf).equalsIgnoreCase(name)).orElse(null);
 			if (file == null) {
 				return null;
 			}

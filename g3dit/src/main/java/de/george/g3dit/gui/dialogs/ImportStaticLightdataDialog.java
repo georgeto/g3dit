@@ -22,6 +22,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
+import de.george.g3utils.util.PathFilter;
 import org.jdesktop.swingx.decorator.EnabledHighlighter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -101,7 +102,7 @@ public class ImportStaticLightdataDialog extends AbstractTableProgressDialog {
 		}
 
 		Map<String, Sldat> lightData = new HashMap<>();
-		for (Path file : IOUtils.listFiles(lightFolder, f -> f.getName().endsWith(".sldat"))) {
+		for (Path file : IOUtils.listFiles(lightFolder, PathFilter.withExt("sldat"))) {
 			try (G3FileReader reader = new G3FileReaderVirtual(file)) {
 				Sldat sldat = new Sldat(reader);
 				lightData.put(sldat.getEntityGuid().getGuid(), sldat);

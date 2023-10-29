@@ -21,6 +21,7 @@ import de.george.g3dit.gui.components.Severity;
 import de.george.g3dit.util.FileManager;
 import de.george.g3utils.structure.GuidUtil;
 import de.george.g3utils.util.FilesEx;
+import de.george.g3utils.util.PathFilter;
 import de.george.lrentnode.archive.ArchiveFile;
 import de.george.lrentnode.archive.eCEntity;
 import de.george.lrentnode.classes.G3Class;
@@ -97,11 +98,11 @@ public class CheckLightmaps extends AbstractEntityCheck {
 
 	@Override
 	public void reportProblems(ProblemConsumer problemConsumer) {
-		for (Path lightmap : ctx.getFileManager().listPrimaryFiles(FileManager.RP_LIGHTMAPS, f -> f.getName().endsWith(".xlmp"))) {
+		for (Path lightmap : ctx.getFileManager().listPrimaryFiles(FileManager.RP_LIGHTMAPS, PathFilter.withExt("xlmp"))) {
 			checkLightmap(lightmap, problemConsumer, true);
 		}
 
-		for (Path lightmap : ctx.getFileManager().listSecondaryFiles(FileManager.RP_LIGHTMAPS, f -> f.getName().endsWith(".xlmp"))) {
+		for (Path lightmap : ctx.getFileManager().listSecondaryFiles(FileManager.RP_LIGHTMAPS, PathFilter.withExt("xlmp"))) {
 			checkLightmap(lightmap, problemConsumer, false);
 		}
 	}

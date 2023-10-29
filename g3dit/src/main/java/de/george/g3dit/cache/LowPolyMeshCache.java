@@ -45,7 +45,7 @@ public class LowPolyMeshCache extends AbstractCache<LowPolyMeshCache> {
 	public void create() throws Exception {
 		ConcurrencyUtil.executeAndInvokeLater(() -> {
 			ImmutableSet<String> lowPolyMeshes = ctx.getFileManager()
-					.listFiles(FileManager.RP_COMPILED_MESH, f -> f.getName().toLowerCase().endsWith("_lowpoly.xcmsh")).stream()
+					.listFiles(FileManager.RP_COMPILED_MESH, f -> FilesEx.getFileNameLowerCase(f).endsWith("_lowpoly.xcmsh")).stream()
 					.map(FilesEx::getFileName).collect(ImmutableSet.toImmutableSet());
 
 			ImmutableSet<String> lowPolyMeshesLowerCase = lowPolyMeshes.stream().map(String::toLowerCase)

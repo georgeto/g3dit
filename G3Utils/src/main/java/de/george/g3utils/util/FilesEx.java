@@ -75,7 +75,7 @@ public final class FilesEx {
 	}
 
 	public static boolean hasFileExtension(Path file, String extension) {
-		return extension.equals(getFileExtension(file));
+		return extension.equalsIgnoreCase(getFileExtension(file));
 	}
 
 	public static boolean sameContent(Path file1, Path file2) throws IOException {
