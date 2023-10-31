@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.0\n"
+"X-Generator: Poedit 3.3.2\n"
 
 #: G3Utils\src\main\java\de\george\g3utils\gui\ColorChooserButton.java:30
 msgid "Select color"
@@ -2471,7 +2471,20 @@ msgstr "Zugeordnet zu {0} anstatt {1}."
 msgid "Critical InteractObject."
 msgstr "Problematisches Interaktionsobjekt."
 
-#: g3dit\src\main\java\de\george\g3dit\nav\NavCalcStage.java:178
+#: g3dit\src\main\java\de\george\g3dit\nav\NavCalcStage.java:162
+msgid "Scanning..."
+msgstr "Scanne..."
+
+#: g3dit\src\main\java\de\george\g3dit\nav\NavCalcStage.java:166
+msgid "Scan completed"
+msgstr "Scan abgeschlossen"
+
+#: g3dit\src\main\java\de\george\g3dit\nav\NavCalcStage.java:170
+#, java-format
+msgid "Scan failed: {0}"
+msgstr "Scan fehlgeschlagen: {0}"
+
+#: g3dit\src\main\java\de\george\g3dit\nav\NavCalcStage.java:188
 msgid "Fixed"
 msgstr "Behoben"
 

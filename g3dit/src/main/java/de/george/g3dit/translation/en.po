@@ -2396,7 +2396,20 @@ msgstr ""
 msgid "Critical InteractObject."
 msgstr ""
 
-#: g3dit\src\main\java\de\george\g3dit\nav\NavCalcStage.java:178
+#: g3dit\src\main\java\de\george\g3dit\nav\NavCalcStage.java:162
+msgid "Scanning..."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\nav\NavCalcStage.java:166
+msgid "Scan completed"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\nav\NavCalcStage.java:170
+#, java-format
+msgid "Scan failed: {0}"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\nav\NavCalcStage.java:188
 msgid "Fixed"
 msgstr ""
 

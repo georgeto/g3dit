@@ -7,6 +7,8 @@ import static j2html.TagCreator.rawHtml;
 import java.awt.Component;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -71,6 +73,8 @@ public abstract class NavCalcStage {
 
 	private JComponent component;
 	private Consumer<NavCalcState> gotoState;
+
+	private JProgressBar progressBar;
 
 	private EventList<Change> changes;
 	private AdvancedTableModel<Change> changeTableModel;
@@ -155,7 +159,17 @@ public abstract class NavCalcStage {
 	}
 
 	private void onExecute() {
-		doExecute();
+		progressBar.setString(I.tr("Scanning..."));
+		progressBar.setToolTipText(null);
+		try {
+			doExecute();
+			progressBar.setString(I.tr("Scan completed"));
+		} catch (RuntimeException e) {
+			StringWriter sw = new StringWriter();
+			e.printStackTrace(new PrintWriter(sw));
+			progressBar.setString(I.trf("Scan failed: {0}", e.getMessage()));
+			progressBar.setToolTipText(sw.toString());
+		}
 		updateFilteredCount();
 		if (!changeTable.hasFocus()) {
 			changeTable.requestFocusInWindow();
@@ -229,7 +243,7 @@ public abstract class NavCalcStage {
 	protected <T extends Change> JPanel createMainPanel(Class<T> changeClass, TableColumnDef... columns) {
 		JPanel mainPanel = new JPanel(new MigLayout("fill"));
 
-		JProgressBar progressBar = SwingUtils.createProgressBar();
+		progressBar = SwingUtils.createProgressBar();
 		mainPanel.add(progressBar, "spanx 10, split 2, pushx, growx 100, id progressbar");
 
 		mainPanel.add(SwingUtils.keyStrokeButton(I.tr("Execute Scan"), Icons.getImageIcon(Icons.Action.DIFF), KeyEvent.VK_E,
