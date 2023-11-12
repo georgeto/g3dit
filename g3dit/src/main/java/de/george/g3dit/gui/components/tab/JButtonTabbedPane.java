@@ -81,12 +81,12 @@ public class JButtonTabbedPane extends JTabbedPane {
 		createTabComponentAt(index, title, null, icon);
 	}
 
-	public void addTabAction(int index, Action action, Icon icon) {
-		addTabAction(index, action, icon, false);
+	public void addTabAction(int index, Action action) {
+		addTabAction(index, action, false);
 	}
 
-	public void addTabAction(int index, Action action, Icon icon, boolean front) {
-		buttonTabComponentAt(index).ifPresent(tabComponent -> tabComponent.addButton(action, icon, front));
+	public void addTabAction(int index, Action action, boolean front) {
+		buttonTabComponentAt(index).ifPresent(tabComponent -> tabComponent.addButton(action, front));
 		internalRefreshTabComponentAt(index);
 	}
 
@@ -136,7 +136,7 @@ public class JButtonTabbedPane extends JTabbedPane {
 		private String title;
 		private Color titleColor;
 		private Icon icon;
-		private List<ButtonTabButton> buttons;
+		private List<Action> buttons;
 
 		private Dimension buttonSize;
 		private int buttonSeparatorStrutSize;
@@ -185,11 +185,11 @@ public class JButtonTabbedPane extends JTabbedPane {
 			this.icon = icon;
 		}
 
-		public void addButton(Action action, Icon icon, boolean front) {
+		public void addButton(Action action, boolean front) {
 			if (front) {
-				buttons.add(0, new ButtonTabButton(action, icon));
+				buttons.add(0, action);
 			} else {
-				buttons.add(new ButtonTabButton(action, icon));
+				buttons.add(action);
 			}
 		}
 
@@ -221,33 +221,12 @@ public class JButtonTabbedPane extends JTabbedPane {
 				if (i > 0) {
 					add(Box.createHorizontalStrut(buttonSeparatorStrutSize));
 				}
-				ButtonTabButton tabButton = buttons.get(i);
-				JButton button = new JButton();
+				JButton button = new JButton(buttons.get(i));
 				button.setFocusable(false);
-				button.setIcon(tabButton.getIcon());
 				button.setPreferredSize(buttonSize);
-				button.addActionListener(tabButton.getAction());
 				add(button);
 			}
 
-		}
-
-		private class ButtonTabButton {
-			private Action action;
-			private Icon icon;
-
-			public ButtonTabButton(Action action, Icon icon) {
-				this.action = action;
-				this.icon = icon;
-			}
-
-			public Action getAction() {
-				return action;
-			}
-
-			public Icon getIcon() {
-				return icon;
-			}
 		}
 	}
 }

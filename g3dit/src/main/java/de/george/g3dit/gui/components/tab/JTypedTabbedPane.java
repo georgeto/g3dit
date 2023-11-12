@@ -6,8 +6,6 @@ import java.util.List;
 import java.util.Optional;
 
 import javax.swing.Action;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JTabbedPane;
 
@@ -141,14 +139,14 @@ public class JTypedTabbedPane<T extends ITypedTab> extends EventBusProvider {
 		return !closeEvent.isCancelled();
 	}
 
-	public void addTabAction(T tab, Action action, Icon icon) {
-		addTabAction(tab, action, icon, false);
+	public void addTabAction(T tab, Action action) {
+		addTabAction(tab, action, false);
 	}
 
-	public void addTabAction(T tab, Action action, Icon icon, boolean front) {
+	public void addTabAction(T tab, Action action, boolean front) {
 		int index = getTabIndex(tab);
 		if (index != -1) {
-			tabbedPane.addTabAction(index, action, icon, front);
+			tabbedPane.addTabAction(index, action, front);
 		}
 	}
 
@@ -174,8 +172,7 @@ public class JTypedTabbedPane<T extends ITypedTab> extends EventBusProvider {
 
 		// Tab Actions hinzufügen
 		if (closeable) {
-			addTabAction(tab, SwingUtils.createAction(() -> closeTab(tab)),
-					new ImageIcon(JTypedTabbedPane.class.getResource("/res/buttonclose.png")));
+			addTabAction(tab, SwingUtils.createAction(null, SwingUtils.loadIcon("/res/buttonclose.png"), () -> closeTab(tab)));
 		}
 
 		// Beim ersten Tab reagiert der ChangeListener nicht

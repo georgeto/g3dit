@@ -10,8 +10,6 @@ import java.util.List;
 import java.util.Optional;
 
 import javax.swing.Action;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
 import javax.swing.JSplitPane;
 
 import com.google.common.eventbus.EventBus;
@@ -165,28 +163,29 @@ public class JSplittedTypedTabbedPane<T extends ITypedTab> extends EventBusProvi
 		return tabs.size();
 	}
 
-	public void addTabAction(T tab, Action action, Icon icon) {
-		addTabAction(tab, action, icon, false);
+	public void addTabAction(T tab, Action action) {
+		addTabAction(tab, action, false);
 	}
 
-	public void addTabAction(T tab, Action action, Icon icon, boolean front) {
-		getTabIndex(tab).ifPresent(tabIndex -> tabIndex.getTabbedPane().addTabAction(tab, action, icon, front));
+	public void addTabAction(T tab, Action action, boolean front) {
+		getTabIndex(tab).ifPresent(tabIndex -> tabIndex.getTabbedPane().addTabAction(tab, action, front));
 	}
 
 	protected void afterTabAdded(final T tab) {
 		tabs.add(tab);
 
-		addTabAction(tab, SwingUtils.createAction(() -> {
+		addTabAction(tab, SwingUtils.createAction(null, SwingUtils.loadIcon("/res/buttonpopout.png"), () -> {
 			Optional<TabIndex> tabIndex = getTabIndex(tab);
 			if (tabIndex.isPresent()) {
 				Side side = tabIndex.get().getPosition() == TabbedPanePosition.LEFT ? Side.RIGHT : Side.LEFT;
 				lockTabSelectEvent = true;
 				removeTab(tab);
+				// TODO: Ensure additionals buttons are preserved...
 				addTab(tab, side);
 				lockTabSelectEvent = false;
 				selectTab(tab);
 			}
-		}), new ImageIcon(JSplittedTypedTabbedPane.class.getResource("/res/buttonpopout.png")), true);
+		}), true);
 
 		layoutSplitPaneDivider();
 	}
