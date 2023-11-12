@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Frame;
 import java.awt.Window;
 import java.awt.dnd.DropTarget;
+import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
@@ -21,11 +22,13 @@ import java.util.concurrent.Executors;
 import java.util.function.Function;
 import java.util.logging.Level;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.LookAndFeel;
 import javax.swing.SwingUtilities;
 import javax.swing.ToolTipManager;
 
+import org.jdesktop.swingx.action.AbstractActionExt;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.bridge.SLF4JBridgeHandler;
@@ -88,6 +91,8 @@ import de.george.g3dit.util.ConcurrencyUtil;
 import de.george.g3dit.util.Dialogs;
 import de.george.g3dit.util.FileDialogWrapper;
 import de.george.g3dit.util.FileManager;
+import de.george.g3dit.util.Icons;
+import de.george.g3dit.util.Icons.Misc;
 import de.george.g3dit.util.NavMapManager;
 import de.george.g3dit.util.event.FileDropListener;
 import de.george.g3dit.util.event.VisibilityManager;
@@ -566,6 +571,26 @@ public class Editor implements EditorContext {
 		tabs.add(tab);
 		tbTabs.addTab(tab, side);
 		tbTabs.selectTab(tab);
+		if (tab instanceof EditorAbstractFileTab fileTab) {
+			ImageIcon icon = Icons
+					.getImageIcon(fileTab.getDataFile().map(mainMenu::isFavorite).orElse(false) ? Icons.Misc.STAR : Misc.STAR_EMPTY);
+			var action = new AbstractActionExt(null, icon) {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					Optional<Path> dataFile = fileTab.getDataFile();
+					dataFile.ifPresent(filePath -> {
+						mainMenu.toggleFavorite(filePath);
+						// TODO: Update if toggled from duplicate tab...
+						if (mainMenu.isFavorite(filePath))
+							setSmallIcon(Icons.getImageIcon(Misc.STAR));
+						else
+							setSmallIcon(Icons.getImageIcon(Misc.STAR_EMPTY));
+					});
+				}
+			};
+			action.setShortDescription(I.tr("Favorite"));
+			tbTabs.addTabAction(tab, action, true);
+		}
 		tab.getTabContent().requestFocus();
 		eventBus().post(new EditorTab.OpenedEvent(tab));
 	}

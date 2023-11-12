@@ -121,6 +121,8 @@ public class Icons {
 		public static final String CHAIN_MINUS = "/icons/chain-minus.png";
 		public static final String MAGNIFIER = "/icons/magnifier.png";
 		public static final String MAGNIFIER_WARN = "/icons/magnifier-warn.png";
+		public static final String STAR = "/icons/star.png";
+		public static final String STAR_EMPTY = "/icons/star-empty.png";
 	}
 
 	public static class Flags {

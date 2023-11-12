@@ -48,7 +48,7 @@ public abstract class FileMenu extends JMenu {
 		}
 	}
 
-	public void generateMenu() {
+	protected void generateMenu() {
 		// check if this is disabled
 		if (!isEnabled()) {
 			setEnabled(true);
@@ -89,6 +89,7 @@ public abstract class FileMenu extends JMenu {
 
 	public void setAliasMap(PathAliases aliasMap) {
 		pathAlias = aliasMap;
+		generateMenu();
 	}
 
 	public abstract List<Path> getFiles();

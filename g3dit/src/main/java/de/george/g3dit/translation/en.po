@@ -492,7 +492,11 @@ msgstr ""
 msgid "Save changes to NavMap before exiting?"
 msgstr ""
 
-#: g3dit\src\main\java\de\george\g3dit\EntityMap.java:79
+#: g3dit\src\main\java\de\george\g3dit\Editor.java:591
+msgid "Favorite"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\EntityMap.java:80
 msgid "Entity Map"
 msgstr ""
 
@@ -799,7 +803,12 @@ msgstr ""
 msgid "Recent files"
 msgstr ""
 
-#: g3dit\src\main\java\de\george\g3dit\MainMenu.java:147
+#: g3dit\src\main\java\de\george\g3dit\MainMenu.java:163
+#: g3dit\src\main\java\de\george\g3dit\settings\EditorOptions.java:168
+msgid "Favorites"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\MainMenu.java:182
 msgid "New"
 msgstr ""
 

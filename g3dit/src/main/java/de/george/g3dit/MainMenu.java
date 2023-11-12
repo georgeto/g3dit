@@ -41,6 +41,7 @@ import de.george.g3dit.cache.TemplateCache.TemplateCacheEntry;
 import de.george.g3dit.check.CheckManager;
 import de.george.g3dit.config.ConfigFiles;
 import de.george.g3dit.gui.components.EnableGroup;
+import de.george.g3dit.gui.components.FavoriteFileMenu;
 import de.george.g3dit.gui.components.RecentFileMenu;
 import de.george.g3dit.gui.dialogs.AboutDialog;
 import de.george.g3dit.gui.dialogs.DisplayTextDialog;
@@ -87,7 +88,8 @@ public class MainMenu extends JMenuBar {
 
 	private JMenuItem miSave, miSaveAs, miClose;
 	private JMenuItem miImport, miCleanStringtable, miSaveNavMap, miSaveNavMapAs;
-	private RecentFileMenu fileMenu;
+	private RecentFileMenu muRecentFiles;
+	private FavoriteFileMenu muFavorites;
 	private EditorContext ctx;
 
 	private EnableGroup egHasDataFile;
@@ -121,7 +123,8 @@ public class MainMenu extends JMenuBar {
 
 	private void createMenuData() {
 		JMenu muData = new JMenu(I.tr("File"));
-		muData.setMnemonic(KeyEvent.VK_D);
+		muData.setMnemonic(KeyEvent.VK_D); // TODO: Mnemonics not unique (developer menu also has
+		// it), also broken after translation to english :/
 		add(muData);
 
 		/*
@@ -143,16 +146,37 @@ public class MainMenu extends JMenuBar {
 		/*
 		 * Zuletzt geöffnete Dateien
 		 */
-		fileMenu = new RecentFileMenu(I.tr("Recent files"), 10) {
+		muRecentFiles = new RecentFileMenu(I.tr("Recent files"), 10) {
 			@Override
 			public void onSelectFile(Path filePath) {
 				ctx.getEditor().openFile(filePath);
 			}
 		};
-		fileMenu.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_R, InputEvent.CTRL_DOWN_MASK));
-		fileMenu.setMnemonic(KeyEvent.VK_D);
-		fileMenu.addRecentFiles(ctx.getOptionStore().get(EditorOptions.MainMenu.RECENT_FILES));
-		muData.add(fileMenu);
+		muRecentFiles.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_R, InputEvent.CTRL_DOWN_MASK));
+		muRecentFiles.setMnemonic(KeyEvent.VK_D);
+		muRecentFiles.setRecentFiles(ctx.getOptionStore().get(EditorOptions.MainMenu.RECENT_FILES));
+		muData.add(muRecentFiles);
+
+		/*
+		 * Favorits
+		 */
+		muFavorites = new FavoriteFileMenu(I.tr("Favorites")) {
+			@Override
+			public void onSelectFile(Path filePath) {
+				// TODO: If open from favorits, maybe select and not reopen already open file?
+				// (maybe make it an general option in settings, which then also applies to recent
+				// files?)
+				ctx.getEditor().openFile(filePath);
+			}
+		};
+		muFavorites.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, InputEvent.CTRL_DOWN_MASK));
+		muFavorites.setMnemonic(KeyEvent.VK_D);
+		// - Bearbeiten Option mit dem ListModificationControl
+		// - Add/remove bei Rechtsklick auf Tab... (ah no, add a star, to add to favorites)
+		// - Need to implement Tab update in tabbed pane (so that we can update the icon state of
+		// the star button)
+		muFavorites.setFavoriteFiles(ctx.getOptionStore().get(EditorOptions.MainMenu.FAVORITES));
+		muData.add(muFavorites);
 
 		/*
 		 * Neue Datei erstellen
@@ -816,8 +840,9 @@ public class MainMenu extends JMenuBar {
 	}
 
 	private void settingsUpdated() {
-		fileMenu.setAliasMap(PathAliases.from(ctx.getOptionStore()));
-		fileMenu.generateMenu();
+		PathAliases aliaes = PathAliases.from(ctx.getOptionStore());
+		muRecentFiles.setAliasMap(aliaes);
+		muFavorites.setAliasMap(aliaes);
 		adaptToTab(ctx.getEditor().getSelectedTab());
 
 		muDeveloper.setVisible(ctx.getOptionStore().get(EditorOptions.Misc.DEVELOPER_MODE));
@@ -826,10 +851,19 @@ public class MainMenu extends JMenuBar {
 	}
 
 	public void saveSettings(OptionStore optionStore) {
-		optionStore.put(EditorOptions.MainMenu.RECENT_FILES, new ArrayList<>(fileMenu.getRecentFiles()));
+		optionStore.put(EditorOptions.MainMenu.RECENT_FILES, new ArrayList<>(muRecentFiles.getFiles()));
+		optionStore.put(EditorOptions.MainMenu.FAVORITES, new ArrayList<>(muFavorites.getFiles()));
 	}
 
 	public void addRecentFile(Path filePath) {
 		muRecentFiles.addEntry(filePath);
+	}
+
+	public boolean isFavorite(Path filePath) {
+		return muFavorites.isFavorite(filePath);
+	}
+
+	public void toggleFavorite(Path filePath) {
+		muFavorites.toggleFavorite(filePath);
 	}
 }

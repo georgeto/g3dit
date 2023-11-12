@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import com.google.common.collect.Lists;
-
 public abstract class RecentFileMenu extends FileMenu {
 
 	private int itemCount; // how many items in the menu
@@ -48,7 +46,8 @@ public abstract class RecentFileMenu extends FileMenu {
 		return Collections.unmodifiableList(recentFiles);
 	}
 
-	public void addRecentFiles(List<Path> files) {
-		Lists.reverse(files).forEach(this::addEntry);
+	public void setRecentFiles(List<Path> files) {
+		recentFiles.clear();
+		recentFiles.addAll(files);
 	}
 }
