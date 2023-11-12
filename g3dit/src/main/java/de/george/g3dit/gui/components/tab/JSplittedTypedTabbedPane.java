@@ -6,7 +6,9 @@ import java.awt.dnd.DropTargetListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.util.ArrayList;
+import java.util.IdentityHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import javax.swing.Action;
@@ -18,6 +20,7 @@ import com.jidesoft.utils.JideFocusTracker;
 
 import de.george.g3dit.util.event.EventBusProvider;
 import de.george.g3utils.gui.SwingUtils;
+import de.george.g3utils.util.Pair;
 
 public class JSplittedTypedTabbedPane<T extends ITypedTab> extends EventBusProvider {
 	public enum Side {
@@ -61,7 +64,7 @@ public class JSplittedTypedTabbedPane<T extends ITypedTab> extends EventBusProvi
 	private TabbedPanePosition lastGainedFocus = TabbedPanePosition.INVALID;
 	private boolean lockTabSelectEvent = false;
 
-	private List<T> tabs;
+	private Map<T, List<Pair<Action, Boolean>>> tabs;
 
 	public JSplittedTypedTabbedPane(boolean closeable) {
 		leftTabs = new JTypedTabbedPane<>(closeable);
@@ -71,7 +74,7 @@ public class JSplittedTypedTabbedPane<T extends ITypedTab> extends EventBusProvi
 		splitPane.setLeftComponent(leftTabs.getComponent());
 		splitPane.setRightComponent(rightTabs.getComponent());
 
-		tabs = new ArrayList<>();
+		tabs = new IdentityHashMap<>();
 
 		JideFocusTracker leftTracker = new JideFocusTracker(leftTabs.getComponent());
 		TabbedPaneHandler leftHandler = new TabbedPaneHandler(TabbedPanePosition.LEFT);
@@ -92,13 +95,12 @@ public class JSplittedTypedTabbedPane<T extends ITypedTab> extends EventBusProvi
 	}
 
 	public void addTab(T tab, Side side) {
-		if (!tabs.contains(tab)) {
+		if (!tabs.containsKey(tab)) {
 			if (side == Side.LEFT) {
 				leftTabs.addTab(tab);
 			} else {
 				rightTabs.addTab(tab);
 			}
-			// splitPane.addTab(tab.getTabTitle(), tab.getTabIcon(), tab.getTabContent());
 			afterTabAdded(tab);
 		}
 
@@ -109,7 +111,7 @@ public class JSplittedTypedTabbedPane<T extends ITypedTab> extends EventBusProvi
 	}
 
 	public void insertTab(T tab, Side side, int index) {
-		if (!tabs.contains(tab)) {
+		if (!tabs.containsKey(tab)) {
 			if (side == Side.LEFT) {
 				leftTabs.insertTab(tab, index);
 			} else {
@@ -121,11 +123,11 @@ public class JSplittedTypedTabbedPane<T extends ITypedTab> extends EventBusProvi
 	}
 
 	public boolean containsTab(T tab) {
-		return tabs.contains(tab);
+		return tabs.containsKey(tab);
 	}
 
 	public void removeTab(T tab) {
-		if (tabs.remove(tab)) {
+		if (tabs.remove(tab) != null) {
 			Optional<TabIndex> index = getTabIndex(tab);
 			index.ifPresent(tabIndex -> tabIndex.getTabbedPane().removeTab(tab));
 			layoutSplitPaneDivider();
@@ -168,24 +170,31 @@ public class JSplittedTypedTabbedPane<T extends ITypedTab> extends EventBusProvi
 	}
 
 	public void addTabAction(T tab, Action action, boolean front) {
+		tabs.get(tab).add(Pair.of(action, front));
 		getTabIndex(tab).ifPresent(tabIndex -> tabIndex.getTabbedPane().addTabAction(tab, action, front));
 	}
 
 	protected void afterTabAdded(final T tab) {
-		tabs.add(tab);
+		tabs.put(tab, new ArrayList<>());
 
-		addTabAction(tab, SwingUtils.createAction(null, SwingUtils.loadIcon("/res/buttonpopout.png"), () -> {
-			Optional<TabIndex> tabIndex = getTabIndex(tab);
-			if (tabIndex.isPresent()) {
-				Side side = tabIndex.get().getPosition() == TabbedPanePosition.LEFT ? Side.RIGHT : Side.LEFT;
-				lockTabSelectEvent = true;
-				removeTab(tab);
-				// TODO: Ensure additionals buttons are preserved...
-				addTab(tab, side);
-				lockTabSelectEvent = false;
-				selectTab(tab);
-			}
-		}), true);
+		if (!lockTabSelectEvent)
+			addTabAction(tab, SwingUtils.createAction(null, SwingUtils.loadIcon("/res/buttonpopout.png"), () -> {
+				Optional<TabIndex> tabIndex = getTabIndex(tab);
+				if (tabIndex.isPresent()) {
+					// Save additional actions.
+					var actions = tabs.get(tab);
+					lockTabSelectEvent = true;
+					// Move tab to the other pane.
+					Side side = tabIndex.get().getPosition() == TabbedPanePosition.LEFT ? Side.RIGHT : Side.LEFT;
+					removeTab(tab);
+					addTab(tab, side);
+					// Restore additional actions.
+					for (Pair<Action, Boolean> action : actions)
+						addTabAction(tab, action.el0(), action.el1());
+					lockTabSelectEvent = false;
+					selectTab(tab);
+				}
+			}), true);
 
 		layoutSplitPaneDivider();
 	}
