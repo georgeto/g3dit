@@ -145,9 +145,8 @@ public class MainMenu extends JMenuBar {
 		 */
 		fileMenu = new RecentFileMenu(I.tr("Recent files"), 10) {
 			@Override
-			public void onSelectFile(String filePath) {
-				Path file = Paths.get(filePath);
-				ctx.getEditor().openFile(file);
+			public void onSelectFile(Path filePath) {
+				ctx.getEditor().openFile(filePath);
 			}
 		};
 		fileMenu.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_R, InputEvent.CTRL_DOWN_MASK));
@@ -830,7 +829,7 @@ public class MainMenu extends JMenuBar {
 		optionStore.put(EditorOptions.MainMenu.RECENT_FILES, new ArrayList<>(fileMenu.getRecentFiles()));
 	}
 
-	public void addRecentFile(String filePath) {
-		fileMenu.addEntry(filePath);
+	public void addRecentFile(Path filePath) {
+		muRecentFiles.addEntry(filePath);
 	}
 }

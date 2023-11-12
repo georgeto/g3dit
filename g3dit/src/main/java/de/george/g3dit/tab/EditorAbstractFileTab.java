@@ -215,7 +215,7 @@ public abstract class EditorAbstractFileTab extends EditorTab implements FileCha
 			if (!this.saveFile(Optional.of(file))) {
 				return false;
 			}
-			ctx.getEditor().getMainMenu().addRecentFile(FilesEx.getAbsolutePath(file));
+			ctx.getEditor().getMainMenu().addRecentFile(file);
 			return true;
 		} else {
 			TaskDialogs.inform(ctx.getParentWindow(), I.tr("Saving failed"), I.tr("No save location has been selected."));

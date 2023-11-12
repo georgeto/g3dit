@@ -162,7 +162,7 @@ public abstract class EditorOptions {
 	}
 
 	public static abstract class MainMenu {
-		public static final Option<List<String>> RECENT_FILES = new NoHandlerOption<>(Collections.emptyList(),
+		public static final Option<List<java.nio.file.Path>> RECENT_FILES = new NoHandlerOption<>(Collections.emptyList(),
 				"EditorOptions.MainMenu.RECENT_FILES", I.tr("Recent files"));
 	}
 

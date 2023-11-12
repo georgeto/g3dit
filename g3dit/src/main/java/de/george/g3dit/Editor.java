@@ -655,7 +655,7 @@ public class Editor implements EditorContext {
 
 		if (tab.openFile(file)) {
 			openTab(tab, side);
-			mainMenu.addRecentFile(FilesEx.getAbsolutePath(file));
+			mainMenu.addRecentFile(file);
 			runGC();
 			return true;
 		}
