@@ -1744,6 +1744,10 @@ msgstr ""
 msgid "<html>Coordinates in the form x/y/z//<br>The position can be prefixed with one of the following prefixes.<ul><li><b>No prefix</b>: Distance</li><li><b>#l#</b>: Distance ignoring the Y component</li></ul></html>"
 msgstr ""
 
+#: g3dit\src\main\java\de\george\g3dit\gui\components\FavoriteFileMenu.java:49
+msgid "Edit..."
+msgstr ""
+
 #: g3dit\src\main\java\de\george\g3dit\gui\components\JEntityGuidField.java:51
 msgid "Open entity for this guid [F3]"
 msgstr ""

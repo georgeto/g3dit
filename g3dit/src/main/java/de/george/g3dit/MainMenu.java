@@ -160,7 +160,7 @@ public class MainMenu extends JMenuBar {
 		/*
 		 * Favorits
 		 */
-		muFavorites = new FavoriteFileMenu(I.tr("Favorites")) {
+		muFavorites = new FavoriteFileMenu(I.tr("Favorites"), ctx) {
 			@Override
 			public void onSelectFile(Path filePath) {
 				// TODO: If open from favorits, maybe select and not reopen already open file?
