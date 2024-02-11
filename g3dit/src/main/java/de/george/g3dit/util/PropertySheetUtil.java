@@ -56,6 +56,10 @@ public class PropertySheetUtil {
 		sheet.getEditorRegistry().registerEditor(G3EnumWrapper.class, G3EnumEditor.class);
 		sheet.getEditorRegistry().registerEditor(G3EnumArrayWrapper.class, G3EnumArrayPropertyEditor.class);
 		sheet.getEditorRegistry().registerEditor(JsonStringWrapper.class, JsonStringPropertyEditor.class);
+		// Workaround to make category readable with dark theme (original code uses darker() three
+		// times, which brings it too close to background color).
+		sheet.getTable().setCategoryForeground(sheet.getTable().getPropertyForeground().darker());
+		sheet.getTable().setSelectedCategoryForeground(sheet.getTable().getCategoryForeground());
 		return sheet;
 	}
 }
