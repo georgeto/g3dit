@@ -4,10 +4,12 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
@@ -36,6 +38,8 @@ import ca.odell.glazedlists.gui.WritableTableFormat;
 import ca.odell.glazedlists.swing.AdvancedTableModel;
 import ca.odell.glazedlists.swing.GlazedListsSwing;
 import ca.odell.glazedlists.swing.TableComparatorChooser;
+import de.george.g3dit.gui.components.TableModificationControl;
+import de.george.g3dit.util.FileChangeMonitor;
 import de.george.g3utils.gui.SwingUtils;
 import one.util.streamex.StreamEx;
 
@@ -228,7 +232,7 @@ public abstract class TableUtil {
 	}
 
 	public static class SortableEventTable<T> {
-		public final SortedList<T> sortedSource;
+		private final SortedList<T> sortedSource;
 		public final TableFormat<T> tableFormat;
 		public final AdvancedTableModel<T> tableModel;
 		public final JXTable table;
@@ -259,6 +263,44 @@ public abstract class TableUtil {
 
 		public void addModelListener(TableModelListener l) {
 			tableModel.addTableModelListener(l);
+		}
+
+		public TableModificationControl<T> createModificationControl(FileChangeMonitor changeMonitor, Supplier<T> entrySupplier) {
+			return new TableModificationControl<>(changeMonitor, table, sortedSource, entrySupplier);
+		}
+
+		public boolean isEditing() {
+			return table.isEditing();
+		}
+
+		public void stopEditing() {
+			TableUtil.stopEditing(table);
+		}
+
+		public boolean isEmpty() {
+			return sortedSource.isEmpty();
+		}
+
+		public List<T> getEntries() {
+			return GlazedLists.readOnlyList(sortedSource);
+		}
+
+		public <R> List<R> getEntries(Function<? super T, ? extends R> mapper) {
+			return sortedSource.stream().map(mapper).collect(Collectors.toList());
+		}
+
+		public void setEntries(Collection<T> entries) {
+			sortedSource.clear();
+			sortedSource.addAll(entries);
+		}
+
+		public <R> void setEntries(Collection<R> entries, Function<? super R, ? extends T> mapper) {
+			sortedSource.clear();
+			entries.stream().map(mapper).forEach(sortedSource::add);
+		}
+
+		public void clearEntries() {
+			sortedSource.clear();
 		}
 	}
 

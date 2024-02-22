@@ -5,14 +5,14 @@ import java.util.Arrays;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-import com.teamunify.i18n.I;
 import org.netbeans.validation.api.AbstractValidator;
 import org.netbeans.validation.api.Problems;
 import org.netbeans.validation.api.Validator;
 
+import com.teamunify.i18n.I;
+
 import ca.odell.glazedlists.GlazedLists;
 import de.george.g3dit.EditorContext;
-import de.george.g3dit.gui.components.TableModificationControl;
 import de.george.g3dit.gui.edit.PropertyPanelDef;
 import de.george.g3dit.gui.table.TableColumnDef;
 import de.george.g3dit.gui.table.TableUtil;
@@ -44,7 +44,7 @@ public class ArrayNamedGuidPropertyHandler extends TitledPropertyHandler<bTObjAr
 		table.table.setRowHeight((int) (table.table.getRowHeight() * 1.3));
 		content.add(new JScrollPane(table.table), "sgx table, wrap");
 		FileChangeMonitor changeMonitor = ctx instanceof FileChangeMonitor ? (FileChangeMonitor) ctx : null;
-		content.add(new TableModificationControl<>(changeMonitor, table.table, table.sortedSource, eCEntityProxy::new), "sgx table");
+		content.add(table.createModificationControl(changeMonitor, eCEntityProxy::new), "sgx table");
 
 		// Update validation when model changes
 		if (def.hasValidators()) {
@@ -54,8 +54,7 @@ public class ArrayNamedGuidPropertyHandler extends TitledPropertyHandler<bTObjAr
 
 	@Override
 	protected void load(bTObjArray_eCEntityProxy value) {
-		table.sortedSource.clear();
-		table.sortedSource.addAll(value.getEntries(eCEntityProxy::clone));
+		table.setEntries(value.getEntries(eCEntityProxy::clone));
 	}
 
 	@Override
@@ -63,7 +62,7 @@ public class ArrayNamedGuidPropertyHandler extends TitledPropertyHandler<bTObjAr
 		TableUtil.stopEditing(table.table);
 
 		bTObjArray_eCEntityProxy result = new bTObjArray_eCEntityProxy();
-		result.setEntries(table.sortedSource, eCEntityProxy::clone);
+		result.setEntries(table.getEntries(), eCEntityProxy::clone);
 		return result;
 	}
 
@@ -76,7 +75,7 @@ public class ArrayNamedGuidPropertyHandler extends TitledPropertyHandler<bTObjAr
 				public void validate(Problems problems, String compName, Object model) {
 					// Only validate renderer if table is not empty and only validate editor if it
 					// is active
-					boolean validate = table != null && (editor ? table.table.isEditing() : !table.sortedSource.isEmpty());
+					boolean validate = table != null && (editor ? table.table.isEditing() : !table.isEmpty());
 					if (validate) {
 						v.validate(problems, compName, model);
 					}

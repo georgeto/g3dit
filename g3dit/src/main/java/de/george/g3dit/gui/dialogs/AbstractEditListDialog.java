@@ -11,7 +11,6 @@ import com.jidesoft.dialog.ButtonPanel;
 import com.teamunify.i18n.I;
 
 import ca.odell.glazedlists.EventList;
-import de.george.g3dit.gui.components.TableModificationControl;
 import de.george.g3dit.gui.table.TableColumnDef;
 import de.george.g3dit.gui.table.TableUtil;
 import de.george.g3dit.gui.table.TableUtil.SortableEventTable;
@@ -33,7 +32,7 @@ public abstract class AbstractEditListDialog<T> extends ExtStandardDialog {
 
 		panel.add(new JScrollPane(sortableTable.table), "width 100%, growy, push, wrap");
 
-		panel.add(new TableModificationControl<>(null, sortableTable.table, sortableTable.sortedSource, () -> {
+		panel.add(sortableTable.createModificationControl(null, () -> {
 			if (inputNewEntry == null)
 				return null;
 

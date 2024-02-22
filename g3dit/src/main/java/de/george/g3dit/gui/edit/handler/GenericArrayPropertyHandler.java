@@ -5,7 +5,6 @@ import javax.swing.JScrollPane;
 
 import ca.odell.glazedlists.GlazedLists;
 import de.george.g3dit.EditorContext;
-import de.george.g3dit.gui.components.TableModificationControl;
 import de.george.g3dit.gui.edit.PropertyPanelDef;
 import de.george.g3dit.gui.table.TableUtil;
 import de.george.g3dit.gui.table.TableUtil.SortableEventTable;
@@ -35,13 +34,12 @@ public class GenericArrayPropertyHandler extends TitledPropertyHandler<bTArray<G
 		}
 		content.add(new JScrollPane(table.table), "grow, sgx table, wrap");
 		FileChangeMonitor changeMonitor = ctx instanceof FileChangeMonitor ? (FileChangeMonitor) ctx : null;
-		content.add(new TableModificationControl<>(changeMonitor, table.table, table.sortedSource, this::createEntry), "growx, sgx table");
+		content.add(table.createModificationControl(changeMonitor, this::createEntry), "growx, sgx table");
 	}
 
 	@Override
 	protected void load(bTArray<G3Serializable> value) {
-		table.sortedSource.clear();
-		table.sortedSource.addAll(value.getEntries(PropertyUtil::clone));
+		table.setEntries(value.getEntries(PropertyUtil::clone));
 	}
 
 	@Override
@@ -49,7 +47,7 @@ public class GenericArrayPropertyHandler extends TitledPropertyHandler<bTArray<G
 		TableUtil.stopEditing(table.table);
 
 		bTArray<G3Serializable> result = createEmptyArray();
-		result.setEntries(table.sortedSource, PropertyUtil::clone);
+		result.setEntries(table.getEntries(), PropertyUtil::clone);
 		return result;
 	}
 
