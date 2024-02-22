@@ -23,6 +23,22 @@ public class gCEffectCommandPlaySound extends gCEffectCommand {
 			probability = reader.readFloat();
 		}
 
+		public String getName() {
+			return name;
+		}
+
+		public void setName(String name) {
+			this.name = name;
+		}
+
+		public float getProbability() {
+			return probability;
+		}
+
+		public void setProbability(float probability) {
+			this.probability = probability;
+		}
+
 		@Override
 		public void write(G3FileWriter writer) {
 			writer.writeEntry(name).writeFloat(probability);

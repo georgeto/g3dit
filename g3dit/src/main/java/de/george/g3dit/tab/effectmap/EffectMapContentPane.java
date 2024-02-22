@@ -9,14 +9,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
-import javax.swing.ListSelectionModel;
-
-import org.jdesktop.swingx.JXTable;
-import org.jdesktop.swingx.table.ColumnFactory;
-import org.jdesktop.swingx.table.TableColumnExt;
 
 import com.ezware.dialog.task.TaskDialogs;
-import com.google.common.collect.ImmutableBiMap;
 import com.l2fprod.common.propertysheet.Property;
 import com.l2fprod.common.propertysheet.PropertySheetPanel;
 import com.teamunify.i18n.I;
@@ -29,11 +23,13 @@ import de.george.g3dit.gui.components.HidingGroup;
 import de.george.g3dit.gui.components.ListManageAndEdit;
 import de.george.g3dit.gui.components.TableModificationControl;
 import de.george.g3dit.gui.dialogs.EnterEnumDialog;
+import de.george.g3dit.gui.editor.LambdaConvertEditor;
 import de.george.g3dit.gui.renderer.FunctionalListCellRenderer;
+import de.george.g3dit.gui.table.TableColumnDef;
 import de.george.g3dit.gui.table.TableUtil;
+import de.george.g3dit.gui.table.TableUtil.SortableEventTable;
 import de.george.g3dit.tab.archive.views.property.G3Property;
 import de.george.g3dit.util.PropertySheetUtil;
-import de.george.g3utils.gui.ListTableModel;
 import de.george.g3utils.gui.SwingUtils;
 import de.george.g3utils.gui.UndoableTextField;
 import de.george.lrentnode.effect.gCEffectCommand;
@@ -45,6 +41,7 @@ import de.george.lrentnode.enums.G3Enums;
 import de.george.lrentnode.enums.G3Enums.gEEffectCommand;
 import de.george.lrentnode.properties.ClassProperty;
 import de.george.lrentnode.util.ClassUtil;
+import de.george.lrentnode.util.PropertyUtil;
 import net.miginfocom.swing.MigLayout;
 
 public class EffectMapContentPane extends JPanel {
@@ -156,8 +153,7 @@ public class EffectMapContentPane extends JPanel {
 		private gCEffectCommand command;
 
 		private PropertySheetPanel commandSheet;
-		private JXTable sampleTable;
-		private SampleTableModel sampleModel;
+		private SortableEventTable<Sample> sampleTable;
 		private HidingGroup sampleHidingGroup;
 
 		public EffectCommandEditingPanel() {
@@ -165,25 +161,24 @@ public class EffectMapContentPane extends JPanel {
 			loadCommand(null);
 		}
 
+		protected static final TableColumnDef COLUMN_SAMPLE = TableColumnDef.withName("Name").displayName(I.tr("Sample")).editable(true)
+				.size(300).b();
+		protected static final TableColumnDef COLUMN_PROBABILITY = TableColumnDef.withName("Probability").displayName(I.tr("Probability"))
+				.cellEditor(new LambdaConvertEditor<>(Object::toString, Float::parseFloat)).editable(true).size(100).b();
+
 		private void setupComponents() {
 			setLayout(new MigLayout("fill", "[grow, fill]", "[grow 100, fill]12px push[grow 50, fill]"));
 
 			commandSheet = PropertySheetUtil.createPropertySheetPanel();
 			add(commandSheet, "wrap");
 
-			sampleTable = new JXTable();
-			TableUtil.disableSearch(sampleTable);
-			sampleTable.setColumnFactory(new SampleTableColumFactory());
-			sampleTable.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-			sampleModel = new SampleTableModel();
-			sampleTable.setModel(sampleModel);
+			sampleTable = TableUtil.createTable(GlazedLists.eventList(null), Sample.class, COLUMN_SAMPLE, COLUMN_PROBABILITY);
 
 			JLabel lblSamples = SwingUtils.createBoldLabel(I.tr("Samples"));
 			add(lblSamples, "gaptop u, hidemode 2, wrap");
-			JScrollPane scrollSampleTable = new JScrollPane(sampleTable);
+			JScrollPane scrollSampleTable = new JScrollPane(sampleTable.table);
 			add(scrollSampleTable, "hidemode 2, wrap");
-			TableModificationControl<Sample> modControl = new TableModificationControl<>(ctx, sampleTable, sampleModel,
-					() -> new Sample("", 1));
+			TableModificationControl<Sample> modControl = sampleTable.createModificationControl(ctx, () -> new Sample("", 1));
 			add(modControl, "hidemode 2");
 
 			sampleHidingGroup = HidingGroup.create(lblSamples, scrollSampleTable, modControl);
@@ -200,74 +195,22 @@ public class EffectMapContentPane extends JPanel {
 			}
 
 			if (command instanceof gCEffectCommandPlaySound soundCommand) {
-				sampleModel.setEntries(soundCommand.samples);
+				sampleTable.setEntries(soundCommand.samples, PropertyUtil::clone);
 				sampleHidingGroup.setVisible(true);
 			} else {
-				sampleModel.clearEntries();
+				sampleTable.clearEntries();
 				sampleHidingGroup.setVisible(false);
 			}
 		}
 
 		public void save() {
 			TableUtil.stopEditing(commandSheet.getTable());
-			TableUtil.stopEditing(sampleTable);
+			sampleTable.stopEditing();
 
 			if (command != null && command instanceof gCEffectCommandPlaySound soundCommand) {
-				soundCommand.samples = new ArrayList<>(sampleModel.getEntries());
+				soundCommand.samples = sampleTable.getEntries(PropertyUtil::clone);
 			}
 		}
-
-		private static final ImmutableBiMap<String, String> SAMPLE_COLUMN_MAPPING = ImmutableBiMap.of("Sample", I.tr("Sample"),
-				"Probability", I.tr("Probability"));
-
-		private class SampleTableModel extends ListTableModel<Sample> {
-			public SampleTableModel() {
-				super(SAMPLE_COLUMN_MAPPING.values().toArray(new String[0]));
-			}
-
-			@Override
-			public Object getValueAt(Sample entry, int col) {
-				return switch (col) {
-					case 0 -> entry.name;
-					case 1 -> entry.probability;
-					default -> null;
-				};
-			}
-
-			@Override
-			public void setValueAt(Object value, Sample entry, int col) {
-				boolean changed = false;
-				switch (col) {
-					case 0:
-						changed = !entry.name.equals(value);
-						entry.name = (String) value;
-					case 1:
-						changed = entry.probability != (float) value;
-						entry.probability = (Float) value;
-				}
-				if (changed) {
-					ctx.fileChanged();
-				}
-			}
-
-			@Override
-			public boolean isCellEditable(int rowIndex, int columnIndex) {
-				return true;
-			}
-		}
-
-		private class SampleTableColumFactory extends ColumnFactory {
-			@Override
-			public void configureColumnWidths(JXTable table, TableColumnExt columnExt) {
-				columnExt.setEditable(true);
-				switch (SAMPLE_COLUMN_MAPPING.inverse().get(columnExt.getTitle())) {
-					case "Sample" -> columnExt.setPreferredWidth(300);
-					case "Probability" -> columnExt.setPreferredWidth(100);
-					default -> super.configureColumnWidths(table, columnExt);
-				}
-			}
-		}
-
 	}
 
 	public void loadValues() {
@@ -290,7 +233,7 @@ public class EffectMapContentPane extends JPanel {
 
 	private Optional<gCEffectCommandSequence> inputEffect() {
 		String input = TaskDialogs.input(ctx.getParentWindow(), I.tr("Create new effect"), I.tr("Please enter the name of the effect"),
-				I.tr("Insert effect"));
+				"");
 
 		return Optional.ofNullable(input).filter(i -> !i.isEmpty()).map(gCEffectCommandSequence::new);
 	}

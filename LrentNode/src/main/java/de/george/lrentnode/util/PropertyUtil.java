@@ -37,8 +37,8 @@ public abstract class PropertyUtil {
 		return TREASURE_SET_PROERTIES;
 	}
 
-	public static G3Serializable clone(G3Serializable source) {
-		return fromBytes(toBytes(source), source.getClass());
+	public static <T extends G3Serializable> T clone(T source) {
+		return fromBytes(toBytes(source), (Class<T>) source.getClass());
 	}
 
 	public static <T extends G3Serializable> ClassProperty<T> clone(ClassProperty<T> source) {
@@ -57,7 +57,7 @@ public abstract class PropertyUtil {
 		return writer.getData();
 	}
 
-	public static G3Serializable fromBytes(byte[] source, Class<? extends G3Serializable> type) {
+	public static <T extends G3Serializable> T fromBytes(byte[] source, Class<T> type) {
 		try (G3FileReaderVirtual reader = new G3FileReaderVirtual(source)) {
 			return reader.read(type, source.length);
 		} catch (IOException e) {
