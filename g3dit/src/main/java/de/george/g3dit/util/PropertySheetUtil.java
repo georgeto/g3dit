@@ -7,6 +7,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JScrollPane;
 import javax.swing.table.TableColumn;
 
+import com.l2fprod.common.propertysheet.PropertyEditorRegistry;
 import com.l2fprod.common.propertysheet.PropertySheet;
 import com.l2fprod.common.propertysheet.PropertySheetPanel;
 
@@ -51,15 +52,19 @@ public class PropertySheetUtil {
 	}
 
 	@SuppressWarnings("deprecation")
-	private static final PropertySheetPanel createBasicPropertySheetPanel() {
+	private static PropertySheetPanel createBasicPropertySheetPanel() {
 		PropertySheetPanel sheet = new PropertySheetPanel();
-		sheet.getEditorRegistry().registerEditor(G3EnumWrapper.class, G3EnumEditor.class);
-		sheet.getEditorRegistry().registerEditor(G3EnumArrayWrapper.class, G3EnumArrayPropertyEditor.class);
-		sheet.getEditorRegistry().registerEditor(JsonStringWrapper.class, JsonStringPropertyEditor.class);
+		registerDefaultEditors(sheet.getEditorRegistry());
 		// Workaround to make category readable with dark theme (original code uses darker() three
 		// times, which brings it too close to background color).
 		sheet.getTable().setCategoryForeground(sheet.getTable().getPropertyForeground().darker());
 		sheet.getTable().setSelectedCategoryForeground(sheet.getTable().getCategoryForeground());
 		return sheet;
+	}
+
+	public static void registerDefaultEditors(PropertyEditorRegistry registry) {
+		registry.registerEditor(G3EnumWrapper.class, G3EnumEditor.class);
+		registry.registerEditor(G3EnumArrayWrapper.class, G3EnumArrayPropertyEditor.class);
+		registry.registerEditor(JsonStringWrapper.class, JsonStringPropertyEditor.class);
 	}
 }

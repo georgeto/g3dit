@@ -1,10 +1,13 @@
 package de.george.g3dit.gui.table;
 
+import java.awt.Component;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.beans.PropertyEditor;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.EventObject;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.BiFunction;
@@ -16,9 +19,12 @@ import java.util.stream.Collectors;
 import javax.swing.Action;
 import javax.swing.JComponent;
 import javax.swing.JTable;
+import javax.swing.event.CellEditorListener;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellEditor;
+import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableModel;
 
 import org.jdesktop.swingx.JXTable;
@@ -28,18 +34,24 @@ import org.jdesktop.swingx.table.TableColumnExt;
 
 import com.google.common.collect.ImmutableSortedSet;
 import com.google.common.primitives.Booleans;
+import com.l2fprod.common.propertysheet.CellEditorAdapter;
+import com.l2fprod.common.propertysheet.DefaultProperty;
+import com.l2fprod.common.propertysheet.PropertyEditorRegistry;
+import com.l2fprod.common.propertysheet.PropertyRendererRegistry;
 
 import ca.odell.glazedlists.EventList;
 import ca.odell.glazedlists.GlazedLists;
 import ca.odell.glazedlists.SortedList;
 import ca.odell.glazedlists.gui.AbstractTableComparatorChooser;
+import ca.odell.glazedlists.gui.AdvancedTableFormat;
 import ca.odell.glazedlists.gui.TableFormat;
-import ca.odell.glazedlists.gui.WritableTableFormat;
+import ca.odell.glazedlists.impl.beans.BeanTableFormat;
 import ca.odell.glazedlists.swing.AdvancedTableModel;
 import ca.odell.glazedlists.swing.GlazedListsSwing;
 import ca.odell.glazedlists.swing.TableComparatorChooser;
 import de.george.g3dit.gui.components.TableModificationControl;
 import de.george.g3dit.util.FileChangeMonitor;
+import de.george.g3dit.util.PropertySheetUtil;
 import de.george.g3utils.gui.SwingUtils;
 import one.util.streamex.StreamEx;
 
@@ -166,7 +178,7 @@ public abstract class TableUtil {
 
 	@SuppressWarnings("unchecked")
 	public static <T> TableFormat<T> tableFormat(Class<T> baseClass, TableColumnDef... tableColumns) {
-		WritableTableFormat<T> tableFormat = (WritableTableFormat<T>) GlazedLists.tableFormat(baseClass,
+		BeanTableFormat<T> tableFormat = (BeanTableFormat<T>) GlazedLists.tableFormat(baseClass,
 				Arrays.stream(tableColumns).map(TableColumnDef::getFieldName).toArray(String[]::new),
 				Arrays.stream(tableColumns).map(TableColumnDef::getDisplayName).toArray(String[]::new),
 				Booleans.toArray(Arrays.stream(tableColumns).map(TableColumnDef::isEditable).collect(Collectors.toList())));
@@ -175,11 +187,90 @@ public abstract class TableUtil {
 				Arrays.stream(tableColumns).map(TableColumnDef::getCellValueTransformer).toArray(BiFunction[]::new));
 	}
 
+	public static TableCellRenderer monospaceTableCellRenderer(TableCellRenderer renderer) {
+		if (renderer == null)
+			return null;
+
+		return (JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) -> {
+			Component comp = renderer.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+			SwingUtils.monospaceFont(comp);
+			return comp;
+		};
+	}
+
+	private static class MonospaceTableCellEditor implements TableCellEditor {
+		private final TableCellEditor editor;
+
+		public MonospaceTableCellEditor(TableCellEditor editor) {
+			this.editor = editor;
+		}
+
+		@Override
+		public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
+			Component comp = editor.getTableCellEditorComponent(table, value, isSelected, row, column);
+			SwingUtils.monospaceFont(comp);
+			return comp;
+		}
+
+		@Override
+		public Object getCellEditorValue() {
+			return editor.getCellEditorValue();
+		}
+
+		@Override
+		public boolean isCellEditable(EventObject event) {
+			return editor.isCellEditable(event);
+		}
+
+		@Override
+		public boolean shouldSelectCell(EventObject event) {
+			return editor.shouldSelectCell(event);
+		}
+
+		@Override
+		public boolean stopCellEditing() {
+			return editor.stopCellEditing();
+		}
+
+		@Override
+		public void cancelCellEditing() {
+			editor.cancelCellEditing();
+		}
+
+		@Override
+		public void addCellEditorListener(CellEditorListener listener) {
+			editor.addCellEditorListener(listener);
+		}
+
+		@Override
+		public void removeCellEditorListener(CellEditorListener listener) {
+			editor.removeCellEditorListener(listener);
+		}
+	}
+
+	public static TableCellEditor monospaceTableCellEditor(TableCellEditor editor) {
+		if (editor != null)
+			return new MonospaceTableCellEditor(editor);
+		return null;
+	}
+
 	private static final class TableColumnDefColumnFactory extends ColumnFactory {
 		private final TableColumnDef[] columns;
 
+		private PropertyRendererRegistry rendererRegistry;
+		private PropertyEditorRegistry editorRegistry;
+
 		public TableColumnDefColumnFactory(TableColumnDef[] columns) {
 			this.columns = columns;
+			this.rendererRegistry = new PropertyRendererRegistry();
+			this.editorRegistry = new PropertyEditorRegistry();
+			PropertySheetUtil.registerDefaultEditors(editorRegistry);
+
+		}
+
+		@Override
+		public TableColumnExt createAndConfigureTableColumn(TableModel model, int modelIndex) {
+			return super.createAndConfigureTableColumn(model, modelIndex);
 		}
 
 		@Override
@@ -198,10 +289,35 @@ public abstract class TableUtil {
 					columnExt.setCellEditor(columnDef.getCellEditor());
 				}
 
+				if (model instanceof AdvancedTableModel<?> advancedModel) {
+					if (advancedModel.getTableFormat() instanceof AdvancedTableFormat<?> tableFormat) {
+						Class<?> columnClass = tableFormat.getColumnClass(columnExt.getModelIndex());
+
+						if (!columnDef.hasCellRenderer() && columnClass != null) {
+							TableCellRenderer renderer = rendererRegistry.createTableCellRenderer(columnClass);
+							// TODO: Proxied TableCellRenderer that implements the stuff from
+							// TypedProperty getValue().
+							if (renderer != null)
+								columnExt.setCellRenderer(monospaceTableCellRenderer(renderer));
+						}
+
+						if (!columnDef.hasCellEditor() && columnClass != null) {
+							// TypedProperty property = new
+							// TypedProperty(columnDef.getDisplayName(), columnClass);
+							DefaultProperty property = new DefaultProperty();
+							property.setType(columnClass);
+							PropertyEditor editor = editorRegistry.createPropertyEditor(property);
+							if (editor != null)
+								// TODO: Proxied TableCellEditor that implements the stuff from
+								// TypedProperty setValue().
+								columnExt.setCellEditor(monospaceTableCellEditor(new CellEditorAdapter(editor)));
+						}
+					}
+				}
+
 				if (columnDef.hasComparator()) {
 					columnExt.setComparator(columnDef.getComparator());
 				}
-
 			}
 		}
 
@@ -325,6 +441,9 @@ public abstract class TableUtil {
 		AdvancedTableModel<T> tableModel = GlazedListsSwing.eventTableModelWithThreadProxyList(sortedSource, tableFormat);
 
 		JXTable table = new JXTable();
+		// TODO: Configure per column?! Maybe by overriding getCellRender/getCellEditor of
+		// TableColumnExt in createAndConfigureTableColumn... Then we could also move the property
+		// editor lookup handling into that.
 		SwingUtils.monospaceFont(table);
 		table.setAutoCreateRowSorter(false);
 		table.setSortable(false);

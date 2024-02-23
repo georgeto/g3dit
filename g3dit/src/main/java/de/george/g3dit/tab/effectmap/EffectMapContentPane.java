@@ -23,7 +23,6 @@ import de.george.g3dit.gui.components.HidingGroup;
 import de.george.g3dit.gui.components.ListManageAndEdit;
 import de.george.g3dit.gui.components.TableModificationControl;
 import de.george.g3dit.gui.dialogs.EnterEnumDialog;
-import de.george.g3dit.gui.editor.LambdaConvertEditor;
 import de.george.g3dit.gui.renderer.FunctionalListCellRenderer;
 import de.george.g3dit.gui.table.TableColumnDef;
 import de.george.g3dit.gui.table.TableUtil;
@@ -164,13 +163,15 @@ public class EffectMapContentPane extends JPanel {
 		protected static final TableColumnDef COLUMN_SAMPLE = TableColumnDef.withName("Name").displayName(I.tr("Sample")).editable(true)
 				.size(300).b();
 		protected static final TableColumnDef COLUMN_PROBABILITY = TableColumnDef.withName("Probability").displayName(I.tr("Probability"))
-				.cellEditor(new LambdaConvertEditor<>(Object::toString, Float::parseFloat)).editable(true).size(100).b();
+				.editable(true).size(100).b();
 
 		private void setupComponents() {
 			setLayout(new MigLayout("fill", "[grow, fill]", "[grow 100, fill]12px push[grow 50, fill]"));
 
 			commandSheet = PropertySheetUtil.createPropertySheetPanel();
 			add(commandSheet, "wrap");
+
+			// TODO: Let bean detect fields.
 
 			sampleTable = TableUtil.createTable(GlazedLists.eventList(null), Sample.class, COLUMN_SAMPLE, COLUMN_PROBABILITY);
 

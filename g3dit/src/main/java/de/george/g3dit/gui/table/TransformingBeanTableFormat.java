@@ -1,14 +1,17 @@
 package de.george.g3dit.gui.table;
 
+import java.util.Comparator;
 import java.util.function.BiFunction;
 
+import ca.odell.glazedlists.gui.AdvancedTableFormat;
 import ca.odell.glazedlists.gui.WritableTableFormat;
+import ca.odell.glazedlists.impl.beans.BeanTableFormat;
 
-public class TransformingBeanTableFormat<T> implements WritableTableFormat<T> {
-	private final WritableTableFormat<T> wrapped;
+public class TransformingBeanTableFormat<T> implements WritableTableFormat<T>, AdvancedTableFormat<T> {
+	private final BeanTableFormat<T> wrapped;
 	private BiFunction<T, ? super Object, ?>[] transformers;
 
-	public TransformingBeanTableFormat(WritableTableFormat<T> wrapped, BiFunction<T, ? super Object, ?>[] cellValueTransformer) {
+	public TransformingBeanTableFormat(BeanTableFormat<T> wrapped, BiFunction<T, ? super Object, ?>[] cellValueTransformer) {
 		this.wrapped = wrapped;
 		this.transformers = cellValueTransformer;
 	}
@@ -40,5 +43,17 @@ public class TransformingBeanTableFormat<T> implements WritableTableFormat<T> {
 			value = transformers[column].apply(baseObject, value);
 		}
 		return value;
+	}
+
+	@Override
+	public Class getColumnClass(int column) {
+		if (transformers[column] == null)
+			return wrapped.getColumnClass(column);
+		return null;
+	}
+
+	@Override
+	public Comparator getColumnComparator(int column) {
+		return wrapped.getColumnComparator(column);
 	}
 }
