@@ -116,7 +116,7 @@ public class Editor implements EditorContext {
 	private static final Logger logger = LoggerFactory.getLogger(Editor.class);
 
 	public static final String EDITOR_TITLE = "g3dit";
-	public static final String EDITOR_VERSION = IOUtils.getManifestAttribute(Editor.class, "g3dit-Version");
+	public static final String EDITOR_VERSION = IOUtils.getManifestAttribute(Editor.class, "g3dit-Version").orElse("DEV");
 	public static final String EDITOR_CONFIG_FOLDER = "config";
 
 	public enum UiLanguage {
@@ -418,8 +418,16 @@ public class Editor implements EditorContext {
 			optionStore = new JsonFileOptionStore(jsonStoreFile, kryoOptionStore.getOptions());
 		}
 
-		if (optionStore instanceof MigratableOptionStore) {
-			new OptionStoreMigrator((MigratableOptionStore) optionStore).migrate();
+		if (optionStore instanceof MigratableOptionStore optionStore) {
+			new OptionStoreMigrator(optionStore).migrate(store -> {
+				if (store instanceof JsonFileOptionStore jsonStore) {
+					Path backupFile = FilesEx.addFileExtension(jsonStoreFile,
+							"backup_pre_migrate_" + Editor.EDITOR_VERSION.replace(".", "_"));
+					var backupStore = new JsonFileOptionStore(backupFile, jsonStore.getOptions());
+					backupStore.save();
+				}
+				return true;
+			});
 		}
 	}
 

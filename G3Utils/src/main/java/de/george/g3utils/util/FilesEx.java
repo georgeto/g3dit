@@ -70,6 +70,10 @@ public final class FilesEx {
 		return file.resolveSibling(changeExtension(getFileName(file), extension));
 	}
 
+	public static Path addFileExtension(Path file, String extension) {
+		return file.resolveSibling(getFileName(file) + "." + extension);
+	}
+
 	public static String getFileExtension(Path file) {
 		return getFileExtension(getFileName(file));
 	}

@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
+import java.util.function.Predicate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -27,7 +28,7 @@ public class OptionStoreMigrator {
 		this.optionStore = optionStore;
 	}
 
-	public void migrate() {
+	public void migrate(Predicate<MigratableOptionStore> prepareMigrate) {
 		SortedMap<Long, Class<? extends OptionStoreMigration>> migrations = new TreeMap<>();
 		for (Class<? extends OptionStoreMigration> migration : ClasspathScanUtil.findSubtypesOf(OptionStoreMigration.class,
 				"de.george.g3dit.settings.migrations")) {
@@ -42,6 +43,11 @@ public class OptionStoreMigrator {
 		}
 
 		Set<Long> appliedMigrations = new HashSet<>(optionStore.get(APPLIED_MIGRATIONS));
+		// If either all migrations are already applied to the option store or the preparation
+		// callback fails, skip applying migrations.
+		if (appliedMigrations.containsAll(migrations.keySet()) || !prepareMigrate.test(optionStore))
+			return;
+
 		try {
 			for (Map.Entry<Long, Class<? extends OptionStoreMigration>> migration : migrations.entrySet()) {
 				if (!appliedMigrations.contains(migration.getKey())) {

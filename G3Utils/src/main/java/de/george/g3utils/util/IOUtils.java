@@ -262,7 +262,7 @@ public class IOUtils {
 		}
 	}
 
-	public static String getManifestAttribute(Class<?> clazz, String name) {
+	public static Optional<String> getManifestAttribute(Class<?> clazz, String name) {
 		try {
 			Attributes.Name attributeName = new Attributes.Name(name);
 			Enumeration<URL> resources = clazz.getClassLoader().getResources(JarFile.MANIFEST_NAME);
@@ -271,7 +271,7 @@ public class IOUtils {
 				try {
 					Manifest manifest = new Manifest(url.openStream());
 					if (manifest.getMainAttributes().containsKey(attributeName)) {
-						return (String) manifest.getMainAttributes().get(attributeName);
+						return Optional.ofNullable((String) manifest.getMainAttributes().get(attributeName));
 					}
 				} catch (Exception e) {
 					logger.warn("Failed to get manifest attribute.", e);
@@ -280,6 +280,6 @@ public class IOUtils {
 		} catch (IOException e) {
 			logger.warn("Failed to enumerate manifest resources.", e);
 		}
-		return null;
+		return Optional.empty();
 	}
 }
