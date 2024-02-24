@@ -21,7 +21,7 @@ import de.george.g3utils.util.IOUtils;
 public class KryoFileOptionStore extends AbstractConcurrentOptionStore {
 	private Logger logger = LoggerFactory.getLogger(KryoFileOptionStore.class);
 
-	private String fileName;
+	private final String fileName;
 
 	@SuppressWarnings("unchecked")
 	public KryoFileOptionStore(Path file) {

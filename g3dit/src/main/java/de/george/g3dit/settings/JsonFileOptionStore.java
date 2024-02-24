@@ -30,7 +30,7 @@ public class JsonFileOptionStore extends AbstractConcurrentOptionStore {
 			.registerModule(new ParameterNamesModule())
 			.enable(SerializationFeature.INDENT_OUTPUT, SerializationFeature.ORDER_MAP_ENTRIES_BY_KEYS)
 			.setDefaultTyping(new NonPrimitiveTypeResolverBuilder());
-	private Path file;
+	private final Path file;
 
 	public JsonFileOptionStore(Path file) {
 		this.file = file;
