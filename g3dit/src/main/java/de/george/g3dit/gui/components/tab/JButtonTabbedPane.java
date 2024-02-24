@@ -125,7 +125,7 @@ public class JButtonTabbedPane extends JTabbedPane {
 
 	private Optional<JButtonTabComponent> buttonTabComponentAt(int index) {
 		Component c = super.getTabComponentAt(index);
-		if (c != null && c instanceof JButtonTabComponent) {
+		if (c instanceof JButtonTabComponent) {
 			return Optional.of((JButtonTabComponent) c);
 		}
 		return Optional.empty();
