@@ -2,7 +2,6 @@ package de.george.g3dit.tab.shared;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import javax.swing.JCheckBox;
 import javax.swing.JPanel;

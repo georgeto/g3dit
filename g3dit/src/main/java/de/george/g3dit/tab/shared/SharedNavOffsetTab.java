@@ -22,7 +22,6 @@ import de.george.g3utils.structure.bCMotion;
 import de.george.g3utils.structure.bCQuaternion;
 import de.george.g3utils.structure.bCVector;
 import de.george.g3utils.util.Misc;
-import de.george.g3utils.validation.ValidationGroupWrapper;
 import de.george.lrentnode.archive.G3ClassContainer;
 import de.george.lrentnode.classes.desc.CD;
 import de.george.lrentnode.enums.G3Enums.gEDirection;
@@ -159,16 +158,6 @@ public class SharedNavOffsetTab extends AbstractPropertySharedTab {
 
 			JPanel operationPanel = getOperationPanel();
 			add(operationPanel, "cell 3 0, spanx 2, spany");
-		}
-
-		@Override
-		public void initValidation(ValidationGroup group) {
-
-		}
-
-		@Override
-		public void removeValidation(ValidationGroupWrapper group) {
-
 		}
 
 		@Override

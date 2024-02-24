@@ -68,9 +68,6 @@ public class SharedInventarTab extends AbstractPropertySharedTab {
 	}
 
 	@Override
-	public void cleanUp() {}
-
-	@Override
 	public String getTabTitle() {
 		return I.tr("Inventory");
 	}

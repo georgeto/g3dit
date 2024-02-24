@@ -33,7 +33,6 @@ import de.george.g3utils.structure.bCOrientedBox;
 import de.george.g3utils.structure.bCSphere;
 import de.george.g3utils.structure.bCVector;
 import de.george.g3utils.util.FilesEx;
-import de.george.g3utils.validation.ValidationGroupWrapper;
 import de.george.lrentnode.archive.G3ClassContainer;
 import de.george.lrentnode.classes.eCCollisionShape;
 import de.george.lrentnode.classes.eCCollisionShape.BoxShape;
@@ -211,16 +210,6 @@ public class SharedCollisionShapeTab extends AbstractSharedTab {
 			loadShape();
 			lastShapeType = colShape.property(CD.eCCollisionShape.ShapeType).getEnumValue();
 			cbShapeType.addItemListener(e -> shapeTypeChanged());
-		}
-
-		@Override
-		public void initValidation(ValidationGroup group) {
-
-		}
-
-		@Override
-		public void removeValidation(ValidationGroupWrapper group) {
-
 		}
 
 		@Override

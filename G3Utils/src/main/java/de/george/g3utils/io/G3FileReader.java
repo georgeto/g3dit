@@ -217,11 +217,6 @@ public abstract class G3FileReader extends G3FileBase implements AutoCloseable {
 		return Misc.asHex(buffer.array());
 	}
 
-	@Override
-	public ByteBuffer getBuffer() {
-		return buffer;
-	}
-
 	public String getFileName() {
 		return fileName;
 	}

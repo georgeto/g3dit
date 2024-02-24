@@ -42,8 +42,6 @@ import de.george.g3dit.tab.archive.views.property.TemplateEntityBeanInfo;
 import de.george.g3dit.util.Icons;
 import de.george.g3dit.util.ListUtil;
 import de.george.g3dit.util.PropertySheetUtil;
-import de.george.g3utils.io.G3FileReader;
-import de.george.g3utils.io.G3FileWriter;
 import de.george.g3utils.io.G3Serializable;
 import de.george.g3utils.util.TriFunction;
 import de.george.lrentnode.archive.G3ClassContainer;
@@ -346,17 +344,6 @@ public class SharedPropertyView extends JPanel {
 		public G3ClassContainer getContainer() {
 			return container;
 		}
-
-		@Override
-		protected void readPostClassVersion(G3FileReader reader) {
-
-		}
-
-		@Override
-		protected void writePostClassVersion(G3FileWriter writer) {
-
-		}
-
 	}
 
 	// An empty ListMode, this is used when the UI changes to allow

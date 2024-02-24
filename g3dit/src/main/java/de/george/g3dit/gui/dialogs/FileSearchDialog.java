@@ -20,7 +20,6 @@ import org.netbeans.validation.api.Problems;
 import org.netbeans.validation.api.ui.swing.SwingValidationGroup;
 
 import com.google.common.eventbus.Subscribe;
-import com.jidesoft.dialog.ButtonPanel;
 import com.teamunify.i18n.I;
 
 import ca.odell.glazedlists.BasicEventList;
@@ -140,11 +139,6 @@ public class FileSearchDialog extends AbstractTableProgressDialog {
 		});
 		ctx.eventBus().register(this);
 		return mainPanel;
-	}
-
-	@Override
-	public ButtonPanel createButtonPanel() {
-		return null;
 	}
 
 	@Override
