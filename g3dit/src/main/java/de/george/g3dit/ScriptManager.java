@@ -65,7 +65,7 @@ public class ScriptManager implements IScriptEnvironment {
 						scripts.add(script.newInstance());
 					}
 				} catch (InstantiationException | IllegalAccessException e) {
-					logger.warn("Unable to instantiate '{}': {})", script.getSimpleName(), e);
+					logger.warn("Unable to instantiate '{}'.", script.getSimpleName(), e);
 				}
 			}
 			return scripts;

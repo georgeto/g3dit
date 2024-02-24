@@ -125,7 +125,7 @@ public class MeshUtil {
 
 				if (!onlyMaterial) {
 					if (submesh.numUVSets > 1) {
-						logger.warn("Submesh {} ({}) has multiple %d UV sets.", i, mesh.materialName, submesh.numUVSets);
+						logger.warn("Submesh {} ({}) has multiple {} UV sets.", i, mesh.materialName, submesh.numUVSets);
 					}
 
 					boolean hasTexCoords = submesh.numUVSets >= 1;
