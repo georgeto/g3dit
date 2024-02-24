@@ -27,7 +27,7 @@ public class LayeredValidationPanel {
 		String geName = GraphicsEnvironment.getLocalGraphicsEnvironment().getClass().getName();
 		if (geName.equals("sun.awt.X11GraphicsEnvironment")) {
 			Field problemLabelField = ReflectionUtils.getField(ValidationPanel.class, "problemLabel");
-			JLabel problemLabel = (JLabel) ReflectionUtils.getFieldValue(problemLabelField, validationPanel);
+			JLabel problemLabel = ReflectionUtils.getFieldValue(problemLabelField, validationPanel);
 			problemLabel.setUI(new BasicLabelUI());
 		}
 

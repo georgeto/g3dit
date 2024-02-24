@@ -96,7 +96,7 @@ public class CheckFaultyBodyParts extends AbstractEntityCheck {
 					}
 				}
 
-				String creator = ((LrentdatEntity) entity).getCreator();
+				String creator = entity.getCreator();
 				if (creator != null) {
 					Path tpleFile = tpleGuidMap.get(creator);
 					if (tpleFile != null) {

@@ -310,7 +310,7 @@ public class ImportStaticLightdataDialog extends AbstractTableProgressDialog {
 			while (iterator.hasNext()) {
 				ArchiveFile currentFile = iterator.next();
 				boolean hasChanged = processFile(iterator.next(), iterator.nextFile(), lightData, applyChanges, enableFilter,
-						(Consumer<Result>) this::publish);
+						this::publish);
 
 				if (applyChanges && hasChanged) {
 					Path outFile = iterator.nextFile();

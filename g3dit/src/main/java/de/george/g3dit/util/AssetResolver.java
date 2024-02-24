@@ -156,7 +156,7 @@ public class AssetResolver {
 
 		for (Method getter : getters) {
 			String textureType = getter.getName().replaceFirst("getColorSrc", "");
-			eCColorSrcProxy proxy = (eCColorSrcProxy) ReflectionUtils.invoke(getter, shader);
+			eCColorSrcProxy proxy = ReflectionUtils.invoke(getter, shader);
 			if (proxy == null) {
 				continue;
 			}

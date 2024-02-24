@@ -30,7 +30,7 @@ public class ValidationGroupWrapper {
 
 	@SuppressWarnings({"unchecked", "rawtypes"})
 	public ValidationListener remove(Component comp) {
-		LinkedList<ValidationListener> list = (LinkedList<ValidationListener>) ReflectionUtils.getFieldValue(GROUPITEMS_FIELD, group);
+		LinkedList<ValidationListener> list = ReflectionUtils.getFieldValue(GROUPITEMS_FIELD, group);
 		for (ValidationListener listener : list) {
 			Object target = ReflectionUtils.getFieldValue(LISTENER_TARGET, listener);
 			if (comp.equals(target)) {
