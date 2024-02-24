@@ -308,7 +308,7 @@ public class SharedPropertyView extends JPanel {
 		}
 	}
 
-	private class ClassContainerClassListModel extends AbstractListModel<G3Class> {
+	private static class ClassContainerClassListModel extends AbstractListModel<G3Class> {
 		private G3ClassContainer container;
 		private HeaderClass header;
 

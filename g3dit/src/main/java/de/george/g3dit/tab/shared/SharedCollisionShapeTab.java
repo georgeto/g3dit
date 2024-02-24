@@ -357,7 +357,7 @@ public class SharedCollisionShapeTab extends AbstractSharedTab {
 		}
 	}
 
-	private class BoxShapePanel extends ShapePanel<BoxShape> {
+	private static class BoxShapePanel extends ShapePanel<BoxShape> {
 		private UndoableTextField tfCenter, tfExtent, tfPitch, tfYaw, tfRoll;
 
 		public BoxShapePanel() {
@@ -405,7 +405,7 @@ public class SharedCollisionShapeTab extends AbstractSharedTab {
 		}
 	}
 
-	private class CapsuleShapePanel extends ShapePanel<CapsuleShape> {
+	private static class CapsuleShapePanel extends ShapePanel<CapsuleShape> {
 		private UndoableTextField tfCenter, tfRadius, tfHeight, tfPitch, tfYaw, tfRoll;
 
 		public CapsuleShapePanel() {
@@ -459,7 +459,7 @@ public class SharedCollisionShapeTab extends AbstractSharedTab {
 		}
 	}
 
-	private class SphereShapePanel extends ShapePanel<SphereShape> {
+	private static class SphereShapePanel extends ShapePanel<SphereShape> {
 		private UndoableTextField tfRadius;
 		private UndoableTextField tfPosition;
 
@@ -493,7 +493,7 @@ public class SharedCollisionShapeTab extends AbstractSharedTab {
 		}
 	}
 
-	private class PointShapePanel extends ShapePanel<PointShape> {
+	private static class PointShapePanel extends ShapePanel<PointShape> {
 		private UndoableTextField tfPosition;
 
 		public PointShapePanel() {

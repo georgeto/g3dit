@@ -777,7 +777,7 @@ public class CheckManager {
 		}
 	}
 
-	private class EntityProblemTreeFormat extends ProblemTreeFormat {
+	private static class EntityProblemTreeFormat extends ProblemTreeFormat {
 		@Override
 		public Comparator<? super Problem> getComparator(int depth) {
 			return switch (depth) {
