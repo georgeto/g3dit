@@ -58,6 +58,8 @@ public class JSplittedTypedTabbedPane<T extends ITypedTab> extends EventBusProvi
 
 	}
 
+	private static final String ACTION_KEY_TAB_NAME = "TAB_ACTION_NAME";
+
 	private JSplitPane splitPane;
 
 	private JTypedTabbedPane<T> leftTabs, rightTabs;
@@ -165,20 +167,30 @@ public class JSplittedTypedTabbedPane<T extends ITypedTab> extends EventBusProvi
 		return tabs.size();
 	}
 
-	public void addTabAction(T tab, Action action) {
-		addTabAction(tab, action, false);
+	public void addTabAction(T tab, String actionName, Action action) {
+		addTabAction(tab, actionName, action, false);
 	}
 
-	public void addTabAction(T tab, Action action, boolean front) {
+	public void addTabAction(T tab, String actionName, Action action, boolean front) {
 		tabs.get(tab).add(Pair.of(action, front));
+		action.putValue(ACTION_KEY_TAB_NAME, actionName);
 		getTabIndex(tab).ifPresent(tabIndex -> tabIndex.getTabbedPane().addTabAction(tab, action, front));
+	}
+
+	public Optional<Action> getTabAction(T tab, String name) {
+		for (Pair<Action, Boolean> action : tabs.get(tab)) {
+			Object actionName = action.el0().getValue(ACTION_KEY_TAB_NAME);
+			if (actionName instanceof String && actionName.equals(name))
+				return Optional.of(action.el0());
+		}
+		return Optional.empty();
 	}
 
 	protected void afterTabAdded(final T tab) {
 		tabs.put(tab, new ArrayList<>());
 
 		if (!lockTabSelectEvent)
-			addTabAction(tab, SwingUtils.createAction(null, SwingUtils.loadIcon("/res/buttonpopout.png"), () -> {
+			addTabAction(tab, null, SwingUtils.createAction(null, SwingUtils.loadIcon("/res/buttonpopout.png"), () -> {
 				Optional<TabIndex> tabIndex = getTabIndex(tab);
 				if (tabIndex.isPresent()) {
 					// Save additional actions.
@@ -190,7 +202,7 @@ public class JSplittedTypedTabbedPane<T extends ITypedTab> extends EventBusProvi
 					addTab(tab, side);
 					// Restore additional actions.
 					for (Pair<Action, Boolean> action : actions)
-						addTabAction(tab, action.el0(), action.el1());
+						addTabAction(tab, (String) action.el0().getValue(ACTION_KEY_TAB_NAME), action.el0(), action.el1());
 					lockTabSelectEvent = false;
 					selectTab(tab);
 				}

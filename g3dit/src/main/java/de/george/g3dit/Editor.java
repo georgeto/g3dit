@@ -22,7 +22,8 @@ import java.util.concurrent.Executors;
 import java.util.function.Function;
 import java.util.logging.Level;
 
-import javax.swing.ImageIcon;
+import javax.swing.Action;
+import javax.swing.Icon;
 import javax.swing.JFrame;
 import javax.swing.LookAndFeel;
 import javax.swing.SwingUtilities;
@@ -71,6 +72,7 @@ import de.george.g3dit.gui.theme.ThemeManager;
 import de.george.g3dit.jme.EntityViewer;
 import de.george.g3dit.jme.JmeTransparentDesktopSystem;
 import de.george.g3dit.settings.EditorOptions;
+import de.george.g3dit.settings.FavoriteChangedEvent;
 import de.george.g3dit.settings.JsonFileOptionStore;
 import de.george.g3dit.settings.KryoFileOptionStore;
 import de.george.g3dit.settings.MigratableOptionStore;
@@ -575,29 +577,32 @@ public class Editor implements EditorContext {
 		});
 	}
 
+	private static final String ACTION_TOGGLE_FAVORITE = "ToggleFavorite";
+
+	private Icon getFavoriteActionIcon(Path filePath) {
+		if (filePath != null && mainMenu.isFavorite(filePath))
+			return Icons.getImageIcon(Icons.Misc.STAR);
+		else
+			return Icons.getImageIcon(Misc.STAR_EMPTY);
+	}
+
 	private void openTab(EditorTab tab, Side side) {
 		tabs.add(tab);
 		tbTabs.addTab(tab, side);
 		tbTabs.selectTab(tab);
 		if (tab instanceof EditorAbstractFileTab fileTab) {
-			ImageIcon icon = Icons
-					.getImageIcon(fileTab.getDataFile().map(mainMenu::isFavorite).orElse(false) ? Icons.Misc.STAR : Misc.STAR_EMPTY);
-			var action = new AbstractActionExt(null, icon) {
+			var action = new AbstractActionExt(null, getFavoriteActionIcon(fileTab.getDataFile().orElse(null))) {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					Optional<Path> dataFile = fileTab.getDataFile();
 					dataFile.ifPresent(filePath -> {
 						mainMenu.toggleFavorite(filePath);
-						// TODO: Update if toggled from duplicate tab...
-						if (mainMenu.isFavorite(filePath))
-							setSmallIcon(Icons.getImageIcon(Misc.STAR));
-						else
-							setSmallIcon(Icons.getImageIcon(Misc.STAR_EMPTY));
+						eventBus.post(new FavoriteChangedEvent(filePath));
 					});
 				}
 			};
 			action.setShortDescription(I.tr("Favorite"));
-			tbTabs.addTabAction(tab, action, true);
+			tbTabs.addTabAction(tab, ACTION_TOGGLE_FAVORITE, action, true);
 		}
 		tab.getTabContent().requestFocus();
 		eventBus().post(new EditorTab.OpenedEvent(tab));
@@ -629,6 +634,20 @@ public class Editor implements EditorContext {
 	public void onTabStateChange(EditorTab.StateChangedEvent event) {
 		tbTabs.updateTab(event.getTab());
 		refreshTitle();
+	}
+
+	@Subscribe
+	public void onFavoriteChanged(FavoriteChangedEvent event) {
+		for (EditorTab tab : tabs) {
+			if (tab instanceof EditorAbstractFileTab fileTab) {
+				if (!fileTab.getDataFile().map(event.filePath()::equals).orElse(false))
+					continue;
+
+				tbTabs.getTabAction(fileTab, ACTION_TOGGLE_FAVORITE).ifPresent(action -> {
+					action.putValue(Action.SMALL_ICON, getFavoriteActionIcon(event.filePath()));
+				});
+			}
+		}
 	}
 
 	@Subscribe
