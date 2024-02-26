@@ -7,6 +7,8 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
 import javax.swing.MenuSelectionManager;
+import javax.swing.event.MenuEvent;
+import javax.swing.event.MenuListener;
 
 import de.george.g3dit.util.PathAliases;
 import de.george.g3utils.gui.SwingUtils;
@@ -26,6 +28,22 @@ public abstract class FileMenu extends JMenu {
 		setText(name);
 		pathAlias = PathAliases.empty();
 		setEnabled(false);
+		addMenuListener(new MenuListener() {
+			@Override
+			public void menuSelected(MenuEvent e) {
+				setupActionMap();
+			}
+
+			@Override
+			public void menuDeselected(MenuEvent e) {
+				clearActionMap();
+			}
+
+			@Override
+			public void menuCanceled(MenuEvent e) {
+				clearActionMap();
+			}
+		});
 	}
 
 	@Override
@@ -42,8 +60,26 @@ public abstract class FileMenu extends JMenu {
 		firePropertyChange("accelerator", oldAccelerator, accelerator);
 	}
 
+	private void setupActionMap() {
+		for (int i = 0; i < 10 && i < getItemCount(); i++) {
+			JMenuItem menuItem = getItem(i);
+			if (menuItem == null)
+				break;
+			KeyStroke keyStroke = KeyStroke.getKeyStroke(String.valueOf(i).charAt(0));
+			menuItem.setAccelerator(keyStroke);
+			getInputMap(WHEN_IN_FOCUSED_WINDOW).put(keyStroke, "EntryOpen" + i);
+			getActionMap().put("EntryOpen" + i, SwingUtils.createAction(() -> {
+				if (menuItem.isShowing()) {
+					menuItem.doClick(0);
+					MenuSelectionManager.defaultManager().clearSelectedPath();
+				}
+			}));
+		}
+	}
+
 	private void clearActionMap() {
 		for (int i = 0; i < 10; i++) {
+			getInputMap(WHEN_IN_FOCUSED_WINDOW).remove(KeyStroke.getKeyStroke(String.valueOf(i).charAt(0)));
 			getActionMap().remove("EntryOpen" + i);
 		}
 	}
@@ -61,19 +97,6 @@ public abstract class FileMenu extends JMenu {
 		for (int i = 0; i < files.size(); i++) {
 			Path filePath = files.get(i);
 			JMenuItem menuItem = new JFileMenuItem();
-
-			if (i < 10) {
-				KeyStroke keyStroke = KeyStroke.getKeyStroke(String.valueOf(i).charAt(0));
-				menuItem.setAccelerator(keyStroke);
-				this.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(keyStroke, "EntryOpen" + i);
-				getActionMap().put("EntryOpen" + i, SwingUtils.createAction(() -> {
-					if (menuItem.isShowing()) {
-						menuItem.doClick(0);
-						MenuSelectionManager.defaultManager().clearSelectedPath();
-					}
-				}));
-
-			}
 
 			String menuName = pathAlias.apply(filePath);
 
