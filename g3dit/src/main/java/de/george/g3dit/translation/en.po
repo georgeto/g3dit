@@ -4434,11 +4434,7 @@ msgstr ""
 msgid "Create new EffectCommand"
 msgstr ""
 
-#: g3dit\src\main\java\de\george\g3dit\tab\effectmap\EffectMapContentPane.java:181
-msgid "Samples"
-msgstr ""
-
-#: g3dit\src\main\java\de\george\g3dit\tab\effectmap\EffectMapContentPane.java:220
+#: g3dit\src\main\java\de\george\g3dit\tab\effectmap\EffectMapContentPane.java:163
 msgid "Sample"
 msgstr ""
 
@@ -4446,16 +4442,16 @@ msgstr ""
 msgid "Probability"
 msgstr ""
 
-#: g3dit\src\main\java\de\george\g3dit\tab\effectmap\EffectMapContentPane.java:292
+#: g3dit\src\main\java\de\george\g3dit\tab\effectmap\EffectMapContentPane.java:178
+msgid "Samples"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\effectmap\EffectMapContentPane.java:236
 msgid "Create new effect"
 msgstr ""
 
-#: g3dit\src\main\java\de\george\g3dit\tab\effectmap\EffectMapContentPane.java:292
+#: g3dit\src\main\java\de\george\g3dit\tab\effectmap\EffectMapContentPane.java:236
 msgid "Please enter the name of the effect"
-msgstr ""
-
-#: g3dit\src\main\java\de\george\g3dit\tab\effectmap\EffectMapContentPane.java:293
-msgid "Insert effect"
 msgstr ""
 
 #: g3dit\src\main\java\de\george\g3dit\tab\navmap\EditorNavMapObjectTab.java:18
