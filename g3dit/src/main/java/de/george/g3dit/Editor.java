@@ -141,6 +141,25 @@ public class Editor implements EditorContext {
 		}
 	}
 
+	public enum OpenPolicy {
+		MULTI(I.tr("Allow multiple instances")),
+		SINGLE(I.tr("Open single instance")),
+		ASK(I.tr("Ask every time"));
+
+		public static final OpenPolicy DEFAULT = OpenPolicy.MULTI;
+
+		public final String displayName;
+
+		private OpenPolicy(String displayName) {
+			this.displayName = displayName;
+		}
+
+		@Override
+		public String toString() {
+			return displayName;
+		}
+	}
+
 	private EventBus eventBus;
 
 	private CacheManager cacheManager;
@@ -681,6 +700,22 @@ public class Editor implements EditorContext {
 	}
 
 	public boolean openFile(Path file, Side side) {
+		switch (optionStore.get(EditorOptions.Misc.FILE_OPEN_POLICY)) {
+			case MULTI -> {
+			}
+			case SINGLE -> {
+				if (selectFile(file))
+					return true;
+			}
+			case ASK -> {
+				Optional<EditorTab> fileTab = getTabsByFile(file).findFirst();
+				if (fileTab.isPresent() && !TaskDialogs.ask(getParentWindow(), I.tr("File already open"), I.tr("Open the file again?"))) {
+					selectTab(fileTab.get());
+					return true;
+				}
+			}
+		}
+
 		EditorAbstractFileTab tab = null;
 		switch (FilesEx.getFileExtension(file).toLowerCase()) {
 			case "lrentdat":
@@ -714,13 +749,17 @@ public class Editor implements EditorContext {
 		return false;
 	}
 
-	public boolean openOrSelectFile(Path file) {
+	public boolean selectFile(Path file) {
 		Optional<EditorTab> fileTab = getTabsByFile(file).findFirst();
 		if (fileTab.isPresent()) {
 			selectTab(fileTab.get());
 			return true;
 		}
-		return openFile(file);
+		return false;
+	}
+
+	public boolean openOrSelectFile(Path file) {
+		return selectFile(file) || openFile(file);
 	}
 
 	public void openArchive(ArchiveFile file, boolean isChanged) {

@@ -13,6 +13,7 @@ import javax.swing.JFrame;
 import com.google.common.collect.ImmutableList;
 import com.teamunify.i18n.I;
 
+import de.george.g3dit.Editor.OpenPolicy;
 import de.george.g3dit.Editor.UiLanguage;
 import de.george.g3dit.gui.theme.ThemeInfo;
 import de.george.g3dit.gui.theme.ThemeManager;
@@ -91,6 +92,11 @@ public abstract class EditorOptions {
 		public static final Option<Boolean> CLEAN_STRINGTABLE = new LambdaOption<>(false,
 				(parent) -> new BooleanOptionHandler(parent, I.tr("Removed unused entries from the stringtable")),
 				"EditorOptions.Misc.CLEAN_STRINGTABLE", I.tr("Clean up string table"));
+
+		public static final Option<OpenPolicy> FILE_OPEN_POLICY = new LambdaOption<>(
+				OpenPolicy.DEFAULT, (parent) -> new ComboBoxOptionHandler<>(parent, I.tr("File opening policy"),
+						ImmutableList.copyOf(OpenPolicy.values()), false),
+				"EditorOptions.Misc.FILE_OPEN_POLICY", I.tr("File opening policy"));
 
 		public static final Option<Boolean> OPTIMIZE_MEMORY_USAGE = new LambdaOption<>(false,
 				(parent) -> new BooleanOptionHandler(parent,
