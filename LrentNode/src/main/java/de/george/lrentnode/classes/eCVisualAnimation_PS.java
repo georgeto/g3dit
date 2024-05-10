@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 
 import de.george.g3utils.io.G3FileReader;
 import de.george.g3utils.io.G3FileWriter;
-import de.george.g3utils.structure.bCVector;
+import de.george.g3utils.structure.bCBox;
 import de.george.lrentnode.enums.G3Enums.gESlot;
 
 public class eCVisualAnimation_PS extends eCEntityPropertySet {
@@ -18,7 +18,7 @@ public class eCVisualAnimation_PS extends eCEntityPropertySet {
 	public List<MaterialSwitchSlot> bodyParts;
 	public List<String> stEntries;
 	public List<ExtraSlot> attachments;
-	public bCVector minVec, maxVec;
+	public bCBox boundary;
 
 	public eCVisualAnimation_PS(String className, G3FileReader reader) {
 		super(className, reader);
@@ -50,8 +50,7 @@ public class eCVisualAnimation_PS extends eCEntityPropertySet {
 		for (int i = 0; i < extraCount; i++) {
 			attachments.add(new ExtraSlot(reader));
 		}
-		minVec = reader.readVector();
-		maxVec = reader.readVector();
+		boundary = reader.readBox();
 		super.readPostClassVersion(reader);
 	}
 
@@ -74,7 +73,7 @@ public class eCVisualAnimation_PS extends eCEntityPropertySet {
 		for (ExtraSlot slot : attachments) {
 			slot.write(writer);
 		}
-		writer.writeVector(minVec).writeVector(maxVec);
+		writer.writeBox(boundary);
 		super.writePostClassVersion(writer);
 	}
 
