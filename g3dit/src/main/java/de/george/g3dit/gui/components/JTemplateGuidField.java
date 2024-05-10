@@ -57,7 +57,7 @@ public class JTemplateGuidField extends JSearchNamedGuidField {
 
 	@Override
 	protected Optional<String> nameToGuid(String name) {
-		return cache.getEntryByName(name).map(TemplateCacheEntry::getGuid);
+		return cache.getEntryByName(name, getTemplateEntities()).map(TemplateCacheEntry::getGuid);
 	}
 
 	private Stream<TemplateCacheEntry> getTemplateEntities() {
