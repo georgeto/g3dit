@@ -295,7 +295,9 @@ public class FileUtil {
 	}
 
 	private static <T extends G3Class> T openOneClassGenomeFile(Path file) throws IOException {
-		return openOneClassGenomeFile(new G3FileReaderEx(file));
+		try (G3FileReaderEx reader = new G3FileReaderEx(file)) {
+			return openOneClassGenomeFile(reader);
+		}
 	}
 
 	private static <T extends G3Class> T openOneClassGenomeFile(InputStream is) throws IOException {
@@ -307,7 +309,9 @@ public class FileUtil {
 	}
 
 	public static eCResourceAnimationActor_PS openAnimationActor(Path file) throws IOException {
-		return new eCResourceAnimationActor_PS(new G3FileReaderEx(file));
+		try (G3FileReaderEx reader = new G3FileReaderEx(file)) {
+			return new eCResourceAnimationActor_PS(reader);
+		}
 	}
 
 	public static eCResourceAnimationActor_PS openAnimationActor(InputStream is) throws IOException {
@@ -315,7 +319,9 @@ public class FileUtil {
 	}
 
 	public static eCResourceAnimationMotion_PS openAnimationMotion(Path file) throws IOException {
-		return new eCResourceAnimationMotion_PS(new G3FileReaderEx(file));
+		try (G3FileReaderEx reader = new G3FileReaderEx(file)) {
+			return new eCResourceAnimationMotion_PS(reader);
+		}
 	}
 
 	public static eCResourceAnimationMotion_PS openAnimationMotion(InputStream is) throws IOException {
@@ -323,7 +329,9 @@ public class FileUtil {
 	}
 
 	public static gCEffectMap openEffectMap(Path file) throws IOException {
-		return new gCEffectMap(new G3FileReaderEx(file));
+		try (G3FileReaderEx reader = new G3FileReaderEx(file)) {
+			return new gCEffectMap(reader);
+		}
 	}
 
 	public static gCEffectMap openEffectMap(InputStream is) throws IOException {
