@@ -1851,10 +1851,14 @@ msgstr "Inhalt löschen"
 msgid "Add"
 msgstr "Hinzufügen"
 
-#: g3dit\src\main\java\de\george\g3dit\gui\components\ListModificationControl.java:54
+#: g3dit\src\main\java\de\george\g3dit\gui\components\ListModificationControl.java:51
+msgid "Clone"
+msgstr "Klonen"
+
+#: g3dit\src\main\java\de\george\g3dit\gui\components\ListModificationControl.java:74
 #: g3dit\src\main\java\de\george\g3dit\gui\components\TableModificationControl.java:62
-#: g3dit\src\main\java\de\george\g3dit\gui\components\search\ModularSearchPanel.java:262
-#: g3dit\src\main\java\de\george\g3dit\gui\components\search\ModularSearchPanel.java:363
+#: g3dit\src\main\java\de\george\g3dit\gui\components\search\ModularSearchPanel.java:263
+#: g3dit\src\main\java\de\george\g3dit\gui\components\search\ModularSearchPanel.java:365
 #: g3dit\src\main\java\de\george\g3dit\tab\shared\AbstractElementPanel.java:40
 msgid "Delete"
 msgstr "Löschen"

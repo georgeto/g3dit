@@ -57,7 +57,7 @@ public class EffectMapContentPane extends JPanel {
 		editingPanel = new EffectMapEditingPanel();
 
 		ListManageAndEdit<gCEffectCommandSequence> edit = ListManageAndEdit.create(effects, this::inputEffect, editingPanel)
-				.title(I.tr("Effects")).changeMonitor(ctx).onSelect(editingPanel::loadEffect)
+				.title(I.tr("Effects")).changeMonitor(ctx).onSelect(editingPanel::loadEffect).onClone(PropertyUtil::clone)
 				.matcherEditor(tfFilter -> new TextComponentMatcherEditor<>(tfFilter, GlazedLists.textFilterator("Name")))
 				.cellRenderer(new FunctionalListCellRenderer<>(gCEffectCommandSequence::getName)).build();
 
@@ -87,7 +87,7 @@ public class EffectMapContentPane extends JPanel {
 			commandEditingPanel = new EffectCommandEditingPanel();
 			ListManageAndEdit<gCEffectCommand> edit = ListManageAndEdit.create(commands, this::inputCommand, commandEditingPanel)
 					.title(I.tr("Commands")).orientation(JSplitPane.VERTICAL_SPLIT).changeMonitor(ctx)
-					.onSelect(commandEditingPanel::loadCommand)
+					.onSelect(commandEditingPanel::loadCommand).onClone(ClassUtil::clone)
 					.cellRenderer(
 							new FunctionalListCellRenderer<gCEffectCommand>(e -> e.getClassName().replaceFirst("gCEffectCommand", "")))
 					.build();

@@ -33,6 +33,7 @@ public class ListManageAndEdit<E> {
 	private Supplier<Optional<E>> supplyNewItem;
 	private FileChangeMonitor changeMonitor;
 	private Consumer<E> onSelect;
+	private Function<E, Optional<E>> onClone;
 	private Predicate<E> onDelete;
 	private Predicate<List<E>> onMultiDelete;
 
@@ -144,7 +145,7 @@ public class ListManageAndEdit<E> {
 			});
 
 			add(new JScrollPane(itemsList), "sgx items, pushy, growy, wrap, gapbottom 5px");
-			add(new ListModificationControl<>(changeMonitor, itemsList, filteredItems, supplyNewItem, onDelete, onMultiDelete),
+			add(new ListModificationControl<>(changeMonitor, itemsList, filteredItems, supplyNewItem, onClone, onDelete, onMultiDelete),
 					"sgx items, wrap");
 
 			if (itemsList.getModel().getSize() > 0) {
@@ -189,6 +190,15 @@ public class ListManageAndEdit<E> {
 	public ListManageAndEdit<E> onSelect(Consumer<E> onSelect) {
 		this.onSelect = onSelect;
 		return this;
+	}
+
+	public ListManageAndEdit<E> onCloneOpt(Function<E, Optional<E>> onClone) {
+		this.onClone = onClone;
+		return this;
+	}
+
+	public ListManageAndEdit<E> onClone(Function<E, E> onClone) {
+		return onCloneOpt(onClone.andThen(Optional::of));
 	}
 
 	public ListManageAndEdit<E> onDelete(Predicate<E> onDelete) {

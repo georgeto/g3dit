@@ -159,13 +159,13 @@ public class ClassUtil {
 		writeTemplateClass(writer, clazz.getClazz(), clazz.getClassVersion());
 	}
 
-	public static G3Class clone(G3Class clazz) {
+	public static <C extends G3Class> C clone(C clazz) {
 		G3FileWriterEx writer = new G3FileWriterEx();
 		writeSubClass(writer, clazz);
 
 		G3FileReaderEx reader = new G3FileReaderEx(writer.getData());
 		reader.setStringtable(writer.getStringtable());
-		return readSubClass(reader);
+		return (C) readSubClass(reader);
 	}
 
 	public static List<ClassProperty<?>> readClassItems(int propertyTypeCount, int propertyClassVersion, G3FileReader reader) {
