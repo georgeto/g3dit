@@ -27,7 +27,7 @@ import net.miginfocom.swing.MigLayout;
 public class TableModificationControl<T> extends JPanel {
 	public TableModificationControl(FileChangeMonitor changeMonitor, JTable table, ListTableModel<T> model, Supplier<T> entrySupplier,
 			Function<T, Optional<T>> cloneEntry) {
-		this(changeMonitor, table, entrySupplier, cloneEntry, model::addEntry, model::getEntry, model::removeEntries);
+		this(changeMonitor, table, entrySupplier, cloneEntry, model::addEntry, model::getEntry, model::removeEntries, null, null);
 	}
 
 	public TableModificationControl(FileChangeMonitor changeMonitor, JTable table, ListTableModel<T> model, Supplier<T> entrySupplier) {
@@ -35,23 +35,38 @@ public class TableModificationControl<T> extends JPanel {
 	}
 
 	public TableModificationControl(FileChangeMonitor changeMonitor, JTable table, EventList<T> source, Supplier<T> entrySupplier,
-			Function<T, Optional<T>> cloneEntry) {
+			Function<T, Optional<T>> cloneEntry, boolean movable) {
 		this(changeMonitor, table, entrySupplier, cloneEntry, source::add, source::get, rows -> {
 			ImmutableSortedSet<Integer> sortedRows = ImmutableSortedSet.<Integer>reverseOrder().addAll(rows).build();
 			for (int row : sortedRows) {
 				source.remove(row);
 			}
 			return !sortedRows.isEmpty();
-		});
+		}, movable ? row -> {
+			if (row > 0) {
+				source.add(row - 1, source.remove((int) row));
+				table.getSelectionModel().setSelectionInterval(row - 1, row - 1);
+			}
+		} : null, movable ? row -> {
+			if (row < source.size() - 1) {
+				T entry = source.remove((int) row);
+				if (row == source.size())
+					source.add(entry);
+				else
+					source.add(row + 1, entry);
+				table.getSelectionModel().setSelectionInterval(row + 1, row + 1);
+			}
+		} : null);
+
 	}
 
 	public TableModificationControl(FileChangeMonitor changeMonitor, JTable table, EventList<T> source, Supplier<T> entrySupplier) {
-		this(changeMonitor, table, source, entrySupplier, null);
+		this(changeMonitor, table, source, entrySupplier, null, false);
 	}
 
 	public TableModificationControl(FileChangeMonitor changeMonitor, JTable table, Supplier<T> entrySupplier,
 			Function<T, Optional<T>> cloneEntry, Consumer<T> addEntry, Function<Integer, T> getEntry,
-			Function<Iterable<Integer>, Boolean> removeEntries) {
+			Function<Iterable<Integer>, Boolean> removeEntries, Consumer<Integer> moveUp, Consumer<Integer> moveDown) {
 		setLayout(new MigLayout("fillx, insets 0"));
 
 		TableModel model = table.getModel();
@@ -62,9 +77,8 @@ public class TableModificationControl<T> extends JPanel {
 				T newEntry = entrySupplier.get();
 				if (newEntry != null) {
 					addEntry.accept(newEntry);
-					if (changeMonitor != null) {
+					if (changeMonitor != null)
 						changeMonitor.fileChanged();
-					}
 				}
 			});
 			add(btnAdd, "sg tmcbtn, growx, pushx");
@@ -78,9 +92,8 @@ public class TableModificationControl<T> extends JPanel {
 					Optional<T> entry = cloneEntry.apply(selected);
 					if (entry.isPresent()) {
 						addEntry.accept(entry.get());
-						if (changeMonitor != null) {
+						if (changeMonitor != null)
 							changeMonitor.fileChanged();
-						}
 					}
 				}
 			});
@@ -97,10 +110,31 @@ public class TableModificationControl<T> extends JPanel {
 		add(btnRemove, "sg tmcbtn, growx, pushx");
 		btnRemove.addActionListener(a -> {
 			if (removeEntries.apply(TableUtil.getSelectedRows(table))) {
-				if (changeMonitor != null) {
+				if (changeMonitor != null)
 					changeMonitor.fileChanged();
-				}
 			}
 		});
+
+		if (moveUp != null) {
+			JButton btnMoveUp = new JButton(I.tr("Move up"), Icons.getImageIcon(Icons.Arrow.UP));
+			add(btnMoveUp, "sg tmcbtn, growx, pushx");
+			btnMoveUp.addActionListener(a -> {
+				TableUtil.withSelectedRow(table, moveUp);
+				if (changeMonitor != null)
+					changeMonitor.fileChanged();
+			});
+			TableUtil.enableOnEqual(table, btnMoveUp, 1);
+		}
+
+		if (moveDown != null) {
+			JButton btnMoveDown = new JButton(I.tr("Move down"), Icons.getImageIcon(Icons.Arrow.DOWN));
+			add(btnMoveDown, "sg tmcbtn, growx, pushx");
+			btnMoveDown.addActionListener(a -> {
+				TableUtil.withSelectedRow(table, moveDown);
+				if (changeMonitor != null)
+					changeMonitor.fileChanged();
+			});
+			TableUtil.enableOnEqual(table, btnMoveDown, 1);
+		}
 	}
 }

@@ -1871,6 +1871,16 @@ msgstr "Info"
 msgid "Warn"
 msgstr "Warnung"
 
+#: g3dit\src\main\java\de\george\g3dit\gui\components\TableModificationControl.java:119
+#: g3dit\src\main\java\de\george\g3dit\tab\shared\AbstractElementPanel.java:35
+msgid "Move up"
+msgstr "Nach oben verschieben"
+
+#: g3dit\src\main\java\de\george\g3dit\gui\components\TableModificationControl.java:130
+#: g3dit\src\main\java\de\george\g3dit\tab\shared\AbstractElementPanel.java:45
+msgid "Move down"
+msgstr "Nach unten verschieben"
+
 #: g3dit\src\main\java\de\george\g3dit\gui\components\search\EntityPositionSearchFilterBuilder.java:31
 msgid "Ignore Y"
 msgstr "Ignoriere Y"
@@ -4677,14 +4687,6 @@ msgstr "{0} einfügen"
 #, java-format
 msgid "Please enter the name of the {0}"
 msgstr "Bitte Namen der {0} eingeben"
-
-#: g3dit\src\main\java\de\george\g3dit\tab\shared\AbstractElementPanel.java:35
-msgid "Move up"
-msgstr "Nach oben verschieben"
-
-#: g3dit\src\main\java\de\george\g3dit\tab\shared\AbstractElementPanel.java:45
-msgid "Move down"
-msgstr "Nach unten verschieben"
 
 #: g3dit\src\main\java\de\george\g3dit\tab\shared\AbstractElementPanel.java:50
 #, java-format

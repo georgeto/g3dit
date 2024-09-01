@@ -387,8 +387,8 @@ public abstract class TableUtil {
 		}
 
 		public TableModificationControl<T> createModificationControl(FileChangeMonitor changeMonitor, Supplier<T> entrySupplier,
-				Function<T, Optional<T>> cloneEntry) {
-			return new TableModificationControl<>(changeMonitor, table, sortedSource, entrySupplier, cloneEntry);
+				Function<T, Optional<T>> cloneEntry, boolean movable) {
+			return new TableModificationControl<>(changeMonitor, table, sortedSource, entrySupplier, cloneEntry, movable);
 		}
 
 		public boolean isEditing() {

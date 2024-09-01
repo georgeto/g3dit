@@ -46,7 +46,7 @@ public abstract class AbstractEditListDialog<T> extends ExtStandardDialog {
 				}
 			}
 			return newEntry;
-		} : null), "width 100%,");
+		} : null, null, true), "width 100%,");
 
 		return panel;
 	}
