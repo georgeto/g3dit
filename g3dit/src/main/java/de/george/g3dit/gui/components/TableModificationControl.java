@@ -52,21 +52,23 @@ public class TableModificationControl<T> extends JPanel {
 	public TableModificationControl(FileChangeMonitor changeMonitor, JTable table, Supplier<T> entrySupplier,
 			Function<T, Optional<T>> cloneEntry, Consumer<T> addEntry, Function<Integer, T> getEntry,
 			Function<Iterable<Integer>, Boolean> removeEntries) {
-		setLayout(new MigLayout("fillx, insets 0", "[grow][][grow]"));
+		setLayout(new MigLayout("fillx, insets 0"));
 
 		TableModel model = table.getModel();
 
-		JButton btnAdd = new JButton(I.tr("Add"), Icons.getImageIcon(Icons.Action.ADD));
-		btnAdd.addActionListener(a -> {
-			T newEntry = entrySupplier.get();
-			if (newEntry != null) {
-				addEntry.accept(newEntry);
-				if (changeMonitor != null) {
-					changeMonitor.fileChanged();
+		if (entrySupplier != null) {
+			JButton btnAdd = new JButton(I.tr("Add"), Icons.getImageIcon(Icons.Action.ADD));
+			btnAdd.addActionListener(a -> {
+				T newEntry = entrySupplier.get();
+				if (newEntry != null) {
+					addEntry.accept(newEntry);
+					if (changeMonitor != null) {
+						changeMonitor.fileChanged();
+					}
 				}
-			}
-		});
-		add(btnAdd, "sg tmcbtn, growx");
+			});
+			add(btnAdd, "sg tmcbtn, growx, pushx");
+		}
 
 		if (cloneEntry != null) {
 			JButton btnClone = new JButton(I.tr("Clone"), Icons.getImageIcon(Icons.Action.CLONE));
@@ -92,7 +94,7 @@ public class TableModificationControl<T> extends JPanel {
 		model.addTableModelListener(e -> lblCount.setText(Integer.toString(model.getRowCount())));
 
 		JButton btnRemove = new JButton(I.tr("Delete"), Icons.getImageIcon(Icons.Action.DELETE));
-		add(btnRemove, "sg tmcbtn, growx");
+		add(btnRemove, "sg tmcbtn, growx, pushx");
 		btnRemove.addActionListener(a -> {
 			if (removeEntries.apply(TableUtil.getSelectedRows(table))) {
 				if (changeMonitor != null) {

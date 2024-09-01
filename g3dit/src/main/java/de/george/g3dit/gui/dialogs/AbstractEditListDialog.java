@@ -36,10 +36,7 @@ public abstract class AbstractEditListDialog<T> extends ExtStandardDialog {
 
 		panel.add(new JScrollPane(sortableTable.table), "width 100%, growy, push, wrap");
 
-		panel.add(sortableTable.createModificationControl(null, () -> {
-			if (inputNewEntry == null)
-				return null;
-
+		panel.add(sortableTable.createModificationControl(null, inputNewEntry != null ? () -> {
 			T newEntry = inputNewEntry.get();
 			if (newEntry != null) {
 				int index = entries.indexOf(newEntry);
@@ -49,7 +46,7 @@ public abstract class AbstractEditListDialog<T> extends ExtStandardDialog {
 				}
 			}
 			return newEntry;
-		}), "width 100%,");
+		} : null), "width 100%,");
 
 		return panel;
 	}
