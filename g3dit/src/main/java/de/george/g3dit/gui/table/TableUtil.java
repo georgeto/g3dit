@@ -49,6 +49,7 @@ import ca.odell.glazedlists.impl.beans.BeanTableFormat;
 import ca.odell.glazedlists.swing.AdvancedTableModel;
 import ca.odell.glazedlists.swing.GlazedListsSwing;
 import ca.odell.glazedlists.swing.TableComparatorChooser;
+import de.george.g3dit.EditorContext;
 import de.george.g3dit.gui.components.TableModificationControl;
 import de.george.g3dit.util.FileChangeMonitor;
 import de.george.g3dit.util.PropertySheetUtil;
@@ -260,12 +261,12 @@ public abstract class TableUtil {
 		private PropertyRendererRegistry rendererRegistry;
 		private PropertyEditorRegistry editorRegistry;
 
-		public TableColumnDefColumnFactory(TableColumnDef[] columns) {
+		public TableColumnDefColumnFactory(EditorContext ctx, TableColumnDef[] columns) {
 			this.columns = columns;
 			this.rendererRegistry = new PropertyRendererRegistry();
 			this.editorRegistry = new PropertyEditorRegistry();
-			PropertySheetUtil.registerDefaultEditors(editorRegistry);
-
+			PropertySheetUtil.registerDefaultRenderers(rendererRegistry, ctx);
+			PropertySheetUtil.registerDefaultEditors(editorRegistry, ctx);
 		}
 
 		@Override
@@ -343,8 +344,8 @@ public abstract class TableUtil {
 
 	}
 
-	public static ColumnFactory columnFactory(TableColumnDef... tableColumns) {
-		return new TableColumnDefColumnFactory(tableColumns);
+	public static ColumnFactory columnFactory(EditorContext ctx, TableColumnDef... tableColumns) {
+		return new TableColumnDefColumnFactory(ctx, tableColumns);
 	}
 
 	public static class SortableEventTable<T> {
@@ -385,6 +386,11 @@ public abstract class TableUtil {
 			return new TableModificationControl<>(changeMonitor, table, sortedSource, entrySupplier);
 		}
 
+		public TableModificationControl<T> createModificationControl(FileChangeMonitor changeMonitor, Supplier<T> entrySupplier,
+				Function<T, Optional<T>> cloneEntry) {
+			return new TableModificationControl<>(changeMonitor, table, sortedSource, entrySupplier, cloneEntry);
+		}
+
 		public boolean isEditing() {
 			return table.isEditing();
 		}
@@ -420,18 +426,18 @@ public abstract class TableUtil {
 		}
 	}
 
-	public static <T, V extends T> SortableEventTable<T> createTable(EventList<T> source, Class<V> sourceClass,
+	public static <T, V extends T> SortableEventTable<T> createTable(EditorContext ctx, EventList<T> source, Class<V> sourceClass,
 			TableColumnDef... tableColumns) {
-		return createSortableTable(source, sourceClass, false, tableColumns);
+		return createSortableTable(ctx, source, sourceClass, false, tableColumns);
 	}
 
-	public static <T, V extends T> SortableEventTable<T> createSortableTable(EventList<T> source, Class<V> sourceClass,
+	public static <T, V extends T> SortableEventTable<T> createSortableTable(EditorContext ctx, EventList<T> source, Class<V> sourceClass,
 			TableColumnDef... tableColumns) {
-		return createSortableTable(source, sourceClass, true, tableColumns);
+		return createSortableTable(ctx, source, sourceClass, true, tableColumns);
 	}
 
-	private static <T, V extends T> SortableEventTable<T> createSortableTable(EventList<T> source, Class<V> sourceClass, boolean sortable,
-			TableColumnDef[] tableColumns) {
+	private static <T, V extends T> SortableEventTable<T> createSortableTable(EditorContext ctx, EventList<T> source, Class<V> sourceClass,
+			boolean sortable, TableColumnDef[] tableColumns) {
 		@SuppressWarnings("unchecked")
 		TableFormat<T> tableFormat = (TableFormat<T>) TableUtil.tableFormat(sourceClass, tableColumns);
 
@@ -450,7 +456,7 @@ public abstract class TableUtil {
 		table.setRowSorter(null);
 		table.setColumnControlVisible(true);
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
-		table.setColumnFactory(TableUtil.columnFactory(tableColumns));
+		table.setColumnFactory(TableUtil.columnFactory(ctx, tableColumns));
 		table.setModel(tableModel);
 		if (sortable) {
 			TableComparatorChooser.install(table, sortedSource, AbstractTableComparatorChooser.MULTIPLE_COLUMN_KEYBOARD, tableFormat);

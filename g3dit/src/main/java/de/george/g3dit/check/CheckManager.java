@@ -475,7 +475,8 @@ public class CheckManager {
 
 			JButton btnEditIgnoreList = SwingUtils.keyStrokeButton(null, I.tr("Edit ignore list"),
 					Icons.getImageIcon(Icons.Select.CANCEL_EDIT), KeyEvent.VK_G, InputEvent.CTRL_DOWN_MASK,
-					() -> new EditStringWithCommentConfigDialog(ctx.getParentWindow(), I.tr("Edit ignore list"), ignoredFiles).open());
+					() -> new EditStringWithCommentConfigDialog(ctx, ctx.getParentWindow(), I.tr("Edit ignore list"), ignoredFiles)
+							.open());
 
 			JPanel ignorePanel = new JPanel(new MigLayout("insets 0, fill"));
 			ignorePanel.add(cbEnableIgnoreList);

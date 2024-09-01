@@ -70,7 +70,7 @@ public class SharedPropertyView extends JPanel {
 
 		setLayout(new MigLayout("fill", "[]12px[grow, fill]", "[][][grow, fill]"));
 		LookAndFeelTweaks.tweak();
-		sheet = PropertySheetUtil.createPropertySheetPanel();
+		sheet = PropertySheetUtil.createPropertySheetPanel(ctx);
 
 		classList = new JList<>();
 		classList.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));

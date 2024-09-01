@@ -10,6 +10,7 @@ import javax.swing.JComponent;
 
 import ca.odell.glazedlists.EventList;
 import ca.odell.glazedlists.GlazedLists;
+import de.george.g3dit.EditorContext;
 import de.george.g3dit.gui.table.TableColumnDef;
 
 public class EditListDialog<T> extends AbstractEditListDialog<T> {
@@ -19,9 +20,9 @@ public class EditListDialog<T> extends AbstractEditListDialog<T> {
 	private Consumer<List<T>> onSave;
 	private TableColumnDef[] tableColumns;
 
-	public EditListDialog(Window parent, String title, boolean modal, Collection<T> items, Class<T> itemType, Supplier<T> inputNewEntry,
-			Consumer<List<T>> onSave, TableColumnDef... tableColumns) {
-		super(parent, title, modal);
+	public EditListDialog(EditorContext ctx, Window parent, String title, boolean modal, Collection<T> items, Class<T> itemType,
+			Supplier<T> inputNewEntry, Consumer<List<T>> onSave, TableColumnDef... tableColumns) {
+		super(ctx, parent, title, modal);
 
 		this.entries = GlazedLists.eventList(items);
 		this.itemType = itemType;

@@ -157,7 +157,7 @@ public class EntitySearchDialog extends AbstractTableProgressDialog {
 		results = new BasicEventList<>();
 		SortedList<Result> sortedResults = new SortedList<>(results,
 				Comparator.comparing(Result::getRawPath).thenComparing(Result::getPosition));
-		table = TableUtil.createSortableTable(sortedResults, Result.class, COLUMN_POSITION, COLUMN_NAME, COLUMN_GUID, COLUMN_PATH);
+		table = TableUtil.createSortableTable(ctx, sortedResults, Result.class, COLUMN_POSITION, COLUMN_NAME, COLUMN_GUID, COLUMN_PATH);
 		appendBarAndTable(mainPanel, table.table);
 
 		setEntryActivationListener(i -> table.getRowAt(i).open());

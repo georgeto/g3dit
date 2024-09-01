@@ -4,14 +4,15 @@ import java.awt.Window;
 
 import com.teamunify.i18n.I;
 
+import de.george.g3dit.EditorContext;
 import de.george.g3dit.config.GuidWithCommentConfigFile;
 import de.george.g3dit.gui.table.TableColumnDef;
 import de.george.g3dit.util.GuidWithComment;
 import de.george.g3utils.structure.GuidUtil;
 
 public class EditGuidWithCommentConfigDialog extends EditUniqueWithCommentConfigDialog<GuidWithComment> {
-	public EditGuidWithCommentConfigDialog(Window parent, String title, GuidWithCommentConfigFile config) {
-		super(parent, title, config);
+	public EditGuidWithCommentConfigDialog(EditorContext ctx, Window parent, String title, GuidWithCommentConfigFile config) {
+		super(ctx, parent, title, config);
 	}
 
 	private static final TableColumnDef COLUMN_GUID = TableColumnDef.withName("Guid").displayName(I.tr("Guid")).editable(false)

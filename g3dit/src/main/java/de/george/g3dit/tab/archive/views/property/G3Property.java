@@ -17,9 +17,11 @@ import de.george.lrentnode.classes.desc.PropertyDescriptor;
 import de.george.lrentnode.classes.desc.PropertyDescriptorRegistry;
 import de.george.lrentnode.enums.G3Enums;
 import de.george.lrentnode.properties.ClassProperty;
+import de.george.lrentnode.properties.bCPropertyID;
 import de.george.lrentnode.properties.bTObjArray_bTPropertyContainer;
 import de.george.lrentnode.properties.bTPropertyContainer;
 import de.george.lrentnode.properties.bTPropertyObject;
+import de.george.lrentnode.properties.eCEntityProxy;
 
 @SuppressWarnings("rawtypes")
 public class G3Property extends AbstractProperty {
@@ -76,15 +78,20 @@ public class G3Property extends AbstractProperty {
 
 	@Override
 	public Class<?> getType() {
-		if (classProperty.getValue() instanceof bTPropertyContainer) {
+		G3Serializable value = classProperty.getValue();
+		if (value instanceof bTPropertyContainer) {
 			return G3EnumWrapper.class;
 		}
 
-		if (classProperty.getValue() instanceof bTObjArray_bTPropertyContainer) {
+		if (value instanceof bTObjArray_bTPropertyContainer) {
 			return G3EnumArrayWrapper.class;
 		}
 
-		Object value = classProperty.getValue();
+		if (value instanceof eCEntityProxy || value instanceof bCPropertyID) {
+			boolean template = classProperty.getType().equals("eCTemplateEntityProxy");
+			return template ? TemplateProxyMarker.class : EntityProxyMarker.class;
+		}
+
 		if (value == null) {
 			return Object.class;
 		}

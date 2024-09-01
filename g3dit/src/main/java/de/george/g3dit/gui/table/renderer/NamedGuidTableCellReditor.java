@@ -26,14 +26,14 @@ public class NamedGuidTableCellReditor extends AbstractCellEditor
 
 	private final JSearchNamedGuidField tfGuidField;
 
-	public NamedGuidTableCellReditor(EditorContext ctx, boolean template) {
+	public NamedGuidTableCellReditor(EditorContext ctx, boolean template, int distribution) {
 		tfGuidField = template ? new JTemplateGuidField(ctx) : new JEntityGuidField(ctx);
-		tfGuidField.setFieldLayout(Layout.Horizontal, 50);
+		tfGuidField.setFieldLayout(Layout.Horizontal, distribution);
 	}
 
-	public NamedGuidTableCellReditor(EditorContext ctx, boolean template, ValidationGroup group, String fieldName,
+	public NamedGuidTableCellReditor(EditorContext ctx, boolean template, int distribution, ValidationGroup group, String fieldName,
 			Validator... validators) {
-		this(ctx, template);
+		this(ctx, template, distribution);
 		tfGuidField.initValidation(group, fieldName, validators);
 	}
 

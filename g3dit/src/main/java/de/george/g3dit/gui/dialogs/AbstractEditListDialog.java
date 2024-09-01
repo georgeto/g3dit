@@ -11,6 +11,7 @@ import com.jidesoft.dialog.ButtonPanel;
 import com.teamunify.i18n.I;
 
 import ca.odell.glazedlists.EventList;
+import de.george.g3dit.EditorContext;
 import de.george.g3dit.gui.table.TableColumnDef;
 import de.george.g3dit.gui.table.TableUtil;
 import de.george.g3dit.gui.table.TableUtil.SortableEventTable;
@@ -18,8 +19,11 @@ import de.george.g3utils.gui.SwingUtils;
 import net.miginfocom.swing.MigLayout;
 
 public abstract class AbstractEditListDialog<T> extends ExtStandardDialog {
-	public AbstractEditListDialog(Window parent, String title, boolean modal) {
+	private final EditorContext ctx;
+
+	public AbstractEditListDialog(EditorContext ctx, Window parent, String title, boolean modal) {
 		super(parent, title, modal);
+		this.ctx = ctx;
 		setSize(1000, 500);
 		setDefaultCancelAction(SwingUtils.createAction(this::cancel));
 	}
@@ -28,7 +32,7 @@ public abstract class AbstractEditListDialog<T> extends ExtStandardDialog {
 			TableColumnDef... tableColumns) {
 		JPanel panel = new JPanel(new MigLayout("insets 10, fill"));
 
-		SortableEventTable<T> sortableTable = TableUtil.createSortableTable(entries, itemType, tableColumns);
+		SortableEventTable<T> sortableTable = TableUtil.createSortableTable(ctx, entries, itemType, tableColumns);
 
 		panel.add(new JScrollPane(sortableTable.table), "width 100%, growy, push, wrap");
 

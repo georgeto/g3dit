@@ -22,7 +22,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
-import de.george.g3utils.util.PathFilter;
 import org.jdesktop.swingx.decorator.EnabledHighlighter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -53,6 +52,7 @@ import de.george.g3utils.io.G3FileReader;
 import de.george.g3utils.io.G3FileReaderVirtual;
 import de.george.g3utils.structure.Guid;
 import de.george.g3utils.util.IOUtils;
+import de.george.g3utils.util.PathFilter;
 import de.george.lrentnode.archive.ArchiveFile;
 import de.george.lrentnode.archive.eCEntity;
 import de.george.lrentnode.classes.eCIlluminated_PS;
@@ -200,7 +200,7 @@ public class ImportStaticLightdataDialog extends AbstractTableProgressDialog {
 		results = new BasicEventList<>();
 
 		FilterList<Result> filteredResults = new FilterList<>(results, new HideFiltered());
-		table = TableUtil.createSortableTable(filteredResults, Result.class, COLUMN_NAME, COLUMN_GUID, COLUMN_FILE, COLUMN_LOG);
+		table = TableUtil.createSortableTable(ctx, filteredResults, Result.class, COLUMN_NAME, COLUMN_GUID, COLUMN_FILE, COLUMN_LOG);
 
 		appendBarAndTable(mainPanel, table.table);
 

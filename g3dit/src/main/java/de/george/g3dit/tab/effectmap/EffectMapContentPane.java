@@ -168,12 +168,12 @@ public class EffectMapContentPane extends JPanel {
 		private void setupComponents() {
 			setLayout(new MigLayout("fill", "[grow, fill]", "[grow 100, fill]12px push[grow 50, fill]"));
 
-			commandSheet = PropertySheetUtil.createPropertySheetPanel();
+			commandSheet = PropertySheetUtil.createPropertySheetPanel(ctx);
 			add(commandSheet, "wrap");
 
 			// TODO: Let bean detect fields.
 
-			sampleTable = TableUtil.createTable(GlazedLists.eventList(null), Sample.class, COLUMN_SAMPLE, COLUMN_PROBABILITY);
+			sampleTable = TableUtil.createTable(ctx, GlazedLists.eventList(null), Sample.class, COLUMN_SAMPLE, COLUMN_PROBABILITY);
 
 			JLabel lblSamples = SwingUtils.createBoldLabel(I.tr("Samples"));
 			add(lblSamples, "gaptop u, hidemode 2, wrap");

@@ -10,6 +10,7 @@ import com.teamunify.i18n.I;
 
 import ca.odell.glazedlists.EventList;
 import ca.odell.glazedlists.GlazedLists;
+import de.george.g3dit.EditorContext;
 import de.george.g3dit.config.JsonSetConfigFile;
 import de.george.g3dit.gui.table.TableColumnDef;
 
@@ -18,8 +19,8 @@ public abstract class EditUniqueWithCommentConfigDialog<T> extends AbstractEditL
 	private JsonSetConfigFile<T> config;
 	private EventList<T> entries;
 
-	public EditUniqueWithCommentConfigDialog(Window parent, String title, JsonSetConfigFile<T> config) {
-		super(parent, title, false);
+	public EditUniqueWithCommentConfigDialog(EditorContext ctx, Window parent, String title, JsonSetConfigFile<T> config) {
+		super(ctx, parent, title, false);
 		// Acquire config edit lock
 		if (!config.acquireEditLock()) {
 			TaskDialogs.error(parent, title, I.tr("Already opened for editing."));

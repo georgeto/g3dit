@@ -122,7 +122,7 @@ public class FileSearchDialog extends AbstractTableProgressDialog {
 
 		results = new BasicEventList<>();
 		SortedList<Result> sortedResults = new SortedList<>(results, Comparator.comparing(Result::getPath));
-		table = TableUtil.createSortableTable(sortedResults, Result.class, COLUMN_NAME, COLUMN_PATH);
+		table = TableUtil.createSortableTable(ctx, sortedResults, Result.class, COLUMN_NAME, COLUMN_PATH);
 		appendBarAndTable(mainPanel, table.table);
 
 		// Open in editor

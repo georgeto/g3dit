@@ -28,7 +28,7 @@ public class GenericArrayPropertyHandler extends TitledPropertyHandler<bTArray<G
 
 	@Override
 	protected void addValueComponent(JPanel content) {
-		table = TableUtil.createTable(GlazedLists.eventList(null), entryType, def.getTableCoumns());
+		table = TableUtil.createTable(ctx, GlazedLists.eventList(null), entryType, def.getTableCoumns());
 		if (def.getTableCoumns().length < 2) {
 			table.table.setTableHeader(null);
 		}

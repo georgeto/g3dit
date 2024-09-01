@@ -5,13 +5,14 @@ import java.awt.Window;
 import com.ezware.dialog.task.TaskDialogs;
 import com.teamunify.i18n.I;
 
+import de.george.g3dit.EditorContext;
 import de.george.g3dit.config.StringWithCommentConfigFile;
 import de.george.g3dit.gui.table.TableColumnDef;
 import de.george.g3dit.util.StringWithComment;
 
 public class EditStringWithCommentConfigDialog extends EditUniqueWithCommentConfigDialog<StringWithComment> {
-	public EditStringWithCommentConfigDialog(Window parent, String title, StringWithCommentConfigFile config) {
-		super(parent, title, config);
+	public EditStringWithCommentConfigDialog(EditorContext ctx, Window parent, String title, StringWithCommentConfigFile config) {
+		super(ctx, parent, title, config);
 	}
 
 	private static final TableColumnDef COLUMN_VALUE = TableColumnDef.withName("Value").displayName(I.tr("Value")).editable(false)

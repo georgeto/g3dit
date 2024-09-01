@@ -390,7 +390,7 @@ public class MainMenu extends JMenuBar {
 
 		JMenuItem miEditObjectsWithoutObject = new JMenuItem(I.tr("Edit Objects without LowPoly"), Icons.getImageIcon(Icons.Action.EDIT));
 		muTools.add(miEditObjectsWithoutObject);
-		miEditObjectsWithoutObject.addActionListener(l -> new EditGuidWithCommentConfigDialog(ctx.getParentWindow(),
+		miEditObjectsWithoutObject.addActionListener(l -> new EditGuidWithCommentConfigDialog(ctx, ctx.getParentWindow(),
 				I.tr("Edit Objects without LowPoly"), ConfigFiles.objectsWithoutLowPoly(ctx)).open());
 
 		JMenuItem miGenerateLowPoly = new JMenuItem(I.tr("Generate LowPoly"), Icons.getImageIcon(Icons.Action.DIFF));
@@ -579,13 +579,13 @@ public class MainMenu extends JMenuBar {
 		JMenuItem miEditNegCirclesWithoutObject = new JMenuItem(I.tr("Edit NegCircles without object"),
 				Icons.getImageIcon(Icons.Action.EDIT));
 		muNavMap.add(miEditNegCirclesWithoutObject);
-		miEditNegCirclesWithoutObject.addActionListener(l -> new EditGuidWithCommentConfigDialog(ctx.getParentWindow(),
+		miEditNegCirclesWithoutObject.addActionListener(l -> new EditGuidWithCommentConfigDialog(ctx, ctx.getParentWindow(),
 				I.tr("Edit NegCircles without object"), ConfigFiles.negCirclesWithoutObject(ctx)).open());
 
 		JMenuItem miEditObjectsWithoutNegCircle = new JMenuItem(I.tr("Edit objects without NegCircle"),
 				Icons.getImageIcon(Icons.Action.EDIT));
 		muNavMap.add(miEditObjectsWithoutNegCircle);
-		miEditObjectsWithoutNegCircle.addActionListener(l -> new EditGuidWithCommentConfigDialog(ctx.getParentWindow(),
+		miEditObjectsWithoutNegCircle.addActionListener(l -> new EditGuidWithCommentConfigDialog(ctx, ctx.getParentWindow(),
 				I.tr("Edit objects without NegCircle"), ConfigFiles.objectsWithoutNegCircles(ctx)).open());
 
 		JMenuItem miEditPrefPaths = new JMenuItem(I.tr("Edit PrefPaths"), Icons.getImageIcon(Icons.Action.EDIT));

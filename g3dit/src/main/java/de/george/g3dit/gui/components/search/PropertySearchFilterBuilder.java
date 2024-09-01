@@ -19,6 +19,7 @@ import ca.odell.glazedlists.BasicEventList;
 import ca.odell.glazedlists.EventList;
 import ca.odell.glazedlists.SortedList;
 import ca.odell.glazedlists.swing.GlazedListsSwing;
+import de.george.g3dit.EditorContext;
 import de.george.g3dit.gui.complete.FunctionalComboBoxSearchable;
 import de.george.g3dit.gui.renderer.FunctionalListCellRenderer;
 import de.george.g3dit.gui.table.TableUtil;
@@ -79,7 +80,7 @@ public class PropertySearchFilterBuilder<T extends G3ClassContainer> implements 
 
 	private PropertySheetPanel field;
 
-	public PropertySearchFilterBuilder() {
+	public PropertySearchFilterBuilder(EditorContext ctx) {
 		cbPropertySet = new JComboBoxExt<>(NON_EMPTY_ENTITY_PROPERTY_SETS, ClassDescriptor.class.getClass());
 		cbPropertySet.setRenderer(new FunctionalListCellRenderer<>(ClassDescriptor::getName));
 		new AutoCompletion(cbPropertySet, new FunctionalComboBoxSearchable<>(cbPropertySet, ClassDescriptor::getName));
@@ -98,7 +99,7 @@ public class PropertySearchFilterBuilder<T extends G3ClassContainer> implements 
 		cbOperation = new JComboBoxExt<>(GlazedListsSwing.eventComboBoxModel(operations));
 		cbOperation.setRenderer(new FunctionalListCellRenderer<>(RENDER_COMPARE_OPERATION::get));
 
-		field = PropertySheetUtil.createPropertyField();
+		field = PropertySheetUtil.createPropertyField(ctx);
 
 		cbPropertySet.addItemListener(e -> {
 			fillProperties(cbPropertySet.getSelectedItem(), properties);

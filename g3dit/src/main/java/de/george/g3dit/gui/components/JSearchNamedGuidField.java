@@ -51,9 +51,9 @@ public abstract class JSearchNamedGuidField extends JSearchGuidField {
 			if (distribution == -1) {
 				distribution = 70;
 			}
-			add(tfGuid, "width " + distribution + "%, height 20!, egy fields, id tfGuid");
+			add(tfGuid, "width " + distribution + "%, height 20!, aligny top, egy fields, id tfGuid");
 			SwingUtils.smallTextField(getOrCreateTextFieldName());
-			add(getOrCreateTextFieldName(), "width " + (100 - distribution) + "%, height 20!, egy fields, y tfGuid.y");
+			add(getOrCreateTextFieldName(), "width " + (100 - distribution) + "%, height 20!, aligny top, egy fields, y tfGuid.y");
 		}
 	}
 

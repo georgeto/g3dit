@@ -48,8 +48,8 @@ public abstract class FavoriteFileMenu extends FileMenu {
 		this.addSeparator();
 		JMenuItem miEdit = new JMenuItem(I.tr("Edit..."));
 		miEdit.addActionListener(e -> {
-			new EditListDialog<>(ctx.getParentWindow(), "Edit Favorites", true, favoriteFiles, Path.class, null, this::setFavoriteFiles,
-					TableColumnDef.withName("FileName").editable(false).b()).open();
+			new EditListDialog<>(ctx, ctx.getParentWindow(), "Edit Favorites", true, favoriteFiles, Path.class, null,
+					this::setFavoriteFiles, TableColumnDef.withName("FileName").editable(false).b()).open();
 		});
 		this.add(miEdit);
 	}

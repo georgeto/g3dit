@@ -274,7 +274,7 @@ public abstract class NavCalcStage {
 				Comparator.comparing(Change::getFile, Comparator.nullsFirst(Comparator.naturalOrder())).thenComparing(Change::getGuid)
 						.thenComparing(Change::getSeverity).thenComparing(Change::getMessage));
 
-		SortableEventTable<Change> sortableTable = TableUtil.createSortableTable(sortedChanges, changeClass, columns);
+		SortableEventTable<Change> sortableTable = TableUtil.createSortableTable(ctx, sortedChanges, changeClass, columns);
 		changeTableModel = sortableTable.tableModel;
 		changeTableModel.addTableModelListener(l -> updateFilteredCount());
 

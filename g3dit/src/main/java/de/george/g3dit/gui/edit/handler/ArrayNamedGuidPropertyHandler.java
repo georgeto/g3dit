@@ -39,7 +39,7 @@ public class ArrayNamedGuidPropertyHandler extends TitledPropertyHandler<bTObjAr
 		TableColumnDef column = TableColumnDef.withName("Guid").displayName(I.tr("Guid")).size(700).editable(true)
 				.cellRenderer(buildTableReditor(false)).cellEditor(buildTableReditor(true)).b();
 
-		table = TableUtil.createTable(GlazedLists.eventList(null), eCEntityProxy.class, column);
+		table = TableUtil.createTable(ctx, GlazedLists.eventList(null), eCEntityProxy.class, column);
 		table.table.setTableHeader(null);
 		table.table.setRowHeight((int) (table.table.getRowHeight() * 1.3));
 		content.add(new JScrollPane(table.table), "sgx table, wrap");
@@ -82,9 +82,9 @@ public class ArrayNamedGuidPropertyHandler extends TitledPropertyHandler<bTObjAr
 				}
 			}).toArray(AbstractValidator[]::new);
 
-			return new NamedGuidTableCellReditor(ctx, template, def.getValidation(), def.getName(), validators);
+			return new NamedGuidTableCellReditor(ctx, template, 50, def.getValidation(), def.getName(), validators);
 		} else {
-			return new NamedGuidTableCellReditor(ctx, template);
+			return new NamedGuidTableCellReditor(ctx, template, 50);
 		}
 	}
 }
