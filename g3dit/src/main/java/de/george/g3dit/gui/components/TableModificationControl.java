@@ -1,5 +1,7 @@
 package de.george.g3dit.gui.components;
 
+import java.util.List;
+import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -11,6 +13,7 @@ import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.table.TableModel;
 
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSortedSet;
 import com.teamunify.i18n.I;
 
@@ -22,12 +25,18 @@ import de.george.g3utils.gui.ListTableModel;
 import net.miginfocom.swing.MigLayout;
 
 public class TableModificationControl<T> extends JPanel {
-	public TableModificationControl(FileChangeMonitor changeMonitor, JTable table, ListTableModel<T> model, Supplier<T> entrySupplier) {
-		this(changeMonitor, table, entrySupplier, model::addEntry, model::removeEntries);
+	public TableModificationControl(FileChangeMonitor changeMonitor, JTable table, ListTableModel<T> model, Supplier<T> entrySupplier,
+			Function<T, Optional<T>> cloneEntry) {
+		this(changeMonitor, table, entrySupplier, cloneEntry, model::addEntry, model::getEntry, model::removeEntries);
 	}
 
-	public TableModificationControl(FileChangeMonitor changeMonitor, JTable table, EventList<T> source, Supplier<T> entrySupplier) {
-		this(changeMonitor, table, entrySupplier, source::add, rows -> {
+	public TableModificationControl(FileChangeMonitor changeMonitor, JTable table, ListTableModel<T> model, Supplier<T> entrySupplier) {
+		this(changeMonitor, table, model, entrySupplier, null);
+	}
+
+	public TableModificationControl(FileChangeMonitor changeMonitor, JTable table, EventList<T> source, Supplier<T> entrySupplier,
+			Function<T, Optional<T>> cloneEntry) {
+		this(changeMonitor, table, entrySupplier, cloneEntry, source::add, source::get, rows -> {
 			ImmutableSortedSet<Integer> sortedRows = ImmutableSortedSet.<Integer>reverseOrder().addAll(rows).build();
 			for (int row : sortedRows) {
 				source.remove(row);
@@ -36,7 +45,12 @@ public class TableModificationControl<T> extends JPanel {
 		});
 	}
 
-	public TableModificationControl(FileChangeMonitor changeMonitor, JTable table, Supplier<T> entrySupplier, Consumer<T> addEntry,
+	public TableModificationControl(FileChangeMonitor changeMonitor, JTable table, EventList<T> source, Supplier<T> entrySupplier) {
+		this(changeMonitor, table, source, entrySupplier, null);
+	}
+
+	public TableModificationControl(FileChangeMonitor changeMonitor, JTable table, Supplier<T> entrySupplier,
+			Function<T, Optional<T>> cloneEntry, Consumer<T> addEntry, Function<Integer, T> getEntry,
 			Function<Iterable<Integer>, Boolean> removeEntries) {
 		setLayout(new MigLayout("fillx, insets 0", "[grow][][grow]"));
 
@@ -53,6 +67,24 @@ public class TableModificationControl<T> extends JPanel {
 			}
 		});
 		add(btnAdd, "sg tmcbtn, growx");
+
+		if (cloneEntry != null) {
+			JButton btnClone = new JButton(I.tr("Clone"), Icons.getImageIcon(Icons.Action.CLONE));
+			btnClone.addActionListener(a -> {
+				List<T> selectedEntries = ImmutableList.copyOf(TableUtil.getSelectedRows(table).map(getEntry));
+				for (T selected : selectedEntries) {
+					Optional<T> entry = cloneEntry.apply(selected);
+					if (entry.isPresent()) {
+						addEntry.accept(entry.get());
+						if (changeMonitor != null) {
+							changeMonitor.fileChanged();
+						}
+					}
+				}
+			});
+			add(btnClone, "sg tmcbtn, growx, pushx");
+			TableUtil.enableOnGreaterEqual(table, btnClone, 1);
+		}
 
 		JLabel lblCount = new JLabel(Integer.toString(model.getRowCount()));
 		lblCount.setHorizontalAlignment(SwingConstants.CENTER);
