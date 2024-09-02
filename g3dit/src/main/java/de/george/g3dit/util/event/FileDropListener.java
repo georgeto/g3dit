@@ -2,17 +2,23 @@ package de.george.g3dit.util.event;
 
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
+import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.dnd.DnDConstants;
 import java.awt.dnd.DropTargetDragEvent;
 import java.awt.dnd.DropTargetDropEvent;
 import java.awt.dnd.DropTargetEvent;
 import java.awt.dnd.DropTargetListener;
+import java.io.File;
+import java.io.IOException;
 import java.nio.file.Path;
+import java.util.Arrays;
 import java.util.List;
+import java.util.function.Predicate;
 
 import com.google.common.eventbus.EventBus;
 
 import de.george.g3utils.util.PathFilter;
+import one.util.streamex.StreamEx;
 
 public class FileDropListener extends EventBusProvider implements DropTargetListener {
 	private PathFilter[] filters;
@@ -35,27 +41,10 @@ public class FileDropListener extends EventBusProvider implements DropTargetList
 	}
 
 	private void acceptDrag(DropTargetDragEvent dtde) {
-		try {
-			Transferable tr = dtde.getTransferable();
-			for (DataFlavor flavor : tr.getTransferDataFlavors()) {
-				if (flavor.isFlavorJavaFileListType()) {
-					@SuppressWarnings("unchecked")
-					List<Path> files = (List<Path>) tr.getTransferData(flavor);
-					for (Path file : files) {
-						for (PathFilter filter : filters) {
-							if (filter.accept(file)) {
-								dtde.acceptDrag(DnDConstants.ACTION_COPY_OR_MOVE);
-								return;
-							}
-						}
-					}
-				}
-			}
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		dtde.rejectDrag();
+		if (iterTransferredFiles(dtde.getTransferable()).findAny().isPresent())
+			dtde.acceptDrag(DnDConstants.ACTION_COPY_OR_MOVE);
+		else
+			dtde.rejectDrag();
 	}
 
 	@Override
@@ -64,29 +53,18 @@ public class FileDropListener extends EventBusProvider implements DropTargetList
 	@Override
 	@SuppressWarnings("unchecked")
 	public void drop(DropTargetDropEvent dtde) {
-		try {
-			Transferable tr = dtde.getTransferable();
-			dtde.acceptDrop(DnDConstants.ACTION_COPY_OR_MOVE);
-			for (DataFlavor flavor : tr.getTransferDataFlavors()) {
-				if (flavor.isFlavorJavaFileListType()) {
-					List<Path> files = (List<Path>) tr.getTransferData(flavor);
-					for (Path file : files) {
-						for (PathFilter filter : filters) {
-							if (filter.accept(file)) {
-								eventBus().post(new FileDropEvent(file));
-								break;
-							}
-						}
-					}
-					dtde.dropComplete(true);
-					return;
-				}
-			}
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		dtde.acceptDrop(DnDConstants.ACTION_COPY_OR_MOVE);
+
+		boolean dropped = false;
+		for (Path file : iterTransferredFiles(dtde.getTransferable())) {
+			eventBus().post(new FileDropEvent(file));
+			dropped = true;
 		}
-		dtde.rejectDrop();
+
+		if (dropped)
+			dtde.dropComplete(true);
+		else
+			dtde.rejectDrop();
 	}
 
 	/**
@@ -96,6 +74,16 @@ public class FileDropListener extends EventBusProvider implements DropTargetList
 	@Override
 	public EventBus eventBus() {
 		return super.eventBus();
+	}
+
+	private StreamEx<Path> iterTransferredFiles(Transferable transferable) {
+		try {
+			List<File> files = (List<File>) transferable.getTransferData(DataFlavor.javaFileListFlavor);
+			Predicate<Path> matchesAnyFilter = f -> Arrays.stream(filters).anyMatch(filter -> filter.accept(f));
+			return StreamEx.of(files).map(File::toPath).filter(matchesAnyFilter);
+		} catch (UnsupportedFlavorException | IOException e) {
+			return StreamEx.empty();
+		}
 	}
 
 	public static class FileDropEvent {
