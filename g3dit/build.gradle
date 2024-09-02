@@ -131,15 +131,20 @@ task copyJar(type: Copy) {
 
 task dist(type: Zip) {
 	dependsOn 'copyJar'
-	from 'out/' + project.name + '.exe'
-	from 'out/' + project.name + 'c.exe'
-	from 'out/' + project.name + '.jar'
+	into ('') {
+		from 'out/' + project.name + '.exe'
+		from 'out/' + project.name + 'c.exe'
+		from 'out/' + project.name + '.sh'
+		from 'out/' + project.name + 'c.sh'
+		from 'out/' + project.name + '.jar'
+		fileMode 0755
+	}
 	into('libs') {
 		from 'out/libs'
 	}
 	into('config') {
 		from 'out/config'
-		exclude 'g3dit.json'
+		exclude 'g3dit*.json*'
 	}
 	destinationDirectory = file('dist')
 	archiveFileName = project.name + '_' + project.version.replace(' ', '_') + ".zip"
