@@ -276,6 +276,10 @@ public class PropertyPanelDef {
 			return horizontal(-1);
 		}
 
+		public Builder<T> splitVertical(int count) {
+			return constraints("split " + count + ", flowy");
+		}
+
 		public Builder<T> grow() {
 			return constraints("grow");
 		}
