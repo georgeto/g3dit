@@ -77,9 +77,11 @@ import ca.odell.glazedlists.swing.TextComponentMatcherEditor;
 import ca.odell.glazedlists.swing.TreeTableSupport;
 import de.george.g3dit.EditorContext;
 import de.george.g3dit.check.Check.PassStatus;
+import de.george.g3dit.check.FileDescriptor.FileType;
 import de.george.g3dit.check.problem.Category;
 import de.george.g3dit.check.problem.EntityHelper;
 import de.george.g3dit.check.problem.FileHelper;
+import de.george.g3dit.check.problem.GenericFileProblem;
 import de.george.g3dit.check.problem.Problem;
 import de.george.g3dit.check.problem.ProblemConsumer;
 import de.george.g3dit.config.ConfigFiles;
@@ -158,7 +160,6 @@ public class CheckManager {
 			checks.forEach(this::addCheck);
 			loadEnabledChecks();
 		}, ctx.getExecutorService());
-
 	}
 
 	public void addCheck(Check check) {
@@ -321,16 +322,24 @@ public class CheckManager {
 
 							TemplateFile tple = iter.next();
 							Path tpleFile = iter.nextFile();
-							boolean allDone = true;
-							for (Check check : enabledChecks) {
-								if (pass < check.getTemplatePasses()) {
-									PassStatus status = check.processTemplate(tple, tpleFile, pass, problemConsumer);
-									allDone &= status == PassStatus.Done;
-								}
-							}
+							try {
+								boolean allDone = true;
+								for (Check check : enabledChecks) {
+									if (pass < check.getTemplatePasses()) {
+										PassStatus status = check.processTemplate(tple, tpleFile, pass, problemConsumer);
+										allDone &= status == PassStatus.Done;
 
-							if (allDone) {
-								break;
+									}
+								}
+								if (allDone) {
+									break;
+								}
+							} catch (Exception e) {
+								logger.warn("Failure during check execution on {}.", tpleFile, e);
+								GenericFileProblem problem = new GenericFileProblem(I.tr("Failure during check execution"), e.toString());
+								problem.setParent(problemConsumer.getFileHelper(new FileDescriptor(tpleFile, FileType.Template)));
+								problemConsumer.fatal(problem);
+								return;
 							}
 						}
 					}
@@ -346,17 +355,23 @@ public class CheckManager {
 
 							ArchiveFile archive = iter.next();
 							Path archiveFile = iter.nextFile();
-							boolean allDone = true;
-							for (Check check : enabledChecks) {
-								if (pass < check.getArchivePasses()) {
-									PassStatus status = check.processArchive(archive, archiveFile, pass, problemConsumer);
-									allDone &= status == PassStatus.Done;
+							try {
+								boolean allDone = true;
+								for (Check check : enabledChecks) {
+									if (pass < check.getArchivePasses()) {
+
+										PassStatus status = check.processArchive(archive, archiveFile, pass, problemConsumer);
+										allDone &= status == PassStatus.Done;
+
+									}
 								}
+								if (allDone) {
+									break;
+								}
+							} catch (Exception e) {
+								throw new CheckFailureException(new FileDescriptor(archiveFile, archive.getArchiveType()), e);
 							}
 
-							if (allDone) {
-								break;
-							}
 						}
 					}
 				}
@@ -372,19 +387,35 @@ public class CheckManager {
 			}, new FutureCallback<Void>() {
 				@Override
 				public void onSuccess(Void result) {
-					onCompletion();
+					onCompletion(false);
 				}
 
 				@Override
 				public void onFailure(Throwable t) {
-					if (!executeChecksFuture.isCancelled())
-						logger.warn("Failure during check execution.", t);
-					onCompletion();
+					boolean failed = !executeChecksFuture.isCancelled();
+					if (failed) {
+						if (t instanceof CheckFailureException e) {
+							logger.warn("Failure during check execution on {}.", e.file, e.exception);
+							GenericFileProblem problem = new GenericFileProblem(I.tr("Failure during check execution"),
+									e.exception.toString());
+							problem.setParent(problemConsumer.getFileHelper(e.file));
+							problemConsumer.fatal(problem);
+						} else {
+							logger.warn("Failure during check execution.", t);
+							problemConsumer.fatal(new GenericFileProblem(I.tr("Failure during check execution"), t.toString()));
+						}
+					}
+					onCompletion(failed);
 				}
 
-				private void onCompletion() {
+				private void onCompletion(boolean failed) {
 					progressBar.setIndeterminate(false);
-					progressBar.setString(executeChecksFuture.isCancelled() ? I.tr("Execution cancelled") : I.tr("Execution completed"));
+					if (failed)
+						progressBar.setString(I.tr("Execution failed"));
+					else if (executeChecksFuture.isCancelled())
+						progressBar.setString(I.tr("Execution cancelled"));
+					else
+						progressBar.setString(I.tr("Execution completed"));
 					egCheck.setEnabled(true);
 					ctx.runGC();
 					executeChecksFuture = null;

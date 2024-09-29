@@ -1223,7 +1223,13 @@ msgstr "Ermittele zu überprüfende Dateien..."
 msgid "Template pass {0, number}/{1, number}"
 msgstr "Template-Pass {0, number}/{1, number}"
 
-#: g3dit\src\main\java\de\george\g3dit\check\CheckManager.java:281
+#: g3dit\src\main\java\de\george\g3dit\check\CheckManager.java:339
+#: g3dit\src\main\java\de\george\g3dit\check\CheckManager.java:399
+#: g3dit\src\main\java\de\george\g3dit\check\CheckManager.java:405
+msgid "Failure during check execution"
+msgstr "Fehler bei der Checkausführung"
+
+#: g3dit\src\main\java\de\george\g3dit\check\CheckManager.java:348
 msgid "Archive pass {0, number}/{1, number}"
 msgstr "Archive-Pass {0, number}/{1, number}"
 
@@ -1231,7 +1237,11 @@ msgstr "Archive-Pass {0, number}/{1, number}"
 msgid "Collect issues..."
 msgstr "Sammle Probleme..."
 
-#: g3dit\src\main\java\de\george\g3dit\check\CheckManager.java:387
+#: g3dit\src\main\java\de\george\g3dit\check\CheckManager.java:414
+msgid "Execution failed"
+msgstr "Ausführung fehlgeschlagen"
+
+#: g3dit\src\main\java\de\george\g3dit\check\CheckManager.java:416
 msgid "Execution cancelled"
 msgstr "Ausführung abgebrochen"
 
