@@ -100,7 +100,9 @@ public class XFileDialog {
 			return byteArray2String(result);
 		} else {
 			setJavaSelectionMode(Mode.SAVE_FILE);
-			showJavaDialog(parent, Mode.SAVE_FILE);
+			if (!showJavaDialog(parent, Mode.SAVE_FILE))
+				return null;
+
 			File temp = failsafe.getSelectedFile();
 			if (temp != null) {
 				return temp.getName();
@@ -119,7 +121,9 @@ public class XFileDialog {
 			return byteArray2String(result);
 		} else {
 			setJavaSelectionMode(Mode.LOAD_FILE);
-			showJavaDialog(parent, Mode.LOAD_FILE);
+			if (!showJavaDialog(parent, Mode.LOAD_FILE))
+				return null;
+
 			File temp = failsafe.getSelectedFile();
 			if (temp != null) {
 				return temp.getName();
@@ -138,7 +142,9 @@ public class XFileDialog {
 		} else {
 
 			setJavaSelectionMode(Mode.LOAD_FOLDER);
-			showJavaDialog(parent, Mode.LOAD_FOLDER);
+			if (!showJavaDialog(parent, Mode.LOAD_FOLDER))
+				return null;
+
 			File temp = failsafe.getSelectedFile();
 			if (temp != null) {
 				return temp.getAbsolutePath();
@@ -171,7 +177,8 @@ public class XFileDialog {
 		} else {
 
 			setJavaSelectionMode(Mode.LOAD_FOLDERS);
-			showJavaDialog(parent, Mode.LOAD_FOLDERS);
+			if (!showJavaDialog(parent, Mode.LOAD_FOLDERS))
+				return null;
 
 			File[] temp1 = failsafe.getSelectedFiles();
 			if (temp1 == null) {
@@ -221,7 +228,8 @@ public class XFileDialog {
 		} else {
 
 			setJavaSelectionMode(Mode.LOAD_FILES);
-			showJavaDialog(parent, Mode.LOAD_FILES);
+			if (!showJavaDialog(parent, Mode.LOAD_FILES))
+				return null;
 
 			File[] temp1 = failsafe.getSelectedFiles();
 			if (temp1 == null) {
@@ -522,11 +530,11 @@ public class XFileDialog {
 		}
 	}
 
-	private void showJavaDialog(Component component, Mode mode) {
-		switch (mode) {
+	private boolean showJavaDialog(Component component, Mode mode) {
+		return switch (mode) {
 			case LOAD_FILE, LOAD_FILES, LOAD_FOLDER, LOAD_FOLDERS -> failsafe.showOpenDialog(component);
 			case SAVE_FILE -> failsafe.showSaveDialog(component);
-		}
+		} == JFileChooser.APPROVE_OPTION;
 	}
 
 }
