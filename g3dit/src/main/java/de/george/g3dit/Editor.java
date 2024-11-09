@@ -441,7 +441,7 @@ public class Editor implements EditorContext {
 
 		if (optionStore instanceof MigratableOptionStore optionStore) {
 			new OptionStoreMigrator(optionStore).migrate(store -> {
-				if (store instanceof JsonFileOptionStore jsonStore) {
+				if (store instanceof JsonFileOptionStore jsonStore && Files.exists(jsonStoreFile)) {
 					Path backupFile = FilesEx.addFileExtension(jsonStoreFile,
 							"backup_pre_migrate_" + Editor.EDITOR_VERSION.replace(".", "_"));
 					var backupStore = new JsonFileOptionStore(backupFile, jsonStore.getOptions());
