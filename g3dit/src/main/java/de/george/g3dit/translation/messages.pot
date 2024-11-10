@@ -474,7 +474,17 @@ msgstr ""
 msgid "Ask every time"
 msgstr ""
 
-#: g3dit\src\main\java\de\george\g3dit\Editor.java:313
+#: g3dit\src\main\java\de\george\g3dit\Editor.java:278
+msgid "Started without launcher"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\Editor.java:279
+msgid ""
+"g3dit seems to have been started directly via g3dit.jar file.\n"
+"Please us one of the launchers: g3dit.exe, g3dit.bat or g3dit.sh"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\Editor.java:326
 msgid "No comparison program for binary files configured."
 msgstr ""
 

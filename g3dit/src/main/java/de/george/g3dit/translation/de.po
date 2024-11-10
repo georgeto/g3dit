@@ -500,7 +500,19 @@ msgstr "Nur eine Instanz pro Datei erlauben"
 msgid "Ask every time"
 msgstr "Jedes Mal fragen"
 
-#: g3dit\src\main\java\de\george\g3dit\Editor.java:317
+#: g3dit\src\main\java\de\george\g3dit\Editor.java:278
+msgid "Started without launcher"
+msgstr "Ohne Launcher gestartet"
+
+#: g3dit\src\main\java\de\george\g3dit\Editor.java:279
+msgid ""
+"g3dit seems to have been started directly via g3dit.jar file.\n"
+"Please us one of the launchers: g3dit.exe, g3dit.bat or g3dit.sh"
+msgstr ""
+"g3dit scheint direkt über die Datei g3dit.jar gestartet worden zu sein.\n"
+"Bitte verwende einen der Launcher: g3dit.exe, g3dit.bat oder g3dit.sh"
+
+#: g3dit\src\main\java\de\george\g3dit\Editor.java:326
 msgid "No comparison program for binary files configured."
 msgstr "Kein Vergleichsprogramm für Binärdateien konfiguriert."
 

@@ -3,6 +3,7 @@ package de.george.g3dit.settings;
 import java.awt.Window;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JPanel;
@@ -43,17 +44,16 @@ public class FileExtensionOptionHandler extends AbstractOptionHandler<Void> {
 	@Override
 	public void load(OptionStore optionStore, Option<Void> option) {
 		ExtensionRegistry registry = ExtensionRegistry.getInstance();
-		String exePath = System.getProperty("g3dit.exefile");
-		if (exePath == null) {
+		Optional<String> exePath = Editor.getExeFile();
+		if (!exePath.isPresent())
 			return;
-		}
 
 		DefaultListModel<Extension> model = new DefaultListModel<>();
 		cblExt.setModel(model);
 		for (String ext : EXTENSIONS) {
 			Extension extension = new Extension(ext);
 			model.addElement(extension);
-			if (registry.isRegisteredTo(ext, exePath)) {
+			if (registry.isRegisteredTo(ext, exePath.get())) {
 				extension.setWasRegistered(true);
 				cblExt.addCheckBoxListSelectedValue(extension, false);
 			}
@@ -63,10 +63,9 @@ public class FileExtensionOptionHandler extends AbstractOptionHandler<Void> {
 	@Override
 	public void save(OptionStore optionStore, Option<Void> option) {
 		ExtensionRegistry registry = ExtensionRegistry.getInstance();
-		String exePath = System.getProperty("g3dit.exefile");
-		if (exePath == null) {
+		Optional<String> exePath = Editor.getExeFile();
+		if (!exePath.isPresent())
 			return;
-		}
 
 		@SuppressWarnings("unchecked")
 		ListModel<Extension> model = cblExt.getModel();
@@ -75,7 +74,7 @@ public class FileExtensionOptionHandler extends AbstractOptionHandler<Void> {
 			Extension ext = model.getElementAt(i);
 			try {
 				if (!ext.wasRegistered() && checkedExts.contains(ext)) {
-					registry.registerExtension(ext.getName(), Editor.EDITOR_TITLE, registry.createDefaultCommand(exePath));
+					registry.registerExtension(ext.getName(), Editor.EDITOR_TITLE, registry.createDefaultCommand(exePath.get()));
 				} else if (ext.wasRegistered() && !checkedExts.contains(ext)) {
 					registry.unregisterExtension(ext.getName());
 				}

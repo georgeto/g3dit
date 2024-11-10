@@ -121,6 +121,10 @@ public class Editor implements EditorContext {
 	public static final String EDITOR_VERSION = IOUtils.getManifestAttribute(Editor.class, "g3dit-Version").orElse("DEV");
 	public static final String EDITOR_CONFIG_FOLDER = "config";
 
+	public static final Optional<String> getExeFile() {
+		return Optional.ofNullable(System.getProperty("g3dit.exefile"));
+	}
+
 	public enum UiLanguage {
 		EN("en", "English"),
 		DE("de", "Deutsch");
@@ -265,6 +269,11 @@ public class Editor implements EditorContext {
 		// Drag'n'Drop auf die einzelnen TabbedPanes
 		tbTabs.addDropListener(Side.LEFT, new FileDropListener(dropFilter)).eventBus().register(new EditorFileDropSubscriber(Side.LEFT));
 		tbTabs.addDropListener(Side.RIGHT, new FileDropListener(dropFilter)).eventBus().register(new EditorFileDropSubscriber(Side.RIGHT));
+
+		if (!getExeFile().isPresent()) {
+			TaskDialogs.error(frame, I.tr("Started without launcher"), I.trf(
+					"g3dit seems to have been started directly via g3dit.jar file.\nPlease us one of the launchers: g3dit.exe, g3dit.bat or g3dit.sh"));
+		}
 
 		if (!processArguments(null, args, new PrintWriter(System.out))) {
 			System.exit(EditorCli.EXIT_CODE_ERROR);
