@@ -32,7 +32,7 @@ public class ThemeManager {
 			try {
 				nativeLookAndFeel = (LookAndFeel) Class.forName("com.jgoodies.looks.windows.WindowsLookAndFeel").getConstructor()
 						.newInstance();
-			} catch (ReflectiveOperationException e) {
+			} catch (ReflectiveOperationException | LinkageError e) {
 				logger.warn("Failed to create windows look and feel.", e);
 			}
 		}
