@@ -134,6 +134,8 @@ task dist(type: Zip) {
 	into ('') {
 		from 'out/' + project.name + '.exe'
 		from 'out/' + project.name + 'c.exe'
+		from 'out/' + project.name + '.bat'
+		from 'out/' + project.name + 'c.bat'
 		from 'out/' + project.name + '.sh'
 		from 'out/' + project.name + 'c.sh'
 		from 'out/' + project.name + '.jar'
