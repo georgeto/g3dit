@@ -63,12 +63,17 @@ public class PropertyPanelBase<T extends PropertyPanelBase<T>> implements Proper
 
 	@Override
 	public Builder<T> add(String text) {
-		return PropertyPanelDef.with(this).handler(new LabelPropertyHandler(text)).constraints(newline());
+		return add(new LabelPropertyHandler(text));
 	}
 
 	@Override
 	public Builder<T> add(PropertyHandler<?> handler) {
 		return PropertyPanelDef.with(this).handler(handler).constraints(newline());
+	}
+
+	@Override
+	public Builder<T> add(PropertyAdapter<?> adapter) {
+		return PropertyPanelDef.with(this).adapter(adapter).constraints(newline());
 	}
 
 	@Override
@@ -78,16 +83,13 @@ public class PropertyPanelBase<T extends PropertyPanelBase<T>> implements Proper
 
 	@Override
 	public Builder<T> add(PropertyDescriptor<?> descriptor, Function<G3ClassContainer, G3Class> propertySetExtractor) {
-		return PropertyPanelDef.with(this).adapter(new DescriptorPropertyAdapter(descriptor, propertySetExtractor))
-				.name(descriptor.getName()).constraints(newline());
+		return add(new DescriptorPropertyAdapter(descriptor, propertySetExtractor)).name(descriptor.getName());
 	}
 
 	@Override
 	public <C extends G3Class, V extends G3Serializable> Builder<T> add(Class<? extends ClassDescriptor> propertySet,
 			Function<C, V> getter, BiConsumer<C, V> setter, Supplier<V> defaultSupplier, Class<V> dataType, String dataTypeName) {
-		return PropertyPanelDef.with(this)
-				.adapter(new GetterSetterPropertyAdapter<>(propertySet, getter, setter, defaultSupplier, dataType, dataTypeName))
-				.constraints(newline());
+		return add(new GetterSetterPropertyAdapter<>(propertySet, getter, setter, defaultSupplier, dataType, dataTypeName));
 	}
 
 	@SuppressWarnings("unchecked")
@@ -100,18 +102,12 @@ public class PropertyPanelBase<T extends PropertyPanelBase<T>> implements Proper
 
 	@SuppressWarnings("unchecked")
 	protected T addInternal(PropertyPanelDef def) {
-
-		PropertyHandler<?> handler;
-		PropertyAdapter<?> adapter;
-		if (def.hasAdapter()) {
+		PropertyHandler<?> handler = def.getHandler();
+		if (!def.hasHandler() && def.hasAdapter()) {
 			handler = PropertyPanelHandlerFactory.create(ctx, def);
-			adapter = def.getAdapter();
-		} else {
-			handler = def.getHandler();
-			adapter = null;
 		}
 		content.add(handler.getContent(), def.getConstraints());
-		properties.add(new EditProperty(handler, adapter, def));
+		properties.add(new EditProperty(handler, def.getAdapter(), def));
 		return (T) this;
 	}
 

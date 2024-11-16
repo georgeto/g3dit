@@ -187,10 +187,7 @@ public class PropertyPanelDef {
 		/**
 		 * @param handler Handler for this entry.
 		 */
-		protected Builder<T> handler(PropertyHandler<?> handler) {
-			if (!Objects.isNull(adapter)) {
-				throw new IllegalStateException();
-			}
+		public Builder<T> handler(PropertyHandler<?> handler) {
 			this.handler = handler;
 			return this;
 		}

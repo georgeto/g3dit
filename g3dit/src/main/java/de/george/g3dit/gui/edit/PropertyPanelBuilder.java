@@ -4,6 +4,7 @@ import java.util.function.BiConsumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
+import de.george.g3dit.gui.edit.adapter.PropertyAdapter;
 import de.george.g3dit.gui.edit.handler.PropertyHandler;
 import de.george.g3utils.io.G3Serializable;
 import de.george.lrentnode.archive.G3ClassContainer;
@@ -17,6 +18,8 @@ public interface PropertyPanelBuilder<B extends PropertyPanelBuilderContext<B, T
 	B add(String text);
 
 	B add(PropertyHandler<?> handler);
+
+	B add(PropertyAdapter<?> adapter);
 
 	B add(PropertyDescriptor<?> descriptor);
 
