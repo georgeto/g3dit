@@ -86,6 +86,7 @@ jar {
 		)
 	}
 	processResources {
+		dependsOn("extractProto")
 		exclude('logback-test.xml')
 	}
 }
