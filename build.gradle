@@ -176,11 +176,18 @@ task generateGettextSources() {
 	}
 }
 
+interface InjectedExecOps {
+    @Inject //@javax.inject.Inject
+    ExecOperations getExecOps()
+}
+
 task cleanupTranslation() {
 	outputs.upToDateWhen { false }
+
+	def injected = project.objects.newInstance(InjectedExecOps)
 	doLast {
 		var diffOutput = new ByteArrayOutputStream()
-		exec {
+		injected.execOps.exec {
 			executable = "git"
 			standardOutput = diffOutput
 			workingDir = file("$projectDir")
@@ -195,7 +202,7 @@ task cleanupTranslation() {
 		println "Diff translation"
 		println diffOutput.toString()
 
-		exec {
+		injected.execOps.exec {
 			executable = "git"
 			workingDir = file("$projectDir")
 			args('checkout')
@@ -204,7 +211,7 @@ task cleanupTranslation() {
 		}
 
 		if (diffOutput.size() > 0) {
-			exec {
+			injected.execOps.exec {
 				standardInput = new ByteArrayInputStream(diffOutput.toByteArray())
 				executable = "git"
 				workingDir = file("$projectDir")

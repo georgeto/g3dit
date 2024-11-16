@@ -1,6 +1,6 @@
 plugins {
 	id 'application'
-	id 'com.github.johnrengelman.shadow' version '7.1.0'
+	id 'com.gradleup.shadow' version '8.3.5'
 	id 'com.google.protobuf' version '0.9.4'
 }
 
@@ -128,7 +128,7 @@ task dist(type: Zip) {
 		from 'root/' + project.name + '.sh'
 		from 'root/' + project.name + 'c.sh'
 		from 'root/' + project.name + '.jar'
-		fileMode 0755
+		filePermissions {unix("rwxr-xr-x") }
 	}
 	into('libs') {
 		from 'root/libs'
