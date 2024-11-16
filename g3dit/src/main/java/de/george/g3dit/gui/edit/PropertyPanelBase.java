@@ -129,6 +129,14 @@ public class PropertyPanelBase<T extends PropertyPanelBase<T>> implements Proper
 		return content;
 	}
 
+	public void updateComponentVisibility(G3ClassContainer container) {
+		properties.forEach(p -> {
+			boolean visible = !p.def.isHidden(container);
+			p.handler.getContent().setVisible(visible);
+		});
+		headlineHiding.forEach(h -> h.accept(container));
+	}
+
 	@SuppressWarnings("unchecked")
 	public void load(G3ClassContainer container) {
 		properties.forEach(p -> {
