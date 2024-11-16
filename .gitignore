@@ -20,6 +20,9 @@ bin/
 .idea/**/misc.xml
 .idea/**/vcs.xml
 
+# Compiler output
+*/out/
+
 # Gradle
 .idea/**/gradle.xml
 .idea/**/libraries

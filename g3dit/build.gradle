@@ -103,7 +103,7 @@ application {
 }
 
 tasks.run {
-	workingDir = "$projectDir/out"
+	workingDir = "$projectDir/root"
 }
 
 tasks.compileJava {
@@ -119,33 +119,33 @@ task copyBinlib(type: Copy) {
 	from("$projectDir/libs") {
 		include "xfiledialog*.dll"
 	}
-	into "$projectDir/out/libs"
+	into "$projectDir/root/libs"
 }
 
 task copyJar(type: Copy) {
 	dependsOn 'copyBinlib'
 	from file("$buildDir/libs/${project.name}-${project.version}-all.jar")
-	into "$projectDir/out/"
+	into "$projectDir/root/"
 	rename { "${project.name}.jar" }
 }
 
 task dist(type: Zip) {
 	dependsOn 'copyJar'
 	into ('') {
-		from 'out/' + project.name + '.exe'
-		from 'out/' + project.name + 'c.exe'
-		from 'out/' + project.name + '.bat'
-		from 'out/' + project.name + 'c.bat'
-		from 'out/' + project.name + '.sh'
-		from 'out/' + project.name + 'c.sh'
-		from 'out/' + project.name + '.jar'
+		from 'root/' + project.name + '.exe'
+		from 'root/' + project.name + 'c.exe'
+		from 'root/' + project.name + '.bat'
+		from 'root/' + project.name + 'c.bat'
+		from 'root/' + project.name + '.sh'
+		from 'root/' + project.name + 'c.sh'
+		from 'root/' + project.name + '.jar'
 		fileMode 0755
 	}
 	into('libs') {
-		from 'out/libs'
+		from 'root/libs'
 	}
 	into('config') {
-		from 'out/config'
+		from 'root/config'
 		exclude 'g3dit*.json*'
 	}
 	destinationDirectory = file('dist')
