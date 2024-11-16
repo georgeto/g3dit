@@ -1,7 +1,7 @@
 plugins {
 	id 'application'
 	id 'com.github.johnrengelman.shadow' version '7.1.0'
-	id 'com.google.protobuf' version '0.8.11'
+	id 'com.google.protobuf' version '0.9.4'
 }
 
 repositories {
@@ -58,23 +58,12 @@ dependencies {
 	testImplementation group: 'junit', name: 'junit', version: '4.13.2'
 }
 
-sourceSets {
-	main {
-		java {
-			// include self written and generated code
-			srcDirs "$buildDir/generated/source/proto/main/java"
-		}
-	}
-}
-
 protobuf {
 	// Configure the protoc executable
 	protoc {
 		// Download from repositories
 		artifact = 'com.google.protobuf:protoc:2.6.1'
 	}
-
-	generatedFilesBaseDir = "$buildDir/generated/source/proto"
 }
 
 jar {
@@ -86,7 +75,6 @@ jar {
 		)
 	}
 	processResources {
-		dependsOn("extractProto")
 		exclude('logback-test.xml')
 	}
 }
