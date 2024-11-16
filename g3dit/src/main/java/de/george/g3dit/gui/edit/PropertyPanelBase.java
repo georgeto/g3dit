@@ -3,7 +3,9 @@ package de.george.g3dit.gui.edit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.function.Supplier;
 
 import javax.swing.JComponent;
@@ -33,6 +35,7 @@ public class PropertyPanelBase<T extends PropertyPanelBase<T>> implements Proper
 	private EditorContext ctx;
 	private JPanel content;
 	private List<EditProperty> properties;
+	private List<Consumer<G3ClassContainer>> headlineHiding;
 	private boolean headline;
 
 	public PropertyPanelBase(EditorContext ctx) {
@@ -51,12 +54,16 @@ public class PropertyPanelBase<T extends PropertyPanelBase<T>> implements Proper
 		this.ctx = ctx;
 		content = new JPanel(new MigLayout(join("ins 0, hidemode 3", layoutConstraints), colConstraints, rowConstraints));
 		properties = new ArrayList<>();
+		headlineHiding = new ArrayList<>();
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public T addHeadline(String text) {
-		content.add(SwingUtils.createBoldLabel(text), join("spanx", properties.isEmpty() ? "" : "newline, gaptop u"));
+	public T addHeadline(String text, Predicate<G3ClassContainer> hideIf) {
+		JComponent comp = SwingUtils.createBoldLabel(text);
+		content.add(comp, join("spanx", properties.isEmpty() ? "" : "newline, gaptop u"));
+		if (hideIf != null)
+			headlineHiding.add(c -> comp.setVisible(!hideIf.test(c)));
 		headline = true;
 		return (T) this;
 	}
@@ -115,6 +122,7 @@ public class PropertyPanelBase<T extends PropertyPanelBase<T>> implements Proper
 		content.removeAll();
 		content.revalidate();
 		properties.clear();
+		headlineHiding.clear();
 	}
 
 	public JComponent getContent() {
@@ -130,6 +138,7 @@ public class PropertyPanelBase<T extends PropertyPanelBase<T>> implements Proper
 				p.handler.load(container, p.adapter);
 			}
 		});
+		headlineHiding.forEach(h -> h.accept(container));
 	}
 
 	@SuppressWarnings("unchecked")

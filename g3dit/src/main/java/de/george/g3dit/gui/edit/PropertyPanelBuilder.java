@@ -2,6 +2,7 @@ package de.george.g3dit.gui.edit;
 
 import java.util.function.BiConsumer;
 import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.function.Supplier;
 
 import de.george.g3dit.gui.edit.adapter.PropertyAdapter;
@@ -13,7 +14,11 @@ import de.george.lrentnode.classes.desc.ClassDescriptor;
 import de.george.lrentnode.classes.desc.PropertyDescriptor;
 
 public interface PropertyPanelBuilder<B extends PropertyPanelBuilderContext<B, T>, T extends PropertyPanelBase<T>> {
-	T addHeadline(String text);
+	T addHeadline(String text, Predicate<G3ClassContainer> hideIf);
+
+	default T addHeadline(String text) {
+		return addHeadline(text, null);
+	}
 
 	B add(String text);
 

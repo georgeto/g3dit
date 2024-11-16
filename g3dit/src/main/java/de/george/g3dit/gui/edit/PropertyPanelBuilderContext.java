@@ -2,6 +2,7 @@ package de.george.g3dit.gui.edit;
 
 import java.util.function.BiConsumer;
 import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.function.Supplier;
 
 import de.george.g3dit.gui.edit.adapter.PropertyAdapter;
@@ -22,8 +23,8 @@ public abstract class PropertyPanelBuilderContext<B extends PropertyPanelBuilder
 	}
 
 	@Override
-	public T addHeadline(String text) {
-		return done().addHeadline(text);
+	public T addHeadline(String text, Predicate<G3ClassContainer> hideIf) {
+		return done().addHeadline(text, hideIf);
 	}
 
 	@Override
