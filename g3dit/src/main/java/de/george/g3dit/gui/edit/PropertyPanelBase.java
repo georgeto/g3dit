@@ -49,7 +49,7 @@ public class PropertyPanelBase<T extends PropertyPanelBase<T>> implements Proper
 
 	public PropertyPanelBase(EditorContext ctx, String layoutConstraints, String colConstraints, String rowConstraints) {
 		this.ctx = ctx;
-		content = new JPanel(new MigLayout(join("ins 0", layoutConstraints), colConstraints, rowConstraints));
+		content = new JPanel(new MigLayout(join("ins 0, hidemode 3", layoutConstraints), colConstraints, rowConstraints));
 		properties = new ArrayList<>();
 	}
 
