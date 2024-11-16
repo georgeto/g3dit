@@ -4983,6 +4983,18 @@ msgstr ""
 msgid "List all references in templates to this template"
 msgstr ""
 
+#: g3dit\src\main\java\de\george\g3dit\tab\template\views\header\ItemTab.java:67
+msgid "Damage"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\template\views\header\ItemTab.java:76
+msgid "Range"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\template\views\header\ItemTab.java:89
+msgid "Armor"
+msgstr ""
+
 #: g3dit\src\main\java\de\george\g3dit\tab\template\views\header\MapTab.java:26
 msgid "Active"
 msgstr ""

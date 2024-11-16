@@ -5104,6 +5104,18 @@ msgstr "Alle Referenzen in Entities auf diese Template auflisten"
 msgid "List all references in templates to this template"
 msgstr "Alle Referenzen in Templates auf diese Template auflisten"
 
+#: g3dit\src\main\java\de\george\g3dit\tab\template\views\header\ItemTab.java:67
+msgid "Damage"
+msgstr "Schaden"
+
+#: g3dit\src\main\java\de\george\g3dit\tab\template\views\header\ItemTab.java:76
+msgid "Range"
+msgstr "Reichweite"
+
+#: g3dit\src\main\java\de\george\g3dit\tab\template\views\header\ItemTab.java:89
+msgid "Armor"
+msgstr "Rüstung"
+
 #: g3dit\src\main\java\de\george\g3dit\tab\template\views\header\MapTab.java:26
 msgid "Active"
 msgstr "Aktiv"
