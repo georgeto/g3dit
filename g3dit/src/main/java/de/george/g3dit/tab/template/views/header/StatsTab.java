@@ -61,14 +61,14 @@ public class StatsTab extends AbstractPropertyTemplateTab {
 				.add(Integer.toString(i)).horizontalStart()
 				.add(REQ_ATTRIB_TAGS.get(i - 1))
 				.valueList(Misc.concat(new String[] {""}, ATTRIBUTES))
-					.noTitle().horizontal().growx()
+					.noTitle().horizontal()
 				.add(opProperty.getPropertySet(), (ps) -> ps.property(opProperty, opIndex),
 						(ps, v) -> ps.property(opProperty, opIndex).setEnumValue(v.getEnumValue()),
 						opProperty::getDefaultValue, opProperty.getDataType(), opProperty.getDataTypeName())
-					.noTitle().horizontal().growx()
+					.noTitle().horizontal()
 				.add(REQ_ATTRIB_VALUES.get(i - 1))
 					.validate(validation(), StringValidators.REQUIRE_VALID_INTEGER)
-					.noTitle().horizontal().growx()
+					.noTitle().horizontal()
 				.done();
 		}
 
@@ -78,12 +78,12 @@ public class StatsTab extends AbstractPropertyTemplateTab {
 				.add(Integer.toString(i)).horizontalStart()
 				.add(MOD_ATTRIB_TAGS.get(i - 1))
 				.valueList(Misc.concat(new String[] {""}, Misc.concat(ATTRIBUTES, PROTECTIONS)))
-					.noTitle().horizontal().growx()
+					.noTitle().horizontal()
 				.add(MOD_ATTRIB_OPS.get(i - 1))
-					.noTitle().horizontal().growx()
+					.noTitle().horizontal()
 				.add(MOD_ATTRIB_VALUES.get(i - 1))
 					.validate(validation(), StringValidators.REQUIRE_VALID_INTEGER)
-					.noTitle().horizontal().growx()
+					.noTitle().horizontal()
 				.done();
 		}
 

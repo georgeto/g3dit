@@ -20,7 +20,7 @@ public class InteractionTab extends AbstractPropertyEntityTab {
 			.add(CD.gCInteraction_PS.FocusPriority).horizontalStart()
 			.add(CD.gCInteraction_PS.UseType).horizontal()
 			.add(CD.gCInteraction_PS.RoutineExclusive).horizontal()
-			.add(CD.gCInteraction_PS.ScriptUseFunc).growx()
+			.add(CD.gCInteraction_PS.ScriptUseFunc).horizontalStartSpan()
 			.add(CD.gCInteraction_PS.AnchorPoint)
 				.validate(validation(), GuidValidator.INSTANCE_ALLOW_EMPTY, new EntityExistenceValidator(validation(), ctx))
 			.add(CD.gCInteraction_PS.Owner)

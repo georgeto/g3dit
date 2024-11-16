@@ -82,14 +82,14 @@ public class EditVegetationMeshesDialog extends ExtStandardDialog {
 		propertyPanel = new PropertyPanel(ctx);
 		//@foff
         propertyPanel
-                .add(CD.eCVegetation_Mesh.MeshFilePath).editable(false).growx()
-                .<eCVegetation_Mesh, bCString>add(CD.eCVegetation_Mesh.class, m -> new bCString(m.diffuseTexture), (m, v) -> m.diffuseTexture = v.getString(), null, bCString.class, "").name("DiffuseTexture").growx()
-                .add(CD.eCVegetation_Mesh.MeshShading).horizontalStart(2).growx()
+                .add(CD.eCVegetation_Mesh.MeshFilePath).editable(false)
+                .<eCVegetation_Mesh, bCString>add(CD.eCVegetation_Mesh.class, m -> new bCString(m.diffuseTexture), (m, v) -> m.diffuseTexture = v.getString(), null, bCString.class, "").name("DiffuseTexture")
+                .add(CD.eCVegetation_Mesh.MeshShading).horizontalStart(2)
                 .add(CD.eCVegetation_Mesh.DoubleSided).horizontal()
                 .add(CD.eCVegetation_Mesh.WindStrength).<FloatSpinner>customize(sp -> sp.setStepSize(0.1f)).horizontalStart()
                 .add(CD.eCVegetation_Mesh.MinSpacing).horizontal()
-                .<eCVegetation_Mesh, gInt>add(CD.eCVegetation_Mesh.class, m -> new gInt(m.getMeshID().getIndex()), null, null, gInt.class, "").name("MeshID").editable(false)
-                .<eCVegetation_Mesh, gInt>add(CD.eCVegetation_Mesh.class, m -> new gInt(vegetationPS.getMeshUseCount(m.getMeshID())), null, null, gInt.class, "").name(I.tr("Number of occurrences")).editable(false)
+                .<eCVegetation_Mesh, gInt>add(CD.eCVegetation_Mesh.class, m -> new gInt(m.getMeshID().getIndex()), null, null, gInt.class, "").name("MeshID").editable(false).horizontalStart(2)
+                .<eCVegetation_Mesh, gInt>add(CD.eCVegetation_Mesh.class, m -> new gInt(vegetationPS.getMeshUseCount(m.getMeshID())), null, null, gInt.class, "").name(I.tr("Number of occurrences")).editable(false).horizontalStart(2)
                 .<eCVegetation_Mesh, gInt>add(CD.eCVegetation_Mesh.class, m -> new gInt(m.positions.size()), null, null, gInt.class, "").name("Vertices").editable(false).horizontalStart()
                 .<eCVegetation_Mesh, gInt>add(CD.eCVegetation_Mesh.class, m -> new gInt(m.normals.size()), null, null, gInt.class, "").name("Normals").editable(false).horizontal()
                 .<eCVegetation_Mesh, gInt>add(CD.eCVegetation_Mesh.class, m -> new gInt(m.uvs.size()), null, null, gInt.class, "").name("UVs").editable(false).horizontal()

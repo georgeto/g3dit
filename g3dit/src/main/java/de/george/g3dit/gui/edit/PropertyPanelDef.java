@@ -148,6 +148,12 @@ public class PropertyPanelDef {
 		return new Builder<>(panel);
 	}
 
+	/**
+	 * Defaults:
+	 * <li>add: newline</li>
+	 * <li>First column: growx</li>
+	 * <li>Component: spanx, growx</li>
+	 */
 	public static final class Builder<T extends PropertyPanelBase<T>> extends PropertyPanelBuilderContext<Builder<T>, T> {
 		private PropertyAdapter<?> adapter;
 		private PropertyHandler<?> handler;
@@ -160,7 +166,7 @@ public class PropertyPanelDef {
 		private Validator<?>[] validators;
 		private Predicate<G3ClassContainer> hideIf;
 		private boolean editable = true;
-		private String constraints = "spanx";
+		private String constraints = "spanx, growx";
 		private Consumer<?> customizer;
 
 		public Builder(PropertyPanelBase<T> base) {
@@ -246,13 +252,25 @@ public class PropertyPanelDef {
 			return this;
 		}
 
+		public Builder<T> filterConstraint(String constraint) {
+			this.constraints = this.constraints.replaceAll("(^|,)\\s*" + constraint + "\\b", "");
+			return this;
+		}
+
 		public Builder<T> horizontalStart() {
 			return horizontalStart(1);
 		}
 
+		public Builder<T> horizontalStartSpan() {
+			return horizontalStart(-1);
+		}
+
 		public Builder<T> horizontalStart(int count) {
 			constraints = base.newline();
-			if (count > 1) {
+			growx();
+			if (count == -1) {
+				constraints("spanx");
+			} else if (count > 1) {
 				constraints("spanx " + count);
 			}
 			return this;
@@ -264,6 +282,7 @@ public class PropertyPanelDef {
 
 		public Builder<T> horizontal(int count) {
 			constraints = "gapleft 15px";
+			growx();
 			if (count == -1) {
 				constraints("spanx");
 			} else if (count > 1) {
@@ -282,6 +301,10 @@ public class PropertyPanelDef {
 
 		public Builder<T> grow() {
 			return constraints("grow");
+		}
+
+		public Builder<T> nogrowx() {
+			return filterConstraint("growx");
 		}
 
 		public Builder<T> growx() {
