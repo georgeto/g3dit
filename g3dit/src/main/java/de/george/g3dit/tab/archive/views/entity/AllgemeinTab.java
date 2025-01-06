@@ -34,6 +34,7 @@ import de.george.g3dit.tab.archive.EditorArchiveTab;
 import de.george.g3dit.tab.shared.BoundingBoxPanel;
 import de.george.g3dit.tab.shared.PositionPanel;
 import de.george.g3dit.util.Icons;
+import de.george.g3dit.util.Tooltips;
 import de.george.g3utils.gui.SwingUtils;
 import de.george.g3utils.gui.UndoableTextField;
 import de.george.g3utils.structure.GuidUtil;
@@ -146,10 +147,12 @@ public class AllgemeinTab extends AbstractEntityTab {
 		btnDiffTemplate.addActionListener(e -> handleDiffTemplate());
 
 		lblChangeTime = new JLabel(I.tr("ChangeTime"));
+		lblChangeTime.setToolTipText(Tooltips.changeTime());
 		add(lblChangeTime, "wrap");
 
 		tfChangeTime = SwingUtils.createUndoTF();
 		tfChangeTime.setName(I.tr("ChangeTime"));
+		tfChangeTime.setToolTipText(Tooltips.changeTime());
 		addValidators(tfChangeTime, IsALongValidator.INSTANCE, new ChangeTimeValidator(validation(), ctx, tfRefGuid));
 		add(tfChangeTime, "width 50:100:100, wrap");
 

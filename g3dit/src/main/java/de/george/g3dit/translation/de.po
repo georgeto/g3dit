@@ -5384,3 +5384,7 @@ msgstr ""
 "könnten Stringtableeinträge gelöscht werden,\n"
 "die noch von diesen Klassen verwendet werden.\n"
 "Stringtable trotzdem aufräumen?"
+
+#: g3dit\src\main\java\de\george\g3dit\util\Tooltips.java:12
+msgid "Entities store the Guid and ChangeTime of the template they were created from. If the template's ChangeTime is updated in a patch, modified properties from the template are applied to the entity when a game is started or loaded."
+msgstr "Entities speichern die Guid und ChangeTime der Template, aus der sie erstellt wurden. Wenn die ChangeTime der Template in einem Patch verändert wird, werden die geänderten Eigenschaften der Template auf die Entity angewendet, wenn ein Spiel gestartet oder geladen wird."

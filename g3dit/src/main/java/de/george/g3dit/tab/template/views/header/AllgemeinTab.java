@@ -21,6 +21,7 @@ import de.george.g3dit.tab.shared.BoundingBoxPanel;
 import de.george.g3dit.tab.shared.PositionPanel;
 import de.george.g3dit.tab.template.EditorTemplateTab;
 import de.george.g3dit.util.Icons;
+import de.george.g3dit.util.Tooltips;
 import de.george.g3utils.gui.JGuidField;
 import de.george.g3utils.gui.SwingUtils;
 import de.george.g3utils.gui.UndoableTextField;
@@ -102,9 +103,12 @@ public class AllgemeinTab extends AbstractTemplateTab {
 		btnCopyGuid.addActionListener(a -> IOUtils.copyToClipboard(tfRefGuid.getText()));
 		add(btnCopyGuid, LayoutUtils.sqrBtn("wrap"));
 
-		add(new JLabel(I.tr("ChangeTime")), "wrap");
+		JLabel lblChangeTime = new JLabel(I.tr("ChangeTime"));
+		lblChangeTime.setToolTipText(Tooltips.changeTime());
+		add(lblChangeTime, "wrap");
 		tfChangeTime = SwingUtils.createUndoTF();
 		tfChangeTime.setName(I.tr("ChangeTime"));
+		tfChangeTime.setToolTipText(Tooltips.changeTime());
 		addValidators(tfChangeTime, IsALongValidator.INSTANCE);
 		add(tfChangeTime, "width 50:100:100, wrap");
 

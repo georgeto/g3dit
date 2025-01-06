@@ -5247,3 +5247,7 @@ msgid ""
 "could delete string table entries that are still used by those classes.\n"
 "Clean up the string table anyway?"
 msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\util\Tooltips.java:12
+msgid "Entities store the Guid and ChangeTime of the template they were created from. If the template's ChangeTime is updated in a patch, modified properties from the template are applied to the entity when a game is started or loaded."
+msgstr ""

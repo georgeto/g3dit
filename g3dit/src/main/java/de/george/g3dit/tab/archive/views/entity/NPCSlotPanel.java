@@ -20,6 +20,7 @@ import de.george.g3dit.gui.validation.TemplateExistenceValidator;
 import de.george.g3dit.tab.archive.EditorArchiveTab;
 import de.george.g3dit.tab.archive.views.entity.dialogs.SlotDialog;
 import de.george.g3dit.util.Icons;
+import de.george.g3dit.util.Tooltips;
 import de.george.g3utils.gui.SwingUtils;
 import de.george.g3utils.structure.GuidUtil;
 import de.george.g3utils.util.Pair;
@@ -74,8 +75,10 @@ public class NPCSlotPanel extends JPanel implements TemplateSearchListener {
 		tfRefGuid.setEditable(false);
 
 		lblChangeTime = new JLabel(I.tr("ChangeTime"));
+		lblChangeTime.setToolTipText(Tooltips.changeTime());
 		tfChangeTime = SwingUtils.createUndoTF();
 		tfChangeTime.setEditable(false);
+		tfChangeTime.setToolTipText(Tooltips.changeTime());
 
 		lblError = SwingUtils.createSelectableLabel();
 
