@@ -65,6 +65,8 @@ public class MapAndTableComponent<T extends MapItem> {
 				<dd><code>Ctrl + E</code></dd>
 				<dt>Teleport player to mouse position</dt>
 				<dd><code>Ctrl + T</code></dd>
+				<dt>Teleport player to entity nearest to mouse position</dt>
+				<dd><code>Ctrl + Shift + T</code></dd>
 				<dt>Invert selection</dt>
 				<dd><code>Ctrl + I</code></dd>
 				<dt>Remove selection from list</dt>
@@ -161,6 +163,11 @@ public class MapAndTableComponent<T extends MapItem> {
 					if (lastPosition != null) {
 						IpcUtil.gotoPosition(lastPosition, true);
 					}
+				});
+		SwingUtils.addKeyStroke(map.getViewer().getComponent(), JComponent.WHEN_IN_FOCUSED_WINDOW, "Goto Entity Near Position",
+				KeyStroke.getKeyStroke(KeyEvent.VK_T, InputEvent.CTRL_DOWN_MASK | InputEvent.SHIFT_DOWN_MASK), () -> {
+					positionOverlay.getLastMousePosition().map(pos -> map.getModel().getNearest(pos.x, pos.y, 20))
+							.ifPresent(entry -> IpcUtil.gotoPosition(entry.getPosition()));
 				});
 
 		cbOnlySelected = new JCheckBox(I.tr("Show only selected on map"));

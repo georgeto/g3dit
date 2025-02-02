@@ -9,6 +9,7 @@ import java.awt.RenderingHints;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
+import java.util.Optional;
 import java.util.function.Supplier;
 
 import de.george.g3utils.gui.SwingUtils;
@@ -56,6 +57,10 @@ public class MapPositionOverlay extends Overlay implements ImageMouseMotionAdapt
 			g.setColor(Color.BLACK);
 			g.drawChars(text.toCharArray(), 0, text.length(), textLocation.x, textLocation.y);
 		}
+	}
+
+	public Optional<Point> getLastMousePosition() {
+		return lastMousePosition != null ? Optional.of(new Point(lastMousePosition)) : Optional.empty();
 	}
 
 	public bCVector getLastPosition() {
