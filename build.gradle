@@ -195,6 +195,7 @@ task cleanupTranslation() {
 			args('--ignore-matching-lines="^#"')
 			args('--ignore-matching-lines="^\\"PO-Revision-Date"')
 			args('--ignore-matching-lines="^\\"POT-Creation-Date"')
+			args('--ignore-matching-lines="^\\"X-Generator"')
 			args('--')
 			args('g3dit/src/main/java/de/george/g3dit/translation/')
 		}
