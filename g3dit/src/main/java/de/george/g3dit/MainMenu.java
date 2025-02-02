@@ -528,6 +528,7 @@ public class MainMenu extends JMenuBar {
 		add(muRemote);
 
 		JMenuItem miShowLiveEntityPosition = new JMenuItem(I.tr("Live Entity Position"), Icons.getImageIcon(Icons.Arrow.CIRCLE_DOUBLE));
+		miShowLiveEntityPosition.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P, InputEvent.CTRL_DOWN_MASK));
 		muRemote.add(miShowLiveEntityPosition);
 		miShowLiveEntityPosition.addActionListener(e -> {
 			LivePositionFrame dialog = new LivePositionFrame(ctx);
