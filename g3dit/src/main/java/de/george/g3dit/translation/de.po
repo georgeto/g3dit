@@ -2505,15 +2505,17 @@ msgstr "Interaktionsobjekt befindet sich innerhalb von NegCircle."
 msgid "InteractObject is inside of NegZone."
 msgstr "Interaktionsobjekt befindet sich innerhalb der NegZone."
 
-#: g3dit\src\main\java\de\george\g3dit\nav\InteractObjectStage.java:129
-msgid "no NavArea (null)"
-msgstr "keine NavArea (null)"
-
-#: g3dit\src\main\java\de\george\g3dit\nav\InteractObjectStage.java:131
-msgid "no NavArea (out of)"
+#: g3dit\src\main\java\de\george\g3dit\nav\InteractObjectStage.java:123
+#, fuzzy
+#| msgid "no NavArea (out of)"
+msgid "no NavArea (outside)"
 msgstr "keine NavArea (außerhalb)"
 
-#: g3dit\src\main\java\de\george\g3dit\nav\InteractObjectStage.java:187
+#: g3dit\src\main\java\de\george\g3dit\nav\InteractObjectStage.java:125
+msgid "no NavArea (in NegZone/NegCircle)"
+msgstr "keine NavArea (in NegZone/NegCircle)"
+
+#: g3dit\src\main\java\de\george\g3dit\nav\InteractObjectStage.java:181
 #: g3dit\src\main\java\de\george\g3dit\nav\NavPathStage.java:237
 #: g3dit\src\main\java\de\george\g3dit\nav\NavZoneStage.java:93
 msgid "Not in NavMap."

@@ -94,18 +94,14 @@ public class InteractObjectStage extends NavCalcStage {
 								addChange(new CriticalInteractObject(descriptor.get(), entity.getWorldPosition(), insideNegDetails));
 							}
 						}
-					} else {
-						// No area detected -> Assign OUT_OF_NAV_AREA_ID
-						area = new NavArea(NavMap.OUT_OF_NAV_AREA_ID, false);
 					}
 
-					Optional<NavArea> navMapAreaOpt = navMapInteractables.getOrDefault(entity.getGuid(), Optional.empty());
-					if (!navMapAreaOpt.isPresent()) {
+					Optional<NavArea> navMapArea = navMapInteractables.get(entity.getGuid());
+					if (navMapArea == null) {
 						addChange(new NotInNavmap(descriptor.get(), entity.getWorldPosition(), area));
 					} else {
-						NavArea navMapArea = navMapAreaOpt.orElseGet(() -> new NavArea(NavMap.OUT_OF_NAV_AREA_ID, false));
-						if (!area.equals(navMapArea)) {
-							addChange(new AreaChanged(descriptor.get(), entity.getWorldPosition(), area, navMapArea));
+						if (!Optional.ofNullable(area).equals(navMapArea)) {
+							addChange(new AreaChanged(descriptor.get(), entity.getWorldPosition(), area, navMapArea.orElse(null)));
 						}
 					}
 				}
@@ -123,12 +119,10 @@ public class InteractObjectStage extends NavCalcStage {
 	}
 
 	private static String getRegisteredToArea(NavArea area) {
-		// if (area == null || !NavMap.OUT_OF_NAV_AREA_ID.equals(area.areaId)) {
-		// return "no NavArea";
 		if (area == null) {
-			return I.tr("no NavArea (null)");
+			return I.tr("no NavArea (outside)");
 		} else if (NavMap.OUT_OF_NAV_AREA_ID.equals(area.areaId)) {
-			return I.tr("no NavArea (out of)");
+			return I.tr("no NavArea (in NegZone/NegCircle)");
 		} else {
 			return String.format("%s %s", area.isNavPath ? "NavPath" : "NavZone", area.areaId);
 		}
@@ -190,7 +184,7 @@ public class InteractObjectStage extends NavCalcStage {
 
 		@Override
 		public void fix() {
-			navMap.addInteractable(getGuid(), Optional.of(area));
+			navMap.addInteractable(getGuid(), Optional.ofNullable(area));
 			markFixed();
 		}
 	}

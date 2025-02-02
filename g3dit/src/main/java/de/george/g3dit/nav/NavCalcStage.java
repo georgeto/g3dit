@@ -28,6 +28,7 @@ import javax.swing.JTable;
 
 import org.jdesktop.swingx.JXTable;
 
+import com.ezware.dialog.task.TaskDialogs;
 import com.google.common.base.Predicates;
 import com.teamunify.i18n.I;
 
@@ -169,6 +170,7 @@ public abstract class NavCalcStage {
 			e.printStackTrace(new PrintWriter(sw));
 			progressBar.setString(I.trf("Scan failed: {0}", e.getMessage()));
 			progressBar.setToolTipText(sw.toString());
+			TaskDialogs.showException(e);
 		}
 		updateFilteredCount();
 		if (!changeTable.hasFocus()) {
