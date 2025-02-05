@@ -328,24 +328,22 @@ public abstract class TableUtil {
 				TableColumnDef columnDef = columns[columnExt.getModelIndex()];
 				if (columnDef.hasPreferredSize()) {
 					columnExt.setPreferredWidth(columnDef.getPreferredSize());
-					return;
-				}
-				if (columnDef.hasPreferredSizeExample()) {
-					columnExt.setPrototypeValue(columnDef.getPreferredSizeExample());
+				} else {
+					if (columnDef.hasPreferredSizeExample())
+						columnExt.setPrototypeValue(columnDef.getPreferredSizeExample());
+
+					// Calculates the column width from its prototype value and header width.
+					super.configureColumnWidths(table, columnExt);
 				}
 				if (columnDef.hasMaxSize()) {
 					columnExt.setMaxWidth(columnDef.getMaxSize());
 				}
 			}
-
-			// Calculates the column width from its prototype value, or sets a sane default.
-			super.configureColumnWidths(table, columnExt);
 		}
-
 	}
 
 	public static ColumnFactory columnFactory(EditorContext ctx, TableColumnDef... tableColumns) {
-		return new TableColumnDefColumnFactory(ctx, tableColumns);
+		return new TableUtil.TableColumnDefColumnFactory(ctx, tableColumns);
 	}
 
 	public static class SortableEventTable<T> {
