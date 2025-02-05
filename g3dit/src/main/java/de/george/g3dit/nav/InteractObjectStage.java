@@ -218,7 +218,7 @@ public class InteractObjectStage extends NavCalcStage {
 
 		@Override
 		public void fix() {
-			navMap.updateInteractable(getGuid(), Optional.of(area));
+			navMap.updateInteractable(getGuid(), Optional.ofNullable(area));
 			markFixed();
 		}
 
