@@ -52,6 +52,10 @@ public class NavMap extends GenomeFile {
 
 	private static final byte[] IDENTIFIER = Misc.asByte("4745332D4E41562D4D4150");
 
+	// Used in gCInteraction_PS::GetZoneEntity(). The difference between interact object that has
+	// this versus null area assigned or no entry at all is, that for the OUT_OF_NAV_AREA_ID does
+	// not even try a costly gCNavigationMap::GetZone() lookup. Whereas for the latter two it tries
+	// to dynamically locate a nav area.
 	public static final String OUT_OF_NAV_AREA_ID = "A3D9D3161307D749B56613FEB478580100000000";
 
 	public static final String INVALID_ZONE_ID = "0000000000000000000000000000000000000000";
