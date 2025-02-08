@@ -60,10 +60,10 @@ public class FileDescriptor implements Comparable<FileDescriptor> {
 	}
 
 	public static FileDescriptor none(FileType type) {
-		return new FileDescriptor(Paths.get("<None>"), type);
+		return new FileDescriptor(Paths.get("[None]"), type);
 	}
 
 	public static FileDescriptor none(ArchiveType type) {
-		return new FileDescriptor(Paths.get("<None>"), type);
+		return new FileDescriptor(Paths.get("[None]"), type);
 	}
 }
