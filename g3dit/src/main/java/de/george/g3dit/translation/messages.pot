@@ -2841,7 +2841,19 @@ msgstr ""
 msgid "{0} ({1}) at position {2} alone in the radius of {3, number}."
 msgstr ""
 
-#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptGenerateStatistics.java:24
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptFixNavMapInteractAssignments.java:24
+msgid "Fix corrupted NavMap interact object assignments"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptFixNavMapInteractAssignments.java:30
+msgid "The NavMap distinguishes whether an interact object is outside any nav area or in a nav area but blocked by a NegZone or NegCircle. g3dit before version 1.13.2 did not make this distinction, and instead handled interact object outside any nav area, as if they were not registered in the NavMap.That resulted in duplicate entries for interact objects."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptFixNavMapInteractAssignments.java:85
+msgid "Save fixed NavigationMap"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptGenerateStatistics.java:23
 msgid "Generate modification statistics"
 msgstr ""
 
