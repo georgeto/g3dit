@@ -32,6 +32,7 @@ public class G3Property extends AbstractProperty {
 
 	private Property parent;
 	private List<Property> subProperties = ImmutableList.of();
+	private boolean displayErrorShown;
 
 	public G3Property(ClassProperty classProperty) {
 		this(classProperty, null);
@@ -134,9 +135,12 @@ public class G3Property extends AbstractProperty {
 				}
 			}
 		} catch (Exception e) {
-			logger.warn("Failed to display the value of the property '{}'.", getName(), e);
-			TaskDialogs.error(null, I.tr("Error while displaying"),
-					I.trf("Error while displaying the value of the property ''{0}''.", getName()));
+			if (!displayErrorShown) {
+				logger.warn("Failed to display the value of the property '{}'.", getName(), e);
+				TaskDialogs.error(null, I.tr("Error while displaying"),
+						I.trf("Error while displaying the value of the property ''{0}''.", getName()));
+				displayErrorShown = true;
+			}
 			throw new RuntimeException(e);
 		}
 
@@ -152,6 +156,9 @@ public class G3Property extends AbstractProperty {
 	@SuppressWarnings("unchecked")
 	public void setValue(Object value) {
 		try {
+			// Reset display error shown state on set
+			displayErrorShown = false;
+
 			if (classProperty.getValue() instanceof bTPropertyContainer) {
 				((bTPropertyContainer<?>) classProperty.getValue()).setEnumValue(((G3EnumWrapper) value).getEnumValue());
 				return;
@@ -175,8 +182,9 @@ public class G3Property extends AbstractProperty {
 			classProperty.setValue((G3Serializable) value);
 		} catch (Exception e) {
 			logger.warn("Failed to parse the entered value '{}' for the property '{}'.", value, getName(), e);
-			TaskDialogs.error(null, "Fehler beim Parsen",
+			TaskDialogs.error(null, I.tr("Error while parsing"),
 					I.trf("Error while parsing the entered value ''{0}'' for property ''{1}''.", value, getName()));
+			displayErrorShown = true;
 		} finally {
 			// Call afterwards, as it triggers the PropertySheetPanelListeners
 			super.setValue(value);

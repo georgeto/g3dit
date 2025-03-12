@@ -4479,17 +4479,18 @@ msgstr ""
 msgid "Error while displaying the value of the property ''{0}''."
 msgstr ""
 
-#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\property\G3Property.java:172
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\property\G3Property.java:185
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\property\PropertyDescriptorAdapter.java:110
+msgid "Error while parsing"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\property\G3Property.java:186
 #: g3dit\src\main\java\de\george\g3dit\tab\archive\views\property\PropertyDescriptorAdapter.java:111
 #, java-format
 msgid "Error while parsing the entered value ''{0}'' for property ''{1}''."
 msgstr ""
 
-#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\property\PropertyDescriptorAdapter.java:110
-msgid "Error while parsing"
-msgstr ""
-
-#: g3dit\src\main\java\de\george\g3dit\tab\effectmap\EffectMapContentPane.java:64
+#: g3dit\src\main\java\de\george\g3dit\tab\effectmap\EffectMapContentPane.java:60
 msgid "Effects"
 msgstr ""
 
