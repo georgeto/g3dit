@@ -15,6 +15,9 @@ import com.l2fprod.common.propertysheet.PropertySheetPanel;
 import de.george.g3dit.EditorContext;
 import de.george.g3dit.gui.table.renderer.NamedGuidTableCellReditor;
 import de.george.g3dit.tab.archive.views.property.EntityProxyMarker;
+import de.george.g3dit.tab.archive.views.property.FallbackWrapper;
+import de.george.g3dit.tab.archive.views.property.FallbackWrapperEditor;
+import de.george.g3dit.tab.archive.views.property.FallbackWrapperRenderer;
 import de.george.g3dit.tab.archive.views.property.G3EnumArrayPropertyEditor;
 import de.george.g3dit.tab.archive.views.property.G3EnumArrayWrapper;
 import de.george.g3dit.tab.archive.views.property.G3EnumEditor;
@@ -72,6 +75,7 @@ public class PropertySheetUtil {
 	public static void registerDefaultRenderers(PropertyRendererRegistry registry, EditorContext ctx) {
 		registry.registerRenderer(EntityProxyMarker.class, new NamedGuidTableCellReditor(ctx, false, 70));
 		registry.registerRenderer(TemplateProxyMarker.class, new NamedGuidTableCellReditor(ctx, true, 70));
+		registry.registerRenderer(FallbackWrapper.class, new FallbackWrapperRenderer(registry));
 	}
 
 	public static void registerDefaultEditors(PropertyEditorRegistry registry, EditorContext ctx) {
@@ -80,5 +84,6 @@ public class PropertySheetUtil {
 		registry.registerEditor(JsonStringWrapper.class, JsonStringPropertyEditor.class);
 		registry.registerEditor(EntityProxyMarker.class, new PropertyEditorAdapter(new NamedGuidTableCellReditor(ctx, false, 70)));
 		registry.registerEditor(TemplateProxyMarker.class, new PropertyEditorAdapter(new NamedGuidTableCellReditor(ctx, true, 70)));
+		registry.registerEditor(FallbackWrapper.class, new FallbackWrapperEditor(registry));
 	}
 }

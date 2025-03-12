@@ -54,6 +54,10 @@ public final class PropertyValueConverterRegistry {
 		registeredConverters.put(converter.getPropertyType(), converter);
 	}
 
+	public <T extends G3Serializable> void registerConverterJsonFallback(PropertyValueConverter<T, ?> converter) {
+		registerConverter(new FallbackConverter<>(converter, new JsonPropertyValueConverter<>(converter.getPropertyType())));
+	}
+
 	private PropertyValueConverterRegistry() {
 		registerDefaults();
 	}
@@ -68,21 +72,23 @@ public final class PropertyValueConverterRegistry {
 		 * f.toString(), Float::valueOf) .with("Pitch", Float.TYPE, f -> f.toString(),
 		 * Float::valueOf) .with("Roll", Float.TYPE, f -> f.toString(), Float::valueOf).build());
 		 */
-		registerConverter(LambdaConverter.of(bCFloatAlphaColor.class, Color.class, bCFloatAlphaColor::toAwt, bCFloatAlphaColor::fromAwt));
-		registerConverter(LambdaConverter.of(bCFloatColor.class, Color.class, bCFloatColor::toAwt, bCFloatColor::fromAwt));
+		registerConverterJsonFallback(
+				LambdaConverter.of(bCFloatAlphaColor.class, Color.class, bCFloatAlphaColor::toAwt, bCFloatAlphaColor::fromAwt));
+		registerConverterJsonFallback(LambdaConverter.of(bCFloatColor.class, Color.class, bCFloatColor::toAwt, bCFloatColor::fromAwt));
 		registerConverter(
 				LambdaConverter.ofInplace(bCGuid.class, String.class, bCGuid::getGuid, (g, v) -> g.setGuid(GuidUtil.parseGuid(v))));
 		// add(bCMatrix.class, "bCMatrix");
 		registerConverter(LambdaConverter.ofInplace(bCPropertyID.class, String.class, bCPropertyID::getGuid,
 				(g, v) -> g.setGuid(GuidUtil.parseGuid(v))));
-		registerConverter(DictPropertyValueConverter.builder(bCRange1.class).with("Min", Float.TYPE, Object::toString, Float::valueOf)
-				.with("Max", Float.TYPE, Object::toString, Float::valueOf).build());
-		registerConverter(
+		registerConverterJsonFallback(
+				DictPropertyValueConverter.builder(bCRange1.class).with("Min", Float.TYPE, Object::toString, Float::valueOf)
+						.with("Max", Float.TYPE, Object::toString, Float::valueOf).build());
+		registerConverterJsonFallback(
 				DictPropertyValueConverter.builder(bCRange3.class).with("Min", bCVector.class, bCVector::toString, bCVector::fromString)
 						.with("Max", bCVector.class, bCVector::toString, bCVector::fromString).build());
 		// add(bCRect.class, "bCRect");
 		registerConverter(BeanPropertyValueConverter.with(bCString.class, String.class, "String"));
-		registerConverter(LambdaConverter.of(bCVector.class, String.class, bCVector::toString, bCVector::fromString));
+		registerConverterJsonFallback(LambdaConverter.of(bCVector.class, String.class, bCVector::toString, bCVector::fromString));
 		// add(bCVector2.class, "bCVector2");
 		registerConverter(ArrayPropertyValueConverter.of(bTObjArray_bCString.class, bCString::getString, bCString::new));
 		registerConverter(ArrayPropertyValueConverter.of(bTObjArray_eCEntityProxy.class, eCEntityProxy::getGuid,
