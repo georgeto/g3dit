@@ -13,6 +13,7 @@ import javax.swing.ListModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.formdev.flatlaf.util.SystemInfo;
 import com.github.sarxos.winreg.RegistryException;
 import com.jidesoft.swing.CheckBoxList;
 
@@ -43,6 +44,9 @@ public class FileExtensionOptionHandler extends AbstractOptionHandler<Void> {
 
 	@Override
 	public void load(OptionStore optionStore, Option<Void> option) {
+		if (!SystemInfo.isWindows)
+			return;
+
 		ExtensionRegistry registry = ExtensionRegistry.getInstance();
 		Optional<String> exePath = Editor.getExeFile();
 		if (!exePath.isPresent())
@@ -51,17 +55,24 @@ public class FileExtensionOptionHandler extends AbstractOptionHandler<Void> {
 		DefaultListModel<Extension> model = new DefaultListModel<>();
 		cblExt.setModel(model);
 		for (String ext : EXTENSIONS) {
-			Extension extension = new Extension(ext);
-			model.addElement(extension);
-			if (registry.isRegisteredTo(ext, exePath.get())) {
-				extension.setWasRegistered(true);
-				cblExt.addCheckBoxListSelectedValue(extension, false);
+			try {
+				Extension extension = new Extension(ext);
+				model.addElement(extension);
+				if (registry.isRegisteredTo(ext, exePath.get())) {
+					extension.setWasRegistered(true);
+					cblExt.addCheckBoxListSelectedValue(extension, false);
+				}
+			} catch (ExceptionInInitializerError e) {
+				logger.debug("Unable to query file extension.", e);
 			}
 		}
 	}
 
 	@Override
 	public void save(OptionStore optionStore, Option<Void> option) {
+		if (!SystemInfo.isWindows)
+			return;
+
 		ExtensionRegistry registry = ExtensionRegistry.getInstance();
 		Optional<String> exePath = Editor.getExeFile();
 		if (!exePath.isPresent())
