@@ -175,7 +175,7 @@ public abstract class EditorOptions {
 	}
 
 	public static abstract class TheVoid {
-		public static final Option<ThemeInfo> THEME = new LambdaOption<>(ThemeManager.getNativeTheme(), ThemeOptionHandler::new,
+		public static final Option<ThemeInfo> THEME = new LambdaOption<>(ThemeManager.getDefaultTheme(), ThemeOptionHandler::new,
 				"EditorOptions.TheVoid.THEME", I.tr("Theme"));
 
 		public static final Option<Void> FILE_EXTENSIONS = new LambdaOption<>(null, FileExtensionOptionHandler::new,

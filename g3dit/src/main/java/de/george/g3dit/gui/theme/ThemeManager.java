@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.ezware.dialog.task.TaskDialogs;
+import com.formdev.flatlaf.FlatDarkLaf;
 import com.formdev.flatlaf.FlatLaf;
 import com.formdev.flatlaf.FlatPropertiesLaf;
 import com.formdev.flatlaf.IntelliJTheme;
@@ -19,6 +20,10 @@ import de.george.g3utils.util.FilesEx;
 
 public class ThemeManager {
 	private static final Logger logger = LoggerFactory.getLogger(ThemeManager.class);
+
+	public static ThemeInfo createThemeInfo(LookAndFeel lookAndFeel) {
+		return new ThemeInfo(lookAndFeel.getName(), lookAndFeel.getDescription(), null, false, lookAndFeel.getClass().getName(), null);
+	}
 
 	public static ThemeInfo getNativeTheme() {
 		LookAndFeel nativeLookAndFeel = null;
@@ -38,10 +43,16 @@ public class ThemeManager {
 		}
 
 		if (nativeLookAndFeel != null)
-			return new ThemeInfo(nativeLookAndFeel.getName(), nativeLookAndFeel.getDescription(), null, false,
-					nativeLookAndFeel.getClass().getName(), null);
+			return createThemeInfo(nativeLookAndFeel);
 
 		return null;
+	}
+
+	public static ThemeInfo getDefaultTheme() {
+		if (SystemInfo.isLinux)
+			return createThemeInfo(new FlatDarkLaf());
+		else
+			return getNativeTheme();
 	}
 
 	public static boolean setTheme(ThemeInfo theme, boolean early) {
@@ -86,6 +97,6 @@ public class ThemeManager {
 	}
 
 	public static boolean setThemeOrDefault(ThemeInfo theme, boolean early) {
-		return setTheme(theme, early) || setTheme(getNativeTheme(), early);
+		return setTheme(theme, early) || setTheme(getDefaultTheme(), early);
 	}
 }
