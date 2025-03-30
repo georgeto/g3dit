@@ -29,6 +29,7 @@ import hu.kazocsaba.imageviewer.Overlay;
 public class NavObjectOverlay<T extends EntityMapItem> extends Overlay {
 	private MapModel<T> data;
 	private EditorContext ctx;
+	private boolean suppressNavMapError = false;
 
 	public NavObjectOverlay(MapModel<T> data, EditorContext ctx) {
 		this.data = data;
@@ -101,7 +102,15 @@ public class NavObjectOverlay<T extends EntityMapItem> extends Overlay {
 		transform = worldTransform(transform);
 
 		NavCache navCache = Caches.nav(ctx);
-		NavMap navMap = ctx.getNavMapManager().getNavMap(true);
+		boolean showNavMapError = !suppressNavMapError;
+		// Show missing nav map error only once (need to set this before calling getNavMap, due to
+		// the way the dialogs work together with the AWT event queue).
+		suppressNavMapError = true;
+		NavMap navMap = ctx.getNavMapManager().getNavMap(showNavMapError);
+		suppressNavMapError = navMap == null;
+		if (navMap == null)
+			return;
+
 		for (T entity : data.items) {
 			NavZone navZone = navCache.getZoneByGuid(entity.getGuid());
 			if (navZone != null) {
