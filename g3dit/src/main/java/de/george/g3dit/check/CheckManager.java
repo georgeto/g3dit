@@ -288,7 +288,7 @@ public class CheckManager {
 		}
 
 		private void executeChecks() {
-			if (executeChecksFuture != null || checks.isEmpty()) {
+			if (executeChecksFuture != null || checks.isEmpty() || enabledChecks.isEmpty()) {
 				return;
 			}
 
