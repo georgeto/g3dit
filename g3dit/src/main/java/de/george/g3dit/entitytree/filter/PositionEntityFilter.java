@@ -34,7 +34,7 @@ public class PositionEntityFilter extends AbstractEntityFilter {
 	public PositionEntityFilter(bCVector positonToMatch, float positionTolerance, boolean ignoreY) {
 		this.positonToMatch = positonToMatch.clone();
 		if (ignoreY) {
-			positonToMatch.setY(0.0f);
+			this.positonToMatch.setY(0.0f);
 		}
 		this.positionTolerance = positionTolerance;
 		this.ignoreY = ignoreY;
