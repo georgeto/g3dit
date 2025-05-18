@@ -1822,9 +1822,9 @@ msgstr "<html>Es kann sowohl nach vollständigen als auch unvollständigen Guids
 msgid "<html>The search term can be prefixed with one of the following prefixes.<ul><li><b>No prefix</b>: Name contains search term</li><li><b>#f#</b>: Focus name contains search term</li></ul></html>"
 msgstr "<html>Dem Suchbegriff kann einer der folgenden Präfixe vorangestellt werden.<ul><li><b>Kein Präfix</b>: Name enthält Suchbegriff</li><li><b>#f#</b>: Fokusname enthält Suchbegriff</li></ul></html>"
 
-#: g3dit\src\main\java\de\george\g3dit\entitytree\filter\PositionEntityFilter.java:71
-msgid "<html>Coordinates in the form x/y/z//<br>The position can be prefixed with one of the following prefixes.<ul><li><b>No prefix</b>: Distance</li><li><b>#l#</b>: Distance ignoring the Y component</li></ul></html>"
-msgstr "<html>Koordinaten in der Form x/y/z//<br>Der Position kann einer der folgenden Präfixe vorangestellt werden.<ul><li><b>Kein Präfix</b>: Distanz</li><li><b>#l#</b>: Distanz unter Vernachlässigung der Y-Komponente</li></ul></html>"
+#: g3dit\src\main\java\de\george\g3dit\entitytree\filter\PositionEntityFilter.java:89
+msgid "<html>Coordinates in the form x/y/z//<br>The position can be prefixed with one of the following prefixes.<ul><li><b>No prefix</b>: Distance</li><li><b>#l#</b>: Distance ignoring the Y component</li><li><b>#c#</b>: Cube side length (instead of sphere radius)</li><li><b>#s#</b>: Square side length ignoring the Y component (instead of circle radius)</li></ul></html>"
+msgstr "<html>Koordinaten in der Form x/y/z//<br>Der Position kann einer der folgenden Präfixe vorangestellt werden.<ul><li><b>Kein Präfix</b>: Distanz</li><li><b>#l#</b>: Distanz unter Vernachlässigung der Y-Komponente</li><li><b>#c#</b>: Kantenlänge eines Würfels (anstelle des Radius einer Kugel)</li><li><b>#s#</b>: Kantenlänge eines Quadrats unter Vernachlässigung der Y-Komponente (anstelle des Radius eines Kreises)</li></ul></html>"
 
 #: g3dit\src\main\java\de\george\g3dit\gui\components\FavoriteFileMenu.java:49
 msgid "Edit..."
@@ -1907,7 +1907,15 @@ msgstr "Nach unten verschieben"
 msgid "Ignore Y"
 msgstr "Ignoriere Y"
 
-#: g3dit\src\main\java\de\george\g3dit\gui\components\search\ModularSearchPanel.java:253
+#: g3dit\src\main\java\de\george\g3dit\gui\components\search\EntityPositionSearchFilterBuilder.java:33
+msgid "Cube"
+msgstr "Würfel"
+
+#: g3dit\src\main\java\de\george\g3dit\gui\components\search\EntityPositionSearchFilterBuilder.java:34
+msgid "Cube side length (instead of sphere radius)"
+msgstr "Kantenlänge eines Würfels (anstelle des Radius einer Kugel)"
+
+#: g3dit\src\main\java\de\george\g3dit\gui\components\search\ModularSearchPanel.java:254
 msgid "Append filter"
 msgstr "Filter hinzufügen"
 

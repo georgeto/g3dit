@@ -101,9 +101,9 @@ public class EntitySearchDialog extends AbstractTableProgressDialog {
 		return openEntitySearch(ctx, new GuidEntityFilter(matchMode, guid));
 	}
 
-	public static final EntitySearchDialog openEntitySearchPosition(EditorContext ctx, bCVector position, float tolerance,
-			boolean ignoreY) {
-		return openEntitySearch(ctx, new PositionEntityFilter(position, tolerance, ignoreY));
+	public static final EntitySearchDialog openEntitySearchPosition(EditorContext ctx, bCVector position, float tolerance, boolean ignoreY,
+			boolean box) {
+		return openEntitySearch(ctx, new PositionEntityFilter(position, tolerance, ignoreY, box));
 	}
 
 	private EntitySearchDialog(EditorContext ctx, String title) {

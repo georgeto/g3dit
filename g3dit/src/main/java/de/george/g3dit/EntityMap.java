@@ -241,7 +241,7 @@ public class EntityMap extends JFrame {
 						&& (e.getOriginalEvent().getModifiersEx() & InputEvent.SHIFT_DOWN_MASK) == InputEvent.SHIFT_DOWN_MASK
 						&& (e.getOriginalEvent().getModifiersEx() & InputEvent.CTRL_DOWN_MASK) == InputEvent.CTRL_DOWN_MASK) {
 					bCVector position = map.getMap().getModel().pixelsToPosition(new bCVector2(e.getX(), e.getY()));
-					EntitySearchDialog.openEntitySearchPosition(ctx, position, 2500, true);
+					EntitySearchDialog.openEntitySearchPosition(ctx, position, 2500, true, false);
 				}
 			}
 		});

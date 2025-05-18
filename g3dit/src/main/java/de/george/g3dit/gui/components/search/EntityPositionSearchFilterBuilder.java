@@ -22,6 +22,7 @@ public class EntityPositionSearchFilterBuilder implements SearchFilterBuilder<eC
 	private JTextField tfFilter;
 	private FloatSpinner fsDistance;
 	private JCheckBox cbIgnoreY;
+	private JCheckBox cbCube;
 	private JPanel comp;
 
 	public EntityPositionSearchFilterBuilder() {
@@ -29,11 +30,14 @@ public class EntityPositionSearchFilterBuilder implements SearchFilterBuilder<eC
 		fsDistance = new FloatSpinner(100.0f);
 		fsDistance.setVal(100.0f);
 		cbIgnoreY = new JCheckBox(I.tr("Ignore Y"), false);
+		cbCube = new JCheckBox(I.tr("Cube"), false);
+		cbCube.setToolTipText(I.tr("Cube side length (instead of sphere radius)"));
 
 		comp = new JPanel(new MigLayout("ins 0"));
 		comp.add(tfFilter, "width 100:300:400");
 		comp.add(fsDistance, "width 50:100:150");
 		comp.add(cbIgnoreY);
+		comp.add(cbCube);
 	}
 
 	@Override
@@ -53,7 +57,7 @@ public class EntityPositionSearchFilterBuilder implements SearchFilterBuilder<eC
 			fsDistance.commitEdit();
 		} catch (ParseException e) {
 		}
-		return new PositionEntityFilter(position, fsDistance.getVal(), cbIgnoreY.isSelected());
+		return new PositionEntityFilter(position, fsDistance.getVal(), cbIgnoreY.isSelected(), cbCube.isSelected());
 	}
 
 	@Override
@@ -62,6 +66,7 @@ public class EntityPositionSearchFilterBuilder implements SearchFilterBuilder<eC
 			tfFilter.setText(typedFilter.getPositonToMatch() != null ? typedFilter.getPositonToMatch().toString() : "");
 			fsDistance.setVal(typedFilter.getPositionTolerance());
 			cbIgnoreY.setSelected(typedFilter.isIgnoreY());
+			cbCube.setSelected(typedFilter.isCube());
 			return true;
 		} else {
 			return false;
