@@ -255,6 +255,18 @@ public class EditorArchiveTab extends EditorAbstractFileTab {
 		return false;
 	}
 
+	public boolean modifyArchive(Function<ArchiveFile, Boolean> modify) {
+		contentPane.saveView();
+
+		if (!modify.apply(currentFile))
+			return false;
+
+		refreshTree(true);
+		contentPane.loadView();
+		fileChanged();
+		return true;
+	}
+
 	public boolean modifyEntity(eCEntity entity, Function<eCEntity, Boolean> modify) {
 		if (entity == getCurrentEntity())
 			contentPane.saveView();

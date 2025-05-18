@@ -845,13 +845,27 @@ public class Editor implements EditorContext {
 		}
 	}
 
+	public boolean modifyArchive(FileDescriptor fileDescriptor, Function<ArchiveFile, Boolean> modify) {
+		if (!openOrSelectFile(fileDescriptor.getPath())) {
+			return false;
+		}
+
+		boolean changed = false;
+		for (EditorTab tab : getTabsByFile(fileDescriptor.getPath()).filterBy(EditorTab::type, EditorTabType.Archive).toList()) {
+			EditorArchiveTab archiveTab = (EditorArchiveTab) tab;
+			changed |= archiveTab.modifyArchive(modify);
+		}
+		return changed;
+	}
+
 	public boolean modifyEntity(EntityDescriptor entityDescriptor, Function<eCEntity, Boolean> modify) {
 		if (!openOrSelectFile(entityDescriptor.getFile().getPath())) {
 			return false;
 		}
 
 		boolean changed = false;
-		for (EditorTab tab : getTabsByFile(entityDescriptor.getFile().getPath()).filterBy(EditorTab::type, EditorTabType.Archive)) {
+		for (EditorTab tab : getTabsByFile(entityDescriptor.getFile().getPath()).filterBy(EditorTab::type, EditorTabType.Archive)
+				.toList()) {
 			EditorArchiveTab archiveTab = (EditorArchiveTab) tab;
 			changed |= archiveTab.modifyEntity(entityDescriptor, modify);
 		}
