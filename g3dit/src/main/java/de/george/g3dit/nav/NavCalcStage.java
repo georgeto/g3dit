@@ -246,7 +246,7 @@ public abstract class NavCalcStage {
 		JPanel mainPanel = new JPanel(new MigLayout("fill"));
 
 		progressBar = SwingUtils.createProgressBar();
-		mainPanel.add(progressBar, "spanx 10, split 2, pushx, growx 100, id progressbar");
+		mainPanel.add(progressBar, "spanx 10, split 2, pushx, grow, id progressbar");
 
 		mainPanel.add(SwingUtils.keyStrokeButton(I.tr("Execute Scan"), Icons.getImageIcon(Icons.Action.DIFF), KeyEvent.VK_E,
 				InputEvent.CTRL_DOWN_MASK, this::onExecute), "wrap");
