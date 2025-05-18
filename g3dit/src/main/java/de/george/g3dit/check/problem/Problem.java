@@ -18,7 +18,9 @@ public interface Problem {
 
 	boolean navigate(EditorContext context);
 
-	boolean canFix();
+	boolean isFixed();
 
-	boolean fix(EditorContext context);
+	boolean canBeFixed();
+
+	void fix(EditorContext context);
 }

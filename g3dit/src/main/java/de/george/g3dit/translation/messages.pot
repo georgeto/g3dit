@@ -1255,7 +1255,17 @@ msgstr ""
 msgid "Edit ignore list"
 msgstr ""
 
-#: g3dit\src\main\java\de\george\g3dit\check\CheckManager.java:535
+#: g3dit\src\main\java\de\george\g3dit\check\CheckManager.java:623
+#: g3dit\src\main\java\de\george\g3dit\nav\NavCalcStage.java:290
+msgid "Fix"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\CheckManager.java:623
+#: g3dit\src\main\java\de\george\g3dit\nav\NavCalcStage.java:290
+msgid "Fix the selected issue(s)."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\CheckManager.java:629
 msgid "Add the selected file(s) to the ignore list."
 msgstr ""
 
@@ -1264,9 +1274,17 @@ msgstr ""
 msgid "Blacklist"
 msgstr ""
 
-#: g3dit\src\main\java\de\george\g3dit\check\CheckManager.java:619
-#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\EditGuidWithCommentConfigDialog.java:34
-#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\EditStringWithCommentConfigDialog.java:34
+#: g3dit\src\main\java\de\george\g3dit\check\CheckManager.java:635
+#: g3dit\src\main\java\de\george\g3dit\nav\NavCalcStage.java:296
+msgid "Open in editor"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\CheckManager.java:636
+msgid "Open the affected object in the editor."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\CheckManager.java:726
+#: g3dit\src\main\java\de\george\g3dit\gui\dialogs\EditUniqueWithCommentConfigDialog.java:26
 #: g3dit\src\main\java\de\george\g3dit\nav\NegCircleStage.java:122
 msgid "Already opened for editing."
 msgstr ""
@@ -1275,7 +1293,12 @@ msgstr ""
 msgid "Ignore list"
 msgstr ""
 
-#: g3dit\src\main\java\de\george\g3dit\check\CheckManager.java:721
+#: g3dit\src\main\java\de\george\g3dit\check\CheckManager.java:828
+#: g3dit\src\main\java\de\george\g3dit\nav\NavCalcStage.java:190
+msgid "Fixed"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\CheckManager.java:828
 #: g3dit\src\main\java\de\george\g3dit\check\problem\EntityHelper.java:43
 msgid "Index"
 msgstr ""
@@ -2486,11 +2509,7 @@ msgstr ""
 msgid "Scan failed: {0}"
 msgstr ""
 
-#: g3dit\src\main\java\de\george\g3dit\nav\NavCalcStage.java:188
-msgid "Fixed"
-msgstr ""
-
-#: g3dit\src\main\java\de\george\g3dit\nav\NavCalcStage.java:210
+#: g3dit\src\main\java\de\george\g3dit\nav\NavCalcStage.java:222
 #, java-format
 msgid "Back ({0}) <-"
 msgstr ""
@@ -2504,19 +2523,7 @@ msgstr ""
 msgid "Execute Scan"
 msgstr ""
 
-#: g3dit\src\main\java\de\george\g3dit\nav\NavCalcStage.java:278
-msgid "Fix"
-msgstr ""
-
-#: g3dit\src\main\java\de\george\g3dit\nav\NavCalcStage.java:278
-msgid "Fix the selected issue(s)."
-msgstr ""
-
-#: g3dit\src\main\java\de\george\g3dit\nav\NavCalcStage.java:284
-msgid "Open in editor"
-msgstr ""
-
-#: g3dit\src\main\java\de\george\g3dit\nav\NavCalcStage.java:284
+#: g3dit\src\main\java\de\george\g3dit\nav\NavCalcStage.java:296
 msgid "Open the affected nav object in the editor."
 msgstr ""
 

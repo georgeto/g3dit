@@ -44,6 +44,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkEvent.EventType;
 import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableModel;
 
 import org.jdesktop.swingx.JXTable;
@@ -53,6 +54,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.ezware.dialog.task.TaskDialogs;
+import com.google.common.base.Predicates;
 import com.google.common.collect.ImmutableBiMap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Iterables;
@@ -69,6 +71,7 @@ import ca.odell.glazedlists.GlazedLists;
 import ca.odell.glazedlists.TreeList;
 import ca.odell.glazedlists.TreeList.Format;
 import ca.odell.glazedlists.TreeList.Node;
+import ca.odell.glazedlists.gui.AdvancedTableFormat;
 import ca.odell.glazedlists.gui.TableFormat;
 import ca.odell.glazedlists.matchers.AbstractMatcherEditor;
 import ca.odell.glazedlists.swing.AdvancedTableModel;
@@ -100,6 +103,7 @@ import de.george.g3dit.gui.dialogs.EditStringWithCommentConfigDialog;
 import de.george.g3dit.gui.dialogs.ExtStandardDialog;
 import de.george.g3dit.gui.renderer.BeanListCellRenderer;
 import de.george.g3dit.gui.table.TableUtil;
+import de.george.g3dit.gui.table.renderer.BooleanTableCellRenderer;
 import de.george.g3dit.settings.EditorOptions;
 import de.george.g3dit.util.ClasspathScanUtil;
 import de.george.g3dit.util.ConcurrencyUtil;
@@ -125,6 +129,7 @@ public class CheckManager {
 	private EditorContext ctx;
 	private StringWithCommentConfigFile ignoredFiles;
 	private CheckDialog checkDialog;
+	private List<Runnable> repaintListeners = new ArrayList<>();
 
 	public CheckManager(EditorContext ctx) {
 		checks = new TreeSet<>(CheckManager::compareCheck);
@@ -580,6 +585,21 @@ public class CheckManager {
 				SwingUtils.addKeyStroke(problemTable, JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT, "Delete",
 						KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0), this::onDelete);
 				problemTable.getSelectionModel().addListSelectionListener(e -> onSelect());
+				problemTable.setDefaultRenderer(Boolean.class, new BooleanTableCellRenderer() {
+					private TableCellRenderer defaultRenderer = problemTable.getDefaultRenderer(Object.class);
+
+					@Override
+					public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
+							int row, int column) {
+						int modelRow = table.convertRowIndexToModel(row);
+						if (problemTableModel != null && modelRow < problemTableModel.getRowCount()) {
+							if (!problemTableModel.getElementAt(table.convertRowIndexToModel(row)).canBeFixed()) {
+								return defaultRenderer.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+							}
+						}
+						return super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+					}
+				});
 
 				// make the 3rd table column a hierarchical column to create a TreeTable
 				TreeTableSupport treeTableSupport = TreeTableSupport.install(problemTable, treeList, 0);
@@ -600,11 +620,23 @@ public class CheckManager {
 			}
 
 			private void createActionButtons() {
+				JButton btnFix = SwingUtils.keyStrokeButton(I.tr("Fix"), I.tr("Fix the selected issue(s)."),
+						Icons.getImageIcon(Icons.Misc.WAND_MAGIC), KeyEvent.VK_SPACE, 0, this::onFix);
+				repaintListeners.add(TableUtil.enableOnGreaterEqual(problemTable, btnFix, 1,
+						() -> getSelectedProblems().anyMatch(problem -> problem.canBeFixed() && !problem.isFixed())));
+				actionButtons.add(btnFix);
+
 				JButton btnBlacklist = SwingUtils.keyStrokeButton(I.tr("Blacklist"), I.tr("Add the selected file(s) to the ignore list."),
 						Icons.getImageIcon(Icons.Select.CANCEL), KeyEvent.VK_B, InputEvent.CTRL_DOWN_MASK, this::onBlacklist);
 				TableUtil.enableOnGreaterEqual(problemTable, btnBlacklist, 1,
 						() -> getSelectedProblems().mapPartial(CheckManager::getFileHelperFile).findAny().isPresent());
 				actionButtons.add(btnBlacklist);
+
+				JButton btnShowInEditor = SwingUtils.keyStrokeButton(I.tr("Open in editor"),
+						I.tr("Open the affected object in the editor."), Icons.getImageIcon(Icons.Action.EDIT), KeyEvent.VK_O,
+						InputEvent.CTRL_DOWN_MASK, () -> onNavigate(TableUtil.getSelectedRow(problemTable)));
+				TableUtil.enableOnGreaterEqual(problemTable, btnShowInEditor, 1);
+				actionButtons.add(btnShowInEditor);
 			}
 
 			@Override
@@ -646,6 +678,11 @@ public class CheckManager {
 				return TableUtil.getSelectedRows(problemTable).map(problemTableModel::getElementAt);
 			}
 
+			protected void repaintChanges() {
+				problemTable.repaint();
+				repaintListeners.forEach(Runnable::run);
+			}
+
 			private void onNavigate(int index) {
 				getProblem(index).ifPresent(problem -> {
 					if (problem.canNavigate()) {
@@ -670,6 +707,12 @@ public class CheckManager {
 				if (!problems.isEmpty()) {
 					problems.removeAll(problemsToDelete);
 				}
+			}
+
+			private void onFix() {
+				getSelectedProblems().filter(Predicates.and(Problem::canBeFixed, Predicates.not(Problem::isFixed)))
+						.forEach(p -> p.fix(ctx));
+				repaintChanges();
 			}
 
 			private void onBlacklist() {
@@ -782,9 +825,9 @@ public class CheckManager {
 
 	// TODO: Make certain columns monospace...
 	private static final ImmutableBiMap<String, String> COLUMN_MAPPING = ImmutableBiMap.of("Name", I.tr("Name"), "Guid", I.tr("Guid"),
-			"Index", I.tr("Index"), "Path", I.tr("Path"));
+			"Index", I.tr("Index"), "Fixed", I.tr("Fixed"), "Path", I.tr("Path"));
 
-	private abstract static class ProblemTableFormat implements TableFormat<Problem> {
+	private abstract static class ProblemTableFormat implements AdvancedTableFormat<Problem> {
 		@Override
 		public String getColumnName(int column) {
 			return switch (column) {
@@ -807,6 +850,16 @@ public class CheckManager {
 				default -> throw new IllegalArgumentException();
 			}
 		}
+
+		@Override
+		public Class getColumnClass(int column) {
+			return Object.class;
+		}
+
+		@Override
+		public Comparator getColumnComparator(int column) {
+			return null;
+		}
 	}
 
 	private static class EntityProblemTreeFormat extends ProblemTreeFormat {
@@ -824,7 +877,7 @@ public class CheckManager {
 	private class EntityProblemTableFormat extends ProblemTableFormat {
 		@Override
 		public int getColumnCount() {
-			return 4;
+			return 5;
 		}
 
 		@Override
@@ -833,7 +886,8 @@ public class CheckManager {
 				case 0 -> super.getColumnName(column);
 				case 1 -> COLUMN_MAPPING.get("Guid");
 				case 2 -> COLUMN_MAPPING.get("Index");
-				case 3 -> COLUMN_MAPPING.get("Path");
+				case 3 -> COLUMN_MAPPING.get("Fixed");
+				case 4 -> COLUMN_MAPPING.get("Path");
 				default -> throw new IllegalArgumentException();
 			};
 		}
@@ -854,9 +908,21 @@ public class CheckManager {
 					}
 					return null;
 				case 3:
+					return problem.canBeFixed() ? problem.isFixed() : null;
+				case 4:
 					return getFileHelperPath(problem);
 				default:
 					throw new IllegalArgumentException();
+			}
+		}
+
+		@Override
+		public Class getColumnClass(int column) {
+			switch (column) {
+				case 3:
+					return Boolean.class;
+				default:
+					return super.getColumnClass(column);
 			}
 		}
 	}
@@ -882,7 +948,7 @@ public class CheckManager {
 					columnExt.setPreferredWidth(300);
 					columnExt.setMaxWidth(300);
 				}
-				case "Index" -> {
+				case "Index", "Fixed" -> {
 					columnExt.setMinWidth(40);
 					columnExt.setPreferredWidth(45);
 					columnExt.setMaxWidth(45);
@@ -909,14 +975,15 @@ public class CheckManager {
 	private class TemplateProblemTableFormat extends ProblemTableFormat {
 		@Override
 		public int getColumnCount() {
-			return 2;
+			return 3;
 		}
 
 		@Override
 		public String getColumnName(int column) {
 			return switch (column) {
 				case 0 -> super.getColumnName(column);
-				case 1 -> COLUMN_MAPPING.get("Path");
+				case 1 -> COLUMN_MAPPING.get("Fixed");
+				case 2 -> COLUMN_MAPPING.get("Path");
 				default -> throw new IllegalArgumentException();
 			};
 		}
@@ -925,8 +992,17 @@ public class CheckManager {
 		public Object getColumnValue(Problem problem, int column) {
 			return switch (column) {
 				case 0 -> super.getColumnValue(problem, column);
-				case 1 -> getFileHelperPath(problem);
+				case 1 -> problem.canBeFixed() ? problem.isFixed() : null;
+				case 2 -> getFileHelperPath(problem);
 				default -> throw new IllegalArgumentException();
+			};
+		}
+
+		@Override
+		public Class getColumnClass(int column) {
+			return switch (column) {
+				case 1 -> Boolean.class;
+				default -> super.getColumnClass(column);
 			};
 		}
 	}
@@ -939,6 +1015,11 @@ public class CheckManager {
 					columnExt.setPreferredWidth(500);
 					columnExt.setMaxWidth(1000);
 					columnExt.setHideable(false);
+				}
+				case "Fixed" -> {
+					columnExt.setMinWidth(40);
+					columnExt.setPreferredWidth(45);
+					columnExt.setMaxWidth(45);
 				}
 				case "Path" -> {
 					columnExt.setPreferredWidth(75);

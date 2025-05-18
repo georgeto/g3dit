@@ -67,12 +67,15 @@ public class FileHelper implements Problem {
 	}
 
 	@Override
-	public boolean canFix() {
+	public boolean isFixed() {
 		return false;
 	}
 
 	@Override
-	public boolean fix(EditorContext context) {
+	public boolean canBeFixed() {
 		return false;
 	}
+
+	@Override
+	public void fix(EditorContext context) {}
 }

@@ -8,6 +8,8 @@ public abstract class AbstractBaseProblem implements Problem {
 	private Severity severity;
 	private String message;
 	private String details;
+	private Fixer fixer;
+	private boolean fixed;
 
 	public AbstractBaseProblem(String message) {
 		this(message, null);
@@ -20,6 +22,10 @@ public abstract class AbstractBaseProblem implements Problem {
 
 	public void setParent(Problem parent) {
 		this.parent = parent;
+	}
+
+	public void setFixer(Fixer fixer) {
+		this.fixer = fixer;
 	}
 
 	@Override
@@ -57,12 +63,18 @@ public abstract class AbstractBaseProblem implements Problem {
 	}
 
 	@Override
-	public boolean canFix() {
-		return false;
+	public boolean isFixed() {
+		return fixed;
 	}
 
 	@Override
-	public boolean fix(EditorContext context) {
-		return false;
+	public boolean canBeFixed() {
+		return fixer != null;
+	}
+
+	@Override
+	public void fix(EditorContext context) {
+		if (fixer != null && !fixed)
+			fixed = fixer.fix();
 	}
 }

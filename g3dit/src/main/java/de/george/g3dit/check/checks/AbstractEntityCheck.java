@@ -8,6 +8,7 @@ import de.george.g3dit.check.Check;
 import de.george.g3dit.check.EntityDescriptor;
 import de.george.g3dit.check.FileDescriptor;
 import de.george.g3dit.check.problem.EntityProblem;
+import de.george.g3dit.check.problem.Fixer;
 import de.george.g3dit.check.problem.ProblemConsumer;
 import de.george.g3dit.check.problem.TemplateProblem;
 import de.george.g3dit.gui.components.Severity;
@@ -70,8 +71,8 @@ public abstract class AbstractEntityCheck implements Check {
 				return entityDescriptor.held();
 			};
 
-			EntityPassStatus status = processEntity(archiveFile, dataFile, entity, entityPositon.held(), pass, getDescriptor,
-					(severity, message, details) -> postEntityProblem(problemConsumer, getDescriptor.get(), severity, message, details));
+			EntityPassStatus status = processEntity(archiveFile, dataFile, entity, entityPositon.held(), pass, getDescriptor, (severity,
+					message, details, fix) -> postEntityProblem(problemConsumer, getDescriptor.get(), severity, message, details, fix));
 			entityPositon.hold(entityPositon.held() + 1);
 
 			if (status == EntityPassStatus.ArchiveDone) {
@@ -95,8 +96,8 @@ public abstract class AbstractEntityCheck implements Check {
 		TemplateEntity entity = tple.getReferenceHeader();
 		if (entity != null) {
 			FileDescriptor descriptor = new FileDescriptor(dataFile, FileDescriptor.FileType.Template);
-			return processTemplateEntity(tple, dataFile, entity, pass, descriptor,
-					(severity, message, details) -> postTemplateProblem(problemConsumer, descriptor, severity, message, details));
+			return processTemplateEntity(tple, dataFile, entity, pass, descriptor, (severity, message, details,
+					fix) -> postTemplateProblem(problemConsumer, descriptor, severity, message, details, fix));
 		}
 		return PassStatus.Next;
 	}
@@ -123,51 +124,79 @@ public abstract class AbstractEntityCheck implements Check {
 	public void reset() {}
 
 	protected void postEntityProblem(ProblemConsumer problemConsumer, EntityDescriptor descriptor, Severity severity, String message,
-			String details) {
+			String details, Fixer fix) {
 		EntityProblem problem = new EntityProblem(message, details);
 		problem.setSeverity(severity);
 		problem.setParent(problemConsumer.getEntityHelper(descriptor));
+		problem.setFixer(fix);
+		problemConsumer.post(problem);
+	}
+
+	protected void postEntityProblem(ProblemConsumer problemConsumer, EntityDescriptor descriptor, Severity severity, String message,
+			String details) {
+		postEntityProblem(problemConsumer, descriptor, severity, message, details, null);
+	}
+
+	protected void postTemplateProblem(ProblemConsumer problemConsumer, FileDescriptor descriptor, Severity severity, String message,
+			String details, Fixer fix) {
+		TemplateProblem problem = new TemplateProblem(message, details);
+		problem.setSeverity(severity);
+		problem.setParent(problemConsumer.getFileHelper(descriptor));
+		problem.setFixer(fix);
 		problemConsumer.post(problem);
 	}
 
 	protected void postTemplateProblem(ProblemConsumer problemConsumer, FileDescriptor descriptor, Severity severity, String message,
 			String details) {
-		TemplateProblem problem = new TemplateProblem(message, details);
-		problem.setSeverity(severity);
-		problem.setParent(problemConsumer.getFileHelper(descriptor));
-		problemConsumer.post(problem);
+		postTemplateProblem(problemConsumer, descriptor, severity, message, details, null);
 	}
 
 	protected interface StringProblemConsumer {
-		void post(Severity severity, String message, String details);
+		void post(Severity severity, String message, String details, Fixer fix);
 
 		default void info(String message) {
-			info(message, null);
+			info(message, null, null);
 		}
 
 		default void info(String message, String details) {
-			post(Severity.Info, message, details);
+			post(Severity.Info, message, details, null);
+		}
+
+		default void info(String message, String details, Fixer fix) {
+			post(Severity.Info, message, details, fix);
 		}
 
 		default void warning(String message) {
-			warning(message, null);
+			warning(message, null, null);
 		}
 
 		default void warning(String message, String details) {
-			post(Severity.Warn, message, details);
+			post(Severity.Warn, message, details, null);
+		}
+
+		default void warning(String message, String details, Fixer fix) {
+			post(Severity.Warn, message, details, fix);
 		}
 
 		default void fatal(String message) {
-			fatal(message, null);
+			fatal(message, null, null);
 		}
 
 		default void fatal(String message, String details) {
-			post(Severity.Error, message, details);
+			post(Severity.Error, message, details, null);
+		}
+
+		default void fatal(String message, String details, Fixer fix) {
+			post(Severity.Error, message, details, fix);
 		}
 
 		default void postIfDetailsNotEmpy(Severity severity, String message, List<String> details) {
+			postIfDetailsNotEmpy(severity, message, details, null);
+		}
+
+		default void postIfDetailsNotEmpy(Severity severity, String message, List<String> details, Fixer fix) {
 			if (details != null && !details.isEmpty()) {
-				post(severity, message, HtmlCreator.renderList(details));
+				post(severity, message, HtmlCreator.renderList(details), fix);
 			}
 		}
 	}
