@@ -297,6 +297,17 @@ public class CheckManager {
 				return;
 			}
 
+			if (ctx.getEditor().hasUnsavedFiles()) {
+				if (!TaskDialogs.ask(ctx.getParentWindow(), I.tr("Unsaved files with modifications"), I.tr("""
+						There are unsaved files open that have been modified.
+						These modifications are not taken into account when performing the checks.
+						Therefore, it is recommended to first save all modified files.
+
+						Execute the checks anyway?"""))) {
+					return;
+				}
+			}
+
 			progressBar.setIndeterminate(true);
 			egCheck.setEnabled(false);
 

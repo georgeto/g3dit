@@ -28,7 +28,7 @@ public class ScriptFixNavMapInteractAssignments implements IScript {
 	public String getDescription() {
 		return I.tr(
 				"The NavMap distinguishes whether an interact object is outside any nav area or in a nav area but blocked by a NegZone or NegCircle. "
-						+ "g3dit before version 1.13.2 did not make this distinction, and instead handled interact object outside any nav area, as if they were not registered in the NavMap."
+						+ "g3dit before version 1.13.2 did not make this distinction, and instead handled interact object outside any nav area, as if they were not registered in the NavMap. "
 						+ "That resulted in duplicate entries for interact objects.");
 	}
 

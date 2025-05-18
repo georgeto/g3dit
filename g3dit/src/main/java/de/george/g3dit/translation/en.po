@@ -1194,7 +1194,20 @@ msgstr ""
 msgid "Select checks"
 msgstr ""
 
-#: g3dit\src\main\java\de\george\g3dit\check\CheckManager.java:246
+#: g3dit\src\main\java\de\george\g3dit\check\CheckManager.java:301
+msgid ""
+"There are unsaved files open that have been modified.\n"
+"These modifications are not taken into account when performing the checks.\n"
+"Therefore, it is recommended to first save all modified files.\n"
+"\n"
+"Execute the checks anyway?"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\CheckManager.java:301
+msgid "Unsaved files with modifications"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\CheckManager.java:324
 msgid "Determine files to be checked..."
 msgstr ""
 
@@ -2861,7 +2874,7 @@ msgid "Fix corrupted NavMap interact object assignments"
 msgstr ""
 
 #: g3dit\src\main\java\de\george\g3dit\scripts\ScriptFixNavMapInteractAssignments.java:30
-msgid "The NavMap distinguishes whether an interact object is outside any nav area or in a nav area but blocked by a NegZone or NegCircle. g3dit before version 1.13.2 did not make this distinction, and instead handled interact object outside any nav area, as if they were not registered in the NavMap.That resulted in duplicate entries for interact objects."
+msgid "The NavMap distinguishes whether an interact object is outside any nav area or in a nav area but blocked by a NegZone or NegCircle. g3dit before version 1.13.2 did not make this distinction, and instead handled interact object outside any nav area, as if they were not registered in the NavMap. That resulted in duplicate entries for interact objects."
 msgstr ""
 
 #: g3dit\src\main\java\de\george\g3dit\scripts\ScriptFixNavMapInteractAssignments.java:85

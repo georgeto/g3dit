@@ -845,6 +845,15 @@ public class Editor implements EditorContext {
 		}
 	}
 
+	public boolean hasUnsavedFiles() {
+		for (EditorTab tab : tabs) {
+			if (tab instanceof EditorAbstractFileTab fileTab && fileTab.isFileChanged()) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	public boolean modifyArchive(FileDescriptor fileDescriptor, Function<ArchiveFile, Boolean> modify) {
 		if (!openOrSelectFile(fileDescriptor.getPath())) {
 			return false;
