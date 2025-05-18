@@ -12,6 +12,7 @@ import com.google.common.base.Strings;
 
 import de.george.g3utils.structure.GuidUtil;
 import de.george.g3utils.structure.bCVector;
+import de.george.g3utils.util.FastMath;
 import de.george.g3utils.util.Misc;
 import de.george.g3utils.util.Pair;
 import de.george.g3utils.util.ReflectionUtils;
@@ -297,6 +298,12 @@ public class EntityUtil {
 		}
 
 		return Optional.empty();
+	}
+
+	public static String getStaticNodeName(bCVector coordinates) {
+		int x = (int) FastMath.floor(coordinates.getX() / 10000) * 10000 + 5000;
+		int z = (int) FastMath.floor(coordinates.getZ() / 10000) * 10000 + 5000;
+		return "G3_World_01_x" + x + "y0z" + z + "_CStat.node";
 	}
 
 	public static boolean isOutsideOfStaticNodesArea(bCVector entityPosition, bCVector nc) {
