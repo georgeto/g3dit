@@ -3384,8 +3384,8 @@ msgstr ""
 msgid "Make backup"
 msgstr ""
 
-#: g3dit\src\main\java\de\george\g3dit\settings\EditorOptions.java:92
-msgid "Removed unused entries from the stringtable"
+#: g3dit\src\main\java\de\george\g3dit\settings\EditorOptions.java:93
+msgid "Remove unused entries from stringtable"
 msgstr ""
 
 #: g3dit\src\main\java\de\george\g3dit\settings\EditorOptions.java:97

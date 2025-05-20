@@ -90,7 +90,7 @@ public abstract class EditorOptions {
 				(parent) -> new BooleanOptionHandler(parent, I.tr("Make backup")), "EditorOptions.Misc.MAKE_BACKUP", I.tr("Make backup"));
 
 		public static final Option<Boolean> CLEAN_STRINGTABLE = new LambdaOption<>(false,
-				(parent) -> new BooleanOptionHandler(parent, I.tr("Removed unused entries from the stringtable")),
+				(parent) -> new BooleanOptionHandler(parent, I.tr("Remove unused entries from stringtable")),
 				"EditorOptions.Misc.CLEAN_STRINGTABLE", I.tr("Clean up string table"));
 
 		public static final Option<OpenPolicy> FILE_OPEN_POLICY = new LambdaOption<>(

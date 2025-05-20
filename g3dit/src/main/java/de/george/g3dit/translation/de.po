@@ -3473,8 +3473,8 @@ msgstr "Stringtable-Sprache"
 msgid "Make backup"
 msgstr "Backup anlegen"
 
-#: g3dit\src\main\java\de\george\g3dit\settings\EditorOptions.java:92
-msgid "Removed unused entries from the stringtable"
+#: g3dit\src\main\java\de\george\g3dit\settings\EditorOptions.java:93
+msgid "Remove unused entries from stringtable"
 msgstr "Nicht mehr benötige Einträge aus der Stringtable entfernen"
 
 #: g3dit\src\main\java\de\george\g3dit\settings\EditorOptions.java:97
