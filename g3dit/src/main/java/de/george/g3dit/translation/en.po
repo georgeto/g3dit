@@ -1215,13 +1215,7 @@ msgstr ""
 msgid "Template pass {0, number}/{1, number}"
 msgstr ""
 
-#: g3dit\src\main\java\de\george\g3dit\check\CheckManager.java:339
-#: g3dit\src\main\java\de\george\g3dit\check\CheckManager.java:399
-#: g3dit\src\main\java\de\george\g3dit\check\CheckManager.java:405
-msgid "Failure during check execution"
-msgstr ""
-
-#: g3dit\src\main\java\de\george\g3dit\check\CheckManager.java:348
+#: g3dit\src\main\java\de\george\g3dit\check\CheckManager.java:360
 msgid "Archive pass {0, number}/{1, number}"
 msgstr ""
 
@@ -1229,7 +1223,12 @@ msgstr ""
 msgid "Collect issues..."
 msgstr ""
 
-#: g3dit\src\main\java\de\george\g3dit\check\CheckManager.java:414
+#: g3dit\src\main\java\de\george\g3dit\check\CheckManager.java:411
+#: g3dit\src\main\java\de\george\g3dit\check\CheckManager.java:417
+msgid "Failure during check execution"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\CheckManager.java:426
 msgid "Execution failed"
 msgstr ""
 

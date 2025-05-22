@@ -351,11 +351,7 @@ public class CheckManager {
 									break;
 								}
 							} catch (Exception e) {
-								logger.warn("Failure during check execution on {}.", tpleFile, e);
-								GenericFileProblem problem = new GenericFileProblem(I.tr("Failure during check execution"), e.toString());
-								problem.setParent(problemConsumer.getFileHelper(new FileDescriptor(tpleFile, FileType.Template)));
-								problemConsumer.fatal(problem);
-								return;
+								throw new CheckFailureException(new FileDescriptor(tpleFile, FileType.Template), e);
 							}
 						}
 					}
