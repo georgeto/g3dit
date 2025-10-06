@@ -4,8 +4,8 @@ import org.netbeans.validation.api.builtin.stringvalidation.StringValidators;
 
 import com.google.common.collect.ImmutableList;
 
-import de.george.g3dit.gui.components.JTemplateGuidField;
 import de.george.g3dit.gui.edit.PropertyPanel;
+import de.george.g3dit.gui.edit.handler.RefFilters;
 import de.george.g3dit.gui.validation.TemplateExistenceValidator;
 import de.george.g3dit.tab.template.EditorTemplateTab;
 import de.george.g3utils.util.Misc;
@@ -114,8 +114,7 @@ public class StatsTab extends AbstractPropertyTemplateTab {
 		propertyPanel
 			.add(Integer.toString(i)).horizontalStart()
 			.add(property).horizontalSpan().noTitle()
-				.<JTemplateGuidField>customize(tfGuidField -> tfGuidField.setFilter(
-						e -> e.hasAnyClass(CD.gCSkill_PS.class, CD.gCMagic_PS.class)))
+				.customize(RefFilters::tpleSkillOrMagic)
 				.validate(validation(), GuidValidator.INSTANCE_ALLOW_EMPTY, new TemplateExistenceValidator(validation(), ctx))
 			.done();
 		//@fon

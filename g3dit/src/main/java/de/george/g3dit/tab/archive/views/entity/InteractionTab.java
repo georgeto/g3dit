@@ -1,6 +1,7 @@
 package de.george.g3dit.tab.archive.views.entity;
 
 import de.george.g3dit.gui.edit.PropertyPanel;
+import de.george.g3dit.gui.edit.handler.RefFilters;
 import de.george.g3dit.gui.validation.EntityExistenceValidator;
 import de.george.g3dit.gui.validation.TemplateExistenceValidator;
 import de.george.g3dit.tab.archive.EditorArchiveTab;
@@ -26,6 +27,7 @@ public class InteractionTab extends AbstractPropertyEntityTab {
 			.add(CD.gCInteraction_PS.Owner)
 				.validate(validation(),GuidValidator.INSTANCE_ALLOW_EMPTY, new EntityExistenceValidator(validation(), ctx))
 			.add(CD.gCInteraction_PS.Spell)
+				.customize(RefFilters.tpleHasAnyOf(CD.gCSkill_PS.class))
 				.validate(validation(),GuidValidator.INSTANCE_ALLOW_EMPTY, new TemplateExistenceValidator(validation(), ctx))
 			.done();
 		//@fon

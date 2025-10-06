@@ -11,6 +11,7 @@ import de.george.g3dit.gui.components.JEnumComboBox;
 import de.george.g3dit.gui.edit.PropertyPanel;
 import de.george.g3dit.gui.edit.adapter.LambdaPropertyAdapter;
 import de.george.g3dit.gui.edit.handler.QualityPanelPropertyHandler;
+import de.george.g3dit.gui.edit.handler.RefFilters;
 import de.george.g3dit.gui.validation.TemplateExistenceValidator;
 import de.george.g3dit.tab.template.EditorTemplateTab;
 import de.george.g3utils.util.Holder;
@@ -72,10 +73,13 @@ public class ItemTab extends AbstractPropertyTemplateTab {
 			.add(gCInteraction_PS.UseType).customize(cbUseType::hold).horizontalStart()
 			.add(gCInteraction_PS.ScriptUseFunc).horizontal()
 			.add(gCItem_PS.ArmorSet)
+				.customize(RefFilters.tpleHasAnyOf(CD.gCArmorSet_PS.class))
 				.validate(validation(), GuidValidator.INSTANCE_ALLOW_EMPTY, new TemplateExistenceValidator(validation(), ctx))
 			.add(gCItem_PS.Spell)
+				.customize(RefFilters.tpleHasAnyOf(CD.gCMagic_PS.class))
 				.validate(validation(), GuidValidator.INSTANCE_ALLOW_EMPTY, new TemplateExistenceValidator(validation(), ctx))
 			.add(gCItem_PS.Skill)
+				.customize(RefFilters.tpleHasAnyOf(CD.gCSkill_PS.class))
 				.validate(validation(), GuidValidator.INSTANCE_ALLOW_EMPTY, new TemplateExistenceValidator(validation(), ctx))
 			.add(gCItem_PS.MissionItem).horizontalStart()
 			.add(gCItem_PS.Permanent).horizontal()

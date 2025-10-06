@@ -2,8 +2,8 @@ package de.george.g3dit.tab.archive.views.entity;
 
 import javax.swing.DefaultCellEditor;
 
-import de.george.g3dit.gui.components.JTemplateGuidField;
 import de.george.g3dit.gui.edit.PropertyPanel;
+import de.george.g3dit.gui.edit.handler.RefFilters;
 import de.george.g3dit.gui.table.TableColumnDef;
 import de.george.g3dit.gui.validation.TemplateExistenceValidator;
 import de.george.g3dit.tab.archive.EditorArchiveTab;
@@ -32,9 +32,8 @@ public class TeachTab extends AbstractPropertyEntityTab {
 				.grow().sizegroup("teachTables")
 			.add(CD.gCNPC_PS.TeachSkills)
 				.name("Skills")
+				.customize(RefFilters::tpleSkillOrMagic)
 				.validate(validation(), GuidValidator.INSTANCE, new TemplateExistenceValidator(validation(), ctx))
-				.<JTemplateGuidField>customize(tfGuidField -> tfGuidField.setFilter(
-						e -> e.hasAnyClass(CD.gCSkill_PS.class, CD.gCMagic_PS.class)))
 				.grow().sizegroup("teachTables")
 			.done();
 		//@fon
