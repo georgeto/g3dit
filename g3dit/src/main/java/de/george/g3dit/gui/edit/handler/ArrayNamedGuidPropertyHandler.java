@@ -68,6 +68,7 @@ public class ArrayNamedGuidPropertyHandler extends TitledPropertyHandler<bTObjAr
 
 	@SuppressWarnings({"unchecked", "rawtypes"})
 	private NamedGuidTableCellReditor buildTableReditor(boolean editor) {
+		NamedGuidTableCellReditor reditor;
 		if (def.hasValidators()) {
 			Validator[] validators = def.getValidators();
 			validators = Arrays.stream(validators).map(v -> new AbstractValidator(v.modelType()) {
@@ -82,9 +83,11 @@ public class ArrayNamedGuidPropertyHandler extends TitledPropertyHandler<bTObjAr
 				}
 			}).toArray(AbstractValidator[]::new);
 
-			return new NamedGuidTableCellReditor(ctx, template, 50, def.getValidation(), def.getName(), validators);
+			reditor = new NamedGuidTableCellReditor(ctx, template, 50, def.getValidation(), def.getName(), validators);
 		} else {
-			return new NamedGuidTableCellReditor(ctx, template, 50);
+			reditor = new NamedGuidTableCellReditor(ctx, template, 50);
 		}
+		def.customize(reditor.getGuidField());
+		return reditor;
 	}
 }

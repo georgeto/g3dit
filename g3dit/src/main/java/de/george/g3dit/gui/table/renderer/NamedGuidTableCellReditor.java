@@ -67,4 +67,8 @@ public class NamedGuidTableCellReditor extends AbstractCellEditor
 		tfGuidField.setText(value);
 		return tfGuidField;
 	}
+
+	public JSearchNamedGuidField getGuidField() {
+		return tfGuidField;
+	}
 }
