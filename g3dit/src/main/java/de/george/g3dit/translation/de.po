@@ -4384,7 +4384,11 @@ msgstr "Objekt bearbeiten"
 msgid "Delete selected"
 msgstr "Ausgewählte löschen"
 
-#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\VegetationTab.java:161
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\VegetationTab.java:162
+msgid "{0, number} objects"
+msgstr "{0, number} Objekte"
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\VegetationTab.java:167
 msgid "Colorize"
 msgstr "Einfärben"
 

@@ -74,11 +74,13 @@ public class ItemTab extends AbstractPropertyTemplateTab {
 			.add(gCInteraction_PS.ScriptUseFunc).horizontal()
 			.add(gCItem_PS.ArmorSet)
 				.customize(RefFilters.tpleHasAnyOf(CD.gCArmorSet_PS.class))
+				// TODO: Validate type of template...
 				.validate(validation(), GuidValidator.INSTANCE_ALLOW_EMPTY, new TemplateExistenceValidator(validation(), ctx))
 			.add(gCItem_PS.Spell)
 				.customize(RefFilters.tpleHasAnyOf(CD.gCMagic_PS.class))
 				.validate(validation(), GuidValidator.INSTANCE_ALLOW_EMPTY, new TemplateExistenceValidator(validation(), ctx))
 			.add(gCItem_PS.Skill)
+				// TODO: Validate type of template...
 				.customize(RefFilters.tpleHasAnyOf(CD.gCSkill_PS.class))
 				.validate(validation(), GuidValidator.INSTANCE_ALLOW_EMPTY, new TemplateExistenceValidator(validation(), ctx))
 			.add(gCItem_PS.MissionItem).horizontalStart()

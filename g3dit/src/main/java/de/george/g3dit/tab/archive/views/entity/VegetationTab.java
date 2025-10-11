@@ -138,7 +138,7 @@ public class VegetationTab extends AbstractEntityTab {
 
 		JButton btnCreate = new JButton(I.tr("Insert new object"), Icons.getImageIcon(Icons.Action.ADD));
 		btnCreate.setMnemonic(KeyEvent.VK_E);
-		add(btnCreate, "split 4, gaptop 5");
+		add(btnCreate, "split 5, gaptop 5");
 		btnCreate.addActionListener((e) -> insertPlant(false));
 
 		JButton btnCreateFromClipboard = new JButton(I.tr("New object from clipboard"), Icons.getImageIcon(Icons.IO.IMPORT));
@@ -155,8 +155,14 @@ public class VegetationTab extends AbstractEntityTab {
 		JButton btnDelete = new JButton(I.tr("Delete selected"), Icons.getImageIcon(Icons.Action.DELETE));
 		btnDelete.setMnemonic(KeyEvent.VK_S);
 		TableUtil.enableOnGreaterEqual(table, btnDelete, 1);
-		add(btnDelete, "wrap");
+		add(btnDelete, "");
 		btnDelete.addActionListener((e) -> removeSelectedPlants());
+
+		JLabel lblCount = new JLabel();
+		Runnable updateObjectCount = () -> lblCount.setText(I.trf("{0, number} objects", model.getRowCount()));
+		updateObjectCount.run();
+		add(lblCount, "gapx push, wrap");
+		model.addTableModelListener(e -> updateObjectCount.run());
 
 		JButton btnApplyColor = new JButton(I.tr("Colorize"), Icons.getImageIcon(Icons.Color.ARROW));
 		add(btnApplyColor, "gaptop 10, split 3, sgy color");
