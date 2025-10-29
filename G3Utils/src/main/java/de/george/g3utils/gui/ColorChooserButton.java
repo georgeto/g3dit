@@ -1,6 +1,8 @@
 package de.george.g3utils.gui;
 
 import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Window;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,8 +23,10 @@ public class ColorChooserButton extends JButton {
 	}
 
 	public ColorChooserButton(Color color, Window owner, boolean showAlpha) {
-		setContentAreaFilled(false);
+		setText(null);
+		setIcon(null);
 		setOpaque(true);
+		setContentAreaFilled(false);
 		setFocusPainted(false);
 		setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
 		setSelectedColor(color);
@@ -67,5 +71,13 @@ public class ColorChooserButton extends JButton {
 
 	public void addColorChangedListener(ColorChangedListener toAdd) {
 		listeners.add(toAdd);
+	}
+
+	@Override
+	protected void paintComponent(Graphics g) {
+		Graphics2D g2 = (Graphics2D) g.create();
+		g2.setColor(current);
+		g2.fillRect(0, 0, getWidth(), getHeight());
+		g2.dispose();
 	}
 }
