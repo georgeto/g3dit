@@ -51,6 +51,11 @@ public class Icons {
 		public static final String RETURN_AFTER = "/icons/arrow-return-180.png";
 		public static final String RETURN_BEFORE = "/icons/arrow-return-180-left.png";
 		public static final String CIRCLE_DOUBLE = "/icons/arrow-circle-double.png";
+		public static final String BAR_UP = "/icons/arrow-bar-up.png";
+		public static final String BAR_DOWN = "/icons/arrow-bar-down.png";
+		public static final String BAR_LEFT = "/icons/arrow-bar-left.png";
+		public static final String BAR_RIGHT = "/icons/arrow-bar-right.png";
+
 	}
 
 	public static class Data {
