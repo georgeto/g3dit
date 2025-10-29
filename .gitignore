@@ -45,3 +45,6 @@ bin/
 build/
 .gradle/
 gradle.properties
+
+# g3dit
+g3dit/src/main/java/de/george/g3dit/translation/de.mo
