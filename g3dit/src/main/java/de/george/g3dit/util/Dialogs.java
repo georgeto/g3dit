@@ -17,7 +17,7 @@ public class Dialogs {
 		AllYes,
 	}
 
-	public static Answer askSaveChanges(Window parent, String message, boolean all) {
+	public static Answer askYesNoCancel(Window parent, String title, String message, boolean all) {
 		List<CommandLink> links = new ArrayList<>();
 		links.add(new CommandLink(I.tr("Yes"), ""));
 		links.add(new CommandLink(I.tr("No"), ""));
@@ -26,7 +26,7 @@ public class Dialogs {
 			links.add(new CommandLink(I.tr("All No"), ""));
 			links.add(new CommandLink(I.tr("All Yes"), ""));
 		}
-		int answer = TaskDialogs.choice(parent, I.tr("Apply changes"), message, 0, links);
+		int answer = TaskDialogs.choice(parent, title, message, 0, links);
 
 		return switch (answer) {
 			case 0 -> Answer.Yes;
@@ -36,6 +36,10 @@ public class Dialogs {
 			case 4 -> Answer.AllYes;
 			default -> throw new IllegalStateException();
 		};
+	}
+
+	public static Answer askSaveChanges(Window parent, String message, boolean all) {
+		return askYesNoCancel(parent, I.tr("Apply changes"), message, all);
 	}
 
 	public static Answer askSaveChanges(Window parent, String message) {

@@ -4,6 +4,7 @@ import java.awt.Window;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -35,6 +36,7 @@ import de.george.g3dit.tab.EditorAbstractFileTab;
 import de.george.g3dit.util.AssetResolver;
 import de.george.g3dit.util.AssetResolver.MaterialAsset;
 import de.george.g3dit.util.AssetResolver.TextureAsset;
+import de.george.g3dit.util.Dialogs;
 import de.george.g3dit.util.FileDialogWrapper;
 import de.george.g3dit.util.Icons;
 import de.george.g3utils.gui.SwingUtils;
@@ -176,7 +178,26 @@ public class EditVegetationMeshesDialog extends ExtStandardDialog {
 						I.tr("Import meshes from another VegetationRoot"), AbstractSelectDialog.SELECTION_MULTIPLE, meshes);
 
 				if (dialog.openAndWasSuccessful()) {
-					List<eCVegetation_Mesh> selectedMeshes = dialog.getSelectedEntries();
+					List<eCVegetation_Mesh> selectedMeshes = new ArrayList<>();
+					Dialogs.Answer answer = null;
+					for (eCVegetation_Mesh mesh : dialog.getSelectedEntries()) {
+						if (isDuplicate(mesh.getName()) && answer != Dialogs.Answer.AllYes) {
+							answer = answer == Dialogs.Answer.AllNo ? answer : askDuplicateMesh(mesh.getName(), true);
+							switch (answer) {
+								case Yes:
+								case AllYes:
+									selectedMeshes.add(mesh);
+									break;
+								case Cancel:
+									return Optional.empty();
+								case No:
+								case AllNo:
+									break;
+							}
+						} else
+							selectedMeshes.add(mesh);
+					}
+
 					selectedMeshes.forEach(vegetationPS::addMeshClass);
 					eventList.addAll(selectedMeshes);
 					ctx.fileChanged();
@@ -246,11 +267,24 @@ public class EditVegetationMeshesDialog extends ExtStandardDialog {
 
 	private Optional<eCVegetation_Mesh> importMeshesFromXcmsh() {
 		eCVegetation_Mesh vegMesh = (eCVegetation_Mesh) ClassUtil.createDefaultPropertySet(CD.eCVegetation_Mesh.class);
-		if (updateMeshFromXcmsh(vegMesh)) {
-			vegetationPS.addMeshClass(vegMesh);
-			return Optional.of(vegMesh);
-		} else
+		if (!updateMeshFromXcmsh(vegMesh))
 			return Optional.empty();
 
+		if (isDuplicate(vegMesh.getName()) && askDuplicateMesh(vegMesh.getName(), false) != Dialogs.Answer.Yes)
+			return Optional.empty();
+
+		vegetationPS.addMeshClass(vegMesh);
+		return Optional.of(vegMesh);
+	}
+
+	private boolean isDuplicate(String meshName) {
+		return vegetationPS.getMeshClasses().stream().anyMatch(mesh -> meshName.equals(mesh.getName()));
+	}
+
+	private Dialogs.Answer askDuplicateMesh(String meshName, boolean all) {
+		return Dialogs.askYesNoCancel(EditVegetationMeshesDialog.this, I.tr("Duplicate vegetation mesh"), I.trf("""
+				The VegetationRoot already contains a vegetation mesh with the name ''{0}''.
+				Do you really want to import a duplicate vegetation mesh?
+				""", meshName), all);
 	}
 }

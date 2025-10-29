@@ -4475,6 +4475,17 @@ msgstr ""
 msgid "Material ''{0}'' contains more than one diffuse texture."
 msgstr ""
 
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\dialogs\EditVegetationMeshesDialog.java:286
+msgid "Duplicate vegetation mesh"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\dialogs\EditVegetationMeshesDialog.java:286
+#, java-format
+msgid ""
+"The VegetationRoot already contains a vegetation mesh with the name ''{0}''.\n"
+"Do you really want to import a duplicate vegetation mesh?\n"
+msgstr ""
+
 #: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\dialogs\SlotDialog.java:12
 msgid "Load slot from template"
 msgstr ""

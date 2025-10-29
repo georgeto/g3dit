@@ -4576,6 +4576,19 @@ msgstr "''{0}'' enthält keine Diffsue-Textur."
 msgid "Material ''{0}'' contains more than one diffuse texture."
 msgstr "Material ''{0}'' enthält mehr als eine Diffuse-Textur."
 
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\dialogs\EditVegetationMeshesDialog.java:286
+msgid "Duplicate vegetation mesh"
+msgstr "Doppeltes Vegetation-Mesh"
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\dialogs\EditVegetationMeshesDialog.java:286
+#, java-format
+msgid ""
+"The VegetationRoot already contains a vegetation mesh with the name ''{0}''.\n"
+"Do you really want to import a duplicate vegetation mesh?\n"
+msgstr ""
+"Die VegetationRoot enthält bereits ein Vegetations-Mesh mit dem Namen ''{0}''.\n"
+"Soll wirklich ein doppeltes Vegetations-Mesh importiert werden?\n"
+
 #: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\dialogs\SlotDialog.java:12
 msgid "Load slot from template"
 msgstr "Slot aus Template laden"
