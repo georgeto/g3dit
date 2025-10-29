@@ -22,7 +22,6 @@ import com.jidesoft.dialog.ButtonPanel;
 import com.teamunify.i18n.I;
 
 import de.george.g3dit.gui.dialogs.ExtStandardDialog;
-import de.george.g3dit.gui.dialogs.TemplateSearchDialog;
 import de.george.g3utils.gui.ColorChooserButton;
 import de.george.g3utils.gui.SwingUtils;
 import de.george.g3utils.structure.bCEulerAngles;
@@ -35,7 +34,7 @@ import de.george.lrentnode.classes.eCVegetation_PS.PlantRegionEntry;
 import net.miginfocom.swing.MigLayout;
 
 public class CreatePlantDialog extends ExtStandardDialog {
-	private static final Logger logger = LoggerFactory.getLogger(TemplateSearchDialog.class);
+	private static final Logger logger = LoggerFactory.getLogger(CreatePlantDialog.class);
 
 	private JTextField tfX, tfY, tfZ, tfPitch, tfYaw, tfRoll, tfScaleWidth, tfScaleHeight;
 	private MeshListComboBox cbMesh;

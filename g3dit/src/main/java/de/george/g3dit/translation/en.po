@@ -4328,7 +4328,17 @@ msgstr ""
 msgid "Teleports the player to the object."
 msgstr ""
 
-#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\VegetationTab.java:184
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\VegetationTab.java:213
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\VegetationTab.java:375
+msgid "Import objects from JSON"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\VegetationTab.java:217
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\VegetationTab.java:442
+msgid "Export objects to JSON"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\VegetationTab.java:222
 msgid "View meshes"
 msgstr ""
 
@@ -4370,7 +4380,41 @@ msgstr ""
 msgid "Select mesh to set"
 msgstr ""
 
-#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\VegetationTab.java:411
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\VegetationTab.java:393
+msgid "Failed to import objects from JSON"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\VegetationTab.java:397
+msgid "Malformed vegetation object"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\VegetationTab.java:398
+#, java-format
+msgid ""
+"Vegetation object to be imported refers to non-existing mesh:\n"
+"{0}"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\VegetationTab.java:418
+#, java-format
+msgid ""
+"Vegetation object to be imported refers to non-existing mesh (contained in JSON, but mesh import is disabled):\n"
+"{0}"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\VegetationTab.java:428
+msgid "Failed to parse mesh data from JSON"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\VegetationTab.java:451
+msgid "Should the object be imported?"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\VegetationTab.java:517
+msgid "Failed to export objects to JSON"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\VegetationTab.java:523
 msgid "Position X"
 msgstr ""
 
@@ -4446,7 +4490,7 @@ msgstr ""
 msgid "Invalid number entered"
 msgstr ""
 
-#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\dialogs\CreatePlantDialog.java:210
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\dialogs\CreatePlantDialog.java:170
 msgid "Malformed vegetation object data"
 msgstr ""
 
@@ -4516,6 +4560,42 @@ msgstr ""
 msgid ""
 "The VegetationRoot already contains a vegetation mesh with the name ''{0}''.\n"
 "Do you really want to import a duplicate vegetation mesh?\n"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\dialogs\ExportVegetationObjectsDialog.java:41
+msgid "Export position"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\dialogs\ExportVegetationObjectsDialog.java:45
+msgid "Position of exported objects will be relative to the export position."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\dialogs\ExportVegetationObjectsDialog.java:49
+msgid "Export meshes used by exported objects"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\dialogs\ExportVegetationObjectsDialog.java:61
+msgid "Export"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\dialogs\ImportVegetationObjectsDialog.java:41
+msgid "Import position"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\dialogs\ImportVegetationObjectsDialog.java:45
+msgid "Position of import objects will be relative to the import position."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\dialogs\ImportVegetationObjectsDialog.java:49
+msgid "Import meshes used by imported objects"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\dialogs\ImportVegetationObjectsDialog.java:52
+msgid "Skip objects with missing mesh"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\dialogs\ImportVegetationObjectsDialog.java:64
+msgid "Import"
 msgstr ""
 
 #: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\dialogs\SlotDialog.java:12

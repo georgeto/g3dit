@@ -2,10 +2,15 @@ package de.george.g3dit.tab.archive.views.entity;
 
 import java.awt.Color;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.function.Function;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -24,6 +29,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.ezware.dialog.task.TaskDialogs;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
+import com.github.bsideup.jabel.Desugar;
 import com.google.common.collect.ImmutableBiMap;
 import com.l2fprod.common.swing.renderer.ColorCellRenderer;
 import com.teamunify.i18n.I;
@@ -34,23 +44,33 @@ import de.george.g3dit.rpc.IpcUtil;
 import de.george.g3dit.tab.archive.EditorArchiveTab;
 import de.george.g3dit.tab.archive.views.entity.dialogs.CreatePlantDialog;
 import de.george.g3dit.tab.archive.views.entity.dialogs.EditVegetationMeshesDialog;
+import de.george.g3dit.tab.archive.views.entity.dialogs.ExportVegetationObjectsDialog;
+import de.george.g3dit.tab.archive.views.entity.dialogs.ImportVegetationObjectsDialog;
 import de.george.g3dit.tab.archive.views.entity.dialogs.SelectMeshDialog;
+import de.george.g3dit.util.Dialogs;
+import de.george.g3dit.util.FileDialogWrapper;
 import de.george.g3dit.util.Icons;
+import de.george.g3dit.util.json.JsonUtil;
 import de.george.g3utils.gui.ColorChooserButton;
 import de.george.g3utils.gui.ListTableModel;
 import de.george.g3utils.gui.SwingUtils;
+import de.george.g3utils.io.G3FileReaderVirtual;
+import de.george.g3utils.io.G3FileWriterVirtual;
 import de.george.g3utils.structure.bCEulerAngles;
+import de.george.g3utils.structure.bCMatrix;
 import de.george.g3utils.structure.bCQuaternion;
 import de.george.g3utils.structure.bCVector;
 import de.george.g3utils.util.FilesEx;
 import de.george.g3utils.util.IOUtils;
 import de.george.g3utils.util.Misc;
 import de.george.lrentnode.archive.eCEntity;
+import de.george.lrentnode.classes.eCVegetation_Mesh;
 import de.george.lrentnode.classes.eCVegetation_Mesh.eSVegetationMeshID;
 import de.george.lrentnode.classes.eCVegetation_PS;
 import de.george.lrentnode.classes.eCVegetation_PS.PlantRegionEntry;
 import de.george.lrentnode.classes.eCVegetation_PS.eCVegetation_GridNode;
 import de.george.lrentnode.classes.desc.CD;
+import de.george.lrentnode.util.ClassUtil;
 import de.george.lrentnode.util.EntityUtil;
 import net.miginfocom.swing.MigLayout;
 
@@ -194,8 +214,17 @@ public class VegetationTab extends AbstractEntityTab {
 		ctx.getIpcMonitor().addListener(this,
 				ipcMonitor -> btnGotoPlant.setEnabled(ipcMonitor.isAvailable() && table.getSelectedRowCount() >= 1), true, false, true);
 
+		JButton btnImportObjects = new JButton(I.tr("Import objects from JSON"), Icons.getImageIcon(Icons.Arrow.BAR_UP));
+		add(btnImportObjects, "gaptop 20, split 2");
+		btnImportObjects.addActionListener((e) -> importFromJson());
+
+		JButton btnExportObjects = new JButton(I.tr("Export objects to JSON"), Icons.getImageIcon(Icons.Arrow.BAR_DOWN));
+		TableUtil.enableOnGreaterEqual(table, btnExportObjects, 1);
+		add(btnExportObjects, "wrap");
+		btnExportObjects.addActionListener((e) -> exportToJson());
+
 		JButton btnEditMeshes = new JButton(I.tr("View meshes"), Icons.getImageIcon(Icons.Action.BOOK));
-		add(btnEditMeshes, "gaptop 20, split 2");
+		add(btnEditMeshes, "gaptop 10, split 2");
 		btnEditMeshes.addActionListener((e) -> editMeshes());
 
 		JButton btnUpdateBounds = new JButton(I.tr("Recalculate BoundaryBox"), Icons.getImageIcon(Icons.Arrow.CIRCLE_DOUBLE));
@@ -340,6 +369,153 @@ public class VegetationTab extends AbstractEntityTab {
 	private void gotoPlant() {
 		PlantTableEntry entry = model.getEntry(TableUtil.getSelectedRow(table));
 		IpcUtil.gotoPosition(entry.position);
+	}
+
+	private ObjectMapper jsonMapper = JsonUtil.noGetterAutodetectMapper().registerModule(JsonUtil.getExtensionModule())
+			.registerModule(new ParameterNamesModule())
+			.enable(SerializationFeature.INDENT_OUTPUT, SerializationFeature.ORDER_MAP_ENTRIES_BY_KEYS);
+
+	private void importFromJson() {
+		Path openFile = FileDialogWrapper.saveFile(I.tr("Import objects from JSON"), null, "json", ctx.getParentWindow(),
+				FileDialogWrapper.JSON_FILTER);
+		if (openFile == null)
+			return;
+
+		var dialog = new ImportVegetationObjectsDialog(ctx.getParentWindow(), I.tr("Import objects from JSON"));
+		if (!dialog.openAndWasSuccessful())
+			return;
+
+		PlantJsonObjectDb db;
+		try {
+			db = jsonMapper.readValue(openFile.toFile(), PlantJsonObjectDb.class);
+		} catch (IOException e) {
+			logger.error("Failed to import objects from JSON.", e);
+			TaskDialogs.error(ctx.getParentWindow(), I.tr("Failed to import objects from JSON"), e.getMessage());
+			return;
+		}
+
+		Function<PlantJsonObject, Optional<eCVegetation_Mesh>> lookupMesh = object -> vegetationPS.getMeshClasses().stream()
+				.filter(m -> m.getName().equals(object.meshName)).findFirst();
+
+		for (var object : db.objects) {
+			var mesh = lookupMesh.apply(object).orElse(null);
+			if (mesh == null) {
+				byte[] meshData = db.meshes.get(object.meshName);
+				if (meshData == null) {
+					if (dialog.skipMissing())
+						continue;
+
+					TaskDialogs.error(ctx.getParentWindow(), I.tr("Malformed vegetation object"),
+							I.trf("Vegetation object to be imported refers to non-existing mesh:\n{0}", object.meshName));
+					return;
+				}
+
+				if (!dialog.importMeshes()) {
+					if (dialog.skipMissing())
+						continue;
+
+					TaskDialogs.error(ctx.getParentWindow(), I.tr("Malformed vegetation object"), I.trf(
+							"Vegetation object to be imported refers to non-existing mesh (contained in JSON, but mesh import is disabled):\n{0}",
+							object.meshName));
+					return;
+				}
+
+				try (var reader = new G3FileReaderVirtual(meshData)) {
+					mesh = (eCVegetation_Mesh) ClassUtil.readSubClass(reader);
+					vegetationPS.addMeshClass(mesh);
+				} catch (IOException e) {
+					logger.error("Failed to parse mesh data from JSON.", e);
+					TaskDialogs.error(ctx.getParentWindow(), I.tr("Failed to parse mesh data from JSON"), e.getMessage());
+					return;
+				}
+			}
+		}
+
+		Dialogs.Answer answer = null;
+		for (var object : db.objects) {
+			var mesh = lookupMesh.apply(object);
+			if (dialog.skipMissing() && !mesh.isPresent())
+				continue;
+
+			var relativeMatrix = new bCMatrix(bCEulerAngles.fromDegree(object.yaw, object.pitch, object.roll),
+					new bCVector(object.scaleWidth, object.scaleHeight, object.scaleWidth), object.position);
+			var entryMatrix = dialog.getImportPosition().getProduct(relativeMatrix);
+			var entryScaling = entryMatrix.getPureScaling();
+
+			bCQuaternion rotation = new bCQuaternion(entryMatrix);
+			var entry = new PlantRegionEntry(mesh.get().getMeshID(), entryMatrix.getTranslation(), rotation,
+					Math.max(entryScaling.getX(), entryScaling.getZ()), entryScaling.getY(), object.color.getRGB());
+
+			if (!isInsideStaticNode(entry.position) && answer != Dialogs.Answer.AllYes) {
+				answer = answer == Dialogs.Answer.AllNo ? answer
+						: Dialogs.askYesNoCancel(ctx.getParentWindow(), I.tr("Should the object be imported?"),
+								I.trf("The position ({0}) of the new object ''{1}''\nis outside the scope of this file.\n"
+										+ "The object should instead be inserted into the file responsible for the scope.",
+										entry.position.toString(), mesh.get().getName()),
+								true);
+
+				switch (answer) {
+					case Yes:
+					case AllYes:
+						vegetationPS.getGrid().insertEntry(entry);
+						break;
+					case Cancel:
+						return;
+					case No:
+					case AllNo:
+						break;
+				}
+			} else
+				vegetationPS.getGrid().insertEntry(entry);
+		}
+
+		boundsNeedUpdate = true;
+		ctx.fileChanged();
+		loadValues();
+	}
+
+	private void exportToJson() {
+		var objects = new ArrayList<PlantJsonObject>();
+		var meshes = new HashMap<String, byte[]>();
+
+		var dialog = new ExportVegetationObjectsDialog(ctx.getParentWindow(), I.tr("Export objects to JSON"));
+		if (!dialog.openAndWasSuccessful())
+			return;
+
+		for (int row : TableUtil.getSelectedRows(table)) {
+			PlantTableEntry entry = model.getEntry(row);
+			var mesh = vegetationPS.getMeshClass(entry.meshID);
+			if (!meshes.containsKey(mesh.getName()) && dialog.includeMeshes()) {
+				var writer = new G3FileWriterVirtual();
+				ClassUtil.writeSubClass(writer, mesh);
+				meshes.put(mesh.getName(), writer.getData());
+			}
+
+			var entryMatrix = new bCMatrix(bCEulerAngles.fromDegree(entry.yaw, entry.pitch, entry.roll),
+					new bCVector(entry.scaleWidth, entry.scaleHeight, entry.scaleWidth), entry.position);
+			var relativeMatrix = dialog.getExportPosition().getInverted();
+			relativeMatrix.multiply(entryMatrix);
+			var relativeRotation = new bCEulerAngles(relativeMatrix);
+			var relativeScaling = relativeMatrix.getPureScaling();
+
+			objects.add(new PlantJsonObject(mesh.getName(), relativeMatrix.getTranslation(), relativeRotation.getPitchDeg(),
+					relativeRotation.getYawDeg(), relativeRotation.getRollDeg(), Math.max(relativeScaling.getX(), relativeScaling.getZ()),
+					relativeScaling.getY(), new Color(entry.colorARGB)));
+		}
+
+		Path saveFile = FileDialogWrapper.saveFile(I.tr("Export objects to JSON"), null, "json", ctx.getParentWindow(),
+				FileDialogWrapper.JSON_FILTER);
+		if (saveFile == null)
+			return;
+
+		var db = new PlantJsonObjectDb(objects, meshes);
+		try {
+
+			jsonMapper.writeValue(saveFile.toFile(), db);
+		} catch (IOException e) {
+			logger.error("Failed to export objects to JSON.", e);
+			TaskDialogs.error(ctx.getParentWindow(), I.tr("Failed to export objects to JSON"), e.getMessage());
+		}
 	}
 
 	private void editMeshes() {
@@ -610,6 +786,16 @@ public class VegetationTab extends AbstractEntityTab {
 			this.gridNode = gridNode;
 			this.entry = entry;
 		}
+	}
 
+	@Desugar
+	@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
+	private record PlantJsonObject(String meshName, bCVector position, float pitch, float yaw, float roll, float scaleWidth,
+			float scaleHeight, Color color) {
+	}
+
+	@Desugar
+	@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
+	private record PlantJsonObjectDb(List<PlantJsonObject> objects, Map<String, byte[]> meshes) {
 	}
 }

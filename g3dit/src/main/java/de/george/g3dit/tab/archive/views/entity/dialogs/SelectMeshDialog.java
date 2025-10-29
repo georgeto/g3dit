@@ -15,14 +15,13 @@ import com.jidesoft.dialog.ButtonPanel;
 import com.teamunify.i18n.I;
 
 import de.george.g3dit.gui.dialogs.ExtStandardDialog;
-import de.george.g3dit.gui.dialogs.TemplateSearchDialog;
 import de.george.g3utils.gui.SwingUtils;
 import de.george.lrentnode.classes.eCVegetation_Mesh.eSVegetationMeshID;
 import de.george.lrentnode.classes.eCVegetation_PS;
 import net.miginfocom.swing.MigLayout;
 
 public class SelectMeshDialog extends ExtStandardDialog {
-	private static final Logger logger = LoggerFactory.getLogger(TemplateSearchDialog.class);
+	private static final Logger logger = LoggerFactory.getLogger(SelectMeshDialog.class);
 
 	private MeshListComboBox cbMesh;
 

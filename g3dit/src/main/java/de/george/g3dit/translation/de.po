@@ -4423,7 +4423,17 @@ msgstr "Mesh setzen"
 msgid "Teleports the player to the object."
 msgstr "Teleportiert den Spieler zum Objekt."
 
-#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\VegetationTab.java:184
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\VegetationTab.java:213
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\VegetationTab.java:375
+msgid "Import objects from JSON"
+msgstr "Objekte aus JSON importieren"
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\VegetationTab.java:217
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\VegetationTab.java:442
+msgid "Export objects to JSON"
+msgstr "Objekte nach JSON exportieren"
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\VegetationTab.java:222
 msgid "View meshes"
 msgstr "Meshes betrachten"
 
@@ -4471,7 +4481,45 @@ msgstr ""
 msgid "Select mesh to set"
 msgstr "Zu setzendes Mesh auswählen"
 
-#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\VegetationTab.java:411
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\VegetationTab.java:393
+msgid "Failed to import objects from JSON"
+msgstr "Fehler beim Importieren von Objekten aus JSON"
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\VegetationTab.java:397
+msgid "Malformed vegetation object"
+msgstr "Fehlerhaftes Vegetationsobjekt"
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\VegetationTab.java:398
+#, java-format
+msgid ""
+"Vegetation object to be imported refers to non-existing mesh:\n"
+"{0}"
+msgstr ""
+"Das zu importierende Vegetationsobjekt verweist auf ein nicht existierendes Mesh:\n"
+"{0}"
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\VegetationTab.java:418
+#, java-format
+msgid ""
+"Vegetation object to be imported refers to non-existing mesh (contained in JSON, but mesh import is disabled):\n"
+"{0}"
+msgstr ""
+"Das zu importierende Vegetationsobjekt verweist auf ein nicht existierendes Mesh (in JSON enthalten, aber Mesh-Import ist deaktiviert):\n"
+"{0}"
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\VegetationTab.java:428
+msgid "Failed to parse mesh data from JSON"
+msgstr "Fehler beim Parsen der Mesh-Daten aus JSON"
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\VegetationTab.java:451
+msgid "Should the object be imported?"
+msgstr "Soll das Objekt importiert werden?"
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\VegetationTab.java:517
+msgid "Failed to export objects to JSON"
+msgstr "Fehler beim Exportieren von Objekten nach JSON"
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\VegetationTab.java:523
 msgid "Position X"
 msgstr "Position X"
 
@@ -4547,7 +4595,7 @@ msgstr "max-z"
 msgid "Invalid number entered"
 msgstr "Ungültige Nummer eingegeben"
 
-#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\dialogs\CreatePlantDialog.java:210
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\dialogs\CreatePlantDialog.java:170
 msgid "Malformed vegetation object data"
 msgstr "Fehlerhafte Vegetationsobjektdaten"
 
@@ -4620,6 +4668,42 @@ msgid ""
 msgstr ""
 "Die VegetationRoot enthält bereits ein Vegetations-Mesh mit dem Namen ''{0}''.\n"
 "Soll wirklich ein doppeltes Vegetations-Mesh importiert werden?\n"
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\dialogs\ExportVegetationObjectsDialog.java:41
+msgid "Export position"
+msgstr "Exportposition"
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\dialogs\ExportVegetationObjectsDialog.java:45
+msgid "Position of exported objects will be relative to the export position."
+msgstr "Die Position der exportierten Objekte wird relativ zur Exportposition sein."
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\dialogs\ExportVegetationObjectsDialog.java:49
+msgid "Export meshes used by exported objects"
+msgstr "Von exportierten Objekten verwendete Meshes exportieren"
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\dialogs\ExportVegetationObjectsDialog.java:61
+msgid "Export"
+msgstr "Exportieren"
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\dialogs\ImportVegetationObjectsDialog.java:41
+msgid "Import position"
+msgstr "Importposition"
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\dialogs\ImportVegetationObjectsDialog.java:45
+msgid "Position of import objects will be relative to the import position."
+msgstr "Die Position der importierten Objekte wird relativ zur Importposition sein."
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\dialogs\ImportVegetationObjectsDialog.java:49
+msgid "Import meshes used by imported objects"
+msgstr "Von importierten Objekten verwendete Meshes importieren"
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\dialogs\ImportVegetationObjectsDialog.java:52
+msgid "Skip objects with missing mesh"
+msgstr "Objekte mit fehlendem Mesh überspringen"
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\dialogs\ImportVegetationObjectsDialog.java:64
+msgid "Import"
+msgstr "Importieren"
 
 #: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\dialogs\SlotDialog.java:12
 msgid "Load slot from template"
