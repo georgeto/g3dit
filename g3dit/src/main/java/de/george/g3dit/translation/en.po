@@ -4418,7 +4418,11 @@ msgstr ""
 msgid "max-z"
 msgstr ""
 
-#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\dialogs\EditVegetationMeshesDialog.java:59
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\dialogs\CreatePlantDialog.java:210
+msgid "Malformed vegetation object data"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\dialogs\EditVegetationMeshesDialog.java:73
 msgid "Edit vegetation meshes"
 msgstr ""
 

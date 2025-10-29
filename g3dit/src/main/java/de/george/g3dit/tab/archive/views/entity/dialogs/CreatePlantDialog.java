@@ -18,6 +18,10 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.EtchedBorder;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.ezware.dialog.task.TaskDialogs;
 import com.jidesoft.dialog.ButtonPanel;
 import com.teamunify.i18n.I;
 
@@ -25,6 +29,7 @@ import ca.odell.glazedlists.GlazedLists;
 import ca.odell.glazedlists.SortedList;
 import ca.odell.glazedlists.swing.GlazedListsSwing;
 import de.george.g3dit.gui.dialogs.ExtStandardDialog;
+import de.george.g3dit.gui.dialogs.TemplateSearchDialog;
 import de.george.g3utils.gui.ColorChooserButton;
 import de.george.g3utils.gui.SwingUtils;
 import de.george.g3utils.structure.bCEulerAngles;
@@ -38,6 +43,8 @@ import de.george.lrentnode.classes.eCVegetation_PS.PlantRegionEntry;
 import net.miginfocom.swing.MigLayout;
 
 public class CreatePlantDialog extends ExtStandardDialog {
+	private static final Logger logger = LoggerFactory.getLogger(TemplateSearchDialog.class);
+
 	private JTextField tfX, tfY, tfZ, tfPitch, tfYaw, tfRoll, tfScaleWidth, tfScaleHeight;
 	private JComboBox<MeshEntry> cbMesh;
 	private ColorChooserButton ccbColor;
@@ -198,8 +205,9 @@ public class CreatePlantDialog extends ExtStandardDialog {
 				lastSelectedMeshID = createdEntry.meshID;
 				dispose();
 				setDialogResult(RESULT_AFFIRMED);
-			} catch (NumberFormatException e1) {
-				e1.printStackTrace();
+			} catch (NumberFormatException e) {
+				logger.info("Malformed vegetation object data: {}", e.getMessage());
+				TaskDialogs.error(CreatePlantDialog.this, I.tr("Malformed vegetation object data"), e.getMessage());
 			}
 		});
 
