@@ -34,6 +34,7 @@ import de.george.g3dit.rpc.IpcUtil;
 import de.george.g3dit.tab.archive.EditorArchiveTab;
 import de.george.g3dit.tab.archive.views.entity.dialogs.CreatePlantDialog;
 import de.george.g3dit.tab.archive.views.entity.dialogs.EditVegetationMeshesDialog;
+import de.george.g3dit.tab.archive.views.entity.dialogs.SelectMeshDialog;
 import de.george.g3dit.util.Icons;
 import de.george.g3utils.gui.ColorChooserButton;
 import de.george.g3utils.gui.ListTableModel;
@@ -165,7 +166,7 @@ public class VegetationTab extends AbstractEntityTab {
 		model.addTableModelListener(e -> updateObjectCount.run());
 
 		JButton btnApplyColor = new JButton(I.tr("Colorize"), Icons.getImageIcon(Icons.Color.ARROW));
-		add(btnApplyColor, "gaptop 10, split 3, sgy color");
+		add(btnApplyColor, "gaptop 10, split 4, sgy color");
 		TableUtil.enableOnGreaterEqual(table, btnApplyColor, 1);
 		btnApplyColor.addActionListener(e -> applyColor());
 
@@ -174,9 +175,15 @@ public class VegetationTab extends AbstractEntityTab {
 		ccbDefaultColor.setToolTipText(I.tr("Default color"));
 
 		JButton btnSetDefaultColor = new JButton(I.tr("Default color from selection"), Icons.getImageIcon(Icons.Color.PENCIL));
-		add(btnSetDefaultColor, "gaptop 10, sgy color, wrap");
+		add(btnSetDefaultColor, "gaptop 10, sgy color");
 		TableUtil.enableOnEqual(table, btnSetDefaultColor, 1);
 		btnSetDefaultColor.addActionListener(e -> setDefaultColor());
+
+		JButton btnSetMesh = new JButton(I.tr("Set mesh"), Icons.getImageIcon(Icons.Action.BOOK_EDIT));
+		btnSetMesh.setMnemonic(KeyEvent.VK_M);
+		TableUtil.enableOnGreaterEqual(table, btnSetMesh, 1);
+		add(btnSetMesh, "gaptop 10, sgy color, wrap");
+		btnSetMesh.addActionListener((e) -> setMeshSelectedPlants());
 
 		JButton btnGotoPlant = new JButton(I.tr("Goto"), Icons.getImageIcon(Icons.Misc.GEOLOCATION));
 		btnGotoPlant.setToolTipText(I.tr("Teleports the player to the object."));
@@ -284,6 +291,24 @@ public class VegetationTab extends AbstractEntityTab {
 		}
 	}
 
+	private void setMeshSelectedPlants() {
+		var dialog = new SelectMeshDialog(ctx.getParentWindow(), I.tr("Select mesh to set"), vegetationPS, lastSelectedMeshID);
+		if (!dialog.openAndWasSuccessful() || dialog.getLastSelectedMeshID() == null)
+			return;
+
+		lastSelectedMeshID = dialog.getLastSelectedMeshID();
+
+		for (int row : TableUtil.getSelectedRows(table)) {
+			PlantTableEntry entry = model.getEntry(row);
+			entry.meshID = lastSelectedMeshID;
+			entry.entry.meshID = lastSelectedMeshID;
+		}
+
+		boundsNeedUpdate = true;
+		ctx.fileChanged();
+		loadValues();
+	}
+
 	private void removeSelectedPlants() {
 		for (int row : TableUtil.getSelectedRows(table)) {
 			PlantTableEntry entry = model.getEntry(row);
@@ -385,7 +410,7 @@ public class VegetationTab extends AbstractEntityTab {
 
 	private static final ImmutableBiMap<String, String> PLANT_COLUMN_MAPPING = ImmutableBiMap.of("Position X", I.tr("Position X"),
 			"Position Y", I.tr("Position Y"), "Position Z", I.tr("Position Z"), "Pitch", I.tr("Pitch"), "Yaw", I.tr("Yaw"), "Roll",
-			I.tr("Roll"), "Scale Height", I.tr("Scale Height"), "Scale Width", I.tr("Scale Width"), "Type", I.tr("Type"), "Color",
+			I.tr("Roll"), "Scale Height", I.tr("Scale Height"), "Scale Width", I.tr("Scale Width"), "Mesh", I.tr("Mesh"), "Color",
 			I.tr("Color"));
 
 	public class PlantTableModel extends ListTableModel<PlantTableEntry> {
@@ -535,7 +560,7 @@ public class VegetationTab extends AbstractEntityTab {
 				case "Position X", "Position Y", "Position Z" -> columnExt.setPreferredWidth(85);
 				case "Pitch", "Yaw", "Roll" -> columnExt.setPreferredWidth(60);
 				case "Scale Height", "Scale Width" -> columnExt.setPreferredWidth(60);
-				case "Type" -> columnExt.setPreferredWidth(200);
+				case "Mesh" -> columnExt.setPreferredWidth(200);
 				case "Color" -> columnExt.setPreferredWidth(40);
 			}
 		}

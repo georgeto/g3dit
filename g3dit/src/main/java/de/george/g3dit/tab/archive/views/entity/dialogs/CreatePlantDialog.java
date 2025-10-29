@@ -3,13 +3,9 @@ package de.george.g3dit.tab.archive.views.entity.dialogs;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Window;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
 import java.util.Optional;
 
 import javax.swing.Action;
-import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -25,9 +21,6 @@ import com.ezware.dialog.task.TaskDialogs;
 import com.jidesoft.dialog.ButtonPanel;
 import com.teamunify.i18n.I;
 
-import ca.odell.glazedlists.GlazedLists;
-import ca.odell.glazedlists.SortedList;
-import ca.odell.glazedlists.swing.GlazedListsSwing;
 import de.george.g3dit.gui.dialogs.ExtStandardDialog;
 import de.george.g3dit.gui.dialogs.TemplateSearchDialog;
 import de.george.g3utils.gui.ColorChooserButton;
@@ -36,7 +29,6 @@ import de.george.g3utils.structure.bCEulerAngles;
 import de.george.g3utils.structure.bCQuaternion;
 import de.george.g3utils.structure.bCVector;
 import de.george.g3utils.util.Misc;
-import de.george.lrentnode.classes.eCVegetation_Mesh;
 import de.george.lrentnode.classes.eCVegetation_Mesh.eSVegetationMeshID;
 import de.george.lrentnode.classes.eCVegetation_PS;
 import de.george.lrentnode.classes.eCVegetation_PS.PlantRegionEntry;
@@ -46,11 +38,9 @@ public class CreatePlantDialog extends ExtStandardDialog {
 	private static final Logger logger = LoggerFactory.getLogger(TemplateSearchDialog.class);
 
 	private JTextField tfX, tfY, tfZ, tfPitch, tfYaw, tfRoll, tfScaleWidth, tfScaleHeight;
-	private JComboBox<MeshEntry> cbMesh;
+	private MeshListComboBox cbMesh;
 	private ColorChooserButton ccbColor;
 
-	private eCVegetation_PS vegetationPS;
-	private eSVegetationMeshID lastSelectedMeshID = null;
 	private JTextArea taRawText;
 	private String initialTextBoxContent;
 	private Color defaultColor;
@@ -65,18 +55,13 @@ public class CreatePlantDialog extends ExtStandardDialog {
 
 	public CreatePlantDialog(Window owner, String title, eCVegetation_PS vegetationPS, eSVegetationMeshID lastSelectedMeshID,
 			Color defaultColor) {
-		this(owner, title, vegetationPS, defaultColor);
-		this.lastSelectedMeshID = lastSelectedMeshID;
-	}
-
-	public CreatePlantDialog(Window owner, String title, eCVegetation_PS vegetationPS, Color defaultColor) {
 		super(owner, title, true);
 		setType(Type.UTILITY);
 		setSize(400, 400);
 		setResizable(true);
 
-		this.vegetationPS = vegetationPS;
 		this.defaultColor = defaultColor != null ? defaultColor : Color.WHITE;
+		this.cbMesh = new MeshListComboBox(vegetationPS, lastSelectedMeshID);
 	}
 
 	@Override
@@ -124,15 +109,12 @@ public class CreatePlantDialog extends ExtStandardDialog {
 		mainPanel.add(ccbColor, "height " + tfScaleHeight.getPreferredSize().height + "! ,width 100:150:200, wrap");
 
 		mainPanel.add(new JLabel(I.tr("Mesh")), "wrap");
-		cbMesh = new JComboBox<>();
-		mainPanel.add(cbMesh, "spanx 3, width 200:300:400, wrap");
+		mainPanel.add(cbMesh.getComboBox(), "spanx 3, width 200:300:400, wrap");
 
 		taRawText = new JTextArea();
 		taRawText.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		mainPanel.add(new JScrollPane(taRawText), "spanx 4, pushy, gaptop 7, grow, wrap");
 		taRawText.getDocument().addDocumentListener(SwingUtils.createDocumentListener(this::parseTextArea));
-
-		loadMeshList();
 
 		if (initialTextBoxContent != null && !initialTextBoxContent.isEmpty()) {
 			taRawText.setText(initialTextBoxContent);
@@ -165,27 +147,6 @@ public class CreatePlantDialog extends ExtStandardDialog {
 		ccbColor.setSelectedColor(Optional.ofNullable(Misc.stringToColor(text)).orElseGet(() -> defaultColor));
 	}
 
-	private void loadMeshList() {
-		List<MeshEntry> meshEntries = new ArrayList<>();
-		MeshEntry lastSelectedEntry = null;
-		for (eCVegetation_Mesh mesh : vegetationPS.getMeshClasses()) {
-			MeshEntry meshEntry = new MeshEntry(mesh.getName(), mesh.getMeshID());
-			meshEntries.add(meshEntry);
-
-			if (mesh.getMeshID().equals(lastSelectedMeshID)) {
-				lastSelectedEntry = meshEntry;
-			}
-		}
-		SortedList<MeshEntry> sortedMeshList = new SortedList<>(GlazedLists.eventList(meshEntries), Comparator.comparing(e -> e.mesh));
-		cbMesh.setModel(GlazedListsSwing.eventComboBoxModel(sortedMeshList));
-
-		if (lastSelectedEntry != null) {
-			cbMesh.setSelectedItem(lastSelectedEntry);
-		} else if (!sortedMeshList.isEmpty()) {
-			cbMesh.setSelectedIndex(0);
-		}
-	}
-
 	@Override
 	public ButtonPanel createButtonPanel() {
 		ButtonPanel buttonPanel = newButtonPanel();
@@ -199,10 +160,9 @@ public class CreatePlantDialog extends ExtStandardDialog {
 				float roll = Float.parseFloat(tfRoll.getText());
 				float scaleWidth = Float.parseFloat(tfScaleWidth.getText());
 				float scaleHeight = Float.parseFloat(tfScaleHeight.getText());
-				eSVegetationMeshID meshID = ((MeshEntry) cbMesh.getSelectedItem()).getMeshID();
+				eSVegetationMeshID meshID = cbMesh.getSelectedMeshID();
 				bCQuaternion rotation = new bCQuaternion(bCEulerAngles.fromDegree(yaw, pitch, roll));
 				createdEntry = new PlantRegionEntry(meshID, pos, rotation, scaleWidth, scaleHeight, ccbColor.getSelectedColor().getRGB());
-				lastSelectedMeshID = createdEntry.meshID;
 				dispose();
 				setDialogResult(RESULT_AFFIRMED);
 			} catch (NumberFormatException e) {
@@ -218,33 +178,10 @@ public class CreatePlantDialog extends ExtStandardDialog {
 	}
 
 	public eSVegetationMeshID getLastSelectedMeshID() {
-		return lastSelectedMeshID;
+		return cbMesh.getSelectedMeshID();
 	}
 
 	public PlantRegionEntry getCreatedEntry() {
 		return createdEntry;
-	}
-
-	private static class MeshEntry {
-		private String mesh;
-		private eSVegetationMeshID meshID;
-
-		public MeshEntry(String mesh, eSVegetationMeshID meshID) {
-			this.mesh = mesh;
-			this.meshID = meshID;
-		}
-
-		public String getMesh() {
-			return mesh;
-		}
-
-		public eSVegetationMeshID getMeshID() {
-			return meshID;
-		}
-
-		@Override
-		public String toString() {
-			return mesh;
-		}
 	}
 }

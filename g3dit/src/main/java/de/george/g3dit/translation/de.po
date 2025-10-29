@@ -4400,7 +4400,11 @@ msgstr "Standardfarbe"
 msgid "Default color from selection"
 msgstr "Standardfarbe aus Markierung"
 
-#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\VegetationTab.java:176
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\VegetationTab.java:182
+msgid "Set mesh"
+msgstr "Mesh setzen"
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\VegetationTab.java:189
 msgid "Teleports the player to the object."
 msgstr "Teleportiert den Spieler zum Objekt."
 
@@ -4448,7 +4452,11 @@ msgstr ""
 "liegt außerhalb des Zuständigkeitsbereiches dieser Datei.\n"
 "Das Objekt sollte stattdessen in die für den Bereich zuständige Datei verschoben werden."
 
-#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\VegetationTab.java:379
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\VegetationTab.java:295
+msgid "Select mesh to set"
+msgstr "Zu setzendes Mesh auswählen"
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\VegetationTab.java:411
 msgid "Position X"
 msgstr "Position X"
 

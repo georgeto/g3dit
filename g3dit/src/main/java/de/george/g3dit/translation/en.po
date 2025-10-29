@@ -4305,7 +4305,11 @@ msgstr ""
 msgid "Default color from selection"
 msgstr ""
 
-#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\VegetationTab.java:176
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\VegetationTab.java:182
+msgid "Set mesh"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\VegetationTab.java:189
 msgid "Teleports the player to the object."
 msgstr ""
 
@@ -4347,7 +4351,11 @@ msgid ""
 "The object should instead be moved to the file responsible for the area."
 msgstr ""
 
-#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\VegetationTab.java:379
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\VegetationTab.java:295
+msgid "Select mesh to set"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\VegetationTab.java:411
 msgid "Position X"
 msgstr ""
 
