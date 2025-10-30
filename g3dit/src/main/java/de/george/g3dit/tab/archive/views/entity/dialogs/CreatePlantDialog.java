@@ -140,8 +140,24 @@ public class CreatePlantDialog extends ExtStandardDialog {
 		tfYaw.setText(Misc.formatFloat(parsedRotation.getYawDeg()));
 		tfRoll.setText(Misc.formatFloat(parsedRotation.getRollDeg()));
 
-		tfScaleWidth.setText(Misc.formatFloat(Misc.stringToPrefixedValue(text, 1, "scalewidth", "scalew", "swidth", "sw", "width")));
-		tfScaleHeight.setText(Misc.formatFloat(Misc.stringToPrefixedValue(text, 1, "scaleheight", "scaleh", "sheight", "sh", "height")));
+		float scaleWidth = Misc.stringToPrefixedValue(text, Float.NaN, "scalewidth", "scalew", "swidth", "sw", "width");
+		if (Float.isNaN(scaleWidth)) {
+			float scaleX = Misc.stringToPrefixedValue(text, Float.NaN, "scalex", "scale");
+			float scaleZ = Misc.stringToPrefixedValue(text, Float.NaN, "scalez", "scale");
+			if (!Float.isNaN(scaleX))
+				scaleWidth = !Float.isNaN(scaleZ) ? Math.max(scaleX, scaleZ) : scaleX;
+			else if (!Float.isNaN(scaleZ))
+				scaleWidth = scaleZ;
+			else
+				scaleWidth = 1;
+		}
+
+		float scaleHeight = Misc.stringToPrefixedValue(text, Float.NaN, "scaleheight", "scaleh", "sheight", "sh", "height");
+		if (Float.isNaN(scaleHeight)) {
+			scaleHeight = Misc.stringToPrefixedValue(text, 1, "scaley", "scale");
+		}
+		tfScaleWidth.setText(Misc.formatFloat(scaleWidth));
+		tfScaleHeight.setText(Misc.formatFloat(scaleHeight));
 
 		ccbColor.setSelectedColor(Optional.ofNullable(Misc.stringToColor(text)).orElseGet(() -> defaultColor));
 	}
