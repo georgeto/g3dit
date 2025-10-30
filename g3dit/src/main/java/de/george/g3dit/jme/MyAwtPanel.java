@@ -36,7 +36,6 @@ import com.jme3.util.Screenshots;
  * Uses RGBA frame buffer instead of a RGB one.
  */
 public class MyAwtPanel extends Canvas implements SceneProcessor {
-
 	private boolean attachAsMain = false;
 
 	private BufferedImage img;
@@ -157,7 +156,7 @@ public class MyAwtPanel extends Canvas implements SceneProcessor {
 					createBufferStrategy(1, new BufferCapabilities(new ImageCapabilities(true), new ImageCapabilities(true),
 							BufferCapabilities.FlipContents.UNDEFINED));
 				} catch (AWTException ex) {
-					ex.printStackTrace();
+					Logger.getLogger(MyAwtPanel.class.getName()).log(Level.WARNING, "OGL: Failed to create buffer strategy.", ex);
 				}
 				strategy = getBufferStrategy();
 			}

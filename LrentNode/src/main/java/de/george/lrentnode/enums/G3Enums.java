@@ -4,7 +4,12 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class G3Enums {
+	private static final Logger logger = LoggerFactory.getLogger(G3Enums.class);
+
 	public static class G3Enum {}
 
 	@SuppressWarnings("unchecked")
@@ -64,7 +69,7 @@ public class G3Enums {
 				}
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.warn("Failed to convert enum {} with value {} to string.", clazz, number, e);
 		}
 		return null;
 	}
@@ -78,7 +83,7 @@ public class G3Enums {
 			Field field = clazz.getField(stripped ? classToEnumName(clazz) + "_" + name : name);
 			return field.getInt(null);
 		} catch (Exception e) {
-			// TODO: Logging...
+			logger.warn("Failed to convert enum {} with name {} to int.", clazz, name, e);
 		}
 		return -1;
 	}

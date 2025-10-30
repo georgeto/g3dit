@@ -2838,6 +2838,11 @@ msgstr "Prüfe Position von Vegetations-Objekten"
 msgid "Checks whether all vegetation objects are in the VegetationRoot responsible for their area."
 msgstr "Prüft, ob alle Vegetations-Objekte, in der für ihren Bereich zuständigen VegetationRoot, positioniert sind."
 
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptCondOwnerNearEntity.java:54
+#, java-format
+msgid "Failed to open info {0}: {1}"
+msgstr "Fehler beim Öffnen von Info {0}: {1}"
+
 #: g3dit\src\main\java\de\george\g3dit\scripts\ScriptDeleteNPCs.java:20
 msgid "List of NPC names separated with commas"
 msgstr "Liste von NPC-Namen getrennt mit Kommas"
@@ -3045,6 +3050,11 @@ msgstr "Fehler beim Schreiben der Datei: {0}"
 msgid "List material properties"
 msgstr "Material Eigenschaften auflisten"
 
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptListMaterialProperties.java:40
+#, java-format
+msgid "Failed to open material {0}: {1}"
+msgstr "Fehler beim Öffnen von Material {0}: {1}"
+
 #: g3dit\src\main\java\de\george\g3dit\scripts\ScriptListPickPocketNPCs.java:26
 msgid "List NPCs that can be stolen from"
 msgstr "Beklaubare NPCs auflisten"
@@ -3109,7 +3119,12 @@ msgstr "Nicht verwendete Meshes auflisten"
 msgid "Creates a list of all unused meshes."
 msgstr "Erstellt eine Liste aller nicht verwendeten Meshes."
 
-#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptListUnusedMeshes.java:91
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptListUnusedMeshes.java:54
+#, java-format
+msgid "Failed to open mesh {0}: {1}"
+msgstr "Fehler beim Öffnen von Mesh {0}: {1}"
+
+#: g3dit\src\main\java\de\george\g3dit\scripts\ScriptListUnusedMeshes.java:90
 msgid "Overview"
 msgstr "Übersicht"
 
@@ -4526,6 +4541,11 @@ msgstr "max-y"
 #: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\dialogs\BoundingBoxDialog.java:53
 msgid "max-z"
 msgstr "max-z"
+
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\dialogs\BoundingBoxDialog.java:82
+#: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\dialogs\PositionDialog.java:107
+msgid "Invalid number entered"
+msgstr "Ungültige Nummer eingegeben"
 
 #: g3dit\src\main\java\de\george\g3dit\tab\archive\views\entity\dialogs\CreatePlantDialog.java:210
 msgid "Malformed vegetation object data"

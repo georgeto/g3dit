@@ -50,8 +50,8 @@ public class ScriptListUnusedMeshes implements IScript {
 			try {
 				eCResourceMeshLoD_PS lodMesh = FileUtil.openLodMesh(lodMeshFile);
 				lodMesh.getMeshes().forEach(m -> meshes.remove(m.toLowerCase()));
-			} catch (IOException e1) {
-				e1.printStackTrace();
+			} catch (IOException e) {
+				env.log(I.trf("Failed to open mesh {0}: {1}", lodMeshFile.getFileName(), e.getMessage()));
 			}
 		}
 

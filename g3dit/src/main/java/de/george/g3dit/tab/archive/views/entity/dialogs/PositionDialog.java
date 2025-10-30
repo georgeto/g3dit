@@ -11,6 +11,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EtchedBorder;
 
+import com.ezware.dialog.task.TaskDialogs;
 import com.jidesoft.dialog.ButtonPanel;
 import com.teamunify.i18n.I;
 
@@ -102,8 +103,8 @@ public class PositionDialog extends ExtStandardDialog {
 				positionMatrix.modifyTranslation(
 						new bCVector(Float.parseFloat(tfX.getText()), Float.parseFloat(tfY.getText()), Float.parseFloat(tfZ.getText())));
 				affirm();
-			} catch (NumberFormatException e1) {
-				e1.printStackTrace();
+			} catch (NumberFormatException e) {
+				TaskDialogs.error(this, I.tr("Invalid number entered"), e.getMessage());
 			}
 		});
 

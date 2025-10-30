@@ -1,13 +1,14 @@
 package de.george.g3dit.scripts;
 
 import java.awt.Desktop;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.HashSet;
 import java.util.Properties;
 import java.util.Set;
+
+import com.teamunify.i18n.I;
 
 import de.george.g3utils.util.PathFilter;
 import de.george.lrentnode.archive.ArchiveFile;
@@ -49,10 +50,8 @@ public class ScriptCondOwnerNearEntity implements IScript {
 					env.log(file.getFileName() + ": " + ownerNearEntity);
 					Desktop.getDesktop().open(file.toFile());
 				}
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
 			} catch (IOException e) {
-				e.printStackTrace();
+				env.log(I.trf("Failed to open info {0}: {1}", file.getFileName(), e.getMessage()));
 			}
 		}
 

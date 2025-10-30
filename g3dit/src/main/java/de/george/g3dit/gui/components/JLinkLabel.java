@@ -8,7 +8,12 @@ import java.net.URI;
 
 import javax.swing.JLabel;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class JLinkLabel extends JLabel {
+	private static final Logger logger = LoggerFactory.getLogger(JLinkLabel.class);
+
 	public JLinkLabel(final String link) {
 		this(link, link);
 	}
@@ -33,8 +38,8 @@ public class JLinkLabel extends JLabel {
 					try {
 						Desktop.getDesktop().browse(new URI(link));
 						setText("<HTML><FONT color=\"#0000FF\"><U>" + name + "</U></FONT>");
-					} catch (Throwable t) {
-						t.printStackTrace();
+					} catch (Exception ex) {
+						logger.warn("Unable to open link.", ex);
 					}
 				}
 			}

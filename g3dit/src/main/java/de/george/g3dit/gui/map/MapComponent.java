@@ -24,6 +24,9 @@ import javax.swing.Icon;
 import javax.swing.JComponent;
 import javax.swing.KeyStroke;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import ca.odell.glazedlists.EventList;
 import de.george.g3utils.gui.SwingUtils;
 import de.george.g3utils.structure.bCBox;
@@ -38,6 +41,8 @@ import hu.kazocsaba.imageviewer.Overlay;
 import hu.kazocsaba.imageviewer.ResizeStrategy;
 
 public class MapComponent<T extends MapItem> {
+	private static final Logger logger = LoggerFactory.getLogger(MapComponent.class);
+
 	private ImageViewer viewer;
 	private int imageWidth, imageHeight;
 
@@ -52,7 +57,7 @@ public class MapComponent<T extends MapItem> {
 			imageWidth = mapWorld.getWidth();
 			imageHeight = mapWorld.getHeight();
 		} catch (IOException e) {
-			e.printStackTrace();
+			logger.warn("Unable to load map world image.", e);
 		}
 		viewer.setResizeStrategy(ResizeStrategy.CUSTOM_ZOOM);
 		viewer.setInterpolationType(RenderingHints.VALUE_INTERPOLATION_BILINEAR);

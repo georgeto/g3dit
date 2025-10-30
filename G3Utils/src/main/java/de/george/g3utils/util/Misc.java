@@ -309,8 +309,7 @@ public class Misc {
 		if (temp != null) {
 			try {
 				return Float.parseFloat(temp.replace(",", "."));
-			} catch (NumberFormatException e) {
-				e.printStackTrace();
+			} catch (NumberFormatException ignored) {
 			}
 		}
 		return standard;

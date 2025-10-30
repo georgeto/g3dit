@@ -17,7 +17,7 @@ public class ClassTypes {
 			try {
 				consMap.putIfAbsent(type, clazz.getConstructor(String.class, G3FileReader.class));
 			} catch (Exception e) {
-				e.printStackTrace();
+				throw new RuntimeException(e);
 			}
 		}
 

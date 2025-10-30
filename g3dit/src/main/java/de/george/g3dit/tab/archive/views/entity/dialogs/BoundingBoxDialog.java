@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
+import com.ezware.dialog.task.TaskDialogs;
 import com.jidesoft.dialog.ButtonPanel;
 import com.teamunify.i18n.I;
 
@@ -77,8 +78,8 @@ public class BoundingBoxDialog extends ExtStandardDialog {
 						Float.parseFloat(tfMaxZ.getText())));
 
 				affirm();
-			} catch (NumberFormatException e1) {
-				e1.printStackTrace();
+			} catch (NumberFormatException e) {
+				TaskDialogs.error(this, I.tr("Invalid number entered"), e.getMessage());
 			}
 		});
 

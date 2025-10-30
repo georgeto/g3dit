@@ -482,7 +482,7 @@ public class EntityTree extends JPanel {
 				entitiesFlavor = new DataFlavor(mimeType);
 				flavors[0] = entitiesFlavor;
 			} catch (ClassNotFoundException e) {
-				logger.warn("TreeTransferHandler mime ClassNotFound: {}", e.getMessage());
+				logger.warn("TreeTransferHandler mime class not found: {}", e.getMessage());
 			}
 		}
 
@@ -506,9 +506,9 @@ public class EntityTree extends JPanel {
 			try {
 				transferEntities = (eCEntity[]) support.getTransferable().getTransferData(entitiesFlavor);
 			} catch (UnsupportedFlavorException e) {
-				e.printStackTrace();
+				logger.warn("Encountered unsupported transfer data.", e);
 			} catch (IOException e) {
-				e.printStackTrace();
+				logger.warn("Encountered error while reading transfer data.", e);
 			}
 
 			// Drop Entity darf keine Quell-Entity sein
@@ -590,9 +590,9 @@ public class EntityTree extends JPanel {
 			try {
 				droppedEntities = (eCEntity[]) support.getTransferable().getTransferData(entitiesFlavor);
 			} catch (UnsupportedFlavorException e) {
-				e.printStackTrace();
+				logger.warn("Encountered unsupported transfer data.", e);
 			} catch (IOException e) {
-				e.printStackTrace();
+				logger.warn("Encountered error while reading transfer data.", e);
 			}
 
 			// Get drop location info.

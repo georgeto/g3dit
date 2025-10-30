@@ -1,6 +1,10 @@
 package de.george.g3dit.gui.components.search;
 
 import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import de.george.g3dit.tab.archive.views.property.PropertyValueConverterRegistry;
 import de.george.g3utils.io.G3Serializable;
@@ -14,6 +18,8 @@ import de.george.lrentnode.properties.compare.PropertyComparator;
 import de.george.lrentnode.util.PropertyUtil;
 
 public class PropertySearchFilter<T extends G3ClassContainer> implements SearchFilter<T> {
+	private static final Logger logger = LoggerFactory.getLogger(PropertySearchFilter.class);
+
 	private final SubClassDescriptor subClassDescriptor;
 	private final PropertyDescriptor<?> propertyDesc;
 	private final ClassProperty<G3Serializable> property;
@@ -35,8 +41,10 @@ public class PropertySearchFilter<T extends G3ClassContainer> implements SearchF
 				String raw = (String) PropertyValueConverterRegistry.getInstance().getConverter(propertyDesc.getDataType())
 						.convertTo(property.getValue());
 				cachedPattern = Pattern.compile(raw, operation == CompareOperation.RegexIgnoreCase ? Pattern.CASE_INSENSITIVE : 0);
+			} catch (PatternSyntaxException e) {
+				logger.warn("Invalid regex: {}", e.getMessage());
 			} catch (Exception e) {
-				e.printStackTrace();
+				logger.warn("Unable to convert property value to string.", e);
 			}
 		}
 	}

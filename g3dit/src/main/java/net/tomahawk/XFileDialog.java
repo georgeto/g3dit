@@ -493,7 +493,7 @@ public class XFileDialog {
 			str = new String(data, StandardCharsets.UTF_16);
 			// trace("JNI>>: " + str);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.warn("Failed to convert byte array to string.", e);
 		}
 		return str;
 

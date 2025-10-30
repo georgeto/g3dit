@@ -37,7 +37,7 @@ public class ScriptListMaterialProperties implements IScript {
 				env.log(file.getFileName() + ": " + G3Enums.asString(eEShaderMaterialBlendMode.class, blendMode) + ", " + maskReference
 						+ ", " + useDethBias);
 			} catch (Exception e) {
-				e.printStackTrace();
+				env.log(I.trf("Failed to open material {0}: {1}", file.getFileName(), e.getMessage()));
 			}
 		}
 
