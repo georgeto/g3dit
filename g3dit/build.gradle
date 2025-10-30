@@ -114,7 +114,7 @@ task copyBinlib(type: Copy) {
 
 task copyJar(type: Copy) {
 	dependsOn 'copyBinlib'
-	from file("$buildDir/libs/${project.name}-${project.version}-all.jar")
+	from layout.buildDirectory.file("libs/${project.name}-${project.version}-all.jar")
 	into "$projectDir/root/"
 	rename { "${project.name}.jar" }
 }
