@@ -1,5 +1,6 @@
 package de.george.g3dit.rpc.zmq;
 
+import java.nio.channels.SocketChannel;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -12,7 +13,10 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.zeromq.SocketType;
+import org.zeromq.ZEvent;
 import org.zeromq.ZMQ;
+import org.zeromq.ZMonitor.Event;
 
 import com.google.protobuf.Descriptors.FieldDescriptor;
 import com.google.protobuf.Descriptors.OneofDescriptor;
@@ -107,12 +111,50 @@ public class GothicIpc {
 		public void run() {
 			try {
 				context = ZMQ.context(1);
-				requester = context.socket(ZMQ.DEALER);
+				String monitorAddr = "inproc://monitor";
+				ZMQ.Socket monitor = context.socket(SocketType.PAIR);
+				monitor.setReceiveTimeOut(0);
+				monitor.connect(monitorAddr);
+
+				String gameAddr = "tcp://" + address + ":" + port;
+				requester = context.socket(SocketType.DEALER);
 				requester.setSendTimeOut(0);
 				requester.setReceiveTimeOut(0);
-				requester.setExpireTimeDelta(1000);
-				requester.connect("tcp://" + address + ":" + port);
+				requester.monitor(monitorAddr, ZMQ.EVENT_CONNECTED | ZMQ.EVENT_DISCONNECTED);
+				requester.connect(gameAddr);
+
+				boolean connected = false;
 				while (!Thread.currentThread().isInterrupted()) {
+					while (true) {
+						var monitorEvent = ZEvent.recv(monitor);
+						if (monitorEvent == null)
+							break;
+
+						if (monitorEvent.getEvent() == Event.DISCONNECTED) {
+							connected = false;
+							continue;
+						}
+						try {
+							SocketChannel socket = monitorEvent.getValue();
+							if (socket.getLocalAddress() == null || socket.getRemoteAddress() == null)
+								continue;
+
+							// Depending on the ephemeral port range it might happen that the remote
+							// port we try to connect to is assigned as the ephemeral local port.
+							// That results in us connecting to ourselves, and then requests we send
+							// are immediately delivered to us as responses.
+							if (socket.getLocalAddress().equals(socket.getRemoteAddress())) {
+								logger.warn("Detected accidental self connect to due remote port being assigned as ephemeral local port.");
+								// Reconnect in case we accidentally connected to ourselves.
+								requester.disconnect(gameAddr);
+								requester.connect(gameAddr);
+							} else
+								connected = true;
+						} catch (Exception e) {
+							logger.warn("Error while inspecting connected socket.", e);
+						}
+					}
+
 					// Nachrichten empfangen
 					List<ResponseContainer> responses = getResponses();
 					for (ResponseContainer response : responses) {
@@ -127,7 +169,7 @@ public class GothicIpc {
 					// Nachrichten versenden
 					while (pendingRequests.peek() != null) {
 						Request request = pendingRequests.poll();
-						if (requester.send(request.getContainer().toByteArray())) {
+						if (connected && requester.send(request.getContainer().toByteArray())) {
 							sentRequests.put(request.getContainer().getRequestNumber(), request);
 						} else {
 							notifyCallback(request, Status.Timeout, null);
