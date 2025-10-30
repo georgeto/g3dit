@@ -147,8 +147,8 @@ public class VegetationTab extends AbstractEntityTab {
 			PlantRegionEntry plantEntry = tableEntry.entry;
 			plantEntry.position = tableEntry.position;
 			rotation.ifPresent(r -> plantEntry.rotation = r);
-			plantEntry.scaleHeight = tableEntry.scaleHeight;
 			plantEntry.scaleWidth = tableEntry.scaleWidth;
+			plantEntry.scaleHeight = tableEntry.scaleHeight;
 			plantEntry.meshID = tableEntry.meshID;
 
 			// An neuer Position einfügen
@@ -586,7 +586,7 @@ public class VegetationTab extends AbstractEntityTab {
 
 	private static final ImmutableBiMap<String, String> PLANT_COLUMN_MAPPING = ImmutableBiMap.of("Position X", I.tr("Position X"),
 			"Position Y", I.tr("Position Y"), "Position Z", I.tr("Position Z"), "Pitch", I.tr("Pitch"), "Yaw", I.tr("Yaw"), "Roll",
-			I.tr("Roll"), "Scale Height", I.tr("Scale Height"), "Scale Width", I.tr("Scale Width"), "Mesh", I.tr("Mesh"), "Color",
+			I.tr("Roll"), "Scale Width", I.tr("Scale Width"), "Scale Height", I.tr("Scale Height"), "Mesh", I.tr("Mesh"), "Color",
 			I.tr("Color"));
 
 	public class PlantTableModel extends ListTableModel<PlantTableEntry> {
@@ -605,8 +605,8 @@ public class VegetationTab extends AbstractEntityTab {
 				case 3 -> Misc.round(entry.pitch, 2);
 				case 4 -> Misc.round(entry.yaw, 2);
 				case 5 -> Misc.round(entry.roll, 2);
-				case 6 -> Misc.round(entry.scaleHeight, 2);
-				case 7 -> Misc.round(entry.scaleWidth, 2);
+				case 6 -> Misc.round(entry.scaleWidth, 2);
+				case 7 -> Misc.round(entry.scaleHeight, 2);
 				case 8 -> vegetationPS.getMeshClass(entry.meshID).getName();
 				case 9 -> new Color(entry.colorARGB);
 				default -> null;
@@ -669,14 +669,14 @@ public class VegetationTab extends AbstractEntityTab {
 					}
 					break;
 				case 6:
-					if (!Misc.compareFloat(tableEntry.scaleHeight, newValue, 0.01f)) {
-						tableEntry.scaleHeight = newValue;
+					if (!Misc.compareFloat(tableEntry.scaleWidth, newValue, 0.01f)) {
+						tableEntry.scaleWidth = newValue;
 						changed = 3;
 					}
 					break;
 				case 7:
-					if (!Misc.compareFloat(tableEntry.scaleWidth, newValue, 0.01f)) {
-						tableEntry.scaleWidth = newValue;
+					if (!Misc.compareFloat(tableEntry.scaleHeight, newValue, 0.01f)) {
+						tableEntry.scaleHeight = newValue;
 						changed = 3;
 					}
 					break;
@@ -735,7 +735,7 @@ public class VegetationTab extends AbstractEntityTab {
 			switch (PLANT_COLUMN_MAPPING.inverse().get(columnExt.getTitle())) {
 				case "Position X", "Position Y", "Position Z" -> columnExt.setPreferredWidth(85);
 				case "Pitch", "Yaw", "Roll" -> columnExt.setPreferredWidth(60);
-				case "Scale Height", "Scale Width" -> columnExt.setPreferredWidth(60);
+				case "Scale Width", "Scale Height" -> columnExt.setPreferredWidth(60);
 				case "Mesh" -> columnExt.setPreferredWidth(200);
 				case "Color" -> columnExt.setPreferredWidth(40);
 			}
@@ -767,7 +767,7 @@ public class VegetationTab extends AbstractEntityTab {
 
 	private static class PlantTableEntry {
 		bCVector position;
-		float pitch, yaw, roll, scaleHeight, scaleWidth;
+		float pitch, yaw, roll, scaleWidth, scaleHeight;
 		eSVegetationMeshID meshID;
 		eCVegetation_GridNode gridNode;
 		PlantRegionEntry entry;
@@ -779,8 +779,8 @@ public class VegetationTab extends AbstractEntityTab {
 			pitch = rotation.getPitchDeg();
 			yaw = rotation.getYawDeg();
 			roll = rotation.getRollDeg();
-			scaleHeight = entry.scaleHeight;
 			scaleWidth = entry.scaleWidth;
+			scaleHeight = entry.scaleHeight;
 			meshID = entry.meshID;
 			colorARGB = entry.colorARGB;
 			this.gridNode = gridNode;
