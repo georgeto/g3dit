@@ -45,7 +45,7 @@ jobs:
           echo "Unable to generate changelog: No previous tag found" > CHANGELOG_TEMP.md
         fi
 
-    - name: Create Draft Release.
+    - name: Create Draft Release
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
