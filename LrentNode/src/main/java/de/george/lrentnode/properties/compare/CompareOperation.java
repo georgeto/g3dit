@@ -17,7 +17,9 @@ public enum CompareOperation {
 	EndsWithIgnoreCase,
 	Regex,
 	RegexIgnoreCase,
-	ContainsElement;
+	ContainsElement,
+	Similar,
+	NotSimilar;
 
 	public boolean isRegex() {
 		return this == CompareOperation.Regex || this == CompareOperation.RegexIgnoreCase;

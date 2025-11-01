@@ -60,7 +60,8 @@ public class PropertySearchFilterBuilder<T extends G3ClassContainer> implements 
 			.put(CompareOperation.EndsWith, I.tr("Ends With"))
 			.put(CompareOperation.EndsWithIgnoreCase, I.tr("Ends With (case insensitive)")).put(CompareOperation.Regex, I.tr("Regex"))
 			.put(CompareOperation.RegexIgnoreCase, I.tr("Regex (case insensitive)"))
-			.put(CompareOperation.ContainsElement, I.tr("Contains")).build();
+			.put(CompareOperation.ContainsElement, I.tr("Contains")).put(CompareOperation.Similar, I.tr("Similar"))
+			.put(CompareOperation.NotSimilar, I.tr("Not Similar")).build();
 
 	private JComponent comp;
 

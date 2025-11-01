@@ -95,5 +95,17 @@ public final class PropertyComparatorRegistry {
 		registerArrayComparator(bTValArray_long.class, gLong.class);
 		registerArrayComparator(bTValArray_short.class, gShort.class);
 		registerArrayComparator(bTValArray_unsigned_short.class, gUnsignedShort.class);
+
+		registerComparator(bCVector.class, new FloatPropertyComparator<>() {
+			@Override
+			public boolean equals(bCVector o1, bCVector o2) {
+				return o1.equals(o2);
+			}
+
+			@Override
+			public boolean similiar(bCVector o1, bCVector o2) {
+				return o1.simliar(o2, 0.001f);
+			}
+		});
 	}
 }

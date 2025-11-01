@@ -39,6 +39,8 @@ public interface PropertyComparator<T extends G3Serializable> {
 			case EndsWithIgnoreCase -> ((TextPropertyComparator<T>) this).endsWithIgnoreCase(object, (T) value);
 			case Regex, RegexIgnoreCase -> ((TextPropertyComparator<T>) this).regex(object, (Pattern) value);
 			case ContainsElement -> ((ContainerPropertyComparator<T, V>) this).contains(object, value);
+			case Similar -> ((FloatPropertyComparator<T>) this).similiar(object, (T) value);
+			case NotSimilar -> !((FloatPropertyComparator<T>) this).similiar(object, (T) value);
 			default -> throw new IllegalStateException();
 		};
 	}
@@ -61,6 +63,10 @@ public interface PropertyComparator<T extends G3Serializable> {
 
 		if (this instanceof ContainerPropertyComparator<?, ?>) {
 			builder.add(CompareOperation.ContainsElement);
+		}
+
+		if (this instanceof FloatPropertyComparator<?>) {
+			builder.add(CompareOperation.Similar, CompareOperation.NotSimilar);
 		}
 
 		return builder.build();

@@ -1988,8 +1988,16 @@ msgstr ""
 msgid "Regex (case insensitive)"
 msgstr ""
 
-#: g3dit\src\main\java\de\george\g3dit\gui\components\search\PropertySearchFilterBuilder.java:196
-#: g3dit\src\main\java\de\george\g3dit\tab\shared\SharedPropertyView.java:251
+#: g3dit\src\main\java\de\george\g3dit\gui\components\search\PropertySearchFilterBuilder.java:63
+msgid "Similar"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\components\search\PropertySearchFilterBuilder.java:64
+msgid "Not Similar"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\gui\components\search\PropertySearchFilterBuilder.java:198
+#: g3dit\src\main\java\de\george\g3dit\tab\shared\SharedPropertyView.java:249
 #, java-format
 msgid "Failed to create instance of type ''{0}''."
 msgstr ""
