@@ -38,7 +38,7 @@ jobs:
 
     - name: Generate changelog
       run: |
-        PREV_TAG="$(git tag --sort=-version:refname --merged ${GITHUB_REF_NAME}~1)"
+        PREV_TAG="$(git tag --sort=-version:refname --merged ${GITHUB_REF_NAME}~1 | head -n 1)"
         if [[ -n "${PREV_TAG}" ]]; then
           git log "${PREV_TAG}..${GITHUB_REF_NAME}~1" --pretty=format:"- %s%n%w(0,2,2)%b" > CHANGELOG_TEMP.md
         else
