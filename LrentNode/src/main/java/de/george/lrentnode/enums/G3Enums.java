@@ -3,6 +3,7 @@ package de.george.lrentnode.enums;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,16 +14,16 @@ public class G3Enums {
 	public static class G3Enum {}
 
 	@SuppressWarnings("unchecked")
-	public static Class<? extends G3Enum> byName(String name) {
+	public static Optional<Class<? extends G3Enum>> byName(String name) {
 		for (Class<?> clazz : G3Enums.class.getDeclaredClasses()) {
 			if (classToEnumName(clazz).equals(name)) {
-				return (Class<? extends G3Enum>) clazz;
+				return Optional.of((Class<? extends G3Enum>) clazz);
 			}
 		}
-		return null;
+		return Optional.empty();
 	}
 
-	public static Class<? extends G3Enum> byG3Type(String name) {
+	public static Optional<Class<? extends G3Enum>> byG3Type(String name) {
 		return byName(name.replaceFirst(".*<enum", "").replaceFirst(">.*", "").trim());
 	}
 

@@ -81,7 +81,10 @@ public class G3Property extends AbstractProperty {
 	public Class<?> getType() {
 		G3Serializable value = classProperty.getValue();
 		if (value instanceof bTPropertyContainer) {
-			return G3EnumWrapper.class;
+			if (G3Enums.byG3Type(classProperty.getType()).isPresent())
+				return G3EnumWrapper.class;
+			else
+				return Integer.class;
 		}
 
 		if (value instanceof bTObjArray_bTPropertyContainer) {
@@ -114,12 +117,17 @@ public class G3Property extends AbstractProperty {
 	public Object getValue() {
 		G3Serializable value = classProperty.getValue();
 		if (value instanceof bTPropertyContainer) {
-			return new G3EnumWrapper(((bTPropertyContainer) value).getEnumValue(), G3Enums.byG3Type(classProperty.getType()));
+			int enumValue = ((bTPropertyContainer) value).getEnumValue();
+			var enumClass = G3Enums.byG3Type(classProperty.getType());
+			if (enumClass.isPresent())
+				return new G3EnumWrapper(enumValue, enumClass.get());
+			else
+				return enumValue;
 		}
 
 		if (value instanceof bTObjArray_bTPropertyContainer) {
 			return new G3EnumArrayWrapper(((bTObjArray_bTPropertyContainer<?>) value).getNativeEntries(),
-					G3Enums.byG3Type(classProperty.getType()));
+					G3Enums.byG3Type(classProperty.getType()).get());
 		}
 
 		if (value instanceof bTPropertyObject) {
@@ -160,7 +168,12 @@ public class G3Property extends AbstractProperty {
 			displayErrorShown = false;
 
 			if (classProperty.getValue() instanceof bTPropertyContainer) {
-				((bTPropertyContainer<?>) classProperty.getValue()).setEnumValue(((G3EnumWrapper) value).getEnumValue());
+				int enumValue;
+				if (G3Enums.byG3Type(classProperty.getType()).isPresent())
+					enumValue = ((G3EnumWrapper) value).getEnumValue();
+				else
+					enumValue = (Integer) value;
+				((bTPropertyContainer<?>) classProperty.getValue()).setEnumValue(enumValue);
 				return;
 			}
 

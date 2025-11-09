@@ -23,7 +23,7 @@ public class PropertyPanelHandlerFactory {
 
 		PropertyAdapter<?> adapter = def.getAdapter();
 		if (adapter.getDataType() == bTPropertyContainer.class) {
-			return new EnumPropertyHandler<>(def, G3Enums.byG3Type(adapter.getDataTypeName()));
+			return new EnumPropertyHandler<>(def, G3Enums.byG3Type(adapter.getDataTypeName()).get());
 		} else if (adapter.getDataType() == gBool.class) {
 			return new BooleanPropertyHandler(def);
 		} else if (adapter.getDataType() == bCString.class) {
