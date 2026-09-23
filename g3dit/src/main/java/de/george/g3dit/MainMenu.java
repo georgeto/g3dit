@@ -118,7 +118,7 @@ public class MainMenu extends JMenuBar {
 
 		createMenuLanguage();
 
-		settingsUpdated();
+		applySettings();
 	}
 
 	private void createMenuData() {
@@ -840,14 +840,17 @@ public class MainMenu extends JMenuBar {
 		miOpenTinyHexer.setEnabled(hasDataFile && !ctx.getOptionStore().get(EditorOptions.Path.TINY_HEXER).isEmpty());
 	}
 
-	private void settingsUpdated() {
+	private void applySettings() {
 		PathAliases aliaes = PathAliases.from(ctx.getOptionStore());
 		muRecentFiles.setAliasMap(aliaes);
 		muFavorites.setAliasMap(aliaes);
 		adaptToTab(ctx.getEditor().getSelectedTab());
 
 		muDeveloper.setVisible(ctx.getOptionStore().get(EditorOptions.Misc.DEVELOPER_MODE));
+	}
 
+	private void settingsUpdated() {
+		applySettings();
 		ctx.eventBus().post(new SettingsUpdatedEvent());
 	}
 

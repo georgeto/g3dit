@@ -672,6 +672,8 @@ public class Editor implements EditorContext {
 		FileDialogWrapper.setPlaces(StreamEx.of(getFileManager().getDataFolders()).map(FilesEx::getAbsolutePath));
 		// Apply theme
 		applyTheme(false);
+		// Write updated settings to disk.
+		saveSettings();
 	}
 
 	private LookAndFeel nativeLookAndFeel;
