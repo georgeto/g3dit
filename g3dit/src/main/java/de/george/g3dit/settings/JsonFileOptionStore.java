@@ -4,6 +4,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Arrays;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -80,7 +81,9 @@ public class JsonFileOptionStore extends AbstractConcurrentOptionStore {
 				gen.flush();
 
 				// Serialization was successful, now write the config file to disk.
-				Files.write(file, buffer.toByteArray());
+				var serialized = buffer.toByteArray();
+				if (!Files.exists(file) || !Arrays.equals(Files.readAllBytes(file), serialized))
+					Files.write(file, serialized);
 				return true;
 			} catch (IOException e) {
 				logger.warn("Error while saving configuration file.", e);
