@@ -4,6 +4,7 @@ import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.function.Supplier;
 
@@ -64,8 +65,14 @@ public class CheckInvalidAnchors extends AbstractEntityCheck {
 
 		if (entity.hasClass(CD.gCAnchor_PS.class)) {
 			gCAnchor_PS anchor = entity.getClass(CD.gCAnchor_PS.class);
-			anchors.put(entity.getGuid(), new Anchor(descriptor.get(), ImmutableSet.copyOf(anchor.interactPoints.getNativeEntries()),
-					archiveFile.isLrentdat(), anchor.property(CD.gCAnchor_PS.AnchorType).getEnumValue()));
+			var nativeEntries = anchor.interactPoints.getNativeEntries();
+			var entries = anchor.interactPoints.getNativeEntries().stream().filter(Objects::nonNull)
+					.collect(ImmutableSet.toImmutableSet());
+			if (nativeEntries.size() != entries.size())
+				problemConsumer.fatal(I.tr("Anchor has empty interaction point entry."), null);
+
+			anchors.put(entity.getGuid(), new Anchor(descriptor.get(), entries, archiveFile.isLrentdat(),
+					anchor.property(CD.gCAnchor_PS.AnchorType).getEnumValue()));
 		} else if (entity.hasClass(CD.gCInteraction_PS.class)) {
 			String anchorPoint = entity.getProperty(CD.gCInteraction_PS.AnchorPoint).getGuid();
 			interactPoints.put(entity.getGuid(), new InteractPoint(descriptor.get(), anchorPoint, archiveFile.isLrentdat()));
