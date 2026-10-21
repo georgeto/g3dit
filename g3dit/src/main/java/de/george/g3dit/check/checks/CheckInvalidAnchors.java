@@ -8,6 +8,7 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.function.Supplier;
 
+import com.google.common.collect.ImmutableMultiset;
 import com.google.common.collect.ImmutableSet;
 import com.teamunify.i18n.I;
 
@@ -66,12 +67,18 @@ public class CheckInvalidAnchors extends AbstractEntityCheck {
 		if (entity.hasClass(CD.gCAnchor_PS.class)) {
 			gCAnchor_PS anchor = entity.getClass(CD.gCAnchor_PS.class);
 			var nativeEntries = anchor.interactPoints.getNativeEntries();
-			var entries = anchor.interactPoints.getNativeEntries().stream().filter(Objects::nonNull)
-					.collect(ImmutableSet.toImmutableSet());
-			if (nativeEntries.size() != entries.size())
-				problemConsumer.fatal(I.tr("Anchor has empty interaction point entry."), null);
+			var numEmpty = nativeEntries.stream().filter(Objects::isNull).count();
+			if (numEmpty > 0)
+				problemConsumer.fatal(I.trf("Anchor has {0} empty interaction point entries.", numEmpty), null);
 
-			anchors.put(entity.getGuid(), new Anchor(descriptor.get(), entries, archiveFile.isLrentdat(),
+			var entries = anchor.interactPoints.getNativeEntries().stream().filter(Objects::nonNull)
+					.collect(ImmutableMultiset.toImmutableMultiset());
+			var duplicateEntries = entries.entrySet().stream().filter(e -> e.getCount() > 1).map(e -> e.getElement())
+					.collect(ImmutableSet.toImmutableSet());
+			if (!duplicateEntries.isEmpty())
+				problemConsumer.fatal(I.trf("Anchor has duplicate interaction point entries.", numEmpty), HtmlCreator.renderList(entries));
+
+			anchors.put(entity.getGuid(), new Anchor(descriptor.get(), entries.elementSet(), archiveFile.isLrentdat(),
 					anchor.property(CD.gCAnchor_PS.AnchorType).getEnumValue()));
 		} else if (entity.hasClass(CD.gCInteraction_PS.class)) {
 			String anchorPoint = entity.getProperty(CD.gCInteraction_PS.AnchorPoint).getGuid();
@@ -92,7 +99,7 @@ public class CheckInvalidAnchors extends AbstractEntityCheck {
 			}
 
 			for (String interactPointGuid : anchor.interactPoints) {
-				InteractPoint interactPoint = interactPoints.get(interactPointGuid);
+				CheckInvalidAnchors.InteractPoint interactPoint = interactPoints.get(interactPointGuid);
 				if (interactPoint != null) {
 					if (interactPoint.anchor == null) {
 						postEntityProblem(problemConsumer, anchor.descriptor, Severity.Error,

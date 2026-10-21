@@ -1486,22 +1486,27 @@ msgid "Finds inconsistencies in the assignment of interaction points to anchors.
 msgstr ""
 
 #: g3dit\src\main\java\de\george\g3dit\check\checks\CheckInvalidAnchors.java:72
-msgid "Anchor has empty interaction point entry."
+#, java-format
+msgid "Anchor has {0} empty interaction point entries."
 msgstr ""
 
-#: g3dit\src\main\java\de\george\g3dit\check\checks\CheckInvalidAnchors.java:89
-msgid "Anchor is inside .node (UserCount not part of the save game)"
-msgstr ""
-
-#: g3dit\src\main\java\de\george\g3dit\check\checks\CheckInvalidAnchors.java:84
-msgid "Interact points"
-msgstr ""
-
-#: g3dit\src\main\java\de\george\g3dit\check\checks\CheckInvalidAnchors.java:92
-msgid "Anchor refers to interaction point that has no anchor set."
+#: g3dit\src\main\java\de\george\g3dit\check\checks\CheckInvalidAnchors.java:79
+msgid "Anchor has duplicate interaction point entries."
 msgstr ""
 
 #: g3dit\src\main\java\de\george\g3dit\check\checks\CheckInvalidAnchors.java:96
+msgid "Anchor is inside .node (UserCount not part of the save game)"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\checks\CheckInvalidAnchors.java:98
+msgid "Interact points"
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\checks\CheckInvalidAnchors.java:106
+msgid "Anchor refers to interaction point that has no anchor set."
+msgstr ""
+
+#: g3dit\src\main\java\de\george\g3dit\check\checks\CheckInvalidAnchors.java:110
 msgid "Anchor refers to interaction point that has different anchor set."
 msgstr ""
 

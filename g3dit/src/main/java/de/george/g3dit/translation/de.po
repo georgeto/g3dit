@@ -1525,10 +1525,15 @@ msgid "Finds inconsistencies in the assignment of interaction points to anchors.
 msgstr "Ermittelt Inkonsistenzen in der Zuordnung von Interaktionspunkten zu Anchors."
 
 #: g3dit\src\main\java\de\george\g3dit\check\checks\CheckInvalidAnchors.java:72
-msgid "Anchor has empty interaction point entry."
-msgstr "Anchor enthält leeren Interaktionspunkteintrag."
+#, java-format
+msgid "Anchor has {0} empty interaction point entries."
+msgstr "Anchor enthält {0} leere Interaktionspunkteinträge."
 
-#: g3dit\src\main\java\de\george\g3dit\check\checks\CheckInvalidAnchors.java:89
+#: g3dit\src\main\java\de\george\g3dit\check\checks\CheckInvalidAnchors.java:79
+msgid "Anchor has duplicate interaction point entries."
+msgstr "Anchor enthält doppelte Interaktionspunkteinträge."
+
+#: g3dit\src\main\java\de\george\g3dit\check\checks\CheckInvalidAnchors.java:96
 msgid "Anchor is inside .node (UserCount not part of the save game)"
 msgstr "Anchor befindet sich in .node (UserCount nicht Teil des Spielstands)"
 
